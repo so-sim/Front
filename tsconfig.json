@@ -1,0 +1,29 @@
+{
+  "compilerOptions": {
+    "esModuleInterop": true,
+    "sourceMap": true,
+    "lib": [
+      "ES2020",
+      "DOM"
+    ],
+    "module": "esnext",
+    "moduleResolution": "Node",
+    "target": "ES6",
+    "strict": true,
+    "resolveJsonModule": true,
+    "jsx": "preserve",
+    "jsxImportSource": "@emotion/react",
+  },
+  "include": [
+    "**/*.ts",
+    "**/*.tsx",
+  ],
+  "ts-node": {
+    "compilerOptions": {
+      "module": "commonJS",
+      "moduleResolution": "Node",
+      "target": "es5",
+      "esModuleInterop": true
+    }
+  }
+}
