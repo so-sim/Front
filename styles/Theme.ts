@@ -1,8 +1,8 @@
 const theme = {
   colors: {
-    neutral_200: '#f1f2f3',
-    neutral_300: '#e3e4e5',
-    neutral_400: '#d7d8d9',
+    neutral_200_b: '#f1f2f3',
+    neutral_300_b: '#e3e4e5',
+    neutral_400_b: '#d7d8d9',
     secondary_100: '#fff',
     secondary_200: '#efefef',
     secondary_300: '#d4d4d4',
@@ -31,6 +31,13 @@ const theme = {
     blue_300: '#9465f8',
     system_red_100: '#f51e1e',
     system_red_200: '#dd2424',
+  },
+  cover: {
+    red: '#f86565',
+    orange: '#f89a65',
+    yellow: '#f8e065',
+    blue: '#658ef8',
+    purple: '#9465f8',
   },
 };
 
