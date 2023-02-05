@@ -5,7 +5,7 @@ import * as Style from './style';
 export const GroupSection = () => {
   return (
     <Style.GroupSection>
-      <span>참여 모임</span>
+      <Style.Title>참여 모임</Style.Title>
       <CardList />
     </Style.GroupSection>
   );
