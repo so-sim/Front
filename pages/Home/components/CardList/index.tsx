@@ -2,7 +2,7 @@ import AddCard from '../Card/AddCard';
 import { GroupCard } from '../Card/GroupCard';
 import * as Style from './style';
 
-export interface Group {
+export interface GroupInfo {
   title: string;
   color: string;
   people: number;
@@ -16,7 +16,7 @@ export const CardList = () => {
    * 3) 바뀔 위험이 있잖아
    * => 그냥 색상 코드를 보내는게 좋을듯
    */
-  const groupList: Group[] = [
+  const groupList: GroupInfo[] = [
     { title: '전국 대한 산악회1', color: '#f86565', people: 1 },
     { title: '전국 대한 산악회2', color: '#f89a65', people: 1 },
     { title: '전국 대한 산악회3', color: '#f8e065', people: 1 },
