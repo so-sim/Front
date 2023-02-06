@@ -1,13 +1,15 @@
-import React from 'react';
-import KaKaoLogin from '../../common/KakaoLogin';
+
+import { Header, Banner, GroupSection, Footer } from './components';
 
 const Home = () => {
   return (
-    <>
-      <KaKaoLogin>
-        <button>kakao</button>
-      </KaKaoLogin>
-    </>
+    /** layout 자리 */
+    <main>
+      <Header />
+      <Banner />
+      <GroupSection />
+      <Footer />
+    </main>
   );
 };
 
