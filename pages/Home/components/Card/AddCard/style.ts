@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 
-const AddCardFrame = styled.div`
+export const AddCardFrame = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -9,11 +9,6 @@ const AddCardFrame = styled.div`
   height: 100%;
 `;
 
-const AddCardText = styled.div`
+export const AddCardText = styled.div`
   margin-top: 16px;
 `;
-
-export const Add = {
-  Frame: AddCardFrame,
-  Text: AddCardText,
-};

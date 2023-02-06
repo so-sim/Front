@@ -9,13 +9,6 @@ export interface GroupInfo {
 }
 
 export const CardList = () => {
-  /**
-   * 논의 필요
-   * 1) color를 16진법으로 받아올지, => 변동 가능성이 있기 때문에
-   * 2) blue, red와 같이 상징하는 색으로 받아올지 => 5가지가 아니라 많아질 수도 있음
-   * 3) 바뀔 위험이 있잖아
-   * => 그냥 색상 코드를 보내는게 좋을듯
-   */
   const groupList: GroupInfo[] = [
     { title: '전국 대한 산악회1', color: '#f86565', people: 1 },
     { title: '전국 대한 산악회2', color: '#f89a65', people: 1 },

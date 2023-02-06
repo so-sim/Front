@@ -1,15 +1,14 @@
-import React from 'react';
 import { Card } from '..';
-import { Plus } from '../../../../../assets/icons/System';
-import { Add } from './style';
+import { SYSTEM } from '../../../../../assets/icons/System';
+import * as Style from './style';
 
 const AddCard = () => {
   return (
     <Card>
-      <Add.Frame>
-        <Plus />
-        <Add.Text>모임 만들기</Add.Text>
-      </Add.Frame>
+      <Style.AddCardFrame>
+        {SYSTEM.PLUS}
+        <Style.AddCardText>모임 만들기</Style.AddCardText>
+      </Style.AddCardFrame>
     </Card>
   );
 };

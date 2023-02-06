@@ -1,21 +1,19 @@
 import { Card } from '..';
 import { GroupInfo } from '../../CardList';
-import { Group } from './style';
-import * as User from '../../../../../assets/icons/User';
+import * as Style from './style';
+import { USER } from '../../../../../assets/icons/User';
 
 export const GroupCard = ({ title, color, people }: GroupInfo) => {
   return (
     <Card>
-      <Group.Color color={color} />
-      <Group.Info>
-        <Group.Title>{title}</Group.Title>
-        <Group.People>
-          <Group.Icon>
-            <User.Group width={16} height={16} />
-          </Group.Icon>
-          <Group.PeopleNumber>{people}명</Group.PeopleNumber>
-        </Group.People>
-      </Group.Info>
+      <Style.GroupColor color={color} />
+      <Style.GroupInfo>
+        <Style.GroupTitle>{title}</Style.GroupTitle>
+        <Style.GroupPeople>
+          <Style.GroupIcon>{USER.GROUP}</Style.GroupIcon>
+          <Style.GroupPeopleNumber>{people}명</Style.GroupPeopleNumber>
+        </Style.GroupPeople>
+      </Style.GroupInfo>
     </Card>
   );
 };
