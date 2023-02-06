@@ -1,11 +1,12 @@
-import React, { useEffect, useReducer, useState } from 'react';
+import React, { useState } from 'react';
 import ARROW from '../../assets/icons/Arrow';
 import LOGO from '../../assets/icons/Logo';
+import Button from '../../common/Button';
 import * as Style from './styles';
 
 const TOSList = [
-  { id: 1, title: '(필수)개인정보수집 동의' },
-  { id: 2, title: '(필수)이용약관 동의' },
+  { id: 1, title: '(필수)개인정보수집 동의', href: '' },
+  { id: 2, title: '(필수)이용약관 동의', href: '' },
 ];
 
 const TOS = () => {
@@ -56,10 +57,15 @@ const TOS = () => {
                   <input type="checkbox" checked={checkedList.includes(list.id)} onChange={(event) => checkHandler(event, list.id)} />
                   <span>{list.title}</span>
                 </label>
-                {ARROW.right}
+                <Style.TOSLink href={list.href} target="_blank" rel="noopnner noreferrer">
+                  {ARROW.right}
+                </Style.TOSLink>
               </Style.TOS>
             ))}
           </Style.TOSList>
+          <Style.TOSFooter>
+            <Button color={isAllChecked ? 'primary' : 'disabeld'}>가입</Button>
+          </Style.TOSFooter>
         </Style.TOSContainer>
       </Style.Layout>
     </>
