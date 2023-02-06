@@ -31,6 +31,7 @@ const theme = {
     blue_300: '#9465f8',
     system_red_100: '#f51e1e',
     system_red_200: '#dd2424',
+    white: '#FFFFFF',
   },
   cover: {
     red: '#f86565',

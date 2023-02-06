@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import ARROW from '../../assets/icons/Arrow';
-import LOGO from '../../assets/icons/Logo';
+import { ARROW } from '../../assets/icons/Arrow';
+import { LOGO } from '../../assets/icons/Logo';
 import Button from '../../common/Button';
 import * as Style from './styles';
 
@@ -58,13 +58,13 @@ const TOS = () => {
                   <span>{list.title}</span>
                 </label>
                 <Style.TOSLink href={list.href} target="_blank" rel="noopnner noreferrer">
-                  {ARROW.right}
+                  {ARROW.RIGHT}
                 </Style.TOSLink>
               </Style.TOS>
             ))}
           </Style.TOSList>
           <Style.TOSFooter>
-            <Button color={isAllChecked ? 'primary' : 'disabeld'}>가입</Button>
+            <Button color={isAllChecked ? 'primary' : 'disabled'}>가입</Button>
           </Style.TOSFooter>
         </Style.TOSContainer>
       </Style.Layout>
