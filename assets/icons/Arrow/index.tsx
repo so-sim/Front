@@ -4,4 +4,10 @@ import Left from './Left.svg';
 import Right from './Right.svg';
 import Solid from './Solid.svg';
 
-export { DoubleRight, Down, Left, Right, Solid };
+export const ARROW = {
+  DOUBLE_RIGHT: <DoubleRight />,
+  DOWN: <Down />,
+  LEFT: <Left />,
+  RIGHT: <Right />,
+  SOLID: <Solid />,
+};
