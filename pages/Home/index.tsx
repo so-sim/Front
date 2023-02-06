@@ -1,3 +1,4 @@
+
 import { Header, Banner, GroupSection, Footer } from './components';
 
 const Home = () => {

@@ -11,7 +11,11 @@
     "jsx": "preserve",
     "jsxImportSource": "@emotion/react"
   },
-  "include": ["**/*.ts", "**/*.tsx", "types/svg.d.ts"],
+  "include": [
+    "**/*.ts",
+    "**/*.tsx",
+    "types/svg.d.ts"
+  ],
   "ts-node": {
     "compilerOptions": {
       "module": "commonJS",
