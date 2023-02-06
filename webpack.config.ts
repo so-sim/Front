@@ -56,7 +56,7 @@ const config: Configuration = {
         ],
       },
       {
-        test: /\.svg$/,
+        test: /\.svg$/i,
         use: ['@svgr/webpack'],
       },
     ],

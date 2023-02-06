@@ -1,7 +1,15 @@
-import React from 'react';
+import { Header, Banner, GroupSection, Footer } from './components';
 
 const Home = () => {
-  return <div>dd</div>;
+  return (
+    /** layout 자리 */
+    <main>
+      <Header />
+      <Banner />
+      <GroupSection />
+      <Footer />
+    </main>
+  );
 };
 
 export default Home;
