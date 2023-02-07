@@ -1,4 +1,5 @@
 import React, { FC, ReactNode } from 'react';
+import { SYSTEM } from '../../assets/icons/System';
 import * as Style from './styles';
 
 export interface PropsWithChild {
@@ -9,6 +10,9 @@ export interface ModalProps extends PropsWithChild {
   isOpen: boolean;
   height?: string;
   width?: string;
+  onClick?: () => void;
+}
+export interface ModalHeaderProps extends PropsWithChild {
   onClick?: () => void;
 }
 
@@ -27,9 +31,10 @@ const ModalFrame: FC<ModalProps> = ({ isOpen, width = '376px', height = '283px',
   );
 };
 
-const ModalHeader: FC<PropsWithChild> = ({ children, ...args }) => {
+const ModalHeader: FC<ModalHeaderProps> = ({ children, onClick, ...args }) => {
   return (
     <Style.ModalHeader {...args}>
+      {onClick && <Style.CloseIcon onClick={onClick}>{SYSTEM.CLOSE}</Style.CloseIcon>}
       <Style.HeaderTitle>{children}</Style.HeaderTitle>
     </Style.ModalHeader>
   );

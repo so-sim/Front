@@ -33,6 +33,12 @@ export const ModalFrame = styled.div<ModalProps>`
 
 export const ModalHeader = styled.div``;
 
+export const CloseIcon = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: end;
+`;
+
 export const HeaderTitle = styled.span``;
 
 export const ModalBody = styled.div``;
@@ -40,4 +46,5 @@ export const ModalBody = styled.div``;
 export const ModalFooter = styled.div<Pick<ModalFooterProps, 'flexDirection'>>`
   display: flex;
   flex-direction: ${(props) => props.flexDirection};
+  gap: 12px;
 `;

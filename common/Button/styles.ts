@@ -8,23 +8,32 @@ export const Button = styled.button<ButtonProps>`
   display: flex;
   justify-content: center;
   align-items: center;
+  border: ${(props) => (props.color === 'white' ? `1px solid ${props.theme.colors.secondary_800}` : 'none')};
   background-color: ${({ theme, color }) => {
     const colors = {
       primary: theme.colors.primary_500,
       disabled: theme.colors.secondary_200,
       black: theme.colors.secondary_800,
-      white: theme.colors.white,
+      white: theme.colors.secondary_100,
     };
     return colors[color ?? 'primary'];
   }};
-  color: ${({ theme, color }) => (color === 'primary' ? theme.colors.white : theme.colors.secondary_900)};
+  color: ${({ theme, color }) => {
+    const colors = {
+      primary: theme.colors.secondary_100,
+      disabled: theme.colors.secondary_700,
+      black: theme.colors.secondary_100,
+      white: theme.colors.secondary_800,
+    };
+    return colors[color ?? 'primary'];
+  }};
   &:hover {
     background-color: ${({ theme, color }) => {
       const colors = {
         primary: theme.colors.primary_600,
         disabled: theme.colors.secondary_200,
         black: theme.colors.secondary_900,
-        white: theme.colors.white,
+        white: theme.colors.neutral_200_b,
       };
       return colors[color ?? 'primary'];
     }};
