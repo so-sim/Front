@@ -4,7 +4,7 @@ import * as Style from './style';
 
 const AddCard = () => {
   return (
-    <Card>
+    <Card onClick={() => console.log('hi')}>
       <Style.AddCardFrame>
         {SYSTEM.PLUS}
         <Style.AddCardText>모임 만들기</Style.AddCardText>
