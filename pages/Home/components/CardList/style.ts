@@ -12,6 +12,7 @@ export const CardList = styled.ul`
   flex-wrap: wrap;
   gap: 24px;
   max-width: 1200px;
+  width: 100%;
 `;
 
 export const AddCard = styled.div`
