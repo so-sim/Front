@@ -8,11 +8,13 @@ export const Card = styled.li`
 `;
 
 export const CardList = styled.ul`
-  display: flex;
-  flex-wrap: wrap;
-  gap: 24px;
-  max-width: 1200px;
+  display: grid;
+  grid-column-gap: 20px;
+  grid-row-gap: 24px;
+  grid-template-columns: repeat(auto-fill, minmax(176px, auto));
+  grid-auto-rows: 200px;
   width: 100%;
+  margin: auto;
 `;
 
 export const AddCard = styled.div`
