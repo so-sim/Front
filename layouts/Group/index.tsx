@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
+import { Route, Routes, useParams } from 'react-router-dom';
 import { ARROW } from '../../assets/icons/Arrow';
 import { LOGO } from '../../assets/icons/Logo';
 import { SYSTEM } from '../../assets/icons/System';
 import { USER } from '../../assets/icons/User';
 import DropDown from '../../common/DropDown';
+import Calendar from '../../pages/WholeCalendar';
 import GroupList from './components/GroupList';
 import GroupSideBar from './components/SideBar';
 import * as Style from './styles';
@@ -14,8 +16,10 @@ const DorpDownList = [
 ];
 
 const Group = () => {
+  const param = useParams();
+  const { groupID, tap } = param;
   const [dropDownState, setDropDownState] = useState('');
-  const [showDropDown, setShowDropDown] = useState(true);
+  const [showDropDown, setShowDropDown] = useState(false);
 
   const handleDropDown = () => {
     setShowDropDown((prev) => !prev);
@@ -34,6 +38,9 @@ const Group = () => {
       <Style.GridLayout>
         <GroupList />
         <GroupSideBar />
+        <Routes>
+          <Route path={`/book`} element={<Calendar />} />
+        </Routes>
       </Style.GridLayout>
     </>
   );
