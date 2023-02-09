@@ -27,7 +27,7 @@ const GroupList = () => {
     <>
       <Stlye.Layout>
         {Group.map((group) => (
-          <NavLink key={group.id} to={`/group/${group.id}`}>
+          <NavLink key={group.id} to={`/group/${group.id}/book`}>
             <Stlye.Cover isSelected={isSelected(group.id)} />
             <Stlye.EachGroup color={group.color}>
               <span>{group.name.substring(0, 3)}</span>

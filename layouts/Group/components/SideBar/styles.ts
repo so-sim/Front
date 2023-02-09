@@ -35,3 +35,17 @@ export const Tap = styled.button<TapProps>`
   gap: 4px;
   color: ${(props) => (props.disabled ? props.theme.colors.secondary_400 : 'black')};
 `;
+
+interface SelectedProps {
+  isSelected: boolean;
+}
+
+export const Selected = styled.div<SelectedProps>`
+  display: ${(props) => (props.isSelected ? 'block' : 'none')};
+  position: absolute;
+  width: 6px;
+  left: 100px;
+  height: 32px;
+  background-color: ${({ theme }) => theme.colors.secondary_900};
+  border-radius: 0px 4px 4px 0px;
+`;

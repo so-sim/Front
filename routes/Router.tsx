@@ -10,7 +10,7 @@ const Router = () => {
         <Route path="/" element={<Home />} />
         <Route path="/auth/kakao/callback" element={<KaKaoAuth />} />
         <Route path="/tos" element={<TOS />} />
-        <Route path="/group/:groupID/*" element={<Group />} />
+        <Route path="/group/:groupID/:tap" element={<Group />} />
       </Routes>
     </BrowserRouter>
   );
