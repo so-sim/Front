@@ -5,6 +5,7 @@ import { LOGO } from '../../assets/icons/Logo';
 import { SYSTEM } from '../../assets/icons/System';
 import { USER } from '../../assets/icons/User';
 import DropDown from '../../common/DropDown';
+import FineBook from '../../pages/FineBook';
 import Calendar from '../../pages/WholeCalendar';
 import GroupList from './components/GroupList';
 import GroupSideBar from './components/SideBar';
@@ -40,6 +41,7 @@ const Group = () => {
         <GroupSideBar />
         <Routes>
           <Route path={`/book`} element={<Calendar />} />
+          <Route path={`/book/detail`} element={<FineBook />} />
         </Routes>
       </Style.GridLayout>
     </>

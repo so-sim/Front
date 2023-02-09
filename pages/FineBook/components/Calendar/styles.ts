@@ -2,8 +2,6 @@ import styled from '@emotion/styled';
 
 export const Layout = styled.div`
   padding: 48px 32px;
-  width: 100%;
-  height: 100%;
 `;
 
 export const Header = styled.div`
@@ -55,14 +53,14 @@ interface CalendarContainerProps {
 
 export const CalendarContainer = styled.div<CalendarContainerProps>`
   display: grid;
-  height: 90%;
+  height: 50%;
   grid-template-rows: ${(props) => `repeat(${props.length},1fr`};
   border: 1px solid ${({ theme }) => theme.colors.neutral_400_b};
 `;
-
 export const WeekWrap = styled.div`
   display: grid;
   grid-template-columns: repeat(7, 1fr);
+  border: 1px solid ${({ theme }) => theme.colors.neutral_400_b};
 `;
 
 interface DateCellProps {
@@ -70,14 +68,18 @@ interface DateCellProps {
 }
 
 export const DateCell = styled.div<DateCellProps>`
-  cursor: pointer;
+  display: flex;
   position: relative;
-  display: inline-flex;
   flex-direction: column;
-  padding: 8px;
-  border: 1px solid ${({ theme }) => theme.colors.neutral_400_b};
-  gap: 4px;
+  align-items: center;
+  padding: 12px 4px;
+  gap: 8px;
   color: ${(props) => (props.isCurrentMonth ? 'black' : props.theme.colors.secondary_400)};
+  p {
+    text-align: center;
+    width: 28px;
+    height: 28px;
+  }
 `;
 
 interface TodayMark {
@@ -92,48 +94,7 @@ export const TodayMark = styled.div<TodayMark>`
   border-radius: 50%;
   background-color: ${({ theme }) => theme.colors.neutral_300_b};
   z-index: -10;
-  top: 3px;
-  left: 0;
+  top: 7px;
 `;
 
-interface TagProps {
-  color: 'blue' | 'orange' | 'red';
-}
-
-export const Tag = styled.div<TagProps>`
-  display: inline-flex;
-  width: fit-content;
-  font-size: 16px;
-  gap: 4px;
-  text-align: center;
-  align-items: center;
-
-  padding: 0 12px;
-  height: 32px;
-  border: 2px solid;
-  border-radius: 20px;
-  border-color: ${({ theme, color }) => {
-    const colors = {
-      blue: theme.colors.primary_600,
-      red: theme.colors.red_600,
-      orange: theme.colors.orange_600,
-    };
-    return colors[color];
-  }};
-  color: ${({ theme, color }) => {
-    const colors = {
-      blue: theme.colors.primary_600,
-      red: theme.colors.red_600,
-      orange: theme.colors.orange_600,
-    };
-    return colors[color];
-  }};
-  background-color: ${({ theme, color }) => {
-    const colors = {
-      blue: theme.colors.neutral_200_b,
-      red: theme.colors.red_200,
-      orange: theme.colors.orange_200,
-    };
-    return colors[color];
-  }};
-`;
+export const Mark = styled.div``;

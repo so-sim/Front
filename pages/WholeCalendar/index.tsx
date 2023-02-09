@@ -1,5 +1,6 @@
-import dayjs from 'dayjs';
+import dayjs, { Dayjs } from 'dayjs';
 import React, { useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 import { ARROW } from '../../assets/icons/Arrow';
 import { MARK } from '../../assets/icons/Mark';
 import Button from '../../common/Button';
@@ -10,13 +11,29 @@ const WEEKDATE = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
 const WholeCalendar = () => {
   const [baseDate, setBaseDate] = useState(dayjs());
+  const today = dayjs();
   const monthList = createCalendar(baseDate);
+  const param = useParams();
+  const navigate = useNavigate();
+  const { groupID } = param;
+
+  const isCurrentMonth = (date: Dayjs) => {
+    return date.month() === baseDate.month();
+  };
+
+  const isToday = (date: Dayjs) => {
+    return date.format('YY-MM-DD') === today.format('YY-MM-DD');
+  };
 
   const addMonth = () => {
     setBaseDate(baseDate.add(1, 'month'));
   };
   const subMonth = () => {
     setBaseDate(baseDate.subtract(1, 'month'));
+  };
+
+  const goDetail = () => {
+    navigate(`/group/${groupID}/book/detail`);
   };
 
   return (
@@ -42,10 +59,11 @@ const WholeCalendar = () => {
         </Style.WeekDate>
         <Style.CalendarContainer length={monthList.length}>
           {monthList.map((weeks, idx) => (
-            <Style.WeekWrap key={idx}>
+            <Style.WeekWrap key={idx} onClick={goDetail}>
               {weeks.map((date) => (
-                <Style.DateCell key={date.day()}>
+                <Style.DateCell key={date.day()} isCurrentMonth={isCurrentMonth(date)}>
                   <span>{date.date()}</span>
+                  <Style.TodayMark isToday={isToday(date)} />
                   <Style.Tag color="red">
                     <div>{MARK.RED}</div>
                     <span>미납자 있음</span>
