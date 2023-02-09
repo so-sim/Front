@@ -4,7 +4,7 @@ import styled from '@emotion/styled';
 export const Overlay = styled.div<Pick<ModalProps, 'isOpen'>>`
   display: ${(props) => (props.isOpen ? 'block' : 'none')};
   position: absolute;
-  background-color: #2d2d2d;
+  background-color: ${({ theme }) => theme.colors.secondary_900};
   opacity: 0.3;
   z-index: 10;
   width: 100%;

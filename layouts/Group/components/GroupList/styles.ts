@@ -27,8 +27,8 @@ interface CoverProps {
 }
 export const Cover = styled(EachGroup)<CoverProps>`
   position: absolute;
-  background-color: ${(props) => (props.isSelected ? 'none' : props.theme.colors.secondary_900)};
-  opacity: ${(props) => (props.isSelected ? 'none' : '0.4')};
+  background-color: ${(props) => (props.isSelected ? 'none' : props.theme.colors.primary_900)};
+  opacity: ${(props) => (props.isSelected ? 'none' : '0.5')};
 `;
 
 export const CreateButton = styled(EachGroup)`
