@@ -17,7 +17,7 @@ const DorpDownList = [
 
 const Group = () => {
   const param = useParams();
-  const { groupID, tap } = param;
+  const { groupID } = param;
   const [dropDownState, setDropDownState] = useState('');
   const [showDropDown, setShowDropDown] = useState(false);
 
