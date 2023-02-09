@@ -10,7 +10,7 @@ export const GroupCard = ({ title, color, people }: GroupInfo) => {
       <Style.GroupInfo>
         <Style.GroupTitle>{title}</Style.GroupTitle>
         <Style.GroupPeople>
-          <Style.GroupIcon>{USER.GROUP}</Style.GroupIcon>
+          <Style.GroupIcon>{USER.GROUP_MD}</Style.GroupIcon>
           <Style.GroupPeopleNumber>{people}명</Style.GroupPeopleNumber>
         </Style.GroupPeople>
       </Style.GroupInfo>
