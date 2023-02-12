@@ -10,4 +10,7 @@ export const Input = styled.input<{ isValid: boolean }>`
   background-color: ${({ theme }) => theme.colors.secondary_100};
   width: 100%;
   padding: 8px 12px;
+  &:focus {
+    border: 1px solid ${({ theme, isValid }) => (isValid ? theme.colors.secondary_700 : theme.colors.red_100)};
+  }
 `;
