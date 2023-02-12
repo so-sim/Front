@@ -5,16 +5,18 @@ export const Header = styled.header`
   justify-content: space-between;
   align-items: center;
   padding: 20px 0;
-  max-width: 1200px;
   width: 100%;
+  background-color: ${({ theme }) => theme.colors.secondary_100};
 `;
 
 export const HeaderLeft = styled.span`
   display: flex;
+  margin-left: 12px;
 `;
 
 export const HeaderRight = styled.span`
   display: flex;
+  margin-right: 12px;
 `;
 
 export const Logo = styled.span`
@@ -25,6 +27,7 @@ export const Logo = styled.span`
 `;
 
 export const NavSection = styled.span`
+  margin-left: 40px;
   display: flex;
   gap: 28px;
 `;

@@ -5,7 +5,7 @@ import { USER } from '../../../../../assets/icons/User';
 
 export const GroupCard = ({ title, color, people }: GroupInfo) => {
   return (
-    <Card>
+    <Card onClick={() => console.log('hi')}>
       <Style.GroupColor color={color} />
       <Style.GroupInfo>
         <Style.GroupTitle>{title}</Style.GroupTitle>

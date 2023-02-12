@@ -1,23 +1,25 @@
 import React from 'react';
 import { Header, Banner, GroupSection, Footer } from './components';
 import Modal from '../../common/Modal';
-import { Layout } from './layouts';
+import * as Style from './style';
+import { AdminModal } from './components/Modal/AdminModal';
+import { UserModal } from './components/Modal/UserModal';
+import LoginModal from './components/Modal/LoginModal';
+import { InviteModal } from './components/Modal/InviteModal';
 
 const Home = () => {
   return (
     /** layout 자리 */
-    <Layout>
+    <Style.Main>
       <Header />
       <Banner />
       <GroupSection />
       <Footer />
-      {/* <Modal.Frame isOpen={true} onClick={() => console.log('hi')}>
-        <Modal.Header>모임 만들기</Modal.Header>
-        <Modal.Body>
-          <input type="text" />
-        </Modal.Body>
-      </Modal.Frame> */}
-    </Layout>
+      {/* <AdminModal /> */}
+      {/* <UserModal /> */}
+      {/* <LoginModal /> */}
+      {/* <InviteModal /> */}
+    </Style.Main>
   );
 };
 

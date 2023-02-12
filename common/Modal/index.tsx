@@ -10,6 +10,7 @@ export interface ModalProps extends PropsWithChild {
   isOpen: boolean;
   height?: string;
   width?: string;
+  borderRadius?: string;
   onClick?: () => void;
 }
 export interface ModalHeaderProps extends PropsWithChild {
@@ -20,11 +21,11 @@ export interface ModalFooterProps extends PropsWithChild {
   flexDirection?: 'column' | 'row';
 }
 
-const ModalFrame: FC<ModalProps> = ({ isOpen, width = '376px', height = '283px', onClick, children }) => {
+const ModalFrame: FC<ModalProps> = ({ isOpen, width = '376px', height = '283px', onClick, children, borderRadius = '4px' }) => {
   return (
     <>
       <Style.Overlay isOpen={isOpen} onClick={onClick} />
-      <Style.ModalFrame isOpen={isOpen} width={width} height={height}>
+      <Style.ModalFrame isOpen={isOpen} width={width} height={height} borderRadius={borderRadius}>
         {children}
       </Style.ModalFrame>
     </>

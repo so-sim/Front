@@ -18,6 +18,7 @@ export const Overlay = styled.div<Pick<ModalProps, 'isOpen'>>`
 export const ModalFrame = styled.div<ModalProps>`
   width: ${(props) => props.width};
   height: ${(props) => props.height};
+  border-radius: ${(props) => props.borderRadius};
   display: ${(props) => (props.isOpen ? 'flex' : 'none')};
   flex-direction: column;
   position: absolute;
@@ -37,6 +38,7 @@ export const CloseIcon = styled.div`
   width: 100%;
   display: flex;
   justify-content: end;
+  cursor: pointer;
 `;
 
 export const HeaderTitle = styled.span``;

@@ -1,6 +1,10 @@
 import { FC, PropsWithChildren } from 'react';
 import * as Style from './style';
 
-export const Card: FC<PropsWithChildren> = ({ children }) => {
-  return <Style.Card>{children}</Style.Card>;
+interface CardProps extends PropsWithChildren {
+  onClick: () => void;
+}
+
+export const Card: FC<CardProps> = ({ children, onClick }) => {
+  return <Style.Card onClick={onClick}>{children}</Style.Card>;
 };
