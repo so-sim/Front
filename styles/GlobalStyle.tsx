@@ -35,6 +35,7 @@ const globalStyle = css`
     background: none;
     border: none;
     color: inherit;
+    outline: none;
   }
   a {
     text-decoration: none;
