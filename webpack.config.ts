@@ -3,6 +3,7 @@ import ReactRefreshWebpackPlugin from '@pmmmwh/react-refresh-webpack-plugin';
 import webpack, { Configuration as WebpackConfiguration } from 'webpack';
 import { Configuration as WebpackDevServerConfiguration } from 'webpack-dev-server';
 import { CleanWebpackPlugin } from 'clean-webpack-plugin';
+import Dotenv from 'dotenv-webpack';
 
 interface Configuration extends WebpackConfiguration {
   devServer?: WebpackDevServerConfiguration;
@@ -56,7 +57,7 @@ const config: Configuration = {
         ],
       },
       {
-        test: /\.svg$/,
+        test: /\.svg$/i,
         use: ['@svgr/webpack'],
       },
     ],
@@ -72,6 +73,7 @@ const config: Configuration = {
       verbose: true,
       cleanOnceBeforeBuildPatterns: ['**/*', path.resolve(process.cwd(), 'build/**/*')],
     }),
+    new Dotenv(),
   ],
   output: {
     path: path.join(__dirname, 'dist'),

@@ -2,21 +2,19 @@
   "compilerOptions": {
     "esModuleInterop": true,
     "sourceMap": true,
-    "lib": [
-      "ES2020",
-      "DOM"
-    ],
+    "lib": ["ES2020", "DOM"],
     "module": "esnext",
     "moduleResolution": "Node",
     "target": "ES6",
     "strict": true,
     "resolveJsonModule": true,
     "jsx": "preserve",
-    "jsxImportSource": "@emotion/react",
+    "jsxImportSource": "@emotion/react"
   },
   "include": [
     "**/*.ts",
     "**/*.tsx",
+    "types/svg.d.ts"
   ],
   "ts-node": {
     "compilerOptions": {
