@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import AddCard from '../Card/AddCard';
 import { GroupCard } from '../Card/GroupCard';
-import { GroupModal } from '../Modal/GroupModal';
+import { CreateGroupModal } from '../Modal/CreateGroupModal';
 import * as Style from './style';
 import React from 'react';
 
@@ -36,7 +36,7 @@ export const CardList = () => {
           return <GroupCard {...group} key={group.title} />;
         })}
       </Style.CardList>
-      <GroupModal isOpen={open} setIsOpen={dealWithModal} />
+      {/* <CreateGroupModal isOpen={open} setIsOpen={dealWithModal} /> */}
     </>
   );
 };
