@@ -1,6 +1,6 @@
 import * as Style from './styles';
 import { LOGO } from '../../../../assets/icons/Logo/index';
-import { Paragraph } from '../../Paragraph';
+import { Paragraph } from '../Paragraph';
 
 /** 여기에서 로그인 관련 수행 */
 export const Header = () => {
