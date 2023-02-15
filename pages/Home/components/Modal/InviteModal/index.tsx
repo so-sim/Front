@@ -3,10 +3,11 @@ import Button from '../../../../../common/Button';
 import { Input } from '../../../../../common/Input';
 import { Label } from '../../../../../common/Label';
 import Modal from '../../../../../common/Modal';
+import { isValid } from '../../../../../utils/validation';
 import * as Style from './styles';
 
 export const InviteModal = () => {
-  const [form, setForm] = useState({ myName: '' });
+  const [myName, setMyName] = useState('');
 
   return (
     <Modal.Frame isOpen={true} width="448px" height="262px">
@@ -14,8 +15,8 @@ export const InviteModal = () => {
         <Style.Title>한사랑 산악회 모임</Style.Title>
       </Modal.Header>
       <Modal.Body>
-        <Label title="내이름">
-          <Input value={form} onChange={setForm} type="myName" isValid={false} maxLength={20} />
+        <Label title="내 이름">
+          <Input value={myName} isValid={isValid(myName, 2, 20)} onChange={setMyName} maxLength={20} />
         </Label>
       </Modal.Body>
       <Modal.Footer>
