@@ -17,7 +17,7 @@ const ETC = [
 
 const GroupSideBar = () => {
   const param = useParams();
-  const { groupID, tap } = param;
+  const { groupID } = param;
   const [showEditModal, setShowEditModal] = useState(false);
 
   const handelEditModal = () => {
@@ -25,7 +25,7 @@ const GroupSideBar = () => {
   };
 
   const isSelected = (link: string) => {
-    return tap === link;
+    return param['*']?.split('/').includes(link) === true;
   };
 
   return (
