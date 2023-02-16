@@ -36,7 +36,7 @@ export const CardList = () => {
           return <GroupCard {...group} key={group.title} />;
         })}
       </Style.CardList>
-      {/* <CreateGroupModal isOpen={open} setIsOpen={dealWithModal} /> */}
+      <CreateGroupModal isOpen={open} setIsOpen={dealWithModal} />
     </>
   );
 };
