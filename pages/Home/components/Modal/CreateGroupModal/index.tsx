@@ -7,7 +7,7 @@ import { Label } from '../../../../../common/Label';
 import * as Style from './style';
 import { Input } from '../../../../../common/Input';
 import { ARROW } from '../../../../../assets/icons/Arrow';
-import { GroupDropDown } from '../GroupDropDown';
+import { DropBox } from '../DropBox';
 import { isValid } from '../../../../../utils/validation';
 
 interface GroupModalProps {
@@ -75,7 +75,7 @@ export const CreateGroupModal: FC<GroupModalProps> = ({ isOpen, setIsOpen }) => 
           <Input value={myName} isValid={isValid(myName, 2, 20)} onChange={setMyName} maxLength={20} />
         </Label>
         <Label title="모임 유형">
-          <GroupDropDown dropDownList={dropDownList} type={type} openDrop={openDrop} setOpenDrop={setOpenDrop} setType={setType} />
+          <DropBox dropDownList={dropDownList} type={type} setType={setType} />
         </Label>
         <Label title="커버 색상">
           <GroupColorList value={color} onChange={setColor} />

@@ -6,7 +6,7 @@ import Modal from '../../../../../common/Modal';
 import theme from '../../../../../styles/Theme';
 import { isValid } from '../../../../../utils/validation';
 import { GroupColorList } from '../GroupColorList';
-import { GroupDropDown } from '../GroupDropDown';
+import { DropBox } from '../DropBox';
 import { QuitGroup } from '../QuitGroup';
 import * as Style from './style';
 
@@ -42,7 +42,7 @@ export const AdminModal = () => {
               <Input value={myName} isValid={isValid(myName, 2, 20)} onChange={setMyName} maxLength={20} />
             </Label>
             <Label title="모임 유형" flexDirection="column">
-              <GroupDropDown dropDownList={dropDownList} type={type} openDrop={openDrop} setOpenDrop={setOpenDrop} setType={setType} />
+              <DropBox dropDownList={dropDownList} type={type} setType={setType} />
             </Label>
             <Label title="커버 색상" flexDirection="column">
               <GroupColorList value={color} onChange={setColor} />

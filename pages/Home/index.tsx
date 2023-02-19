@@ -6,7 +6,7 @@ import { AdminModal } from './components/Modal/AdminModal';
 import { UserModal } from './components/Modal/UserModal';
 import LoginModal from './components/Modal/LoginModal';
 import { InviteModal } from './components/Modal/InviteModal';
-import { FineBookModal } from './components/Modal/FineBookModal';
+import { FineBookModal } from '../FineBook/components/DetailFine/components/FineBookModal';
 import { TwoButtonModal } from './components/Modal/TwoButtonModal';
 
 const Home = () => {
