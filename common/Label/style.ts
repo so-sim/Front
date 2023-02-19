@@ -4,13 +4,15 @@ import { CSSProperties } from 'react';
 export const Label = styled.label<{ flexDirection: CSSProperties['flexDirection'] }>`
   display: flex;
   flex-direction: ${({ flexDirection }) => flexDirection};
+  justify-content: flex-start;
   margin-bottom: 12px;
 `;
 
-export const LabelText = styled.div<{ flexDirection: CSSProperties['flexDirection'] }>`
+export const LabelText = styled.div<{ flexDirection: CSSProperties['flexDirection']; width: string }>`
   margin: 8px 12px ${({ flexDirection }) => (flexDirection === 'row' ? '0 0' : '8px 4px')};
-  width: 80px;
+  width: ${({ width }) => width};
   display: flex;
+  white-space: nowrap;
   justify-content: ${({ flexDirection }) => (flexDirection === 'row' ? 'flex-end' : 'flex-start')};
 `;
 
