@@ -31,7 +31,7 @@ const GroupSideBar = () => {
   return (
     <>
       <Style.Layout>
-        <Style.Header>소심한 총무 모임명 적는 곳</Style.Header>
+        <Style.Header>안녕하세요안녕하세요안녕하세요</Style.Header>
         <Style.TapContainer>
           <span>모임관리</span>
           {GROUP_TAPS.map((tap) => (

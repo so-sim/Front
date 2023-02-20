@@ -2,6 +2,8 @@ import styled from '@emotion/styled';
 
 export const Layout = styled.div`
   padding: 48px 32px;
+  width: 100%;
+  height: 100%;
 `;
 
 export const Header = styled.div`
@@ -49,52 +51,18 @@ export const WeekDate = styled.div`
 
 interface CalendarContainerProps {
   length: number;
+  mini: boolean;
 }
 
 export const CalendarContainer = styled.div<CalendarContainerProps>`
   display: grid;
-  height: 50%;
+  height: ${(props) => (props.mini ? '50%' : '90%')};
   grid-template-rows: ${(props) => `repeat(${props.length},1fr`};
   border: 1px solid ${({ theme }) => theme.colors.neutral_400_b};
 `;
+
 export const WeekWrap = styled.div`
   display: grid;
   grid-template-columns: repeat(7, 1fr);
   border: 1px solid ${({ theme }) => theme.colors.neutral_400_b};
 `;
-
-interface DateCellProps {
-  isCurrentMonth: boolean;
-}
-
-export const DateCell = styled.div<DateCellProps>`
-  display: flex;
-  position: relative;
-  flex-direction: column;
-  align-items: center;
-  padding: 12px 4px;
-  gap: 8px;
-  color: ${(props) => (props.isCurrentMonth ? 'black' : props.theme.colors.secondary_400)};
-  p {
-    text-align: center;
-    width: 28px;
-    height: 28px;
-  }
-`;
-
-interface TodayMark {
-  isToday: boolean;
-}
-
-export const TodayMark = styled.div<TodayMark>`
-  display: ${(props) => (props.isToday ? 'block' : 'none')};
-  position: absolute;
-  width: 28px;
-  height: 28px;
-  border-radius: 50%;
-  background-color: ${({ theme }) => theme.colors.neutral_300_b};
-  z-index: -10;
-  top: 7px;
-`;
-
-export const Mark = styled.div``;

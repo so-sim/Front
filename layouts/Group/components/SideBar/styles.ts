@@ -6,10 +6,14 @@ export const Layout = styled.div`
 
 export const Header = styled.header`
   padding: 12px 24px;
+  font-size: 18px;
   width: 100%;
   height: 48px;
   border-bottom: 2px solid ${({ theme }) => theme.colors.neutral_200_b};
   margin-bottom: 12px;
+  @media (max-width: 1718px) {
+    font-size: 16px;
+  }
 `;
 
 export const TapContainer = styled.div`

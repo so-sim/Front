@@ -4,34 +4,36 @@ import { LOGO } from '../../assets/icons/Logo';
 import Button from '../../common/Button';
 import * as Style from './styles';
 
-const TOSList = [
+interface TOS {
+  id: number;
+  title: string;
+  href: string;
+}
+
+const TOSList: TOS[] = [
   { id: 1, title: '(필수)개인정보수집 동의', href: '' },
   { id: 2, title: '(필수)이용약관 동의', href: '' },
 ];
 
 const TOS = () => {
-  const [checkedList, setCheckedList] = useState<number[]>([]);
+  const [checkedList, setCheckedList] = useState<TOS[]>([]);
 
-  const checkedItemHandler = (id: number, isChecked: boolean) => {
+  const checkedItemHandler = (tos: TOS, isChecked: boolean) => {
     if (isChecked) {
-      return setCheckedList((prev) => [...prev, id]);
+      return setCheckedList((prev) => [...prev, tos]);
     }
-    setCheckedList(checkedList.filter((list) => list !== id));
+    setCheckedList(checkedList.filter((checked) => checked.id !== tos.id));
   };
 
-  const checkHandler = (e: React.ChangeEvent<HTMLInputElement>, id: number) => {
-    checkedItemHandler(id, e.target.checked);
+  const checkHandler = (e: React.ChangeEvent<HTMLInputElement>, tos: TOS) => {
+    checkedItemHandler(tos, e.target.checked);
   };
 
   const allCheckHandler = () => {
     if (isAllChecked) {
       setCheckedList([]);
     } else {
-      const arr: number[] = [];
-      TOSList.map((list) => {
-        arr.push(list.id);
-      });
-      setCheckedList(arr);
+      setCheckedList([...TOSList]);
     }
   };
 
@@ -54,7 +56,7 @@ const TOS = () => {
             {TOSList.map((list) => (
               <Style.TOS key={list.id}>
                 <label>
-                  <input type="checkbox" checked={checkedList.includes(list.id)} onChange={(event) => checkHandler(event, list.id)} />
+                  <input type="checkbox" checked={checkedList.includes(list)} onChange={(event) => checkHandler(event, list)} />
                   <span>{list.title}</span>
                 </label>
                 <Style.TOSLink href={list.href} target="_blank" rel="noopnner noreferrer">
