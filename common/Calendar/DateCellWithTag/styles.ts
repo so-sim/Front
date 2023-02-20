@@ -38,6 +38,7 @@ interface TagProps {
 export const Tag = styled.div<TagProps>`
   display: inline-flex;
   width: fit-content;
+  white-space: nowrap;
   font-size: 16px;
   gap: 4px;
   text-align: center;
@@ -72,7 +73,7 @@ export const Tag = styled.div<TagProps>`
     return colors[color];
   }};
 
-  @media (max-width: 1632px) {
+  @media (max-width: 1718px) {
     font-size: 12px;
     padding: 8px;
     gap: 2px;

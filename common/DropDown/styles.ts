@@ -8,6 +8,7 @@ export const DorpDownContainer = styled.div<Pick<DropDownProps, 'top'>>`
   border-radius: 4px;
   right: -2px;
   top: ${(props) => props.top};
+  z-index: 50;
 `;
 
 interface DropDownItemProps {

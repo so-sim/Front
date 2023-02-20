@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Route, Routes, useParams } from 'react-router-dom';
+import { Route, Routes, useNavigate, useParams } from 'react-router-dom';
 import { ARROW } from '../../assets/icons/Arrow';
 import { LOGO } from '../../assets/icons/Logo';
 import { SYSTEM } from '../../assets/icons/System';
@@ -18,6 +18,7 @@ const DorpDownList = [
 
 const Group = () => {
   const param = useParams();
+  const navigate = useNavigate();
   const { groupID } = param;
   const [dropDownState, setDropDownState] = useState('');
   const [showDropDown, setShowDropDown] = useState(false);
@@ -29,7 +30,7 @@ const Group = () => {
   return (
     <>
       <Style.Header>
-        <span>{LOGO.SM}</span>
+        <span onClick={() => navigate('/')}>{LOGO.SM}</span>
         <button onClick={handleDropDown}>
           {USER.PERSON_MD}
           {ARROW.SOLID}
