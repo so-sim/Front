@@ -16,7 +16,7 @@ const DorpDownList = [
   { title: '로그아웃', svg: SYSTEM.LOGOUT },
 ];
 
-const Group = () => {
+const GroupLayout = () => {
   const param = useParams();
   const navigate = useNavigate();
   const { groupID } = param;
@@ -49,4 +49,4 @@ const Group = () => {
   );
 };
 
-export default Group;
+export default GroupLayout;

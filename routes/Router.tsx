@@ -1,5 +1,5 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import Group from '../layouts/Group';
+import GroupLayout from '../layouts/Group';
 import KaKaoAuth from '../pages/Auth/Kakao';
 import Home from '../pages/Home';
 import TOS from '../pages/TOS';
@@ -10,7 +10,7 @@ const Router = () => {
         <Route path="/" element={<Home />} />
         <Route path="/login/oauth2/code/kakao" element={<KaKaoAuth />} />
         <Route path="/tos" element={<TOS />} />
-        <Route path="/group/:groupID/*" element={<Group />} />
+        <Route path="/group/:groupID/*" element={<GroupLayout />} />
       </Routes>
     </BrowserRouter>
   );
