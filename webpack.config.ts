@@ -29,7 +29,12 @@ const config: Configuration = {
         test: /\.tsx?$/,
         loader: 'babel-loader',
         options: {
-          presets: ['@babel/preset-env', '@babel/preset-react', '@babel/preset-typescript', '@emotion/babel-preset-css-prop'],
+          presets: [
+            ['@babel/preset-react', { runtime: 'automatic', importSource: '@emotion/react' }],
+            ['@babel/preset-env', { targets: { node: 'current' } }],
+            '@babel/preset-typescript',
+            '@emotion/babel-preset-css-prop',
+          ],
           env: {
             development: {
               plugins: [['@emotion'], require.resolve('react-refresh/babel')],
