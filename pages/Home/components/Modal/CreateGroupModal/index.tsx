@@ -10,7 +10,7 @@ import { ARROW } from '../../../../../assets/icons/Arrow';
 import { DropBox } from '../DropBox';
 import { isValid } from '../../../../../utils/validation';
 
-interface GroupModalProps {
+export interface ModalProps {
   isOpen: boolean;
   setIsOpen: () => void;
 }
@@ -24,7 +24,7 @@ export interface FormData {
 
 export type GroupColor = 'red' | 'orange' | 'yellow' | 'blue' | 'purple';
 
-export const CreateGroupModal: FC<GroupModalProps> = ({ isOpen, setIsOpen }) => {
+export const CreateGroupModal: FC<ModalProps> = ({ isOpen, setIsOpen }) => {
   const colors: GroupColor[] = ['red', 'orange', 'yellow', 'blue', 'purple'];
 
   const [form, setForm] = useState<FormData>({
@@ -74,9 +74,11 @@ export const CreateGroupModal: FC<GroupModalProps> = ({ isOpen, setIsOpen }) => 
         <Label title="내 이름">
           <Input value={myName} isValid={isValid(myName, 2, 20)} onChange={setMyName} maxLength={20} />
         </Label>
-        <Label title="모임 유형">
-          <DropBox dropDownList={dropDownList} type={type} setType={setType} />
-        </Label>
+        <div style={{ position: 'relative' }}>
+          <Label title="모임 유형">
+            <DropBox dropDownList={dropDownList} type={type} setType={setType} />
+          </Label>
+        </div>
         <Label title="커버 색상">
           <GroupColorList value={color} onChange={setColor} />
         </Label>

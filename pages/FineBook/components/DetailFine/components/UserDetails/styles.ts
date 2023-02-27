@@ -32,3 +32,10 @@ export const CloseIcon = styled.span`
   margin-right: 4px;
   cursor: pointer;
 `;
+
+export const Footer = styled.div`
+  display: flex;
+  gap: 12px;
+  margin: 0 40px;
+  justify-content: flex-end;
+`;

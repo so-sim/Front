@@ -2,6 +2,7 @@ import React, { Dispatch, SetStateAction, useState } from 'react';
 import { Details } from '../..';
 import { SYSTEM } from '../../../../../../assets/icons/System';
 import { USER } from '../../../../../../assets/icons/User';
+import Button from '../../../../../../common/Button';
 import { Label } from '../../../../../../common/Label';
 import { DropBox } from '../../../../../Home/components/Modal/DropBox';
 import * as Style from './styles';
@@ -20,7 +21,18 @@ export const UserDetails = ({ open, setOpen, select }: UserDetailsProps) => {
   const [a, setA] = useState(status);
 
   return (
-    <div style={{ position: 'absolute', top: 0, background: 'white', width: '576px', right: 0, borderLeft: 'gray', height: '100%' }}>
+    <div
+      style={{
+        boxShadow: '2px 0px 25px 7px rgba(156, 156, 156, 0.15)',
+        position: 'absolute',
+        top: 0,
+        background: 'white',
+        width: '576px',
+        right: 0,
+        borderLeft: 'gray',
+        height: '100%',
+      }}
+    >
       <Style.Header>
         <div style={{ display: 'flex', alignItems: 'center' }}>
           <Style.CloseIcon onClick={() => setOpen(false)}>{SYSTEM.CLOSE}</Style.CloseIcon>
@@ -33,7 +45,7 @@ export const UserDetails = ({ open, setOpen, select }: UserDetailsProps) => {
           <span>{name}</span>
         </div>
         <div>{fine}원</div>
-        <div style={{ display: 'flex', width: '100%' }}>
+        <div style={{ display: 'flex', width: '100%', gap: '54px', position: 'relative' }}>
           <Label title="날짜" width="32px">
             <DropBox color="disabled" boxWidth="138px" width={138} setType={setA} type={a} dropDownList={statusList} />
           </Label>
@@ -41,12 +53,20 @@ export const UserDetails = ({ open, setOpen, select }: UserDetailsProps) => {
             <DropBox color="white" boxWidth="138px" width={138} setType={setA} type={a} dropDownList={statusList} />
           </Label>
         </div>
-        <Label title="사유" width="32px">
+        <Label title="사유" width="30px">
           <Style.TextArea disabled placeholder="내용을 입력해주세요.">
             {reason}
           </Style.TextArea>
         </Label>
       </div>
+      <Style.Footer>
+        <Button onClick={() => console.log('hi')} color="white">
+          삭제
+        </Button>
+        <Button onClick={() => console.log('hi')} color="black">
+          수정
+        </Button>
+      </Style.Footer>
     </div>
   );
 };
