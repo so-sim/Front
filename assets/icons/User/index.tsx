@@ -1,3 +1,4 @@
+import KaKaoLogin from './KakaoLogin.svg';
 import Group from './Group.svg';
 import Person from './Person.svg';
 
@@ -7,4 +8,5 @@ export const USER = {
   PERSON_LG: <Person width={28} height={28} />,
   PERSON_MD: <Person width={21} height={21} />,
   PERSON_XL: <Person width={32} height={32} />,
+  KAKAO: <KaKaoLogin />,
 };
