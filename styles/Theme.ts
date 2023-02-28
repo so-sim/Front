@@ -40,6 +40,80 @@ const theme = {
     blue: '#658ef8',
     purple: '#9465f8',
   },
+  font: {
+    display_01: `font-family: SUIT;
+  font-size: 2rem;
+  font-weight: 600;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;`,
+    headline: `font-family: SUIT;
+  font-size: 1.8rem;
+  font-weight: 600;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;`,
+    subhead_04: `
+    font-family: SUIT;
+  font-size: 1.5rem;
+  font-weight: 600;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;
+    `,
+    subhead_03: `font-family: SUIT;
+  font-size: 1.1rem;
+  font-weight: 600;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;`,
+    body_03: `font-family: SUIT;
+  font-size: 1.1rem;
+  font-weight: 500;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.39;
+  letter-spacing: normal;`,
+    subhead_02: `font-family: SUIT;
+  font-size: 1rem;
+  font-weight: 600;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;`,
+    body_02: `font-family: SUIT;
+  font-size: 1rem;
+  font-weight: 500;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.5;
+  letter-spacing: normal;`,
+    subhead_01: `font-family: SUIT;
+  font-size: 0.9rem;
+  font-weight: 600;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;`,
+    body_01: `font-family: SUIT;
+  font-size: 0.9rem;
+  font-weight: 500;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;`,
+    caption: `font-family: SUIT;
+  font-size: 0.8rem;
+  font-weight: 600;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;`,
+  },
 };
 
 export default theme;

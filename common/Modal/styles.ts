@@ -32,7 +32,9 @@ export const ModalFrame = styled.div<ModalProps>`
   padding: 24px 32px;
 `;
 
-export const ModalHeader = styled.div``;
+export const ModalHeader = styled.div`
+  ${({ theme }) => theme.font.headline}
+`;
 
 export const CloseIcon = styled.div`
   width: 100%;

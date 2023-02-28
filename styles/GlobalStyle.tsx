@@ -8,6 +8,29 @@ const globalStyle = css`
     padding: 0;
     height: 100%;
     font-family: 'Pretendard';
+
+    @font-face {
+      font-family: SUIT;
+      src: url('https://cdn.jsdelivr.net/gh/webfontworld/sunn/SUIT-Medium.eot');
+      src: url('https://cdn.jsdelivr.net/gh/webfontworld/sunn/SUIT-Medium.eot?#iefix') format('embedded-opentype'),
+        url('https://cdn.jsdelivr.net/gh/webfontworld/sunn/SUIT-Medium.woff2') format('woff2'), url('https://cdn.jsdelivr.net/gh/webfontworld/sunn/SUIT-Medium.woff') format('woff'),
+        url('https://cdn.jsdelivr.net/gh/webfontworld/sunn/SUIT-Medium.ttf') format('truetype');
+      font-weight: 500;
+      font-style: normal;
+      font-stretch: normal;
+    }
+
+    @font-face {
+      font-family: SUIT;
+      src: url('https://cdn.jsdelivr.net/gh/webfontworld/sunn/SUIT-SemiBold.eot');
+      src: url('https://cdn.jsdelivr.net/gh/webfontworld/sunn/SUIT-SemiBold.eot?#iefix') format('embedded-opentype'),
+        url('https://cdn.jsdelivr.net/gh/webfontworld/sunn/SUIT-SemiBold.woff2') format('woff2'),
+        url('https://cdn.jsdelivr.net/gh/webfontworld/sunn/SUIT-SemiBold.woff') format('woff'),
+        url('https://cdn.jsdelivr.net/gh/webfontworld/sunn/SUIT-SemiBold.ttf') format('truetype');
+      font-weight: 600;
+      font-style: normal;
+      font-stretch: normal;
+    }
   }
   h1,
   h2,
