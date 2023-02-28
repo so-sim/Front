@@ -1,5 +1,4 @@
 import styled from '@emotion/styled';
-import { Status } from '../..';
 
 export const StatusButton = styled.button<{ status: string }>`
   display: flex;

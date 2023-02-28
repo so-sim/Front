@@ -1,7 +1,5 @@
 import React, { Dispatch, FC, SetStateAction } from 'react';
 import { Details } from '../..';
-import { ARROW } from '../../../../../../assets/icons/Arrow';
-import Button from '../../../../../../common/Button';
 import { CircleDropButton } from '../CircleDropButton';
 import * as Style from './styles';
 
