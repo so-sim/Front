@@ -15,6 +15,7 @@ export const ButtonFrame = styled.div`
 export const DeleteButton = styled.button`
   padding: 8px 14px;
   border-radius: 4px;
-  background-color: ${({ theme }) => theme.colors.red_200};
-  color: ${({ theme }) => theme.colors.system_red_200};
+  margin-top: 12px;
+  border: 2px solid ${({ theme }) => theme.colors.neutral_400_b};
+  background-color: ${({ theme }) => theme.colors.neutral_200_b};
 `;

@@ -6,8 +6,11 @@ import { GroupColorList } from '../GroupColorList';
 import { Label } from '../../../../../common/Label';
 import * as Style from './style';
 import { Input } from '../../../../../common/Input';
+import { ARROW } from '../../../../../assets/icons/Arrow';
+import { DropBox } from '../DropBox';
+import { isValid } from '../../../../../utils/validation';
 
-interface GroupModalProps {
+export interface ModalProps {
   isOpen: boolean;
   setIsOpen: () => void;
 }
@@ -21,23 +24,18 @@ export interface FormData {
 
 export type GroupColor = 'red' | 'orange' | 'yellow' | 'blue' | 'purple';
 
-export const CreateGroupModal: FC<GroupModalProps> = ({ isOpen, setIsOpen }) => {
+export const CreateGroupModal: FC<ModalProps> = ({ isOpen, setIsOpen }) => {
   const colors: GroupColor[] = ['red', 'orange', 'yellow', 'blue', 'purple'];
 
   const [form, setForm] = useState<FormData>({
     groupName: '',
     myName: '',
-    type: 'ㅇㅇ',
+    type: '',
     color: 'red',
   });
 
   const changeFormData = <T extends FormData, K extends keyof T>(value: T[K], type: K) => {
     setForm((prev) => ({ ...prev, [type]: value }));
-  };
-
-  const isValid = (text: string, min: number = 2, max: number = 10): boolean => {
-    const regExp = new RegExp(`^[a-zA-Z가-힣]{${min},${max}}$`);
-    return regExp.test(text);
   };
 
   const isValidForm = (form: FormData): boolean => {
@@ -48,20 +46,41 @@ export const CreateGroupModal: FC<GroupModalProps> = ({ isOpen, setIsOpen }) => 
     return true;
   };
 
+  const [groupName, setGroupName] = useState('');
+  const [myName, setMyName] = useState('');
+  const [type, setType] = useState('');
+  const [color, setColor] = useState('red');
+
+  const [openDrop, setOpenDrop] = useState(false);
+
+  const dropDownList = [
+    { title: '학교, 교내/외 모임' },
+    { title: '회사, 사내 모임' },
+    { title: '취미, 동호회 모임' },
+    { title: '친구, 사모임' },
+    { title: '프로젝트' },
+    { title: '기타' },
+  ];
+
   return (
-    <Modal.Frame isOpen={true} width="448px" height="446px">
+    <Modal.Frame isOpen={isOpen} width="448px" height="446px">
       <Modal.Header onClick={setIsOpen}>
         <Style.Title>모임 만들기</Style.Title>
       </Modal.Header>
       <Modal.Body>
         <Label title="모임 이름">
-          <Input value={form} type="groupName" isValid={isValid(form.groupName, 2, 10)} onChange={setForm} maxLength={10} />
+          <Input value={groupName} isValid={isValid(groupName, 2, 10)} onChange={setGroupName} maxLength={10} />
         </Label>
         <Label title="내 이름">
-          <Input value={form} type="myName" isValid={isValid(form.myName, 2, 20)} onChange={setForm} maxLength={20} />
+          <Input value={myName} isValid={isValid(myName, 2, 20)} onChange={setMyName} maxLength={20} />
         </Label>
+        <div style={{ position: 'relative' }}>
+          <Label title="모임 유형">
+            <DropBox dropDownList={dropDownList} type={type} setType={setType} />
+          </Label>
+        </div>
         <Label title="커버 색상">
-          <GroupColorList value={form} onChange={setForm} type="color" />
+          <GroupColorList value={color} onChange={setColor} />
         </Label>
       </Modal.Body>
       <Modal.Footer>

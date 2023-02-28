@@ -19,3 +19,11 @@ export const LinkTo = styled(Link)`
     text-decoration: underline;
   }
 `;
+
+export const LoginBlock = styled.div`
+  gap: 24px;
+  margin-top: 32px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
