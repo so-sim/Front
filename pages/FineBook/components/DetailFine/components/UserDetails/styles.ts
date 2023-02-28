@@ -1,5 +1,16 @@
 import styled from '@emotion/styled';
 
+export const UserDetailsFrame = styled.div`
+  box-shadow: 2px 0px 25px 7px rgba(156, 156, 156, 0.15);
+  position: absolute;
+  top: 0;
+  background: white;
+  width: 576px;
+  right: 0;
+  border-left: gray;
+  height: 100%;
+`;
+
 export const Header = styled.div`
   display: flex;
   align-items: center;
@@ -38,4 +49,22 @@ export const Footer = styled.div`
   gap: 12px;
   margin: 0 40px;
   justify-content: flex-end;
+`;
+
+export const Block = styled.div`
+  display: flex;
+  align-items: center;
+`;
+
+export const UserDetailsContent = styled.div`
+  margin: 48px 40px;
+  display: flex;
+  flex-direction: column;
+`;
+
+export const Row = styled.div`
+  display: flex;
+  width: 100%;
+  gap: 54px;
+  position: relative;
 `;

@@ -21,44 +21,33 @@ export const UserDetails = ({ open, setOpen, select }: UserDetailsProps) => {
   const [a, setA] = useState(status);
 
   return (
-    <div
-      style={{
-        boxShadow: '2px 0px 25px 7px rgba(156, 156, 156, 0.15)',
-        position: 'absolute',
-        top: 0,
-        background: 'white',
-        width: '576px',
-        right: 0,
-        borderLeft: 'gray',
-        height: '100%',
-      }}
-    >
+    <Style.UserDetailsFrame>
       <Style.Header>
-        <div style={{ display: 'flex', alignItems: 'center' }}>
+        <Style.Block>
           <Style.CloseIcon onClick={() => setOpen(false)}>{SYSTEM.CLOSE}</Style.CloseIcon>
           <span>닫기</span>
-        </div>
+        </Style.Block>
       </Style.Header>
-      <div style={{ margin: '48px 40px', display: 'flex', flexDirection: 'column' }}>
-        <div style={{ display: 'flex', alignItems: 'center' }}>
+      <Style.UserDetailsContent>
+        <Style.Block>
           <span>{USER.PERSON_XL}</span>
           <span>{name}</span>
-        </div>
+        </Style.Block>
         <div>{fine}원</div>
-        <div style={{ display: 'flex', width: '100%', gap: '54px', position: 'relative' }}>
+        <Style.Row>
           <Label title="날짜" width="32px">
             <DropBox color="disabled" boxWidth="138px" width={138} setType={setA} type={a} dropDownList={statusList} />
           </Label>
           <Label title="납부여부" width="80px">
             <DropBox color="white" boxWidth="138px" width={138} setType={setA} type={a} dropDownList={statusList} />
           </Label>
-        </div>
+        </Style.Row>
         <Label title="사유" width="30px">
           <Style.TextArea disabled placeholder="내용을 입력해주세요.">
             {reason}
           </Style.TextArea>
         </Label>
-      </div>
+      </Style.UserDetailsContent>
       <Style.Footer>
         <Button onClick={() => console.log('hi')} color="white">
           삭제
@@ -67,6 +56,6 @@ export const UserDetails = ({ open, setOpen, select }: UserDetailsProps) => {
           수정
         </Button>
       </Style.Footer>
-    </div>
+    </Style.UserDetailsFrame>
   );
 };
