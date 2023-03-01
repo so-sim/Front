@@ -34,3 +34,6 @@ yarn-error.log*
 .env
 # typescript
 *.tsbuildinfo
+
+node_modules
+build-storybook.log
