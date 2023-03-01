@@ -4,10 +4,13 @@ import { GroupCard } from '../Card/GroupCard';
 import { CreateGroupModal } from '../Modal/CreateGroupModal';
 import * as Style from './style';
 import React from 'react';
+import theme from '../../../../styles/Theme';
+import { Theme } from '@emotion/react';
 
+export type GroupColors = '#f86565' | '#f89a65' | '#f8e065' | '#658ef8' | '#9465f8';
 export interface GroupInfo {
   title: string;
-  color: string;
+  color: GroupColors;
   people: number;
 }
 

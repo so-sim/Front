@@ -5,4 +5,5 @@ export const Card = styled.li`
   background-color: ${({ theme }) => theme.colors.secondary_100};
   overflow: hidden;
   cursor: pointer;
+  max-width: 173px;
 `;

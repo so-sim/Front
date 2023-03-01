@@ -7,16 +7,22 @@ export const GroupColor = styled.div<{ color: string }>`
 `;
 
 export const GroupInfo = styled.div`
-  margin: 16px 12px 0 12px;
+  margin: 12px 12px 16px 12px;
 `;
 
 export const GroupTitle = styled.div`
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
   margin-bottom: 8px;
+  ${({ theme }) => theme.font.subhead_02}
 `;
 
 export const GroupPeople = styled.div`
   display: flex;
   align-items: center;
+  color: ${({ theme }) => theme.colors.secondary_600};
+  ${({ theme }) => theme.font.caption};
 `;
 
 export const GroupIcon = styled.div`

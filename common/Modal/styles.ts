@@ -33,7 +33,9 @@ export const ModalFrame = styled.div<ModalProps>`
 `;
 
 export const ModalHeader = styled.div`
-  ${({ theme }) => theme.font.headline}
+  ${({ theme }) => theme.font.headline};
+  width: 100%;
+  text-align: center;
 `;
 
 export const CloseIcon = styled.div`
@@ -45,7 +47,11 @@ export const CloseIcon = styled.div`
 
 export const HeaderTitle = styled.span``;
 
-export const ModalBody = styled.div``;
+export const ModalBody = styled.div`
+  ${({ theme }) => theme.font.body_02};
+  width: 100%;
+  text-align: center;
+`;
 
 export const ModalFooter = styled.div<Pick<ModalFooterProps, 'flexDirection'>>`
   display: flex;
