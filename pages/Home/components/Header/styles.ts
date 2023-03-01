@@ -30,6 +30,9 @@ export const NavSection = styled.span`
   margin-left: 40px;
   display: flex;
   gap: 28px;
+  & > button {
+    ${({ theme }) => theme.font.subhead_02};
+  }
 `;
 
 export const Login = styled.button`

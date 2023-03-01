@@ -8,6 +8,7 @@ export const GuidePhrase = styled.p`
 export const LinkTo = styled(Link)`
   text-decoration: none;
   color: ${({ theme }) => theme.colors.secondary_500};
+  ${({ theme }) => theme.font.caption};
 
   &:focus,
   &:visited,
@@ -26,4 +27,9 @@ export const LoginBlock = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+`;
+
+export const Text = styled.span`
+  color: ${({ theme }) => theme.colors.secondary_600};
+  margin-left: 4px;
 `;

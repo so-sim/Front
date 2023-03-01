@@ -8,7 +8,7 @@ const globalStyle = css`
     padding: 0;
     height: 100%;
     font-family: 'Pretendard';
-
+    color: #2d2d2d;
     @font-face {
       font-family: SUIT;
       src: url('https://cdn.jsdelivr.net/gh/webfontworld/sunn/SUIT-Medium.eot');
@@ -46,7 +46,8 @@ const globalStyle = css`
     cursor: pointer;
     outline: none;
   }
-  ul {
+  ul,
+  li {
     list-style: none;
     padding: 0;
     margin: 0;
