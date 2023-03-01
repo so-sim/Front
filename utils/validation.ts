@@ -1,4 +1,5 @@
-export const isValid = (text: string, min: number = 2, max: number = 10): boolean => {
-  const regExp = new RegExp(`^[a-zA-Z가-힣]{${min},${max}}$`);
+export const isValid = (text: string, min: number = 1, max: number = 10): boolean => {
+  if (text.trim().length === 0) return false;
+  const regExp = new RegExp(`^[a-zA-Zㄱ-ㅎ가-힣]{${min},${max}}$`);
   return regExp.test(text);
 };
