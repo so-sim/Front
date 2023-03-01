@@ -1,4 +1,4 @@
-import DoubleRight from './Doubleright.svg';
+import DoubleRight from './DoubleRight.svg';
 import DoubleLeft from './DoubleLeft.svg';
 import Down from './Down.svg';
 import Left from './Left.svg';
