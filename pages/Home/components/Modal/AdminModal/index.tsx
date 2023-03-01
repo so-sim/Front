@@ -9,14 +9,14 @@ import { GroupColorList } from '../GroupColorList';
 import { DropBox } from '../DropBox';
 import { QuitGroup } from '../QuitGroup';
 import * as Style from './style';
+import { GroupColor } from '../CreateGroupModal';
 
 export const AdminModal = () => {
-  const [openDrop, setOpenDrop] = useState(false);
-
   const [groupName, setGroupName] = useState('');
   const [myName, setMyName] = useState('');
   const [type, setType] = useState('');
-  const [color, setColor] = useState('red');
+  const [color, setColor] = useState<GroupColor>('red');
+
   const dropDownList = [
     { title: '학교, 교내/외 모임' },
     { title: '회사, 사내 모임' },
@@ -36,10 +36,10 @@ export const AdminModal = () => {
           <div style={{ marginRight: '20px' }}>사용자 설정</div>
           <div style={{ width: '100%', borderLeft: `2px solid ${theme.colors.neutral_400_b}`, paddingLeft: '16px' }}>
             <Label title="모임 이름" flexDirection="column">
-              <Input value={groupName} isValid={isValid(groupName, 2, 10)} onChange={setGroupName} maxLength={10} />
+              <Input value={groupName} isValid={isValid(groupName, 1, 10)} onChange={setGroupName} maxLength={10} />
             </Label>
             <Label title="내 이름" flexDirection="column">
-              <Input value={myName} isValid={isValid(myName, 2, 20)} onChange={setMyName} maxLength={20} />
+              <Input value={myName} isValid={isValid(myName, 1, 20)} onChange={setMyName} maxLength={20} />
             </Label>
             <Label title="모임 유형" flexDirection="column">
               <DropBox dropDownList={dropDownList} type={type} setType={setType} />

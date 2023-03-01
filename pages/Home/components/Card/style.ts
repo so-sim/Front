@@ -6,4 +6,5 @@ export const Card = styled.li`
   overflow: hidden;
   cursor: pointer;
   max-width: 173px;
+  height: 200px;
 `;

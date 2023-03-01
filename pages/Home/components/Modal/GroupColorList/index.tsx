@@ -5,7 +5,7 @@ import * as Style from './style';
 
 interface GroupColorList {
   value: string;
-  onChange: (value: string) => void;
+  onChange: Dispatch<SetStateAction<GroupColor>>;
 }
 
 export const GroupColorList = ({ value, onChange }: GroupColorList) => {

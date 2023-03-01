@@ -39,4 +39,6 @@ export const Login = styled.button`
   border: 2px solid ${({ theme }) => theme.colors.primary_400};
   border-radius: 4px;
   padding: 8px 28px;
+  color: ${({ theme }) => theme.colors.primary_400};
+  ${({ theme }) => theme.font.subhead_02}
 `;

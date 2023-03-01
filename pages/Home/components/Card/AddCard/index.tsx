@@ -7,7 +7,7 @@ interface AddCardProps {
   onClick: () => void;
 }
 
-const AddCard: FC<AddCardProps> = ({ onClick }) => {
+export const AddCard: FC<AddCardProps> = ({ onClick }) => {
   return (
     <Card onClick={onClick}>
       <Style.AddCardFrame>
@@ -17,5 +17,3 @@ const AddCard: FC<AddCardProps> = ({ onClick }) => {
     </Card>
   );
 };
-
-export default AddCard;
