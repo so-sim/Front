@@ -6,7 +6,8 @@
     "build": "cross-env NODE_ENV=production webpack",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
-    "test": "jest"
+    "test": "jest",
+    "chromatic": "npx chromatic --project-token=436725a17d7d"
   },
   "dependencies": {
     "@babel/runtime-corejs3": "^7.20.1",
@@ -43,8 +44,11 @@
     "@storybook/addon-interactions": "^6.5.16",
     "@storybook/addon-links": "^6.5.16",
     "@storybook/builder-webpack5": "^6.5.16",
+    "@storybook/channel-websocket": "^6.5.16",
     "@storybook/manager-webpack5": "^6.5.16",
+    "@storybook/preview-web": "^6.5.16",
     "@storybook/react": "^6.5.16",
+    "@storybook/store": "^6.5.16",
     "@storybook/testing-library": "^0.0.13",
     "@svgr/webpack": "^6.5.1",
     "@testing-library/dom": "^9.0.0",
@@ -61,6 +65,7 @@
     "@yarnpkg/pnpify": "^4.0.0-rc.37",
     "@yarnpkg/sdks": "^2.7.0",
     "babel-loader": "^9.1.0",
+    "chromatic": "^6.17.1",
     "clean-webpack-plugin": "^4.0.0",
     "css-loader": "^6.7.1",
     "dotenv-webpack": "^8.0.1",
@@ -71,6 +76,7 @@
     "eslint-plugin-react-hooks": "^4.6.0",
     "file-loader": "^6.2.0",
     "fork-ts-checker-webpack-plugin": "^7.2.13",
+    "global": "^4.4.0",
     "jest": "^29.4.3",
     "jest-environment-jsdom": "^29.4.3",
     "jest-transformer-svg": "^2.0.0",
@@ -84,5 +90,8 @@
     "webpack": "^5.75.0",
     "webpack-cli": "^4.10.0",
     "webpack-dev-server": "^4.11.1"
-  }
+  },
+  "version": "",
+  "readme": "ERROR: No README data found!",
+  "_id": "sosim_front@"
 }

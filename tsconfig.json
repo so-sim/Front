@@ -2,10 +2,7 @@
   "compilerOptions": {
     "esModuleInterop": true,
     "sourceMap": true,
-    "lib": [
-      "ES2020",
-      "DOM"
-    ],
+    "lib": ["ES2020", "DOM"],
     "module": "esnext",
     "moduleResolution": "Node",
     "target": "ES6",
@@ -15,11 +12,7 @@
     "outDir": "./dist",
     "allowJs": true
   },
-  "include": [
-    "**/*.ts",
-    "**/*.tsx",
-    "types/svg.d.ts",
-  ],
+  "include": ["**/*.ts", "**/*.tsx", "types/svg.d.ts", "../stories/Introduction.stories.mdx", "../stories/*.stories.ts"],
   "ts-node": {
     "compilerOptions": {
       "module": "commonJS",
