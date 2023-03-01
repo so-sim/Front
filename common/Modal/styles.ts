@@ -57,4 +57,5 @@ export const ModalFooter = styled.div<Pick<ModalFooterProps, 'flexDirection'>>`
   display: flex;
   flex-direction: ${(props) => props.flexDirection};
   gap: 12px;
+  margin-top: 20px;
 `;
