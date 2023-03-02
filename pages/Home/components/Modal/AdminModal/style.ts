@@ -5,8 +5,8 @@ export const Title = styled.div`
 `;
 
 export const ButtonFrame = styled.div`
-  margin-top: 32px;
   display: flex;
+  margin-top: 12px;
   gap: 12px;
   justify-content: flex-end;
   width: 100%;
