@@ -4,25 +4,25 @@ import { GroupCard } from '../Card/GroupCard';
 import { CreateGroupModal } from '../Modal/CreateGroupModal';
 import * as Style from './style';
 import React from 'react';
+import { GroupColor } from '../../../../constants';
 
-export type GroupColors = '#f86565' | '#f89a65' | '#f8e065' | '#658ef8' | '#9465f8';
 export interface GroupInfo {
   title: string;
-  color: GroupColors;
-  people: number;
+  color: GroupColor;
+  admin: string;
 }
 
 export const CardList = () => {
   const [open, setOpen] = useState(false);
 
   const groupList: GroupInfo[] = [
-    { title: '전국 대한 산악회1', color: '#f86565', people: 1 },
-    { title: '전국 대한 산악회2', color: '#f89a65', people: 1 },
-    { title: '전국 대한 산악회3', color: '#f8e065', people: 1 },
-    { title: '전국 대한 산악회4', color: '#658ef8', people: 1 },
-    { title: '전국 대한 산악회5', color: '#9465f8', people: 1 },
-    { title: '전국 대한 산악회6', color: '#f86565', people: 1 },
-    { title: '전국 대한 산악회7', color: '#658ef8', people: 1 },
+    { title: '전국 대한 산악회1', color: 'red', admin: '안녕하세요안녕하세요안녕하세요' },
+    { title: '전국 대한 산악회2', color: 'orange', admin: '안녕하세요안녕하세요안녕하세요' },
+    { title: '전국 대한 산악회3', color: 'yellow', admin: '안녕하세요안녕하세요안녕하세요' },
+    { title: '전국 대한 산악회4', color: 'blue', admin: '안녕하세요안녕하세요안녕하세요' },
+    { title: '전국 대한 산악회5', color: 'purple', admin: '안녕하세요안녕하세요안녕하세요' },
+    { title: '전국 대한 산악회6', color: 'red', admin: '안녕하세요안녕하세요안녕하세요' },
+    { title: '전국 대한 산악회7', color: 'blue', admin: '안녕하세요안녕하세요안녕하세요' },
   ];
 
   const dealWithModal = () => {
