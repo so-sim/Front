@@ -18,6 +18,9 @@ const config: Configuration = {
   mode: isDevelopment ? 'development' : 'production',
   devtool: !isDevelopment ? 'hidden-source-map' : 'inline-source-map',
   resolve: {
+    alias: {
+      '@': path.resolve(__dirname, './'),
+    },
     extensions: ['.js', '.jsx', '.ts', '.tsx', '.json'],
   },
   entry: {

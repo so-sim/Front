@@ -1,3 +1,6 @@
+const path = require('path');
+const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
+
 module.exports = {
   stories: ['../**/*.stories.mdx', '../**/*.stories.@(js|jsx|ts|tsx)'],
   addons: ['@storybook/addon-links', '@storybook/addon-essentials', '@storybook/addon-interactions'],
@@ -17,6 +20,14 @@ module.exports = {
       enforce: 'pre',
       loader: require.resolve('@svgr/webpack'),
     });
+
+    config.resolve.alias = {
+      ...config.resolve.alias,
+      '@': path.resolve(__dirname, './'),
+    };
+
+    config.resolve.plugins = [new TsconfigPathsPlugin()];
+
     return config;
   },
 };
