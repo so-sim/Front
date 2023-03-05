@@ -93,5 +93,8 @@
   },
   "version": "",
   "readme": "ERROR: No README data found!",
-  "_id": "sosim_front@"
+  "_id": "sosim_front@",
+  "msw": {
+    "workerDirectory": ""
+  }
 }
