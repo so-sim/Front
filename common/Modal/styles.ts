@@ -32,10 +32,10 @@ export const ModalFrame = styled.div<ModalProps>`
   padding: 24px 32px;
 `;
 
-export const ModalHeader = styled.div`
+export const ModalHeader = styled.div<{ align: 'center' | 'start' }>`
   ${({ theme }) => theme.font.headline};
   width: 100%;
-  text-align: center;
+  text-align: ${({ align }) => align === 'center' && 'center'};
 `;
 
 export const CloseIcon = styled.div`

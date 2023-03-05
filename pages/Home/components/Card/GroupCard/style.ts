@@ -12,7 +12,7 @@ export const GroupInfo = styled.div`
 `;
 
 export const GroupTitle = styled.div`
-  width: 150px;
+  width: calc(100% - 36px);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -37,10 +37,10 @@ export const GroupIcon = styled.div`
 `;
 
 export const GroupAdminName = styled.div`
-  width: 128px;
+  width: calc(100% - 24px);
   display: block;
   height: 20px;
-  padding: 4px;
+  padding: 2px 4px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;

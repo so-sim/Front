@@ -1,6 +1,5 @@
 import styled from '@emotion/styled';
-import { GroupColor } from '../CreateGroupModal';
-
+import { GroupColor } from '../../../../../constants';
 export const ColorButton = styled.button<{ color: GroupColor }>`
   background-color: ${({ color, theme }) => theme.cover[color]};
   width: 20px;
