@@ -16,6 +16,7 @@ export const DropDownBox = styled.div<{ boxWidth: string; color: DropBoxColor }>
 `;
 
 export const Text = styled.div<{ boxWidth: string }>`
+  ${({ theme }) => theme.font.body_02}
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;

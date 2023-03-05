@@ -1,7 +1,7 @@
 import React from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 import { LoginModal } from '.';
-import { withRouter } from '../../../../../utils/withRouter';
+import { withRouter } from '@/utils/withRouter';
 
 export default {
   title: 'Component/Modal/LoginModal',

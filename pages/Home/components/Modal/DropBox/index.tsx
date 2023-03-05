@@ -1,6 +1,6 @@
 import React, { Dispatch, FC, SetStateAction, useState } from 'react';
-import { ARROW } from '../../../../../assets/icons/Arrow';
-import DropDown from '../../../../../common/DropDown';
+import { ARROW } from '@/assets/icons/Arrow';
+import DropDown from '@/common/DropDown';
 import * as Style from './styles';
 
 export type DropBoxColor = 'white' | 'gray' | 'disabled';

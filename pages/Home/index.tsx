@@ -1,4 +1,3 @@
-import React from 'react';
 import { Header, Banner, GroupSection, Footer } from './components';
 import * as Style from './style';
 

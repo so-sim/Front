@@ -4,6 +4,13 @@ export const Title = styled.div`
   margin-bottom: 16px;
 `;
 
+export const SubTitle = styled.div`
+  ${({ theme }) => theme.font.subhead_03};
+  margin: 4px 20px 0 4px;
+  width: 92px;
+  white-space: nowrap;
+`;
+
 export const ButtonFrame = styled.div`
   display: flex;
   margin-top: 12px;
@@ -13,6 +20,7 @@ export const ButtonFrame = styled.div`
 `;
 
 export const DeleteButton = styled.button`
+  ${({ theme }) => theme.font.subhead_01};
   padding: 8px 14px;
   border-radius: 4px;
   margin-top: 12px;

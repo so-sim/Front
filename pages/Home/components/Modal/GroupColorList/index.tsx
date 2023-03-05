@@ -1,8 +1,7 @@
 import styled from '@emotion/styled';
 import React, { Dispatch, FC, SetStateAction } from 'react';
-import { FormData } from '../CreateGroupModal';
 import * as Style from './style';
-import { GroupColor } from '../../../../../constants';
+import { GroupColor } from '@/constants';
 
 interface GroupColorList {
   value: string;

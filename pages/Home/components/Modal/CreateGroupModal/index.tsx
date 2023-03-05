@@ -1,14 +1,14 @@
 import React, { FC, useEffect, useState } from 'react';
-import Button from '../../../../../common/Button';
-import Modal from '../../../../../common/Modal';
+import Button from '@/common/Button';
+import Modal from '@/common/Modal';
 import { GroupColorList } from '../GroupColorList';
-import { Label } from '../../../../../common/Label';
+import { Label } from '@/common/Label';
 import * as Style from './style';
-import { Input } from '../../../../../common/Input';
+import { Input } from '@/common/Input';
 import { DropBox } from '../DropBox';
-import { isValid } from '../../../../../utils/validation';
-import { COLORS, DROPDOWN_LIST, PLACEHOLDER } from '../../../../../constants';
-import { GroupColor } from '../../../../../constants';
+import { isValid } from '@/utils/validation';
+import { COLORS, DROPDOWN_LIST, PLACEHOLDER } from '@/constants';
+import { GroupColor } from '@/constants';
 
 export interface ModalProps {
   isOpen: boolean;

@@ -1,6 +1,6 @@
 import React, { Dispatch } from 'react';
-import Button from '../../../../../common/Button';
-import Modal from '../../../../../common/Modal';
+import Button from '@/common/Button';
+import Modal from '@/common/Modal';
 
 interface ModalButton {
   text: string;

@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
-import { USER } from '../../../../../assets/icons/User';
-import Modal from '../../../../../common/Modal';
+import { USER } from '@/assets/icons/User';
+import Modal from '@/common/Modal';
 import * as Style from './styles';
 import { ModalProps } from '../CreateGroupModal';
 

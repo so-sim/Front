@@ -1,15 +1,14 @@
 import React, { FC, useEffect, useState } from 'react';
-import Button from '../../../../../common/Button';
-import { Input } from '../../../../../common/Input';
-import { Label } from '../../../../../common/Label';
-import Modal from '../../../../../common/Modal';
-import theme from '../../../../../styles/Theme';
-import { isValid } from '../../../../../utils/validation';
+import { Input, Label } from '@/common';
+import Button from '@/common/Button';
+import Modal from '@/common/Modal';
+import theme from '@/styles/Theme';
+import { isValid } from '@/utils/validation';
 import { GroupColorList } from '../GroupColorList';
 import { DropBox } from '../DropBox';
 import { QuitGroup } from '../QuitGroup';
 import * as Style from './style';
-import { COLORS, DROPDOWN_LIST, GroupColor } from '../../../../../constants';
+import { COLORS, DROPDOWN_LIST, GroupColor } from '@/constants';
 import { ModalProps } from '../CreateGroupModal';
 
 export const AdminModal: FC<ModalProps> = ({ isOpen, setIsOpen }) => {
@@ -43,7 +42,7 @@ export const AdminModal: FC<ModalProps> = ({ isOpen, setIsOpen }) => {
       </Modal.Header>
       <Modal.Body>
         <div style={{ display: 'flex', width: '100%' }}>
-          <div style={{ margin: '4px 20px 0 4px', width: '92px', whiteSpace: 'nowrap' }}>사용자 설정</div>
+          <Style.SubTitle>사용자 설정</Style.SubTitle>
           <div style={{ width: '100%', borderLeft: `2px solid ${theme.colors.neutral_400_b}`, paddingLeft: '16px' }}>
             <Label title="모임 이름" flexDirection="column">
               <Input value={groupName} isValid={isInit.groupName || isValid(groupName)} onChange={setGroupName} maxLength={15} />

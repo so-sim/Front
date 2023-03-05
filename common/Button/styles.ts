@@ -2,6 +2,7 @@ import { ButtonProps } from './index';
 import styled from '@emotion/styled';
 
 export const Button = styled.button<ButtonProps>`
+  ${({ theme }) => theme.font.subhead_02};
   width: ${(props) => props.width};
   height: ${(props) => props.height};
   border-radius: 4px;
@@ -38,4 +39,14 @@ export const Button = styled.button<ButtonProps>`
       return colors[color ?? 'primary'];
     }};
   }
+`;
+
+export const InnerText = styled.span`
+  display: flex;
+  align-items: center;
+  gap: 8px;
+`;
+
+export const Icon = styled.span`
+  height: 16px;
 `;

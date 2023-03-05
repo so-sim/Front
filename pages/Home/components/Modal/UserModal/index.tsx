@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import Button from '../../../../../common/Button';
-import { Input } from '../../../../../common/Input';
-import { Label } from '../../../../../common/Label';
-import Modal from '../../../../../common/Modal';
-import theme from '../../../../../styles/Theme';
-import { isValid } from '../../../../../utils/validation';
+import Button from '@/common/Button';
+import { Input } from '@/common/Input';
+import { Label } from '@/common/Label';
+import Modal from '@/common/Modal';
+import theme from '@/styles/Theme';
+import { isValid } from '@/utils/validation';
 import { QuitGroup } from '../QuitGroup';
 import * as Style from './style';
 

@@ -1,14 +1,13 @@
 import React, { FC, useEffect, useState } from 'react';
 import Button from '../../../../../common/Button';
-import { Input } from '../../../../../common/Input';
-import { Label } from '../../../../../common/Label';
-import Modal from '../../../../../common/Modal';
-import { PLACEHOLDER } from '../../../../../constants';
-import { isValid } from '../../../../../utils/validation';
+import { Input, Label } from '@/common';
+import Modal from '@/common/Modal';
+import { PLACEHOLDER } from '@/constants';
+import { isValid } from '@/utils/validation';
 import * as Style from './styles';
-import { ModalProps } from '../../../../../common/Modal';
+import { ModalProps } from '@/common/Modal';
 
-export const InviteModal: FC<ModalProps> = ({ isOpen, onClick }) => {
+export const InvitationModal: FC<ModalProps> = ({ isOpen, onClick }) => {
   const [myName, setMyName] = useState('');
   const [isInit, setIsInit] = useState(true);
 

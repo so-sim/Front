@@ -1,6 +1,7 @@
 import styled from '@emotion/styled';
 
 export const Input = styled.input<{ isValid: boolean }>`
+  ${({ theme }) => theme.font.body_02};
   border-radius: 4px;
   border: 1px solid ${({ theme, isValid }) => (isValid ? theme.colors.secondary_500 : theme.colors.red_100)};
   background-color: ${({ theme }) => theme.colors.secondary_100};
@@ -23,4 +24,5 @@ export const ErrorText = styled.span<{ isValid: boolean }>`
 
 export const Length = styled.span`
   color: ${({ theme }) => theme.colors.secondary_500};
+  ${({ theme }) => theme.font.caption}
 `;
