@@ -2,6 +2,7 @@ import { DropBoxColor } from './index';
 import styled from '@emotion/styled';
 
 export const DropDownBox = styled.div<{ boxWidth: string; color: DropBoxColor }>`
+  position: relative;
   vertical-align: center;
   display: flex;
   align-items: center;
@@ -15,6 +16,7 @@ export const DropDownBox = styled.div<{ boxWidth: string; color: DropBoxColor }>
 `;
 
 export const Text = styled.div<{ boxWidth: string }>`
+  ${({ theme }) => theme.font.body_02}
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;

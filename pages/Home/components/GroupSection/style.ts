@@ -8,4 +8,5 @@ export const GroupSection = styled.section`
 
 export const Title = styled.div`
   margin-bottom: 16px;
+  ${({ theme }) => theme.font.headline}
 `;

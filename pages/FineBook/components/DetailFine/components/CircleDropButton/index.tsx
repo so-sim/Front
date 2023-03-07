@@ -1,4 +1,4 @@
-import { CIRCLE_DROP } from '../../../../../../assets/icons/CircleDrop';
+import { CIRCLE_DROP } from '@/assets/icons/CircleDrop';
 import * as Style from './styles';
 
 interface CircleDropButtonProps {

@@ -25,13 +25,20 @@ export const DetailList: FC<DetailListProps> = ({ details, page, setSelect, setO
           return (
             <Style.TableRow
               key={i}
-              onClick={() => {
+              onClick={(e) => {
+                e.stopPropagation();
                 setSelect(detail);
                 setOpenUserDetails(true);
               }}
             >
               <span>{date}</span>
-              <CircleDropButton status={status} />
+              <Style.DropDownWrapper
+                onClick={(e) => {
+                  e.stopPropagation();
+                }}
+              >
+                <CircleDropButton status={status} />
+              </Style.DropDownWrapper>
               <span>{name}</span>
               <span>{fine}</span>
               <span>{reason}</span>

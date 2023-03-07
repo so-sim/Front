@@ -32,8 +32,11 @@ export const ModalFrame = styled.div<ModalProps>`
   padding: 24px 32px;
 `;
 
-export const ModalHeader = styled.div`
-  ${({ theme }) => theme.font.headline}
+export const ModalHeader = styled.div<{ align: 'center' | 'start' }>`
+  ${({ theme }) => theme.font.headline};
+  width: 100%;
+  text-align: ${({ align }) => align === 'center' && 'center'};
+  margin-bottom: 22px;
 `;
 
 export const CloseIcon = styled.div`
@@ -45,10 +48,15 @@ export const CloseIcon = styled.div`
 
 export const HeaderTitle = styled.span``;
 
-export const ModalBody = styled.div``;
+export const ModalBody = styled.div`
+  ${({ theme }) => theme.font.body_02};
+  width: 100%;
+  text-align: center;
+`;
 
 export const ModalFooter = styled.div<Pick<ModalFooterProps, 'flexDirection'>>`
   display: flex;
   flex-direction: ${(props) => props.flexDirection};
   gap: 12px;
+  margin-top: 20px;
 `;

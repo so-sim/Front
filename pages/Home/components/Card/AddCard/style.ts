@@ -11,4 +11,5 @@ export const AddCardFrame = styled.div`
 
 export const AddCardText = styled.div`
   margin-top: 16px;
+  ${({ theme }) => theme.font.subhead_03}
 `;

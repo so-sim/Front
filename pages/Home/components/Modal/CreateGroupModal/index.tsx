@@ -1,14 +1,14 @@
-import React, { FC, useState } from 'react';
-import Button from '../../../../../common/Button';
-import Modal from '../../../../../common/Modal';
-import theme from '../../../../../styles/Theme';
-import { GroupColorList } from '../GroupColorList';
-import { Label } from '../../../../../common/Label';
 import * as Style from './style';
-import { Input } from '../../../../../common/Input';
-import { ARROW } from '../../../../../assets/icons/Arrow';
+import { FC, useEffect, useState } from 'react';
+import Button from '@/common/Button';
+import Modal from '@/common/Modal';
+import { GroupColorList } from '../GroupColorList';
+import { Input, Label } from '@/common';
 import { DropBox } from '../DropBox';
-import { isValid } from '../../../../../utils/validation';
+import { isValid } from '@/utils/validation';
+import { COLORS, DROPDOWN_LIST, PLACEHOLDER } from '@/constants';
+import { GroupColor } from '@/constants';
+import { useCreateGroup } from '@/queries/Group/useCreateGroup';
 
 export interface ModalProps {
   isOpen: boolean;
@@ -22,61 +22,49 @@ export interface FormData {
   color: GroupColor;
 }
 
-export type GroupColor = 'red' | 'orange' | 'yellow' | 'blue' | 'purple';
-
 export const CreateGroupModal: FC<ModalProps> = ({ isOpen, setIsOpen }) => {
-  const colors: GroupColor[] = ['red', 'orange', 'yellow', 'blue', 'purple'];
-
-  const [form, setForm] = useState<FormData>({
-    groupName: '',
-    myName: '',
-    type: '',
-    color: 'red',
-  });
-
-  const changeFormData = <T extends FormData, K extends keyof T>(value: T[K], type: K) => {
-    setForm((prev) => ({ ...prev, [type]: value }));
-  };
-
-  const isValidForm = (form: FormData): boolean => {
-    if (!isValid(form.groupName, 2, 10)) return false;
-    if (!isValid(form.myName, 2, 20)) return false;
-    if (form.type === '') return false;
-    if (!colors.includes(form.color)) return false;
-    return true;
-  };
-
   const [groupName, setGroupName] = useState('');
   const [myName, setMyName] = useState('');
   const [type, setType] = useState('');
-  const [color, setColor] = useState('red');
+  const [color, setColor] = useState<GroupColor>('#f86565');
 
-  const [openDrop, setOpenDrop] = useState(false);
+  const [isInit, setIsInit] = useState({
+    groupName: true,
+    myName: true,
+  });
 
-  const dropDownList = [
-    { title: '학교, 교내/외 모임' },
-    { title: '회사, 사내 모임' },
-    { title: '취미, 동호회 모임' },
-    { title: '친구, 사모임' },
-    { title: '프로젝트' },
-    { title: '기타' },
-  ];
+  const { mutate } = useCreateGroup();
+
+  const createGroup = () => mutate({ groupName, myName, type, color });
+
+  useEffect(() => {
+    if (groupName !== '' && isInit.groupName === true) setIsInit((prev) => ({ ...prev, groupName: false }));
+    if (myName !== '' && isInit.myName === true) setIsInit((prev) => ({ ...prev, myName: false }));
+  }, [groupName, myName]);
+
+  const isValidForm = (): boolean => {
+    if (!isValid(groupName)) return false;
+    if (!isValid(myName)) return false;
+    if (type === '') return false;
+    if (!COLORS.includes(color)) return false;
+    return true;
+  };
 
   return (
-    <Modal.Frame isOpen={isOpen} width="448px" height="446px">
+    <Modal.Frame isOpen={isOpen} onClick={setIsOpen} width="448px" height="446px">
       <Modal.Header onClick={setIsOpen}>
         <Style.Title>모임 만들기</Style.Title>
       </Modal.Header>
       <Modal.Body>
         <Label title="모임 이름">
-          <Input value={groupName} isValid={isValid(groupName, 2, 10)} onChange={setGroupName} maxLength={10} />
+          <Input placeholder={PLACEHOLDER.GROUP} value={groupName} isValid={isInit.groupName || isValid(groupName)} onChange={setGroupName} maxLength={15} />
         </Label>
         <Label title="내 이름">
-          <Input value={myName} isValid={isValid(myName, 2, 20)} onChange={setMyName} maxLength={20} />
+          <Input placeholder={PLACEHOLDER.NAME} value={myName} isValid={isInit.myName || isValid(myName)} onChange={setMyName} maxLength={15} />
         </Label>
         <div style={{ position: 'relative' }}>
           <Label title="모임 유형">
-            <DropBox dropDownList={dropDownList} type={type} setType={setType} />
+            <DropBox dropDownList={DROPDOWN_LIST} type={type} setType={setType} />
           </Label>
         </div>
         <Label title="커버 색상">
@@ -84,8 +72,7 @@ export const CreateGroupModal: FC<ModalProps> = ({ isOpen, setIsOpen }) => {
         </Label>
       </Modal.Body>
       <Modal.Footer>
-        <div style={{ height: '12px' }} />
-        <Button width="100%" height="42px" color={isValidForm(form) ? 'primary' : 'disabled'}>
+        <Button onClick={createGroup} width="100%" height="42px" color={isValidForm() ? 'primary' : 'disabled'}>
           만들기
         </Button>
       </Modal.Footer>

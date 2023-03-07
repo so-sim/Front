@@ -7,12 +7,16 @@ export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   width?: string;
   height?: string;
   color?: 'primary' | 'black' | 'white' | 'disabled';
+  leftIcon?: JSX.Element;
 }
 
-const Button: FC<ButtonProps> = ({ children, width = '60px', height = '36px', onClick, color = 'primary' }) => {
+const Button: FC<ButtonProps> = ({ children, width = '60px', height = '36px', onClick, leftIcon, color = 'primary' }) => {
   return (
     <Style.Button width={width} height={height} color={color} onClick={onClick} disabled={color === 'disabled'}>
-      {children}
+      <Style.InnerText>
+        {leftIcon && <Style.Icon>{leftIcon}</Style.Icon>}
+        {children}
+      </Style.InnerText>
     </Style.Button>
   );
 };
