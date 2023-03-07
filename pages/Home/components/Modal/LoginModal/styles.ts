@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 import { Link } from 'react-router-dom';
 
 export const GuidePhrase = styled.p`
-  margin-top: 22px;
+  /* margin-top: 22px; */
 `;
 
 export const LinkTo = styled(Link)`

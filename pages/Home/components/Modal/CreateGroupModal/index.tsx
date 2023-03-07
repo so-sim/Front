@@ -64,7 +64,7 @@ export const CreateGroupModal: FC<ModalProps> = ({ isOpen, setIsOpen }) => {
         </Label>
         <div style={{ position: 'relative' }}>
           <Label title="모임 유형">
-            <DropBox dropDownList={DROPDOWN_LIST} type={type} setType={setType} />
+            <DropBox dropDownList={DROPDOWN_LIST} type={type} setType={setType} color="gray" />
           </Label>
         </div>
         <Label title="커버 색상">

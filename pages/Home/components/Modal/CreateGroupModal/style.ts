@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 
 export const Title = styled.div`
-  margin-bottom: 24px;
+  /* margin-bottom: 24px; */
 `;
 
 export const Input = styled.input<{ isValid: boolean }>`
