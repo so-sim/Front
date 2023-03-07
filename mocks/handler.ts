@@ -2,15 +2,15 @@ import { BASE_URL } from './../api/index';
 import { rest } from 'msw';
 
 const groupList = [
-  { title: '전국 노래 자랑', adminNickname: '윤하나둘셋넷', coverColor: '#f86565' },
-  { title: '전국 노래 자랑', adminNickname: '윤하나둘셋넷', coverColor: '#f86565' },
-  { title: '전국 노래 자랑', adminNickname: '윤하나둘셋넷', coverColor: '#f86565' },
-  { title: '전국 노래 자랑', adminNickname: '윤하나둘셋넷', coverColor: '#f86565' },
-  { title: '전국 노래 자랑', adminNickname: '윤하나둘셋넷', coverColor: '#f86565' },
-  { title: '전국 노래 자랑', adminNickname: '윤하나둘셋넷', coverColor: '#f86565' },
-  { title: '전국 노래 자랑', adminNickname: '윤하나둘셋넷', coverColor: '#f86565' },
-  { title: '전국 노래 자랑', adminNickname: '윤하나둘셋넷', coverColor: '#f86565' },
-  { title: '전국 노래 자랑', adminNickname: '윤하나둘셋넷', coverColor: '#f86565' },
+  { title: '전국 노래 자랑', adminNickname: '윤하나둘셋넷', coverColor: '#f86565', type: '스터디' },
+  { title: '전국 노래 자랑', adminNickname: '윤하나둘셋넷', coverColor: '#f86565', type: '스터디' },
+  { title: '전국 노래 자랑', adminNickname: '윤하나둘셋넷', coverColor: '#f86565', type: '스터디' },
+  { title: '전국 노래 자랑', adminNickname: '윤하나둘셋넷', coverColor: '#f86565', type: '스터디' },
+  { title: '전국 노래 자랑', adminNickname: '윤하나둘셋넷', coverColor: '#f86565', type: '스터디' },
+  { title: '전국 노래 자랑', adminNickname: '윤하나둘셋넷', coverColor: '#f86565', type: '스터디' },
+  { title: '전국 노래 자랑', adminNickname: '윤하나둘셋넷', coverColor: '#f86565', type: '스터디' },
+  { title: '전국 노래 자랑', adminNickname: '윤하나둘셋넷', coverColor: '#f86565', type: '스터디' },
+  { title: '전국 노래 자랑', adminNickname: '윤하나둘셋넷', coverColor: '#f86565', type: '스터디' },
 ];
 
 const getGroupList: Parameters<typeof rest.get>[1] = (req, res, ctx) => {
@@ -69,10 +69,10 @@ const deleteGroup: Parameters<typeof rest.put>[1] = (req, res, ctx) => {
 };
 
 export const handler = [
-  rest.get('/api/groupList', getGroupList), //
-  rest.get('/api/group/1', getGroupDetail), //
-  rest.get('/api/group/1/participant', getGroupParticipant), //
-  rest.post('api/group', createGroup),
-  rest.put('api/group/1', modifyGroup),
-  rest.delete('api/group/1', deleteGroup),
+  rest.get('/api/groupList', getGroupList),
+  rest.get('/api/group/1', getGroupDetail),
+  rest.get('/api/group/1/participant', getGroupParticipant),
+  rest.post('/api/group', createGroup),
+  rest.put('/api/group/1', modifyGroup),
+  rest.delete('/api/group/1', deleteGroup),
 ];

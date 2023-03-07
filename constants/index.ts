@@ -1,6 +1,4 @@
-import { Theme } from '@emotion/react';
-
-export type GroupColor = 'red' | 'orange' | 'yellow' | 'blue' | 'purple';
+export type GroupColor = '#f86565' | '#f89a65' | '#f8e065' | '#658ef8' | '#9465f8';
 // export type GroupColor = keyof Theme['cover'];
 
 export const PLACEHOLDER = {
@@ -18,4 +16,4 @@ export const DROPDOWN_LIST = [
   { title: '기타' },
 ];
 
-export const COLORS: GroupColor[] = ['red', 'orange', 'yellow', 'blue', 'purple'];
+export const COLORS: GroupColor[] = ['#f86565', '#f89a65', '#f8e065', '#658ef8', '#9465f8'];

@@ -24,7 +24,7 @@ export const Button = styled.button<ButtonProps>`
       primary: theme.colors.secondary_100,
       disabled: theme.colors.secondary_700,
       black: theme.colors.secondary_100,
-      white: theme.colors.secondary_800,
+      white: theme.colors.secondary_700,
     };
     return colors[color ?? 'primary'];
   }};

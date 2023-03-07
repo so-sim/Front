@@ -22,3 +22,10 @@ export const NotFoundList = styled.div`
   height: 220px;
   width: 100%;
 `;
+
+export const DropDownWrapper = styled.div`
+  padding: 0;
+  &:hover {
+    background: ${({ theme }) => theme.colors.neutral_300_b};
+  }
+`;

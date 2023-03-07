@@ -4,7 +4,7 @@ import { GroupColor as Color } from '../../../../../constants';
 export const GroupColor = styled.div<{ color: Color }>`
   width: 100%;
   height: 120px;
-  background-color: ${({ theme, color }) => theme.cover[color]};
+  background-color: ${({ color }) => color};
 `;
 
 export const GroupInfo = styled.div`

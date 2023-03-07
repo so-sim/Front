@@ -15,7 +15,7 @@ export const AdminModal: FC<ModalProps> = ({ isOpen, setIsOpen }) => {
   const [groupName, setGroupName] = useState('');
   const [myName, setMyName] = useState('');
   const [type, setType] = useState('');
-  const [color, setColor] = useState<GroupColor>('red');
+  const [color, setColor] = useState<GroupColor>('#f86565');
 
   const [isInit, setIsInit] = useState({
     groupName: true,
