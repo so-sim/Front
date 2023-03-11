@@ -6,7 +6,6 @@ import { withRouter } from '../../../../../utils/withRouter';
 export default {
   title: 'Component/Modal/InvitationModal',
   component: InvitationModal,
-  decorators: [(Story) => withRouter(<Story />)],
 } as ComponentMeta<typeof InvitationModal>;
 
 const Template: ComponentStory<typeof InvitationModal> = (args) => <InvitationModal {...args} />;
