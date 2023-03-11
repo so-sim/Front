@@ -6,20 +6,13 @@ import { GroupColorList } from '../GroupColorList';
 import { Input, Label } from '@/common';
 import { DropBox } from '../DropBox';
 import { isValid } from '@/utils/validation';
-import { COLORS, DROPDOWN_LIST, PLACEHOLDER } from '@/constants';
+import { COLORS, DROPDOWN_LIST, GroupType, PLACEHOLDER } from '@/constants';
 import { GroupColor } from '@/constants';
-import { useCreateGroup } from '@/queries/Group/useCreateGroup';
+import { useCreateGroup } from '@/queries/Group';
 
 export interface ModalProps {
   isOpen: boolean;
   setIsOpen: () => void;
-}
-
-export interface FormData {
-  groupName: string;
-  myName: string;
-  type: string;
-  color: GroupColor;
 }
 
 export const CreateGroupModal: FC<ModalProps> = ({ isOpen, setIsOpen }) => {
@@ -27,20 +20,19 @@ export const CreateGroupModal: FC<ModalProps> = ({ isOpen, setIsOpen }) => {
   const [myName, setMyName] = useState('');
   const [type, setType] = useState('');
   const [color, setColor] = useState<GroupColor>('#f86565');
-
   const [isInit, setIsInit] = useState({
     groupName: true,
     myName: true,
   });
 
-  const { mutate } = useCreateGroup();
-
-  const createGroup = () => mutate({ groupName, myName, type, color });
-
   useEffect(() => {
     if (groupName !== '' && isInit.groupName === true) setIsInit((prev) => ({ ...prev, groupName: false }));
     if (myName !== '' && isInit.myName === true) setIsInit((prev) => ({ ...prev, myName: false }));
   }, [groupName, myName]);
+
+  const { mutate } = useCreateGroup();
+
+  const createGroup = () => mutate({ title: groupName, type, coverColor: color });
 
   const isValidForm = (): boolean => {
     if (!isValid(groupName)) return false;

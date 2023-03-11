@@ -10,6 +10,10 @@ import { QuitGroup } from '../QuitGroup';
 import * as Style from './style';
 import { COLORS, DROPDOWN_LIST, GroupColor } from '@/constants';
 import { ModalProps } from '../CreateGroupModal';
+import { useCheckInit } from '@/hooks/useCheckInit';
+import { useUpdateGroup } from '@/queries/Group';
+import { useParams } from 'react-router-dom';
+import { GroupId } from '@/api/Group';
 
 export const AdminModal: FC<ModalProps> = ({ isOpen, setIsOpen }) => {
   const [groupName, setGroupName] = useState('');
@@ -17,15 +21,16 @@ export const AdminModal: FC<ModalProps> = ({ isOpen, setIsOpen }) => {
   const [type, setType] = useState('');
   const [color, setColor] = useState<GroupColor>('#f86565');
 
-  const [isInit, setIsInit] = useState({
-    groupName: true,
-    myName: true,
-  });
+  const [groupCheck, nameCheck] = useCheckInit(groupName, myName);
 
-  useEffect(() => {
-    if (groupName !== '' && isInit.groupName === true) setIsInit((prev) => ({ ...prev, groupName: false }));
-    if (myName !== '' && isInit.myName === true) setIsInit((prev) => ({ ...prev, myName: false }));
-  }, [groupName, myName]);
+  const params = useParams();
+  console.log(params);
+
+  const update = useUpdateGroup();
+
+  const updateGroupInfo = () => {
+    // update.mutate({ title: groupName, type, coverColor: color, groupId: params.groupId });
+  };
 
   const isValidForm = (): boolean => {
     if (!isValid(groupName)) return false;
@@ -45,10 +50,10 @@ export const AdminModal: FC<ModalProps> = ({ isOpen, setIsOpen }) => {
           <Style.SubTitle>사용자 설정</Style.SubTitle>
           <div style={{ width: '100%', borderLeft: `2px solid ${theme.colors.neutral_400_b}`, paddingLeft: '16px' }}>
             <Label title="모임 이름" flexDirection="column">
-              <Input value={groupName} isValid={isInit.groupName || isValid(groupName)} onChange={setGroupName} maxLength={15} />
+              <Input value={groupName} isValid={groupCheck || isValid(groupName)} onChange={setGroupName} maxLength={15} />
             </Label>
             <Label title="내 이름" flexDirection="column">
-              <Input value={myName} isValid={isInit.myName || isValid(myName)} onChange={setMyName} maxLength={15} />
+              <Input value={myName} isValid={nameCheck || isValid(myName)} onChange={setMyName} maxLength={15} />
             </Label>
             <Label title="모임 유형" flexDirection="column">
               <DropBox dropDownList={DROPDOWN_LIST} type={type} setType={setType} />

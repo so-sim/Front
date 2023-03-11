@@ -5,41 +5,28 @@ import { Label } from '@/common/Label';
 import Modal from '@/common/Modal';
 import { DropBox } from '@/pages/Home/components/Modal/DropBox';
 import * as Style from './styles';
+import { SYSTEM } from '@/assets/icons/System';
 
 interface ModalProps {
   open: boolean;
   setOpen: Dispatch<SetStateAction<boolean>>;
+  type?: 'update' | 'create';
 }
 
-export const FineBookModal = ({ open, setOpen }: ModalProps) => {
+export const FineBookModal = ({ open, setOpen, type = 'create' }: ModalProps) => {
   const [member, setMember] = useState('');
   const [reason, setReason] = useState('');
 
   const [fine, setFine] = useState('');
 
-  const isSuitableKey = (key: string): boolean => {
-    switch (key) {
-      case '1':
-      case '2':
-      case '3':
-      case '4':
-      case '5':
-      case '6':
-      case '7':
-      case '8':
-      case '9':
-      case '0':
-      case 'Backspace':
-      case 'Enter':
-      case 'Tab':
-        return true;
-      default:
-        return false;
-    }
+  const isAllowedKey = (key: string): boolean => {
+    const allowedKey = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'Backspace', 'Enter', 'Tab'];
+    if (allowedKey.includes(key)) return true;
+    return false;
   };
 
   const onChangeFine = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (isSuitableKey(e.key))
+    if (isAllowedKey(e.key))
       setFine((prev) => {
         if (!isNaN(Number(e.key))) return prev + e.key;
         if (e.key === 'Backspace') return prev.slice(0, -1);
@@ -63,8 +50,8 @@ export const FineBookModal = ({ open, setOpen }: ModalProps) => {
   const status = [{ title: '미납' }, { title: '완납' }, { title: '확인 필요' }];
 
   return (
-    <Modal.Frame width="448px" height="412px" isOpen={open} onClick={() => setOpen(false)}>
-      <Modal.Header onClick={() => setOpen(false)}>상세 내역 수정</Modal.Header>
+    <Modal.Frame width="448px" height={type === 'create' ? '466px' : '412px'} isOpen={open} onClick={() => setOpen(false)}>
+      <Modal.Header onClick={() => setOpen(false)}>{type === 'create' ? '내역 추가하기' : '상세 내역 수정'}</Modal.Header>
       <div style={{ display: 'flex', flexDirection: 'column', width: '100%' }}>
         <Style.Row>
           <Label title="팀원" width="32px">
@@ -92,9 +79,11 @@ export const FineBookModal = ({ open, setOpen }: ModalProps) => {
           <Button color="black" width="100%" height="42px">
             저장하기
           </Button>
-          {/* <Button color="white" width="100%" height="42px" leftIcon={SYSTEM.PLUS_GRAY}>
-            계속해서 추가하기
-          </Button> */}
+          {type === 'create' && (
+            <Button color="white" width="100%" height="42px" leftIcon={SYSTEM.PLUS_GRAY}>
+              계속해서 추가하기
+            </Button>
+          )}
         </Modal.Footer>
       </div>
     </Modal.Frame>
