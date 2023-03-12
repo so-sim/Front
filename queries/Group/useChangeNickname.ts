@@ -1,8 +1,9 @@
 import { message } from './index';
-import { changeNickname, GroupId, GroupNickname, ServerResponse } from '@/api/Group';
+import { changeNickname, GroupId, GroupNickname } from '@/api/Group';
 import { useMutation } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
+import { ServerResponse } from '@/types';
 
 export const useChangeNickname = () => {
-  return useMutation<ServerResponse<null>, AxiosError, GroupNickname & GroupId>(changeNickname, message);
+  return useMutation<ServerResponse, AxiosError, GroupNickname & GroupId>(changeNickname, message);
 };

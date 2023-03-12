@@ -1,8 +1,9 @@
 import { message } from './index';
-import { deleteGroup, ServerResponse } from '@/api/Group';
+import { deleteGroup } from '@/api/Group';
 import { useMutation } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
+import { ServerResponse } from '@/types';
 
 export const useDeleteGroup = () => {
-  return useMutation<ServerResponse<null>, AxiosError, string>(deleteGroup, message);
+  return useMutation<ServerResponse, AxiosError, string>(deleteGroup, message);
 };

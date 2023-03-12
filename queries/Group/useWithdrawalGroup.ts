@@ -1,8 +1,9 @@
 import { message } from './index';
-import { ServerResponse, withdrawalGroup } from '@/api/Group';
+import { withdrawalGroup } from '@/api/Group';
 import { useMutation } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
+import { ServerResponse } from '@/types';
 
 export const useWithdrawalGroup = () => {
-  return useMutation<ServerResponse<null>, AxiosError, string>(withdrawalGroup, message);
+  return useMutation<ServerResponse, AxiosError, string>(withdrawalGroup, message);
 };
