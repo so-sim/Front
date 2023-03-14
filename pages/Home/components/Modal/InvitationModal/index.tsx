@@ -26,7 +26,7 @@ export const InvitationModal: FC<ModalProps> = ({ isOpen, onClick }) => {
         </Label>
       </Modal.Body>
       <Modal.Footer>
-        <Button color={myName !== '' ? 'primary' : 'disabled'} width="100%">
+        <Button color={myName !== '' ? 'primary' : 'disabled'} width="100%" height="42px">
           입장하기
         </Button>
       </Modal.Footer>

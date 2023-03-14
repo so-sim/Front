@@ -36,7 +36,7 @@ export const ModalHeader = styled.div<{ align: 'center' | 'start' }>`
   ${({ theme }) => theme.font.headline};
   width: 100%;
   text-align: ${({ align }) => align === 'center' && 'center'};
-  margin-bottom: 22px;
+  margin-bottom: 20px;
 `;
 
 export const CloseIcon = styled.div`

@@ -1,3 +1,5 @@
+import { withRouter } from '../utils/withRouter';
+
 export const parameters = {
   actions: { argTypesRegex: '^on[A-Z].*' },
   controls: {
@@ -20,3 +22,4 @@ export const parameters = {
     ],
   },
 };
+export const decorators = [(Story) => withRouter(<Story />)];

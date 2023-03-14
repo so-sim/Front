@@ -19,7 +19,7 @@ export const InviteModal: FC<ModalProps> = ({ isOpen, onClick }) => {
       </Modal.Body>
       <div style={{ height: '12px' }} />
       <Modal.Footer>
-        <Button color="primary" width="100%" leftIcon={SYSTEM.LINK}>
+        <Button color="primary" width="100%" leftIcon={SYSTEM.LINK} height="42px">
           초대링크 복사하기
         </Button>
       </Modal.Footer>

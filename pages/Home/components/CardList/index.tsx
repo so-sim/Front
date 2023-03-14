@@ -3,27 +3,12 @@ import { AddCard } from '../Card/AddCard';
 import { GroupCard } from '../Card/GroupCard';
 import { CreateGroupModal } from '../Modal/CreateGroupModal';
 import * as Style from './style';
-import React from 'react';
-import { GroupColor } from '../../../../constants';
-
-export interface GroupInfo {
-  title: string;
-  color: GroupColor;
-  admin: string;
-}
+import { useGroupList } from '@/queries/Group/';
 
 export const CardList = () => {
   const [open, setOpen] = useState(false);
 
-  const groupList: GroupInfo[] = [
-    { title: '전국 대한 산악회1', color: '#f86565', admin: '안녕하세요안녕하세요안녕하세요' },
-    { title: '전국 대한 산악회2', color: '#f89a65', admin: '안녕하세요안녕하세요안녕하세요' },
-    { title: '전국 대한 산악회3', color: '#f8e065', admin: '안녕하세요안녕하세요안녕하세요' },
-    { title: '전국 대한 산악회4', color: '#658ef8', admin: '안녕하세요안녕하세요안녕하세요' },
-    { title: '전국 대한 산악회5', color: '#9465f8', admin: '안녕하세요안녕하세요안녕하세요' },
-    { title: '전국 대한 산악회6', color: '#f86565', admin: '안녕하세요안녕하세요안녕하세요' },
-    { title: '전국 대한 산악회7', color: '#658ef8', admin: '안녕하세요안녕하세요안녕하세요' },
-  ];
+  const { data } = useGroupList();
 
   const dealWithModal = () => {
     setOpen((prev) => !prev);
@@ -33,7 +18,7 @@ export const CardList = () => {
     <>
       <Style.CardList>
         <AddCard onClick={dealWithModal} />
-        {groupList.map((group) => {
+        {data?.content.map((group) => {
           return <GroupCard {...group} key={group.title} />;
         })}
       </Style.CardList>
