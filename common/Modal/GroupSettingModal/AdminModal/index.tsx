@@ -6,11 +6,10 @@ import theme from '@/styles/Theme';
 import { isValid } from '@/utils/validation';
 import { GroupColorList } from '../../GroupColorList';
 import { DropBox } from '../../../DropBox';
-import { QuitGroup } from '../../QuitGroup';
 import * as Style from './style';
 import { COLORS, DROPDOWN_LIST } from '@/constants';
 import { ModalHandlerProps } from '../../CreateGroupModal';
-import { useUpdateGroup } from '@/queries/Group';
+import { useUpdateGroup, useWithdrawalGroup } from '@/queries/Group';
 import { useParams } from 'react-router-dom';
 import { GroupColor } from '@/types/group';
 
@@ -23,11 +22,17 @@ export const AdminModal: FC<ModalHandlerProps> = ({ isOpen, modalHandler }) => {
   const { groupId } = useParams();
 
   const { mutate: updateGroupMutate } = useUpdateGroup();
+  const { mutate: withdrawalGroupMutate } = useWithdrawalGroup();
 
   const updateGroupInfo = () => {
     const id = Number(groupId);
     updateGroupMutate({ title: groupName, type, coverColor: color, groupId: id });
     modalHandler();
+  };
+
+  const withdrwalGroup = () => {
+    const id = Number(groupId);
+    withdrawalGroupMutate({ groupId: id });
   };
 
   const isValidForm = () => {
@@ -60,7 +65,10 @@ export const AdminModal: FC<ModalHandlerProps> = ({ isOpen, modalHandler }) => {
               <GroupColorList value={color} onChange={setColor} />
             </Label>
             <Label title="모임 탈퇴" flexDirection="column">
-              <QuitGroup />
+              <Style.WithDrwal>
+                <Style.GroupName>그룹이름</Style.GroupName>
+                <Style.QuitButton onClick={withdrwalGroup}>탈퇴</Style.QuitButton>
+              </Style.WithDrwal>
             </Label>
             <div style={{ display: 'flex' }}>
               <Style.DeleteButton>모임 삭제</Style.DeleteButton>

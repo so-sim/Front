@@ -20,7 +20,7 @@ const GroupSideBar = () => {
   const [showGroupSettingModal, setShowGroupSettingModal] = useState(true);
   const param = useParams();
   const { groupId } = param;
-  const isAdmin = true;
+  const isAdmin = false;
 
   const isSelected = (link: string) => {
     return param['*']?.split('/').includes(link) === true;

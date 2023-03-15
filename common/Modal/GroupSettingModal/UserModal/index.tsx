@@ -4,12 +4,21 @@ import { Input } from '@/common/Input';
 import { Label } from '@/common/Label';
 import Modal from '@/common/Modal';
 import { isValid } from '@/utils/validation';
-import { QuitGroup } from '../../QuitGroup';
 import * as Style from './style';
 import { ModalHandlerProps } from '../../CreateGroupModal';
+import { useParams } from 'react-router-dom';
+import { useWithdrawalGroup } from '@/queries/Group';
 
 export const UserModal: FC<ModalHandlerProps> = ({ isOpen, modalHandler }) => {
-  const [myName, setMyName] = useState('');
+  const [myName, setMyName] = useState('내이름');
+  const { groupId } = useParams();
+
+  const { mutate: withdrawalGroupMutate } = useWithdrawalGroup();
+
+  const withdrwalGroup = () => {
+    const id = Number(groupId);
+    withdrawalGroupMutate({ groupId: id });
+  };
 
   return (
     <Modal.Frame isOpen={isOpen} onClick={modalHandler} width="492px" height="380px">
@@ -24,7 +33,10 @@ export const UserModal: FC<ModalHandlerProps> = ({ isOpen, modalHandler }) => {
               <Input value={myName} isValid={isValid(myName, 2, 20)} onChange={setMyName} maxLength={20} />
             </Label>
             <Label title="모임 탈퇴" flexDirection="column">
-              <QuitGroup />
+              <Style.WithDrwal>
+                <Style.GroupName>그룹네임</Style.GroupName>
+                <Style.QuitButton onClick={withdrwalGroup}>탈퇴</Style.QuitButton>
+              </Style.WithDrwal>
             </Label>
           </Style.InputContainer>
         </Style.Flex>

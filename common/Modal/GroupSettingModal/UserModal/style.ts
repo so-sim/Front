@@ -27,7 +27,7 @@ export const ButtonFrame = styled.div`
   width: 100%;
 `;
 
-export const Frame = styled.div`
+export const WithDrwal = styled.div`
   display: flex;
   align-items: center;
   gap: 12px;
