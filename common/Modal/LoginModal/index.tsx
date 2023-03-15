@@ -2,12 +2,12 @@ import React, { FC } from 'react';
 import { USER } from '@/assets/icons/User';
 import Modal from '@/common/Modal';
 import * as Style from './styles';
-import { ModalProps } from '../CreateGroupModal';
+import { ModalHandlerProps } from '../CreateGroupModal';
 
-export const LoginModal: FC<ModalProps> = ({ isOpen, setIsOpen }) => {
+export const LoginModal: FC<ModalHandlerProps> = ({ isOpen, modalHandler }) => {
   return (
-    <Modal.Frame isOpen={isOpen} onClick={setIsOpen}>
-      <Modal.Header onClick={setIsOpen}>로그인</Modal.Header>
+    <Modal.Frame isOpen={isOpen} onClick={modalHandler}>
+      <Modal.Header onClick={modalHandler}>로그인</Modal.Header>
       <Modal.Body>
         <Style.GuidePhrase>서비스 이용을 위해서는 로그인이 필요해요.</Style.GuidePhrase>
       </Modal.Body>

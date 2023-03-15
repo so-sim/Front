@@ -10,12 +10,12 @@ import { COLORS, DROPDOWN_LIST, PLACEHOLDER } from '@/constants';
 import { useCreateGroup } from '@/queries/Group';
 import { GroupColor } from '@/types/group';
 
-export interface ModalProps {
+export interface ModalHandlerProps {
   isOpen: boolean;
-  setIsOpen: () => void;
+  modalHandler: () => void;
 }
 
-export const CreateGroupModal: FC<ModalProps> = ({ isOpen, setIsOpen }) => {
+export const CreateGroupModal: FC<ModalHandlerProps> = ({ isOpen, modalHandler }) => {
   const [groupName, setGroupName] = useState('');
   const [myName, setMyName] = useState('');
   const [type, setType] = useState('');
@@ -43,8 +43,8 @@ export const CreateGroupModal: FC<ModalProps> = ({ isOpen, setIsOpen }) => {
   };
 
   return (
-    <Modal.Frame isOpen={isOpen} onClick={setIsOpen} width="448px" height="446px">
-      <Modal.Header onClick={setIsOpen}>
+    <Modal.Frame isOpen={isOpen} onClick={modalHandler} width="448px" height="446px">
+      <Modal.Header onClick={modalHandler}>
         <Style.Title>모임 만들기</Style.Title>
       </Modal.Header>
       <Modal.Body>

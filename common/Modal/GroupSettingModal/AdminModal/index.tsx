@@ -4,18 +4,18 @@ import Button from '@/common/Button';
 import Modal from '@/common/Modal';
 import theme from '@/styles/Theme';
 import { isValid } from '@/utils/validation';
-import { GroupColorList } from '../GroupColorList';
-import { DropBox } from '../../DropBox';
-import { QuitGroup } from '../QuitGroup';
+import { GroupColorList } from '../../GroupColorList';
+import { DropBox } from '../../../DropBox';
+import { QuitGroup } from '../../QuitGroup';
 import * as Style from './style';
 import { COLORS, DROPDOWN_LIST } from '@/constants';
-import { ModalProps } from '../CreateGroupModal';
+import { ModalHandlerProps } from '../../CreateGroupModal';
 import { useCheckInit } from '@/hooks/useCheckInit';
 import { useUpdateGroup } from '@/queries/Group';
 import { useParams } from 'react-router-dom';
 import { GroupColor } from '@/types/group';
 
-export const AdminModal: FC<ModalProps> = ({ isOpen, setIsOpen }) => {
+export const AdminModal: FC<ModalHandlerProps> = ({ isOpen, modalHandler }) => {
   const [groupName, setGroupName] = useState('');
   const [myName, setMyName] = useState('');
   const [type, setType] = useState('');
@@ -41,8 +41,8 @@ export const AdminModal: FC<ModalProps> = ({ isOpen, setIsOpen }) => {
   };
 
   return (
-    <Modal.Frame isOpen={isOpen} onClick={setIsOpen} width="492px" height="708px">
-      <Modal.Header align="start" onClick={setIsOpen}>
+    <Modal.Frame isOpen={isOpen} onClick={modalHandler} width="492px" height="708px">
+      <Modal.Header align="start" onClick={modalHandler}>
         <Style.Title>모임 설정</Style.Title>
       </Modal.Header>
       <Modal.Body>

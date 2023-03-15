@@ -4,7 +4,7 @@ import DropDown from '@/common/DropDown';
 import { useChangeAdmin } from '@/queries/Group';
 import React, { FC, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import ChangeAdminModal from '../ChangAdminModal';
+import ChangeAdminModal from '../../../../common/Modal/ChangAdminModal';
 import * as Style from './styles';
 
 interface MemberListItemProps {

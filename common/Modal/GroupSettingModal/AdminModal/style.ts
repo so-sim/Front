@@ -1,13 +1,10 @@
 import styled from '@emotion/styled';
 
-export const Title = styled.div`
-  margin-bottom: 16px;
-`;
+export const Title = styled.div``;
 
 export const SubTitle = styled.div`
   ${({ theme }) => theme.font.subhead_03};
   margin: 4px 20px 0 4px;
-  width: 92px;
   white-space: nowrap;
 `;
 

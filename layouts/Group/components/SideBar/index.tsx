@@ -1,8 +1,9 @@
+import { AdminModal } from '@/common/Modal/GroupSettingModal/AdminModal';
+import { UserModal } from '@/common/Modal/GroupSettingModal/UserModal';
 import React, { useState } from 'react';
 import { NavLink, useParams } from 'react-router-dom';
 import { SYSTEM } from '../../../../assets/icons/System';
 import { USER } from '../../../../assets/icons/User';
-import Modal from '../../../../common/Modal';
 import * as Style from './styles';
 
 const GROUP_TAPS = [
@@ -16,11 +17,17 @@ const ETC = [
 ];
 
 const GroupSideBar = () => {
+  const [showGroupSettingModal, setShowGroupSettingModal] = useState(true);
   const param = useParams();
   const { groupId } = param;
+  const isAdmin = false;
 
   const isSelected = (link: string) => {
     return param['*']?.split('/').includes(link) === true;
+  };
+
+  const handleGroupSettingModal = () => {
+    setShowGroupSettingModal((prev) => !prev);
   };
 
   return (
@@ -51,7 +58,7 @@ const GroupSideBar = () => {
                 </Style.Tap>
               </NavLink>
             ) : (
-              <Style.Tap key={etc.title}>
+              <Style.Tap key={etc.title} onClick={handleGroupSettingModal}>
                 <div>{etc.svg}</div>
                 <span>{etc.title}</span>
               </Style.Tap>
@@ -59,6 +66,11 @@ const GroupSideBar = () => {
           )}
         </Style.TapContainer>
       </Style.Layout>
+      {isAdmin ? (
+        <AdminModal isOpen={showGroupSettingModal} modalHandler={handleGroupSettingModal} />
+      ) : (
+        <UserModal isOpen={showGroupSettingModal} modalHandler={handleGroupSettingModal} />
+      )}
     </>
   );
 };
