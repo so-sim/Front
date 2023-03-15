@@ -1,15 +1,23 @@
-export interface DetailInfo {
+type PaymentType = '미납' | '확인필요' | '완납';
+
+export interface EvnetInfo {
+  eventId: number;
+  userId: number;
   userName: string;
   groundsDate: string;
-  payment: number;
   grounds: string;
-  paymentType: string;
+  paymentType: PaymentType;
 }
 
-export type DataWithEventId<T = null> = T & {
-  eventId: string;
-};
+export interface EvnetId {
+  eventId: number;
+}
 
-export type DetailWithEventId = DataWithEventId<DetailInfo>;
-
-export type DetailStatusWithEventId = DataWithEventId<Pick<DetailInfo, 'paymentType'>>;
+export interface EventFilter {
+  month: number;
+  week: number;
+  day: number;
+  userId: number;
+  paymentType: 1 | 2 | 3;
+  today: boolean;
+}

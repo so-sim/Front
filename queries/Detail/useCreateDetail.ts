@@ -1,6 +1,6 @@
-import { createDetail } from '@/api/Detail';
+import { createEvent } from '@/api/Event';
 import { useMutation } from '@tanstack/react-query';
 
 export const useCreateDetail = () => {
-  return useMutation(createDetail);
+  return useMutation(createEvent);
 };

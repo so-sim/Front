@@ -13,8 +13,7 @@ export const getGroupDetail = async (group_id: string): Promise<ServerResponse<G
   return data;
 };
 
-export const getGroupList = async ({ queryKey }: QueryFunctionContext<[string, number]>): Promise<ServerResponse<GroupListWithIndex>> => {
-  const [_, index] = queryKey;
+export const getGroupList = async (index: number): Promise<ServerResponse<GroupListWithIndex>> => {
   const { data } = await api.get(`/api/groups?index=${index}`);
   return data;
 };

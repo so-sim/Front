@@ -1,6 +1,6 @@
-import { deleteDetail } from '@/api/Detail';
+import { deleteEvent } from '@/api/Event';
 import { useMutation } from '@tanstack/react-query';
 
 export const useDeleteDetail = () => {
-  return useMutation(deleteDetail);
+  return useMutation(deleteEvent);
 };
