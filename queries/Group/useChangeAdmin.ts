@@ -1,9 +1,9 @@
 import { message } from './index';
-import { changeAdmin, GroupId, GroupNickname } from '@/api/Group';
+import { changeAdmin } from '@/api/Group';
 import { useMutation } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
-import { ServerResponse } from '@/types';
+import { ServerResponse } from '@/types/serverResponse';
 
 export const useChangeAdmin = () => {
-  return useMutation<ServerResponse, AxiosError, GroupNickname & GroupId>(changeAdmin, message);
+  return useMutation(changeAdmin, message);
 };

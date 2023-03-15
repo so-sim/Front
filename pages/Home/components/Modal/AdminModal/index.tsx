@@ -8,12 +8,12 @@ import { GroupColorList } from '../GroupColorList';
 import { DropBox } from '../DropBox';
 import { QuitGroup } from '../QuitGroup';
 import * as Style from './style';
-import { COLORS, DROPDOWN_LIST, GroupColor } from '@/constants';
+import { COLORS, DROPDOWN_LIST } from '@/constants';
 import { ModalProps } from '../CreateGroupModal';
 import { useCheckInit } from '@/hooks/useCheckInit';
 import { useUpdateGroup } from '@/queries/Group';
 import { useParams } from 'react-router-dom';
-import { GroupId } from '@/api/Group';
+import { GroupColor } from '@/types/group';
 
 export const AdminModal: FC<ModalProps> = ({ isOpen, setIsOpen }) => {
   const [groupName, setGroupName] = useState('');

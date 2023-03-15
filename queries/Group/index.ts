@@ -8,8 +8,8 @@ export { useChangeNickname } from './useChangeNickname';
 export { useChangeAdmin } from './useChangeAdmin';
 export { useDeleteGroup } from './useDeleteGroup';
 export { useWithdrawalGroup } from './useWithdrawalGroup';
-import { ServerResponse } from '@/types';
+import { ServerResponse } from '@/types/serverResponse';
 
 export const message = {
-  onSuccess: (data: ServerResponse<any>) => console.log(data.message),
+  onSuccess: (data: ServerResponse<any>) => console.log(data.status),
 };

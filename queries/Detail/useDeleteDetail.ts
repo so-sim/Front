@@ -1,8 +1,6 @@
-import { createDetail, DataWithEventId, deleteDetail, DetailInfo } from '@/api/Detail';
-import { ServerResponse } from '@/types';
+import { deleteDetail } from '@/api/Detail';
 import { useMutation } from '@tanstack/react-query';
-import { AxiosError } from 'axios';
 
 export const useDeleteDetail = () => {
-  return useMutation<ServerResponse<{ eventId: string }>, AxiosError, DataWithEventId>(deleteDetail);
+  return useMutation(deleteDetail);
 };

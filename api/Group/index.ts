@@ -1,41 +1,6 @@
-import { GroupColor } from '@/constants';
-import { ServerResponse } from '@/types';
+import { ServerResponse } from '@/types/serverResponse';
+import { CoverGroupInfo, GroupDetail, GroupId, GroupInfo, GroupNickname, ParticipantList } from '@/types/group';
 import api from '..';
-
-export interface GroupInfo {
-  title: string;
-  type: string;
-  coverColor: GroupColor;
-}
-
-export interface GroupId {
-  groupId: string;
-}
-
-export interface GroupNickname {
-  nickname: string;
-}
-
-export interface GroupDetail {
-  title: string;
-  adminNickname: string;
-  createDate: string;
-  updateDate: string;
-  coverColor: string;
-  groupType: string;
-}
-
-export interface ParticipantList {
-  adminId: string;
-  adminNickname: string;
-  nicknameList: string[];
-}
-
-export interface CoverGroupInfo {
-  title: string;
-  coverColor: GroupColor;
-  admin: string;
-}
 
 export const createGroup = async (newGroupInfo: GroupInfo): Promise<ServerResponse<GroupId>> => {
   const { data } = await api.post('/api/group', newGroupInfo);

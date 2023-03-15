@@ -1,20 +1,5 @@
+import { DetailInfo, DetailStatusWithEventId, DetailWithEventId } from '@/types/event';
 import api from '..';
-
-export interface DetailInfo {
-  userName: string;
-  groundsDate: string;
-  payment: number;
-  grounds: string;
-  paymentType: string;
-}
-
-export type DataWithEventId<T = null> = T & {
-  eventId: string;
-};
-
-export type DetailWithEventId = DataWithEventId<DetailInfo>;
-
-export type DetailStatusWithEventId = DataWithEventId<Pick<DetailInfo, 'paymentType'>>;
 
 export const createDetail = async (detailInfo: DetailInfo) => {
   const { data } = await api.post('/api/event/penalty', detailInfo);

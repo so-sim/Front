@@ -1,4 +1,4 @@
 export interface ServerResponse<T = null> {
-  message: string;
+  status: { code: string; message: string };
   content: T;
 }

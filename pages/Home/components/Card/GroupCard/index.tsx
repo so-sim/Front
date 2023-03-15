@@ -2,7 +2,7 @@ import { Card } from '..';
 import * as Style from './style';
 import { USER } from '@/assets/icons/User';
 import { useNavigate } from 'react-router-dom';
-import { CoverGroupInfo } from '@/api/Group';
+import { CoverGroupInfo } from '@/types/group';
 
 export const GroupCard = ({ title, coverColor, admin }: CoverGroupInfo) => {
   const navigate = useNavigate();
