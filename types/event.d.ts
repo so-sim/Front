@@ -18,6 +18,6 @@ export interface EventFilter {
   week: number;
   day: number;
   userId: number;
-  paymentType: 1 | 2 | 3;
+  paymentType: PaymentType;
   today: boolean;
 }

@@ -1,4 +1,4 @@
-import { EvnetInfo, EvnetId } from '@/types/event';
+import { EvnetInfo, EvnetId, EventFilter } from '@/types/event';
 import { ServerResponse } from '@/types/serverResponse';
 import api from '..';
 
@@ -13,8 +13,8 @@ export const getOneOfEvent = async (eventId: string): Promise<ServerResponse<Omi
 };
 
 /** 아직 미완성 */
-export const getEventList = async (): Promise<ServerResponse<EvnetInfo>> => {
-  const { data } = await api.get(`api/event/penalty`);
+export const getEventList = async (evnetFilter: EventFilter): Promise<ServerResponse<EvnetInfo>> => {
+  const { data } = await api.post(`api/event/penalty`, evnetFilter);
   return data;
 };
 
