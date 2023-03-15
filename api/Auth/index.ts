@@ -1,7 +1,6 @@
 import { SignUpResult } from './../../types/auth.d';
 import { ServerResponse } from '@/types/serverResponse';
-import api from '..';
-import { setAccesToken } from '@/queries/Auth/useSignInMutation';
+import api, { setAccesToken } from '..';
 
 export const kakaoLogin = async (code: string): Promise<ServerResponse<SignUpResult>> => {
   const { data } = await api.post(`/login/oauth2/code/kakao?code=${code}`);
