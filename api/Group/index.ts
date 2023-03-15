@@ -1,7 +1,6 @@
 import { ServerResponse } from '@/types/serverResponse';
 import { GroupDetail, GroupId, GroupInfo, GroupListWithIndex, GroupNickname, ParticipantList } from '@/types/group';
 import api from '..';
-import { QueryFunctionContext } from '@tanstack/react-query';
 
 export const createGroup = async (newGroupInfo: GroupInfo): Promise<ServerResponse<GroupId>> => {
   const { data } = await api.post('/api/group', newGroupInfo);

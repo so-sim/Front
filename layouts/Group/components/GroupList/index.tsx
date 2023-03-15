@@ -13,7 +13,7 @@ const Group = [
 
 const GroupList = () => {
   const param = useParams();
-  const { groupID } = param;
+  const { groupId } = param;
   const [showCreateModal, setShowCreateModal] = useState(true);
 
   const handleCreateModal = () => {
@@ -21,7 +21,7 @@ const GroupList = () => {
   };
 
   const isSelected = (id: string) => {
-    return groupID === id;
+    return groupId === id;
   };
 
   return (

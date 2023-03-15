@@ -17,9 +17,7 @@ const DorpDownList = [
 ];
 
 const GroupLayout = () => {
-  const param = useParams();
   const navigate = useNavigate();
-  const { groupID } = param;
   const [dropDownState, setDropDownState] = useState('');
   const [showDropDown, setShowDropDown] = useState(false);
 
