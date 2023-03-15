@@ -12,8 +12,8 @@ export const getAccessToken = () => {
 const useSignInMutation = () => {
   const navigate = useNavigate();
   return useMutation(kakaoLogin, {
-    onSuccess: ({ data }) => {
-      localStorage.setItem('token', data.token);
+    onSuccess: ({ content }) => {
+      localStorage.setItem('token', content.accessToken);
       navigate('/');
     },
     onError: (error) => {},
