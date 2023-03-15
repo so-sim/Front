@@ -1,8 +1,6 @@
-import { DetailWithEventId, updateDetail, DetailInfo } from '@/api/Detail';
-import { AxiosError } from 'axios';
-import { ServerResponse } from '@/types';
+import { updateEvent } from '@/api/Event';
 import { useMutation } from '@tanstack/react-query';
 
 export const useUpdateDetail = () => {
-  return useMutation<ServerResponse<DetailInfo>, AxiosError, DetailWithEventId>(updateDetail);
+  return useMutation(updateEvent);
 };

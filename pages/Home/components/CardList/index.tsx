@@ -7,8 +7,9 @@ import { useGroupList } from '@/queries/Group/';
 
 export const CardList = () => {
   const [open, setOpen] = useState(false);
+  const [index, setIndex] = useState(0);
 
-  const { data } = useGroupList();
+  const { data } = useGroupList(index);
 
   const dealWithModal = () => {
     setOpen((prev) => !prev);
@@ -18,7 +19,7 @@ export const CardList = () => {
     <>
       <Style.CardList>
         <AddCard onClick={dealWithModal} />
-        {data?.content.map((group) => {
+        {data?.content.groupList.map((group) => {
           return <GroupCard {...group} key={group.title} />;
         })}
       </Style.CardList>

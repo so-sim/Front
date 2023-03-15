@@ -1,12 +1,13 @@
 import { kakaoLogin } from '../../api/Auth/index';
 import { useMutation } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
+import { setAccesToken } from '@/api';
 
 const useSignInMutation = () => {
   const navigate = useNavigate();
   return useMutation(kakaoLogin, {
-    onSuccess: ({ data }) => {
-      localStorage.setItem('token', data.token);
+    onSuccess: ({ content }) => {
+      setAccesToken(content.accessToken);
       navigate('/');
     },
     onError: (error) => {},

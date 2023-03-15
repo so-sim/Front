@@ -1,7 +1,6 @@
-import { getOneOfDetail, DetailInfo } from '@/api/Detail';
-import { ServerResponse } from '@/types';
+import { getOneOfEvent } from '@/api/Event';
 import { useQuery } from '@tanstack/react-query';
 
 export const useGetOneOfDetail = (eventId: string) => {
-  return useQuery<ServerResponse<DetailInfo>>(['oneOfDetail', eventId], () => getOneOfDetail(eventId));
+  return useQuery(['oneOfDetail', eventId], () => getOneOfEvent(eventId));
 };

@@ -6,9 +6,9 @@ import { GroupColorList } from '../GroupColorList';
 import { Input, Label } from '@/common';
 import { DropBox } from '../DropBox';
 import { isValid } from '@/utils/validation';
-import { COLORS, DROPDOWN_LIST, GroupType, PLACEHOLDER } from '@/constants';
-import { GroupColor } from '@/constants';
+import { COLORS, DROPDOWN_LIST, PLACEHOLDER } from '@/constants';
 import { useCreateGroup } from '@/queries/Group';
+import { GroupColor } from '@/types/group';
 
 export interface ModalProps {
   isOpen: boolean;

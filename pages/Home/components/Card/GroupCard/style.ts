@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { GroupColor as Color } from '../../../../../constants';
+import { GroupColor as Color } from '@/types/group';
 
 export const GroupColor = styled.div<{ color: Color }>`
   width: 100%;

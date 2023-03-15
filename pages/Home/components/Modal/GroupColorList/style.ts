@@ -1,5 +1,6 @@
+import { GroupColor } from '@/types/group';
 import styled from '@emotion/styled';
-import { GroupColor } from '@/constants';
+
 export const ColorButton = styled.button<{ color: GroupColor }>`
   background-color: ${({ color }) => color};
   width: 20px;
