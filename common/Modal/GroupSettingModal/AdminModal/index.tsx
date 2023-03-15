@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from 'react';
+import { FC, useState } from 'react';
 import { Input, Label } from '@/common';
 import Button from '@/common/Button';
 import Modal from '@/common/Modal';
@@ -10,29 +10,27 @@ import { QuitGroup } from '../../QuitGroup';
 import * as Style from './style';
 import { COLORS, DROPDOWN_LIST } from '@/constants';
 import { ModalHandlerProps } from '../../CreateGroupModal';
-import { useCheckInit } from '@/hooks/useCheckInit';
 import { useUpdateGroup } from '@/queries/Group';
 import { useParams } from 'react-router-dom';
 import { GroupColor } from '@/types/group';
 
 export const AdminModal: FC<ModalHandlerProps> = ({ isOpen, modalHandler }) => {
-  const [groupName, setGroupName] = useState('');
-  const [myName, setMyName] = useState('');
-  const [type, setType] = useState('');
+  const [groupName, setGroupName] = useState('모임이름');
+  const [myName, setMyName] = useState('내이름');
+  const [type, setType] = useState('스터디');
   const [color, setColor] = useState<GroupColor>('#f86565');
 
-  const [groupCheck, nameCheck] = useCheckInit(groupName, myName);
+  const { groupId } = useParams();
 
-  const params = useParams();
-  console.log(params);
-
-  const update = useUpdateGroup();
+  const { mutate: updateGroupMutate } = useUpdateGroup();
 
   const updateGroupInfo = () => {
-    // update.mutate({ title: groupName, type, coverColor: color, groupId: params.groupId });
+    const id = Number(groupId);
+    updateGroupMutate({ title: groupName, type, coverColor: color, groupId: id });
+    modalHandler();
   };
 
-  const isValidForm = (): boolean => {
+  const isValidForm = () => {
     if (!isValid(groupName)) return false;
     if (!isValid(myName)) return false;
     if (type === '') return false;
@@ -50,10 +48,10 @@ export const AdminModal: FC<ModalHandlerProps> = ({ isOpen, modalHandler }) => {
           <Style.SubTitle>사용자 설정</Style.SubTitle>
           <div style={{ width: '100%', borderLeft: `2px solid ${theme.colors.neutral_400_b}`, paddingLeft: '16px' }}>
             <Label title="모임 이름" flexDirection="column">
-              <Input value={groupName} isValid={groupCheck || isValid(groupName)} onChange={setGroupName} maxLength={15} />
+              <Input value={groupName} isValid={isValid(groupName)} onChange={setGroupName} maxLength={15} />
             </Label>
             <Label title="내 이름" flexDirection="column">
-              <Input value={myName} isValid={nameCheck || isValid(myName)} onChange={setMyName} maxLength={15} />
+              <Input value={myName} isValid={isValid(myName)} onChange={setMyName} maxLength={15} />
             </Label>
             <Label title="모임 유형" flexDirection="column">
               <DropBox dropDownList={DROPDOWN_LIST} type={type} setType={setType} />
@@ -72,8 +70,12 @@ export const AdminModal: FC<ModalHandlerProps> = ({ isOpen, modalHandler }) => {
       </Modal.Body>
       <Modal.Footer>
         <Style.ButtonFrame>
-          <Button color="white">취소</Button>
-          <Button color="black">저장</Button>
+          <Button color="white" onClick={modalHandler}>
+            취소
+          </Button>
+          <Button color={isValidForm() ? 'black' : 'disabled'} onClick={updateGroupInfo}>
+            저장
+          </Button>
         </Style.ButtonFrame>
       </Modal.Footer>
     </Modal.Frame>
