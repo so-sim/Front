@@ -28,6 +28,9 @@ export const DropDownItem = styled.div<DropDownItemProps>`
   background-color: white;
   cursor: pointer;
   border-bottom: 2px solid ${({ theme }) => theme.colors.neutral_400_b};
+  span {
+    font-size: 14px;
+  }
   &:hover {
     background-color: ${({ theme }) => theme.colors.neutral_300_b};
   }

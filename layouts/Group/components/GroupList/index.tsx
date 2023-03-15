@@ -5,11 +5,11 @@ import { SYSTEM } from '../../../../assets/icons/System';
 import * as Stlye from './styles';
 
 const Group = [
-  { name: '테스1', color: '#f86565', id: '1' },
-  { name: '테스2', color: '#f89a65', id: '2' },
-  { name: '테스3', color: '#f8e065', id: '3' },
-  { name: '테스4', color: '#658ef8', id: '4' },
-  { name: '테스5', color: '#9465f8', id: '5' },
+  { title: '테스1', coverColor: '#f86565', groupId: '1' },
+  { title: '테스2', coverColor: '#f89a65', groupId: '2' },
+  { title: '테스3', coverColor: '#f8e065', groupId: '3' },
+  { title: '테스4', coverColor: '#658ef8', groupId: '4' },
+  { title: '테스5', coverColor: '#9465f8', groupId: '5' },
 ];
 
 const GroupList = () => {
@@ -29,10 +29,10 @@ const GroupList = () => {
     <>
       <Stlye.Layout>
         {Group.map((group) => (
-          <NavLink key={group.id} to={`/group/${group.id}/book`}>
-            <Stlye.Cover isSelected={isSelected(group.id)} />
-            <Stlye.EachGroup color={group.color}>
-              <span>{group.name.substring(0, 3)}</span>
+          <NavLink key={group.groupId} to={`/group/${group.groupId}/book`}>
+            <Stlye.Cover isSelected={isSelected(group.groupId)} />
+            <Stlye.EachGroup color={group.coverColor}>
+              <span>{group.title.substring(0, 3)}</span>
             </Stlye.EachGroup>
           </NavLink>
         ))}
