@@ -1,15 +1,15 @@
 import { rest } from 'msw';
 
 const groupList = [
-  { title: '전국 노래 자랑', admin: '윤하나둘셋넷', coverColor: '#f86565', id: '1' },
-  { title: '전국 노래 자랑', admin: '윤하나', coverColor: '#f86565', id: '2' },
-  { title: '전국 노래 자랑', admin: '윤둘', coverColor: '#f86565', id: '3' },
-  { title: '전국 노래 자랑', admin: '윤셋', coverColor: '#f86565', id: '4' },
-  { title: '전국 노래 자랑', admin: '윤넷', coverColor: '#f86565', id: '5' },
-  { title: '전국 노래 자랑', admin: '윤하나둘', coverColor: '#f86565', id: '6' },
-  { title: '전국 노래 자랑', admin: '윤하나셋넷', coverColor: '#f86565', id: '7' },
-  { title: '전국 노래 자랑', admin: '윤둘셋넷', coverColor: '#f86565', id: '8' },
-  { title: '전국 노래 자랑', admin: '윤하나둘넷', coverColor: '#f86565', id: '9' },
+  { title: '전국 노래 자랑', admin: '윤하나둘셋넷', coverColor: '#f86565', groupId: '1' },
+  { title: '전국 노래 자랑', admin: '윤하나', coverColor: '#f86565', groupId: '2' },
+  { title: '전국 노래 자랑', admin: '윤둘', coverColor: '#f86565', groupId: '3' },
+  { title: '전국 노래 자랑', admin: '윤셋', coverColor: '#f86565', groupId: '4' },
+  { title: '전국 노래 자랑', admin: '윤넷', coverColor: '#f86565', groupId: '5' },
+  { title: '전국 노래 자랑', admin: '윤하나둘', coverColor: '#f86565', groupId: '6' },
+  { title: '전국 노래 자랑', admin: '윤하나셋넷', coverColor: '#f86565', groupId: '7' },
+  { title: '전국 노래 자랑', admin: '윤둘셋넷', coverColor: '#f86565', groupId: '8' },
+  { title: '전국 노래 자랑', admin: '윤하나둘넷', coverColor: '#f86565', groupId: '9' },
 ];
 
 const getGroupList: Parameters<typeof rest.get>[1] = (req, res, ctx) => {

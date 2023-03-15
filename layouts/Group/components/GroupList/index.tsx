@@ -1,3 +1,4 @@
+import { CreateGroupModal } from '@/common/CreateGroupModal';
 import React, { useState } from 'react';
 import { NavLink, useParams } from 'react-router-dom';
 import { SYSTEM } from '../../../../assets/icons/System';
@@ -14,7 +15,7 @@ const Group = [
 const GroupList = () => {
   const param = useParams();
   const { groupId } = param;
-  const [showCreateModal, setShowCreateModal] = useState(true);
+  const [showCreateModal, setShowCreateModal] = useState(false);
 
   const handleCreateModal = () => {
     setShowCreateModal((prev) => !prev);
@@ -37,6 +38,7 @@ const GroupList = () => {
         ))}
         <Stlye.CreateButton onClick={handleCreateModal}>{SYSTEM.PLUS_GRAY}</Stlye.CreateButton>
       </Stlye.Layout>
+      <CreateGroupModal isOpen={showCreateModal} setIsOpen={handleCreateModal} />
     </>
   );
 };

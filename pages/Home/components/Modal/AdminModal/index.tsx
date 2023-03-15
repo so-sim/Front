@@ -9,7 +9,7 @@ import { DropBox } from '../DropBox';
 import { QuitGroup } from '../QuitGroup';
 import * as Style from './style';
 import { COLORS, DROPDOWN_LIST } from '@/constants';
-import { ModalProps } from '../CreateGroupModal';
+import { ModalProps } from '../../../../../common/CreateGroupModal';
 import { useCheckInit } from '@/hooks/useCheckInit';
 import { useUpdateGroup } from '@/queries/Group';
 import { useParams } from 'react-router-dom';
