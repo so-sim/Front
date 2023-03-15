@@ -8,7 +8,7 @@ export interface GroupInfo {
 }
 
 export interface GroupId {
-  groupId: string;
+  groupId: number;
 }
 
 export interface GroupNickname {
@@ -18,14 +18,13 @@ export interface GroupNickname {
 export interface GroupDetail {
   title: string;
   adminNickname: string;
-  createDate: string;
-  updateDate: string;
+  groupId: number;
   coverColor: string;
   groupType: string;
 }
 
 export interface ParticipantList {
-  adminId: string;
+  adminId: number;
   adminNickname: string;
   nicknameList: string[];
 }
@@ -34,4 +33,18 @@ export interface CoverGroupInfo {
   title: string;
   coverColor: GroupColor;
   admin: string;
+}
+
+export interface GropuList {
+  groupId: number;
+  title: string;
+  coverColor: GroupColor;
+  groupType: string;
+  adminNickname: string;
+}
+
+export interface GroupListWithIndex {
+  index: number;
+  next: boolean;
+  groupList: GropuList[];
 }

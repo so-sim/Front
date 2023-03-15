@@ -13,5 +13,5 @@ export const GroupCardComponent = Template.bind({});
 GroupCardComponent.args = {
   title: '전국 대한 산악회',
   coverColor: '#f86565',
-  admin: '하이하이하이염',
+  adminNickname: '하이하이하이염',
 };

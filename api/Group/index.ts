@@ -1,24 +1,26 @@
 import { ServerResponse } from '@/types/serverResponse';
-import { CoverGroupInfo, GroupDetail, GroupId, GroupInfo, GroupNickname, ParticipantList } from '@/types/group';
+import { GroupDetail, GroupId, GroupInfo, GroupListWithIndex, GroupNickname, ParticipantList } from '@/types/group';
 import api from '..';
+import { QueryFunctionContext } from '@tanstack/react-query';
 
 export const createGroup = async (newGroupInfo: GroupInfo): Promise<ServerResponse<GroupId>> => {
   const { data } = await api.post('/api/group', newGroupInfo);
   return data;
 };
 
-export const getGroupDetail = async (groupId: string): Promise<ServerResponse<GroupDetail>> => {
-  const { data } = await api.get(`/api/group/${groupId}`);
+export const getGroupDetail = async (group_id: string): Promise<ServerResponse<GroupDetail>> => {
+  const { data } = await api.get(`/api/group/${group_id}`);
   return data;
 };
 
-export const getGroupList = async (): Promise<ServerResponse<CoverGroupInfo[]>> => {
-  const { data } = await api.get(`/api/groupList`);
+export const getGroupList = async ({ queryKey }: QueryFunctionContext<[string, number]>): Promise<ServerResponse<GroupListWithIndex>> => {
+  const [_, index] = queryKey;
+  const { data } = await api.get(`/api/groups?index=${index}`);
   return data;
 };
 
-export const getParticipantList = async (groupId: string): Promise<ServerResponse<ParticipantList>> => {
-  const { data } = await api.get(`/api/group/${groupId}/participant`);
+export const getParticipantList = async (group_id: string): Promise<ServerResponse<ParticipantList>> => {
+  const { data } = await api.get(`/api/group/${group_id}/participant`);
   return data;
 };
 
@@ -28,8 +30,8 @@ export const updateGroup = async (updateGroupInfo: GroupInfo & GroupId): Promise
   return data;
 };
 
-export const deleteGroup = async (groupId: string): Promise<ServerResponse> => {
-  const { data } = await api.delete(`/api/group/${groupId}`);
+export const deleteGroup = async (group_id: string): Promise<ServerResponse> => {
+  const { data } = await api.delete(`/api/group/${group_id}`);
   return data;
 };
 
