@@ -2,7 +2,7 @@ import React, { FC } from 'react';
 import { USER } from '@/assets/icons/User';
 import Modal from '@/common/Modal';
 import * as Style from './styles';
-import { ModalProps } from '../../../../../common/CreateGroupModal';
+import { ModalProps } from '../CreateGroupModal';
 
 export const LoginModal: FC<ModalProps> = ({ isOpen, setIsOpen }) => {
   return (

@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { AddCard } from '../Card/AddCard';
 import { GroupCard } from '../Card/GroupCard';
-import { CreateGroupModal } from '../../../../common/CreateGroupModal';
+import { CreateGroupModal } from '../../../../common/Modal/CreateGroupModal';
 import * as Style from './style';
 import { useGroupList } from '@/queries/Group/';
 

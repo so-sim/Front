@@ -1,4 +1,4 @@
-import { CreateGroupModal } from '@/common/CreateGroupModal';
+import { CreateGroupModal } from '@/common/Modal/CreateGroupModal';
 import React, { useState } from 'react';
 import { NavLink, useParams } from 'react-router-dom';
 import { SYSTEM } from '../../../../assets/icons/System';

@@ -1,5 +1,5 @@
 import React, { FC, useEffect, useState } from 'react';
-import Button from '../../../../../common/Button';
+import Button from '../../Button';
 import { Input, Label } from '@/common';
 import Modal from '@/common/Modal';
 import { PLACEHOLDER } from '@/constants';

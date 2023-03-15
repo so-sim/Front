@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import theme from '../../../../../styles/Theme';
+import theme from '../../../styles/Theme';
 
 export const Frame = styled.div`
   display: flex;

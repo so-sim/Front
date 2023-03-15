@@ -4,7 +4,7 @@ import { SYSTEM } from '../../../../../../assets/icons/System';
 import { USER } from '../../../../../../assets/icons/User';
 import Button from '../../../../../../common/Button';
 import { Label } from '../../../../../../common/Label';
-import { DropBox } from '../../../../../Home/components/Modal/DropBox';
+import { DropBox } from '../../../../../../common/DropBox';
 import * as Style from './styles';
 
 interface UserDetailsProps {

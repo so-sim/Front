@@ -3,7 +3,7 @@ import React, { Dispatch, SetStateAction, useState } from 'react';
 import Button from '@/common/Button';
 import { Label } from '@/common/Label';
 import Modal from '@/common/Modal';
-import { DropBox } from '@/pages/Home/components/Modal/DropBox';
+import { DropBox } from '@/common/DropBox';
 import * as Style from './styles';
 import { SYSTEM } from '@/assets/icons/System';
 
