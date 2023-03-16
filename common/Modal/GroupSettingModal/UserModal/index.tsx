@@ -26,7 +26,7 @@ export const UserModal: FC<ModalHandlerProps> = ({ modalHandler }) => {
   useEffect(() => {
     if (!myNickname) return;
     setMyName(myNickname.content.nickname);
-  }, [groupId]);
+  }, [myNickname?.content.nickname]);
 
   return (
     <Modal.Frame onClick={modalHandler} width="492px" height="380px">

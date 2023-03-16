@@ -56,7 +56,7 @@ export const AdminModal: FC<ModalHandlerProps> = ({ modalHandler }) => {
     setColor(groupData.content.coverColor);
     setType(groupData.content.groupType);
     setMyName(myNickname.content.nickname);
-  }, [groupId]);
+  }, [groupData?.content.title, myNickname?.content.nickname]);
 
   return (
     <Modal.Frame onClick={modalHandler} width="492px" height="708px">
