@@ -1,7 +1,6 @@
 import { AdminModal } from '@/common/Modal/GroupSettingModal/AdminModal';
 import { UserModal } from '@/common/Modal/GroupSettingModal/UserModal';
 import { useGroupDetail } from '@/queries/Group';
-import { useGetMyNikname } from '@/queries/Group/useGetMyNickname';
 import React, { useState } from 'react';
 import { NavLink, useParams } from 'react-router-dom';
 import { SYSTEM } from '../../../../assets/icons/System';
@@ -19,7 +18,7 @@ const ETC = [
 ];
 
 const GroupSideBar = () => {
-  const [showGroupSettingModal, setShowGroupSettingModal] = useState(true);
+  const [showGroupSettingModal, setShowGroupSettingModal] = useState(false);
   const param = useParams();
   const { groupId } = param;
 
@@ -69,7 +68,7 @@ const GroupSideBar = () => {
           )}
         </Style.TapContainer>
       </Style.Layout>
-      {groupData?.content.isAdmin ? (
+      {!groupData?.content.isAdmin ? (
         <AdminModal isOpen={showGroupSettingModal} modalHandler={handleGroupSettingModal} />
       ) : (
         <UserModal isOpen={showGroupSettingModal} modalHandler={handleGroupSettingModal} />

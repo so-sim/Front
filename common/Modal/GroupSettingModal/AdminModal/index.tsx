@@ -39,6 +39,8 @@ export const AdminModal: FC<ModalHandlerProps> = ({ isOpen, modalHandler }) => {
     withdrawalGroupMutate({ groupId: id });
   };
 
+  console.log(groupData);
+
   const isValidForm = () => {
     if (!isValid(groupName)) return false;
     if (!isValid(myName)) return false;
@@ -79,7 +81,7 @@ export const AdminModal: FC<ModalHandlerProps> = ({ isOpen, modalHandler }) => {
             </Label>
             <Label title="모임 탈퇴" flexDirection="column">
               <Style.WithDrwal>
-                <Style.GroupName>그룹이름</Style.GroupName>
+                <Style.GroupName>{groupData?.content.title}</Style.GroupName>
                 <Style.QuitButton onClick={withdrwalGroup}>탈퇴</Style.QuitButton>
               </Style.WithDrwal>
             </Label>

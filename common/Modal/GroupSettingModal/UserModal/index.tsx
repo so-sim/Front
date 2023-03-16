@@ -11,7 +11,7 @@ import { useGroupDetail, useWithdrawalGroup } from '@/queries/Group';
 import { useGetMyNikname } from '@/queries/Group/useGetMyNickname';
 
 export const UserModal: FC<ModalHandlerProps> = ({ isOpen, modalHandler }) => {
-  const [myName, setMyName] = useState('내이름');
+  const [myName, setMyName] = useState('');
   const { groupId } = useParams();
 
   const { mutate: withdrawalGroupMutate } = useWithdrawalGroup();

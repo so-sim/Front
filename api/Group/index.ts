@@ -8,7 +8,7 @@ export const createGroup = async (newGroupInfo: GroupInfo): Promise<ServerRespon
 };
 
 export const getGroupDetail = async (groupId: GroupId): Promise<ServerResponse<GroupDetail>> => {
-  const { data } = await api.get(`/api/group/${groupId}`);
+  const { data } = await api.get(`/api/group/${groupId.groupId}`);
   return data;
 };
 
@@ -18,7 +18,7 @@ export const getGroupList = async (index: number): Promise<ServerResponse<GroupL
 };
 
 export const getParticipantList = async (groupId: GroupId): Promise<ServerResponse<ParticipantList>> => {
-  const { data } = await api.get(`/api/group/${groupId}/participant`);
+  const { data } = await api.get(`/api/group/${groupId.groupId}/participants`);
   return data;
 };
 
@@ -29,7 +29,7 @@ export const updateGroup = async (updateGroupInfo: GroupInfo & GroupId): Promise
 };
 
 export const deleteGroup = async (groupId: GroupId): Promise<ServerResponse> => {
-  const { data } = await api.delete(`/api/group/${groupId}`);
+  const { data } = await api.delete(`/api/group/${groupId.groupId}`);
   return data;
 };
 
@@ -46,7 +46,7 @@ export const changeAdmin = async (info: GroupNickname & GroupId): Promise<Server
 };
 
 export const withdrawalGroup = async (groupId: GroupId): Promise<ServerResponse> => {
-  const { data } = await api.delete(`/api/group/${groupId}`);
+  const { data } = await api.delete(`/api/group/${groupId.groupId}`);
   return data;
 };
 
@@ -57,6 +57,6 @@ export const changeNickname = async (info: GroupNickname & GroupId): Promise<Ser
 };
 
 export const getMyNickname = async (groupId: GroupId): Promise<ServerResponse<GroupNickname>> => {
-  const { data } = await api.get(`/api/group/${groupId}/particiapnt`);
+  const { data } = await api.get(`/api/group/${groupId.groupId}/participant`);
   return data;
 };
