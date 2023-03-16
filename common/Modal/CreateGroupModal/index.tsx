@@ -11,11 +11,10 @@ import { useCreateGroup } from '@/queries/Group';
 import { GroupColor } from '@/types/group';
 
 export interface ModalHandlerProps {
-  isOpen: boolean;
   modalHandler: () => void;
 }
 
-export const CreateGroupModal: FC<ModalHandlerProps> = ({ isOpen, modalHandler }) => {
+export const CreateGroupModal: FC<ModalHandlerProps> = ({ modalHandler }) => {
   const [groupName, setGroupName] = useState('');
   const [myName, setMyName] = useState('');
   const [type, setType] = useState('');
@@ -43,7 +42,7 @@ export const CreateGroupModal: FC<ModalHandlerProps> = ({ isOpen, modalHandler }
   };
 
   return (
-    <Modal.Frame isOpen={isOpen} onClick={modalHandler} width="448px" height="446px">
+    <Modal.Frame onClick={modalHandler} width="448px" height="446px">
       <Modal.Header onClick={modalHandler}>
         <Style.Title>모임 만들기</Style.Title>
       </Modal.Header>

@@ -5,9 +5,9 @@ import * as Style from './styles';
 import { ModalProps } from '@/common/Modal';
 import { SYSTEM } from '@/assets/icons/System';
 
-export const InviteModal: FC<ModalProps> = ({ isOpen, onClick }) => {
+export const InviteModal: FC<ModalProps> = ({ onClick }) => {
   return (
-    <Modal.Frame isOpen={isOpen} width="448px" height="264px">
+    <Modal.Frame width="448px" height="264px">
       <Modal.Header onClick={onClick}>
         <Style.Title>초대하기</Style.Title>
       </Modal.Header>

@@ -7,7 +7,7 @@ import { isValid } from '@/utils/validation';
 import * as Style from './styles';
 import { ModalProps } from '@/common/Modal';
 
-export const InvitationModal: FC<ModalProps> = ({ isOpen, onClick }) => {
+export const InvitationModal: FC<ModalProps> = ({ onClick }) => {
   const [myName, setMyName] = useState('');
   const [isInit, setIsInit] = useState(true);
 
@@ -16,7 +16,7 @@ export const InvitationModal: FC<ModalProps> = ({ isOpen, onClick }) => {
   }, [myName]);
 
   return (
-    <Modal.Frame isOpen={isOpen} width="448px" height="262px">
+    <Modal.Frame width="448px" height="262px">
       <Modal.Header onClick={onClick}>
         <Style.Title>한사랑 산악회 모임</Style.Title>
       </Modal.Header>

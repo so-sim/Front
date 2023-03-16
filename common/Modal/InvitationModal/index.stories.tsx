@@ -12,6 +12,5 @@ const Template: ComponentStory<typeof InvitationModal> = (args) => <InvitationMo
 export const InvitationModalComponent = Template.bind({});
 
 InvitationModalComponent.args = {
-  isOpen: true,
   onClick: () => undefined,
 };

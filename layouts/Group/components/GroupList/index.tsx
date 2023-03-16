@@ -38,7 +38,7 @@ const GroupList = () => {
         ))}
         <Stlye.CreateButton onClick={handleCreateModal}>{SYSTEM.PLUS_GRAY}</Stlye.CreateButton>
       </Stlye.Layout>
-      <CreateGroupModal isOpen={showCreateModal} modalHandler={handleCreateModal} />
+      {showCreateModal && <CreateGroupModal modalHandler={handleCreateModal} />}
     </>
   );
 };

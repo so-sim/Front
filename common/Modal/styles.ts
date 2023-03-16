@@ -1,8 +1,7 @@
 import { ModalProps, ModalFooterProps } from './index';
 import styled from '@emotion/styled';
 
-export const Overlay = styled.div<Pick<ModalProps, 'isOpen'>>`
-  display: ${(props) => (props.isOpen ? 'block' : 'none')};
+export const Overlay = styled.div`
   position: fixed;
   background-color: ${({ theme }) => theme.colors.secondary_900};
   opacity: 0.3;
@@ -19,7 +18,7 @@ export const ModalFrame = styled.div<ModalProps>`
   width: ${(props) => props.width};
   height: ${(props) => props.height};
   border-radius: ${(props) => props.borderRadius};
-  display: ${(props) => (props.isOpen ? 'flex' : 'none')};
+  display: flex;
   flex-direction: column;
   position: absolute;
   right: 0;

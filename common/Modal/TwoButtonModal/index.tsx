@@ -8,7 +8,6 @@ interface ModalButton {
 }
 
 interface TwoButtonModalProps {
-  isOpen: boolean;
   onClick: () => void;
   title: string;
   description: string;
@@ -17,9 +16,9 @@ interface TwoButtonModalProps {
   flexDirection?: 'row' | 'column';
 }
 
-export const TwoButtonModal = ({ isOpen, onClick, title, description, firstBtn, secondBtn, flexDirection = 'row' }: TwoButtonModalProps) => {
+export const TwoButtonModal = ({ onClick, title, description, firstBtn, secondBtn, flexDirection = 'row' }: TwoButtonModalProps) => {
   return (
-    <Modal.Frame width="376px" height="208px" isOpen={isOpen} onClick={onClick}>
+    <Modal.Frame width="376px" height="208px" onClick={onClick}>
       <Modal.Header>
         <div style={{ textAlign: 'center', height: '32px', marginBottom: '4px' }}>{title}</div>
       </Modal.Header>

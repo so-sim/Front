@@ -4,9 +4,9 @@ import Modal from '@/common/Modal';
 import * as Style from './styles';
 import { ModalHandlerProps } from '../CreateGroupModal';
 
-export const LoginModal: FC<ModalHandlerProps> = ({ isOpen, modalHandler }) => {
+export const LoginModal: FC<ModalHandlerProps> = ({ modalHandler }) => {
   return (
-    <Modal.Frame isOpen={isOpen} onClick={modalHandler}>
+    <Modal.Frame onClick={modalHandler}>
       <Modal.Header onClick={modalHandler}>로그인</Modal.Header>
       <Modal.Body>
         <Style.GuidePhrase>서비스 이용을 위해서는 로그인이 필요해요.</Style.GuidePhrase>

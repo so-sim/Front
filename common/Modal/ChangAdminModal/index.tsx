@@ -6,14 +6,13 @@ import { useParams } from 'react-router-dom';
 import * as Style from './styles';
 
 interface ChangeAdminModalProps {
-  isOpen: boolean;
   modalHandler: () => void;
   onClickConfirm: () => void;
 }
 
-const ChangeAdminModal: FC<ChangeAdminModalProps> = ({ isOpen, modalHandler, onClickConfirm }) => {
+const ChangeAdminModal: FC<ChangeAdminModalProps> = ({ modalHandler, onClickConfirm }) => {
   return (
-    <Modal.Frame isOpen={isOpen} height={'228px'} onClick={modalHandler}>
+    <Modal.Frame height={'228px'} onClick={modalHandler}>
       <Modal.Header>총무 변경</Modal.Header>
       <Modal.Body>
         <Style.Container>총무를 넘겨주시겠습니까?</Style.Container>
