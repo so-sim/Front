@@ -7,13 +7,14 @@ import { isValid } from '@/utils/validation';
 import * as Style from './style';
 import { ModalHandlerProps } from '../../CreateGroupModal';
 import { useParams } from 'react-router-dom';
-import { useGroupDetail, useWithdrawalGroup } from '@/queries/Group';
+import { useChangeNickname, useGroupDetail, useWithdrawalGroup } from '@/queries/Group';
 import { useGetMyNikname } from '@/queries/Group/useGetMyNickname';
 
 export const UserModal: FC<ModalHandlerProps> = ({ modalHandler }) => {
   const [myName, setMyName] = useState('');
   const { groupId } = useParams();
 
+  const { mutate: updateNickname } = useChangeNickname();
   const { mutate: withdrawalGroupMutate } = useWithdrawalGroup();
   const { data: groupData } = useGroupDetail({ groupId: Number(groupId) });
   const { data: myNickname } = useGetMyNikname({ groupId: Number(groupId) });
@@ -21,6 +22,12 @@ export const UserModal: FC<ModalHandlerProps> = ({ modalHandler }) => {
   const withdrwalGroup = () => {
     const id = Number(groupId);
     withdrawalGroupMutate({ groupId: id });
+  };
+
+  const updateMyNickname = () => {
+    const id = Number(groupId);
+    updateNickname({ groupId: id, nickname: myName });
+    modalHandler();
   };
 
   useEffect(() => {
@@ -54,7 +61,9 @@ export const UserModal: FC<ModalHandlerProps> = ({ modalHandler }) => {
           <Button color="white" onClick={modalHandler}>
             취소
           </Button>
-          <Button color="black">저장</Button>
+          <Button color="black" onClick={updateMyNickname}>
+            저장
+          </Button>
         </Style.ButtonFrame>
       </Modal.Footer>
     </Modal.Frame>
