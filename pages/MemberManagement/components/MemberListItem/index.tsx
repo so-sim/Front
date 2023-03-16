@@ -1,7 +1,7 @@
 import { SYSTEM } from '@/assets/icons/System';
 import { USER } from '@/assets/icons/User';
 import DropDown from '@/common/DropDown';
-import { useChangeAdmin } from '@/queries/Group';
+import { useChangeAdmin, useGroupDetail } from '@/queries/Group';
 import React, { FC, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import ChangeAdminModal from '../../../../common/Modal/ChangAdminModal';
@@ -17,12 +17,12 @@ const DropDonwList = [
 ];
 
 const MemberListItem: FC<MemberListItemProps> = ({ nickname }) => {
-  const isAdmin = false;
+  const { groupId } = useParams();
+  const { data: groupData } = useGroupDetail({ groupId: Number(groupId) });
 
   const [showDropDown, setShowDropDown] = useState(false);
   const [selectAction, setSelectAction] = useState('');
   const [showChangeAdminModal, setShowChangeAdminModal] = useState(false);
-  const { groupId } = useParams();
 
   const handleDropDown = () => {
     setShowDropDown((prev) => !prev);
@@ -53,7 +53,7 @@ const MemberListItem: FC<MemberListItemProps> = ({ nickname }) => {
           <div>{USER.PERSON_XL}</div>
           <span>{nickname}</span>
         </Style.Flex>
-        {!isAdmin && (
+        {groupData?.content.isAdmin && (
           <Style.SVG>
             <div onClick={handleDropDown}>
               {SYSTEM.DOTS}
