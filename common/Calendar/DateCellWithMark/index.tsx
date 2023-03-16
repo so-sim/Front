@@ -11,17 +11,16 @@ interface DateCellWithMarkProps {
 
 const DateCellWithMark: FC<DateCellWithMarkProps> = ({ date, isCurrentMonth, isToday }) => {
   return (
-    <>
-      <Style.DateCell isCurrentMonth={isCurrentMonth(date)}>
-        <p>{date.date()}</p>
-        <Style.TodayMark isToday={isToday(date)} />
-        <Style.Mark>
-          <span>{MARK.BLUE}</span>
-          {/* <span>{MARK.YELLOW}</span> */}
-          {/* <span>{MARK.RED}</span> */}
-        </Style.Mark>
-      </Style.DateCell>
-    </>
+    <Style.DateCell>
+      <Style.Date isToday={isToday(date)} isSelected={true} isCurrentMonth={isCurrentMonth(date)}>
+        {date.date()}
+      </Style.Date>
+      <Style.Mark>
+        <span>{MARK.BLUE}</span>
+        {/* <span>{MARK.YELLOW}</span> */}
+        {/* <span>{MARK.RED}</span> */}
+      </Style.Mark>
+    </Style.DateCell>
   );
 };
 

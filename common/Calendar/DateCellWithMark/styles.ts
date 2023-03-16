@@ -1,10 +1,6 @@
 import styled from '@emotion/styled';
 
-interface DateCellProps {
-  isCurrentMonth: boolean;
-}
-
-export const DateCell = styled.div<DateCellProps>`
+export const DateCell = styled.div`
   cursor: pointer;
   position: relative;
   display: flex;
@@ -12,27 +8,35 @@ export const DateCell = styled.div<DateCellProps>`
   align-items: center;
   padding: 12px 4px;
   gap: 8px;
-  color: ${(props) => (props.isCurrentMonth ? 'black' : props.theme.colors.secondary_400)};
-  p {
-    text-align: center;
-    width: 28px;
-    height: 28px;
-  }
 `;
 
-interface TodayMark {
+interface DateProps {
   isToday: boolean;
+  isSelected: boolean;
+  isCurrentMonth: boolean;
 }
 
-export const TodayMark = styled.div<TodayMark>`
-  display: ${(props) => (props.isToday ? 'block' : 'none')};
-  position: absolute;
+export const Date = styled.div<DateProps>`
+  display: flex;
+  justify-content: center;
+  align-items: center;
   width: 28px;
   height: 28px;
-  border-radius: 50%;
-  background-color: ${({ theme }) => theme.colors.neutral_300_b};
-  z-index: -10;
-  top: 7px;
+  border-radius: 30px;
+  background-color: ${(props) => (props.isToday ? props.theme.colors.secondary_800 : 'white')};
+  color: ${(props) => {
+    if (props.isToday) {
+      return props.theme.colors.white;
+    } else if (!props.isCurrentMonth) {
+      return props.theme.colors.secondary_400;
+    } else {
+      return props.theme.colors.secondary_900;
+    }
+  }};
+  border: ${(props) => props.isSelected && `2px solid ${props.theme.colors.secondary_800}`};
+  :hover {
+    background-color: ${(props) => (props.isToday ? props.theme.colors.secondary_600 : props.theme.colors.neutral_200_b)};
+  }
 `;
 
 export const Mark = styled.div``;

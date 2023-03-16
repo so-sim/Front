@@ -2,7 +2,6 @@ import dayjs, { Dayjs } from 'dayjs';
 import React, { FC, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { ARROW } from '../../assets/icons/Arrow';
-import { MARK } from '../../assets/icons/Mark';
 import Button from '../../common/Button';
 import createCalendar from '../../utils/createCalendar';
 import DateCellWithMark from './DateCellWithMark';
@@ -19,9 +18,8 @@ const Calendar: FC<CalnedrProps> = ({ cellType }) => {
   const [baseDate, setBaseDate] = useState(dayjs());
   const today = dayjs();
   const monthList = createCalendar(baseDate);
-  const param = useParams();
   const navigate = useNavigate();
-  const { groupID } = param;
+  const { groupId } = useParams();
 
   const addMonth = () => {
     setBaseDate(baseDate.add(1, 'month'));
@@ -38,8 +36,8 @@ const Calendar: FC<CalnedrProps> = ({ cellType }) => {
     return date.format('YY-MM-DD') === today.format('YY-MM-DD');
   };
 
-  const goDetail = () => {
-    navigate(`/group/${groupID}/book/detail`);
+  const goDetail = (date: Dayjs) => {
+    navigate(`/group/${groupId}/book/detail?date=${date.format('YYYY-MM-DD')}`);
   };
 
   return (
@@ -67,15 +65,15 @@ const Calendar: FC<CalnedrProps> = ({ cellType }) => {
         </Style.WeekDate>
         <Style.CalendarContainer length={monthList.length} mini={cellType === 'Mark'}>
           {monthList.map((weeks, idx) => (
-            <Style.WeekWrap key={idx} onClick={goDetail}>
+            <Style.WeekWrap key={idx} cellType={cellType}>
               {weeks.map((date) => (
-                <>
+                <div key={date.format('YYYY-MM-DD')} onClick={() => goDetail(date)}>
                   {cellType === 'Tag' ? (
-                    <DateCellWithTag date={date} key={date.date()} isCurrentMonth={isCurrentMonth} isToday={isToday} />
+                    <DateCellWithTag date={date} isCurrentMonth={isCurrentMonth} isToday={isToday} />
                   ) : (
-                    <DateCellWithMark date={date} key={date.date()} isCurrentMonth={isCurrentMonth} isToday={isToday} />
+                    <DateCellWithMark date={date} isCurrentMonth={isCurrentMonth} isToday={isToday} />
                   )}
-                </>
+                </div>
               ))}
             </Style.WeekWrap>
           ))}

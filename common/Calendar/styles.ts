@@ -12,6 +12,7 @@ export const Header = styled.div`
   justify-content: space-between;
   height: 40px;
   margin-bottom: 12px;
+  white-space: nowrap;
   div {
     display: flex;
     align-items: center;
@@ -56,13 +57,18 @@ interface CalendarContainerProps {
 
 export const CalendarContainer = styled.div<CalendarContainerProps>`
   display: grid;
-  height: ${(props) => (props.mini ? '50%' : '90%')};
+  max-height: ${(props) => (props.mini ? '50%' : '100%')};
   grid-template-rows: ${(props) => `repeat(${props.length},1fr`};
   border: 1px solid ${({ theme }) => theme.colors.neutral_400_b};
 `;
 
-export const WeekWrap = styled.div`
+interface WeekWrapProps {
+  cellType: 'Mark' | 'Tag';
+}
+
+export const WeekWrap = styled.div<WeekWrapProps>`
   display: grid;
   grid-template-columns: repeat(7, 1fr);
+  max-height: ${(props) => props.cellType === 'Mark' && '80px'};
   border: 1px solid ${({ theme }) => theme.colors.neutral_400_b};
 `;
