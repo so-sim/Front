@@ -29,7 +29,7 @@ export const Header = () => {
           </Style.HeaderRight>
         </Paragraph>
       </Style.Header>
-      {<LoginModal isOpen={openModal} modalHandler={loginModalHandler} />}
+      {openModal && <LoginModal modalHandler={loginModalHandler} />}
     </>
   );
 };

@@ -10,7 +10,7 @@ import { useParams } from 'react-router-dom';
 import { useGroupDetail, useWithdrawalGroup } from '@/queries/Group';
 import { useGetMyNikname } from '@/queries/Group/useGetMyNickname';
 
-export const UserModal: FC<ModalHandlerProps> = ({ isOpen, modalHandler }) => {
+export const UserModal: FC<ModalHandlerProps> = ({ modalHandler }) => {
   const [myName, setMyName] = useState('');
   const { groupId } = useParams();
 
@@ -29,7 +29,7 @@ export const UserModal: FC<ModalHandlerProps> = ({ isOpen, modalHandler }) => {
   }, [groupId]);
 
   return (
-    <Modal.Frame isOpen={isOpen} onClick={modalHandler} width="492px" height="380px">
+    <Modal.Frame onClick={modalHandler} width="492px" height="380px">
       <Modal.Header onClick={modalHandler}>
         <Style.Title>모임 설정</Style.Title>
       </Modal.Header>

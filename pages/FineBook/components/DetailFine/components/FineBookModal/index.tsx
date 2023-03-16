@@ -8,12 +8,11 @@ import * as Style from './styles';
 import { SYSTEM } from '@/assets/icons/System';
 
 interface ModalProps {
-  open: boolean;
   setOpen: Dispatch<SetStateAction<boolean>>;
   type?: 'update' | 'create';
 }
 
-export const FineBookModal = ({ open, setOpen, type = 'create' }: ModalProps) => {
+export const FineBookModal = ({ setOpen, type = 'create' }: ModalProps) => {
   const [member, setMember] = useState('');
   const [reason, setReason] = useState('');
 
@@ -50,7 +49,7 @@ export const FineBookModal = ({ open, setOpen, type = 'create' }: ModalProps) =>
   const status = [{ title: '미납' }, { title: '완납' }, { title: '확인 필요' }];
 
   return (
-    <Modal.Frame width="448px" height={type === 'create' ? '466px' : '412px'} isOpen={open} onClick={() => setOpen(false)}>
+    <Modal.Frame width="448px" height={type === 'create' ? '466px' : '412px'} onClick={() => setOpen(false)}>
       <Modal.Header onClick={() => setOpen(false)}>{type === 'create' ? '내역 추가하기' : '상세 내역 수정'}</Modal.Header>
       <div style={{ display: 'flex', flexDirection: 'column', width: '100%' }}>
         <Style.Row>

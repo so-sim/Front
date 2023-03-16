@@ -14,7 +14,7 @@ import { useParams } from 'react-router-dom';
 import { GroupColor } from '@/types/group';
 import { useGetMyNikname } from '@/queries/Group/useGetMyNickname';
 
-export const AdminModal: FC<ModalHandlerProps> = ({ isOpen, modalHandler }) => {
+export const AdminModal: FC<ModalHandlerProps> = ({ modalHandler }) => {
   const [groupName, setGroupName] = useState('');
   const [myName, setMyName] = useState('');
   const [type, setType] = useState('');
@@ -59,7 +59,7 @@ export const AdminModal: FC<ModalHandlerProps> = ({ isOpen, modalHandler }) => {
   }, [groupId]);
 
   return (
-    <Modal.Frame isOpen={isOpen} onClick={modalHandler} width="492px" height="708px">
+    <Modal.Frame onClick={modalHandler} width="492px" height="708px">
       <Modal.Header align="start" onClick={modalHandler}>
         <Style.Title>모임 설정</Style.Title>
       </Modal.Header>

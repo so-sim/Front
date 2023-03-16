@@ -62,7 +62,7 @@ const MemberListItem: FC<MemberListItemProps> = ({ nickname }) => {
           </Style.SVG>
         )}
       </Style.MemberContainer>
-      <ChangeAdminModal isOpen={showChangeAdminModal} modalHandler={handleShowChangeAdminModal} onClickConfirm={onClickConfirm} />
+      {showChangeAdminModal && <ChangeAdminModal modalHandler={handleShowChangeAdminModal} onClickConfirm={onClickConfirm} />}
     </>
   );
 };
