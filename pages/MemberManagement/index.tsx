@@ -1,21 +1,16 @@
 import { SYSTEM } from '@/assets/icons/System';
 import { USER } from '@/assets/icons/User';
 import Button from '@/common/Button';
-import { useChangeAdmin } from '@/queries/Group';
+import { useParticipantList } from '@/queries/Group';
 import { useParams } from 'react-router-dom';
 import MemberListItem from './components/MemberListItem';
 import * as Style from './styles';
 
-const FakeData = {
-  state: {},
-  content: {
-    adminId: 1,
-    adminNickname: '안녕하세요안녕하세요안녕하세요',
-    nicknameList: ['닉네임1', '닉네임1', '닉네임1', '닉네임1', '닉네임1', '닉네임1'],
-  },
-};
-
 const MemberManagement = () => {
+  const { groupId } = useParams();
+
+  const { data: participantList } = useParticipantList({ groupId: Number(groupId) });
+
   return (
     <>
       <Style.Container>
@@ -30,10 +25,10 @@ const MemberManagement = () => {
         </Style.Title>
         <Style.AdminContainer>
           <div>{USER.PERSON_XL}</div>
-          <span>{FakeData.content.adminNickname}</span>
+          <span>{participantList?.content.adminNickname}</span>
           <Style.Tage>총무</Style.Tage>
         </Style.AdminContainer>
-        {FakeData.content.nicknameList.map((nickname) => (
+        {participantList?.content.nicknameList.map((nickname) => (
           <MemberListItem nickname={nickname} key={nickname} />
         ))}
       </Style.Container>
