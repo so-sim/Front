@@ -12,6 +12,5 @@ const Template: ComponentStory<typeof LoginModal> = (args) => <LoginModal {...ar
 export const LoginModalComponent = Template.bind({});
 
 LoginModalComponent.args = {
-  isOpen: true,
-  setIsOpen: () => undefined,
+  modalHandler: () => undefined,
 };

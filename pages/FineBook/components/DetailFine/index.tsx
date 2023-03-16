@@ -64,7 +64,7 @@ const DetailFine = () => {
         <Pagination details={details} page={page} setPage={setPage} />
         <UserDetails open={openUserDetails} setOpen={setOpenUserDetails} select={select} />
       </Style.DetailFineFrame>
-      <FineBookModal open={openAddModal} setOpen={setOpenAddModal} />
+      {openAddModal && <FineBookModal setOpen={setOpenAddModal} />}
     </>
   );
 };

@@ -1,15 +1,14 @@
 import { ServerResponse } from '@/types/serverResponse';
 import { GroupDetail, GroupId, GroupInfo, GroupListWithIndex, GroupNickname, ParticipantList } from '@/types/group';
 import api from '..';
-import { QueryFunctionContext } from '@tanstack/react-query';
 
 export const createGroup = async (newGroupInfo: GroupInfo): Promise<ServerResponse<GroupId>> => {
   const { data } = await api.post('/api/group', newGroupInfo);
   return data;
 };
 
-export const getGroupDetail = async (group_id: string): Promise<ServerResponse<GroupDetail>> => {
-  const { data } = await api.get(`/api/group/${group_id}`);
+export const getGroupDetail = async (groupId: GroupId): Promise<ServerResponse<GroupDetail>> => {
+  const { data } = await api.get(`/api/group/${groupId.groupId}`);
   return data;
 };
 
@@ -18,8 +17,8 @@ export const getGroupList = async (index: number): Promise<ServerResponse<GroupL
   return data;
 };
 
-export const getParticipantList = async (group_id: string): Promise<ServerResponse<ParticipantList>> => {
-  const { data } = await api.get(`/api/group/${group_id}/participant`);
+export const getParticipantList = async (groupId: GroupId): Promise<ServerResponse<ParticipantList>> => {
+  const { data } = await api.get(`/api/group/${groupId.groupId}/participants`);
   return data;
 };
 
@@ -29,8 +28,8 @@ export const updateGroup = async (updateGroupInfo: GroupInfo & GroupId): Promise
   return data;
 };
 
-export const deleteGroup = async (group_id: string): Promise<ServerResponse> => {
-  const { data } = await api.delete(`/api/group/${group_id}`);
+export const deleteGroup = async (groupId: GroupId): Promise<ServerResponse> => {
+  const { data } = await api.delete(`/api/group/${groupId.groupId}`);
   return data;
 };
 
@@ -46,13 +45,18 @@ export const changeAdmin = async (info: GroupNickname & GroupId): Promise<Server
   return data;
 };
 
-export const withdrawalGroup = async (groupId: string): Promise<ServerResponse> => {
-  const { data } = await api.delete(`/api/group/${groupId}`);
+export const withdrawalGroup = async (groupId: GroupId): Promise<ServerResponse> => {
+  const { data } = await api.delete(`/api/group/${groupId.groupId}`);
   return data;
 };
 
 export const changeNickname = async (info: GroupNickname & GroupId): Promise<ServerResponse> => {
   const { nickname, groupId } = info;
   const { data } = await api.patch(`/api/participant/${groupId}`, { nickname });
+  return data;
+};
+
+export const getMyNickname = async (groupId: GroupId): Promise<ServerResponse<GroupNickname>> => {
+  const { data } = await api.get(`/api/group/${groupId.groupId}/participant`);
   return data;
 };

@@ -11,6 +11,5 @@ const Template: ComponentStory<typeof AdminModal> = (args) => <AdminModal {...ar
 
 export const AdminModalComponent = Template.bind({});
 AdminModalComponent.args = {
-  isOpen: true,
-  setIsOpen: () => undefined,
+  modalHandler: () => undefined,
 };

@@ -1,3 +1,4 @@
+import MemberManagement from '@/pages/MemberManagement';
 import React, { useState } from 'react';
 import { Route, Routes, useNavigate, useParams } from 'react-router-dom';
 import { ARROW } from '../../assets/icons/Arrow';
@@ -17,9 +18,7 @@ const DorpDownList = [
 ];
 
 const GroupLayout = () => {
-  const param = useParams();
   const navigate = useNavigate();
-  const { groupID } = param;
   const [dropDownState, setDropDownState] = useState('');
   const [showDropDown, setShowDropDown] = useState(false);
 
@@ -43,6 +42,7 @@ const GroupLayout = () => {
         <Routes>
           <Route path={`/book`} element={<Calendar />} />
           <Route path={`/book/detail`} element={<FineBook />} />
+          <Route path={'/member'} element={<MemberManagement />} />
         </Routes>
       </Style.GridLayout>
     </>

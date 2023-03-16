@@ -1,8 +1,10 @@
+import { AdminModal } from '@/common/Modal/GroupSettingModal/AdminModal';
+import { UserModal } from '@/common/Modal/GroupSettingModal/UserModal';
+import { useGroupDetail } from '@/queries/Group';
 import React, { useState } from 'react';
 import { NavLink, useParams } from 'react-router-dom';
 import { SYSTEM } from '../../../../assets/icons/System';
 import { USER } from '../../../../assets/icons/User';
-import Modal from '../../../../common/Modal';
 import * as Style from './styles';
 
 const GROUP_TAPS = [
@@ -16,26 +18,28 @@ const ETC = [
 ];
 
 const GroupSideBar = () => {
+  const [showGroupSettingModal, setShowGroupSettingModal] = useState(false);
   const param = useParams();
-  const { groupID } = param;
-  const [showEditModal, setShowEditModal] = useState(false);
+  const { groupId } = param;
 
-  const handelEditModal = () => {
-    setShowEditModal((prev) => !prev);
-  };
+  const { data: groupData } = useGroupDetail({ groupId: Number(groupId) });
 
   const isSelected = (link: string) => {
     return param['*']?.split('/').includes(link) === true;
   };
 
+  const handleGroupSettingModal = () => {
+    setShowGroupSettingModal((prev) => !prev);
+  };
+
   return (
     <>
       <Style.Layout>
-        <Style.Header>안녕하세요안녕하세요안녕하세요</Style.Header>
+        <Style.Header>{groupData?.content.title}</Style.Header>
         <Style.TapContainer>
           <span>모임관리</span>
           {GROUP_TAPS.map((tap) => (
-            <NavLink to={`/group/${groupID}/${tap.link}`} key={tap.title}>
+            <NavLink to={`/group/${groupId}/${tap.link}`} key={tap.title}>
               <Style.Selected isSelected={isSelected(tap.link)} />
               <Style.Tap disabled={tap.disabled}>
                 <div>{tap.svg}</div>
@@ -48,7 +52,7 @@ const GroupSideBar = () => {
           <span>기타</span>
           {ETC.map((etc) =>
             etc.link ? (
-              <NavLink to={`/group/${groupID}/${etc.link}`} key={etc.title}>
+              <NavLink to={`/group/${groupId}/${etc.link}`} key={etc.title}>
                 <Style.Selected isSelected={isSelected(etc.link)} />
                 <Style.Tap key={etc.title}>
                   <div>{etc.svg}</div>
@@ -56,7 +60,7 @@ const GroupSideBar = () => {
                 </Style.Tap>
               </NavLink>
             ) : (
-              <Style.Tap key={etc.title} onClick={handelEditModal}>
+              <Style.Tap key={etc.title} onClick={handleGroupSettingModal}>
                 <div>{etc.svg}</div>
                 <span>{etc.title}</span>
               </Style.Tap>
@@ -64,9 +68,8 @@ const GroupSideBar = () => {
           )}
         </Style.TapContainer>
       </Style.Layout>
-      <Modal.Frame isOpen={showEditModal} onClick={handelEditModal}>
-        <div>EditModal</div>
-      </Modal.Frame>
+      {groupData?.content.isAdmin && showGroupSettingModal && <AdminModal modalHandler={handleGroupSettingModal} />}
+      {!groupData?.content.isAdmin && showGroupSettingModal && <UserModal modalHandler={handleGroupSettingModal} />}
     </>
   );
 };
