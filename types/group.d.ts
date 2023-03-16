@@ -16,10 +16,11 @@ export interface GroupNickname {
 }
 
 export interface GroupDetail {
+  isAdmin: boolean;
   title: string;
   adminNickname: string;
   groupId: number;
-  coverColor: string;
+  coverColor: GroupColor;
   groupType: string;
 }
 

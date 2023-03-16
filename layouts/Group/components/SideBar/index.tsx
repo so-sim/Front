@@ -1,5 +1,7 @@
 import { AdminModal } from '@/common/Modal/GroupSettingModal/AdminModal';
 import { UserModal } from '@/common/Modal/GroupSettingModal/UserModal';
+import { useGroupDetail } from '@/queries/Group';
+import { useGetMyNikname } from '@/queries/Group/useGetMyNickname';
 import React, { useState } from 'react';
 import { NavLink, useParams } from 'react-router-dom';
 import { SYSTEM } from '../../../../assets/icons/System';
@@ -20,7 +22,8 @@ const GroupSideBar = () => {
   const [showGroupSettingModal, setShowGroupSettingModal] = useState(true);
   const param = useParams();
   const { groupId } = param;
-  const isAdmin = false;
+
+  const { data: groupData } = useGroupDetail({ groupId: Number(groupId) });
 
   const isSelected = (link: string) => {
     return param['*']?.split('/').includes(link) === true;
@@ -33,7 +36,7 @@ const GroupSideBar = () => {
   return (
     <>
       <Style.Layout>
-        <Style.Header>안녕하세요안녕하세요안녕하세요</Style.Header>
+        <Style.Header>{groupData?.content.title}</Style.Header>
         <Style.TapContainer>
           <span>모임관리</span>
           {GROUP_TAPS.map((tap) => (
@@ -66,7 +69,7 @@ const GroupSideBar = () => {
           )}
         </Style.TapContainer>
       </Style.Layout>
-      {isAdmin ? (
+      {groupData?.content.isAdmin ? (
         <AdminModal isOpen={showGroupSettingModal} modalHandler={handleGroupSettingModal} />
       ) : (
         <UserModal isOpen={showGroupSettingModal} modalHandler={handleGroupSettingModal} />

@@ -55,3 +55,8 @@ export const changeNickname = async (info: GroupNickname & GroupId): Promise<Ser
   const { data } = await api.patch(`/api/participant/${groupId}`, { nickname });
   return data;
 };
+
+export const getMyNickname = async (groupId: GroupId): Promise<ServerResponse<GroupNickname>> => {
+  const { data } = await api.get(`/api/group/${groupId}/particiapnt`);
+  return data;
+};

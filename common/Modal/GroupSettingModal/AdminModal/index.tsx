@@ -1,4 +1,4 @@
-import { FC, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { Input, Label } from '@/common';
 import Button from '@/common/Button';
 import Modal from '@/common/Modal';
@@ -9,20 +9,24 @@ import { DropBox } from '../../../DropBox';
 import * as Style from './style';
 import { COLORS, DROPDOWN_LIST } from '@/constants';
 import { ModalHandlerProps } from '../../CreateGroupModal';
-import { useUpdateGroup, useWithdrawalGroup } from '@/queries/Group';
+import { useGroupDetail, useUpdateGroup, useWithdrawalGroup } from '@/queries/Group';
 import { useParams } from 'react-router-dom';
 import { GroupColor } from '@/types/group';
+import { useGetMyNikname } from '@/queries/Group/useGetMyNickname';
 
 export const AdminModal: FC<ModalHandlerProps> = ({ isOpen, modalHandler }) => {
-  const [groupName, setGroupName] = useState('모임이름');
-  const [myName, setMyName] = useState('내이름');
-  const [type, setType] = useState('스터디');
-  const [color, setColor] = useState<GroupColor>('#f86565');
+  const [groupName, setGroupName] = useState('');
+  const [myName, setMyName] = useState('');
+  const [type, setType] = useState('');
+  const [color, setColor] = useState<GroupColor>('#f89a65');
 
   const { groupId } = useParams();
 
   const { mutate: updateGroupMutate } = useUpdateGroup();
   const { mutate: withdrawalGroupMutate } = useWithdrawalGroup();
+
+  const { data: groupData } = useGroupDetail({ groupId: Number(groupId) });
+  const { data: myNickname } = useGetMyNikname({ groupId: Number(groupId) });
 
   const updateGroupInfo = () => {
     const id = Number(groupId);
@@ -42,6 +46,15 @@ export const AdminModal: FC<ModalHandlerProps> = ({ isOpen, modalHandler }) => {
     if (!COLORS.includes(color)) return false;
     return true;
   };
+
+  useEffect(() => {
+    if (!groupData) return;
+    if (!myNickname) return;
+    setGroupName(groupData?.content.title);
+    setColor(groupData.content.coverColor);
+    setType(groupData.content.groupType);
+    setMyName(myNickname.content.nickname);
+  }, [groupId]);
 
   return (
     <Modal.Frame isOpen={isOpen} onClick={modalHandler} width="492px" height="708px">
