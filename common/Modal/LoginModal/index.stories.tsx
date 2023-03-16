@@ -13,5 +13,5 @@ export const LoginModalComponent = Template.bind({});
 
 LoginModalComponent.args = {
   isOpen: true,
-  setIsOpen: () => undefined,
+  modalHandler: () => undefined,
 };

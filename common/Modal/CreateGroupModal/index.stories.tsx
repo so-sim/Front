@@ -13,5 +13,5 @@ export const CreateGroupModalComponent = Template.bind({});
 
 CreateGroupModalComponent.args = {
   isOpen: true,
-  setIsOpen: () => undefined,
+  modalHandler: () => undefined,
 };
