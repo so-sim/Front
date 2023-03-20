@@ -57,3 +57,7 @@ export const ControllerFrame = styled.div`
 export const ArrowBlock = styled.span`
   display: flex;
 `;
+
+export const Date = styled.span`
+  ${({ theme }) => theme.font.headline}
+`;

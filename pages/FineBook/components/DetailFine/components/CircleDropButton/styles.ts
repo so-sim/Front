@@ -1,14 +1,16 @@
+import { PaymentType } from '@/types/event';
 import styled from '@emotion/styled';
+import { CircleDropButtonProps } from '.';
 
-export const StatusButton = styled.button<{ status: string }>`
+export const StatusButton = styled.button<CircleDropButtonProps>`
   display: flex;
   align-items: center;
   padding: 4px 12px;
   margin: 8px 10px;
   border-radius: 16px;
-  color: ${({ theme, status }) => (status === 'none' ? theme.colors.red_600 : status === 'checking' ? theme.colors.orange_600 : theme.colors.primary_600)};
-  border: 2px solid ${({ theme, status }) => (status === 'none' ? theme.colors.red_600 : status === 'checking' ? theme.colors.orange_600 : theme.colors.primary_600)};
-  background-color: ${({ theme, status }) => (status === 'none' ? theme.colors.red_200 : status === 'checking' ? theme.colors.orange_200 : theme.colors.blue_200)};
+  color: ${({ theme, status }) => (status === '미납' ? theme.colors.red_600 : status === '확인필요' ? theme.colors.orange_600 : theme.colors.primary_600)};
+  border: 2px solid ${({ theme, status }) => (status === '미납' ? theme.colors.red_600 : status === '확인필요' ? theme.colors.orange_600 : theme.colors.primary_600)};
+  background-color: ${({ theme, status }) => (status === '미납' ? theme.colors.red_200 : status === '확인필요' ? theme.colors.orange_200 : theme.colors.blue_200)};
 `;
 
 export const Text = styled.span`

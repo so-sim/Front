@@ -1,7 +1,12 @@
-import React, { Dispatch, FC, SetStateAction } from 'react';
-import { ARROW } from '../../../../../../assets/icons/Arrow';
-import Button from '../../../../../../common/Button';
+import { Dispatch, FC, SetStateAction } from 'react';
+import { ARROW } from '@/assets/icons/Arrow';
+import Button from '@/common/Button';
 import * as Style from './styles';
+import { useQueryString } from '@/hooks/useQueryString';
+import dayjs from 'dayjs';
+import { useGroupList } from '@/queries/Group';
+import { useGetDetailList } from '@/queries/Detail/useGetDetailList';
+import { EventFilter } from '@/types/event';
 
 interface DateControllerProps {
   setOpenAddModal: Dispatch<SetStateAction<boolean>>;
@@ -12,7 +17,7 @@ export const DateController: FC<DateControllerProps> = ({ setOpenAddModal }) => 
     <Style.DateController>
       <Style.ControllerFrame>
         <Style.Block>
-          <span>1월 22일~1월 28일</span>
+          <Style.Date>1월 22일~1월 28일</Style.Date>
           <Style.ArrowBlock>
             <Style.ArrowWrapper>{ARROW.LEFT}</Style.ArrowWrapper>
             <Style.ArrowWrapper>{ARROW.RIGHT}</Style.ArrowWrapper>

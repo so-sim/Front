@@ -1,17 +1,22 @@
-import React, { Dispatch, FC, SetStateAction } from 'react';
-import { Details } from '../..';
-import { CircleDropButton } from '../CircleDropButton';
+import { EvnetInfo } from '@/types/event';
+import { changeNumberToMoney } from '@/utils/changeNumberToMoney';
+import { Dispatch, FC, SetStateAction, useState } from 'react';
+import { DropDownWrapper } from '../DropDownWrapper';
 import * as Style from './styles';
 
 interface DetailListProps {
-  details: Details[];
+  details?: EvnetInfo[];
   page: number;
-  setSelect: Dispatch<SetStateAction<Details>>;
+  setSelect: Dispatch<SetStateAction<EvnetInfo>>;
   setOpenUserDetails: Dispatch<SetStateAction<boolean>>;
 }
 
 export const DetailList: FC<DetailListProps> = ({ details, page, setSelect, setOpenUserDetails }) => {
+  if (details == null) return null;
+
   if (details.length === 0) return <Style.NotFoundList>내역을 추가해주세요!</Style.NotFoundList>;
+
+  const [openListEventId, setOpenListEventId] = useState(0);
 
   const COUNT_PER_PAGE = 16;
 
@@ -21,27 +26,20 @@ export const DetailList: FC<DetailListProps> = ({ details, page, setSelect, setO
         const isCorrect = i >= COUNT_PER_PAGE * (page - 1) && i < COUNT_PER_PAGE * page;
 
         if (isCorrect) {
-          const { date, status, name, fine, reason } = detail;
+          const { groundsDate, userName, payment, grounds } = detail;
           return (
             <Style.TableRow
               key={i}
               onClick={(e) => {
-                e.stopPropagation();
                 setSelect(detail);
                 setOpenUserDetails(true);
               }}
             >
-              <span>{date}</span>
-              <Style.DropDownWrapper
-                onClick={(e) => {
-                  e.stopPropagation();
-                }}
-              >
-                <CircleDropButton status={status} />
-              </Style.DropDownWrapper>
-              <span>{name}</span>
-              <span>{fine}</span>
-              <span>{reason}</span>
+              <Style.Element hasEllipsis={false}>{(groundsDate.split(' ')[0] as string).replaceAll('.', '-')}</Style.Element>
+              <DropDownWrapper openListEventId={openListEventId} setOpenListEventId={setOpenListEventId} detail={detail} />
+              <Style.Element hasEllipsis>{userName}</Style.Element>
+              <Style.Element hasEllipsis>{changeNumberToMoney(payment)}</Style.Element>
+              <Style.Element hasEllipsis>{grounds}</Style.Element>
             </Style.TableRow>
           );
         }
