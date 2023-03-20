@@ -2,19 +2,18 @@ import { EvnetInfo, EvnetId, EventFilter } from '@/types/event';
 import { ServerResponse } from '@/types/serverResponse';
 import api from '..';
 
-export const createEvent = async (detailInfo: EvnetInfo): Promise<ServerResponse<EvnetId>> => {
+export const createEvent = async (detailInfo: Omit<EvnetInfo, 'eventId'>): Promise<ServerResponse<EvnetId>> => {
   const { data } = await api.post('/api/event/penalty', detailInfo);
   return data;
 };
 
-export const getOneOfEvent = async (eventId: string): Promise<ServerResponse<Omit<EvnetInfo, 'eventId' | 'userId'>>> => {
+export const getOneOfEvent = async (eventId: number): Promise<ServerResponse<Omit<EvnetInfo, 'eventId' | 'userId'>>> => {
   const { data } = await api.get(`api/event/penalty/${eventId}`);
   return data;
 };
 
-/** 아직 미완성 */
-export const getEventList = async (evnetFilter: EventFilter): Promise<ServerResponse<EvnetInfo>> => {
-  const { data } = await api.post(`api/event/penalty`, evnetFilter);
+export const getEventList = async (queries: string): Promise<ServerResponse<EvnetInfo[]>> => {
+  const { data } = await api.get(`api/event/penalty?${queries}`);
   return data;
 };
 

@@ -15,6 +15,7 @@ export interface EvnetId {
 }
 
 export interface EventFilter {
+  year: number;
   month: number;
   week: number;
   day: number;
