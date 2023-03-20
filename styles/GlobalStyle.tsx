@@ -1,6 +1,9 @@
 import { css } from '@emotion/react';
 
 const globalStyle = css`
+  html {
+    font-size: 16px;
+  }
   html,
   body,
   #root {
