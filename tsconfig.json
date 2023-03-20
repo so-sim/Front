@@ -2,10 +2,7 @@
   "compilerOptions": {
     "esModuleInterop": true,
     "sourceMap": true,
-    "lib": [
-      "ES2020",
-      "DOM"
-    ],
+    "lib": ["ES2020", "DOM", "ES2021.String"],
     "module": "esnext",
     "moduleResolution": "Node",
     "target": "ES6",
@@ -16,16 +13,10 @@
     "allowJs": true,
     "baseUrl": ".",
     "paths": {
-      "@/*": [
-        "./*"
-      ]
+      "@/*": ["./*"]
     }
   },
-  "include": [
-    "**/*.ts",
-    "**/*.tsx",
-    "types/svg.d.ts"
-  ],
+  "include": ["**/*.ts", "**/*.tsx", "types/svg.d.ts"],
   "ts-node": {
     "compilerOptions": {
       "module": "commonJS",
