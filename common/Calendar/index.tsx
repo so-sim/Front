@@ -1,4 +1,5 @@
 import { useQueryString } from '@/hooks/useQueryString';
+import { dateToString } from '@/utils/dateToString';
 import dayjs, { Dayjs } from 'dayjs';
 import React, { FC, useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -27,12 +28,12 @@ const Calendar: FC<CalnedrProps> = ({ cellType }) => {
 
   const addMonth = () => {
     const newDate = baseDate.add(1, 'month');
-    const [year, month, day] = newDate.format('YYYY-MM-DD').split('-');
+    const [year, month, day] = dateToString(newDate).split('-');
     navigate(`/group/${groupId}/book/detail?year=${year}&month=${month}&day=${day}`);
   };
   const subMonth = () => {
     const newDate = baseDate.subtract(1, 'month');
-    const [year, month, day] = newDate.format('YYYY-MM-DD').split('-');
+    const [year, month, day] = dateToString(newDate).split('-');
     navigate(`/group/${groupId}/book/detail?year=${year}&month=${month}&day=${day}`);
   };
 
@@ -41,15 +42,15 @@ const Calendar: FC<CalnedrProps> = ({ cellType }) => {
   };
 
   const isToday = (date: Dayjs) => {
-    return date.format('YY-MM-DD') === today.format('YY-MM-DD');
+    return dateToString(date) === dateToString(today);
   };
 
   const isSelected = (date: Dayjs) => {
-    return baseDate.format('YY-MM-DD') === date.format('YY-MM-DD');
+    return dateToString(baseDate) === dateToString(date);
   };
 
   const goDetail = (date: Dayjs) => {
-    const [year, month, day] = date.format('YYYY-MM-DD').split('-');
+    const [year, month, day] = dateToString(date).split('-');
     navigate(`/group/${groupId}/book/detail?year=${year}&month=${month}&day=${day}`);
   };
 
@@ -86,11 +87,11 @@ const Calendar: FC<CalnedrProps> = ({ cellType }) => {
           {monthList.map((weeks, idx) => (
             <Style.WeekWrap key={idx} cellType={cellType}>
               {weeks.map((date) => (
-                <div key={date.format('YYYY-MM-DD')} onClick={() => goDetail(date)}>
+                <div key={dateToString(date)} onClick={() => goDetail(date)}>
                   {cellType === 'Tag' ? (
-                    <DateCellWithTag date={date} isCurrentMonth={isCurrentMonth} isToday={isToday}  isSelected={isSelected}/>
+                    <DateCellWithTag date={date} isCurrentMonth={isCurrentMonth} isToday={isToday} isSelected={isSelected} />
                   ) : (
-                    <DateCellWithMark date={date} isCurrentMonth={isCurrentMonth} isToday={isToday}  isSelected={isSelected}/>
+                    <DateCellWithMark date={date} isCurrentMonth={isCurrentMonth} isToday={isToday} isSelected={isSelected} />
                   )}
                 </div>
               ))}
