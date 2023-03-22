@@ -5,7 +5,7 @@ import { EventFilter, EvnetInfo } from '@/types/event';
 import { DateController } from './components/DateController';
 import { DetailList } from './components/DetailList';
 import { DetailsHeader } from './components/DetailsHeader';
-import { FineBookModal } from './components/FineBookModal';
+import { FineBookModal } from '../../../../common/Modal/FineBookModal';
 import { Pagination } from './components/Pagination';
 import { TableHead } from './components/TableHead';
 import { UserDetails } from './components/UserDetails';

@@ -12,11 +12,13 @@ interface DropBoxProps<T = string> {
   width?: number;
   color?: DropBoxColor;
   setType: Dispatch<SetStateAction<T>>;
+  direction?: 'left' | 'right';
 }
 
-export const DropBox = <T,>({ setType, type, dropDownList, width = 152, boxWidth = '148px', color = 'gray' }: DropBoxProps<T>) => {
+export const DropBox = <T,>({ setType, type, dropDownList, width = 152, boxWidth = '148px', color = 'gray', direction }: DropBoxProps<T>) => {
   const [openDrop, setOpenDrop] = useState(false);
   const isDisabled = color === 'disabled';
+
   return (
     <Style.DropDownBox
       boxWidth={boxWidth}
@@ -30,7 +32,7 @@ export const DropBox = <T,>({ setType, type, dropDownList, width = 152, boxWidth
         {(typeof type === 'string' && type) || '선택해주세요'}
       </Style.Text>
       {!isDisabled && <Style.ArrowIcon>{ARROW.DOWN_LG}</Style.ArrowIcon>}
-      {openDrop && <DropDown list={dropDownList} width={width} setState={setType} top="34px" onClose={() => setOpenDrop(false)} />}
+      {openDrop && <DropDown list={dropDownList} width={width} setState={setType} top="34px" onClose={() => setOpenDrop(false)} direction={direction} />}
     </Style.DropDownBox>
   );
 };

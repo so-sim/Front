@@ -38,10 +38,13 @@ export const ModalHeader = styled.div<{ align: 'center' | 'start' }>`
   margin-bottom: 20px;
 `;
 
-export const CloseIcon = styled.div`
+export const HeaderIcon = styled.div`
   width: 100%;
   display: flex;
   justify-content: end;
+`;
+
+export const CloseIcon = styled.div`
   cursor: pointer;
 `;
 

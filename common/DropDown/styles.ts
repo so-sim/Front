@@ -1,14 +1,14 @@
 import { DropDownProps } from './index';
 import styled from '@emotion/styled';
 
-export const DorpDownContainer = styled.div<Pick<DropDownProps, 'top'>>`
+export const DorpDownContainer = styled.div<Pick<DropDownProps, 'top' | 'direction'>>`
   position: absolute;
   border: 2px solid ${({ theme }) => theme.colors.neutral_400_b};
   border-bottom: none;
   border-radius: 4px;
-  right: -2px;
   top: ${(props) => props.top};
   z-index: 50;
+  ${(props) => (props.direction === 'right' ? 'left: -2px' : 'right: -2px')}
 `;
 
 interface DropDownItemProps {
