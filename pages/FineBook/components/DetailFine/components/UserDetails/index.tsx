@@ -6,7 +6,7 @@ import { Label } from '@/common/Label';
 import { DropBox } from '@/common/DropBox';
 import * as Style from './styles';
 import { EvnetInfo } from '@/types/event';
-import { FineBookModal } from '../FineBookModal';
+import { FineBookModal } from '../../../../../../common/Modal/FineBookModal';
 import { changeNumberToMoney } from '@/utils/changeNumberToMoney';
 
 interface UserDetailsProps {

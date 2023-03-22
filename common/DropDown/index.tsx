@@ -1,5 +1,5 @@
 import { EmotionJSX } from '@emotion/react/types/jsx-namespace';
-import React, { Dispatch, FC, SetStateAction } from 'react';
+import React, { Dispatch, SetStateAction, useEffect, useRef } from 'react';
 import * as Style from './styles';
 
 export interface DropDownProps<T = string> {
@@ -11,9 +11,12 @@ export interface DropDownProps<T = string> {
   width?: number;
   onClose: () => void;
   setState: Dispatch<SetStateAction<T>>;
+  direction?: 'left' | 'right';
 }
 
-const DropDown = <T,>({ list, width = 112, setState, onClose, top }: DropDownProps<T>) => {
+const DropDown = <T,>({ list, width = 112, setState, onClose, top, direction = 'left' }: DropDownProps<T>) => {
+  const dropDownRef = useRef<HTMLDivElement>(null);
+
   const handleState = (title: T) => {
     setState(title);
     onClose();
@@ -23,8 +26,20 @@ const DropDown = <T,>({ list, width = 112, setState, onClose, top }: DropDownPro
     return svg === undefined ? false : true;
   };
 
+  useEffect(() => {
+    const onClickOutSide = (event: MouseEvent) => {
+      if (dropDownRef.current && !dropDownRef.current.contains(event.target as Node)) {
+        onClose();
+      }
+    };
+    document.addEventListener('mousedown', onClickOutSide);
+    return () => {
+      document.removeEventListener('mousedown', onClickOutSide);
+    };
+  }, []);
+
   return (
-    <Style.DorpDownContainer onClick={onClose} top={top}>
+    <Style.DorpDownContainer onClick={onClose} top={top} ref={dropDownRef} direction={direction}>
       {list.map((item) => {
         if (typeof item.title != 'string') return;
         return (
