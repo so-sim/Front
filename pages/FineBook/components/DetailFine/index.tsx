@@ -28,7 +28,7 @@ const DetailFine = () => {
   });
   const [page, setPage] = useState(1);
 
-  const queries = useQueryString<Partial<EventFilter>>();
+  const queries = useQueryString();
 
   const { data } = useGetDetailList(queries);
 

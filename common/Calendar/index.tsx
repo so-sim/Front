@@ -1,3 +1,5 @@
+import { useQueryString } from '@/hooks/useQueryString';
+import { EventFilter } from '@/types/event';
 import dayjs, { Dayjs } from 'dayjs';
 import React, { FC, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -15,7 +17,9 @@ interface CalnedrProps {
 }
 
 const Calendar: FC<CalnedrProps> = ({ cellType }) => {
-  const [baseDate, setBaseDate] = useState(dayjs());
+  const queries = useQueryString();
+  const { year, month, day } = queries;
+  const [baseDate, setBaseDate] = useState(year ? dayjs(`${year}-${month}-${day}`) : dayjs());
   const today = dayjs();
   const monthList = createCalendar(baseDate);
   const navigate = useNavigate();
@@ -37,7 +41,8 @@ const Calendar: FC<CalnedrProps> = ({ cellType }) => {
   };
 
   const goDetail = (date: Dayjs) => {
-    navigate(`/group/${groupId}/book/detail?date=${date.format('YYYY-MM-DD')}`);
+    const [year, month, day] = date.format('YYYY-MM-DD').split('-');
+    navigate(`/group/${groupId}/book/detail?year=${year}&month=${month}&day=${day}`);
   };
 
   return (
