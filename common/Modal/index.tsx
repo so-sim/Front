@@ -35,7 +35,11 @@ const ModalFrame: FC<ModalProps> = ({ width = '376px', height = '283px', onClick
 const ModalHeader: FC<ModalHeaderProps> = ({ children, onClick, align = 'center', ...args }) => {
   return (
     <Style.ModalHeader {...args} align={align}>
-      {onClick && <Style.CloseIcon onClick={onClick}>{SYSTEM.CLOSE}</Style.CloseIcon>}
+      {onClick && (
+        <Style.HeaderIcon>
+          <Style.CloseIcon onClick={onClick}>{SYSTEM.CLOSE}</Style.CloseIcon>
+        </Style.HeaderIcon>
+      )}
       <Style.HeaderTitle>{children}</Style.HeaderTitle>
     </Style.ModalHeader>
   );
