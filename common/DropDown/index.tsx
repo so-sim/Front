@@ -1,5 +1,5 @@
 import { EmotionJSX } from '@emotion/react/types/jsx-namespace';
-import React, { Dispatch, FC, ReactNode, SetStateAction, useEffect, useRef } from 'react';
+import React, { Dispatch, SetStateAction, useEffect, useRef } from 'react';
 import * as Style from './styles';
 
 export interface DropDownProps<T = string> {
@@ -11,7 +11,6 @@ export interface DropDownProps<T = string> {
   width?: number;
   onClose: () => void;
   setState: Dispatch<SetStateAction<T>>;
-
   direction?: 'left' | 'right';
 }
 
