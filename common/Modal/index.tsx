@@ -36,8 +36,8 @@ const ModalHeader: FC<ModalHeaderProps> = ({ children, onClick, align = 'center'
   return (
     <Style.ModalHeader {...args} align={align}>
       {onClick && (
-        <Style.HeaderIcon onClick={onClick}>
-          <Style.CloseIcon>{SYSTEM.CLOSE}</Style.CloseIcon>
+        <Style.HeaderIcon>
+          <Style.CloseIcon onClick={onClick}>{SYSTEM.CLOSE}</Style.CloseIcon>
         </Style.HeaderIcon>
       )}
       <Style.HeaderTitle>{children}</Style.HeaderTitle>
