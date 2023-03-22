@@ -1,8 +1,9 @@
-type PaymentType = '미납' | '확인필요' | '완납';
+export type PaymentType = '미납' | '확인필요' | '완납';
 
 export interface EvnetInfo {
   eventId: number;
   userId: number;
+  payment: number;
   userName: string;
   groundsDate: string;
   grounds: string;
@@ -14,6 +15,7 @@ export interface EvnetId {
 }
 
 export interface EventFilter {
+  year: number;
   month: number;
   week: number;
   day: number;

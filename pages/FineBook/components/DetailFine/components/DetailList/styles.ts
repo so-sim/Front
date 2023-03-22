@@ -3,15 +3,21 @@ import styled from '@emotion/styled';
 export const TableRow = styled.div`
   display: grid;
   align-items: center;
+  height: 46px;
   grid-template-columns: 100px 120px 116px 108px 1fr;
   border-top: 2px solid ${({ theme }) => theme.colors.neutral_200_b};
   border-radius: 4px;
   cursor: pointer;
+  background: ${({ theme }) => theme.colors.secondary_100};
   &:hover {
     background-color: ${({ theme }) => theme.colors.neutral_200_b};
   }
   & > span {
     padding: 8px 16px;
+    ${({ theme }) => theme.font.body_02}
+  }
+  &:last-child {
+    border-bottom: 2px solid ${({ theme }) => theme.colors.neutral_200_b};
   }
 `;
 
@@ -23,9 +29,10 @@ export const NotFoundList = styled.div`
   width: 100%;
 `;
 
-export const DropDownWrapper = styled.div`
-  padding: 0;
-  &:hover {
-    background: ${({ theme }) => theme.colors.neutral_300_b};
-  }
+export const Element = styled.span<{ hasEllipsis: boolean }>`
+  display: block;
+  width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ${({ hasEllipsis }) => hasEllipsis && 'ellipsis'};
 `;

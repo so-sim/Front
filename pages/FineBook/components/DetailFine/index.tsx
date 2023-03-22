@@ -1,4 +1,7 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
+import { useQueryString } from '@/hooks/useQueryString';
+import { useGetDetailList } from '@/queries/Detail/useGetDetailList';
+import { EventFilter, EvnetInfo } from '@/types/event';
 import { DateController } from './components/DateController';
 import { DetailList } from './components/DetailList';
 import { DetailsHeader } from './components/DetailsHeader';
@@ -10,47 +13,28 @@ import * as Style from './styles';
 
 export type Status = 'none' | 'checking' | 'complete';
 
-export interface Details {
-  date: string;
-  status: string;
-  name: string;
-  fine: number;
-  reason: string;
-}
-
 const DetailFine = () => {
   const [openAddModal, setOpenAddModal] = useState(false);
 
   const [openUserDetails, setOpenUserDetails] = useState(false);
-  const [select, setSelect] = useState<Details>({ date: '', status: 'none', name: '', fine: 0, reason: '' });
+  const [select, setSelect] = useState<EvnetInfo>({
+    userId: 12,
+    eventId: Math.floor(Math.random() * 10000),
+    groundsDate: '23.01.22',
+    paymentType: '미납',
+    userName: '윤하나둘셋',
+    payment: 1_000_000,
+    grounds: '밥먹다 지각',
+  });
   const [page, setPage] = useState(1);
 
-  const details: Details[] = [
-    { date: '23.01.22', status: 'none', name: '윤하나둘셋', fine: 1_000_000, reason: '밥먹다 지각' },
-    { date: '23.01.22', status: 'checking', name: '윤하나둘셋', fine: 1_000_000, reason: '밥먹다 지각' },
-    { date: '23.01.22', status: 'none', name: '윤하나둘셋', fine: 1_000_000, reason: '밥먹다 지각' },
-    { date: '23.01.22', status: 'complete', name: '윤하나둘셋', fine: 1_000_000, reason: '밥먹다 지각' },
-    { date: '23.01.22', status: 'checking', name: '윤하나둘셋', fine: 1_000_000, reason: '밥먹다 지각' },
-    { date: '23.01.22', status: 'complete', name: '윤하나둘셋', fine: 1_000_000, reason: '밥먹다 지각' },
-    { date: '23.01.22', status: 'none', name: '윤하나둘셋', fine: 1_000_000, reason: '밥먹다 지각' },
-    { date: '23.01.22', status: 'checking', name: '윤하나둘셋', fine: 1_000_000, reason: '밥먹다 지각' },
-    { date: '23.01.22', status: 'none', name: '윤하나둘셋', fine: 1_000_000, reason: '밥먹다 지각' },
-    { date: '23.01.22', status: 'complete', name: '윤하나둘셋', fine: 1_000_000, reason: '밥먹다 지각' },
-    { date: '23.01.22', status: 'checking', name: '윤하나둘셋', fine: 1_000_000, reason: '밥먹다 지각' },
-    { date: '23.01.22', status: 'complete', name: '윤하나둘셋', fine: 1_000_000, reason: '밥먹다 지각' },
-    { date: '23.01.22', status: 'none', name: '윤하나둘셋', fine: 1_000_000, reason: '밥먹다 지각' },
-    { date: '23.01.22', status: 'checking', name: '윤하나둘셋', fine: 1_000_000, reason: '밥먹다 지각' },
-    { date: '23.01.22', status: 'none', name: '윤하나둘셋', fine: 1_000_000, reason: '밥먹다 지각' },
-    { date: '23.01.22', status: 'complete', name: '윤하나둘셋', fine: 1_000_000, reason: '밥먹다 지각' },
-    { date: '23.01.22', status: 'checking', name: '윤하나둘셋', fine: 1_000_000, reason: '밥먹다 지각' },
-    { date: '23.01.22', status: 'complete', name: '윤하나둘셋', fine: 1_000_000, reason: '밥먹다 지각' },
-    { date: '23.01.22', status: 'none', name: '윤하나둘셋', fine: 1_000_000, reason: '밥먹다 지각' },
-    { date: '23.01.22', status: 'checking', name: '윤하나둘셋', fine: 1_000_000, reason: '밥먹다 지각' },
-    { date: '23.01.22', status: 'none', name: '윤하나둘셋', fine: 1_000_000, reason: '밥먹다 지각' },
-    { date: '23.01.22', status: 'complete', name: '윤하나둘셋', fine: 1_000_000, reason: '밥먹다 지각' },
-    { date: '23.01.22', status: 'checking', name: '윤하나둘셋', fine: 1_000_000, reason: '밥먹다 지각' },
-    { date: '23.01.22', status: 'complete', name: '윤하나둘셋', fine: 1_000_000, reason: '밥먹다 지각' },
-  ];
+  const queries = useQueryString<Partial<EventFilter>>();
+
+  const { data } = useGetDetailList(queries);
+
+  // ('/api/event/penalty?today=true');
+  // ('/api/event/penalty?paymentType="non | con | full"');
+  // ('/api/event/penalty?month=3&week=1&day=19&userId=124125');
 
   return (
     <>
@@ -59,9 +43,9 @@ const DetailFine = () => {
         <Style.DetailContent>
           <DateController setOpenAddModal={setOpenAddModal} />
           <TableHead />
-          <DetailList details={details} page={page} setSelect={setSelect} setOpenUserDetails={setOpenUserDetails} />
+          <DetailList details={data?.content} page={page} setSelect={setSelect} setOpenUserDetails={setOpenUserDetails} />
         </Style.DetailContent>
-        <Pagination details={details} page={page} setPage={setPage} />
+        <Pagination count={data?.content.length} page={page} setPage={setPage} />
         <UserDetails open={openUserDetails} setOpen={setOpenUserDetails} select={select} />
       </Style.DetailFineFrame>
       {openAddModal && <FineBookModal setOpen={setOpenAddModal} />}
