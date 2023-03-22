@@ -13,9 +13,10 @@ export interface DropDownProps<T = string> {
   setState: Dispatch<SetStateAction<T>>;
   openDropDown: boolean;
   setOpenDropDown: Dispatch<SetStateAction<boolean>>;
+  direction?: 'left' | 'right';
 }
 
-const DropDown = <T,>({ list, width = 112, setState, onClose, top, openDropDown, setOpenDropDown }: DropDownProps<T>) => {
+const DropDown = <T,>({ list, width = 112, setState, onClose, top, openDropDown, setOpenDropDown, direction = 'left' }: DropDownProps<T>) => {
   const dropDownRef = useRef<HTMLDivElement>(null);
 
   const handleState = (title: T) => {
@@ -40,7 +41,7 @@ const DropDown = <T,>({ list, width = 112, setState, onClose, top, openDropDown,
   }, []);
 
   return (
-    <Style.DorpDownContainer onClick={onClose} top={top} ref={dropDownRef}>
+    <Style.DorpDownContainer onClick={onClose} top={top} ref={dropDownRef} direction={direction}>
       {list.map((item) => {
         if (typeof item.title != 'string') return;
         return (

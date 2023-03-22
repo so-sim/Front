@@ -2,11 +2,6 @@ import { Dispatch, FC, SetStateAction } from 'react';
 import { ARROW } from '@/assets/icons/Arrow';
 import Button from '@/common/Button';
 import * as Style from './styles';
-import { useQueryString } from '@/hooks/useQueryString';
-import dayjs from 'dayjs';
-import { useGroupList } from '@/queries/Group';
-import { useGetDetailList } from '@/queries/Detail/useGetDetailList';
-import { EventFilter } from '@/types/event';
 
 interface DateControllerProps {
   setOpenAddModal: Dispatch<SetStateAction<boolean>>;
