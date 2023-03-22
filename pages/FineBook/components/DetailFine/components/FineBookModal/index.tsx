@@ -27,19 +27,10 @@ export const FineBookModal = ({ setOpen, type = 'create' }: ModalProps) => {
 
   const [fine, setFine] = useState(0);
 
-  const isAllowedKey = (key: string): boolean => {
-    const allowedKey = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'Backspace', 'Enter', 'Tab'];
-    if (allowedKey.includes(key)) return true;
-    return false;
-  };
-
-  const onChangeFine = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (isAllowedKey(e.key))
-      setFine((prev) => {
-        if (!isNaN(Number(e.key))) return Number(String(prev) + e.key);
-        if (e.key === 'Backspace') return Number(String(prev).slice(0, -1));
-        return prev;
-      });
+  const onChangeFine = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { value } = e.target;
+    const removedCommaValue = Number(value.replaceAll(',', ''));
+    if (!isNaN(removedCommaValue)) setFine(removedCommaValue);
   };
 
   const onChangeReason = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -103,7 +94,7 @@ export const FineBookModal = ({ setOpen, type = 'create' }: ModalProps) => {
         </Style.Row>
         <Style.Row>
           <Label title="금액" width="32px">
-            <Style.Input type="string" value={changeNumberToMoney(fine)} onKeyDown={onChangeFine} style={{ height: '32px' }} />
+            <Style.Input type="string" value={changeNumberToMoney(fine)} onChange={onChangeFine} style={{ height: '32px' }} />
           </Label>
           <Label title="날짜" width="32px">
             <DropBox color="white" boxWidth="138px" width={138} setType={setMember} type={member} dropDownList={participantList} />

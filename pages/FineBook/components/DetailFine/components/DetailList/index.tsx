@@ -35,7 +35,7 @@ export const DetailList: FC<DetailListProps> = ({ details, page, setSelect, setO
                 setOpenUserDetails(true);
               }}
             >
-              <Style.Element hasEllipsis={false}>{(groundsDate.split(' ')[0] as string).replaceAll('.', '-')}</Style.Element>
+              <Style.Element hasEllipsis={false}>{(groundsDate.split(' ')[0] as string).replaceAll('-', '.')}</Style.Element>
               <DropDownWrapper openListEventId={openListEventId} setOpenListEventId={setOpenListEventId} detail={detail} />
               <Style.Element hasEllipsis>{userName}</Style.Element>
               <Style.Element hasEllipsis>{changeNumberToMoney(payment)}</Style.Element>
