@@ -1,5 +1,5 @@
 import { EmotionJSX } from '@emotion/react/types/jsx-namespace';
-import React, { Dispatch, FC, SetStateAction, useEffect, useRef } from 'react';
+import React, { Dispatch, FC, ReactNode, SetStateAction, useEffect, useRef } from 'react';
 import * as Style from './styles';
 
 export interface DropDownProps<T = string> {
@@ -28,8 +28,8 @@ const DropDown = <T,>({ list, width = 112, setState, onClose, top, direction = '
   };
 
   useEffect(() => {
-    const onClickOutSide = () => {
-      if (dropDownRef.current) {
+    const onClickOutSide = (event: MouseEvent) => {
+      if (dropDownRef.current && !dropDownRef.current.contains(event.target as Node)) {
         onClose();
       }
     };

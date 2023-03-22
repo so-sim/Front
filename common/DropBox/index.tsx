@@ -18,6 +18,7 @@ interface DropBoxProps<T = string> {
 export const DropBox = <T,>({ setType, type, dropDownList, width = 152, boxWidth = '148px', color = 'gray', direction }: DropBoxProps<T>) => {
   const [openDrop, setOpenDrop] = useState(false);
   const isDisabled = color === 'disabled';
+
   return (
     <Style.DropDownBox
       boxWidth={boxWidth}
