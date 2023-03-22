@@ -11,12 +11,11 @@ export interface DropDownProps<T = string> {
   width?: number;
   onClose: () => void;
   setState: Dispatch<SetStateAction<T>>;
-  openDropDown: boolean;
-  setOpenDropDown: Dispatch<SetStateAction<boolean>>;
+
   direction?: 'left' | 'right';
 }
 
-const DropDown = <T,>({ list, width = 112, setState, onClose, top, openDropDown, setOpenDropDown, direction = 'left' }: DropDownProps<T>) => {
+const DropDown = <T,>({ list, width = 112, setState, onClose, top, direction = 'left' }: DropDownProps<T>) => {
   const dropDownRef = useRef<HTMLDivElement>(null);
 
   const handleState = (title: T) => {
@@ -29,9 +28,9 @@ const DropDown = <T,>({ list, width = 112, setState, onClose, top, openDropDown,
   };
 
   useEffect(() => {
-    const onClickOutSide = (e: MouseEvent) => {
-      if (openDropDown && dropDownRef.current) {
-        setOpenDropDown(false);
+    const onClickOutSide = () => {
+      if (dropDownRef.current) {
+        onClose();
       }
     };
     document.addEventListener('mousedown', onClickOutSide);

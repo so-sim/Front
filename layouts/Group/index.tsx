@@ -33,17 +33,7 @@ const GroupLayout = () => {
         <button onClick={handleDropDown}>
           {USER.PERSON_MD}
           {ARROW.SOLID}
-          {showDropDown && (
-            <DropDown
-              list={DorpDownList}
-              width={112}
-              setState={setDropDownState}
-              onClose={handleDropDown}
-              top={'32px'}
-              openDropDown={showDropDown}
-              setOpenDropDown={setShowDropDown}
-            />
-          )}
+          {showDropDown && <DropDown list={DorpDownList} width={112} setState={setDropDownState} onClose={handleDropDown} top={'32px'} />}
         </button>
       </Style.Header>
       <Style.GridLayout>
