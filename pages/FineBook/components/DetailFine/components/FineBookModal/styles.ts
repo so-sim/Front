@@ -5,8 +5,7 @@ export const Input = styled.input`
   background-color: 2px solid ${({ theme }) => theme.colors.secondary_100};
   border-radius: 4px;
   padding: 4px 12px;
-  width: 142px;
-  margin-right: 8px;
+  width: 148px;
 `;
 
 export const TextArea = styled.textarea`

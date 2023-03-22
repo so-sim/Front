@@ -1,15 +1,26 @@
+import { GropuList } from '@/types/group';
 import { rest } from 'msw';
 
-const groupList = [
-  { title: '전국 노래 자랑', admin: '윤하나둘셋넷', coverColor: '#f86565', groupId: '1' },
-  { title: '전국 노래 자랑', admin: '윤하나', coverColor: '#f86565', groupId: '2' },
-  { title: '전국 노래 자랑', admin: '윤둘', coverColor: '#f86565', groupId: '3' },
-  { title: '전국 노래 자랑', admin: '윤셋', coverColor: '#f86565', groupId: '4' },
-  { title: '전국 노래 자랑', admin: '윤넷', coverColor: '#f86565', groupId: '5' },
-  { title: '전국 노래 자랑', admin: '윤하나둘', coverColor: '#f86565', groupId: '6' },
-  { title: '전국 노래 자랑', admin: '윤하나셋넷', coverColor: '#f86565', groupId: '7' },
-  { title: '전국 노래 자랑', admin: '윤둘셋넷', coverColor: '#f86565', groupId: '8' },
-  { title: '전국 노래 자랑', admin: '윤하나둘넷', coverColor: '#f86565', groupId: '9' },
+const groupList: GropuList[] = [
+  { title: '전국 노래 자랑', adminNickname: '윤하나둘셋넷', coverColor: '#f86565', groupId: 1, groupType: '스터디' },
+  { title: '전국 노래 자랑', adminNickname: '윤하나', coverColor: '#f86565', groupId: 2, groupType: '스터디' },
+  { title: '전국 노래 자랑', adminNickname: '윤둘', coverColor: '#f86565', groupId: 3, groupType: '스터디' },
+  { title: '전국 노래 자랑', adminNickname: '윤셋', coverColor: '#f86565', groupId: 4, groupType: '스터디' },
+  { title: '전국 노래 자랑', adminNickname: '윤넷', coverColor: '#f86565', groupId: 5, groupType: '스터디' },
+  { title: '전국 노래 자랑', adminNickname: '윤하나둘', coverColor: '#f86565', groupId: 6, groupType: '스터디' },
+  { title: '전국 노래 자랑', adminNickname: '윤하나셋넷', coverColor: '#f86565', groupId: 7, groupType: '스터디' },
+  { title: '전국 노래 자랑', adminNickname: '윤둘셋넷', coverColor: '#f86565', groupId: 8, groupType: '스터디' },
+  { title: '전국 노래 자랑', adminNickname: '윤하나둘넷', coverColor: '#f86565', groupId: 9, groupType: '스터디' },
+  { title: '전국 노래 자랑', adminNickname: '윤하나둘넷', coverColor: '#f86565', groupId: 10, groupType: '스터디' },
+  { title: '전국 노래 자랑', adminNickname: '윤하나둘넷', coverColor: '#f86565', groupId: 11, groupType: '스터디' },
+  { title: '전국 노래 자랑', adminNickname: '윤하나둘넷', coverColor: '#f86565', groupId: 12, groupType: '스터디' },
+  { title: '전국 노래 자랑', adminNickname: '윤하나둘넷', coverColor: '#f86565', groupId: 13, groupType: '스터디' },
+  { title: '전국 노래 자랑', adminNickname: '윤하나둘넷', coverColor: '#f86565', groupId: 14, groupType: '스터디' },
+  { title: '전국 노래 자랑', adminNickname: '윤하나둘넷', coverColor: '#f86565', groupId: 15, groupType: '스터디' },
+  { title: '전국 노래 자랑', adminNickname: '윤하나둘넷', coverColor: '#f86565', groupId: 16, groupType: '스터디' },
+  { title: '전국 노래 자랑', adminNickname: '윤하나둘넷', coverColor: '#f86565', groupId: 17, groupType: '스터디' },
+  { title: '전국 노래 자랑', adminNickname: '윤하나둘넷', coverColor: '#f86565', groupId: 18, groupType: '스터디' },
+  { title: '전국 노래 자랑', adminNickname: '윤하나둘넷', coverColor: '#f86565', groupId: 19, groupType: '스터디' },
 ];
 
 const getGroupList: Parameters<typeof rest.get>[1] = (req, res, ctx) => {

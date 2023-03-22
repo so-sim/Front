@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { AddCard } from '../Card/AddCard';
 import { GroupCard } from '../Card/GroupCard';
-import { CreateGroupModal } from '../../../../common/Modal/CreateGroupModal';
+import { CreateGroupModal } from '@/common/Modal/CreateGroupModal';
 import * as Style from './style';
 import { useGroupList } from '@/queries/Group/';
 
@@ -19,8 +19,8 @@ export const CardList = () => {
     <>
       <Style.CardList>
         <AddCard onClick={dealWithModal} />
-        {data?.content.groupList.map((group) => {
-          return <GroupCard {...group} key={group.title} />;
+        {data?.content.groupList.map((group, i) => {
+          return <GroupCard {...group} key={group.title + i} />;
         })}
       </Style.CardList>
       {open && <CreateGroupModal modalHandler={dealWithModal} />}
