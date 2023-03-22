@@ -7,12 +7,13 @@ interface DateCellWithMarkProps {
   date: Dayjs;
   isCurrentMonth: (date: Dayjs) => boolean;
   isToday: (date: Dayjs) => boolean;
+  isSelected: (date: Dayjs) => boolean;
 }
 
-const DateCellWithMark: FC<DateCellWithMarkProps> = ({ date, isCurrentMonth, isToday }) => {
+const DateCellWithMark: FC<DateCellWithMarkProps> = ({ date, isCurrentMonth, isToday, isSelected }) => {
   return (
     <Style.DateCell>
-      <Style.Date isToday={isToday(date)} isSelected={true} isCurrentMonth={isCurrentMonth(date)}>
+      <Style.Date isToday={isToday(date)} isSelected={isSelected(date)} isCurrentMonth={isCurrentMonth(date)}>
         {date.date()}
       </Style.Date>
       <Style.Mark>

@@ -1,7 +1,6 @@
 import { useQueryString } from '@/hooks/useQueryString';
-import { EventFilter } from '@/types/event';
 import dayjs, { Dayjs } from 'dayjs';
-import React, { FC, useState } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { ARROW } from '../../assets/icons/Arrow';
 import Button from '../../common/Button';
@@ -17,19 +16,24 @@ interface CalnedrProps {
 }
 
 const Calendar: FC<CalnedrProps> = ({ cellType }) => {
-  const queries = useQueryString();
-  const { year, month, day } = queries;
-  const [baseDate, setBaseDate] = useState(year ? dayjs(`${year}-${month}-${day}`) : dayjs());
+  const [baseDate, setBaseDate] = useState(dayjs());
   const today = dayjs();
   const monthList = createCalendar(baseDate);
   const navigate = useNavigate();
   const { groupId } = useParams();
+  const queries = useQueryString();
+
+  const { year, month, day } = queries;
 
   const addMonth = () => {
-    setBaseDate(baseDate.add(1, 'month'));
+    const newDate = baseDate.add(1, 'month');
+    const [year, month, day] = newDate.format('YYYY-MM-DD').split('-');
+    navigate(`/group/${groupId}/book/detail?year=${year}&month=${month}&day=${day}`);
   };
   const subMonth = () => {
-    setBaseDate(baseDate.subtract(1, 'month'));
+    const newDate = baseDate.subtract(1, 'month');
+    const [year, month, day] = newDate.format('YYYY-MM-DD').split('-');
+    navigate(`/group/${groupId}/book/detail?year=${year}&month=${month}&day=${day}`);
   };
 
   const isCurrentMonth = (date: Dayjs) => {
@@ -40,10 +44,20 @@ const Calendar: FC<CalnedrProps> = ({ cellType }) => {
     return date.format('YY-MM-DD') === today.format('YY-MM-DD');
   };
 
+  const isSelected = (date: Dayjs) => {
+    return baseDate.format('YY-MM-DD') === date.format('YY-MM-DD');
+  };
+
   const goDetail = (date: Dayjs) => {
     const [year, month, day] = date.format('YYYY-MM-DD').split('-');
     navigate(`/group/${groupId}/book/detail?year=${year}&month=${month}&day=${day}`);
   };
+
+  useEffect(() => {
+    if (year) {
+      setBaseDate(dayjs(`${year}-${month}-${day}`));
+    }
+  }, [year, month, day]);
 
   return (
     <>
@@ -74,9 +88,9 @@ const Calendar: FC<CalnedrProps> = ({ cellType }) => {
               {weeks.map((date) => (
                 <div key={date.format('YYYY-MM-DD')} onClick={() => goDetail(date)}>
                   {cellType === 'Tag' ? (
-                    <DateCellWithTag date={date} isCurrentMonth={isCurrentMonth} isToday={isToday} />
+                    <DateCellWithTag date={date} isCurrentMonth={isCurrentMonth} isToday={isToday}  isSelected={isSelected}/>
                   ) : (
-                    <DateCellWithMark date={date} isCurrentMonth={isCurrentMonth} isToday={isToday} />
+                    <DateCellWithMark date={date} isCurrentMonth={isCurrentMonth} isToday={isToday}  isSelected={isSelected}/>
                   )}
                 </div>
               ))}
