@@ -30,7 +30,9 @@ export const DropBox = <T,>({ setType, type, dropDownList, width = 152, boxWidth
         {(typeof type === 'string' && type) || '선택해주세요'}
       </Style.Text>
       {!isDisabled && <Style.ArrowIcon>{ARROW.DOWN_LG}</Style.ArrowIcon>}
-      {openDrop && <DropDown list={dropDownList} width={width} setState={setType} top="34px" onClose={() => setOpenDrop(false)} />}
+      {openDrop && (
+        <DropDown list={dropDownList} width={width} setState={setType} top="34px" onClose={() => setOpenDrop(false)} openDropDown={openDrop} setOpenDropDown={setOpenDrop} />
+      )}
     </Style.DropDownBox>
   );
 };
