@@ -8,7 +8,12 @@ const useSignInMutation = () => {
   return useMutation(kakaoLogin, {
     onSuccess: ({ content }) => {
       setAccesToken(content.accessToken);
-      navigate('/');
+
+      if (content.isPermit) {
+        navigate('/');
+      } else {
+        navigate('/tos');
+      }
     },
     onError: (error) => {},
   });

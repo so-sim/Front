@@ -89,7 +89,7 @@ const config: Configuration = {
     publicPath: '/dist/',
   },
   devServer: {
-    historyApiFallback: true, // react router
+    historyApiFallback: true, 
     port: 3090,
     devMiddleware: { publicPath: '/dist/' },
     static: { directory: path.resolve(__dirname) },
