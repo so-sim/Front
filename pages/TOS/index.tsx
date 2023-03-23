@@ -1,5 +1,5 @@
+import { KAKAO_URL } from '@/constants/Auth';
 import { TOS_LINK } from '@/constants/ServiceLink';
-import usePermitTosMutation from '@/queries/Auth/usePermitTosMutation';
 import React, { useState } from 'react';
 import { ARROW } from '../../assets/icons/Arrow';
 import { LOGO } from '../../assets/icons/Logo';
@@ -22,8 +22,6 @@ const TOS = () => {
   const [checkedList, setCheckedList] = useState<number[]>([]);
   const requiredTos = TOSList.filter((list) => list.required).map((list) => list.id);
 
-  const { mutate: permitTosMutate } = usePermitTosMutation();
-
   const checkedItemHandler = (tos: TOS, isChecked: boolean) => {
     if (isChecked) {
       return setCheckedList((prev) => [...prev, tos.id]);
@@ -44,7 +42,7 @@ const TOS = () => {
   };
 
   const onSubmit = () => {
-    permitTosMutate();
+    window.location.href = KAKAO_URL.SIGNUP;
   };
 
   const isAllChecked = checkedList.length === requiredTos.length;
