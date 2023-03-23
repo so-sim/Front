@@ -1,13 +1,13 @@
 import React from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
-import { LoginModal } from '.';
+import { AuthModal } from '.';
 
 export default {
   title: 'Component/Modal/LoginModal',
-  component: LoginModal,
-} as ComponentMeta<typeof LoginModal>;
+  component: AuthModal,
+} as ComponentMeta<typeof AuthModal>;
 
-const Template: ComponentStory<typeof LoginModal> = (args) => <LoginModal {...args} />;
+const Template: ComponentStory<typeof AuthModal> = (args) => <AuthModal {...args} />;
 
 export const LoginModalComponent = Template.bind({});
 

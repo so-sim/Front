@@ -2,7 +2,7 @@ import * as Style from './styles';
 import { LOGO } from '@/assets/icons/Logo/index';
 import { Paragraph } from '../Paragraph';
 import { useState } from 'react';
-import { LoginModal } from '../../../../common/Modal/LoginModal';
+import { AuthModal } from '@/common/Modal/LoginModal';
 
 /** 여기에서 로그인 관련 수행 */
 export const Header = () => {
@@ -29,7 +29,7 @@ export const Header = () => {
           </Style.HeaderRight>
         </Paragraph>
       </Style.Header>
-      {openModal && <LoginModal modalHandler={loginModalHandler} />}
+      {openModal && <AuthModal modalHandler={loginModalHandler} />}
     </>
   );
 };

@@ -12,8 +12,8 @@ interface TOS {
 }
 
 const TOSList: TOS[] = [
-  { id: 1, title: '(필수)개인정보수집 동의', href: '', required: true },
-  { id: 2, title: '(필수)이용약관 동의', href: '', required: true },
+  { id: 1, title: '개인정보수집 동의', href: '', required: true },
+  { id: 2, title: '이용약관 동의', href: '', required: true },
 ];
 
 const TOS = () => {
@@ -46,7 +46,7 @@ const TOS = () => {
       <Style.Layout>
         {LOGO.LG}
         <Style.TOSContainer>
-          <Style.TOSTitle>약관동의</Style.TOSTitle>
+          <Style.TOSTitle>약관 동의</Style.TOSTitle>
           <span>아래의 내용 확인 후 동의해 주세요.</span>
           <Style.TOSList>
             <Style.TOSWhole>
@@ -59,7 +59,10 @@ const TOS = () => {
               <Style.TOS key={list.id}>
                 <label>
                   <input type="checkbox" checked={checkedList.includes(list.id)} onChange={(event) => checkHandler(event, list)} />
-                  <span>{list.title}</span>
+                  <span>
+                    {list.required ? '(필수)' : '(선택)'}
+                    {list.title}
+                  </span>
                 </label>
                 <Style.TOSLink href={list.href} target="_blank" rel="noopnner noreferrer">
                   {ARROW.RIGHT}
