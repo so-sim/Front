@@ -1,4 +1,5 @@
 import MemberManagement from '@/pages/MemberManagement';
+import PreParing from '@/pages/PreParing';
 import React, { useState } from 'react';
 import { Route, Routes, useNavigate, useParams } from 'react-router-dom';
 import { ARROW } from '../../assets/icons/Arrow';
@@ -40,6 +41,8 @@ const GroupLayout = () => {
         <GroupList />
         <GroupSideBar />
         <Routes>
+          <Route path={'/home'} element={<PreParing />} />
+          <Route path={'/notice'} element={<PreParing />} />
           <Route path={`/book`} element={<Calendar />} />
           <Route path={`/book/detail`} element={<FineBook />} />
           <Route path={'/member'} element={<MemberManagement />} />
