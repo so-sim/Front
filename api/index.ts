@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-export const BASE_URL = 'http://localhost:3090';
+export const BASE_URL = 'https://back.sosim-manager.com';
 
 export const setAccesToken = (token: string) => {
   return localStorage.setItem('accessToken', token);
