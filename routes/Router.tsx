@@ -8,7 +8,7 @@ const Router = () => {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/login/oauth2/code/kakao" element={<KaKaoAuth />} />
+        <Route path="/auth/login/kakao" element={<KaKaoAuth />} />
         <Route path="/tos" element={<TOS />} />
         <Route path="/group/:groupId/*" element={<GroupLayout />} />
       </Routes>
