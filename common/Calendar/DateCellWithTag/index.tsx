@@ -7,14 +7,14 @@ interface DateCellWitTagProps {
   date: Dayjs;
   isCurrentMonth: (date: Dayjs) => boolean;
   isToday: (date: Dayjs) => boolean;
-  isSelected: (date: Dayjs) => boolean;
+  isSelectedDate: (date: Dayjs) => boolean;
 }
 
-const DateCellWithTag: FC<DateCellWitTagProps> = ({ date, isCurrentMonth, isToday, isSelected }) => {
+const DateCellWithTag: FC<DateCellWitTagProps> = ({ date, isCurrentMonth, isToday, isSelectedDate }) => {
   return (
     <>
       <Style.DateCell key={date.day()}>
-        <Style.Date isToday={isToday(date)} isSelected={isSelected(date)} isCurrentMonth={isCurrentMonth(date)}>
+        <Style.Date isToday={isToday(date)} isSelectedDate={isSelectedDate(date)} isCurrentMonth={isCurrentMonth(date)}>
           {date.date()}
         </Style.Date>
         <Style.Tag color="red">

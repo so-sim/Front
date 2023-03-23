@@ -19,7 +19,7 @@ export const dateState = atom<DateState>({
   default: {
     baseDate: dayjs(),
     selectedDate: null,
-    week: '',
+    week: '02',
     month: '',
     day: '',
   },

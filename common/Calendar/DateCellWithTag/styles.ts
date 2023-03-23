@@ -14,7 +14,7 @@ export const DateCell = styled.div`
 
 interface DateProps {
   isToday: boolean;
-  isSelected: boolean;
+  isSelectedDate: boolean;
   isCurrentMonth: boolean;
 }
 export const Date = styled.div<DateProps>`
@@ -24,7 +24,7 @@ export const Date = styled.div<DateProps>`
   width: 28px;
   height: 28px;
   border-radius: 30px;
-  background-color: ${(props) => (props.isToday ? props.theme.colors.secondary_800 : 'white')};
+  background-color: ${(props) => (props.isToday ? props.theme.colors.secondary_800 : props.theme.colors.white)};
   color: ${(props) => {
     if (props.isToday) {
       return props.theme.colors.white;
@@ -34,7 +34,7 @@ export const Date = styled.div<DateProps>`
       return props.theme.colors.secondary_900;
     }
   }};
-  border: ${(props) => props.isSelected && `2px solid ${props.theme.colors.secondary_800}`};
+  border: ${(props) => props.isToday && `2px solid ${props.theme.colors.secondary_800}`};
   :hover {
     background-color: ${(props) => (props.isToday ? props.theme.colors.secondary_600 : props.theme.colors.neutral_200_b)};
   }

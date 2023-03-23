@@ -24,18 +24,16 @@ const Calendar: FC<CalnedrProps> = ({ cellType }) => {
   const navigate = useNavigate();
   const { groupId } = useParams();
 
-  console.log(typeof dateObj.baseDate, dayjs(dateObj.baseDate), dayjs());
-
   const addMonth = () => {
     setDateObj((prev) => ({
       ...prev,
-      baseDate: prev.baseDate.add(1, 'month'),
+      baseDate: dayjs(prev.baseDate).add(1, 'month'),
     }));
   };
   const subMonth = () => {
     setDateObj((prev) => ({
       ...prev,
-      baseDate: prev.baseDate.subtract(1, 'month'),
+      baseDate: dayjs(prev.baseDate).subtract(1, 'month'),
     }));
   };
 
@@ -47,7 +45,11 @@ const Calendar: FC<CalnedrProps> = ({ cellType }) => {
     return dateToString(date) === dateToString(today);
   };
 
-  const isSelected = (date: Dayjs) => {
+  const isSelectedWeek = (index: number) => {
+    return index + 1 === parseInt(dateObj.week);
+  };
+
+  const isSelectedDate = (date: Dayjs) => {
     if (!dateObj.selectedDate) return false;
     return dateToString(dateObj.selectedDate) === dateToString(date);
   };
@@ -95,9 +97,9 @@ const Calendar: FC<CalnedrProps> = ({ cellType }) => {
               {weeks.map((date) => (
                 <div key={dateToString(date)} onClick={() => goDetail(date)}>
                   {cellType === 'Tag' ? (
-                    <DateCellWithTag date={date} isCurrentMonth={isCurrentMonth} isToday={isToday} isSelected={isSelected} />
+                    <DateCellWithTag date={date} isCurrentMonth={isCurrentMonth} isToday={isToday} isSelectedDate={isSelectedDate} />
                   ) : (
-                    <DateCellWithMark date={date} isCurrentMonth={isCurrentMonth} isToday={isToday} isSelected={isSelected} />
+                    <DateCellWithMark date={date} isCurrentMonth={isCurrentMonth} isToday={isToday} isSelectedDate={isSelectedDate} isSelectedWeek={isSelectedWeek(idx)} />
                   )}
                 </div>
               ))}
