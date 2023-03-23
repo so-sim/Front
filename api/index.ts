@@ -8,6 +8,9 @@ export const setAccesToken = (token: string) => {
 export const getAccessToken = () => {
   return localStorage.getItem('accessToken');
 };
+export const removeAccessToken = () => {
+  return localStorage.removeItem('accessToken');
+};
 
 const api = axios.create({
   baseURL: BASE_URL,

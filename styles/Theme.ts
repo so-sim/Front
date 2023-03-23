@@ -49,7 +49,7 @@ const theme = {
   line-height: normal;
   letter-spacing: normal;`,
     headline: `font-family: SUIT;
-  font-size: 1.8rem;
+  font-size: 1.75rem;
   font-weight: 600;
   font-stretch: normal;
   font-style: normal;
