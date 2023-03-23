@@ -28,13 +28,13 @@ const Calendar: FC<CalnedrProps> = ({ cellType }) => {
   const addMonth = () => {
     setDateObj((prev) => ({
       ...prev,
-      baseDate: dayjs(prev.calendarBaseDate).add(1, 'month'),
+      calendarBaseDate: dayjs(prev.calendarBaseDate).add(1, 'month'),
     }));
   };
   const subMonth = () => {
     setDateObj((prev) => ({
       ...prev,
-      baseDate: dayjs(prev.calendarBaseDate).subtract(1, 'month'),
+      calendarBaseDate: dayjs(prev.calendarBaseDate).subtract(1, 'month'),
     }));
   };
 
