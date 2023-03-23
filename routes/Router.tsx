@@ -9,9 +9,9 @@ const Router = () => {
     <BrowserRouter>
       <Routes>
         <Route path="/tos" element={<TOS />} />
+        <Route path="/auth/login/kakao" element={<KaKaoAuth />} />
         <Route element={<PermitTosRoute />}>
           <Route path="/" element={<Home />} />
-          <Route path="/auth/login/kakao" element={<KaKaoAuth />} />
           <Route path="/group/:groupId/*" element={<GroupLayout />} />
         </Route>
       </Routes>
