@@ -50,16 +50,9 @@ export const Date = styled.div<DateProps>`
   border-radius: 30px;
   background-color: ${(props) => props.isSelectedDate && props.theme.colors.secondary_800};
   color: ${(props) => {
-    if (props.isSelectedWeek) {
-      return props.theme.colors.white;
-    }
-    if (props.isSelectedDate) {
-      return props.theme.colors.white;
-    } else if (!props.isCurrentMonth) {
-      return props.theme.colors.secondary_400;
-    } else {
-      return props.theme.colors.secondary_900;
-    }
+    if (props.isSelectedDate || props.isSelectedWeek) return props.theme.colors.white;
+    if (!props.isCurrentMonth) return props.theme.colors.secondary_400;
+    return props.theme.colors.secondary_900;
   }};
 
   border: ${(props) => props.isToday && `2px solid ${props.theme.colors.secondary_800}`};

@@ -46,7 +46,7 @@ const Calendar: FC<CalnedrProps> = ({ cellType }) => {
   };
 
   const isSelectedWeek = (index: number) => {
-    return index + 1 === parseInt(dateObj.week);
+    return parseInt(dateObj.month) - 1 === dayjs(dateObj.baseDate).month() && index + 1 === parseInt(dateObj.week);
   };
 
   const isSelectedDate = (date: Dayjs) => {

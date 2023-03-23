@@ -20,7 +20,7 @@ export const dateState = atom<DateState>({
     baseDate: dayjs(),
     selectedDate: null,
     week: '02',
-    month: '',
+    month: '03',
     day: '',
   },
   effects_UNSTABLE: [persistAtom],
