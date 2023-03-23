@@ -7,6 +7,7 @@ import Notice from './Notice.svg';
 import Plus from './Plus.svg';
 import Settings from './Settings.svg';
 import Dots from './Dots.svg';
+import PreParing from './PreParing.svg';
 
 export const SYSTEM = {
   ARTICLE: <Article />,
@@ -21,4 +22,5 @@ export const SYSTEM = {
   SETTING_MD: <Settings width={17} height={17} />,
   SETTING_LG: <Settings width={21} height={21} />,
   DOTS: <Dots />,
+  PREPARING: <PreParing />,
 };
