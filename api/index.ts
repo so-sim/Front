@@ -1,22 +1,40 @@
+import { getAccessToken, removeAccessToken } from '@/utils/acceessToken';
 import axios from 'axios';
+import { reTakeToken } from './Auth';
 
 export const BASE_URL = 'https://back.sosim-manager.com';
 
-export const setAccesToken = (token: string) => {
-  return localStorage.setItem('accessToken', token);
-};
-export const getAccessToken = () => {
-  return localStorage.getItem('accessToken');
-};
-export const removeAccessToken = () => {
-  return localStorage.removeItem('accessToken');
-};
-
 const api = axios.create({
   baseURL: BASE_URL,
-  headers: {
-    Authorization: `Bearer ${getAccessToken()}`,
-  },
+  withCredentials: true,
 });
+
+api.interceptors.request.use((config) => {
+  const accessToken = getAccessToken();
+  if (config.headers && accessToken && !config.headers.Authorization) {
+    config.headers.Authorization = `Bearer ${accessToken}`;
+  }
+  return config;
+});
+
+api.interceptors.response.use(
+  (response) => {
+    return response;
+  },
+  async (error) => {
+    const {
+      config,
+      response: { status },
+    } = error;
+
+    if (status.code === 403) {
+      const originalRequest = config;
+      removeAccessToken();
+      reTakeToken();
+      return axios(originalRequest);
+    }
+    return Promise.reject(error);
+  },
+);
 
 export default api;

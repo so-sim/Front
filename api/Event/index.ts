@@ -1,4 +1,4 @@
-import { EvnetInfo, EvnetId, EventFilter } from '@/types/event';
+import { EvnetInfo, EvnetId } from '@/types/event';
 import { ServerResponse } from '@/types/serverResponse';
 import api from '..';
 
@@ -8,12 +8,12 @@ export const createEvent = async (detailInfo: Omit<EvnetInfo, 'eventId'>): Promi
 };
 
 export const getOneOfEvent = async (eventId: number): Promise<ServerResponse<Omit<EvnetInfo, 'eventId' | 'userId'>>> => {
-  const { data } = await api.get(`api/event/penalty/${eventId}`);
+  const { data } = await api.get(`/api/event/penalty/${eventId}`);
   return data;
 };
 
 export const getEventList = async (queries: string): Promise<ServerResponse<EvnetInfo[]>> => {
-  const { data } = await api.get(`api/event/penalty?${queries}`);
+  const { data } = await api.get(`/api/event/penalty?${queries}`);
   return data;
 };
 

@@ -1,4 +1,4 @@
-import { removeAccessToken } from '@/api';
+
 import { ARROW } from '@/assets/icons/Arrow';
 import { LOGO } from '@/assets/icons/Logo';
 import { SYSTEM } from '@/assets/icons/System';
@@ -6,6 +6,7 @@ import { USER } from '@/assets/icons/User';
 import DropDown from '@/common/DropDown';
 import { TwoButtonModal } from '@/common/Modal/TwoButtonModal';
 import UserConfigModal from '@/common/Modal/UserConfigModal';
+import { removeAccessToken } from '@/utils/acceessToken';
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import * as Style from './styles';

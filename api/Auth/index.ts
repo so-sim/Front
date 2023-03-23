@@ -1,14 +1,20 @@
 import { SignUpResult } from './../../types/auth.d';
 import { ServerResponse } from '@/types/serverResponse';
-import api, { setAccesToken } from '..';
+import api from '..';
+import { setAccesToken } from '@/utils/acceessToken';
 
-export const kakaoLogin = async (code: string): Promise<ServerResponse<SignUpResult>> => {
-  const { data } = await api.post(`/login/oauth2/code/kakao?code=${code}`);
+export const kakaoSignUp = async (code: string): Promise<ServerResponse<SignUpResult>> => {
+  const { data } = await api.post(`/login/kakao?code=${code}`);
   setAccesToken(data.accessToken);
   return data;
 };
 
-export const reTakeToken = async (): Promise<ServerResponse<SignUpResult>> => {
+export const kakaoSignIn = async (code: string | null): Promise<ServerResponse<SignUpResult>> => {
+  const { data } = await api.get(`/login/kakao?code=${code}`);
+  return data;
+};
+
+export const reTakeToken = async (): Promise<ServerResponse> => {
   const { data } = await api.post('/login/reIssueToken');
   setAccesToken(data.accessToken);
   return data;

@@ -5,25 +5,19 @@ export const GuidePhrase = styled.p`
   /* margin-top: 22px; */
 `;
 
-export const LinkTo = styled(Link)`
-  text-decoration: none;
+export const Footer = styled.div`
+  cursor: pointer;
   color: ${({ theme }) => theme.colors.secondary_500};
   ${({ theme }) => theme.font.caption};
 
-  &:focus,
-  &:visited,
-  &:link,
-  &:active {
-    text-decoration: none;
-  }
   &:hover {
     text-decoration: underline;
   }
 `;
 
 export const LoginBlock = styled.div`
-  gap: 24px;
-  margin-top: 32px;
+  margin-top: 20px;
+  margin-bottom: 12px;
   display: flex;
   flex-direction: column;
   align-items: center;

@@ -1,5 +1,4 @@
 import styled from '@emotion/styled';
-import { Link } from 'react-router-dom';
 
 export const Layout = styled.div`
   padding-top: 124px;
@@ -58,7 +57,6 @@ export const TOS = styled.div`
 export const TOSLink = styled.a``;
 
 export const TOSWhole = styled(TOS)`
-  border-bottom: 2px solid #e3e4e6;
   margin-bottom: 4px;
 `;
 
