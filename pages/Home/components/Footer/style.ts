@@ -5,3 +5,7 @@ export const Footer = styled.footer`
   width: 100%;
   background-color: ${({ theme }) => theme.colors.neutral_200_b};
 `;
+
+export const FooterLink = styled.a`
+  cursor: pointer;
+`;

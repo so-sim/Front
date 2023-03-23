@@ -26,13 +26,18 @@ export const Logo = styled.span`
   margin-right: 40px;
 `;
 
-export const NavSection = styled.span`
+export const NavSection = styled.div`
   margin-left: 40px;
   display: flex;
+  align-items: center;
   gap: 28px;
   & > button {
     ${({ theme }) => theme.font.subhead_02};
   }
+`;
+
+export const GNBLink = styled.a`
+  cursor: pointer;
 `;
 
 export const Login = styled.button`

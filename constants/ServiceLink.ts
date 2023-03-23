@@ -9,7 +9,7 @@ export const GNB_LINK = {
   SUGGEST: 'https://forms.gle/V7ArjjrinyyHkvzT7',
 };
 
-export const FOTTER_LINK = {
+export const FOOTER_LINK = {
   TERMS: 'https://www.notion.so/10e0ec59f6564133a9efbcf37e0c2c5a?pvs=4',
   PRIVACY: 'https://www.notion.so/e41fced998d24fdda770ea8f7274fb7b?pvs=4',
 };
