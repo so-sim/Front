@@ -41,6 +41,7 @@ const GroupLayoutHeader = () => {
   useEffect(() => {
     if (dropDownState === '환경설정') handelShowConfigModal();
     if (dropDownState === '로그아웃') handleShowLogOutmodal();
+    setDropDownState('');
   }, [dropDownState]);
 
   return (

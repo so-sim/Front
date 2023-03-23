@@ -8,7 +8,7 @@ interface UserConfigModalProps {
 
 const UserConfigModal: FC<UserConfigModalProps> = ({ handleModal }) => {
   return (
-    <Modal.Frame width="493px" height="284px">
+    <Modal.Frame width="493px" height="284px" onClick={handleModal}>
       <Modal.Header align="start" onClick={handleModal}>
         환경설정
       </Modal.Header>
