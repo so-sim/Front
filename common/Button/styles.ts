@@ -39,6 +39,9 @@ export const Button = styled.button<ButtonProps>`
       return colors[color ?? 'primary'];
     }};
   }
+  :disabled {
+    cursor: default;
+  }
 `;
 
 export const InnerText = styled.span`

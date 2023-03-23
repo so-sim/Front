@@ -7,21 +7,28 @@ interface DateCellWithMarkProps {
   date: Dayjs;
   isCurrentMonth: (date: Dayjs) => boolean;
   isToday: (date: Dayjs) => boolean;
+  isSelectedDate: (date: Dayjs) => boolean;
+  isSelectedWeek: boolean;
 }
 
-const DateCellWithMark: FC<DateCellWithMarkProps> = ({ date, isCurrentMonth, isToday }) => {
+const DateCellWithMark: FC<DateCellWithMarkProps> = ({ date, isCurrentMonth, isToday, isSelectedDate, isSelectedWeek }) => {
+  const day = date.day();
+
+  const isFirst = day === 0;
+  const isLast = day === 6;
+
   return (
-    <>
-      <Style.DateCell isCurrentMonth={isCurrentMonth(date)}>
-        <p>{date.date()}</p>
-        <Style.TodayMark isToday={isToday(date)} />
-        <Style.Mark>
-          <span>{MARK.BLUE}</span>
-          {/* <span>{MARK.YELLOW}</span> */}
-          {/* <span>{MARK.RED}</span> */}
-        </Style.Mark>
-      </Style.DateCell>
-    </>
+    <Style.DateCell>
+      <Style.Date isToday={isToday(date)} isSelectedDate={isSelectedDate(date)} isCurrentMonth={isCurrentMonth(date)} isSelectedWeek={isSelectedWeek}>
+        {isSelectedWeek && <Style.selectedWeek isSelectedWeek={isSelectedWeek} isFirst={isFirst} isLast={isLast} />}
+        {date.date()}
+      </Style.Date>
+      <Style.Mark>
+        <span>{MARK.BLUE}</span>
+        {/* <span>{MARK.YELLOW}</span> */}
+        {/* <span>{MARK.RED}</span> */}
+      </Style.Mark>
+    </Style.DateCell>
   );
 };
 
