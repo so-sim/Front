@@ -1,38 +1,70 @@
 import styled from '@emotion/styled';
 
-interface DateCellProps {
-  isCurrentMonth: boolean;
-}
-
-export const DateCell = styled.div<DateCellProps>`
+export const DateCell = styled.div`
   cursor: pointer;
   position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 12px 4px;
+  width: 100%;
+  padding: 12px 0px;
   gap: 8px;
-  color: ${(props) => (props.isCurrentMonth ? 'black' : props.theme.colors.secondary_400)};
-  p {
-    text-align: center;
-    width: 28px;
-    height: 28px;
-  }
 `;
 
-interface TodayMark {
-  isToday: boolean;
+interface SelectedWeekProps {
+  isSelectedWeek: boolean;
+  isFirst: boolean;
+  isLast: boolean;
 }
 
-export const TodayMark = styled.div<TodayMark>`
-  display: ${(props) => (props.isToday ? 'block' : 'none')};
+export const selectedWeek = styled.div<SelectedWeekProps>`
   position: absolute;
+  width: 100%;
+  height: 28px;
+  background-color: ${({ theme }) => theme.colors.secondary_800};
+
+  margin-left: ${(props) => props.isFirst && '12px'};
+  margin-right: ${(props) => props.isLast && '12px'};
+
+  border-top-left-radius: ${(props) => props.isFirst && '50px'};
+  border-bottom-left-radius: ${(props) => props.isFirst && '50px'};
+  border-top-right-radius: ${(props) => props.isLast && '50px'};
+  border-bottom-right-radius: ${(props) => props.isLast && '50px'};
+
+  z-index: -10;
+`;
+
+interface DateProps {
+  isToday: boolean;
+  isSelectedDate: boolean;
+  isCurrentMonth: boolean;
+  isSelectedWeek: boolean;
+}
+
+export const Date = styled.div<DateProps>`
+  display: flex;
+  justify-content: center;
+  align-items: center;
   width: 28px;
   height: 28px;
-  border-radius: 50%;
-  background-color: ${({ theme }) => theme.colors.neutral_300_b};
-  z-index: -10;
-  top: 7px;
+  border-radius: 30px;
+  background-color: ${(props) => props.isSelectedDate && props.theme.colors.secondary_800};
+  color: ${(props) => {
+    if (props.isSelectedDate || props.isSelectedWeek) return props.theme.colors.white;
+    if (!props.isCurrentMonth) return props.theme.colors.secondary_400;
+    return props.theme.colors.secondary_900;
+  }};
+
+  border: ${(props) => props.isToday && `2px solid ${props.theme.colors.secondary_800}`};
+
+  :hover {
+    background-color: ${(props) => {
+      if (props.isSelectedWeek || props.isSelectedDate) {
+        return props.theme.colors.secondary_600;
+      }
+      return props.theme.colors.neutral_200_b;
+    }};
+  }
 `;
 
 export const Mark = styled.div``;
