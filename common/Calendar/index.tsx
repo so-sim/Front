@@ -1,5 +1,5 @@
 import { dateState } from '@/store/dateState';
-import { dateToString } from '@/utils/dateToString';
+import { handleDate } from '@/utils/handleDate';
 import dayjs, { Dayjs } from 'dayjs';
 import React, { FC } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -20,51 +20,50 @@ interface CalnedrProps {
 const Calendar: FC<CalnedrProps> = ({ cellType }) => {
   const [dateObj, setDateObj] = useRecoilState(dateState);
   const today = dayjs();
-  const { calendarBaseDate, week, month, selectedDate } = dateObj;
+  const { calendarBaseDate, week, detailBaseDate, selectedDate } = dateObj;
   const monthList = createCalendar(dayjs(calendarBaseDate));
   const navigate = useNavigate();
   const { groupId } = useParams();
 
-  const addMonth = () => {
+  const { addMonth, subMonth, dateToFormmating, getMonth } = handleDate;
+
+  const increaseMonth = () => {
     setDateObj((prev) => ({
       ...prev,
-      calendarBaseDate: dayjs(prev.calendarBaseDate).add(1, 'month'),
+      calendarBaseDate: addMonth(prev.calendarBaseDate),
     }));
   };
-  const subMonth = () => {
+  const decreaseMonth = () => {
     setDateObj((prev) => ({
       ...prev,
-      calendarBaseDate: dayjs(prev.calendarBaseDate).subtract(1, 'month'),
+      calendarBaseDate: subMonth(prev.calendarBaseDate),
     }));
   };
 
   const isCurrentMonth = (date: Dayjs) => {
-    return date.month() === dayjs(calendarBaseDate).month();
+    return date.month() === getMonth(calendarBaseDate);
   };
 
   const isToday = (date: Dayjs) => {
-    return dateToString(date) === dateToString(today);
+    return dateToFormmating(date) === dateToFormmating(today);
   };
 
   const isSelectedWeek = (index: number) => {
-    return parseInt(month) - 1 === dayjs(calendarBaseDate).month() && index + 1 === parseInt(week);
+    return getMonth(detailBaseDate) === getMonth(calendarBaseDate) && index + 1 === week;
   };
 
   const isSelectedDate = (date: Dayjs) => {
     if (!selectedDate) return false;
-    return dateToString(selectedDate) === dateToString(date);
+    return dateToFormmating(selectedDate) === dateToFormmating(date);
   };
 
   const goDetail = (date: Dayjs) => {
-    const [year, month, day] = dateToString(date).split('-');
-
     setDateObj((prev) => ({
       ...prev,
       calendarBaseDate: date,
+      detailBaseDate: date,
       selectedDate: date,
-      year,
-      month,
-      day,
+      week: null,
     }));
     navigate(`/group/${groupId}/book/detail`);
   };
@@ -77,8 +76,8 @@ const Calendar: FC<CalnedrProps> = ({ cellType }) => {
           <div>
             <Style.DateHeader>{dayjs(dateObj.calendarBaseDate).format('YYYY년 MM월')}</Style.DateHeader>
             <div>
-              <Style.ArrowWrapper onClick={subMonth}>{ARROW.LEFT}</Style.ArrowWrapper>
-              <Style.ArrowWrapper onClick={addMonth}>{ARROW.RIGHT}</Style.ArrowWrapper>
+              <Style.ArrowWrapper onClick={decreaseMonth}>{ARROW.LEFT}</Style.ArrowWrapper>
+              <Style.ArrowWrapper onClick={increaseMonth}>{ARROW.RIGHT}</Style.ArrowWrapper>
             </div>
           </div>
           {cellType === 'Tag' && (
@@ -96,7 +95,7 @@ const Calendar: FC<CalnedrProps> = ({ cellType }) => {
           {monthList.map((weeks, idx) => (
             <Style.WeekWrap key={idx} cellType={cellType}>
               {weeks.map((date) => (
-                <div key={dateToString(date)} onClick={() => goDetail(date)}>
+                <div key={dateToFormmating(date)} onClick={() => goDetail(date)}>
                   {cellType === 'Tag' ? (
                     <DateCellWithTag date={date} isCurrentMonth={isCurrentMonth} isToday={isToday} isSelectedDate={isSelectedDate} />
                   ) : (
@@ -113,3 +112,6 @@ const Calendar: FC<CalnedrProps> = ({ cellType }) => {
 };
 
 export default Calendar;
+function addMonth(calendarBaseDate: dayjs.Dayjs): dayjs.Dayjs {
+  throw new Error('Function not implemented.');
+}

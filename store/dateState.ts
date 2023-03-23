@@ -8,20 +8,18 @@ const { persistAtom } = recoilPersist({
 
 export interface DateState {
   calendarBaseDate: Dayjs;
+  detailBaseDate: Dayjs;
   selectedDate: Dayjs | null;
-  week: string;
-  month: string;
-  day: string;
+  week: number | null;
 }
 
 export const dateState = atom<DateState>({
   key: 'dateState',
   default: {
     calendarBaseDate: dayjs(),
+    detailBaseDate: dayjs(),
     selectedDate: null,
-    week: '02',
-    month: '03',
-    day: '',
+    week: 2,
   },
   effects_UNSTABLE: [persistAtom],
 });
