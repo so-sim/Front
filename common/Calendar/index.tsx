@@ -1,12 +1,13 @@
 import { dateState } from '@/store/dateState';
 import { handleDate } from '@/utils/handleDate';
 import dayjs, { Dayjs } from 'dayjs';
-import React, { FC } from 'react';
+import React, { FC, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
 import { ARROW } from '../../assets/icons/Arrow';
 import Button from '../../common/Button';
 import createCalendar from '../../utils/createCalendar';
+import { FineBookModal } from '../Modal/FineBookModal';
 import DateCellWithMark from './DateCellWithMark';
 import DateCellWithTag from './DateCellWithTag';
 import * as Style from './styles';
@@ -19,6 +20,7 @@ interface CalnedrProps {
 
 const Calendar: FC<CalnedrProps> = ({ cellType }) => {
   const [dateObj, setDateObj] = useRecoilState(dateState);
+  const [showCreateDetailModal, setShowCreateDetailModal] = useState(false);
   const today = dayjs();
   const { calendarBaseDate, week, detailBaseDate, selectedDate } = dateObj;
   const monthList = createCalendar(dayjs(calendarBaseDate));
@@ -26,6 +28,10 @@ const Calendar: FC<CalnedrProps> = ({ cellType }) => {
   const { groupId } = useParams();
 
   const { addMonth, subMonth, dateToFormmating, getMonth } = handleDate;
+
+  const handleShowCreateDetailModal = () => {
+    setShowCreateDetailModal((prev) => !prev);
+  };
 
   const increaseMonth = () => {
     setDateObj((prev) => ({
@@ -81,7 +87,7 @@ const Calendar: FC<CalnedrProps> = ({ cellType }) => {
             </div>
           </div>
           {cellType === 'Tag' && (
-            <Button width="124px" color="black">
+            <Button width="124px" color="black" onClick={handleShowCreateDetailModal}>
               내역 추가하기
             </Button>
           )}
@@ -107,6 +113,7 @@ const Calendar: FC<CalnedrProps> = ({ cellType }) => {
           ))}
         </Style.CalendarContainer>
       </Style.Layout>
+      {showCreateDetailModal && <FineBookModal setOpen={setShowCreateDetailModal} type="create" />}
     </>
   );
 };
