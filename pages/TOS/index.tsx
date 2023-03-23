@@ -1,3 +1,4 @@
+import usePermitTosMutation from '@/queries/Auth/usePermitTosMutation';
 import React, { useState } from 'react';
 import { ARROW } from '../../assets/icons/Arrow';
 import { LOGO } from '../../assets/icons/Logo';
@@ -20,6 +21,8 @@ const TOS = () => {
   const [checkedList, setCheckedList] = useState<number[]>([]);
   const requiredTos = TOSList.filter((list) => list.required).map((list) => list.id);
 
+  const { mutate: permitTosMutate } = usePermitTosMutation();
+
   const checkedItemHandler = (tos: TOS, isChecked: boolean) => {
     if (isChecked) {
       return setCheckedList((prev) => [...prev, tos.id]);
@@ -37,6 +40,10 @@ const TOS = () => {
     } else {
       setCheckedList([...requiredTos]);
     }
+  };
+
+  const onSubmit = () => {
+    permitTosMutate();
   };
 
   const isAllChecked = checkedList.length === requiredTos.length;
@@ -71,7 +78,9 @@ const TOS = () => {
             ))}
           </Style.TOSList>
           <Style.TOSFooter>
-            <Button color={isAllChecked ? 'primary' : 'disabled'}>가입</Button>
+            <Button color={isAllChecked ? 'primary' : 'disabled'} onClick={onSubmit}>
+              가입
+            </Button>
           </Style.TOSFooter>
         </Style.TOSContainer>
       </Style.Layout>

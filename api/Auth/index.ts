@@ -14,3 +14,8 @@ export const reTakeToken = async (): Promise<ServerResponse<SignUpResult>> => {
   setAccesToken(data.accessToken);
   return data;
 };
+
+export const permitTos = async (): Promise<ServerResponse> => {
+  const { data } = await api.patch('/login/permit');
+  return data;
+};
