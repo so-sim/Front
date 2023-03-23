@@ -1,3 +1,4 @@
+import { TOS_LINK } from '@/constants/ServiceLink';
 import usePermitTosMutation from '@/queries/Auth/usePermitTosMutation';
 import React, { useState } from 'react';
 import { ARROW } from '../../assets/icons/Arrow';
@@ -13,8 +14,8 @@ interface TOS {
 }
 
 const TOSList: TOS[] = [
-  { id: 1, title: '개인정보수집 동의', href: '', required: true },
-  { id: 2, title: '이용약관 동의', href: '', required: true },
+  { id: 1, title: '개인정보수집 동의', href: TOS_LINK.PRIVACY, required: true },
+  { id: 2, title: '이용약관 동의', href: TOS_LINK.TERMS, required: true },
 ];
 
 const TOS = () => {
