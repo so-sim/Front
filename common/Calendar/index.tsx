@@ -20,25 +20,26 @@ interface CalnedrProps {
 const Calendar: FC<CalnedrProps> = ({ cellType }) => {
   const [dateObj, setDateObj] = useRecoilState(dateState);
   const today = dayjs();
-  const monthList = createCalendar(dayjs(dateObj.baseDate));
+  const { calendarBaseDate, week, month, selectedDate } = dateObj;
+  const monthList = createCalendar(dayjs(calendarBaseDate));
   const navigate = useNavigate();
   const { groupId } = useParams();
 
   const addMonth = () => {
     setDateObj((prev) => ({
       ...prev,
-      baseDate: dayjs(prev.baseDate).add(1, 'month'),
+      baseDate: dayjs(prev.calendarBaseDate).add(1, 'month'),
     }));
   };
   const subMonth = () => {
     setDateObj((prev) => ({
       ...prev,
-      baseDate: dayjs(prev.baseDate).subtract(1, 'month'),
+      baseDate: dayjs(prev.calendarBaseDate).subtract(1, 'month'),
     }));
   };
 
   const isCurrentMonth = (date: Dayjs) => {
-    return date.month() === dayjs(dateObj.baseDate).month();
+    return date.month() === dayjs(calendarBaseDate).month();
   };
 
   const isToday = (date: Dayjs) => {
@@ -46,12 +47,12 @@ const Calendar: FC<CalnedrProps> = ({ cellType }) => {
   };
 
   const isSelectedWeek = (index: number) => {
-    return parseInt(dateObj.month) - 1 === dayjs(dateObj.baseDate).month() && index + 1 === parseInt(dateObj.week);
+    return parseInt(month) - 1 === dayjs(calendarBaseDate).month() && index + 1 === parseInt(week);
   };
 
   const isSelectedDate = (date: Dayjs) => {
-    if (!dateObj.selectedDate) return false;
-    return dateToString(dateObj.selectedDate) === dateToString(date);
+    if (!selectedDate) return false;
+    return dateToString(selectedDate) === dateToString(date);
   };
 
   const goDetail = (date: Dayjs) => {
@@ -59,7 +60,7 @@ const Calendar: FC<CalnedrProps> = ({ cellType }) => {
 
     setDateObj((prev) => ({
       ...prev,
-      baseDate: date,
+      calendarBaseDate: date,
       selectedDate: date,
       year,
       month,
@@ -74,7 +75,7 @@ const Calendar: FC<CalnedrProps> = ({ cellType }) => {
         <span>벌금 장부</span>
         <Style.Header>
           <div>
-            <Style.DateHeader>{dayjs(dateObj.baseDate).format('YYYY년 MM월')}</Style.DateHeader>
+            <Style.DateHeader>{dayjs(dateObj.calendarBaseDate).format('YYYY년 MM월')}</Style.DateHeader>
             <div>
               <Style.ArrowWrapper onClick={subMonth}>{ARROW.LEFT}</Style.ArrowWrapper>
               <Style.ArrowWrapper onClick={addMonth}>{ARROW.RIGHT}</Style.ArrowWrapper>

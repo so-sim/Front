@@ -7,7 +7,7 @@ const { persistAtom } = recoilPersist({
 });
 
 export interface DateState {
-  baseDate: Dayjs;
+  calendarBaseDate: Dayjs;
   selectedDate: Dayjs | null;
   week: string;
   month: string;
@@ -17,7 +17,7 @@ export interface DateState {
 export const dateState = atom<DateState>({
   key: 'dateState',
   default: {
-    baseDate: dayjs(),
+    calendarBaseDate: dayjs(),
     selectedDate: null,
     week: '02',
     month: '03',
