@@ -1,8 +1,9 @@
-import { useQueryString } from '@/hooks/useQueryString';
+import { dateState } from '@/store/dateState';
 import { dateToString } from '@/utils/dateToString';
 import dayjs, { Dayjs } from 'dayjs';
-import React, { FC, useEffect, useState } from 'react';
+import React, { FC } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
+import { useRecoilState } from 'recoil';
 import { ARROW } from '../../assets/icons/Arrow';
 import Button from '../../common/Button';
 import createCalendar from '../../utils/createCalendar';
@@ -17,28 +18,29 @@ interface CalnedrProps {
 }
 
 const Calendar: FC<CalnedrProps> = ({ cellType }) => {
-  const [baseDate, setBaseDate] = useState(dayjs());
+  const [dateObj, setDateObj] = useRecoilState(dateState);
   const today = dayjs();
-  const monthList = createCalendar(baseDate);
+  const monthList = createCalendar(dayjs(dateObj.baseDate));
   const navigate = useNavigate();
   const { groupId } = useParams();
-  const queries = useQueryString();
 
-  const { year, month, day } = queries;
+  console.log(typeof dateObj.baseDate, dayjs(dateObj.baseDate), dayjs());
 
   const addMonth = () => {
-    const newDate = baseDate.add(1, 'month');
-    const [year, month, day] = dateToString(newDate).split('-');
-    navigate(`/group/${groupId}/book/detail?year=${year}&month=${month}&day=${day}`);
+    setDateObj((prev) => ({
+      ...prev,
+      baseDate: prev.baseDate.add(1, 'month'),
+    }));
   };
   const subMonth = () => {
-    const newDate = baseDate.subtract(1, 'month');
-    const [year, month, day] = dateToString(newDate).split('-');
-    navigate(`/group/${groupId}/book/detail?year=${year}&month=${month}&day=${day}`);
+    setDateObj((prev) => ({
+      ...prev,
+      baseDate: prev.baseDate.subtract(1, 'month'),
+    }));
   };
 
   const isCurrentMonth = (date: Dayjs) => {
-    return date.month() === baseDate.month();
+    return date.month() === dayjs(dateObj.baseDate).month();
   };
 
   const isToday = (date: Dayjs) => {
@@ -46,19 +48,23 @@ const Calendar: FC<CalnedrProps> = ({ cellType }) => {
   };
 
   const isSelected = (date: Dayjs) => {
-    return dateToString(baseDate) === dateToString(date);
+    if (!dateObj.selectedDate) return false;
+    return dateToString(dateObj.selectedDate) === dateToString(date);
   };
 
   const goDetail = (date: Dayjs) => {
     const [year, month, day] = dateToString(date).split('-');
-    navigate(`/group/${groupId}/book/detail?year=${year}&month=${month}&day=${day}`);
-  };
 
-  useEffect(() => {
-    if (year) {
-      setBaseDate(dayjs(`${year}-${month}-${day}`));
-    }
-  }, [year, month, day]);
+    setDateObj((prev) => ({
+      ...prev,
+      baseDate: date,
+      selectedDate: date,
+      year,
+      month,
+      day,
+    }));
+    navigate(`/group/${groupId}/book/detail`);
+  };
 
   return (
     <>
@@ -66,7 +72,7 @@ const Calendar: FC<CalnedrProps> = ({ cellType }) => {
         <span>벌금 장부</span>
         <Style.Header>
           <div>
-            <Style.DateHeader>{baseDate.format('YYYY년 MM월')}</Style.DateHeader>
+            <Style.DateHeader>{dayjs(dateObj.baseDate).format('YYYY년 MM월')}</Style.DateHeader>
             <div>
               <Style.ArrowWrapper onClick={subMonth}>{ARROW.LEFT}</Style.ArrowWrapper>
               <Style.ArrowWrapper onClick={addMonth}>{ARROW.RIGHT}</Style.ArrowWrapper>

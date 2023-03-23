@@ -1,5 +1,5 @@
-import { Dayjs } from 'dayjs';
+import dayjs, { Dayjs } from 'dayjs';
 
 export const dateToString = (date: Dayjs) => {
-  return date.format('YYYY-MM-DD');
+  return dayjs(date).format('YYYY-MM-DD');
 };
