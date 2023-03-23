@@ -27,7 +27,7 @@ api.interceptors.response.use(
       response: { status },
     } = error;
 
-    if (status === 403) {
+    if (status.code === 403) {
       const originalRequest = config;
       removeAccessToken();
       reTakeToken();
