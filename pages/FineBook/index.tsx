@@ -1,4 +1,3 @@
-import React from 'react';
 import Calendar from '../../common/Calendar';
 import DetailFine from './components/DetailFine';
 import * as Style from './styles';

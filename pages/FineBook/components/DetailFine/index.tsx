@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useQueryString } from '@/hooks/useQueryString';
 import { useGetDetailList } from '@/queries/Detail/useGetDetailList';
-import { EventFilter, EvnetInfo } from '@/types/event';
+import { EvnetInfo } from '@/types/event';
 import { DateController } from './components/DateController';
 import { DetailList } from './components/DetailList';
 import { DetailsHeader } from './components/DetailsHeader';
@@ -31,10 +31,6 @@ const DetailFine = () => {
   const queries = useQueryString();
 
   const { data } = useGetDetailList(queries);
-
-  // ('/api/event/penalty?today=true');
-  // ('/api/event/penalty?paymentType="non | con | full"');
-  // ('/api/event/penalty?month=3&week=1&day=19&userId=124125');
 
   return (
     <>
