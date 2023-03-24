@@ -2,7 +2,7 @@ import { FC, useEffect, useState } from 'react';
 import Button from '../../Button';
 import { Input, Label } from '@/common';
 import Modal from '@/common/Modal';
-import { PLACEHOLDER } from '@/constants';
+import { PLACEHOLDER } from '@/constants/Group';
 import { isValid } from '@/utils/validation';
 import * as Style from './styles';
 import { ModalProps } from '@/common/Modal';

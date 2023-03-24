@@ -6,7 +6,7 @@ import { GroupColorList } from '../GroupColorList';
 import { Input, Label } from '@/common';
 import { DropBox } from '../../DropBox';
 import { isValid } from '@/utils/validation';
-import { COLORS, DROPDOWN_LIST, PLACEHOLDER } from '@/constants';
+import { COLORS, DROPDOWN_LIST, PLACEHOLDER } from '@/constants/Group';
 import { useCreateGroup } from '@/queries/Group';
 import { GroupColor } from '@/types/group';
 import { userState } from '@/store/userState';
