@@ -1,0 +1,55 @@
+import styled from '@emotion/styled';
+
+export const Title = styled.div``;
+
+export const SubTitle = styled.div`
+  ${({ theme }) => theme.font.subhead_03};
+  margin: 4px 20px 0 4px;
+  white-space: nowrap;
+`;
+
+export const ButtonFrame = styled.div`
+  display: flex;
+  margin-top: 12px;
+  gap: 12px;
+  justify-content: flex-end;
+  width: 100%;
+`;
+
+export const DeleteButton = styled.button`
+  ${({ theme }) => theme.font.subhead_01};
+  padding: 8px 14px;
+  border-radius: 4px;
+  margin-top: 12px;
+  border: 2px solid ${({ theme }) => theme.colors.neutral_400_b};
+  background-color: ${({ theme }) => theme.colors.neutral_200_b};
+`;
+
+export const WithDrwal = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  height: 32px;
+`;
+
+export const GroupName = styled.div`
+  display: flex;
+  width: 226px;
+  padding: 4px 8px;
+  background-color: ${({ theme }) => theme.colors.neutral_200_b};
+  border-radius: 2px;
+  ${({ theme }) => theme.font.body_02}
+`;
+
+export const QuitButton = styled.button`
+  ${({ theme }) => theme.font.subhead_01};
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  height: 28px;
+  margin: 2px 0;
+  padding: 6px 12px;
+  border: 2px solid ${({ theme }) => theme.colors.neutral_400_b};
+  border-radius: 2px;
+  background-color: ${({ theme }) => theme.colors.neutral_200_b};
+`;
