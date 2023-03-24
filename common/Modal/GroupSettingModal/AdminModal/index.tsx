@@ -7,7 +7,7 @@ import { isValid } from '@/utils/validation';
 import { GroupColorList } from '../../GroupColorList';
 import { DropBox } from '../../../DropBox';
 import * as Style from './style';
-import { COLORS, DROPDOWN_LIST } from '@/constants';
+import { COLORS, DROPDOWN_LIST } from '@/constants/Group';
 import { ModalHandlerProps } from '../../CreateGroupModal';
 import { useGroupDetail, useUpdateGroup, useWithdrawalGroup } from '@/queries/Group';
 import { useParams } from 'react-router-dom';
@@ -30,7 +30,7 @@ export const AdminModal: FC<ModalHandlerProps> = ({ modalHandler }) => {
 
   const updateGroupInfo = () => {
     const id = Number(groupId);
-    updateGroupMutate({ title: groupName, type, coverColor: color, groupId: id });
+    updateGroupMutate({ groupName, type, coverColor: color, groupId: id, myName });
     modalHandler();
   };
 

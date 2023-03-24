@@ -164,4 +164,21 @@ const getDetailList: Parameters<typeof rest.post>[1] = (req, res, ctx) => {
   );
 };
 
-export const detailHandler = [rest.post('/api/event/penalty', createDetail), rest.get('/api/event/penalty?year=2023&month=3', getDetailList)];
+const updateDetailStatus: Parameters<typeof rest.patch>[1] = async (req, res, ctx) => {
+  return res(
+    ctx.status(200),
+    ctx.json({
+      status: {
+        code: 200,
+        message: '납부 여부가 성공적으로 변경되었습니다.',
+      },
+      content: details[1],
+    }),
+  );
+};
+
+export const detailHandler = [
+  rest.post('/api/event/penalty', createDetail),
+  rest.get('/api/event/penalty?year=2023&month=3', getDetailList),
+  rest.patch('/api/event/penalty/*', updateDetailStatus),
+];

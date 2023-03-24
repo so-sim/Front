@@ -1,13 +1,17 @@
-import React, { FC, useEffect, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 import Button from '../../Button';
 import { Input, Label } from '@/common';
 import Modal from '@/common/Modal';
-import { PLACEHOLDER } from '@/constants';
+import { PLACEHOLDER } from '@/constants/Group';
 import { isValid } from '@/utils/validation';
 import * as Style from './styles';
 import { ModalProps } from '@/common/Modal';
 
-export const InvitationModal: FC<ModalProps> = ({ onClick }) => {
+interface InvitationModalProps extends Partial<ModalProps> {
+  groupName: string;
+}
+
+export const InvitationModal: FC<InvitationModalProps> = ({ onClick, groupName }) => {
   const [myName, setMyName] = useState('');
   const [isInit, setIsInit] = useState(true);
 
@@ -18,7 +22,7 @@ export const InvitationModal: FC<ModalProps> = ({ onClick }) => {
   return (
     <Modal.Frame width="448px" height="262px">
       <Modal.Header onClick={onClick}>
-        <Style.Title>한사랑 산악회 모임</Style.Title>
+        <Style.Title>{groupName}</Style.Title>
       </Modal.Header>
       <Modal.Body>
         <Label title="내 이름">

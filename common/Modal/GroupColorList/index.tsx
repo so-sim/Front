@@ -1,6 +1,6 @@
 import * as Style from './style';
 import { Dispatch, SetStateAction } from 'react';
-import { COLORS } from '@/constants';
+import { COLORS } from '@/constants/Group';
 import { GroupColor } from '@/types/group';
 
 interface GroupColorList {
