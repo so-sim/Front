@@ -1,4 +1,5 @@
 import KaKaoSignUp from '@/pages/Auth/KakaoSignUp';
+import ServiceWithdrawal from '@/pages/Withdrawal';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import GroupLayout from '../layouts/Group';
 import KaKaoSignIn from '../pages/Auth/KakaoSignIn';
@@ -13,6 +14,7 @@ const Router = () => {
         <Route path="/auth/signin/kakao" element={<KaKaoSignIn />} />
         <Route path="/auth/signup/kakao" element={<KaKaoSignUp />} />
         <Route path="/tos" element={<TOS />} />
+        <Route path="/withdrawal" element={<ServiceWithdrawal />} />
         <Route path="/group/:groupId/*" element={<GroupLayout />} />
       </Routes>
     </BrowserRouter>
