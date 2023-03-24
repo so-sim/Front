@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import useSignUpMutation from '../../../queries/Auth/useSignUpMutation';
+import Loading from '../Loading';
 
 const KaKaoSignUp = () => {
   const href = window.location.href;
@@ -14,7 +15,7 @@ const KaKaoSignUp = () => {
     }
   }, []);
 
-  return <div>로그인중...?</div>;
+  return <Loading />;
 };
 
 export default KaKaoSignUp;

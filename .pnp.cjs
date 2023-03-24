@@ -97,6 +97,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["prettier", "npm:2.8.3"],\
             ["react", "npm:18.2.0"],\
             ["react-dom", "virtual:2012bb92bd3c02c31c208dd19c7a30b32c4e004bc22c4ac67376a0b485daeffa61f9ac1dd14f7ec2e6d9f117f17b40d67db4154a3f2abfb8e2cf15cea16c14d6#npm:18.2.0"],\
+            ["react-lottie-player", "virtual:2012bb92bd3c02c31c208dd19c7a30b32c4e004bc22c4ac67376a0b485daeffa61f9ac1dd14f7ec2e6d9f117f17b40d67db4154a3f2abfb8e2cf15cea16c14d6#npm:1.5.4"],\
             ["react-refresh", "npm:0.14.0"],\
             ["react-router-dom", "virtual:2012bb92bd3c02c31c208dd19c7a30b32c4e004bc22c4ac67376a0b485daeffa61f9ac1dd14f7ec2e6d9f117f17b40d67db4154a3f2abfb8e2cf15cea16c14d6#npm:6.8.0"],\
             ["react-test-renderer", "virtual:2012bb92bd3c02c31c208dd19c7a30b32c4e004bc22c4ac67376a0b485daeffa61f9ac1dd14f7ec2e6d9f117f17b40d67db4154a3f2abfb8e2cf15cea16c14d6#npm:18.2.0"],\
@@ -20039,6 +20040,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD"\
         }]\
       ]],\
+      ["lottie-web", [\
+        ["npm:5.10.2", {\
+          "packageLocation": "./.yarn/cache/lottie-web-npm-5.10.2-b1628c6dac-9ec80b479d.zip/node_modules/lottie-web/",\
+          "packageDependencies": [\
+            ["lottie-web", "npm:5.10.2"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
       ["loud-rejection", [\
         ["npm:1.6.0", {\
           "packageLocation": "./.yarn/cache/loud-rejection-npm-1.6.0-1d4b7666c5-750e12defd.zip/node_modules/loud-rejection/",\
@@ -23067,6 +23077,31 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD"\
         }]\
       ]],\
+      ["react-lottie-player", [\
+        ["npm:1.5.4", {\
+          "packageLocation": "./.yarn/cache/react-lottie-player-npm-1.5.4-e0d3d5d3d6-ef2f505ca8.zip/node_modules/react-lottie-player/",\
+          "packageDependencies": [\
+            ["react-lottie-player", "npm:1.5.4"]\
+          ],\
+          "linkType": "SOFT"\
+        }],\
+        ["virtual:2012bb92bd3c02c31c208dd19c7a30b32c4e004bc22c4ac67376a0b485daeffa61f9ac1dd14f7ec2e6d9f117f17b40d67db4154a3f2abfb8e2cf15cea16c14d6#npm:1.5.4", {\
+          "packageLocation": "./.yarn/__virtual__/react-lottie-player-virtual-3a5ead202c/0/cache/react-lottie-player-npm-1.5.4-e0d3d5d3d6-ef2f505ca8.zip/node_modules/react-lottie-player/",\
+          "packageDependencies": [\
+            ["react-lottie-player", "virtual:2012bb92bd3c02c31c208dd19c7a30b32c4e004bc22c4ac67376a0b485daeffa61f9ac1dd14f7ec2e6d9f117f17b40d67db4154a3f2abfb8e2cf15cea16c14d6#npm:1.5.4"],\
+            ["@types/react", "npm:18.0.27"],\
+            ["fast-deep-equal", "npm:3.1.3"],\
+            ["lottie-web", "npm:5.10.2"],\
+            ["react", "npm:18.2.0"],\
+            ["rfdc", "npm:1.3.0"]\
+          ],\
+          "packagePeers": [\
+            "@types/react",\
+            "react"\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
       ["react-merge-refs", [\
         ["npm:1.1.0", {\
           "packageLocation": "./.yarn/cache/react-merge-refs-npm-1.1.0-26c3215fdd-9088435299.zip/node_modules/react-merge-refs/",\
@@ -23864,6 +23899,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD"\
         }]\
       ]],\
+      ["rfdc", [\
+        ["npm:1.3.0", {\
+          "packageLocation": "./.yarn/cache/rfdc-npm-1.3.0-272f288ad8-fb2ba8512e.zip/node_modules/rfdc/",\
+          "packageDependencies": [\
+            ["rfdc", "npm:1.3.0"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
       ["rimraf", [\
         ["npm:2.6.3", {\
           "packageLocation": "./.yarn/cache/rimraf-npm-2.6.3-f34c6c72ec-3ea587b981.zip/node_modules/rimraf/",\
@@ -24600,6 +24644,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["prettier", "npm:2.8.3"],\
             ["react", "npm:18.2.0"],\
             ["react-dom", "virtual:2012bb92bd3c02c31c208dd19c7a30b32c4e004bc22c4ac67376a0b485daeffa61f9ac1dd14f7ec2e6d9f117f17b40d67db4154a3f2abfb8e2cf15cea16c14d6#npm:18.2.0"],\
+            ["react-lottie-player", "virtual:2012bb92bd3c02c31c208dd19c7a30b32c4e004bc22c4ac67376a0b485daeffa61f9ac1dd14f7ec2e6d9f117f17b40d67db4154a3f2abfb8e2cf15cea16c14d6#npm:1.5.4"],\
             ["react-refresh", "npm:0.14.0"],\
             ["react-router-dom", "virtual:2012bb92bd3c02c31c208dd19c7a30b32c4e004bc22c4ac67376a0b485daeffa61f9ac1dd14f7ec2e6d9f117f17b40d67db4154a3f2abfb8e2cf15cea16c14d6#npm:6.8.0"],\
             ["react-test-renderer", "virtual:2012bb92bd3c02c31c208dd19c7a30b32c4e004bc22c4ac67376a0b485daeffa61f9ac1dd14f7ec2e6d9f117f17b40d67db4154a3f2abfb8e2cf15cea16c14d6#npm:18.2.0"],\
