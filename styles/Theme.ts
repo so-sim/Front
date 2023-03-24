@@ -18,7 +18,7 @@ const theme = {
     primary_600: '#1960cc',
     primary_900: '#010a1a',
     red_100: '#f86565',
-    red_200: '#ffece5',
+    red_200: '#DD2424',
     red_300: '#f89a65',
     red_400: '#ed4f1d',
     red_600: '#cc4419',
@@ -49,7 +49,7 @@ const theme = {
   line-height: normal;
   letter-spacing: normal;`,
     headline: `font-family: SUIT;
-  font-size: 1.8rem;
+  font-size: 1.75rem;
   font-weight: 600;
   font-stretch: normal;
   font-style: normal;

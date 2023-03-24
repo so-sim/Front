@@ -8,7 +8,6 @@ import * as Style from './styles';
 import { SYSTEM } from '@/assets/icons/System';
 import { useParticipantList } from '@/queries/Group';
 import { useParams } from 'react-router-dom';
-import { GroupId } from '@/types/group';
 import { useCreateDetail } from '@/queries/Detail/useCreateDetail';
 import { PaymentType } from '@/types/event';
 import { useUpdateDetail } from '@/queries/Detail/useUpdateDetail';

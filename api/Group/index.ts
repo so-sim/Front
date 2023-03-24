@@ -13,7 +13,7 @@ export const getGroupDetail = async (groupId: GroupId): Promise<ServerResponse<G
 };
 
 export const getGroupList = async (index: number): Promise<ServerResponse<GroupListWithIndex>> => {
-  const { data } = await api.get(`/api/groups?index=${index}`);
+  const { data } = await api.get(`api/groups?index=${index}`);
   return data;
 };
 

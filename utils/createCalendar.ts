@@ -1,7 +1,8 @@
-import { Dayjs } from 'dayjs';
+import dayjs, { Dayjs } from 'dayjs';
 
 const createCalendar = (baseDate: Dayjs) => {
   const WEEK = 7;
+
   const monthStart = baseDate.startOf('month');
   const monthEnd = baseDate.endOf('month');
   const startDay = monthStart.day();

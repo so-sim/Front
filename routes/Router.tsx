@@ -1,16 +1,23 @@
+import KaKaoSignUp from '@/pages/Auth/KakaoSignUp';
+import Loading from '@/pages/Auth/Loading';
+import ServiceWithdrawal from '@/pages/Withdrawal';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import GroupLayout from '../layouts/Group';
-import KaKaoAuth from '../pages/Auth/Kakao';
+import KaKaoSignIn from '../pages/Auth/KakaoSignIn';
 import Home from '../pages/Home';
 import TOS from '../pages/TOS';
+
 const Router = () => {
   return (
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/login/oauth2/code/kakao" element={<KaKaoAuth />} />
+        <Route path="/auth/signin/kakao" element={<KaKaoSignIn />} />
+        <Route path="/auth/signup/kakao" element={<KaKaoSignUp />} />
         <Route path="/tos" element={<TOS />} />
+        <Route path="/withdrawal" element={<ServiceWithdrawal />} />
         <Route path="/group/:groupId/*" element={<GroupLayout />} />
+        <Route path="/test" element={<Loading />} />
       </Routes>
     </BrowserRouter>
   );
