@@ -1,9 +1,19 @@
+import { useGroupDetail } from '@/queries/Group';
 import { useState } from 'react';
+import { useLocation, useParams } from 'react-router-dom';
 import Calendar from '../../common/Calendar';
 import { InviteModal } from '../FineBook/components/DetailFine/components/InviteModal';
 
 const WholeCalendar = () => {
-  const isFirstVisit = JSON.parse(window.location.search.split('=')[1]);
+  const location = useLocation();
+  const { groupId } = useParams();
+
+  const { data } = useGroupDetail({ groupId: Number(groupId) });
+
+  const isFirstVisit = JSON.parse(location.search.split('=')[1] || 'false');
+
+  const isAdmin = data?.content.isAdmin;
+
   const [showInviteModal, setShowInviteModal] = useState(true);
 
   const handleGroupInviteModal = () => {
@@ -13,7 +23,7 @@ const WholeCalendar = () => {
   return (
     <>
       <Calendar cellType="Tag" />
-      {isFirstVisit && showInviteModal && <InviteModal onClick={handleGroupInviteModal} />}
+      {isAdmin && isFirstVisit && showInviteModal && <InviteModal onClick={handleGroupInviteModal} />}
     </>
   );
 };
