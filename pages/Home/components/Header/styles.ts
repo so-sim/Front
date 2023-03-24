@@ -7,6 +7,7 @@ export const Header = styled.header`
   padding: 20px 0;
   width: 100%;
   background-color: ${({ theme }) => theme.colors.secondary_100};
+  border-bottom: 1px solid ${({ theme }) => theme.colors.neutral_400_b};
 `;
 
 export const HeaderLeft = styled.span`
