@@ -1,5 +1,6 @@
 import { useSignInQuery } from '@/queries/Auth/useSignInQuery';
 import React, { useEffect } from 'react';
+import Loading from '../Loading';
 
 const KaKaoSignIn = () => {
   const href = window.location.href;
@@ -8,7 +9,7 @@ const KaKaoSignIn = () => {
 
   const { data } = useSignInQuery(code);
 
-  return <div>로그인중...?</div>;
+  return <Loading />;
 };
 
 export default KaKaoSignIn;
