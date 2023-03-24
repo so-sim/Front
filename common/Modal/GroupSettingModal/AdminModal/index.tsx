@@ -30,7 +30,7 @@ export const AdminModal: FC<ModalHandlerProps> = ({ modalHandler }) => {
 
   const updateGroupInfo = () => {
     const id = Number(groupId);
-    updateGroupMutate({ title: groupName, type, coverColor: color, groupId: id });
+    updateGroupMutate({ groupName, type, coverColor: color, groupId: id, myName });
     modalHandler();
   };
 

@@ -9,12 +9,20 @@ import { isValid } from '@/utils/validation';
 import { COLORS, DROPDOWN_LIST, PLACEHOLDER } from '@/constants';
 import { useCreateGroup } from '@/queries/Group';
 import { GroupColor } from '@/types/group';
+import { userState } from '@/store/userState';
+import { useRecoilValue } from 'recoil';
+import { useNavigate } from 'react-router-dom';
 
 export interface ModalHandlerProps {
   modalHandler: () => void;
 }
 
 export const CreateGroupModal: FC<ModalHandlerProps> = ({ modalHandler }) => {
+  const user = useRecoilValue(userState);
+  console.log(user);
+
+  const navigate = useNavigate();
+
   const [groupName, setGroupName] = useState('');
   const [myName, setMyName] = useState('');
   const [type, setType] = useState('');
@@ -29,9 +37,18 @@ export const CreateGroupModal: FC<ModalHandlerProps> = ({ modalHandler }) => {
     if (myName !== '' && isInit.myName === true) setIsInit((prev) => ({ ...prev, myName: false }));
   }, [groupName, myName]);
 
-  const { mutate } = useCreateGroup();
+  const { mutate, data } = useCreateGroup();
 
-  const createGroup = () => mutate({ title: groupName, type, coverColor: color });
+  const createGroup = () => {
+    mutate(
+      { groupName, type, coverColor: color, myName },
+      {
+        onSuccess(data) {
+          navigate(`/group/${data.content.groupId}/book?isFirstVisit=true`);
+        },
+      },
+    );
+  };
 
   const isValidForm = (): boolean => {
     if (!isValid(groupName)) return false;
