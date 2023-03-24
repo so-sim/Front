@@ -1,4 +1,4 @@
-import { WITHDRAWAL_HEADER } from '@/constants/withdrawal';
+import { WITHDRAWAL_HEADER } from '@/constants/Withdrawal';
 import React, { useState } from 'react';
 import { Header } from '../Home/components';
 import WithdrawalConfirm from './components/Confirm';
