@@ -1,6 +1,6 @@
 import { FC } from 'react';
 import { Card } from '..';
-import { SYSTEM } from '../../../../../assets/icons/System';
+import { SYSTEM } from '@/assets/icons/System';
 import * as Style from './style';
 
 interface AddCardProps {

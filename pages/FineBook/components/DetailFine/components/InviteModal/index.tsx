@@ -5,7 +5,7 @@ import * as Style from './styles';
 import { ModalProps } from '@/common/Modal';
 import { SYSTEM } from '@/assets/icons/System';
 
-export const InviteModal: FC<ModalProps> = ({ onClick }) => {
+export const InviteModal: FC<Partial<ModalProps>> = ({ onClick }) => {
   return (
     <Modal.Frame width="448px" height="264px">
       <Modal.Header onClick={onClick}>
