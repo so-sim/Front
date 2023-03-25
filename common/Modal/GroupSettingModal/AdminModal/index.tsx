@@ -15,10 +15,10 @@ import { GroupColor } from '@/types/group';
 import { useGetMyNikname } from '@/queries/Group/useGetMyNickname';
 
 export const AdminModal: FC<ModalHandlerProps> = ({ modalHandler }) => {
-  const [groupName, setGroupName] = useState('');
-  const [myName, setMyName] = useState('');
+  const [title, setTitle] = useState('');
+  const [nickname, setNickname] = useState('');
   const [type, setType] = useState('');
-  const [color, setColor] = useState<GroupColor>('#f89a65');
+  const [coverColor, setCoverColor] = useState<GroupColor>('#f89a65');
 
   const { groupId } = useParams();
 
@@ -30,7 +30,7 @@ export const AdminModal: FC<ModalHandlerProps> = ({ modalHandler }) => {
 
   const updateGroupInfo = () => {
     const id = Number(groupId);
-    updateGroupMutate({ groupName, type, coverColor: color, groupId: id, myName });
+    updateGroupMutate({ title, type, coverColor, groupId: id, nickname });
     modalHandler();
   };
 
@@ -42,20 +42,20 @@ export const AdminModal: FC<ModalHandlerProps> = ({ modalHandler }) => {
   console.log(groupData);
 
   const isValidForm = () => {
-    if (!isValid(groupName)) return false;
-    if (!isValid(myName)) return false;
+    if (!isValid(title)) return false;
+    if (!isValid(nickname)) return false;
     if (type === '') return false;
-    if (!COLORS.includes(color)) return false;
+    if (!COLORS.includes(coverColor)) return false;
     return true;
   };
 
   useEffect(() => {
     if (!groupData) return;
     if (!myNickname) return;
-    setGroupName(groupData?.content.title);
-    setColor(groupData.content.coverColor);
+    setTitle(groupData?.content.title);
+    setCoverColor(groupData.content.coverColor);
     setType(groupData.content.groupType);
-    setMyName(myNickname.content.nickname);
+    setNickname(myNickname.content.nickname);
   }, [groupData?.content.title, myNickname?.content.nickname]);
 
   return (
@@ -68,16 +68,16 @@ export const AdminModal: FC<ModalHandlerProps> = ({ modalHandler }) => {
           <Style.SubTitle>사용자 설정</Style.SubTitle>
           <div style={{ width: '100%', borderLeft: `2px solid ${theme.colors.neutral_400_b}`, paddingLeft: '16px' }}>
             <Label title="모임 이름" flexDirection="column">
-              <Input value={groupName} isValid={isValid(groupName)} onChange={setGroupName} maxLength={15} />
+              <Input value={title} isValid={isValid(title)} onChange={setTitle} maxLength={15} />
             </Label>
             <Label title="내 이름" flexDirection="column">
-              <Input value={myName} isValid={isValid(myName)} onChange={setMyName} maxLength={15} />
+              <Input value={nickname} isValid={isValid(nickname)} onChange={setNickname} maxLength={15} />
             </Label>
             <Label title="모임 유형" flexDirection="column">
               <DropBox dropDownList={DROPDOWN_LIST} type={type} setType={setType} />
             </Label>
             <Label title="커버 색상" flexDirection="column">
-              <GroupColorList value={color} onChange={setColor} />
+              <GroupColorList value={coverColor} onChange={setCoverColor} />
             </Label>
             <Label title="모임 탈퇴" flexDirection="column">
               <Style.WithDrwal>

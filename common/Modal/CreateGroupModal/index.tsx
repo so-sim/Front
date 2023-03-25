@@ -23,25 +23,25 @@ export const CreateGroupModal: FC<ModalHandlerProps> = ({ modalHandler }) => {
 
   const navigate = useNavigate();
 
-  const [groupName, setGroupName] = useState('');
-  const [myName, setMyName] = useState('');
+  const [title, setTitle] = useState('');
+  const [nickname, setNickname] = useState('');
   const [type, setType] = useState('');
-  const [color, setColor] = useState<GroupColor>('#f86565');
+  const [coverColor, setCoverColor] = useState<GroupColor>('#f89a65');
   const [isInit, setIsInit] = useState({
     groupName: true,
     myName: true,
   });
 
   useEffect(() => {
-    if (groupName !== '' && isInit.groupName === true) setIsInit((prev) => ({ ...prev, groupName: false }));
-    if (myName !== '' && isInit.myName === true) setIsInit((prev) => ({ ...prev, myName: false }));
-  }, [groupName, myName]);
+    if (title !== '' && isInit.groupName === true) setIsInit((prev) => ({ ...prev, groupName: false }));
+    if (nickname !== '' && isInit.myName === true) setIsInit((prev) => ({ ...prev, myName: false }));
+  }, [title, nickname]);
 
   const { mutate, data } = useCreateGroup();
 
   const createGroup = () => {
     mutate(
-      { groupName, type, coverColor: color, myName },
+      { title, type, coverColor, nickname },
       {
         onSuccess(data) {
           navigate(`/group/${data.content.groupId}/book?isFirstVisit=true`);
@@ -51,10 +51,10 @@ export const CreateGroupModal: FC<ModalHandlerProps> = ({ modalHandler }) => {
   };
 
   const isValidForm = (): boolean => {
-    if (!isValid(groupName)) return false;
-    if (!isValid(myName)) return false;
+    if (!isValid(title)) return false;
+    if (!isValid(nickname)) return false;
     if (type === '') return false;
-    if (!COLORS.includes(color)) return false;
+    if (!COLORS.includes(coverColor)) return false;
     return true;
   };
 
@@ -65,10 +65,10 @@ export const CreateGroupModal: FC<ModalHandlerProps> = ({ modalHandler }) => {
       </Modal.Header>
       <Modal.Body>
         <Label title="모임 이름">
-          <Input placeholder={PLACEHOLDER.GROUP} value={groupName} isValid={isInit.groupName || isValid(groupName)} onChange={setGroupName} maxLength={15} />
+          <Input placeholder={PLACEHOLDER.GROUP} value={title} isValid={isInit.groupName || isValid(title)} onChange={setTitle} maxLength={15} />
         </Label>
         <Label title="내 이름">
-          <Input placeholder={PLACEHOLDER.NAME} value={myName} isValid={isInit.myName || isValid(myName)} onChange={setMyName} maxLength={15} />
+          <Input placeholder={PLACEHOLDER.NAME} value={nickname} isValid={isInit.myName || isValid(nickname)} onChange={setNickname} maxLength={15} />
         </Label>
         <div style={{ position: 'relative' }}>
           <Label title="모임 유형">
@@ -76,7 +76,7 @@ export const CreateGroupModal: FC<ModalHandlerProps> = ({ modalHandler }) => {
           </Label>
         </div>
         <Label title="커버 색상">
-          <GroupColorList value={color} onChange={setColor} />
+          <GroupColorList value={coverColor} onChange={setCoverColor} />
         </Label>
       </Modal.Body>
       <Modal.Footer>

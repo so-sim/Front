@@ -2,8 +2,8 @@ export type GroupColor = '#f86565' | '#f89a65' | '#f8e065' | '#658ef8' | '#9465f
 export type GroupType = '스터디' | '학교, 교내/외 모임' | '회사, 사내 모임' | '취미, 동호회 모임' | '친구, 사모임' | '프로젝트' | '기타' | '';
 
 export interface GroupInfo {
-  groupName: string;
-  myName: string;
+  title: string;
+  nickname: string;
   type: string;
   coverColor: GroupColor;
 }
