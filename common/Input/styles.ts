@@ -16,6 +16,9 @@ export const Phrase = styled.p`
   display: flex;
   justify-content: space-between;
   margin: 4px;
+  & > * {
+    ${({ theme }) => theme.font.caption}
+  }
 `;
 
 export const ErrorText = styled.span<{ isValid: boolean }>`
@@ -24,5 +27,4 @@ export const ErrorText = styled.span<{ isValid: boolean }>`
 
 export const Length = styled.span`
   color: ${({ theme }) => theme.colors.secondary_500};
-  ${({ theme }) => theme.font.caption}
 `;

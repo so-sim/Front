@@ -6,7 +6,7 @@ import theme from '@/styles/Theme';
 import { isValid } from '@/utils/validation';
 import { GroupColorList } from '../../GroupColorList';
 import { DropBox } from '../../../DropBox';
-import * as Style from './style';
+import * as Style from './styles';
 import { COLORS, DROPDOWN_LIST } from '@/constants/Group';
 import { ModalHandlerProps } from '../../CreateGroupModal';
 import { useGroupDetail, useUpdateGroup, useWithdrawalGroup } from '@/queries/Group';

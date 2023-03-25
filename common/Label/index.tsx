@@ -1,5 +1,5 @@
 import React, { FC, PropsWithChildren, CSSProperties } from 'react';
-import * as Style from './style';
+import * as Style from './styles';
 
 interface LabelProps extends PropsWithChildren {
   title: string;

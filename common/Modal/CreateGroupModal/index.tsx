@@ -1,4 +1,4 @@
-import * as Style from './style';
+import * as Style from './styles';
 import { FC, useEffect, useState } from 'react';
 import Button from '@/common/Button';
 import Modal from '@/common/Modal';

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Paragraph } from '../Paragraph';
 import { CardList } from '../CardList';
-import * as Style from './style';
+import * as Style from './styles';
 
 export const GroupSection = () => {
   return (

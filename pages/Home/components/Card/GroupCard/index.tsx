@@ -1,5 +1,5 @@
 import { Card } from '..';
-import * as Style from './style';
+import * as Style from './styles';
 import { USER } from '@/assets/icons/User';
 import { useNavigate } from 'react-router-dom';
 import { GropuList } from '@/types/group';

@@ -1,4 +1,4 @@
-import * as Style from './style';
+import * as Style from './styles';
 import { Dispatch, SetStateAction } from 'react';
 import { COLORS } from '@/constants/Group';
 import { GroupColor } from '@/types/group';

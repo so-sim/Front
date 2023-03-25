@@ -1,5 +1,5 @@
 import { FOOTER_LINK } from '@/constants/ServiceLink';
-import * as Style from './style';
+import * as Style from './styles';
 
 export const Footer = () => {
   return (

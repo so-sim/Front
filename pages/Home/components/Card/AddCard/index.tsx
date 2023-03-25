@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import { Card } from '..';
 import { SYSTEM } from '@/assets/icons/System';
-import * as Style from './style';
+import * as Style from './styles';
 
 interface AddCardProps {
   onClick: () => void;
