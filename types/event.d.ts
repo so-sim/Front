@@ -1,4 +1,4 @@
-export type PaymentType = '미납' | '확인필요' | '완납';
+export type PaymentType = '미납' | '확인필요' | '완납' | '';
 
 export interface EvnetInfo {
   eventId: number;

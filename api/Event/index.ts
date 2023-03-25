@@ -7,13 +7,13 @@ export const createEvent = async (detailInfo: Omit<EvnetInfo, 'eventId'>): Promi
   return data;
 };
 
-export const getOneOfEvent = async (eventId: number): Promise<ServerResponse<Omit<EvnetInfo, 'eventId' | 'userId'>>> => {
+export const getOneOfEvent = async (eventId?: number): Promise<ServerResponse<Omit<EvnetInfo, 'eventId' | 'userId'>>> => {
   const { data } = await api.get(`/api/event/penalty/${eventId}`);
   return data;
 };
 
 export const getEventList = async (queries: string): Promise<ServerResponse<EvnetInfo[]>> => {
-  const { data } = await api.get(`/api/event/penalty?${queries}`);
+  const { data } = await api.get(`/api/event/penalty?year=2023&month=3`);
   return data;
 };
 

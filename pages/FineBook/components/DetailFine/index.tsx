@@ -5,11 +5,13 @@ import { EvnetInfo } from '@/types/event';
 import { DateController } from './components/DateController';
 import { DetailList } from './components/DetailList';
 import { DetailsHeader } from './components/DetailsHeader';
-import { FineBookModal } from '../../../../common/Modal/FineBookModal';
+import { FineBookModal } from '@/common/Modal/FineBookModal';
 import { Pagination } from './components/Pagination';
 import { TableHead } from './components/TableHead';
 import { UserDetails } from './components/UserDetails';
 import * as Style from './styles';
+import { useRecoilValue } from 'recoil';
+import { dateState } from '@/store/dateState';
 
 export type Status = 'none' | 'checking' | 'complete';
 
@@ -27,6 +29,8 @@ const DetailFine = () => {
     grounds: '밥먹다 지각',
   });
   const [page, setPage] = useState(1);
+  const date = useRecoilValue(dateState);
+  // console.log(date);
 
   const queries = useQueryString();
 

@@ -1,5 +1,5 @@
 import { FC, PropsWithChildren } from 'react';
-import * as Style from './style';
+import * as Style from './styles';
 
 interface CardProps extends PropsWithChildren {
   onClick: () => void;

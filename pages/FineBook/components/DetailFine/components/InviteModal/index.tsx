@@ -5,15 +5,10 @@ import * as Style from './styles';
 import { ModalProps } from '@/common/Modal';
 import { SYSTEM } from '@/assets/icons/System';
 import { useParams } from 'react-router-dom';
+import { copyInvitationLink } from '@/utils/copyInvitationLink';
 
 export const InviteModal: FC<Partial<ModalProps>> = ({ onClick }) => {
-  const param = useParams();
-  const invitationLink = `${process.env.REACT_APP_SERVICE_URL}/invitation?groupId=${param.groupId}`;
-
-  const copyInvitationLink = () => {
-    if (!param.groupId) return;
-    navigator.clipboard.writeText(invitationLink).then(() => console.log('complete!'));
-  };
+  const { groupId } = useParams();
 
   return (
     <Modal.Frame width="448px" height="264px">
@@ -28,7 +23,7 @@ export const InviteModal: FC<Partial<ModalProps>> = ({ onClick }) => {
       </Modal.Body>
       <div style={{ height: '12px' }} />
       <Modal.Footer>
-        <Button color="primary" width="100%" leftIcon={SYSTEM.LINK} height="42px" onClick={copyInvitationLink}>
+        <Button color="primary" width="100%" leftIcon={SYSTEM.LINK} height="42px" onClick={() => copyInvitationLink(Number(groupId))}>
           초대링크 복사하기
         </Button>
       </Modal.Footer>

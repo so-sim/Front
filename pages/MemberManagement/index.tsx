@@ -2,6 +2,7 @@ import { SYSTEM } from '@/assets/icons/System';
 import { USER } from '@/assets/icons/User';
 import Button from '@/common/Button';
 import { useParticipantList } from '@/queries/Group';
+import { copyInvitationLink } from '@/utils/copyInvitationLink';
 import { useParams } from 'react-router-dom';
 import MemberListItem from './components/MemberListItem';
 import * as Style from './styles';
@@ -17,7 +18,7 @@ const MemberManagement = () => {
         <Style.Title>
           <h2>멤버 관리</h2>
           <Button width="132px" height="32px" color="black">
-            <Style.ButtonFlex>
+            <Style.ButtonFlex onClick={() => copyInvitationLink(Number(groupId))}>
               {SYSTEM.LINK}
               <span>초대링크 복사</span>
             </Style.ButtonFlex>

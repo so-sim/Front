@@ -1,4 +1,3 @@
-import { PaymentType } from '@/types/event';
 import styled from '@emotion/styled';
 
 export const CircleButtonList = styled.ul`

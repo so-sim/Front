@@ -1,14 +1,14 @@
 import { Card } from '..';
-import * as Style from './style';
+import * as Style from './styles';
 import { USER } from '@/assets/icons/User';
 import { useNavigate } from 'react-router-dom';
 import { GropuList } from '@/types/group';
 
-export const GroupCard = ({ title, coverColor, adminNickname }: GropuList) => {
+export const GroupCard = ({ title, coverColor, adminNickname, groupId }: GropuList) => {
   const navigate = useNavigate();
 
   return (
-    <Card onClick={() => navigate(`/group/1`)}>
+    <Card onClick={() => navigate(`/group/${groupId}/book`)}>
       <Style.GroupColor color={coverColor} />
       <Style.GroupInfo>
         <Style.GroupTitle>{title}</Style.GroupTitle>

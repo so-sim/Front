@@ -18,7 +18,7 @@ export const Input = ({ onChange, value, isValid, placeholder = '', maxLength = 
     <>
       <Style.Input type="text" placeholder={placeholder} isValid={isValid} value={value} onChange={onChangeData} maxLength={maxLength} />
       <Style.Phrase>
-        <Style.ErrorText isValid={isValid}>{isValid ? '' : '최소한 1글자 이상 입력해주세요.'}</Style.ErrorText>
+        <Style.ErrorText isValid={isValid}>{isValid ? '' : '최소 1글자 이상 입력해주세요.'}</Style.ErrorText>
         <Style.Length>
           {value.length}/{maxLength}
         </Style.Length>

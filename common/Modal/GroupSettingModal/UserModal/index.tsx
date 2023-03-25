@@ -4,7 +4,7 @@ import { Input } from '@/common/Input';
 import { Label } from '@/common/Label';
 import Modal from '@/common/Modal';
 import { isValid } from '@/utils/validation';
-import * as Style from './style';
+import * as Style from './styles';
 import { ModalHandlerProps } from '../../CreateGroupModal';
 import { useParams } from 'react-router-dom';
 import { useChangeNickname, useGroupDetail, useWithdrawalGroup } from '@/queries/Group';
