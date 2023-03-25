@@ -9,16 +9,18 @@ import { SYSTEM } from '@/assets/icons/System';
 import { useParticipantList } from '@/queries/Group';
 import { useParams } from 'react-router-dom';
 import { useCreateDetail } from '@/queries/Detail/useCreateDetail';
-import { PaymentType } from '@/types/event';
+import { EvnetInfo, PaymentType } from '@/types/event';
 import { useUpdateDetail } from '@/queries/Detail/useUpdateDetail';
 import { useGetOneOfDetail } from '@/queries/Detail/useGetOneOfDetail';
 
 interface ModalProps {
   setOpen: Dispatch<SetStateAction<boolean>>;
-  type?: 'update' | 'create';
+  eventId?: number;
 }
 
-export const FineBookModal = ({ setOpen, type = 'create' }: ModalProps) => {
+export const FineBookModal = ({ setOpen, eventId }: ModalProps) => {
+  const type = eventId ? 'update' : 'create';
+
   const [member, setMember] = useState('');
   const [status, setStatus] = useState<PaymentType | ''>('');
 
@@ -39,7 +41,7 @@ export const FineBookModal = ({ setOpen, type = 'create' }: ModalProps) => {
   };
 
   const params = useParams();
-  const { data: detail } = useGetOneOfDetail(123);
+  const { data: detail } = useGetOneOfDetail(eventId);
   const { data } = useParticipantList({ groupId: Number(params.groupId) || 1 });
   const { mutate: create } = useCreateDetail();
   const { mutate: update } = useUpdateDetail();
@@ -53,12 +55,18 @@ export const FineBookModal = ({ setOpen, type = 'create' }: ModalProps) => {
     setFine(0);
   };
 
+  const [detailForm, setDetailForm] = useState<Partial<EvnetInfo>>({
+    userId: 0,
+    userName: '',
+    groundsDate: '',
+    grounds: '',
+    paymentType: '',
+    payment: 0,
+  });
+
   const createDetail = async (type: 'continue' | 'save') => {
-    if (status == '') {
-      console.warn('status is undefined');
-      return;
-    }
-    await create({ userId: 3, userName: '윤둘', groundsDate: '', grounds: reason, paymentType: status, payment: fine });
+    if (status == '') return;
+    await create({ userId: 3, userName: member, groundsDate: '2023-03-18 23:42:43', grounds: reason, paymentType: status, payment: fine });
     if (type === 'continue') {
       initDetail();
       return;
@@ -67,15 +75,15 @@ export const FineBookModal = ({ setOpen, type = 'create' }: ModalProps) => {
   };
 
   const updateDetail = () => {
-    if (status == '') {
-      console.warn('status is undefined');
-      return;
-    }
+    if (status == '') return;
     update({ eventId: 213, userId: 3, userName: '윤둘', groundsDate: '', grounds: reason, paymentType: status, payment: fine });
     setOpen(false);
   };
 
+  const admin = { title: data?.content.adminNickname as string };
   const participantList = data?.content.nicknameList.map((participant) => ({ title: participant })) || [];
+
+  const memberList = [admin, ...participantList];
 
   const statusList: { title: PaymentType }[] = [{ title: '미납' }, { title: '완납' }, { title: '확인필요' }];
 
@@ -85,7 +93,7 @@ export const FineBookModal = ({ setOpen, type = 'create' }: ModalProps) => {
       <div style={{ display: 'flex', flexDirection: 'column', width: '100%' }}>
         <Style.Row>
           <Label title="팀원" width="32px">
-            <DropBox boxWidth="148px" width={304} setType={setMember} type={member} dropDownList={participantList} direction="right" />
+            <DropBox boxWidth="148px" width={304} setType={setMember} type={member} dropDownList={memberList} direction="right" />
           </Label>
           <Label title="납부여부" width="64px">
             <DropBox color="white" boxWidth="112px" width={112} setType={setStatus} type={status} dropDownList={statusList} />
@@ -96,7 +104,7 @@ export const FineBookModal = ({ setOpen, type = 'create' }: ModalProps) => {
             <Style.Input type="string" value={changeNumberToMoney(fine)} onChange={onChangeFine} style={{ height: '32px' }} />
           </Label>
           <Label title="날짜" width="32px">
-            <DropBox color="white" boxWidth="138px" width={138} setType={setMember} type={member} dropDownList={participantList} />
+            <DropBox color="white" boxWidth="138px" width={138} setType={setMember} type={member} dropDownList={memberList} />
           </Label>
         </Style.Row>
         <Label title="사유" width="32px">

@@ -6,7 +6,7 @@ import { Label } from '@/common/Label';
 import { DropBox } from '@/common/DropBox';
 import * as Style from './styles';
 import { EvnetInfo } from '@/types/event';
-import { FineBookModal } from '../../../../../../common/Modal/FineBookModal';
+import { FineBookModal } from '@/common/Modal/FineBookModal';
 import { changeNumberToMoney } from '@/utils/changeNumberToMoney';
 
 interface UserDetailsProps {
@@ -60,7 +60,7 @@ export const UserDetails = ({ open, setOpen, select }: UserDetailsProps) => {
           </Button>
         </Style.Footer>
       </Style.UserDetailsFrame>
-      {openUpdateModal && <FineBookModal type="update" setOpen={setOpenUpdateModal} />}
+      {openUpdateModal && <FineBookModal eventId={eventId} setOpen={setOpenUpdateModal} />}
     </>
   );
 };

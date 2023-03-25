@@ -11,12 +11,12 @@ interface TwoButtonModalProps {
   onClick: () => void;
   title: string;
   description: string;
-  firstBtn: ModalButton;
-  secondBtn: ModalButton;
+  cancel: ModalButton;
+  confirm: ModalButton;
   flexDirection?: 'row' | 'column';
 }
 
-export const TwoButtonModal = ({ onClick, title, description, firstBtn, secondBtn, flexDirection = 'row' }: TwoButtonModalProps) => {
+export const TwoButtonModal = ({ onClick, title, description, cancel, confirm, flexDirection = 'row' }: TwoButtonModalProps) => {
   return (
     <Modal.Frame width="376px" height="223px" onClick={onClick}>
       <Modal.Header>
@@ -27,11 +27,11 @@ export const TwoButtonModal = ({ onClick, title, description, firstBtn, secondBt
       </Modal.Body>
       <div style={{ height: '12px' }} />
       <Modal.Footer flexDirection={flexDirection}>
-        <Button width="100%" height="42px" color="white" onClick={firstBtn.onClick}>
-          {firstBtn.text}
+        <Button width="100%" height="42px" color="white" onClick={cancel.onClick}>
+          {cancel.text}
         </Button>
-        <Button width="100%" height="42px" color="black" onClick={secondBtn.onClick}>
-          {secondBtn.text}
+        <Button width="100%" height="42px" color="black" onClick={confirm.onClick}>
+          {confirm.text}
         </Button>
       </Modal.Footer>
     </Modal.Frame>

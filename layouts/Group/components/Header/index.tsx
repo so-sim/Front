@@ -1,4 +1,3 @@
-
 import { ARROW } from '@/assets/icons/Arrow';
 import { LOGO } from '@/assets/icons/Logo';
 import { SYSTEM } from '@/assets/icons/System';
@@ -60,8 +59,8 @@ const GroupLayoutHeader = () => {
           title="로그아웃"
           description="로그아웃 하시겠습니까?"
           onClick={handleShowLogOutmodal}
-          firstBtn={{ text: '취소', onClick: handleShowLogOutmodal }}
-          secondBtn={{ text: '로그아웃', onClick: onClickLogOut }}
+          cancel={{ text: '취소', onClick: handleShowLogOutmodal }}
+          confirm={{ text: '로그아웃', onClick: onClickLogOut }}
         />
       )}
       {showConfigModal && <UserConfigModal handleModal={handelShowConfigModal} />}
