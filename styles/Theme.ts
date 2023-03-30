@@ -18,7 +18,7 @@ const theme = {
     primary_600: '#1960cc',
     primary_900: '#010a1a',
     red_100: '#f86565',
-    red_200: '#DD2424',
+    red_200: '#FFECE5',
     red_300: '#f89a65',
     red_400: '#ed4f1d',
     red_600: '#cc4419',

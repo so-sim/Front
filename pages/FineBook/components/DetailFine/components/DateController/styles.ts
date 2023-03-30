@@ -27,12 +27,15 @@ export const TodayButton = styled.button`
   border-radius: 4px;
 `;
 
-export const FilterButton = styled.button<{ last?: boolean }>`
+export const FilterButton = styled.button<{ isActive: boolean }>`
   padding: 4px 12px;
   border-right: 2px solid ${({ theme }) => theme.colors.neutral_400_b};
-  border: ${({ last }) => last && 'none'};
+  background-color: ${({ theme, isActive }) => (isActive ? theme.colors.neutral_200_b : '')};
   &:hover {
     background-color: ${({ theme }) => theme.colors.neutral_200_b};
+  }
+  &:last-of-type {
+    border: none;
   }
 `;
 
