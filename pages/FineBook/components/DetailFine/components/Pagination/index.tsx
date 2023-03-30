@@ -10,23 +10,36 @@ interface PaginationProps {
 }
 
 export const Pagination: FC<PaginationProps> = ({ count = 0, page, setPage }) => {
+  const pageCount = Math.ceil(count / 16 || 1);
+
+  const increasePage = () => {
+    if (page < pageCount - 1) {
+      setPage((prev) => prev + 1);
+    }
+  };
+  const decreasePage = () => {
+    if (page > 0) {
+      setPage((prev) => prev - 1);
+    }
+  };
+
   return (
     <Style.Pagination>
-      <Style.DoubleArrow>{ARROW.DOUBLE_LEFT}</Style.DoubleArrow>
-      {new Array(Math.ceil(count / 16)).fill(0).map((_, i) => {
+      <Style.DoubleArrow onClick={decreasePage}>{ARROW.DOUBLE_LEFT}</Style.DoubleArrow>
+      {new Array(pageCount).fill(0).map((_, i) => {
         const pageNumber = i + 1;
         return (
           <Style.Page
             onClick={() => {
               setPage(pageNumber);
             }}
-            isSelected={page === pageNumber}
+            isSelected={page + 1 === pageNumber}
           >
             {pageNumber}
           </Style.Page>
         );
       })}
-      <Style.DoubleArrow>{ARROW.DOUBLE_RIGHT}</Style.DoubleArrow>
+      <Style.DoubleArrow onClick={increasePage}>{ARROW.DOUBLE_RIGHT}</Style.DoubleArrow>
     </Style.Pagination>
   );
 };
