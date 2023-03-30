@@ -1,32 +1,80 @@
+import { TwoButtonModal } from '@/common/Modal/TwoButtonModal';
 import { useUpdateDetailStatus } from '@/queries/Detail/useUpdateDetailStatus';
 import { PaymentType } from '@/types/event';
+import { getStatusText } from '@/utils/getStatusIcon';
+import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { CircleDropButton, CircleDropButtonProps } from '../CircleDropButton';
 import * as Style from './styles';
 
 interface CircleButtonListProps extends CircleDropButtonProps {
   statusList: PaymentType[];
   eventId: number;
+  setOpenListEventId: Dispatch<SetStateAction<number>>;
 }
 
-export const CircleButtonList = ({ status, statusList, eventId }: CircleButtonListProps) => {
-  const newStatusList = [status, ...statusList.filter((element) => element !== status)];
+export const CircleButtonList = ({ status, statusList, eventId, setOpenListEventId }: CircleButtonListProps) => {
+  const newStatusList = [getStatusText(status), ...statusList.filter((element) => element !== getStatusText(status))];
   const { mutate } = useUpdateDetailStatus();
+  const [newStatus, setNewStatus] = useState<PaymentType>('');
+  const [showUpdateStatusModal, setShowUpdateStatusModal] = useState(false);
 
   const updateStatus = (paymentType: PaymentType) => {
     if (status != paymentType) {
-      mutate({ paymentType, eventId });
+      mutate({ paymentType, eventId }, { onSuccess: () => setOpenListEventId(0) });
     }
   };
 
+  const handleUpdateStatusModal = () => {
+    setShowUpdateStatusModal((prev) => !prev);
+  };
+
+  const cancelUpdateStatus = async () => {
+    await setShowUpdateStatusModal(false);
+    setNewStatus('');
+    setOpenListEventId(0);
+  };
+
+  useEffect(() => {
+    const closeButtonList = () => {
+      setOpenListEventId(0);
+    };
+
+    window.addEventListener('click', closeButtonList);
+    return () => {
+      window.removeEventListener('click', closeButtonList);
+    };
+  }, []);
+
   return (
-    <Style.CircleButtonList>
-      {newStatusList.map((paymentType) => {
-        return (
-          <Style.CircleButtonBox key={paymentType} onClick={() => updateStatus(paymentType)}>
-            <CircleDropButton status={paymentType} />
-          </Style.CircleButtonBox>
-        );
-      })}
-    </Style.CircleButtonList>
+    <>
+      <Style.CircleButtonList>
+        {newStatusList.map((paymentType) => {
+          return (
+            <Style.CircleButtonBox
+              key={paymentType}
+              onClick={() => {
+                if (paymentType !== getStatusText(status)) {
+                  setShowUpdateStatusModal(true);
+                  setNewStatus('con');
+                } else {
+                  setOpenListEventId(0);
+                }
+              }}
+            >
+              <CircleDropButton status={paymentType} />
+            </Style.CircleButtonBox>
+          );
+        })}
+      </Style.CircleButtonList>
+      {showUpdateStatusModal && (
+        <TwoButtonModal
+          onClick={handleUpdateStatusModal}
+          title="납부여부 변경"
+          description="납부여부를 변경하시겠습니까?"
+          cancel={{ text: '취소', onClick: cancelUpdateStatus }}
+          confirm={{ text: '변경하기', onClick: () => updateStatus(newStatus) }}
+        />
+      )}
+    </>
   );
 };

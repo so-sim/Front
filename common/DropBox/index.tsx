@@ -11,7 +11,7 @@ interface DropBoxProps<T = string> {
   boxWidth?: string;
   width?: number;
   color?: DropBoxColor;
-  setType: Dispatch<SetStateAction<T>>;
+  setType?: Dispatch<SetStateAction<T>>;
   direction?: 'left' | 'right';
 }
 
