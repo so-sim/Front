@@ -12,3 +12,18 @@ export const TableHead = styled.div`
     padding: 8px 16px;
   }
 `;
+
+export const Element = styled.span`
+  display: flex;
+  align-items: center;
+  &,
+  & > * {
+    ${({ theme }) => theme.font.subhead_02}
+    color: ${({ theme }) => theme.colors.secondary_900}
+  }
+`;
+
+export const Arrow = styled.span`
+  height: 16px;
+  margin-left: 8px;
+`;

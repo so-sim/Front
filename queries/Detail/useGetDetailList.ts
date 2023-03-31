@@ -1,12 +1,11 @@
 import { getEventList } from '@/api/Event';
-import { DateQueryString } from '@/hooks/useQueryString';
+import { DateFilterProperty, dateFilterToQuery } from '@/pages/FineBook/utils/dateFilterToQuery';
+import { GroupId } from '@/types/group';
 import { useQuery } from '@tanstack/react-query';
+import { Dayjs } from 'dayjs';
 
-export const useGetDetailList = (evnetFilter: DateQueryString) => {
-  const queries = Object.entries(evnetFilter)
-    .reduce((prev, curr) => `${prev}&${curr[0]}=${curr[1]}`, '')
-    .slice(1) as string;
-  console.log(queries);
+export const useGetDetailList = (dateFilter: Partial<DateFilterProperty>, selectedDate: Dayjs | null, groupId: GroupId) => {
+  const query = dateFilterToQuery(dateFilter);
 
-  return useQuery(['detailList', queries], () => getEventList(queries));
+  return useQuery(['detailList', query, selectedDate, groupId.groupId], () => getEventList(query, groupId));
 };

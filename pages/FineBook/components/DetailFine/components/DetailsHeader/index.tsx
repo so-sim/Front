@@ -1,4 +1,3 @@
-import React from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { ARROW } from '@/assets/icons/Arrow';
 import * as Style from './styles';
@@ -10,6 +9,7 @@ export const DetailsHeader = () => {
   const closeDetails = () => {
     navigate(`/group/${groupID}/book`);
   };
+
   return (
     <Style.DetailsHeader>
       <Style.HeaderAlign>

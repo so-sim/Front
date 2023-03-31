@@ -7,7 +7,7 @@ interface ModalButton {
   onClick: () => void;
 }
 
-interface TwoButtonModalProps {
+export interface TwoButtonModalProps {
   onClick: () => void;
   title: string;
   description: string;

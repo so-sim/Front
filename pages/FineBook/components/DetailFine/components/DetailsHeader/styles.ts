@@ -3,7 +3,7 @@ import styled from '@emotion/styled';
 export const DetailsHeader = styled.div`
   display: flex;
   align-items: center;
-  padding: 12px 48px;
+  padding: 12px 32px;
   border-bottom: 2px solid ${({ theme }) => theme.colors.neutral_200_b};
   div {
     height: 24px;
@@ -16,7 +16,9 @@ export const BackArrowIcon = styled.span`
   cursor: pointer;
 `;
 
-export const Title = styled.span``;
+export const Title = styled.span`
+  ${({ theme }) => theme.font.body_02}
+`;
 
 export const HeaderAlign = styled.div`
   display: flex;

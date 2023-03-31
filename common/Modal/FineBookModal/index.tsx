@@ -12,6 +12,8 @@ import { useCreateDetail } from '@/queries/Detail/useCreateDetail';
 import { EvnetInfo, PaymentType } from '@/types/event';
 import { useUpdateDetail } from '@/queries/Detail/useUpdateDetail';
 import { useGetOneOfDetail } from '@/queries/Detail/useGetOneOfDetail';
+import { useRecoilValue } from 'recoil';
+import { userState } from '@/store/userState';
 
 interface ModalProps {
   setOpen: Dispatch<SetStateAction<boolean>>;
@@ -47,6 +49,8 @@ export const FineBookModal = ({ setOpen, eventId }: ModalProps) => {
   const { mutate: update } = useUpdateDetail();
 
   const isCreate = type === 'create';
+  const user = useRecoilValue(userState);
+  console.log(user);
 
   const initDetail = () => {
     setMember('');
@@ -66,7 +70,7 @@ export const FineBookModal = ({ setOpen, eventId }: ModalProps) => {
 
   const createDetail = async (type: 'continue' | 'save') => {
     if (status == '') return;
-    await create({ userId: 3, userName: member, groundsDate: '2023-03-18 23:42:43', grounds: reason, paymentType: status, payment: fine });
+    await create({ userId: 3, userName: member, groundsDate: '2023.03.18', grounds: reason, paymentType: status, payment: fine });
     if (type === 'continue') {
       initDetail();
       return;

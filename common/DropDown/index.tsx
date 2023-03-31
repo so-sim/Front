@@ -10,7 +10,7 @@ export interface DropDownProps<T = string> {
   top: string;
   width?: number;
   onClose: () => void;
-  setState: Dispatch<SetStateAction<T>>;
+  setState?: Dispatch<SetStateAction<T>>;
   direction?: 'left' | 'right';
 }
 
@@ -18,6 +18,7 @@ const DropDown = <T,>({ list, width = 112, setState, onClose, top, direction = '
   const dropDownRef = useRef<HTMLDivElement>(null);
 
   const handleState = (title: T) => {
+    if (!setState) return null;
     setState(title);
     onClose();
   };

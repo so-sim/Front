@@ -1,5 +1,5 @@
 import { PaymentType } from '@/types/event';
-import { getStatusIcon } from '@/utils/getStatusIcon';
+import { getStatusIcon, getStatusText } from '@/utils/getStatusIcon';
 import * as Style from './styles';
 
 export interface CircleDropButtonProps {
@@ -7,10 +7,12 @@ export interface CircleDropButtonProps {
 }
 
 export const CircleDropButton = ({ status }: CircleDropButtonProps) => {
+  const STATUS = getStatusText(status);
+
   return (
-    <Style.StatusButton status={status}>
-      <Style.Text>{status}</Style.Text>
-      <Style.Icon>{getStatusIcon(status)}</Style.Icon>
+    <Style.StatusButton status={STATUS}>
+      <Style.Text>{STATUS}</Style.Text>
+      <Style.Icon>{getStatusIcon(STATUS)}</Style.Icon>
     </Style.StatusButton>
   );
 };
