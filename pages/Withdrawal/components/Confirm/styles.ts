@@ -24,7 +24,7 @@ export const Label = styled.label`
     margin-right: 8px;
   }
   span {
-    color: ${({ theme }) => theme.colors.red_200};
+    color: ${({ theme }) => theme.colors.red_400};
   }
 `;
 
