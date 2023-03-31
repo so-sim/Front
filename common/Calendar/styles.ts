@@ -3,7 +3,8 @@ import styled from '@emotion/styled';
 export const Layout = styled.div`
   padding: 48px 32px;
   width: 100%;
-  height: 100%;
+  height: calc(100vh - 80px);
+  overflow: auto;
 `;
 
 export const Header = styled.div`

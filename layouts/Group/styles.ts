@@ -22,7 +22,7 @@ export const Header = styled.header`
 
 export const GridLayout = styled.div`
   display: grid;
-  height: 100vh;
+  height: calc(100vh - 68px);
   grid-template-columns: 100px 284px auto;
   @media (max-width: 1718px) {
     grid-template-columns: 100px 260px auto;
