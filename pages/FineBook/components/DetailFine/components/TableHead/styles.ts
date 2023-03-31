@@ -16,6 +16,7 @@ export const TableHead = styled.div`
 export const Element = styled.span`
   display: flex;
   align-items: center;
+  position: relative;
   &,
   & > * {
     ${({ theme }) => theme.font.subhead_02}
