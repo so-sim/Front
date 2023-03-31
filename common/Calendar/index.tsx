@@ -1,7 +1,7 @@
 import { dateState } from '@/store/dateState';
 import { handleDate } from '@/utils/handleDate';
 import dayjs, { Dayjs } from 'dayjs';
-import React, { FC, useState } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
 import { ARROW } from '../../assets/icons/Arrow';
@@ -19,11 +19,13 @@ interface CalnedrProps {
 }
 
 const Calendar: FC<CalnedrProps> = ({ cellType }) => {
-  const [dateObj, setDateObj] = useRecoilState(dateState);
-  const [showCreateDetailModal, setShowCreateDetailModal] = useState(false);
   const today = dayjs();
-  const { calendarBaseDate, week, detailBaseDate, selectedDate } = dateObj;
-  const monthList = createCalendar(dayjs(calendarBaseDate));
+  const [dateObj, setDateObj] = useRecoilState(dateState);
+  const { bastDate, week, selectedDate } = dateObj;
+  const [showCreateDetailModal, setShowCreateDetailModal] = useState(false);
+  const [calendarDate, setCalendarDate] = useState(bastDate);
+
+  const monthList = createCalendar(dayjs(calendarDate));
   const navigate = useNavigate();
   const { groupId } = useParams();
 
@@ -34,20 +36,14 @@ const Calendar: FC<CalnedrProps> = ({ cellType }) => {
   };
 
   const increaseMonth = () => {
-    setDateObj((prev) => ({
-      ...prev,
-      calendarBaseDate: addMonth(prev.calendarBaseDate),
-    }));
+    setCalendarDate(addMonth(calendarDate));
   };
   const decreaseMonth = () => {
-    setDateObj((prev) => ({
-      ...prev,
-      calendarBaseDate: subMonth(prev.calendarBaseDate),
-    }));
+    setCalendarDate(subMonth(calendarDate));
   };
 
   const isCurrentMonth = (date: Dayjs) => {
-    return date.month() === getMonth(calendarBaseDate);
+    return date.month() === getMonth(calendarDate);
   };
 
   const isToday = (date: Dayjs) => {
@@ -55,7 +51,7 @@ const Calendar: FC<CalnedrProps> = ({ cellType }) => {
   };
 
   const isSelectedWeek = (index: number) => {
-    return getMonth(detailBaseDate) === getMonth(calendarBaseDate) && index + 1 === week;
+    return getMonth(bastDate) === getMonth(calendarDate) && index + 1 === week;
   };
 
   const isSelectedDate = (date: Dayjs) => {
@@ -66,13 +62,16 @@ const Calendar: FC<CalnedrProps> = ({ cellType }) => {
   const goDetail = (date: Dayjs) => {
     setDateObj((prev) => ({
       ...prev,
-      calendarBaseDate: date,
-      detailBaseDate: date,
+      bastDate: date,
       selectedDate: date,
       week: null,
     }));
     navigate(`/group/${groupId}/book/detail`);
   };
+
+  useEffect(() => {
+    setCalendarDate(bastDate);
+  }, [bastDate, week, selectedDate]);
 
   return (
     <>
@@ -80,7 +79,7 @@ const Calendar: FC<CalnedrProps> = ({ cellType }) => {
         <span>벌금 장부</span>
         <Style.Header>
           <div>
-            <Style.DateHeader>{dayjs(dateObj.calendarBaseDate).format('YYYY년 MM월')}</Style.DateHeader>
+            <Style.DateHeader>{dayjs(calendarDate).format('YYYY년 MM월')}</Style.DateHeader>
             <div>
               <Style.ArrowWrapper onClick={decreaseMonth}>{ARROW.LEFT}</Style.ArrowWrapper>
               <Style.ArrowWrapper onClick={increaseMonth}>{ARROW.RIGHT}</Style.ArrowWrapper>
@@ -119,6 +118,3 @@ const Calendar: FC<CalnedrProps> = ({ cellType }) => {
 };
 
 export default Calendar;
-function addMonth(calendarBaseDate: dayjs.Dayjs): dayjs.Dayjs {
-  throw new Error('Function not implemented.');
-}
