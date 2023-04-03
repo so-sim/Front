@@ -1,4 +1,4 @@
-import { EventInfo, EvnetId, EventInfoList } from '@/types/event';
+import { EventInfo, EvnetId, EventInfoList, MonthStatus } from '@/types/event';
 import { GroupId } from '@/types/group';
 import { ServerResponse } from '@/types/serverResponse';
 import api from '..';
@@ -32,5 +32,10 @@ export const deleteEvent = async (eventId: string): Promise<ServerResponse<Evnet
 export const updateEventStatus = async (info: EvnetId & Pick<EventInfo, 'paymentType'>): Promise<ServerResponse<EventInfo>> => {
   const { eventId, paymentType } = info;
   const { data } = await api.patch(`/api/event/penalty/${String(eventId)}`, { paymentType });
+  return data;
+};
+
+export const getMonthStatus = async (groupId: string | undefined, year: string, month: string): Promise<ServerResponse<MonthStatus[]>> => {
+  const { data } = await api.get(`/api/event/penalty/mstatus/${groupId}?year=${year}&month=${month}`);
   return data;
 };

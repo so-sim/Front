@@ -3,13 +3,13 @@ import styled from '@emotion/styled';
 export const DateCell = styled.div`
   cursor: pointer;
   width: 100%;
-  height: 100%;
   position: relative;
   display: inline-flex;
   flex-direction: column;
   padding: 8px;
   border: 1px solid ${({ theme }) => theme.colors.neutral_400_b};
   gap: 4px;
+  min-height: 118px;
 `;
 
 interface DateProps {

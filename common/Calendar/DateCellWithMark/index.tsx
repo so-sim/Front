@@ -1,3 +1,4 @@
+import { MonthStatus } from '@/types/event';
 import { Dayjs } from 'dayjs';
 import React, { FC } from 'react';
 import { MARK } from '../../../assets/icons/Mark';
@@ -9,9 +10,10 @@ interface DateCellWithMarkProps {
   isToday: (date: Dayjs) => boolean;
   isSelectedDate: (date: Dayjs) => boolean;
   isSelectedWeek: boolean;
+  status: MonthStatus | undefined;
 }
 
-const DateCellWithMark: FC<DateCellWithMarkProps> = ({ date, isCurrentMonth, isToday, isSelectedDate, isSelectedWeek }) => {
+const DateCellWithMark: FC<DateCellWithMarkProps> = ({ date, isCurrentMonth, isToday, isSelectedDate, isSelectedWeek, status }) => {
   const day = date.day();
 
   const isFirst = day === 0;
@@ -24,9 +26,9 @@ const DateCellWithMark: FC<DateCellWithMarkProps> = ({ date, isCurrentMonth, isT
         {date.date()}
       </Style.Date>
       <Style.Mark>
-        <span>{MARK.BLUE}</span>
-        {/* <span>{MARK.YELLOW}</span> */}
-        {/* <span>{MARK.RED}</span> */}
+        {status?.paymentTypeCountMap.con && <span>{MARK.BLUE}</span>}
+        {status?.paymentTypeCountMap.full && <span>{MARK.YELLOW}</span>}
+        {status?.paymentTypeCountMap.non && <span>{MARK.RED}</span>}
       </Style.Mark>
     </Style.DateCell>
   );
