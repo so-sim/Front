@@ -1,5 +1,5 @@
 import { changeNumberToMoney } from '@/utils/changeNumberToMoney';
-import React, { Dispatch, SetStateAction, useState } from 'react';
+import React, { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import Button from '@/common/Button';
 import { Label } from '@/common/Label';
 import Modal from '@/common/Modal';
@@ -9,26 +9,33 @@ import { SYSTEM } from '@/assets/icons/System';
 import { useParticipantList } from '@/queries/Group';
 import { useParams } from 'react-router-dom';
 import { useCreateDetail } from '@/queries/Detail/useCreateDetail';
-import { EvnetInfo, PaymentType } from '@/types/event';
+import { EventInfo, PaymentType } from '@/types/event';
 import { useUpdateDetail } from '@/queries/Detail/useUpdateDetail';
-import { useGetOneOfDetail } from '@/queries/Detail/useGetOneOfDetail';
-import { useRecoilValue } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import { userState } from '@/store/userState';
+import { CalendarDropBox } from '@/common/DropBox/CalendarDropBox';
+import dayjs from 'dayjs';
+import { dateState } from '@/store/dateState';
+import { getStatusCode, getStatusText } from '@/utils/getStatusIcon';
 
 interface ModalProps {
   setOpen: Dispatch<SetStateAction<boolean>>;
   eventId?: number;
+  select?: EventInfo;
 }
 
-export const FineBookModal = ({ setOpen, eventId }: ModalProps) => {
+export const FineBookModal = ({ setOpen, eventId, select }: ModalProps) => {
   const type = eventId ? 'update' : 'create';
+  // const { eventId, groundsDate, paymentType, userName, payment, grounds } = select;
 
   const [member, setMember] = useState('');
   const [status, setStatus] = useState<PaymentType | ''>('');
-
   const [reason, setReason] = useState('');
-
   const [fine, setFine] = useState(0);
+  const [groundsDate, setGroundsDate] = useState('');
+  const [{ selectedDate, baseDate }, setDateState] = useRecoilState(dateState);
+
+  useEffect(() => {}, [groundsDate]);
 
   const onChangeFine = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target;
@@ -43,44 +50,48 @@ export const FineBookModal = ({ setOpen, eventId }: ModalProps) => {
   };
 
   const params = useParams();
-  const { data: detail } = useGetOneOfDetail(eventId);
   const { data } = useParticipantList({ groupId: Number(params.groupId) || 1 });
   const { mutate: create } = useCreateDetail();
   const { mutate: update } = useUpdateDetail();
 
   const isCreate = type === 'create';
   const user = useRecoilValue(userState);
-  console.log(user);
 
   const initDetail = () => {
     setMember('');
     setStatus('');
     setReason('');
     setFine(0);
+    setGroundsDate('');
   };
-
-  const [detailForm, setDetailForm] = useState<Partial<EvnetInfo>>({
-    userId: 0,
-    userName: '',
-    groundsDate: '',
-    grounds: '',
-    paymentType: '',
-    payment: 0,
-  });
 
   const createDetail = async (type: 'continue' | 'save') => {
-    if (status == '') return;
-    await create({ userId: 3, userName: member, groundsDate: '2023.03.18', grounds: reason, paymentType: status, payment: fine });
+    if (user.userId === null) return;
+    await create({ userId: user.userId, userName: member, groundsDate, grounds: reason, paymentType: getStatusCode(status), payment: fine });
+    await setDateState((prev) => ({ ...prev, baseDate: dayjs(groundsDate), selectedDate: dayjs(groundsDate), week: null }));
+
     if (type === 'continue') {
       initDetail();
-      return;
+    } else {
+      setOpen(false);
     }
-    setOpen(false);
   };
 
+  useEffect(() => {
+    if (select != null) {
+      setMember(select.userName);
+      setGroundsDate(select.groundsDate);
+      setReason(select.grounds);
+      setStatus(getStatusText(select.paymentType));
+      setFine(select.payment);
+    }
+  }, []);
+
   const updateDetail = () => {
-    if (status == '') return;
-    update({ eventId: 213, userId: 3, userName: '윤둘', groundsDate: '', grounds: reason, paymentType: status, payment: fine });
+    if (status == '' || select == null) return;
+    const { eventId, userId } = select;
+
+    update({ eventId, userId, userName: member, groundsDate, grounds: reason, paymentType: getStatusCode(status), payment: fine });
     setOpen(false);
   };
 
@@ -91,35 +102,49 @@ export const FineBookModal = ({ setOpen, eventId }: ModalProps) => {
 
   const statusList: { title: PaymentType }[] = [{ title: '미납' }, { title: '완납' }, { title: '확인필요' }];
 
+  const isUpdate = select !== undefined;
+
   return (
     <Modal.Frame width="448px" height={type === 'create' ? '466px' : '412px'} onClick={() => setOpen(false)}>
       <Modal.Header onClick={() => setOpen(false)}>{type === 'create' ? '내역 추가하기' : '상세 내역 수정'}</Modal.Header>
       <div style={{ display: 'flex', flexDirection: 'column', width: '100%' }}>
         <Style.Row>
           <Label title="팀원" width="32px">
-            <DropBox boxWidth="148px" width={304} setType={setMember} type={member} dropDownList={memberList} direction="right" />
+            <DropBox boxWidth="148px" width={304} setType={setMember} type={isUpdate && member === '' ? select?.userName : member} dropDownList={memberList} direction="right" />
           </Label>
-          <Label title="납부여부" width="64px">
-            <DropBox color="white" boxWidth="112px" width={112} setType={setStatus} type={status} dropDownList={statusList} />
+          <Label title="납부여부" width="56px">
+            <DropBox
+              color="white"
+              boxWidth="112px"
+              width={112}
+              setType={setStatus}
+              type={isUpdate && status === '' ? getStatusText(select?.paymentType) : status}
+              dropDownList={statusList}
+            />
           </Label>
         </Style.Row>
         <Style.Row>
           <Label title="금액" width="32px">
-            <Style.Input type="string" value={changeNumberToMoney(fine)} onChange={onChangeFine} style={{ height: '32px' }} />
+            <Style.Input
+              type="string"
+              value={isUpdate && fine === 0 ? changeNumberToMoney(select?.payment) : changeNumberToMoney(fine)}
+              onChange={onChangeFine}
+              style={{ height: '32px' }}
+            />
           </Label>
           <Label title="날짜" width="32px">
-            <DropBox color="white" boxWidth="138px" width={138} setType={setMember} type={member} dropDownList={memberList} />
+            <CalendarDropBox type={isUpdate && groundsDate === '' ? select?.groundsDate : groundsDate} setType={setGroundsDate} color="white" />
           </Label>
         </Style.Row>
         <Label title="사유" width="32px">
           <Style.TextArea maxLength={65} onChange={onChangeReason} defaultValue={reason} value={reason} placeholder="내용을 입력해주세요.">
-            {reason}
+            {isUpdate && reason === '' ? select.grounds : reason}
           </Style.TextArea>
-          <Style.Length>{reason.length}/65</Style.Length>
+          <Style.Length>{isUpdate && reason === '' ? select?.grounds.length : reason.length}/65</Style.Length>
         </Label>
         <Modal.Footer flexDirection="column">
           <Button
-            color="black"
+            color={true ? 'black' : 'disabled'}
             width="100%"
             height="42px"
             onClick={() => {

@@ -24,3 +24,16 @@ export const getStatusText = (status: PaymentType) => {
       return status;
   }
 };
+
+export const getStatusCode = (status: PaymentType) => {
+  switch (status) {
+    case '미납':
+      return 'non';
+    case '확인필요':
+      return 'con';
+    case '완납':
+      return 'full';
+    default:
+      return status;
+  }
+};
