@@ -5,7 +5,7 @@ import Button from '@/common/Button';
 import { Label } from '@/common/Label';
 import { DropBox } from '@/common/DropBox';
 import * as Style from './styles';
-import { EvnetInfo, PaymentType } from '@/types/event';
+import { EventInfo, PaymentType } from '@/types/event';
 import { FineBookModal } from '@/common/Modal/FineBookModal';
 import { changeNumberToMoney } from '@/utils/changeNumberToMoney';
 import { getStatusText } from '@/utils/getStatusIcon';
@@ -13,12 +13,12 @@ import { getStatusText } from '@/utils/getStatusIcon';
 interface UserDetailsProps {
   open: boolean;
   setOpen: Dispatch<SetStateAction<boolean>>;
-  select: EvnetInfo;
+  select: EventInfo;
 }
 
 export const UserDetails = ({ open, setOpen, select }: UserDetailsProps) => {
   if (!open) return null;
-  const { userId, eventId, groundsDate, paymentType, userName, payment, grounds } = select;
+  const { eventId, groundsDate, paymentType, userName, payment, grounds } = select;
   const [openUpdateModal, setOpenUpdateModal] = useState(false);
   const statusList: { title: PaymentType }[] = [{ title: '미납' }, { title: '완납' }, { title: '확인필요' }];
   const [newStatus, setNewStatus] = useState<PaymentType>('');
@@ -40,7 +40,7 @@ export const UserDetails = ({ open, setOpen, select }: UserDetailsProps) => {
           </Style.Block>
           <Style.Row>
             <Label title="날짜" width="32px">
-              <DropBox color="disabled" boxWidth="110px" width={110} type={groundsDate.split(' ')[0]} dropDownList={statusList} />
+              <DropBox color="disabled" boxWidth="116px" width={116} type={groundsDate.split(' ')[0]} dropDownList={statusList} />
             </Label>
             <Label title="납부여부" width="80px">
               <DropBox
@@ -74,7 +74,7 @@ export const UserDetails = ({ open, setOpen, select }: UserDetailsProps) => {
           </Button>
         </Style.Footer>
       </Style.UserDetailsFrame>
-      {openUpdateModal && <FineBookModal eventId={eventId} setOpen={setOpenUpdateModal} />}
+      {openUpdateModal && <FineBookModal eventId={eventId} select={select} setOpen={setOpenUpdateModal} />}
     </>
   );
 };

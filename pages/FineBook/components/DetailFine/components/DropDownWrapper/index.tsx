@@ -1,11 +1,11 @@
-import { EvnetInfo, PaymentType } from '@/types/event';
+import { EventInfo, PaymentType } from '@/types/event';
 import React, { Dispatch, SetStateAction, useState } from 'react';
 import { CircleButtonList } from '../CircleButtonList';
 import { CircleDropButton } from '../CircleDropButton';
 import * as Style from './styles';
 
 interface DropDownWrapperProps {
-  detail: EvnetInfo;
+  detail: EventInfo;
 }
 
 export const DropDownWrapper = ({ detail }: DropDownWrapperProps) => {

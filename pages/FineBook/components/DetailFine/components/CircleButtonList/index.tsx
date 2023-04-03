@@ -1,7 +1,7 @@
 import { TwoButtonModal } from '@/common/Modal/TwoButtonModal';
 import { useUpdateDetailStatus } from '@/queries/Detail/useUpdateDetailStatus';
 import { PaymentType } from '@/types/event';
-import { getStatusText } from '@/utils/getStatusIcon';
+import { getStatusCode, getStatusText } from '@/utils/getStatusIcon';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { CircleDropButton, CircleDropButtonProps } from '../CircleDropButton';
 import * as Style from './styles';
@@ -55,7 +55,7 @@ export const CircleButtonList = ({ status, statusList, eventId, setOpenListEvent
               onClick={() => {
                 if (paymentType !== getStatusText(status)) {
                   setShowUpdateStatusModal(true);
-                  setNewStatus('con');
+                  setNewStatus(getStatusCode(paymentType));
                 } else {
                   setOpenListEventId(0);
                 }

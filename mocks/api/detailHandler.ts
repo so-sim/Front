@@ -1,9 +1,9 @@
-import { EvnetInfo } from '@/types/event';
+import { EventInfo } from '@/types/event';
 import { rest } from 'msw';
 
 const randomId = () => Math.floor(Math.random() * 1000000);
 
-const details: EvnetInfo[] = [
+const details: EventInfo[] = [
   {
     userId: randomId(),
     eventId: randomId(),

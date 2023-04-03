@@ -1,5 +1,5 @@
 import { getEventList } from '@/api/Event';
-import { DateFilterProperty, dateFilterToQuery } from '@/pages/FineBook/utils/dateFilterToQuery';
+import { DateFilterProperty, dateFilterToQuery } from '@/pages/FineBook/utils/dateFilter';
 import { GroupId } from '@/types/group';
 import { useQuery } from '@tanstack/react-query';
 import { Dayjs } from 'dayjs';

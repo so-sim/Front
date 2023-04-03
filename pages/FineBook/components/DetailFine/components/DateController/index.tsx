@@ -5,8 +5,10 @@ import * as Style from './styles';
 import { useRecoilState } from 'recoil';
 import { dateState } from '@/store/dateState';
 import dayjs from 'dayjs';
-import { DateFilterProperty } from '@/pages/FineBook/utils/dateFilterToQuery';
+import { DateFilterProperty, dateFilterTitle, updateCalendarByType } from '@/pages/FineBook/utils/dateFilter';
 import { FilterMode } from '../..';
+import { customedWeek } from '@/utils/customedWeek';
+import DropDown from '@/common/DropDown';
 
 interface DateControllerProps {
   mode: FilterMode;
@@ -16,87 +18,79 @@ interface DateControllerProps {
   setDateFilter: Dispatch<SetStateAction<DateFilterProperty>>;
 }
 
-export const DateController: FC<DateControllerProps> = ({ mode, setMode, setOpenAddModal, dateFilter, setDateFilter }) => {
-  const [{ selectedDate }, setSelectedDate] = useRecoilState(dateState);
-  if (selectedDate == null) return null;
+export const DateController: FC<DateControllerProps> = ({ mode, setMode, setOpenAddModal, setDateFilter }) => {
+  const [{ baseDate, week }, setSelectedDate] = useRecoilState(dateState);
 
-  const calculatedWeek = Math.ceil((dayjs(selectedDate).startOf('month').day() + dayjs(selectedDate).date()) / 7);
+  const [openWeeklyFilterDrop, setOpenWeeklyFilterDrop] = useState(false);
+  const [selectedWeek, setSelectedWeek] = useState('0');
 
-  const DateFilterTitle = (mode: FilterMode): string => {
-    switch (mode) {
-      case 'day':
-        return `${Number(dayjs(selectedDate).month() + 1)}월 ${Number(dayjs(selectedDate).date())}일`;
-      case 'week':
-        const firstDay = dayjs(selectedDate).startOf('week');
-        const lastDay = dayjs(firstDay).add(6, 'day');
-        return `${Number(dayjs(firstDay).month() + 1)}월 ${Number(dayjs(firstDay).date())}일 - ${Number(dayjs(lastDay).month() + 1)}월 ${Number(dayjs(lastDay).date())}일`;
-      default:
-        return `${Number(dayjs(selectedDate).month() + 1)}월`;
+  useEffect(() => {
+    if (week !== null) {
+      setSelectedWeek(`${week}주`);
     }
-  };
+  }, []);
+
+  useEffect(() => {
+    if (mode === 'week') {
+      const weekNumber = Number(selectedWeek[0]);
+      const startOfMonthDay = dayjs(baseDate).set('date', 1).startOf('month').day();
+      const startOfWeekDate = (weekNumber - 1) * 7 + 1 - startOfMonthDay;
+
+      setSelectedDate((prev) => ({
+        ...prev,
+        week: weekNumber,
+        baseDate: weekNumber === 1 ? dayjs(prev.baseDate).startOf('month') : dayjs(prev.baseDate).set('date', startOfWeekDate),
+      }));
+    }
+  }, [selectedWeek]);
 
   const increaseCalendarByMode = () => {
-    setSelectedDate((prev) => ({ ...prev, selectedDate: dayjs(prev.selectedDate).add(1, mode), week: prev.week !== null ? prev.week + 1 : null }));
+    setSelectedDate((prev) => updateCalendarByType('increase', prev, mode));
   };
 
   const decreaseCalendarByMode = () => {
-    setSelectedDate((prev) => ({ ...prev, selectedDate: dayjs(prev.selectedDate).subtract(1, mode), week: prev.week !== null ? prev.week - 1 : null }));
+    setSelectedDate((prev) => updateCalendarByType('decrease', prev, mode));
   };
+
+  const filterButtonList: { mode: FilterMode; text: string }[] = [
+    { mode: 'month', text: '월간' },
+    { mode: 'week', text: '주간' },
+    { mode: 'day', text: '일간' },
+  ];
 
   return (
     <Style.DateController>
       <Style.ControllerFrame>
         <Style.Block>
-          <Style.Date>{DateFilterTitle(mode)}</Style.Date>
+          <Style.Date mode={mode}>{dateFilterTitle(baseDate, mode, week)}</Style.Date>
           <Style.ArrowBlock>
             <Style.ArrowWrapper onClick={decreaseCalendarByMode}>{ARROW.LEFT}</Style.ArrowWrapper>
             <Style.ArrowWrapper onClick={increaseCalendarByMode}>{ARROW.RIGHT}</Style.ArrowWrapper>
           </Style.ArrowBlock>
         </Style.Block>
         <Style.Block>
-          <Style.TodayButton onClick={() => setSelectedDate((prev) => ({ ...prev, selectedDate: dayjs() }))}>오늘</Style.TodayButton>
+          <Style.TodayButton onClick={() => setSelectedDate((prev) => ({ ...prev, baseDate: dayjs(), selectedDate: dayjs() }))}>오늘</Style.TodayButton>
           <Style.FilterWrapper>
-            <Style.FilterButton
-              isActive={mode === 'month'}
-              onClick={() => {
-                if (mode === 'month') return;
-                setSelectedDate((prev) => ({ ...prev, week: null }));
-                setMode('month');
-                setDateFilter((prev) => {
-                  const { week, day, ...rest } = prev;
-                  return { ...rest, page: 0 };
-                });
-              }}
-            >
-              월간
-            </Style.FilterButton>
-            <Style.FilterButton
-              isActive={mode === 'week'}
-              onClick={() => {
-                if (mode === 'week') return;
-                setDateFilter((prev) => {
-                  const { day, ...rest } = prev;
-                  return { ...rest, page: 0, week: calculatedWeek };
-                });
-                setMode('week');
-
-                setSelectedDate((prev) => ({ ...prev, week: calculatedWeek }));
-              }}
-            >
-              주간
-            </Style.FilterButton>
-            <Style.FilterButton
-              isActive={mode === 'day'}
-              onClick={() => {
-                if (mode === 'day') {
-                  return;
-                }
-                setMode('day');
-                setSelectedDate((prev) => ({ ...prev, week: null }));
-              }}
-            >
-              일간
-            </Style.FilterButton>
+            {filterButtonList.map((btn) => {
+              return (
+                <Style.FilterButton
+                  isActive={mode === btn.mode}
+                  onClick={() => {
+                    setOpenWeeklyFilterDrop((prev) => !prev);
+                    if (mode === btn.mode) return;
+                    setMode(btn.mode);
+                    setSelectedDate((prev) => updateCalendarByType('none', prev, btn.mode));
+                  }}
+                >
+                  <span>{btn.text}</span>
+                  {btn.mode === 'week' && mode === 'week' && openWeeklyFilterDrop && (
+                    <div style={{ position: 'relative', left: '1px' }}>
+                      <DropDown width={60} align="center" setState={setSelectedWeek} list={customedWeek(baseDate)} top="7px" onClose={() => setOpenWeeklyFilterDrop(false)} />
+                    </div>
+                  )}
+                </Style.FilterButton>
+              );
+            })}
           </Style.FilterWrapper>
         </Style.Block>
       </Style.ControllerFrame>
@@ -106,18 +100,3 @@ export const DateController: FC<DateControllerProps> = ({ mode, setMode, setOpen
     </Style.DateController>
   );
 };
-
-// const [filterList, setFilterList] = useState<Partial<EventFilter>>({ year: 2023 });
-// const setFilter = (filter: Partial<EventFilter>) => {
-//   setFilterList((prev) => {
-//     const key = Object.keys(filter)[0];
-//     if (Object.keys(prev).includes(key)) {
-//       if (filter[key as keyof EventFilter] === prev[key as keyof EventFilter]) {
-//         // const { key  ,...rest} = prev
-//       }
-//     }
-//     // prev[Object.keys(filter)[0]]
-//     // if(prev[])
-//     return { ...prev, ...filter };
-//   });
-// };

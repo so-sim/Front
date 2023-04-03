@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+import { FilterMode } from '../..';
 
 export const DateController = styled.div`
   display: flex;
@@ -21,28 +22,37 @@ export const ArrowWrapper = styled.button`
 `;
 
 export const TodayButton = styled.button`
-  padding: 4px 12px;
+  height: 32px;
+  width: 56px;
   background-color: ${({ theme }) => theme.colors.neutral_200_b};
   border: 2px solid ${({ theme }) => theme.colors.neutral_400_b};
   border-radius: 4px;
+  ${({ theme }) => theme.font.subhead_02}
 `;
 
 export const FilterButton = styled.button<{ isActive: boolean }>`
-  padding: 4px 12px;
+  width: 56px;
+  height: 32px;
+  ${({ theme }) => theme.font.subhead_01}
   border-right: 2px solid ${({ theme }) => theme.colors.neutral_400_b};
   background-color: ${({ theme, isActive }) => (isActive ? theme.colors.neutral_200_b : '')};
   &:hover {
     background-color: ${({ theme }) => theme.colors.neutral_200_b};
   }
+  &:first-of-type {
+    border-radius: 10px 0 0 10px;
+  }
   &:last-of-type {
     border: none;
+    border-radius: 0 10px 10px 0;
   }
 `;
 
 export const FilterWrapper = styled.button`
   border: 2px solid ${({ theme }) => theme.colors.neutral_400_b};
   border-radius: 12px;
-  overflow: hidden;
+  /* overflow: hidden; */
+  position: relative;
 `;
 
 export const Block = styled.span`
@@ -61,6 +71,8 @@ export const ArrowBlock = styled.span`
   display: flex;
 `;
 
-export const Date = styled.span`
+export const Date = styled.span<{ mode: FilterMode }>`
+  width: ${({ mode }) => (mode === 'week' ? '254px' : mode === 'day' ? '112px' : '52px')};
+  white-space: nowrap;
   ${({ theme }) => theme.font.headline}
 `;

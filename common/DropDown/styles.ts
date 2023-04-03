@@ -8,12 +8,13 @@ export const DorpDownContainer = styled.div<Pick<DropDownProps, 'top' | 'directi
   border-radius: 4px;
   top: ${(props) => props.top};
   z-index: 50;
-  ${(props) => (props.direction === 'right' ? 'left: -2px' : 'right: -2px')}
+  ${(props) => (props.direction === 'right' ? 'left: -2px' : 'right: -2px')};
 `;
 
 interface DropDownItemProps {
   width: number;
   hasSvg: boolean;
+  align: 'start' | 'center';
 }
 
 export const DropDownItem = styled.div<DropDownItemProps>`
@@ -21,6 +22,7 @@ export const DropDownItem = styled.div<DropDownItemProps>`
   height: 32px;
   display: flex;
   align-items: center;
+  justify-content: ${({ align }) => (align === 'center' ? 'center' : 'flex-start')};
   padding: ${(props) => (props.hasSvg ? '4px 8px' : '4px 12px')};
   max-height: 192px;
   overflow: auto;

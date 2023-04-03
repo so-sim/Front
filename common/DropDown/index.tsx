@@ -11,10 +11,11 @@ export interface DropDownProps<T = string> {
   width?: number;
   onClose: () => void;
   setState?: Dispatch<SetStateAction<T>>;
+  align?: 'center' | 'start';
   direction?: 'left' | 'right';
 }
 
-const DropDown = <T,>({ list, width = 112, setState, onClose, top, direction = 'left' }: DropDownProps<T>) => {
+const DropDown = <T,>({ list, width = 112, align = 'start', setState, onClose, top, direction = 'left' }: DropDownProps<T>) => {
   const dropDownRef = useRef<HTMLDivElement>(null);
 
   const handleState = (title: T) => {
@@ -44,8 +45,8 @@ const DropDown = <T,>({ list, width = 112, setState, onClose, top, direction = '
       {list.map((item) => {
         if (typeof item.title != 'string') return;
         return (
-          <Style.DropDownItem width={width} hasSvg={hasSvg(item.svg)} key={item.title} onClick={() => handleState(item.title)}>
-            <div>{item.svg}</div>
+          <Style.DropDownItem align={align} width={width} hasSvg={hasSvg(item.svg)} key={item.title} onClick={() => handleState(item.title)}>
+            {item.svg && <div>{item.svg}</div>}
             <span>{item.title}</span>
           </Style.DropDownItem>
         );
