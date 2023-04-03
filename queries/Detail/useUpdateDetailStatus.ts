@@ -1,6 +1,11 @@
 import { updateEventStatus } from '@/api/Event';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 export const useUpdateDetailStatus = () => {
-  return useMutation(updateEventStatus);
+  const queryClient = useQueryClient();
+  return useMutation(updateEventStatus, {
+    onSuccess() {
+      queryClient.invalidateQueries(['detailList']);
+    },
+  });
 };
