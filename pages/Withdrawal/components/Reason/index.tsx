@@ -8,17 +8,17 @@ import { useRecoilValue } from 'recoil';
 import { userState } from '@/store/userState';
 
 const WithdrawalReason = () => {
-  const [selectedReason, setSelectedReason] = useState('');
+  const [selectedReason, setSelectedReason] = useState({ title: '', wording: '' });
   const user = useRecoilValue(userState);
   const navigate = useNavigate();
 
   const { mutate: withdrawaMutate } = useUserWithdrawalMutation();
 
   const isChecked = (reason: string) => {
-    return selectedReason === reason;
+    return selectedReason.title === reason;
   };
 
-  const handleChecked = (reason: string) => {
+  const handleChecked = (reason: { title: string; wording: string }) => {
     setSelectedReason(reason);
   };
 
@@ -28,15 +28,15 @@ const WithdrawalReason = () => {
 
   const onClickWithdrawal = () => {
     if (user.userId) {
-      withdrawaMutate({ userId: user.userId, withdrawalGroundsType: selectedReason });
+      withdrawaMutate({ userId: user.userId, withdrawalGroundsType: selectedReason.wording });
     }
   };
 
   return (
     <>
       {WITHDRAWAL_REASON.map((reason) => (
-        <Style.Label>
-          <input type="checkbox" checked={isChecked(reason.title)} onClick={() => handleChecked(reason.title)} />
+        <Style.Label key={reason.wording}>
+          <input type="checkbox" checked={isChecked(reason.title)} onChange={() => handleChecked(reason)} />
           {reason.title}
         </Style.Label>
       ))}
