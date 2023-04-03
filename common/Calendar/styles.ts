@@ -5,6 +5,7 @@ export const Layout = styled.div`
   width: 100%;
   height: calc(100vh - 80px);
   overflow: auto;
+  white-space: nowrap;
 `;
 
 export const Header = styled.div`
@@ -23,6 +24,7 @@ export const Header = styled.div`
 export const DateHeader = styled.div`
   margin-right: 12px;
   font-size: 28px;
+  white-space: nowrap;
 `;
 
 export const ArrowWrapper = styled.button`
@@ -37,6 +39,7 @@ export const ArrowWrapper = styled.button`
 
 export const WeekDate = styled.div`
   display: flex;
+  white-space: nowrap;
   width: 100%;
   height: 32px;
   align-items: center;
@@ -45,6 +48,7 @@ export const WeekDate = styled.div`
   background-color: ${({ theme }) => theme.colors.neutral_200_b};
   border: 2px solid ${({ theme }) => theme.colors.neutral_400_b};
   margin-bottom: 12px;
+  min-width: 200px;
   div {
     width: 100%;
     text-align: center;
@@ -58,6 +62,7 @@ interface CalendarContainerProps {
 
 export const CalendarContainer = styled.div<CalendarContainerProps>`
   display: grid;
+  min-width: 200px;
   max-height: ${(props) => (props.mini ? '50%' : '100%')};
   grid-template-rows: ${(props) => `repeat(${props.length},1fr`};
   border: 1px solid ${({ theme }) => theme.colors.neutral_400_b};
@@ -69,6 +74,7 @@ interface WeekWrapProps {
 
 export const WeekWrap = styled.div<WeekWrapProps>`
   display: grid;
+  white-space: nowrap;
   grid-template-columns: repeat(7, 1fr);
   max-height: ${(props) => props.cellType === 'Mark' && '80px'};
   border: 1px solid ${({ theme }) => theme.colors.neutral_400_b};

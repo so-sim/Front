@@ -1,3 +1,4 @@
+import { MonthStatus } from '@/types/event';
 import { Dayjs } from 'dayjs';
 import React, { FC } from 'react';
 import { MARK } from '../../../assets/icons/Mark';
@@ -8,29 +9,36 @@ interface DateCellWitTagProps {
   isCurrentMonth: (date: Dayjs) => boolean;
   isToday: (date: Dayjs) => boolean;
   isSelectedDate: (date: Dayjs) => boolean;
+  status: MonthStatus | undefined;
 }
 
-const DateCellWithTag: FC<DateCellWitTagProps> = ({ date, isCurrentMonth, isToday, isSelectedDate }) => {
+const DateCellWithTag: FC<DateCellWitTagProps> = ({ date, isCurrentMonth, isToday, isSelectedDate, status }) => {
   return (
     <>
       <Style.DateCell key={date.day()}>
         <Style.Date isToday={isToday(date)} isSelectedDate={isSelectedDate(date)} isCurrentMonth={isCurrentMonth(date)}>
           {date.date()}
         </Style.Date>
-        <Style.Tag color="red">
-          <div>{MARK.RED}</div>
-          <span>미납자 있음</span>
-          <span>(1)</span>
-        </Style.Tag>
-        <Style.Tag color="orange">
-          <div>{MARK.YELLOW}</div>
-          <span>관리자 승인 중</span>
-          <span>(10)</span>
-        </Style.Tag>
-        <Style.Tag color="blue">
-          <div>{MARK.BLUE}</div>
-          <span>모두 완납</span>
-        </Style.Tag>
+        {status?.paymentTypeCountMap.non && (
+          <Style.Tag color="red">
+            <div>{MARK.RED}</div>
+            <span>미납자 있음</span>
+            <span>({status.paymentTypeCountMap.non})</span>
+          </Style.Tag>
+        )}
+        {status?.paymentTypeCountMap.full && (
+          <Style.Tag color="orange">
+            <div>{MARK.YELLOW}</div>
+            <span>관리자 승인 중</span>
+            <span>({status.paymentTypeCountMap.full})</span>
+          </Style.Tag>
+        )}
+        {status?.paymentTypeCountMap.con && (
+          <Style.Tag color="blue">
+            <div>{MARK.BLUE}</div>
+            <span>모두 완납</span>
+          </Style.Tag>
+        )}
       </Style.DateCell>
     </>
   );

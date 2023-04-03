@@ -7,6 +7,7 @@ export const DateCell = styled.div`
   flex-direction: column;
   align-items: center;
   width: 100%;
+  min-height: 80px;
   padding: 12px 0px;
   gap: 8px;
 `;

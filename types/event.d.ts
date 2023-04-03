@@ -2,6 +2,12 @@ type ServerPaymentType = 'non' | 'con' | 'full';
 
 export type PaymentType = '미납' | '확인필요' | '완납' | '' | ServerPaymentType;
 
+export interface PayMentTpyeCountMap {
+  con?: number;
+  non?: number;
+  full?: number;
+}
+
 export interface EventInfo {
   eventId: number;
   userId: number;
@@ -29,4 +35,9 @@ export interface EventFilter {
   userId: number;
   paymentType: PaymentType;
   today: boolean;
+}
+
+export interface MonthStatus {
+  day: number;
+  paymentTypeCountMap: PayMentTpyeCountMap;
 }

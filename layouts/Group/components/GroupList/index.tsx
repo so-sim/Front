@@ -21,8 +21,6 @@ const GroupList = () => {
     return Number(groupId) === id;
   };
 
-  console.log(groups);
-
   useEffect(() => {
     if (inView && hasNextPage) {
       fetchNextPage();

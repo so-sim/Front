@@ -1,3 +1,4 @@
+import { useGetMonthStatus } from '@/queries/Detail/useGetMonthStatus';
 import { dateState } from '@/store/dateState';
 import { handleDate } from '@/utils/handleDate';
 import dayjs, { Dayjs } from 'dayjs';
@@ -10,6 +11,7 @@ import createCalendar from '../../utils/createCalendar';
 import { FineBookModal } from '../Modal/FineBookModal';
 import DateCellWithMark from './DateCellWithMark';
 import DateCellWithTag from './DateCellWithTag';
+
 import * as Style from './styles';
 
 const WEEKDATE = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
@@ -29,7 +31,15 @@ const Calendar: FC<CalnedrProps> = ({ cellType }) => {
   const navigate = useNavigate();
   const { groupId } = useParams();
 
-  const { addMonth, subMonth, dateToFormmating, getMonth } = handleDate;
+  const { addMonth, subMonth, dateToFormmating, getMonth, getDateArray, getDate } = handleDate;
+
+  const [year, month, day] = getDateArray(baseDate);
+
+  const { data: status } = useGetMonthStatus(groupId, year, month);
+
+  const filterCorrectDateStatus = (date: Dayjs) => {
+    return status?.content.filter((list) => list.day === getDate(date))[0];
+  };
 
   const handleShowCreateDetailModal = () => {
     setShowCreateDetailModal((prev) => !prev);
@@ -102,9 +112,16 @@ const Calendar: FC<CalnedrProps> = ({ cellType }) => {
               {weeks.map((date) => (
                 <div key={dateToFormmating(date)} onClick={() => goDetail(date)}>
                   {cellType === 'Tag' ? (
-                    <DateCellWithTag date={date} isCurrentMonth={isCurrentMonth} isToday={isToday} isSelectedDate={isSelectedDate} />
+                    <DateCellWithTag date={date} isCurrentMonth={isCurrentMonth} isToday={isToday} isSelectedDate={isSelectedDate} status={filterCorrectDateStatus(date)} />
                   ) : (
-                    <DateCellWithMark date={date} isCurrentMonth={isCurrentMonth} isToday={isToday} isSelectedDate={isSelectedDate} isSelectedWeek={isSelectedWeek(idx)} />
+                    <DateCellWithMark
+                      date={date}
+                      isCurrentMonth={isCurrentMonth}
+                      isToday={isToday}
+                      isSelectedDate={isSelectedDate}
+                      isSelectedWeek={isSelectedWeek(idx)}
+                      status={filterCorrectDateStatus(date)}
+                    />
                   )}
                 </div>
               ))}
