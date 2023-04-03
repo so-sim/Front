@@ -1,14 +1,14 @@
-import { EvnetInfo, EvnetId, EventInfoList } from '@/types/event';
+import { EventInfo, EvnetId, EventInfoList } from '@/types/event';
 import { GroupId } from '@/types/group';
 import { ServerResponse } from '@/types/serverResponse';
 import api from '..';
 
-export const createEvent = async (detailInfo: Omit<EvnetInfo, 'eventId'>): Promise<ServerResponse<EvnetId>> => {
+export const createEvent = async (detailInfo: Omit<EventInfo, 'eventId'>): Promise<ServerResponse<EvnetId>> => {
   const { data } = await api.post('/api/event/penalty', detailInfo);
   return data;
 };
 
-export const getOneOfEvent = async (eventId?: number): Promise<ServerResponse<Omit<EvnetInfo, 'eventId' | 'userId'>>> => {
+export const getOneOfEvent = async (eventId?: number): Promise<ServerResponse<Omit<EventInfo, 'eventId' | 'userId'>>> => {
   const { data } = await api.get(`/api/event/penalty/${eventId}`);
   return data;
 };
@@ -18,7 +18,7 @@ export const getEventList = async (query: string, groupId: GroupId): Promise<Ser
   return data;
 };
 
-export const updateEvent = async (info: EvnetInfo & EvnetId): Promise<ServerResponse<EvnetInfo>> => {
+export const updateEvent = async (info: EventInfo & EvnetId): Promise<ServerResponse<EventInfo>> => {
   const { eventId, ...detailInfo } = info;
   const { data } = await api.post(`/api/event/penalty/${eventId}`, detailInfo);
   return data;
@@ -29,7 +29,7 @@ export const deleteEvent = async (eventId: string): Promise<ServerResponse<Evnet
   return data;
 };
 
-export const updateEventStatus = async (info: EvnetId & Pick<EvnetInfo, 'paymentType'>): Promise<ServerResponse<EvnetInfo>> => {
+export const updateEventStatus = async (info: EvnetId & Pick<EventInfo, 'paymentType'>): Promise<ServerResponse<EventInfo>> => {
   const { eventId, paymentType } = info;
   const { data } = await api.patch(`/api/event/penalty/${String(eventId)}`, { paymentType });
   return data;

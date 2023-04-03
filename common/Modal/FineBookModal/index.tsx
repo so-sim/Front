@@ -9,7 +9,7 @@ import { SYSTEM } from '@/assets/icons/System';
 import { useParticipantList } from '@/queries/Group';
 import { useParams } from 'react-router-dom';
 import { useCreateDetail } from '@/queries/Detail/useCreateDetail';
-import { EvnetInfo, PaymentType } from '@/types/event';
+import { EventInfo, PaymentType } from '@/types/event';
 import { useUpdateDetail } from '@/queries/Detail/useUpdateDetail';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { userState } from '@/store/userState';
@@ -21,7 +21,7 @@ import { getStatusCode, getStatusText } from '@/utils/getStatusIcon';
 interface ModalProps {
   setOpen: Dispatch<SetStateAction<boolean>>;
   eventId?: number;
-  select?: EvnetInfo;
+  select?: EventInfo;
 }
 
 export const FineBookModal = ({ setOpen, eventId, select }: ModalProps) => {

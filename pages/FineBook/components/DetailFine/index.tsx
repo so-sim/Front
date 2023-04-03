@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useGetDetailList } from '@/queries/Detail/useGetDetailList';
-import { EvnetInfo } from '@/types/event';
+import { EventInfo } from '@/types/event';
 import { DateController } from './components/DateController';
 import { DetailList } from './components/DetailList';
 import { DetailsHeader } from './components/DetailsHeader';
@@ -30,7 +30,7 @@ const DetailFine = () => {
 
   const [openAddModal, setOpenAddModal] = useState(false);
   const [openUserDetails, setOpenUserDetails] = useState(false);
-  const [select, setSelect] = useState<EvnetInfo>({
+  const [select, setSelect] = useState<EventInfo>({
     userId: 12,
     eventId: Math.floor(Math.random() * 10000),
     groundsDate: '23.01.22',

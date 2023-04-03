@@ -2,7 +2,7 @@ type ServerPaymentType = 'non' | 'con' | 'full';
 
 export type PaymentType = '미납' | '확인필요' | '완납' | '' | ServerPaymentType;
 
-export interface EvnetInfo {
+export interface EventInfo {
   eventId: number;
   userId: number;
   payment: number;
@@ -14,7 +14,7 @@ export interface EvnetInfo {
 
 export interface EventInfoList {
   total: number;
-  list: EvnetInfo[];
+  list: EventInfo[];
 }
 
 export interface EvnetId {

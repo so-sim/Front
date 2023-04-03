@@ -5,7 +5,7 @@ import Button from '@/common/Button';
 import { Label } from '@/common/Label';
 import { DropBox } from '@/common/DropBox';
 import * as Style from './styles';
-import { EvnetInfo, PaymentType } from '@/types/event';
+import { EventInfo, PaymentType } from '@/types/event';
 import { FineBookModal } from '@/common/Modal/FineBookModal';
 import { changeNumberToMoney } from '@/utils/changeNumberToMoney';
 import { getStatusText } from '@/utils/getStatusIcon';
@@ -13,7 +13,7 @@ import { getStatusText } from '@/utils/getStatusIcon';
 interface UserDetailsProps {
   open: boolean;
   setOpen: Dispatch<SetStateAction<boolean>>;
-  select: EvnetInfo;
+  select: EventInfo;
 }
 
 export const UserDetails = ({ open, setOpen, select }: UserDetailsProps) => {

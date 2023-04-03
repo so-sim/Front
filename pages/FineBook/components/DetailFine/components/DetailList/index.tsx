@@ -1,13 +1,13 @@
-import { EvnetInfo } from '@/types/event';
+import { EventInfo } from '@/types/event';
 import { changeNumberToMoney } from '@/utils/changeNumberToMoney';
 import { Dispatch, FC, SetStateAction, useState } from 'react';
 import { DropDownWrapper } from '../DropDownWrapper';
 import * as Style from './styles';
 
 interface DetailListProps {
-  details?: EvnetInfo[];
+  details?: EventInfo[];
   page: number;
-  setSelect: Dispatch<SetStateAction<EvnetInfo>>;
+  setSelect: Dispatch<SetStateAction<EventInfo>>;
   setOpenUserDetails: Dispatch<SetStateAction<boolean>>;
 }
 
