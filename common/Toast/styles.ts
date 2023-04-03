@@ -13,7 +13,6 @@ export const Container = styled(ToastContainer)`
     align-items: center;
     padding: 12px 16px;
     gap: 8px;
-    width: 346px;
     background: #ffffff;
     border-radius: 12px;
   }
@@ -21,7 +20,6 @@ export const Container = styled(ToastContainer)`
     width: 24px;
     height: 24px;
   }
-
   .Toastify__toast--success {
     border: 2px solid #1c6ee9;
     color: #1c6ee9;

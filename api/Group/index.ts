@@ -12,9 +12,9 @@ export const getGroupDetail = async (groupId: GroupId): Promise<ServerResponse<G
   return data;
 };
 
-export const getGroupList = async (index: number): Promise<ServerResponse<GroupListWithIndex>> => {
-  const { data } = await api.get(`api/groups?index=${index}`);
-  return data;
+export const getGroupList = async (pageParam: number): Promise<ServerResponse<GroupListWithIndex>> => {
+  const { data } = await api.get(`api/groups?index=${pageParam}`);
+  return { ...data, nextPage: pageParam + 1 };
 };
 
 export const getParticipantList = async (groupId: GroupId): Promise<ServerResponse<ParticipantList>> => {

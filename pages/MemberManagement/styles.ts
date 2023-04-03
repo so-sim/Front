@@ -28,8 +28,18 @@ export const Flex = styled.div`
   gap: 12px;
 `;
 
-export const ButtonFlex = styled(Flex)`
+export const ButtonFlex = styled.button`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  ${({ theme }) => theme.font.subhead_02}
+  color:${({ theme }) => theme.colors.secondary_900};
+  height: 32px;
+  padding: 4px 12px;
   gap: 4px;
+  background-color: ${({ theme }) => theme.colors.neutral_200_b};
+  border: 2px solid ${({ theme }) => theme.colors.neutral_400_b};
+  border-radius: 4px;
 `;
 
 export const AdminContainer = styled.div`

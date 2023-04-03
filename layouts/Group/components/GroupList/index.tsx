@@ -1,41 +1,50 @@
 import { CreateGroupModal } from '@/common/Modal/CreateGroupModal';
-import React, { useState } from 'react';
+import { useGroupList } from '@/queries/Group';
+import React, { useEffect, useState } from 'react';
 import { NavLink, useParams } from 'react-router-dom';
 import { SYSTEM } from '../../../../assets/icons/System';
 import * as Stlye from './styles';
-
-const Group = [
-  { title: '테스1', coverColor: '#f86565', groupId: '1' },
-  { title: '테스2', coverColor: '#f89a65', groupId: '2' },
-  { title: '테스3', coverColor: '#f8e065', groupId: '3' },
-  { title: '테스4', coverColor: '#658ef8', groupId: '4' },
-  { title: '테스5', coverColor: '#9465f8', groupId: '5' },
-];
+import { useInView } from 'react-intersection-observer';
 
 const GroupList = () => {
   const param = useParams();
   const { groupId } = param;
   const [showCreateModal, setShowCreateModal] = useState(false);
+  const { data: groups, fetchNextPage, hasNextPage } = useGroupList();
+  const { ref, inView } = useInView();
 
   const handleCreateModal = () => {
     setShowCreateModal((prev) => !prev);
   };
 
-  const isSelected = (id: string) => {
-    return groupId === id;
+  const isSelected = (id: number) => {
+    return Number(groupId) === id;
   };
+
+  console.log(groups);
+
+  useEffect(() => {
+    if (inView && hasNextPage) {
+      fetchNextPage();
+    }
+  }, [inView]);
 
   return (
     <>
       <Stlye.Layout>
-        {Group.map((group) => (
-          <NavLink key={group.groupId} to={`/group/${group.groupId}/book`}>
-            <Stlye.Cover isSelected={isSelected(group.groupId)} />
-            <Stlye.EachGroup color={group.coverColor}>
-              <span>{group.title.substring(0, 3)}</span>
-            </Stlye.EachGroup>
-          </NavLink>
+        {groups?.pages.map((page, index) => (
+          <React.Fragment key={index}>
+            {page.content.groupList.map((group) => (
+              <Stlye.Groups key={group.groupId} to={`/group/${group.groupId}/book`}>
+                <Stlye.Cover isSelected={isSelected(group.groupId)} />
+                <Stlye.EachGroup color={group.coverColor}>
+                  <span>{group.title.substring(0, 3)}</span>
+                </Stlye.EachGroup>
+              </Stlye.Groups>
+            ))}
+          </React.Fragment>
         ))}
+        <div ref={ref} />
         <Stlye.CreateButton onClick={handleCreateModal}>{SYSTEM.PLUS_GRAY}</Stlye.CreateButton>
       </Stlye.Layout>
       {showCreateModal && <CreateGroupModal modalHandler={handleCreateModal} />}
