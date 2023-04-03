@@ -103,6 +103,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["react-refresh", "npm:0.14.0"],\
             ["react-router-dom", "virtual:2012bb92bd3c02c31c208dd19c7a30b32c4e004bc22c4ac67376a0b485daeffa61f9ac1dd14f7ec2e6d9f117f17b40d67db4154a3f2abfb8e2cf15cea16c14d6#npm:6.8.0"],\
             ["react-test-renderer", "virtual:2012bb92bd3c02c31c208dd19c7a30b32c4e004bc22c4ac67376a0b485daeffa61f9ac1dd14f7ec2e6d9f117f17b40d67db4154a3f2abfb8e2cf15cea16c14d6#npm:18.2.0"],\
+            ["react-toastify", "virtual:2012bb92bd3c02c31c208dd19c7a30b32c4e004bc22c4ac67376a0b485daeffa61f9ac1dd14f7ec2e6d9f117f17b40d67db4154a3f2abfb8e2cf15cea16c14d6#npm:9.1.2"],\
             ["recoil", "virtual:2012bb92bd3c02c31c208dd19c7a30b32c4e004bc22c4ac67376a0b485daeffa61f9ac1dd14f7ec2e6d9f117f17b40d67db4154a3f2abfb8e2cf15cea16c14d6#npm:0.7.7"],\
             ["recoil-persist", "virtual:2012bb92bd3c02c31c208dd19c7a30b32c4e004bc22c4ac67376a0b485daeffa61f9ac1dd14f7ec2e6d9f117f17b40d67db4154a3f2abfb8e2cf15cea16c14d6#npm:4.2.0"],\
             ["style-loader", "virtual:2012bb92bd3c02c31c208dd19c7a30b32c4e004bc22c4ac67376a0b485daeffa61f9ac1dd14f7ec2e6d9f117f17b40d67db4154a3f2abfb8e2cf15cea16c14d6#npm:3.3.1"],\
@@ -23306,6 +23307,33 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD"\
         }]\
       ]],\
+      ["react-toastify", [\
+        ["npm:9.1.2", {\
+          "packageLocation": "./.yarn/cache/react-toastify-npm-9.1.2-b3ba16a74b-0b21851bbb.zip/node_modules/react-toastify/",\
+          "packageDependencies": [\
+            ["react-toastify", "npm:9.1.2"]\
+          ],\
+          "linkType": "SOFT"\
+        }],\
+        ["virtual:2012bb92bd3c02c31c208dd19c7a30b32c4e004bc22c4ac67376a0b485daeffa61f9ac1dd14f7ec2e6d9f117f17b40d67db4154a3f2abfb8e2cf15cea16c14d6#npm:9.1.2", {\
+          "packageLocation": "./.yarn/__virtual__/react-toastify-virtual-27f8be27dd/0/cache/react-toastify-npm-9.1.2-b3ba16a74b-0b21851bbb.zip/node_modules/react-toastify/",\
+          "packageDependencies": [\
+            ["react-toastify", "virtual:2012bb92bd3c02c31c208dd19c7a30b32c4e004bc22c4ac67376a0b485daeffa61f9ac1dd14f7ec2e6d9f117f17b40d67db4154a3f2abfb8e2cf15cea16c14d6#npm:9.1.2"],\
+            ["@types/react", "npm:18.0.27"],\
+            ["@types/react-dom", "npm:18.0.10"],\
+            ["clsx", "npm:1.2.1"],\
+            ["react", "npm:18.2.0"],\
+            ["react-dom", "virtual:2012bb92bd3c02c31c208dd19c7a30b32c4e004bc22c4ac67376a0b485daeffa61f9ac1dd14f7ec2e6d9f117f17b40d67db4154a3f2abfb8e2cf15cea16c14d6#npm:18.2.0"]\
+          ],\
+          "packagePeers": [\
+            "@types/react-dom",\
+            "@types/react",\
+            "react-dom",\
+            "react"\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
       ["read-pkg", [\
         ["npm:1.1.0", {\
           "packageLocation": "./.yarn/cache/read-pkg-npm-1.1.0-11237fa82f-a0f5d5e322.zip/node_modules/read-pkg/",\
@@ -24729,6 +24757,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["react-refresh", "npm:0.14.0"],\
             ["react-router-dom", "virtual:2012bb92bd3c02c31c208dd19c7a30b32c4e004bc22c4ac67376a0b485daeffa61f9ac1dd14f7ec2e6d9f117f17b40d67db4154a3f2abfb8e2cf15cea16c14d6#npm:6.8.0"],\
             ["react-test-renderer", "virtual:2012bb92bd3c02c31c208dd19c7a30b32c4e004bc22c4ac67376a0b485daeffa61f9ac1dd14f7ec2e6d9f117f17b40d67db4154a3f2abfb8e2cf15cea16c14d6#npm:18.2.0"],\
+            ["react-toastify", "virtual:2012bb92bd3c02c31c208dd19c7a30b32c4e004bc22c4ac67376a0b485daeffa61f9ac1dd14f7ec2e6d9f117f17b40d67db4154a3f2abfb8e2cf15cea16c14d6#npm:9.1.2"],\
             ["recoil", "virtual:2012bb92bd3c02c31c208dd19c7a30b32c4e004bc22c4ac67376a0b485daeffa61f9ac1dd14f7ec2e6d9f117f17b40d67db4154a3f2abfb8e2cf15cea16c14d6#npm:0.7.7"],\
             ["recoil-persist", "virtual:2012bb92bd3c02c31c208dd19c7a30b32c4e004bc22c4ac67376a0b485daeffa61f9ac1dd14f7ec2e6d9f117f17b40d67db4154a3f2abfb8e2cf15cea16c14d6#npm:4.2.0"],\
             ["style-loader", "virtual:2012bb92bd3c02c31c208dd19c7a30b32c4e004bc22c4ac67376a0b485daeffa61f9ac1dd14f7ec2e6d9f117f17b40d67db4154a3f2abfb8e2cf15cea16c14d6#npm:3.3.1"],\

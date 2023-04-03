@@ -1,11 +1,14 @@
 import { updateEventStatus } from '@/api/Event';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { ToastPopUp } from '@/common/Toast';
+import { TOAST_SUCCESS } from '@/constants/Toast';
+import { useMutation } from '@tanstack/react-query';
 
 export const useUpdateDetailStatus = () => {
   const queryClient = useQueryClient();
   return useMutation(updateEventStatus, {
-    onSuccess() {
+    onSuccess: () => {
       queryClient.invalidateQueries(['detailList']);
+      ToastPopUp({ type: 'success', message: TOAST_SUCCESS.UPDATE_FINE });
     },
   });
 };
