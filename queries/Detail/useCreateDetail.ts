@@ -1,7 +1,7 @@
 import { createEvent } from '@/api/Event';
 import { ToastPopUp } from '@/common/Toast';
 import { TOAST_SUCCESS } from '@/constants/Toast';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 export const useCreateDetail = () => {
   const queryClient = useQueryClient();
