@@ -6,6 +6,7 @@ import { userState } from '@/store/userState';
 import { kakaoSignUp } from '@/api/Auth';
 import { toast } from 'react-toastify';
 import { TOAST_SUCCESS } from '@/constants/Toast';
+import { ToastPopUp } from '@/common/Toast';
 
 const useSignUpMutation = () => {
   const navigate = useNavigate();
@@ -19,7 +20,7 @@ const useSignUpMutation = () => {
         email,
         userId,
       }));
-      toast.success(TOAST_SUCCESS.SIGNIN, { position: 'bottom-center' });
+      ToastPopUp({ type: 'success', message: TOAST_SUCCESS.SIGNIN });
       navigate('/');
     },
     onError: (error) => {},
