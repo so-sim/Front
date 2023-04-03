@@ -1,3 +1,5 @@
+import { ToastPopUp } from './../../common/Toast/index';
+import { TOAST_SUCCESS } from './../../constants/Toast';
 import { useNavigate } from 'react-router-dom';
 import { kakaoSignIn } from './../../api/Auth/index';
 import { useQuery } from '@tanstack/react-query';
@@ -5,6 +7,7 @@ import { useRecoilState } from 'recoil';
 import { userState } from '@/store/userState';
 import { setAccesToken } from '@/utils/acceessToken';
 import { AxiosError } from 'axios';
+import { toast } from 'react-toastify';
 
 export const useSignInQuery = (code: string | null) => {
   const navigate = useNavigate();
@@ -20,6 +23,7 @@ export const useSignInQuery = (code: string | null) => {
         email,
         userId,
       }));
+      ToastPopUp({ type: 'success', message: TOAST_SUCCESS.SIGNIN });
       navigate('/');
     },
     onError: (error) => {
