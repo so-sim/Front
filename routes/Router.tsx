@@ -19,7 +19,6 @@ const Router = () => {
         <Route path="/withdrawal" element={<ServiceWithdrawal />} />
         <Route path="/group/:groupId/*" element={<GroupLayout />} />
         <Route path="/invitation" element={<Invitation />} />
-        <Route path="/test" element={<Loading />} />
       </Routes>
     </BrowserRouter>
   );
