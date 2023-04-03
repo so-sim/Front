@@ -1,6 +1,11 @@
 import { createEvent } from '@/api/Event';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 export const useCreateDetail = () => {
-  return useMutation(createEvent);
+  const queryClient = useQueryClient();
+  return useMutation(createEvent, {
+    onSuccess() {
+      queryClient.invalidateQueries(['detailList']);
+    },
+  });
 };
