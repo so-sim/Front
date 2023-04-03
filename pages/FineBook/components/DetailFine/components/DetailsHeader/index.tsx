@@ -4,10 +4,10 @@ import * as Style from './styles';
 
 export const DetailsHeader = () => {
   const navigate = useNavigate();
-  const { groupID } = useParams();
+  const { groupId } = useParams();
 
   const closeDetails = () => {
-    navigate(`/group/${groupID}/book`);
+    navigate(`/group/${groupId}/book`);
   };
 
   return (

@@ -21,9 +21,9 @@ interface CalnedrProps {
 const Calendar: FC<CalnedrProps> = ({ cellType }) => {
   const today = dayjs();
   const [dateObj, setDateObj] = useRecoilState(dateState);
-  const { bastDate, week, selectedDate } = dateObj;
+  const { baseDate, week, selectedDate } = dateObj;
   const [showCreateDetailModal, setShowCreateDetailModal] = useState(false);
-  const [calendarDate, setCalendarDate] = useState(bastDate);
+  const [calendarDate, setCalendarDate] = useState(baseDate);
 
   const monthList = createCalendar(dayjs(calendarDate));
   const navigate = useNavigate();
@@ -51,7 +51,7 @@ const Calendar: FC<CalnedrProps> = ({ cellType }) => {
   };
 
   const isSelectedWeek = (index: number) => {
-    return getMonth(bastDate) === getMonth(calendarDate) && index + 1 === week;
+    return getMonth(baseDate) === getMonth(calendarDate) && index + 1 === week;
   };
 
   const isSelectedDate = (date: Dayjs) => {
@@ -62,7 +62,7 @@ const Calendar: FC<CalnedrProps> = ({ cellType }) => {
   const goDetail = (date: Dayjs) => {
     setDateObj((prev) => ({
       ...prev,
-      bastDate: date,
+      baseDate: date,
       selectedDate: date,
       week: null,
     }));
@@ -70,8 +70,8 @@ const Calendar: FC<CalnedrProps> = ({ cellType }) => {
   };
 
   useEffect(() => {
-    setCalendarDate(bastDate);
-  }, [bastDate, week, selectedDate]);
+    setCalendarDate(baseDate);
+  }, [baseDate, week, selectedDate]);
 
   return (
     <>

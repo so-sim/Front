@@ -14,7 +14,7 @@ export const getOneOfEvent = async (eventId?: number): Promise<ServerResponse<Om
 };
 
 export const getEventList = async (query: string, groupId: GroupId): Promise<ServerResponse<EventInfoList>> => {
-  const { data } = await api.get(`/api/event/penalty/list/${groupId.groupId}?${query}&page=0`);
+  const { data } = await api.get(`/api/event/penalty/list/${groupId.groupId}?${query}`);
   return data;
 };
 
