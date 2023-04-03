@@ -1,3 +1,4 @@
+import { NavLink } from 'react-router-dom';
 import styled from '@emotion/styled';
 
 export const Layout = styled.div`
@@ -8,6 +9,7 @@ export const Layout = styled.div`
   border-right: 2px solid ${({ theme }) => theme.colors.neutral_200_b};
   padding: 24px;
   gap: 12px;
+  overflow: auto;
 `;
 
 export const EachGroup = styled.button`
@@ -25,6 +27,10 @@ export const EachGroup = styled.button`
 interface CoverProps {
   isSelected: boolean;
 }
+export const Groups = styled(NavLink)`
+  position: relative;
+`;
+
 export const Cover = styled(EachGroup)<CoverProps>`
   position: absolute;
   background-color: ${(props) => (props.isSelected ? 'none' : props.theme.colors.primary_900)};
@@ -33,4 +39,6 @@ export const Cover = styled(EachGroup)<CoverProps>`
 
 export const CreateButton = styled(EachGroup)`
   background-color: ${({ theme }) => theme.colors.neutral_400_b};
+  min-width: 52px;
+  min-height: 52px;
 `;
