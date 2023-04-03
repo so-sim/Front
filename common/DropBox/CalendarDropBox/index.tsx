@@ -1,24 +1,29 @@
-import React, { Dispatch, FC, SetStateAction, useState } from 'react';
+import React, { Dispatch, FC, SetStateAction, useEffect, useState } from 'react';
 import { ARROW } from '@/assets/icons/Arrow';
 import * as Style from '../styles';
 import { Calendar } from 'react-calendar';
 import 'react-calendar/dist/Calendar.css'; // css import
+import dayjs from 'dayjs';
 
 export type DropBoxColor = 'white' | 'gray' | 'disabled';
 
-interface DropBoxProps<T = string> {
-  type: T;
-  dropDownList: { title: T }[];
+interface CalendarDropBoxProps {
+  type: string;
   boxWidth?: string;
   width?: number;
   color?: DropBoxColor;
-  setType?: Dispatch<SetStateAction<T>>;
+  setType: Dispatch<SetStateAction<string>>;
   direction?: 'left' | 'right';
 }
 
-export const CalendarDropBox = <T,>({ setType, type, dropDownList, width = 152, boxWidth = '148px', color = 'gray', direction }: DropBoxProps<T>) => {
-  const [openDrop, setOpenDrop] = useState(true);
-  const [value, onChange] = useState(new Date());
+export const CalendarDropBox = <T,>({ setType, type, boxWidth = '138px', color = 'gray' }: CalendarDropBoxProps) => {
+  const [openDrop, setOpenDrop] = useState(false);
+  const [value, onChange] = useState<any>(new Date());
+
+  useEffect(() => {
+    setType(dayjs(value).format('YYYY.MM.DD'));
+  }, [value]);
+
   const isDisabled = color === 'disabled';
 
   return (
@@ -36,7 +41,11 @@ export const CalendarDropBox = <T,>({ setType, type, dropDownList, width = 152, 
         </Style.ArrowIcon>
       )}
 
-      {openDrop && <div style={{ position: 'absolute', top: '34px', left: '-2px' }}>{/* <Calendar value={value} onChange /> */}</div>}
+      {openDrop && (
+        <div style={{ position: 'absolute', top: '34px', left: '-2px' }}>
+          <Calendar value={value} onChange={onChange} />
+        </div>
+      )}
     </Style.DropDownBox>
   );
 };
