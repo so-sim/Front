@@ -13,7 +13,7 @@ import { useRecoilValue } from 'recoil';
 import { dateState } from '@/store/dateState';
 import dayjs from 'dayjs';
 import { useParams } from 'react-router-dom';
-import { DateFilterProperty } from '@/pages/FineBook/utils/dateFilterToQuery';
+import { DateFilterProperty } from '@/pages/FineBook/utils/dateFilter';
 
 export type FilterMode = 'month' | 'week' | 'day';
 
@@ -44,42 +44,38 @@ const DetailFine = () => {
   const [dateFilter, setDateFilter] = useState<DateFilterProperty>({});
   const [mode, setMode] = useState<FilterMode>('day');
 
-  const { selectedDate, week: selectedWeek } = useRecoilValue(dateState);
-  const { data } = useGetDetailList(dateFilter, selectedDate, { groupId: Number(param.groupId) });
+  const calendarDate = useRecoilValue(dateState);
+  const { data } = useGetDetailList(dateFilter, calendarDate.baseDate, { groupId: Number(param.groupId) });
 
   useEffect(() => {
-    const [year, month, day] = dayjs(selectedDate)
+    if (calendarDate.selectedDate !== null) setMode('day');
+    if (calendarDate.week !== null) setMode('week');
+    if (calendarDate.selectedDate === null && calendarDate.week === null) setMode('month');
+
+    const [year, month, day] = dayjs(calendarDate.baseDate)
       .format('YYYY.MM.DD')
       .split('.')
       .map((property) => Number(property));
 
     if (mode === 'week') {
       setDateFilter((prev) => {
-        if (prev.day) {
-          const { day, ...rest } = prev;
-          return { ...rest, year, month, week: selectedWeek, page: 0 };
-        }
-        return { ...prev, year, month, week: selectedWeek, page: 0 };
+        const { day, ...rest } = prev;
+        return { ...rest, year, month, week: calendarDate.week, page: 0 };
       });
     }
-
     if (mode === 'day') {
       setDateFilter((prev) => {
-        if (prev.week) {
-          const { week, ...rest } = prev;
-          return { ...rest, year, month, day, page: 0 };
-        }
-        return { ...prev, year, month, day, page: 0 };
+        const { week, ...rest } = prev;
+        return { ...rest, year, month, day, page: 0 };
       });
     }
-
     if (mode === 'month') {
       setDateFilter((prev) => {
         const { week, day, ...rest } = prev;
-        return { ...rest, page: 0, month };
+        return { ...rest, year, month, page: 0 };
       });
     }
-  }, [selectedDate]);
+  }, [calendarDate.selectedDate, calendarDate.baseDate, calendarDate.week, mode]);
 
   return (
     <>
@@ -90,7 +86,7 @@ const DetailFine = () => {
           <TableHead mode={mode} setMode={setMode} dateFilter={dateFilter} setDateFilter={setDateFilter} />
           <DetailList details={data?.content.list} page={page} setSelect={setSelect} setOpenUserDetails={setOpenUserDetails} />
         </Style.DetailContent>
-        <Pagination count={data?.content.total} page={page} setPage={setPage} />
+        {data?.content.total && data?.content.total > 16 && <Pagination count={data?.content.total} page={page} setPage={setPage} />}
         <UserDetails open={openUserDetails} setOpen={setOpenUserDetails} select={select} />
       </Style.DetailFineFrame>
       {openAddModal && <FineBookModal setOpen={setOpenAddModal} />}
