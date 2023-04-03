@@ -69,7 +69,7 @@ export const DateController: FC<DateControllerProps> = ({ mode, setMode, setOpen
           </Style.ArrowBlock>
         </Style.Block>
         <Style.Block>
-          <Style.TodayButton onClick={() => setSelectedDate((prev) => ({ ...prev, baseDate: dayjs(), selectedDate: dayjs() }))}>오늘</Style.TodayButton>
+          <Style.TodayButton onClick={() => setSelectedDate((prev) => ({ ...prev, baseDate: dayjs(), selectedDate: dayjs(), week: null }))}>오늘</Style.TodayButton>
           <Style.FilterWrapper>
             {filterButtonList.map((btn) => {
               return (
