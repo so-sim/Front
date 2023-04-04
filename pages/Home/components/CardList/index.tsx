@@ -39,7 +39,7 @@ export const CardList = () => {
         <AddCard onClick={handleCreateGroupModal} />
         {groups?.pages?.map((page, index) => (
           <React.Fragment key={index}>
-            {page.content.groupList.map((group) => (
+            {page?.content?.groupList.map((group) => (
               <GroupCard {...group} key={group.groupId} />
             ))}
           </React.Fragment>

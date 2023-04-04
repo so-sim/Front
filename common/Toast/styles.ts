@@ -6,7 +6,7 @@ export const Container = styled(ToastContainer)`
     font-family: 'SUIT';
     font-style: normal;
     font-weight: 600;
-    font-size: 18px;
+    font-size: 16px;
     line-height: 22px;
     display: flex;
     flex-direction: row;

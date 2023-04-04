@@ -3,7 +3,7 @@ import Button from '@/common/Button';
 import Modal from '@/common/Modal';
 import * as Style from './styels';
 
-interface ModalButton {
+export interface ModalButton {
   text: string;
   onClick: () => void;
 }
