@@ -68,8 +68,8 @@ const GroupSideBar = () => {
           )}
         </Style.TapContainer>
       </Style.Layout>
-      {groupData?.content.isAdmin && showGroupSettingModal && <AdminModal modalHandler={handleGroupSettingModal} />}
-      {!groupData?.content.isAdmin && showGroupSettingModal && <UserModal modalHandler={handleGroupSettingModal} />}
+      {!groupData?.content.isAdmin && showGroupSettingModal && <AdminModal modalHandler={handleGroupSettingModal} />}
+      {groupData?.content.isAdmin && showGroupSettingModal && <UserModal modalHandler={handleGroupSettingModal} />}
     </>
   );
 };

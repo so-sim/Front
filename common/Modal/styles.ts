@@ -17,6 +17,7 @@ export const Overlay = styled.div`
 export const ModalFrame = styled.div<ModalProps>`
   width: ${(props) => props.width};
   height: ${(props) => props.height};
+  background-color: ${({ theme }) => theme.colors.white};
   border-radius: ${(props) => props.borderRadius};
   display: flex;
   flex-direction: column;
@@ -26,9 +27,11 @@ export const ModalFrame = styled.div<ModalProps>`
   top: 0;
   bottom: 0;
   margin: auto;
-  z-index: 20;
+  z-index: 10;
   background-color: white;
   padding: 24px 32px;
+
+  box-shadow: 2px 0px 25px 7px rgba(156, 156, 156, 0.15);
 `;
 
 export const ModalHeader = styled.div<{ align: 'center' | 'start' }>`
