@@ -33,7 +33,7 @@ const Calendar: FC<CalnedrProps> = ({ cellType }) => {
 
   const { addMonth, subMonth, dateToFormmating, getMonth, getDateArray, getDate } = handleDate;
 
-  const [year, month, day] = getDateArray(baseDate);
+  const [year, month, day] = getDateArray(calendarDate);
 
   const { data: status } = useGetMonthStatus(groupId, year, month);
 

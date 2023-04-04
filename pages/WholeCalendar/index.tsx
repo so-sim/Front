@@ -1,6 +1,5 @@
 import { useGroupDetail } from '@/queries/Group';
 import { firstVisitState } from '@/store/\bfirstVisitState';
-import { useParams } from 'react-router-dom';
 import { dateState } from '@/store/dateState';
 import dayjs from 'dayjs';
 import { useEffect, useState } from 'react';

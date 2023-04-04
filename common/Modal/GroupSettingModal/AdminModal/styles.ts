@@ -2,10 +2,25 @@ import styled from '@emotion/styled';
 
 export const Title = styled.div``;
 
+export const Layout = styled.div`
+  display: flex;
+  width: 100%;
+`;
+
+export const Flex = styled.div`
+  display: flex;
+`;
+
 export const SubTitle = styled.div`
   ${({ theme }) => theme.font.subhead_03};
   margin: 4px 20px 0 4px;
   white-space: nowrap;
+`;
+
+export const Container = styled.div`
+  width: 100%;
+  border-left: 2px solid ${({ theme }) => theme.colors.neutral_400_b};
+  padding-left: 16px;
 `;
 
 export const ButtonFrame = styled.div`
