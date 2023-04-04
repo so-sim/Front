@@ -22,9 +22,9 @@ export const getParticipantList = async (groupId: GroupId): Promise<ServerRespon
   return data;
 };
 
-export const updateGroup = async (updateGroupInfo: GroupInfo & GroupId): Promise<ServerResponse<GroupId>> => {
+export const updateGroup = async (updateGroupInfo: Omit<GroupInfo, 'nickname'> & GroupId): Promise<ServerResponse<GroupId>> => {
   const { groupId, ...groupInfo } = updateGroupInfo;
-  const { data } = await api.put(`/api/group/${groupId}`, groupInfo);
+  const { data } = await api.patch(`/api/group/${groupId}`, groupInfo);
   return data;
 };
 
@@ -52,7 +52,7 @@ export const withdrawalGroup = async (groupId: GroupId): Promise<ServerResponse>
 
 export const changeNickname = async (info: GroupNickname & GroupId): Promise<ServerResponse> => {
   const { nickname, groupId } = info;
-  const { data } = await api.patch(`/api/participant/${groupId}`, { nickname });
+  const { data } = await api.patch(`/api/group/${groupId}/participant`, { nickname });
   return data;
 };
 
