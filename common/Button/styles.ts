@@ -9,13 +9,15 @@ export const Button = styled.button<ButtonProps>`
   display: flex;
   justify-content: center;
   align-items: center;
-  border: ${(props) => (props.color === 'white' ? `1px solid ${props.theme.colors.secondary_800}` : 'none')};
+  border: ${(props) =>
+    props.color === 'white' ? `1px solid ${props.theme.colors.secondary_800}` : props.color === 'white-disabled' ? `1px solid ${props.theme.colors.neutral_400_b}` : 'none'};
   background-color: ${({ theme, color }) => {
     const colors = {
       primary: theme.colors.primary_500,
       disabled: theme.colors.secondary_200,
       black: theme.colors.secondary_800,
       white: theme.colors.secondary_100,
+      ['white-disabled']: theme.colors.secondary_100,
     };
     return colors[color ?? 'primary'];
   }};
@@ -25,6 +27,7 @@ export const Button = styled.button<ButtonProps>`
       disabled: theme.colors.secondary_700,
       black: theme.colors.secondary_100,
       white: theme.colors.secondary_700,
+      ['white-disabled']: theme.colors.secondary_600,
     };
     return colors[color ?? 'primary'];
   }};
@@ -35,6 +38,7 @@ export const Button = styled.button<ButtonProps>`
         disabled: theme.colors.secondary_200,
         black: theme.colors.secondary_900,
         white: theme.colors.neutral_200_b,
+        ['white-disabled']: theme.colors.secondary_100,
       };
       return colors[color ?? 'primary'];
     }};
