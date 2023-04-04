@@ -13,32 +13,34 @@ interface DateCellWitTagProps {
 }
 
 const DateCellWithTag: FC<DateCellWitTagProps> = ({ date, isCurrentMonth, isToday, isSelectedDate, status }) => {
+  const currentMonth = isCurrentMonth(date);
+
   return (
     <>
       <Style.DateCell key={date.day()}>
-        <Style.Date isToday={isToday(date)} isSelectedDate={isSelectedDate(date)} isCurrentMonth={isCurrentMonth(date)}>
+        <Style.Date isToday={isToday(date)} isSelectedDate={isSelectedDate(date)} isCurrentMonth={currentMonth}>
           {date.date()}
         </Style.Date>
-        {status?.paymentTypeCountMap.non && (
+        {status?.paymentTypeCountMap.non && currentMonth ? (
           <Style.Tag color="red">
             <div>{MARK.RED}</div>
             <span>미납자 있음</span>
             <span>({status.paymentTypeCountMap.non})</span>
           </Style.Tag>
-        )}
-        {status?.paymentTypeCountMap.full && (
+        ) : null}
+        {status?.paymentTypeCountMap.con && currentMonth ? (
           <Style.Tag color="orange">
             <div>{MARK.YELLOW}</div>
             <span>관리자 승인 중</span>
             <span>({status.paymentTypeCountMap.full})</span>
           </Style.Tag>
-        )}
-        {status?.paymentTypeCountMap.con && (
+        ) : null}
+        {status?.paymentTypeCountMap.full && currentMonth ? (
           <Style.Tag color="blue">
             <div>{MARK.BLUE}</div>
             <span>모두 완납</span>
           </Style.Tag>
-        )}
+        ) : null}
       </Style.DateCell>
     </>
   );
