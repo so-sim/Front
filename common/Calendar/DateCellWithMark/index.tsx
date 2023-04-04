@@ -15,7 +15,7 @@ interface DateCellWithMarkProps {
 
 const DateCellWithMark: FC<DateCellWithMarkProps> = ({ date, isCurrentMonth, isToday, isSelectedDate, isSelectedWeek, status }) => {
   const day = date.day();
-
+  const currentMonth = isCurrentMonth(date);
   const isFirst = day === 0;
   const isLast = day === 6;
 
@@ -26,9 +26,9 @@ const DateCellWithMark: FC<DateCellWithMarkProps> = ({ date, isCurrentMonth, isT
         {date.date()}
       </Style.Date>
       <Style.Mark>
-        {status?.paymentTypeCountMap.con && <span>{MARK.BLUE}</span>}
-        {status?.paymentTypeCountMap.full && <span>{MARK.YELLOW}</span>}
-        {status?.paymentTypeCountMap.non && <span>{MARK.RED}</span>}
+        {status?.paymentTypeCountMap.full && currentMonth ? <span>{MARK.BLUE}</span> : null}
+        {status?.paymentTypeCountMap.con && currentMonth ? <span>{MARK.YELLOW}</span> : null}
+        {status?.paymentTypeCountMap.non && currentMonth ? <span>{MARK.RED}</span> : null}
       </Style.Mark>
     </Style.DateCell>
   );
