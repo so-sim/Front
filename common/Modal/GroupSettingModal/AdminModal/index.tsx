@@ -64,9 +64,9 @@ export const AdminModal: FC<ModalHandlerProps> = ({ modalHandler }) => {
         <Style.Title>모임 설정</Style.Title>
       </Modal.Header>
       <Modal.Body>
-        <div style={{ display: 'flex', width: '100%' }}>
+        <Style.Layout>
           <Style.SubTitle>사용자 설정</Style.SubTitle>
-          <div style={{ width: '100%', borderLeft: `2px solid ${theme.colors.neutral_400_b}`, paddingLeft: '16px' }}>
+          <Style.Container>
             <Label title="모임 이름" flexDirection="column">
               <Input value={title} isValid={isValid(title)} onChange={setTitle} maxLength={15} />
             </Label>
@@ -85,11 +85,11 @@ export const AdminModal: FC<ModalHandlerProps> = ({ modalHandler }) => {
                 <Style.QuitButton onClick={withdrwalGroup}>탈퇴</Style.QuitButton>
               </Style.WithDrwal>
             </Label>
-            <div style={{ display: 'flex' }}>
+            <Style.Flex>
               <Style.DeleteButton>모임 삭제</Style.DeleteButton>
-            </div>
-          </div>
-        </div>
+            </Style.Flex>
+          </Style.Container>
+        </Style.Layout>
       </Modal.Body>
       <Modal.Footer>
         <Style.ButtonFrame>
