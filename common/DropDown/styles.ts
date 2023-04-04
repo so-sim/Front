@@ -7,7 +7,7 @@ export const DorpDownContainer = styled.div<Pick<DropDownProps, 'top' | 'directi
   border-bottom: none;
   border-radius: 4px;
   top: ${(props) => props.top};
-  z-index: 50;
+  z-index: 5;
   ${(props) => (props.direction === 'right' ? 'left: -2px' : 'right: -2px')};
 `;
 
