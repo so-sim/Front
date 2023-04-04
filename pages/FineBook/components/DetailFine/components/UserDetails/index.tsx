@@ -21,7 +21,7 @@ interface UserDetailsProps {
 export const UserDetails = ({ open, setOpen, select }: UserDetailsProps) => {
   if (!open) return null;
   const { eventId, groundsDate, paymentType, userName, payment, grounds } = select;
-  console.log(paymentType);
+
   const [openUpdateModal, setOpenUpdateModal] = useState(false);
   const [openUpdateStatusModal, setOpenUpdateStatusModal] = useState(false);
   const [openDeleteDetailModal, setOpenDeleteDetailModal] = useState(false);
@@ -33,8 +33,6 @@ export const UserDetails = ({ open, setOpen, select }: UserDetailsProps) => {
   const { mutate: deleteDetail } = useDeleteDetail();
 
   const updateStatus = () => {
-    console.log(getStatusCode(newStatus), paymentType);
-
     if (getStatusCode(newStatus) !== paymentType) {
       update(
         { paymentType: getStatusCode(newStatus), eventId },
@@ -56,12 +54,12 @@ export const UserDetails = ({ open, setOpen, select }: UserDetailsProps) => {
     });
   };
 
-  const handleDeleteDetailModal = () => {
-    setOpenDeleteDetailModal((prev) => !prev);
+  const handleUpdateModal = () => {
+    setOpenUpdateModal((prev) => !prev);
   };
 
-  const handleUpdateStatusModal = () => {
-    setOpenUpdateStatusModal((prev) => !prev);
+  const handleDeleteDetailModal = () => {
+    setOpenDeleteDetailModal((prev) => !prev);
   };
 
   const cancelUpdateStatus = () => {
@@ -125,14 +123,14 @@ export const UserDetails = ({ open, setOpen, select }: UserDetailsProps) => {
           <Button onClick={handleDeleteDetailModal} color="white">
             삭제
           </Button>
-          <Button onClick={handleUpdateStatusModal} color="black">
+          <Button onClick={handleUpdateModal} color="black">
             수정
           </Button>
         </Style.Footer>
       </Style.UserDetailsFrame>
       {openUpdateStatusModal && (
         <TwoButtonModal
-          onClick={handleUpdateStatusModal}
+          onClick={cancelUpdateStatus}
           title="납부여부 변경"
           height="215px"
           description="납부여부를 변경하시겠습니까?"
@@ -142,7 +140,7 @@ export const UserDetails = ({ open, setOpen, select }: UserDetailsProps) => {
       )}
       {openDeleteDetailModal && (
         <TwoButtonModal
-          onClick={handleDeleteDetailModal}
+          onClick={cancelDeleteDetail}
           title="내역 삭제"
           height="240px"
           description={`벌금 내역을 삭제하시겠습니까? \n 삭제된 내역은 복구가 불가능합니다.`}

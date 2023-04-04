@@ -1,6 +1,6 @@
 export const REDIRECT_URI = {
-  SIGNIN: 'http://localhost:3090/auth/signin/kakao',
-  SIGNUP: 'http://localhost:3090/auth/signup/kakao',
+  SIGNIN: `${process.env.REACT_APP_SERVICE_URL}/auth/signin/kakao`,
+  SIGNUP: `${process.env.REACT_APP_SERVICE_URL}/auth/signup/kakao`,
 };
 
 export const KAKAO_URL = {

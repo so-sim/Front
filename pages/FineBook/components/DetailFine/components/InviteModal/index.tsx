@@ -11,7 +11,7 @@ export const InviteModal: FC<Partial<ModalProps>> = ({ onClick }) => {
   const { groupId } = useParams();
 
   return (
-    <Modal.Frame width="448px" height="264px">
+    <Modal.Frame width="448px" height="264px" onClick={onClick}>
       <Modal.Header onClick={onClick}>
         <Style.Title>초대하기</Style.Title>
       </Modal.Header>

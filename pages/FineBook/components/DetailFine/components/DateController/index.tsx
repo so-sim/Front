@@ -9,6 +9,8 @@ import { DateFilterProperty, dateFilterTitle, updateCalendarByType } from '@/pag
 import { FilterMode } from '../..';
 import { customedWeek } from '@/utils/customedWeek';
 import DropDown from '@/common/DropDown';
+import { useGroupDetail } from '@/queries/Group';
+import { useParams } from 'react-router-dom';
 
 interface DateControllerProps {
   mode: FilterMode;
@@ -19,6 +21,9 @@ interface DateControllerProps {
 }
 
 export const DateController: FC<DateControllerProps> = ({ mode, setMode, setOpenAddModal, setDateFilter }) => {
+  const { groupId } = useParams();
+  const { data: groupData } = useGroupDetail({ groupId: Number(groupId) });
+
   const [{ baseDate, week }, setSelectedDate] = useRecoilState(dateState);
 
   const [openWeeklyFilterDrop, setOpenWeeklyFilterDrop] = useState(false);
@@ -67,9 +72,9 @@ export const DateController: FC<DateControllerProps> = ({ mode, setMode, setOpen
             <Style.ArrowWrapper onClick={decreaseCalendarByMode}>{ARROW.LEFT}</Style.ArrowWrapper>
             <Style.ArrowWrapper onClick={increaseCalendarByMode}>{ARROW.RIGHT}</Style.ArrowWrapper>
           </Style.ArrowBlock>
+          <Style.TodayButton onClick={() => setSelectedDate((prev) => ({ ...prev, baseDate: dayjs(), selectedDate: dayjs(), week: null }))}>오늘</Style.TodayButton>
         </Style.Block>
         <Style.Block>
-          <Style.TodayButton onClick={() => setSelectedDate((prev) => ({ ...prev, baseDate: dayjs(), selectedDate: dayjs(), week: null }))}>오늘</Style.TodayButton>
           <Style.FilterWrapper>
             {filterButtonList.map((btn) => {
               return (
@@ -92,11 +97,13 @@ export const DateController: FC<DateControllerProps> = ({ mode, setMode, setOpen
               );
             })}
           </Style.FilterWrapper>
+          {groupData?.content.isAdmin && (
+            <Button color="black" width="124px" height="40px" onClick={() => setOpenAddModal(true)}>
+              내역 추가하기
+            </Button>
+          )}
         </Style.Block>
       </Style.ControllerFrame>
-      <Button color="black" width="124px" height="40px" onClick={() => setOpenAddModal(true)}>
-        내역 추가하기
-      </Button>
     </Style.DateController>
   );
 };
