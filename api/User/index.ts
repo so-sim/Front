@@ -9,6 +9,6 @@ export const getUserInfo = async (userId: number): Promise<ServerResponse<UserIn
 };
 
 export const userWithDrawal = async (withdrawal: WithDrawl): Promise<ServerResponse> => {
-  const { data } = await api.put(`/api/user/${withdrawal.userId}`, withdrawal);
+  const { data } = await api.put(`/api/user/`, withdrawal);
   return data;
 };
