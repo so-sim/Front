@@ -32,7 +32,7 @@ const GroupList = () => {
       <Stlye.Layout>
         {groups?.pages.map((page, index) => (
           <React.Fragment key={index}>
-            {page.content.groupList.map((group) => (
+            {page.content?.groupList.map((group) => (
               <Stlye.Groups key={group.groupId} to={`/group/${group.groupId}/book`}>
                 <Stlye.Cover isSelected={isSelected(group.groupId)} />
                 <Stlye.EachGroup color={group.coverColor}>
