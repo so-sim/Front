@@ -81,7 +81,9 @@ const config: Configuration = {
       verbose: true,
       cleanOnceBeforeBuildPatterns: ['**/*', path.resolve(process.cwd(), 'build/**/*')],
     }),
-    new Dotenv(),
+    new Dotenv({
+      path: isDevelopment ? '.env' : '.env.production',
+    }),
   ],
   output: {
     path: path.join(__dirname, 'dist'),
@@ -89,7 +91,7 @@ const config: Configuration = {
     publicPath: '/dist/',
   },
   devServer: {
-    historyApiFallback: true, 
+    historyApiFallback: true,
     port: 3090,
     devMiddleware: { publicPath: '/dist/' },
     static: { directory: path.resolve(__dirname) },
