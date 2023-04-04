@@ -2,7 +2,6 @@ import { FC, useEffect, useState } from 'react';
 import { Input, Label } from '@/common';
 import Button from '@/common/Button';
 import Modal from '@/common/Modal';
-import theme from '@/styles/Theme';
 import { isValid } from '@/utils/validation';
 import { GroupColorList } from '../../GroupColorList';
 import { DropBox } from '../../../DropBox';
@@ -19,10 +18,11 @@ export const AdminModal: FC<ModalHandlerProps> = ({ modalHandler }) => {
   const [nickname, setNickname] = useState('');
   const [type, setType] = useState('');
   const [coverColor, setCoverColor] = useState<GroupColor>('#f89a65');
+  const [errorText, setErrorText] = useState('');
 
   const { groupId } = useParams();
 
-  const { mutate: updateGroupMutate } = useUpdateGroup();
+  const { mutate: updateGroupMutate, isError } = useUpdateGroup(setErrorText);
   const { mutate: withdrawalGroupMutate } = useWithdrawalGroup();
 
   const { data: groupData } = useGroupDetail({ groupId: Number(groupId) });
@@ -38,8 +38,6 @@ export const AdminModal: FC<ModalHandlerProps> = ({ modalHandler }) => {
     const id = Number(groupId);
     withdrawalGroupMutate({ groupId: id });
   };
-
-  console.log(groupData);
 
   const isValidForm = () => {
     if (!isValid(title)) return false;
@@ -71,7 +69,7 @@ export const AdminModal: FC<ModalHandlerProps> = ({ modalHandler }) => {
               <Input value={title} isValid={isValid(title)} onChange={setTitle} maxLength={15} />
             </Label>
             <Label title="내 이름" flexDirection="column">
-              <Input value={nickname} isValid={isValid(nickname)} onChange={setNickname} maxLength={15} />
+              <Input value={nickname} errorText={errorText} isValid={isValid(nickname) && !isError} onChange={setNickname} maxLength={15} />
             </Label>
             <Label title="모임 유형" flexDirection="column">
               <DropBox dropDownList={DROPDOWN_LIST} type={type} setType={setType} />
