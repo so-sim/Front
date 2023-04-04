@@ -1,6 +1,6 @@
 import { updateEventStatus } from '@/api/Event';
 import { ToastPopUp } from '@/common/Toast';
-import { TOAST_SUCCESS } from '@/constants/Toast';
+import { TOAST_ERROR, TOAST_SUCCESS } from '@/constants/Toast';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 export const useUpdateDetailStatus = () => {
@@ -10,6 +10,9 @@ export const useUpdateDetailStatus = () => {
       queryClient.invalidateQueries(['detailList']);
       queryClient.invalidateQueries(['monthStatus']);
       ToastPopUp({ type: 'success', message: TOAST_SUCCESS.UPDATE_FINE });
+    },
+    onError: () => {
+      ToastPopUp({ type: 'error', message: TOAST_ERROR.NETWORK });
     },
   });
 };
