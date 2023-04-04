@@ -13,7 +13,7 @@ export const SYSTEM = {
   ARTICLE: <Article />,
   CLOSE: <Close />,
   HOME: <Home />,
-  LINK: <Link fill="#fffff" />,
+  LINK: <Link fill="#ffffff" />,
   LINK_BLACK: <Link fill="#3C3C3C" />,
   LOGOUT: <Logout />,
   NOTICE: <Notice />,

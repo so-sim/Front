@@ -35,7 +35,7 @@ const WithdrawalConfirm: FC<WithdrawalConfirmProps> = ({ setPageState }) => {
         ))}
       </Style.UlContainer>
       <Style.Label>
-        <input type="checkbox" checked={check} onClick={handleCheck} />
+        <input type="checkbox" checked={check} onChange={handleCheck} />
         회원 탈퇴에 관한 모든 내용을 확인했습니다.
         <span>*</span>
       </Style.Label>
