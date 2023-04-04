@@ -36,7 +36,7 @@ jobs:
 
       - name: Deploy to S3
         run: |
-          aws s3 sync ./dist s3://${{ secrets.DEV_AWS_S3_BUCKET }} --delete
+          aws s3 sync ./dist s3://${{ secrets.DEV_AWS_S3_BUCKET }}/dist --delete
           aws s3 cp index.html s3://${{ secrets.DEV_AWS_S3_BUCKET }}/
 
       - name: Invalidate CloudFront Cache
