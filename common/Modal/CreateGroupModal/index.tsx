@@ -11,18 +11,12 @@ import { useCreateGroup } from '@/queries/Group';
 import { GroupColor } from '@/types/group';
 import { userState } from '@/store/userState';
 import { useRecoilValue } from 'recoil';
-import { useNavigate } from 'react-router-dom';
 
 export interface ModalHandlerProps {
   modalHandler: () => void;
 }
 
 export const CreateGroupModal: FC<ModalHandlerProps> = ({ modalHandler }) => {
-  const user = useRecoilValue(userState);
-  console.log(user);
-
-  const navigate = useNavigate();
-
   const [title, setTitle] = useState('');
   const [nickname, setNickname] = useState('');
   const [type, setType] = useState('');
@@ -37,17 +31,10 @@ export const CreateGroupModal: FC<ModalHandlerProps> = ({ modalHandler }) => {
     if (nickname !== '' && isInit.myName === true) setIsInit((prev) => ({ ...prev, myName: false }));
   }, [title, nickname]);
 
-  const { mutate, data } = useCreateGroup();
+  const { mutate } = useCreateGroup(modalHandler);
 
   const createGroup = () => {
-    mutate(
-      { title, type, coverColor, nickname },
-      {
-        onSuccess(data) {
-          navigate(`/group/${data.content.groupId}/book?isFirstVisit=true`);
-        },
-      },
-    );
+    mutate({ title, type, coverColor, nickname });
   };
 
   const isValidForm = (): boolean => {

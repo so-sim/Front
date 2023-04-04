@@ -34,7 +34,6 @@ export const DetailList: FC<DetailListProps> = ({ details, page, setSelect, setO
             <Style.Element hasEllipsis>{grounds}</Style.Element>
           </Style.TableRow>
         );
-        // }
       })}
     </>
   );
