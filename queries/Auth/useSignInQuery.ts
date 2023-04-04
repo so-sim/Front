@@ -7,7 +7,6 @@ import { useRecoilState } from 'recoil';
 import { userState } from '@/store/userState';
 import { setAccesToken } from '@/utils/acceessToken';
 import { AxiosError } from 'axios';
-import { toast } from 'react-toastify';
 
 export const useSignInQuery = (code: string | null) => {
   const navigate = useNavigate();

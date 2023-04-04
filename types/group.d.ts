@@ -23,6 +23,7 @@ export interface GroupDetail {
   groupId: number;
   coverColor: GroupColor;
   groupType: string;
+  size: number;
 }
 
 export interface ParticipantList {

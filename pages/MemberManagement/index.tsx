@@ -1,6 +1,7 @@
 import { SYSTEM } from '@/assets/icons/System';
 import { USER } from '@/assets/icons/User';
-import { useParticipantList } from '@/queries/Group';
+import { useGroupDetail, useParticipantList } from '@/queries/Group';
+import { useGetMyNikname } from '@/queries/Group/useGetMyNickname';
 import { copyInvitationLink } from '@/utils/copyInvitationLink';
 import { useParams } from 'react-router-dom';
 import MemberListItem from './components/MemberListItem';
@@ -10,6 +11,8 @@ const MemberManagement = () => {
   const { groupId } = useParams();
 
   const { data: participantList } = useParticipantList({ groupId: Number(groupId) });
+  const { data: myNickname } = useGetMyNikname({ groupId: Number(groupId) });
+  const { data: groupData } = useGroupDetail({ groupId: Number(groupId) });
 
   return (
     <>
@@ -26,9 +29,12 @@ const MemberManagement = () => {
           <span>{participantList?.content.adminNickname}</span>
           <Style.Tage>총무</Style.Tage>
         </Style.AdminContainer>
-        {participantList?.content.nicknameList.map((nickname) => (
-          <MemberListItem nickname={nickname} key={nickname} />
-        ))}
+        {myNickname && !groupData?.content.isAdmin && <MemberListItem nickname={myNickname.content.nickname} />}
+        {participantList?.content.nicknameList.map((nickname) => {
+          if (nickname !== myNickname?.content.nickname) {
+            return <MemberListItem nickname={nickname} key={nickname} />;
+          }
+        })}
       </Style.Container>
     </>
   );
