@@ -9,6 +9,7 @@ export const useCreateDetail = () => {
   return useMutation(createEvent, {
     onSuccess: () => {
       queryClient.invalidateQueries(['detailList']);
+      queryClient.invalidateQueries(['monthStatus']);
       ToastPopUp({ type: 'success', message: TOAST_SUCCESS.CREATE_FINE });
     },
     onError: () => {

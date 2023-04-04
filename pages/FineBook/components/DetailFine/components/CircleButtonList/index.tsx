@@ -70,6 +70,7 @@ export const CircleButtonList = ({ status, statusList, eventId, setOpenListEvent
       {showUpdateStatusModal && (
         <TwoButtonModal
           onClick={handleUpdateStatusModal}
+          height="215px"
           title="납부여부 변경"
           description="납부여부를 변경하시겠습니까?"
           cancel={{ text: '취소', onClick: cancelUpdateStatus }}

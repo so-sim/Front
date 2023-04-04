@@ -16,8 +16,9 @@ export const UserModal: FC<ModalHandlerProps> = ({ modalHandler }) => {
   const [myName, setMyName] = useState('');
   const [showGroupWithdrawalModal, setShowGroupWithdrawalModal] = useState(false);
   const { groupId } = useParams();
+  const [errorText, setErrorText] = useState('');
 
-  const { mutate: updateNickname } = useChangeNickname();
+  const { mutate: updateNickname, isError } = useChangeNickname(setErrorText);
   const { mutate: withdrawalGroupMutate } = useWithdrawalGroup();
   const { data: groupData } = useGroupDetail({ groupId: Number(groupId) });
   const { data: myNickname } = useGetMyNikname({ groupId: Number(groupId) });
@@ -53,7 +54,7 @@ export const UserModal: FC<ModalHandlerProps> = ({ modalHandler }) => {
             <Style.SubTitle>사용자 설정</Style.SubTitle>
             <Style.InputContainer>
               <Label title="내 이름" flexDirection="column">
-                <Input value={myName} isValid={isValid(myName, 2, 20)} onChange={setMyName} maxLength={20} />
+                <Input value={myName} errorText={errorText} isValid={isValid(myName) && !isError} onChange={setMyName} maxLength={20} />
               </Label>
               <Label title="모임 탈퇴" flexDirection="column">
                 <Style.WithDrwal>

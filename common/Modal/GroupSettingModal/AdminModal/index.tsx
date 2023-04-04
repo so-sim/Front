@@ -23,10 +23,11 @@ export const AdminModal: FC<ModalHandlerProps> = ({ modalHandler }) => {
   const [coverColor, setCoverColor] = useState<GroupColor>('#f89a65');
   const [showGroupDeleteModal, setShowGroupDeleteModal] = useState(false);
   const [showGroupWithdrawalModal, setShowGroupWithdrawalModal] = useState(false);
+  const [errorText, setErrorText] = useState('');
 
   const { groupId } = useParams();
 
-  const { mutate: updateGroupMutate } = useUpdateGroup();
+  const { mutate: updateGroupMutate, isError } = useUpdateGroup(setErrorText);
   const { mutate: withdrawalGroupMutate } = useWithdrawalGroup();
   const { mutate: deleteGroup } = useDeleteGroup();
 
@@ -55,8 +56,6 @@ export const AdminModal: FC<ModalHandlerProps> = ({ modalHandler }) => {
     const id = Number(groupId);
     withdrawalGroupMutate({ groupId: id });
   };
-
-  console.log(groupData);
 
   const isValidForm = () => {
     if (!isValid(title)) return false;
