@@ -20,18 +20,20 @@ export const DropBox = <T,>({ setType, type, dropDownList, width = 152, boxWidth
   const isDisabled = color === 'disabled';
 
   return (
-    <Style.DropDownBox
-      boxWidth={boxWidth}
-      color={color}
-      onClick={() => {
-        if (isDisabled) return;
-        setOpenDrop((prev) => !prev);
-      }}
-    >
+    <Style.DropDownBox boxWidth={boxWidth} color={color}>
       <Style.Text boxWidth={boxWidth} isDisabled={isDisabled}>
         {(typeof type === 'string' && type) || '선택해주세요'}
       </Style.Text>
-      {!isDisabled && <Style.ArrowIcon>{ARROW.DOWN_LG}</Style.ArrowIcon>}
+      {!isDisabled && (
+        <Style.ArrowIcon
+          onClick={(e) => {
+            if (isDisabled) return;
+            setOpenDrop((prev) => !prev);
+          }}
+        >
+          {ARROW.DOWN_LG}
+        </Style.ArrowIcon>
+      )}
       {openDrop && <DropDown list={dropDownList} width={width} setState={setType} top="34px" onClose={() => setOpenDrop(false)} direction={direction} />}
     </Style.DropDownBox>
   );

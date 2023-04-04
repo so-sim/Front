@@ -1,4 +1,4 @@
-import React, { Dispatch, SetStateAction, useState } from 'react';
+import React, { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { SYSTEM } from '@/assets/icons/System';
 import { USER } from '@/assets/icons/User';
 import Button from '@/common/Button';
@@ -8,7 +8,9 @@ import * as Style from './styles';
 import { EventInfo, PaymentType } from '@/types/event';
 import { FineBookModal } from '@/common/Modal/FineBookModal';
 import { changeNumberToMoney } from '@/utils/changeNumberToMoney';
-import { getStatusText } from '@/utils/getStatusIcon';
+import { getStatusCode, getStatusText } from '@/utils/getStatusIcon';
+import { useDeleteDetail, useUpdateDetailStatus } from '@/queries/Detail';
+import { TwoButtonModal } from '@/common/Modal/TwoButtonModal';
 
 interface UserDetailsProps {
   open: boolean;
@@ -20,8 +22,59 @@ export const UserDetails = ({ open, setOpen, select }: UserDetailsProps) => {
   if (!open) return null;
   const { eventId, groundsDate, paymentType, userName, payment, grounds } = select;
   const [openUpdateModal, setOpenUpdateModal] = useState(false);
+  const [openUpdateStatusModal, setOpenUpdateStatusModal] = useState(false);
+  const [openDeleteDetailModal, setOpenDeleteDetailModal] = useState(false);
+
   const statusList: { title: PaymentType }[] = [{ title: '미납' }, { title: '완납' }, { title: '확인필요' }];
   const [newStatus, setNewStatus] = useState<PaymentType>('');
+
+  const { mutate: update } = useUpdateDetailStatus();
+  const { mutate: deleteDetail } = useDeleteDetail();
+
+  const updateStatus = (paymentType: PaymentType) => {
+    if (newStatus != paymentType) {
+      update(
+        { paymentType: getStatusCode(newStatus), eventId },
+        {
+          onSuccess() {
+            setOpenUpdateStatusModal(false);
+          },
+        },
+      );
+    }
+  };
+
+  const deleteDetailInfo = () => {
+    deleteDetail(eventId, {
+      onSuccess() {
+        setOpenDeleteDetailModal(false);
+        setOpen(false);
+      },
+    });
+  };
+
+  const handleDeleteDetailModal = () => {
+    setOpenDeleteDetailModal((prev) => !prev);
+  };
+
+  const handleUpdateStatusModal = () => {
+    setOpenUpdateStatusModal((prev) => !prev);
+  };
+
+  const cancelUpdateStatus = () => {
+    setNewStatus('');
+    setOpenUpdateStatusModal(false);
+  };
+
+  const cancelDeleteDetail = () => {
+    setOpenDeleteDetailModal(false);
+  };
+
+  useEffect(() => {
+    if (newStatus !== '') {
+      setOpenUpdateStatusModal(true);
+    }
+  }, [newStatus]);
 
   return (
     <>
@@ -66,14 +119,32 @@ export const UserDetails = ({ open, setOpen, select }: UserDetailsProps) => {
           </Label>
         </Style.UserDetailsContent>
         <Style.Footer>
-          <Button onClick={() => console.log('hi')} color="white">
+          <Button onClick={handleDeleteDetailModal} color="white">
             삭제
           </Button>
-          <Button onClick={() => setOpenUpdateModal(true)} color="black">
+          <Button onClick={handleUpdateStatusModal} color="black">
             수정
           </Button>
         </Style.Footer>
       </Style.UserDetailsFrame>
+      {openUpdateStatusModal && (
+        <TwoButtonModal
+          onClick={handleUpdateStatusModal}
+          title="납부여부 변경"
+          description="납부여부를 변경하시겠습니까?"
+          cancel={{ text: '취소', onClick: cancelUpdateStatus }}
+          confirm={{ text: '변경하기', onClick: () => updateStatus(newStatus) }}
+        />
+      )}
+      {openDeleteDetailModal && (
+        <TwoButtonModal
+          onClick={handleDeleteDetailModal}
+          title="내역 삭제"
+          description={`벌금 내역을 삭제하시겠습니까? \n 삭제된 내역은 복구가 불가능합니다.`}
+          cancel={{ text: '취소', onClick: cancelDeleteDetail }}
+          confirm={{ text: '삭제하기', onClick: deleteDetailInfo }}
+        />
+      )}
       {openUpdateModal && <FineBookModal eventId={eventId} select={select} setOpen={setOpenUpdateModal} />}
     </>
   );
