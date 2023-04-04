@@ -25,13 +25,14 @@ export const CircleButtonList = ({ status, statusList, eventId, setOpenListEvent
   };
 
   const handleUpdateStatusModal = () => {
+    setOpenListEventId(0);
     setShowUpdateStatusModal((prev) => !prev);
   };
 
   const cancelUpdateStatus = async () => {
     await setShowUpdateStatusModal(false);
-    setNewStatus('');
     setOpenListEventId(0);
+    setNewStatus('');
   };
 
   useEffect(() => {
