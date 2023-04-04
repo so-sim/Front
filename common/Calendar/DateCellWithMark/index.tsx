@@ -26,7 +26,7 @@ const DateCellWithMark: FC<DateCellWithMarkProps> = ({ date, isCurrentMonth, isT
         {date.date()}
       </Style.Date>
       <Style.Mark>
-        {status?.paymentTypeCountMap.full && currentMonth ? <span>{MARK.BLUE}</span> : null}
+        {status?.paymentTypeCountMap.full && currentMonth && !status.paymentTypeCountMap.con && !status.paymentTypeCountMap.non ? <span>{MARK.BLUE}</span> : null}
         {status?.paymentTypeCountMap.con && currentMonth ? <span>{MARK.YELLOW}</span> : null}
         {status?.paymentTypeCountMap.non && currentMonth ? <span>{MARK.RED}</span> : null}
       </Style.Mark>

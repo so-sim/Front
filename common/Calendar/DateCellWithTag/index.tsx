@@ -32,10 +32,10 @@ const DateCellWithTag: FC<DateCellWitTagProps> = ({ date, isCurrentMonth, isToda
           <Style.Tag color="orange">
             <div>{MARK.YELLOW}</div>
             <span>관리자 승인 중</span>
-            <span>({status.paymentTypeCountMap.full})</span>
+            <span>({status.paymentTypeCountMap.con})</span>
           </Style.Tag>
         ) : null}
-        {status?.paymentTypeCountMap.full && currentMonth ? (
+        {status?.paymentTypeCountMap.full && currentMonth && !status.paymentTypeCountMap.con && !status.paymentTypeCountMap.non ? (
           <Style.Tag color="blue">
             <div>{MARK.BLUE}</div>
             <span>모두 완납</span>
