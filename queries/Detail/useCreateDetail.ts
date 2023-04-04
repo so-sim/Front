@@ -1,3 +1,4 @@
+import { TOAST_ERROR } from './../../constants/Toast';
 import { createEvent } from '@/api/Event';
 import { ToastPopUp } from '@/common/Toast';
 import { TOAST_SUCCESS } from '@/constants/Toast';
@@ -9,6 +10,9 @@ export const useCreateDetail = () => {
     onSuccess: () => {
       queryClient.invalidateQueries(['detailList']);
       ToastPopUp({ type: 'success', message: TOAST_SUCCESS.CREATE_FINE });
+    },
+    onError: () => {
+      ToastPopUp({ type: 'error', message: TOAST_ERROR.NETWORK });
     },
   });
 };

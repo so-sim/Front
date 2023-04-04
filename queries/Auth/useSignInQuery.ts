@@ -1,5 +1,5 @@
 import { ToastPopUp } from './../../common/Toast/index';
-import { TOAST_SUCCESS } from './../../constants/Toast';
+import { TOAST_SUCCESS, TOAST_ERROR } from './../../constants/Toast';
 import { useNavigate } from 'react-router-dom';
 import { kakaoSignIn } from './../../api/Auth/index';
 import { useQuery } from '@tanstack/react-query';
