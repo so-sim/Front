@@ -7,10 +7,9 @@ import { DropBox } from '@/common/DropBox';
 import * as Style from './styles';
 import { SYSTEM } from '@/assets/icons/System';
 import { useParticipantList } from '@/queries/Group';
+import { useCreateDetail, useUpdateDetail } from '@/queries/Detail';
 import { useParams } from 'react-router-dom';
-import { useCreateDetail } from '@/queries/Detail/useCreateDetail';
 import { EventInfo, PaymentType } from '@/types/event';
-import { useUpdateDetail } from '@/queries/Detail/useUpdateDetail';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { userState } from '@/store/userState';
 import { CalendarDropBox } from '@/common/DropBox/CalendarDropBox';
@@ -26,16 +25,15 @@ interface ModalProps {
 
 export const FineBookModal = ({ setOpen, eventId, select }: ModalProps) => {
   const type = eventId ? 'update' : 'create';
-  // const { eventId, groundsDate, paymentType, userName, payment, grounds } = select;
+  const isCreate = type === 'create';
+  const isUpdate = select !== undefined;
 
   const [member, setMember] = useState('');
-  const [status, setStatus] = useState<PaymentType | ''>('');
+  const [status, setStatus] = useState<PaymentType | ''>('미납');
   const [reason, setReason] = useState('');
   const [fine, setFine] = useState(0);
   const [groundsDate, setGroundsDate] = useState('');
   const [{ selectedDate, baseDate }, setDateState] = useRecoilState(dateState);
-
-  useEffect(() => {}, [groundsDate]);
 
   const onChangeFine = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target;
@@ -54,12 +52,11 @@ export const FineBookModal = ({ setOpen, eventId, select }: ModalProps) => {
   const { mutate: create } = useCreateDetail();
   const { mutate: update } = useUpdateDetail();
 
-  const isCreate = type === 'create';
   const user = useRecoilValue(userState);
 
   const initDetail = () => {
     setMember('');
-    setStatus('');
+    setStatus('미납');
     setReason('');
     setFine(0);
     setGroundsDate('');
@@ -95,14 +92,17 @@ export const FineBookModal = ({ setOpen, eventId, select }: ModalProps) => {
     setOpen(false);
   };
 
+  const checkFormIsValid = (): boolean => {
+    if (!member || !status || !fine || !groundsDate) return false;
+
+    return true;
+  };
+
   const admin = { title: data?.content.adminNickname as string };
   const participantList = data?.content.nicknameList.map((participant) => ({ title: participant })) || [];
-
   const memberList = [admin, ...participantList];
 
   const statusList: { title: PaymentType }[] = [{ title: '미납' }, { title: '완납' }, { title: '확인필요' }];
-
-  const isUpdate = select !== undefined;
 
   return (
     <Modal.Frame width="448px" height={type === 'create' ? '466px' : '412px'} onClick={() => setOpen(false)}>
@@ -144,7 +144,7 @@ export const FineBookModal = ({ setOpen, eventId, select }: ModalProps) => {
         </Label>
         <Modal.Footer flexDirection="column">
           <Button
-            color={true ? 'black' : 'disabled'}
+            color={checkFormIsValid() ? 'black' : 'disabled'}
             width="100%"
             height="42px"
             onClick={() => {
@@ -155,7 +155,7 @@ export const FineBookModal = ({ setOpen, eventId, select }: ModalProps) => {
             {isCreate ? '추가하기' : '저장하기'}
           </Button>
           {isCreate && (
-            <Button color="white" width="100%" height="42px" leftIcon={SYSTEM.PLUS_GRAY} onClick={() => createDetail('continue')}>
+            <Button color={checkFormIsValid() ? 'white' : 'white-disabled'} width="100%" height="42px" leftIcon={SYSTEM.PLUS_GRAY} onClick={() => createDetail('continue')}>
               계속해서 추가하기
             </Button>
           )}

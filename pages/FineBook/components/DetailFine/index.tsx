@@ -32,7 +32,7 @@ const DetailFine = () => {
   const [openUserDetails, setOpenUserDetails] = useState(false);
   const [select, setSelect] = useState<EventInfo>({
     userId: 12,
-    eventId: Math.floor(Math.random() * 10000),
+    eventId: 0,
     groundsDate: '23.01.22',
     paymentType: 'non',
     userName: '윤하나둘셋',
@@ -84,7 +84,7 @@ const DetailFine = () => {
         <Style.DetailContent>
           <DateController mode={mode} setMode={setMode} setOpenAddModal={setOpenAddModal} dateFilter={dateFilter} setDateFilter={setDateFilter} />
           <TableHead mode={mode} setMode={setMode} dateFilter={dateFilter} setDateFilter={setDateFilter} />
-          <DetailList details={data?.content.list} page={page} setSelect={setSelect} setOpenUserDetails={setOpenUserDetails} />
+          <DetailList selectedEventId={select.eventId} details={data?.content.list} page={page} setSelect={setSelect} setOpenUserDetails={setOpenUserDetails} />
         </Style.DetailContent>
         {data?.content.total && data?.content.total > 16 && <Pagination count={data?.content.total} page={page} setPage={setPage} />}
         <UserDetails open={openUserDetails} setOpen={setOpenUserDetails} select={select} />

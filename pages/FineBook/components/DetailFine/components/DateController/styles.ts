@@ -58,13 +58,14 @@ export const FilterWrapper = styled.button`
 export const Block = styled.span`
   display: flex;
   gap: 12px;
-  align-items: center;
+  align-items: flex-end;
 `;
 
 export const ControllerFrame = styled.div`
   display: flex;
-  gap: 20px;
   align-items: center;
+  justify-content: space-between;
+  width: 100%;
 `;
 
 export const ArrowBlock = styled.span`
@@ -72,7 +73,7 @@ export const ArrowBlock = styled.span`
 `;
 
 export const Date = styled.span<{ mode: FilterMode }>`
-  width: ${({ mode }) => (mode === 'week' ? '254px' : mode === 'day' ? '112px' : '52px')};
+  width: ${({ mode }) => (mode === 'week' ? '272px' : mode === 'day' ? '118px' : '60px')};
   white-space: nowrap;
   ${({ theme }) => theme.font.headline}
 `;

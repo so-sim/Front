@@ -25,30 +25,37 @@ export const dateFilterTitle = (baseDate: Dayjs, mode: FilterMode, week: number 
   const changedbaseDateToMonth = Number(dayjs(baseDate).month() + 1);
   const changedbaseDateToDay = Number(dayjs(baseDate).date());
 
+  const month = prependZeroBelowTen(changedbaseDateToMonth);
+  const day = prependZeroBelowTen(changedbaseDateToDay);
+
   switch (mode) {
     case 'day':
-      return `${changedbaseDateToMonth}월 ${changedbaseDateToDay}일`;
+      return `${month}월 ${day}일`;
     case 'week':
       if (week === 1) {
         const baseDateOnFirstWeek = dayjs(baseDate).startOf('week');
-        const dateToMonthOnFirstWeek = Number(baseDateOnFirstWeek.month() + 1);
-        const dateToDayOnFirstWeek = Number(baseDateOnFirstWeek.date());
+        const dateToMonthOnFirstWeek = prependZeroBelowTen(baseDateOnFirstWeek.month() + 1);
+        const dateToDayOnFirstWeek = prependZeroBelowTen(baseDateOnFirstWeek.date());
 
         const lastDay = dayjs(baseDateOnFirstWeek).add(6, 'day');
-        const lastDayToMonth = dayjs(lastDay).month() + 1;
-        const lastDayToDay = dayjs(lastDay).date();
+        const lastDayToMonth = prependZeroBelowTen(dayjs(lastDay).month() + 1);
+        const lastDayToDay = prependZeroBelowTen(dayjs(lastDay).date());
 
         return `${dateToMonthOnFirstWeek}월 ${dateToDayOnFirstWeek}일 - ${lastDayToMonth}월 ${lastDayToDay}일`;
       }
 
       const lastDay = dayjs(baseDate).add(6, 'day');
 
-      const lastDayToMonth = dayjs(lastDay).month() + 1;
-      const lastDayToDay = dayjs(lastDay).date();
-      return `${changedbaseDateToMonth}월 ${changedbaseDateToDay}일 - ${lastDayToMonth}월 ${lastDayToDay}일`;
+      const lastDayToMonth = prependZeroBelowTen(dayjs(lastDay).month() + 1);
+      const lastDayToDay = prependZeroBelowTen(dayjs(lastDay).date());
+      return `${month}월 ${day}일 - ${lastDayToMonth}월 ${lastDayToDay}일`;
     default:
-      return `${changedbaseDateToMonth}월`;
+      return `${month}월`;
   }
+};
+
+export const prependZeroBelowTen = (number: number): string => {
+  return number < 10 ? `0${number}` : `${number}`;
 };
 
 export const updateCalendarByType = (type: 'increase' | 'decrease' | 'none', prev: DateState, mode: FilterMode) => {
