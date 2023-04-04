@@ -24,7 +24,7 @@ export const updateEvent = async (info: EventInfo & EvnetId): Promise<ServerResp
   return data;
 };
 
-export const deleteEvent = async (eventId: string): Promise<ServerResponse<EvnetId>> => {
+export const deleteEvent = async (eventId: number): Promise<ServerResponse<EvnetId>> => {
   const { data } = await api.put(`/api/event/penalty/${eventId}`);
   return data;
 };
