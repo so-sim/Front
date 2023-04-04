@@ -5,7 +5,9 @@ import { USER } from '@/assets/icons/User';
 import DropDown from '@/common/DropDown';
 import { TwoButtonModal } from '@/common/Modal/TwoButtonModal';
 import UserConfigModal from '@/common/Modal/UserConfigModal';
+import { GroupListWithIndex } from '@/types/group';
 import { removeAccessToken } from '@/utils/acceessToken';
+import { useQueryClient } from '@tanstack/react-query';
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import * as Style from './styles';
@@ -33,8 +35,15 @@ const GroupLayoutHeader = () => {
     setShowDropDown((prev) => !prev);
   };
 
+  const queryClient = useQueryClient();
+
   const onClickLogOut = () => {
     removeAccessToken();
+    queryClient.setQueryData<GroupListWithIndex>(['groupList'], {
+      next: false,
+      groupList: [],
+    });
+
     navigate('/');
   };
 
