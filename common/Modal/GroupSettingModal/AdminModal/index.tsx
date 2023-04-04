@@ -8,7 +8,7 @@ import { DropBox } from '../../../DropBox';
 import * as Style from './styles';
 import { COLORS, DROPDOWN_LIST } from '@/constants/Group';
 import { ModalHandlerProps } from '../../CreateGroupModal';
-import { useDeleteGroup, useGroupDetail, useUpdateGroup, useWithdrawalGroup } from '@/queries/Group';
+import { useChangeNickname, useDeleteGroup, useGroupDetail, useUpdateGroup, useWithdrawalGroup } from '@/queries/Group';
 import { useParams } from 'react-router-dom';
 import { GroupColor } from '@/types/group';
 import { useGetMyNikname } from '@/queries/Group/useGetMyNickname';
@@ -28,6 +28,7 @@ export const AdminModal: FC<ModalHandlerProps> = ({ modalHandler }) => {
   const { groupId } = useParams();
 
   const { mutate: updateGroupMutate } = useUpdateGroup({ setErrorText });
+  const { mutate: updateNickname, isError } = useChangeNickname(setErrorText);
   const { mutate: withdrawalGroupMutate } = useWithdrawalGroup();
   const { mutate: deleteGroup } = useDeleteGroup();
 
@@ -48,7 +49,8 @@ export const AdminModal: FC<ModalHandlerProps> = ({ modalHandler }) => {
 
   const updateGroupInfo = () => {
     const id = Number(groupId);
-    updateGroupMutate({ title, type, coverColor, groupId: id, nickname });
+    updateGroupMutate({ title, type, coverColor, groupId: id });
+    updateNickname({ nickname, groupId: id });
     modalHandler();
   };
 
