@@ -10,5 +10,4 @@ export const Banner = styled.section`
   background-image: url('../../../assets/image/Banner/Banner.png');
   background-size: 1920px 400px;
   background-position: center;
-  background-repeat: no-repeat;
 `;

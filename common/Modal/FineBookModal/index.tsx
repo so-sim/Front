@@ -37,6 +37,7 @@ export const FineBookModal = ({ setOpen, eventId, select }: ModalProps) => {
 
   const onChangeFine = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target;
+    if (value.length > 8) return;
     const removedCommaValue = Number(value.replaceAll(',', ''));
     if (!isNaN(removedCommaValue)) setFine(removedCommaValue);
   };
