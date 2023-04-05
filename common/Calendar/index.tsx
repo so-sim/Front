@@ -1,4 +1,5 @@
 import { useGetMonthStatus } from '@/queries/Detail/useGetMonthStatus';
+import { useGroupDetail } from '@/queries/Group';
 import { dateState } from '@/store/dateState';
 import { handleDate } from '@/utils/handleDate';
 import dayjs, { Dayjs } from 'dayjs';
@@ -36,6 +37,8 @@ const Calendar: FC<CalnedrProps> = ({ cellType }) => {
   const [year, month, day] = getDateArray(calendarDate);
 
   const { data: status } = useGetMonthStatus(groupId, year, month);
+
+  const { data: groupData } = useGroupDetail({ groupId: Number(groupId) });
 
   const filterCorrectDateStatus = (date: Dayjs) => {
     return status?.content.filter((list) => list.day === getDate(date))[0];
@@ -95,7 +98,7 @@ const Calendar: FC<CalnedrProps> = ({ cellType }) => {
               <Style.ArrowWrapper onClick={increaseMonth}>{ARROW.RIGHT}</Style.ArrowWrapper>
             </div>
           </div>
-          {cellType === 'Tag' && (
+          {cellType === 'Tag' && groupData?.content.isAdmin && (
             <Button width="124px" color="black" onClick={handleShowCreateDetailModal}>
               내역 추가하기
             </Button>
