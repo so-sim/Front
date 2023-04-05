@@ -15,6 +15,7 @@ export const StatusButton = styled.button<CircleDropButtonProps>`
 export const Text = styled.span`
   display: flex;
   justify-content: flex-start;
+  ${({ theme }) => theme.font.subhead_01}
   width: 52px;
   margin-right: 4px;
 `;

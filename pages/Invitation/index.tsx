@@ -1,6 +1,6 @@
 import Button from '@/common/Button';
 import { userState } from '@/store/userState';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useRecoilValue } from 'recoil';
 import * as Style from './styles';
 import { InvitationModal } from '@/common/Modal/InvitationModal';
@@ -9,6 +9,7 @@ import { useGroupDetail } from '@/queries/Group';
 import { InvitationTicket } from '@/assets/icons/Invitation';
 import { useNavigate } from 'react-router-dom';
 import { useQueryString } from '@/hooks/useQueryString';
+import Loading from '../Auth/Loading';
 
 const Invitation = () => {
   const [showInvitationModal, setShowInvitationModal] = useState(false);
@@ -46,10 +47,12 @@ const Invitation = () => {
   };
 
   useEffect(() => {
+    if (true) {
+    }
     sessionStorage.removeItem('invite-group-id');
   }, []);
 
-  if (!isSuccess) return <p>모임을 찾을 수 없습니다.</p>;
+  if (!isSuccess) return <Loading />;
 
   return (
     <Style.Background>
