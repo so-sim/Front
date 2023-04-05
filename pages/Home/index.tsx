@@ -14,10 +14,14 @@ const Home = () => {
 
   return (
     <Style.Main>
-      <Header />
-      <Banner />
-      <GroupSection />
-      <Footer />
+      <div>
+        <Header />
+        <Banner />
+        <GroupSection />
+      </div>
+      <div>
+        <Footer />
+      </div>
     </Style.Main>
   );
 };

@@ -7,7 +7,7 @@ export const Banner = styled.section`
   margin: auto;
   width: 100%;
   height: 400px;
-  background-image: url('../../../assets/image/Banner/Banner.png');
   background-size: 1920px 400px;
   background-position: center;
+  background-image: url('/public/banner.png');
 `;
