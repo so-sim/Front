@@ -1,10 +1,18 @@
-import { useGroupDetail } from '@/queries/Group';
+import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Header, Banner, GroupSection, Footer } from './components';
 import * as Style from './styles';
 
 const Home = () => {
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (sessionStorage.getItem('invite-group-id') !== null) {
+      navigate(`/invitation?groupId=${sessionStorage.getItem('invite-group-id')}`);
+    }
+  }, []);
+
   return (
-    /** layout 자리 */
     <Style.Main>
       <Header />
       <Banner />
