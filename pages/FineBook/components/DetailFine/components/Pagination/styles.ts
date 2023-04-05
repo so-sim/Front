@@ -1,11 +1,9 @@
 import styled from '@emotion/styled';
 
 export const Pagination = styled.div`
-  position: absolute;
   display: flex;
-  width: 100%;
   justify-content: center;
-  bottom: 50px;
+  margin-bottom: 50px;
 `;
 
 export const Page = styled.span<{ isSelected: boolean }>`

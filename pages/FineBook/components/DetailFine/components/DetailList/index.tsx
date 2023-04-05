@@ -19,7 +19,7 @@ export const DetailList: FC<DetailListProps> = ({ selectedEventId, details, page
   const [openListEventId, setOpenListEventId] = useState(0);
 
   return (
-    <>
+    <Style.DetailList>
       {details.map((detail, i) => {
         const { groundsDate, userName, payment, grounds } = detail;
         return (
@@ -39,6 +39,6 @@ export const DetailList: FC<DetailListProps> = ({ selectedEventId, details, page
           </Style.TableRow>
         );
       })}
-    </>
+    </Style.DetailList>
   );
 };

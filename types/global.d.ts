@@ -1,5 +1,5 @@
 export type KeyValueObject = {
-  [key: string]: string;
+  [key: string]: any;
 };
 
 declare global {
