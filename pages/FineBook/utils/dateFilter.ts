@@ -81,6 +81,9 @@ const changeDateByType = (type: 'increase' | 'decrease' | 'none', baseDate: Dayj
     case 'month':
       return dayjs(baseDate).startOf('month');
     case 'week':
+      if (dayjs(baseDate).startOf('week').month() !== dayjs(baseDate).endOf('week').month()) {
+        return dayjs(baseDate);
+      }
       return dayjs(baseDate).startOf('week');
     default:
       return dayjs(baseDate);

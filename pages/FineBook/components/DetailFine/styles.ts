@@ -2,7 +2,9 @@ import styled from '@emotion/styled';
 
 export const DetailFineFrame = styled.section`
   border-left: 2px solid ${({ theme }) => theme.colors.neutral_200_b};
-  min-width: 780px;
+  height: calc(100vh - 68px);
+  overflow-y: auto;
+  min-width: 800px;
 `;
 
 export const DetailContent = styled.div`

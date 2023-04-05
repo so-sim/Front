@@ -3,8 +3,13 @@ import styled from '@emotion/styled';
 export const DetailsHeader = styled.div`
   display: flex;
   align-items: center;
+  position: sticky;
+  top: 0;
   padding: 12px 32px;
   border-bottom: 2px solid ${({ theme }) => theme.colors.neutral_200_b};
+  width: 100%;
+  z-index: 10;
+  background-color: white;
   div {
     height: 24px;
   }
