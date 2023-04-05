@@ -9,11 +9,17 @@ import * as Style from './styles';
 interface CircleButtonListProps extends CircleDropButtonProps {
   statusList: PaymentType[];
   eventId: number;
+  isAdmin: boolean;
   setOpenListEventId: Dispatch<SetStateAction<number>>;
 }
 
-export const CircleButtonList = ({ status, statusList, eventId, setOpenListEventId }: CircleButtonListProps) => {
-  const newStatusList = [getStatusText(status), ...statusList.filter((element) => element !== getStatusText(status))];
+export const CircleButtonList = ({ status, statusList, eventId, setOpenListEventId, isAdmin }: CircleButtonListProps) => {
+  const adminStatusList = [getStatusText(status), ...statusList.filter((element) => element !== getStatusText(status))];
+
+  const userStatusList: PaymentType[] = status === 'non' ? [getStatusText(status), '확인필요'] : [];
+
+  const dropdownList = isAdmin ? adminStatusList : userStatusList;
+
   const { mutate } = useUpdateDetailStatus();
   const [newStatus, setNewStatus] = useState<PaymentType>('');
   const [showUpdateStatusModal, setShowUpdateStatusModal] = useState(false);
@@ -49,7 +55,7 @@ export const CircleButtonList = ({ status, statusList, eventId, setOpenListEvent
   return (
     <>
       <Style.CircleButtonList>
-        {newStatusList.map((paymentType) => {
+        {dropdownList.map((paymentType) => {
           return (
             <Style.CircleButtonBox
               key={paymentType}
