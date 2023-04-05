@@ -48,6 +48,7 @@ export const HeaderIcon = styled.div`
 `;
 
 export const CloseIcon = styled.div`
+  height: 24px;
   cursor: pointer;
 `;
 
