@@ -20,7 +20,7 @@ export const CreateGroupModal: FC<ModalHandlerProps> = ({ modalHandler }) => {
   const [title, setTitle] = useState('');
   const [nickname, setNickname] = useState('');
   const [type, setType] = useState('');
-  const [coverColor, setCoverColor] = useState<GroupColor>('#f89a65');
+  const [coverColor, setCoverColor] = useState<GroupColor>('#f86565');
   const [isInit, setIsInit] = useState({
     groupName: true,
     myName: true,
@@ -59,7 +59,7 @@ export const CreateGroupModal: FC<ModalHandlerProps> = ({ modalHandler }) => {
         </Label>
         <div style={{ position: 'relative' }}>
           <Label title="모임 유형">
-            <DropBox dropDownList={DROPDOWN_LIST} type={type} setType={setType} color="gray" />
+            <DropBox dropDownList={DROPDOWN_LIST} type={type} setType={setType} color="gray" width={170} boxWidth="170px" />
           </Label>
         </div>
         <Label title="커버 색상">
