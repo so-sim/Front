@@ -1,5 +1,9 @@
 import styled from '@emotion/styled';
 
+export const DetailList = styled.div`
+  min-height: 746px;
+`;
+
 export const TableRow = styled.div<{ isSelected: boolean }>`
   display: grid;
   align-items: center;

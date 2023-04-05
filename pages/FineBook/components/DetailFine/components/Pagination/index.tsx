@@ -27,15 +27,14 @@ export const Pagination: FC<PaginationProps> = ({ count = 0, page, setPage }) =>
     <Style.Pagination>
       <Style.DoubleArrow onClick={decreasePage}>{ARROW.DOUBLE_LEFT}</Style.DoubleArrow>
       {new Array(pageCount).fill(0).map((_, i) => {
-        const pageNumber = i + 1;
         return (
           <Style.Page
             onClick={() => {
-              setPage(pageNumber);
+              setPage(i);
             }}
-            isSelected={page + 1 === pageNumber}
+            isSelected={page === i}
           >
-            {pageNumber}
+            {i + 1}
           </Style.Page>
         );
       })}

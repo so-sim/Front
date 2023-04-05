@@ -77,6 +77,10 @@ const DetailFine = () => {
     }
   }, [calendarDate.selectedDate, calendarDate.baseDate, calendarDate.week, mode]);
 
+  useEffect(() => {
+    setDateFilter((prev) => ({ ...prev, page }));
+  }, [page]);
+
   return (
     <>
       <Style.DetailFineFrame>
@@ -86,7 +90,7 @@ const DetailFine = () => {
           <TableHead mode={mode} setMode={setMode} dateFilter={dateFilter} setDateFilter={setDateFilter} />
           <DetailList selectedEventId={select.eventId} details={data?.content.list} page={page} setSelect={setSelect} setOpenUserDetails={setOpenUserDetails} />
         </Style.DetailContent>
-        {data?.content.total && data?.content.total > 16 && <Pagination count={data?.content.total} page={page} setPage={setPage} />}
+        {Number(data?.content.totalCount) > 16 && <Pagination count={data?.content.totalCount} page={page} setPage={setPage} />}
         <UserDetails open={openUserDetails} setOpen={setOpenUserDetails} select={select} setSelect={setSelect} />
       </Style.DetailFineFrame>
       {openAddModal && <FineBookModal setOpen={setOpenAddModal} />}
