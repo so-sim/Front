@@ -14,8 +14,8 @@ jobs:
 
     env:
       CI: ''
-      REACT_APP_SERVICE_URL: https://sosim-manager.com
-      REACT_APP_KAKAO_CLIENT_ID: f17f6d56ad837b715fd34160ac7b21f4
+      REACT_APP_SERVICE_URL: ${{secrets.REACT_APP_SERVICE_URL}}
+      REACT_APP_KAKAO_CLIENT_ID: ${{secrets.REACT_APP_KAKAO_CLIENT_ID}}
 
     steps:
       - name: Checkout source code
