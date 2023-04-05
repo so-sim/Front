@@ -19,7 +19,7 @@ export interface EventInfo {
 }
 
 export interface EventInfoList {
-  total: number;
+  totalCount: number;
   list: EventInfo[];
 }
 
