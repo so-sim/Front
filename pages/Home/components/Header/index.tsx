@@ -24,7 +24,7 @@ export const Header = () => {
       <Style.Header>
         <Paragraph>
           <Style.HeaderLeft>
-            {LOGO.SM}
+            <Style.HeaderLogo onClick={() => window.location.reload()}>{LOGO.SM}</Style.HeaderLogo>
             <Style.NavSection>
               {GNBLinkList.map((list) => (
                 <Style.GNBLink href={list.href} target="_blank" rel="noopnner noreferrer" key={list.title}>

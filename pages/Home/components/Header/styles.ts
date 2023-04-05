@@ -10,6 +10,10 @@ export const Header = styled.header`
   border-bottom: 1px solid ${({ theme }) => theme.colors.neutral_400_b};
 `;
 
+export const HeaderLogo = styled.span`
+  cursor: pointer;
+`;
+
 export const HeaderLeft = styled.span`
   display: flex;
   margin-left: 12px;
