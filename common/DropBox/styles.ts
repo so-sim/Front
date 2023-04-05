@@ -17,6 +17,11 @@ export const DropDownBox = styled.div<{ boxWidth: string; color: DropBoxColor }>
   justify-content: space-between;
 `;
 
+export const Content = styled.div`
+  display: flex;
+  align-items: center;
+`;
+
 export const Text = styled.div<{ boxWidth: string; isDisabled: boolean }>`
   ${({ theme }) => theme.font.body_02}
   white-space: nowrap;
