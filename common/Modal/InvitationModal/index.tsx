@@ -8,6 +8,7 @@ import * as Style from './styles';
 import { ModalProps } from '@/common/Modal';
 import { useJoinGroup } from '@/queries/Group';
 import { useParams } from 'react-router-dom';
+import { useQueryString } from '@/hooks/useQueryString';
 
 interface InvitationModalProps extends Partial<ModalProps> {
   groupName: string;
@@ -16,7 +17,7 @@ interface InvitationModalProps extends Partial<ModalProps> {
 export const InvitationModal: FC<InvitationModalProps> = ({ onClick, groupName }) => {
   const [myName, setMyName] = useState('');
   const [isInit, setIsInit] = useState(true);
-  const { groupId } = useParams();
+  const { groupId } = useQueryString();
 
   const [errorText, setErrorText] = useState('');
 

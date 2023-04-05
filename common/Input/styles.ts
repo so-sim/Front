@@ -3,6 +3,7 @@ import styled from '@emotion/styled';
 export const Input = styled.input<{ isValid: boolean }>`
   ${({ theme }) => theme.font.body_02};
   border-radius: 4px;
+  height: 40px;
   border: 1px solid ${({ theme, isValid }) => (isValid ? theme.colors.secondary_500 : theme.colors.red_100)};
   background-color: ${({ theme }) => theme.colors.secondary_100};
   width: 100%;
