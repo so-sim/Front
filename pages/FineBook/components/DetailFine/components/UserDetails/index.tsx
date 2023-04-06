@@ -145,7 +145,7 @@ export const UserDetails = ({ open, setOpen, select, setSelect }: UserDetailsPro
                 boxWidth="112px"
                 width={112}
                 setType={setNewStatus}
-                type={newStatus || getStatusText(paymentType)}
+                type={newStatus !== '' ? newStatus : paymentType === 'con' && !data?.content.isAdmin ? '확인중' : getStatusText(paymentType)}
                 dropDownList={dropdownStatusList()}
               />
             </Label>
