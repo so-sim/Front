@@ -2,7 +2,7 @@ import { SYSTEM } from '@/assets/icons/System';
 import { USER } from '@/assets/icons/User';
 import DropDown from '@/common/DropDown';
 import { useChangeAdmin, useGroupDetail } from '@/queries/Group';
-import React, { FC, useEffect, useState } from 'react';
+import React, { FC, useEffect, useRef, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import ChangeAdminModal from '../../../../common/Modal/ChangAdminModal';
 import * as Style from './styles';
@@ -23,6 +23,8 @@ const MemberListItem: FC<MemberListItemProps> = ({ nickname }) => {
   const [showDropDown, setShowDropDown] = useState(false);
   const [selectAction, setSelectAction] = useState('');
   const [showChangeAdminModal, setShowChangeAdminModal] = useState(false);
+
+  const dropDownRef = useRef<HTMLDivElement>(null);
 
   const handleDropDown = () => {
     setShowDropDown((prev) => !prev);
@@ -54,10 +56,10 @@ const MemberListItem: FC<MemberListItemProps> = ({ nickname }) => {
           <Style.Nickname>{nickname}</Style.Nickname>
         </Style.Flex>
         {groupData?.content.isAdmin && (
-          <Style.SVG>
+          <Style.SVG ref={dropDownRef}>
             <div onClick={handleDropDown}>
               {SYSTEM.DOTS}
-              {showDropDown && <DropDown list={DropDonwList} top={'30px'} onClose={handleDropDown} setState={setSelectAction} width={104} />}
+              {showDropDown && <DropDown list={DropDonwList} top={'30px'} onClose={handleDropDown} setState={setSelectAction} width={104} dropDownRef={dropDownRef} />}
             </div>
           </Style.SVG>
         )}
