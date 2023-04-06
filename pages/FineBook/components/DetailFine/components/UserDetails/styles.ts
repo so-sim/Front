@@ -3,12 +3,13 @@ import styled from '@emotion/styled';
 export const UserDetailsFrame = styled.div`
   box-shadow: 2px 0px 25px 7px rgba(156, 156, 156, 0.15);
   position: absolute;
-  top: 0;
+  z-index: 4;
+  top: 68px;
   background: white;
   width: 576px;
   right: 0;
   border-left: gray;
-  height: 100%;
+  height: calc(100% - 68px);
 `;
 
 export const Header = styled.div`
