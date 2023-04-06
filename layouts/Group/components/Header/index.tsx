@@ -8,7 +8,7 @@ import UserConfigModal from '@/common/Modal/UserConfigModal';
 import { GroupListWithIndex } from '@/types/group';
 import { removeAccessToken } from '@/utils/acceessToken';
 import { useQueryClient } from '@tanstack/react-query';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import * as Style from './styles';
 
@@ -23,6 +23,8 @@ const GroupLayoutHeader = () => {
   const [showConfigModal, setShowConfigModal] = useState(false);
   const [showLogOutModal, setShowLogOutModal] = useState(false);
   const [showDropDown, setShowDropDown] = useState(false);
+
+  const dropDownRef = useRef<HTMLButtonElement>(null);
 
   const handelShowConfigModal = () => {
     setShowConfigModal((prev) => !prev);
@@ -57,10 +59,10 @@ const GroupLayoutHeader = () => {
     <>
       <Style.Header>
         <span onClick={() => navigate('/')}>{LOGO.SM}</span>
-        <button onClick={handleDropDown}>
+        <button onClick={handleDropDown} ref={dropDownRef}>
           {USER.PERSON_MD}
           {ARROW.SOLID}
-          {showDropDown && <DropDown list={DorpDownList} width={112} setState={setDropDownState} onClose={handleDropDown} top={'32px'} />}
+          {showDropDown && <DropDown list={DorpDownList} width={112} setState={setDropDownState} onClose={handleDropDown} top={'32px'} dropDownRef={dropDownRef} />}
         </button>
       </Style.Header>
       {showLogOutModal && (

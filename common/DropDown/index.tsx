@@ -1,5 +1,5 @@
 import { EmotionJSX } from '@emotion/react/types/jsx-namespace';
-import React, { Dispatch, SetStateAction, useEffect, useRef } from 'react';
+import React, { Dispatch, RefObject, SetStateAction, useEffect, useRef } from 'react';
 import * as Style from './styles';
 
 export interface DropDownProps<T = string> {
@@ -10,16 +10,14 @@ export interface DropDownProps<T = string> {
   top: string;
   width?: number;
   onClose: () => void;
-  setState?: Dispatch<SetStateAction<T>>;
+  setState: Dispatch<SetStateAction<T>>;
   align?: 'center' | 'start';
   direction?: 'left' | 'right';
+  dropDownRef: RefObject<HTMLDivElement> | RefObject<HTMLButtonElement>;
 }
 
-const DropDown = <T,>({ list, width = 112, align = 'start', setState, onClose, top, direction = 'left' }: DropDownProps<T>) => {
-  const dropDownRef = useRef<HTMLDivElement>(null);
-
+const DropDown = <T,>({ list, width = 112, align = 'start', setState, onClose, top, direction = 'left', dropDownRef }: DropDownProps<T>) => {
   const handleState = (title: T) => {
-    if (!setState) return null;
     setState(title);
     onClose();
   };
@@ -30,7 +28,8 @@ const DropDown = <T,>({ list, width = 112, align = 'start', setState, onClose, t
 
   useEffect(() => {
     const onClickOutSide = (event: MouseEvent) => {
-      if (dropDownRef.current && !dropDownRef.current.contains(event.target as Node)) {
+      console.log(dropDownRef.current);
+      if (dropDownRef?.current && !dropDownRef.current.contains(event.target as Node)) {
         onClose();
       }
     };
@@ -38,10 +37,10 @@ const DropDown = <T,>({ list, width = 112, align = 'start', setState, onClose, t
     return () => {
       document.removeEventListener('mousedown', onClickOutSide);
     };
-  }, []);
+  }, [dropDownRef.current]);
 
   return (
-    <Style.DorpDownContainer onClick={onClose} top={top} ref={dropDownRef} direction={direction}>
+    <Style.DorpDownContainer onClick={onClose} top={top} direction={direction}>
       {list.map((item) => {
         if (typeof item.title != 'string') return;
         return (

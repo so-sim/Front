@@ -1,4 +1,4 @@
-import React, { Dispatch, FC, SetStateAction, useState } from 'react';
+import React, { Dispatch, FC, SetStateAction, useRef, useState } from 'react';
 import { ARROW } from '@/assets/icons/Arrow';
 import DropDown from '@/common/DropDown';
 import * as Style from './styles';
@@ -11,7 +11,7 @@ interface DropBoxProps<T = string> {
   boxWidth?: string;
   width?: number;
   color?: DropBoxColor;
-  setType?: Dispatch<SetStateAction<T>>;
+  setType: Dispatch<SetStateAction<T>>;
   direction?: 'left' | 'right';
   align?: 'start' | 'center';
 }
@@ -20,20 +20,24 @@ export const DropBox = <T,>({ align = 'start', setType, type, dropDownList, widt
   const [openDrop, setOpenDrop] = useState(false);
   const isDisabled = color === 'disabled';
 
+  const dropDownRef = useRef<HTMLDivElement>(null);
+
+  const handleDropDown = () => {
+    if (isDisabled) return;
+    setOpenDrop((prev) => !prev);
+  };
+
   return (
-    <Style.DropDownBox boxWidth={boxWidth} color={color}>
-      <Style.Content
-        onClick={(e) => {
-          if (isDisabled) return;
-          setOpenDrop((prev) => !prev);
-        }}
-      >
+    <Style.DropDownBox boxWidth={boxWidth} color={color} ref={dropDownRef} onClick={handleDropDown}>
+      <Style.Content>
         <Style.Text boxWidth={boxWidth} isDisabled={isDisabled}>
           {(typeof type === 'string' && type) || '선택해주세요'}
         </Style.Text>
         {!isDisabled && <Style.ArrowIcon>{ARROW.DOWN_LG}</Style.ArrowIcon>}
       </Style.Content>
-      {openDrop && <DropDown align={align} list={dropDownList} width={width} setState={setType} top="34px" onClose={() => setOpenDrop(false)} direction={direction} />}
+      {openDrop && (
+        <DropDown align={align} list={dropDownList} width={width} setState={setType} top="34px" onClose={handleDropDown} direction={direction} dropDownRef={dropDownRef} />
+      )}
     </Style.DropDownBox>
   );
 };

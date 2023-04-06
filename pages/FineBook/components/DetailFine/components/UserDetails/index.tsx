@@ -117,7 +117,7 @@ export const UserDetails = ({ open, setOpen, select, setSelect }: UserDetailsPro
           </Style.Block>
           <Style.Row>
             <Label title="날짜" width="32px">
-              <DropBox color="disabled" boxWidth="116px" width={116} type={groundsDate.split(' ')[0]} dropDownList={statusList} />
+              {/* <DropBox color="disabled" boxWidth="116px" width={116} type={groundsDate.split(' ')[0]} dropDownList={statusList} /> */}
             </Label>
             <Label title="납부여부" width="80px">
               <DropBox

@@ -35,6 +35,8 @@ export const FineBookModal = ({ setOpen, eventId, select }: ModalProps) => {
   const [groundsDate, setGroundsDate] = useState('');
   const [{ selectedDate, baseDate }, setDateState] = useRecoilState(dateState);
 
+  console.log(member);
+
   const onChangeFine = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target;
     if (value.length > 8) return;
@@ -44,7 +46,6 @@ export const FineBookModal = ({ setOpen, eventId, select }: ModalProps) => {
 
   const onChangeReason = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     if (e.target.value.length > 65) return;
-
     setReason(e.target.value);
   };
 
@@ -64,10 +65,10 @@ export const FineBookModal = ({ setOpen, eventId, select }: ModalProps) => {
     setGroundsDate('');
   };
 
-  const createDetail = async (type: 'continue' | 'save') => {
+  const createDetail = (type: 'continue' | 'save') => {
     if (user.userId === null) return;
-    await create({ userId: user.userId, userName: member, groundsDate, grounds: reason, paymentType: getStatusCode(status), payment: fine });
-    await setDateState((prev) => ({ ...prev, baseDate: dayjs(groundsDate), selectedDate: dayjs(groundsDate), week: null }));
+    create({ userId: user.userId, userName: member, groundsDate, grounds: reason, paymentType: getStatusCode(status), payment: fine });
+    setDateState((prev) => ({ ...prev, baseDate: dayjs(groundsDate), selectedDate: dayjs(groundsDate), week: null }));
     if (type === 'continue') {
       navigate(`/group/${params.groupId}/book/detail`);
       initDetail();
