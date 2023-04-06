@@ -8,7 +8,7 @@ export const DetailsHeader = styled.div`
   padding: 12px 32px;
   border-bottom: 2px solid ${({ theme }) => theme.colors.neutral_200_b};
   width: 100%;
-  z-index: 10;
+  z-index: 3;
   background-color: white;
   div {
     height: 24px;
