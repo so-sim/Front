@@ -128,8 +128,8 @@ export const AdminModal: FC<ModalHandlerProps> = ({ modalHandler }) => {
           width="448px"
           height="265px"
           onClick={handleGroupWithdrawalModal}
-          title={GROUP_WITHDRWWAL_ADMIN.NO_USER.title}
-          description={GROUP_WITHDRWWAL_ADMIN.NO_USER.desc}
+          title={GROUP_WITHDRWWAL_ADMIN.HAS_USER.title}
+          description={GROUP_WITHDRWWAL_ADMIN.HAS_USER.desc}
           confirm={{ text: '확인', onClick: handleGroupWithdrawalModal }}
         />
       )}
@@ -159,7 +159,7 @@ export const AdminModal: FC<ModalHandlerProps> = ({ modalHandler }) => {
         <OneButtonModal
           width="448px"
           height="240px"
-          onClick={handleGroupWithdrawalModal}
+          onClick={handleGroupDeleteModal}
           title={GROUP_DELETE.HAS_USER.title}
           description={GROUP_DELETE.HAS_USER.desc}
           confirm={{ text: '확인', onClick: handleGroupDeleteModal }}
