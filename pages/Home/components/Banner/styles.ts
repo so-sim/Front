@@ -1,7 +1,13 @@
 import styled from '@emotion/styled';
 
 export const Banner = styled.section`
-  background-color: #1c6ee9;
+  position: relative;
+  display: flex;
+  align-items: center;
+  margin: auto;
   width: 100%;
   height: 400px;
+  background-size: 1920px 400px;
+  background-position: center;
+  background-image: url('/public/banner.png');
 `;

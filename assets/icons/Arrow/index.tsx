@@ -10,7 +10,9 @@ export const ARROW = {
   DOUBLE_LEFT: <DoubleLeft />,
   DOWN_SM: <Down width={16} height={16} />,
   DOWN_LG: <Down width={24} height={24} />,
-  LEFT: <Left />,
-  RIGHT: <Right />,
+  LEFT: <Left width={8} height={12} />,
+  RIGHT: <Right width={8} height={12} />,
+  LEFT_MD: <Left width={8} height={12} />,
+  RIGHT_MD: <Right width={8} height={12} />,
   SOLID: <Solid />,
 };

@@ -13,7 +13,7 @@ const GROUP_TAPS = [
   { title: '벌금 장부', svg: SYSTEM.ARTICLE, disabled: false, link: 'book' },
 ];
 const ETC = [
-  { title: '맴버 관리', svg: USER.GROUP_LG, link: 'member' },
+  { title: '멤버 관리', svg: USER.GROUP_LG, link: 'member' },
   { title: '설정', svg: SYSTEM.SETTING_LG },
 ];
 

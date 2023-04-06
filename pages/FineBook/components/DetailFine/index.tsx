@@ -31,13 +31,13 @@ const DetailFine = () => {
   const [openAddModal, setOpenAddModal] = useState(false);
   const [openUserDetails, setOpenUserDetails] = useState(false);
   const [select, setSelect] = useState<EventInfo>({
-    userId: 12,
+    userId: 0,
     eventId: 0,
-    groundsDate: '23.01.22',
+    groundsDate: '',
     paymentType: 'non',
-    userName: '윤하나둘셋',
-    payment: 1_000_000,
-    grounds: '밥먹다 지각',
+    userName: '',
+    payment: 0,
+    grounds: '',
   });
 
   const [page, setPage] = useState(0);
@@ -77,6 +77,10 @@ const DetailFine = () => {
     }
   }, [calendarDate.selectedDate, calendarDate.baseDate, calendarDate.week, mode]);
 
+  useEffect(() => {
+    setDateFilter((prev) => ({ ...prev, page }));
+  }, [page]);
+
   return (
     <>
       <Style.DetailFineFrame>
@@ -86,8 +90,8 @@ const DetailFine = () => {
           <TableHead mode={mode} setMode={setMode} dateFilter={dateFilter} setDateFilter={setDateFilter} />
           <DetailList selectedEventId={select.eventId} details={data?.content.list} page={page} setSelect={setSelect} setOpenUserDetails={setOpenUserDetails} />
         </Style.DetailContent>
-        {data?.content.total && data?.content.total > 16 && <Pagination count={data?.content.total} page={page} setPage={setPage} />}
-        <UserDetails open={openUserDetails} setOpen={setOpenUserDetails} select={select} />
+        {Number(data?.content.totalCount) > 16 && <Pagination count={data?.content.totalCount} page={page} setPage={setPage} />}
+        <UserDetails open={openUserDetails} setOpen={setOpenUserDetails} select={select} setSelect={setSelect} />
       </Style.DetailFineFrame>
       {openAddModal && <FineBookModal setOpen={setOpenAddModal} />}
     </>

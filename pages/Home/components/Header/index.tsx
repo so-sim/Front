@@ -6,9 +6,9 @@ import { AuthModal } from '@/common/Modal/LoginModal';
 import { GNB_LINK } from '@/constants/ServiceLink';
 
 const GNBLinkList = [
-  { title: '소심한 총무란', href: GNB_LINK.SERVICE },
-  { title: '의견 제안하기', href: GNB_LINK.SUGGEST },
-  { title: 'FAQ', href: GNB_LINK.FAQ },
+  { title: '서비스 소개', href: GNB_LINK.SERVICE },
+  { title: '의견 남기기', href: GNB_LINK.SUGGEST },
+  { title: '이용 가이드', href: GNB_LINK.FAQ },
 ];
 
 /** 여기에서 로그인 관련 수행 */
@@ -24,7 +24,7 @@ export const Header = () => {
       <Style.Header>
         <Paragraph>
           <Style.HeaderLeft>
-            {LOGO.SM}
+            <Style.HeaderLogo onClick={() => window.location.reload()}>{LOGO.SM}</Style.HeaderLogo>
             <Style.NavSection>
               {GNBLinkList.map((list) => (
                 <Style.GNBLink href={list.href} target="_blank" rel="noopnner noreferrer" key={list.title}>

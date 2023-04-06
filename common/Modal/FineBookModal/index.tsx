@@ -8,7 +8,7 @@ import * as Style from './styles';
 import { SYSTEM } from '@/assets/icons/System';
 import { useParticipantList } from '@/queries/Group';
 import { useCreateDetail, useUpdateDetail } from '@/queries/Detail';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { EventInfo, PaymentType } from '@/types/event';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { userState } from '@/store/userState';
@@ -37,6 +37,7 @@ export const FineBookModal = ({ setOpen, eventId, select }: ModalProps) => {
 
   const onChangeFine = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target;
+    if (value.length > 8) return;
     const removedCommaValue = Number(value.replaceAll(',', ''));
     if (!isNaN(removedCommaValue)) setFine(removedCommaValue);
   };
@@ -53,6 +54,7 @@ export const FineBookModal = ({ setOpen, eventId, select }: ModalProps) => {
   const { mutate: update } = useUpdateDetail();
 
   const user = useRecoilValue(userState);
+  const navigate = useNavigate();
 
   const initDetail = () => {
     setMember('');
@@ -66,10 +68,11 @@ export const FineBookModal = ({ setOpen, eventId, select }: ModalProps) => {
     if (user.userId === null) return;
     await create({ userId: user.userId, userName: member, groundsDate, grounds: reason, paymentType: getStatusCode(status), payment: fine });
     await setDateState((prev) => ({ ...prev, baseDate: dayjs(groundsDate), selectedDate: dayjs(groundsDate), week: null }));
-
     if (type === 'continue') {
+      navigate(`/group/${params.groupId}/book/detail`);
       initDetail();
     } else {
+      navigate(`/group/${params.groupId}/book/detail`);
       setOpen(false);
     }
   };

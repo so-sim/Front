@@ -63,6 +63,12 @@ export const DateController: FC<DateControllerProps> = ({ mode, setMode, setOpen
     { mode: 'day', text: '일간' },
   ];
 
+  useEffect(() => {
+    if (mode !== 'week') {
+      setOpenWeeklyFilterDrop(false);
+    }
+  }, [mode]);
+
   return (
     <Style.DateController>
       <Style.ControllerFrame>

@@ -16,8 +16,10 @@ export const DetailList: FC<DetailListProps> = ({ selectedEventId, details, page
   if (details == null) return null;
   if (details.length === 0) return <Style.NotFoundList>내역을 추가해주세요!</Style.NotFoundList>;
 
+  const [openListEventId, setOpenListEventId] = useState(0);
+
   return (
-    <>
+    <Style.DetailList>
       {details.map((detail, i) => {
         const { groundsDate, userName, payment, grounds } = detail;
         return (
@@ -30,13 +32,13 @@ export const DetailList: FC<DetailListProps> = ({ selectedEventId, details, page
             }}
           >
             <Style.Element hasEllipsis={false}>{(groundsDate.split(' ')[0] as string).replaceAll('-', '.')}</Style.Element>
-            <DropDownWrapper detail={detail} />
+            <DropDownWrapper detail={detail} openListEventId={openListEventId} setOpenListEventId={setOpenListEventId} />
             <Style.Element hasEllipsis>{userName}</Style.Element>
             <Style.Element hasEllipsis>{changeNumberToMoney(payment)}</Style.Element>
             <Style.Element hasEllipsis>{grounds}</Style.Element>
           </Style.TableRow>
         );
       })}
-    </>
+    </Style.DetailList>
   );
 };

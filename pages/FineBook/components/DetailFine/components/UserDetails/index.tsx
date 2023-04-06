@@ -11,20 +11,30 @@ import { changeNumberToMoney } from '@/utils/changeNumberToMoney';
 import { getStatusCode, getStatusText } from '@/utils/getStatusIcon';
 import { useDeleteDetail, useUpdateDetailStatus } from '@/queries/Detail';
 import { TwoButtonModal } from '@/common/Modal/TwoButtonModal';
+import { useRecoilValue } from 'recoil';
+import { userState } from '@/store/userState';
+import { useGroupDetail } from '@/queries/Group';
+import { useParams } from 'react-router-dom';
 
 interface UserDetailsProps {
   open: boolean;
   setOpen: Dispatch<SetStateAction<boolean>>;
   select: EventInfo;
+  setSelect: Dispatch<SetStateAction<EventInfo>>;
 }
 
-export const UserDetails = ({ open, setOpen, select }: UserDetailsProps) => {
+export const UserDetails = ({ open, setOpen, select, setSelect }: UserDetailsProps) => {
   if (!open) return null;
-  const { eventId, groundsDate, paymentType, userName, payment, grounds } = select;
+  const { eventId, groundsDate, paymentType, userName, payment, grounds, userId } = select;
+
+  const { groupId } = useParams();
+
+  const { data } = useGroupDetail({ groupId: Number(groupId) });
 
   const [openUpdateModal, setOpenUpdateModal] = useState(false);
   const [openUpdateStatusModal, setOpenUpdateStatusModal] = useState(false);
   const [openDeleteDetailModal, setOpenDeleteDetailModal] = useState(false);
+  const user = useRecoilValue(userState);
 
   const statusList: { title: PaymentType }[] = [{ title: '미납' }, { title: '완납' }, { title: '확인필요' }];
   const [newStatus, setNewStatus] = useState<PaymentType>('');
@@ -71,6 +81,19 @@ export const UserDetails = ({ open, setOpen, select }: UserDetailsProps) => {
     setOpenDeleteDetailModal(false);
   };
 
+  const closeUserDetails = () => {
+    setOpen(false);
+    setSelect({
+      userId: 0,
+      eventId: 0,
+      groundsDate: '',
+      paymentType: 'non',
+      userName: '',
+      payment: 0,
+      grounds: '',
+    });
+  };
+
   useEffect(() => {
     if (newStatus !== '') {
       setOpenUpdateStatusModal(true);
@@ -81,7 +104,7 @@ export const UserDetails = ({ open, setOpen, select }: UserDetailsProps) => {
     <>
       <Style.UserDetailsFrame>
         <Style.Header>
-          <Style.CloseIcon onClick={() => setOpen(false)}>{SYSTEM.CLOSE}</Style.CloseIcon>
+          <Style.CloseIcon onClick={closeUserDetails}>{SYSTEM.CLOSE}</Style.CloseIcon>
           <span>닫기</span>
         </Style.Header>
         <Style.UserDetailsContent>
@@ -98,7 +121,7 @@ export const UserDetails = ({ open, setOpen, select }: UserDetailsProps) => {
             </Label>
             <Label title="납부여부" width="80px">
               <DropBox
-                color="white"
+                color={user.userId === userId || data?.content.isAdmin ? 'white' : 'disabled'}
                 boxWidth="112px"
                 width={112}
                 setType={setNewStatus}
@@ -119,14 +142,16 @@ export const UserDetails = ({ open, setOpen, select }: UserDetailsProps) => {
             </Style.TextArea>
           </Label>
         </Style.UserDetailsContent>
-        <Style.Footer>
-          <Button onClick={handleDeleteDetailModal} color="white">
-            삭제
-          </Button>
-          <Button onClick={handleUpdateModal} color="black">
-            수정
-          </Button>
-        </Style.Footer>
+        {data?.content.isAdmin && (
+          <Style.Footer>
+            <Button onClick={handleDeleteDetailModal} color="white">
+              삭제
+            </Button>
+            <Button onClick={handleUpdateModal} color="black">
+              수정
+            </Button>
+          </Style.Footer>
+        )}
       </Style.UserDetailsFrame>
       {openUpdateStatusModal && (
         <TwoButtonModal
