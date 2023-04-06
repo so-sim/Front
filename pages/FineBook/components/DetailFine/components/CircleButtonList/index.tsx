@@ -14,9 +14,16 @@ interface CircleButtonListProps extends CircleDropButtonProps {
 }
 
 export const CircleButtonList = ({ status, statusList, eventId, setOpenListEventId, isAdmin }: CircleButtonListProps) => {
-  const adminStatusList = [getStatusText(status), ...statusList.filter((element) => element !== getStatusText(status))];
+  const adminStatusList = [
+    getStatusText(status),
+    ...statusList.filter((element) => {
+      if (status === 'con') return element !== getStatusText(status);
 
-  const userStatusList: PaymentType[] = status === 'non' ? [getStatusText(status), '확인필요'] : [];
+      return element !== getStatusText(status) && element !== '확인필요';
+    }),
+  ];
+
+  const userStatusList: PaymentType[] = status === 'non' ? [getStatusText(status), '확인요청'] : [];
 
   const dropdownList = isAdmin ? adminStatusList : userStatusList;
 
@@ -68,7 +75,7 @@ export const CircleButtonList = ({ status, statusList, eventId, setOpenListEvent
                 }
               }}
             >
-              <CircleDropButton status={paymentType} />
+              <CircleDropButton status={paymentType} isAdmin={isAdmin} />
             </Style.CircleButtonBox>
           );
         })}

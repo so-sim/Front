@@ -22,8 +22,6 @@ export const DropDownWrapper = ({ detail, openListEventId, setOpenListEventId }:
   const { data } = useGroupDetail({ groupId: Number(groupId) });
   const user = useRecoilValue(userState);
 
-  console.log(data?.content.isAdmin);
-
   const isValidBeforSelect = data?.content.isAdmin || (!data?.content.isAdmin && detail.userId === user.userId && detail.paymentType === 'non');
 
   const isValidOpenDropdown =
@@ -43,7 +41,7 @@ export const DropDownWrapper = ({ detail, openListEventId, setOpenListEventId }:
       {isValidOpenDropdown ? (
         <CircleButtonList isAdmin={data?.content.isAdmin || false} setOpenListEventId={setOpenListEventId} status={paymentType} statusList={statusList} eventId={eventId} />
       ) : (
-        <CircleDropButton status={paymentType} />
+        <CircleDropButton status={paymentType} isAdmin={data?.content.isAdmin} />
       )}
     </Style.DropDownWrapper>
   );

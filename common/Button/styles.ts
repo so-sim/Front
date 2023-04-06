@@ -26,7 +26,7 @@ export const Button = styled.button<ButtonProps>`
       primary: theme.colors.secondary_100,
       disabled: theme.colors.secondary_700,
       black: theme.colors.secondary_100,
-      white: theme.colors.secondary_700,
+      white: theme.colors.secondary_900,
       ['white-disabled']: theme.colors.secondary_600,
     };
     return colors[color ?? 'primary'];

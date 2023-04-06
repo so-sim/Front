@@ -53,7 +53,7 @@ const MemberListItem: FC<MemberListItemProps> = ({ nickname }) => {
       <Style.MemberContainer>
         <Style.Flex>
           <div>{USER.PERSON_XL}</div>
-          <span>{nickname}</span>
+          <Style.Nickname>{nickname}</Style.Nickname>
         </Style.Flex>
         {groupData?.content.isAdmin && (
           <Style.SVG ref={dropDownRef}>

@@ -13,11 +13,13 @@ export const Container = styled.div`
 
 export const Title = styled.div`
   display: flex;
+  align-items: center;
   gap: 12px;
   padding: 12px 24px;
   h2 {
     font-size: 28px;
     color: ${({ theme }) => theme.colors.secondary_900};
+    ${({ theme }) => theme.font.headline};
   }
 `;
 
@@ -48,17 +50,17 @@ export const AdminContainer = styled.div`
   align-items: center;
   gap: 12px;
   font-weight: 600;
-  font-size: 18px;
   border-bottom: 1px solid ${({ theme }) => theme.colors.neutral_300_b};
+  ${({ theme }) => theme.font.subhead_03};
 `;
 
 export const Tage = styled.div`
   color: ${({ theme }) => theme.colors.white};
   display: flex;
   align-items: center;
-  font-size: 14px;
   padding: 4px 14px;
   height: 26px;
   background-color: ${({ theme }) => theme.colors.secondary_800};
   border-radius: 32px;
+  ${({ theme }) => theme.font.subhead_01};
 `;

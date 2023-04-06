@@ -29,6 +29,8 @@ export const NotFoundList = styled.div`
   align-items: center;
   height: 220px;
   width: 100%;
+  color: ${({ theme }) => theme.colors.secondary_600};
+  ${({ theme }) => theme.font.headline}
 `;
 
 export const Element = styled.span<{ hasEllipsis: boolean }>`

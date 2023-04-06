@@ -11,11 +11,13 @@ export const Header = styled.header`
 `;
 
 export const HeaderLogo = styled.span`
+  height: 32px;
   cursor: pointer;
 `;
 
 export const HeaderLeft = styled.span`
   display: flex;
+  align-items: center;
   margin-left: 12px;
 `;
 
@@ -27,7 +29,7 @@ export const HeaderRight = styled.span`
 export const Logo = styled.span`
   display: flex;
   align-items: center;
-  height: 40px;
+  height: 32px;
   margin-right: 40px;
 `;
 
@@ -42,6 +44,8 @@ export const NavSection = styled.div`
 `;
 
 export const GNBLink = styled.a`
+  ${({ theme }) => theme.font.subhead_02};
+
   cursor: pointer;
 `;
 

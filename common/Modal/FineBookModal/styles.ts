@@ -16,6 +16,7 @@ export const TextArea = styled.textarea`
   padding: 8px 12px;
   overflow: hidden;
   resize: none;
+  ${({ theme }) => theme.font.body_02}
 
   &:focus {
     outline: none;
@@ -24,6 +25,7 @@ export const TextArea = styled.textarea`
 
 export const Length = styled.span`
   color: ${({ theme }) => theme.colors.secondary_500};
+  ${({ theme }) => theme.font.caption};
   width: 100%;
   display: flex;
   justify-content: flex-end;

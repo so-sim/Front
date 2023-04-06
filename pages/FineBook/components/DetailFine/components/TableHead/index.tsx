@@ -52,7 +52,7 @@ export const TableHead: FC<TableHeadProps> = ({ dateFilter, setDateFilter }) => 
   return (
     <Style.TableHead>
       <Style.Element>날짜</Style.Element>
-      <Style.Element onClick={handlePaymentDropDown} ref={paymentTypeDropDownRef}>
+      <Style.PointerElement onClick={handlePaymentDropDown} ref={paymentTypeDropDownRef}>
         <span>납부여부</span>
         <Style.Arrow>{ARROW.DOWN_SM}</Style.Arrow>
         {openPaymentTypeDropdown && (
@@ -66,8 +66,8 @@ export const TableHead: FC<TableHeadProps> = ({ dateFilter, setDateFilter }) => 
             dropDownRef={paymentTypeDropDownRef}
           />
         )}
-      </Style.Element>
-      <Style.Element ref={memberDropDownRef} onClick={handleMemeberDropDown}>
+      </Style.PointerElement>
+      <Style.PointerElement ref={memberDropDownRef} onClick={handleMemeberDropDown}>
         <span>팀원</span>
         <Style.Arrow>{ARROW.DOWN_SM}</Style.Arrow>
         {adminNickname && participants && openMemberDropdown && (
@@ -81,7 +81,7 @@ export const TableHead: FC<TableHeadProps> = ({ dateFilter, setDateFilter }) => 
             direction="right"
           />
         )}
-      </Style.Element>
+      </Style.PointerElement>
       <Style.Element>금액</Style.Element>
       <Style.Element>사유</Style.Element>
     </Style.TableHead>

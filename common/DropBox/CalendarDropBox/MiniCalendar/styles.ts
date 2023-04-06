@@ -42,6 +42,9 @@ export const Day = styled.div<{ isSunday: boolean; isSelected?: boolean; isOther
   ${({ theme }) => theme.font.subhead_02}
   background-color: ${({ theme, isSelected }) => isSelected && theme.colors.neutral_400_b};
   color: ${({ theme, isSunday, isOtherMonth }) => (isOtherMonth ? theme.colors.secondary_400 : isSunday ? theme.colors.system_red_200 : theme.colors.secondary_900)};
+  &:hover {
+    background-color: ${({ theme }) => theme.colors.neutral_400_b};
+  }
 `;
 
 export const DateTitle = styled.div`

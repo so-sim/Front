@@ -10,15 +10,19 @@ export const UserDetailsFrame = styled.div`
   right: 0;
   border-left: gray;
   height: calc(100% - 68px);
+  border-left: 2px solid ${({ theme }) => theme.colors.neutral_400_b};
 `;
 
 export const Header = styled.div`
   display: flex;
   align-items: center;
-  padding: 12px 48px;
+  padding: 12px 40px;
   border-bottom: 2px solid ${({ theme }) => theme.colors.neutral_200_b};
   div {
     height: 24px;
+  }
+  & > span {
+    ${({ theme }) => theme.font.subhead_02};
   }
 `;
 

@@ -6,6 +6,8 @@ export const getStatusIcon = (status: string) => {
     case '미납':
       return CIRCLE_DROP.RED;
     case '확인필요':
+    case '확인요청':
+    case '확인중':
       return CIRCLE_DROP.YELLOW;
     case '완납':
       return CIRCLE_DROP.BLUE;
@@ -30,6 +32,8 @@ export const getStatusCode = (status: PaymentType) => {
     case '미납':
       return 'non';
     case '확인필요':
+    case '확인요청':
+    case '확인중':
       return 'con';
     case '완납':
       return 'full';
