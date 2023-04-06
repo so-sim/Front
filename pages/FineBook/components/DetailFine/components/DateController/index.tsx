@@ -1,4 +1,4 @@
-import { Dispatch, FC, SetStateAction, useEffect, useState } from 'react';
+import { Dispatch, FC, SetStateAction, useEffect, useRef, useState } from 'react';
 import { ARROW } from '@/assets/icons/Arrow';
 import Button from '@/common/Button';
 import * as Style from './styles';
@@ -23,6 +23,7 @@ interface DateControllerProps {
 export const DateController: FC<DateControllerProps> = ({ mode, setMode, setOpenAddModal, setDateFilter }) => {
   const { groupId } = useParams();
   const { data: groupData } = useGroupDetail({ groupId: Number(groupId) });
+  const dropDownRef = useRef<HTMLButtonElement>(null);
 
   const [{ baseDate, week }, setSelectedDate] = useRecoilState(dateState);
 
@@ -86,6 +87,7 @@ export const DateController: FC<DateControllerProps> = ({ mode, setMode, setOpen
               return (
                 <Style.FilterButton
                   isActive={mode === btn.mode}
+                  ref={dropDownRef}
                   onClick={() => {
                     setOpenWeeklyFilterDrop((prev) => !prev);
                     if (mode === btn.mode) return;
@@ -96,7 +98,15 @@ export const DateController: FC<DateControllerProps> = ({ mode, setMode, setOpen
                   <span>{btn.text}</span>
                   {btn.mode === 'week' && mode === 'week' && openWeeklyFilterDrop && (
                     <div style={{ position: 'relative', left: '1px' }}>
-                      <DropDown width={60} align="center" setState={setSelectedWeek} list={customedWeek(baseDate)} top="7px" onClose={() => setOpenWeeklyFilterDrop(false)} />
+                      <DropDown
+                        width={60}
+                        align="center"
+                        setState={setSelectedWeek}
+                        list={customedWeek(baseDate)}
+                        top="7px"
+                        onClose={() => setOpenWeeklyFilterDrop(false)}
+                        dropDownRef={dropDownRef}
+                      />
                     </div>
                   )}
                 </Style.FilterButton>

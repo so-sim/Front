@@ -9,12 +9,10 @@ export const TableHead = styled.div`
   background-color: ${({ theme }) => theme.colors.neutral_200_b};
   margin-bottom: 4px;
   white-space: nowrap;
-  & > span {
-    padding: 8px 16px;
-  }
 `;
 
-export const Element = styled.span`
+export const Element = styled.div`
+  padding: 8px 16px;
   display: flex;
   align-items: center;
   position: relative;
