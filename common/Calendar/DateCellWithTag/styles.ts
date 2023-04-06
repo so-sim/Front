@@ -4,12 +4,15 @@ export const DateCell = styled.div`
   cursor: pointer;
   width: 100%;
   position: relative;
-  display: inline-flex;
+  display: flex;
   flex-direction: column;
   padding: 8px;
   border: 1px solid ${({ theme }) => theme.colors.neutral_400_b};
   gap: 4px;
   min-height: 118px;
+  overflow: hidden;
+  white-space: nowrap;
+  z-index: 1;
 `;
 
 interface DateProps {
@@ -45,9 +48,8 @@ interface TagProps {
 }
 
 export const Tag = styled.div<TagProps>`
-  display: inline-flex;
+  display: flex;
   width: fit-content;
-  white-space: nowrap;
   font-size: 16px;
   gap: 4px;
   text-align: center;

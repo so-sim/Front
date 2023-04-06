@@ -28,7 +28,7 @@ export interface DateFilter {
 const DetailFine = () => {
   const param = useParams<{ groupId: string }>();
 
-  const [openAddModal, setOpenAddModal] = useState(true);
+  const [openAddModal, setOpenAddModal] = useState(false);
   const [openUserDetails, setOpenUserDetails] = useState(false);
   const [select, setSelect] = useState<EventInfo>({
     userId: 0,
