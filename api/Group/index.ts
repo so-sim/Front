@@ -41,7 +41,7 @@ export const joinGroup = async (info: GroupNickname & GroupId): Promise<ServerRe
 
 export const changeAdmin = async (info: GroupNickname & GroupId): Promise<ServerResponse> => {
   const { nickname, groupId } = info;
-  const { data } = await api.patch(`/api/group/admin/${groupId}`, { nickname });
+  const { data } = await api.patch(`/api/group/${groupId}/admin`, { nickname });
   return data;
 };
 
