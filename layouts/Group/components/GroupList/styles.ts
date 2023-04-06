@@ -8,7 +8,6 @@ export const Layout = styled.div`
   background-color: ${({ theme }) => theme.colors.neutral_200_b};
   border-right: 2px solid ${({ theme }) => theme.colors.neutral_200_b};
   padding: 24px;
-  gap: 12px;
   overflow: auto;
 `;
 
@@ -22,6 +21,9 @@ export const EachGroup = styled.button`
   border-radius: 8px;
   color: white;
   cursor: pointer;
+  & > span {
+    ${({ theme }) => theme.font.subhead_01}
+  }
 `;
 
 interface CoverProps {
@@ -29,6 +31,7 @@ interface CoverProps {
 }
 export const Groups = styled(NavLink)`
   position: relative;
+  margin-bottom: 12px;
 `;
 
 export const Cover = styled(EachGroup)<CoverProps>`

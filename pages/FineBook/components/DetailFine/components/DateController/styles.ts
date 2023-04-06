@@ -26,6 +26,7 @@ export const TodayButton = styled.button`
   width: 56px;
   background-color: ${({ theme }) => theme.colors.neutral_200_b};
   border: 2px solid ${({ theme }) => theme.colors.neutral_400_b};
+  color: ${({ theme }) => theme.colors.secondary_900};
   border-radius: 4px;
   ${({ theme }) => theme.font.subhead_02}
 `;
@@ -36,6 +37,7 @@ export const FilterButton = styled.button<{ isActive: boolean }>`
   ${({ theme }) => theme.font.subhead_01}
   border-right: 2px solid ${({ theme }) => theme.colors.neutral_400_b};
   background-color: ${({ theme, isActive }) => (isActive ? theme.colors.neutral_200_b : '')};
+  color: ${({ theme }) => theme.colors.secondary_900};
   &:hover {
     background-color: ${({ theme }) => theme.colors.neutral_200_b};
   }

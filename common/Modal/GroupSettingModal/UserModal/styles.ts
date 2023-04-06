@@ -10,6 +10,7 @@ export const Flex = styled.div`
 `;
 
 export const SubTitle = styled.span`
+  ${({ theme }) => theme.font.subhead_03};
   white-space: nowrap;
   margin-right: 20px;
 `;
@@ -48,8 +49,7 @@ export const QuitButton = styled.button`
   white-space: nowrap;
   display: flex;
   align-items: center;
-  height: 28px;
-  margin: 2px 0;
+  height: 32px;
   padding: 6px 12px;
   border: 2px solid ${({ theme }) => theme.colors.neutral_400_b};
   border-radius: 2px;

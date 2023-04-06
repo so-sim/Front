@@ -108,7 +108,7 @@ export const FineBookModal = ({ setOpen, eventId, select }: ModalProps) => {
   const statusList: { title: PaymentType }[] = [{ title: '미납' }, { title: '완납' }, { title: '확인필요' }];
 
   return (
-    <Modal.Frame width="448px" height={type === 'create' ? '466px' : '412px'} onClick={() => setOpen(false)}>
+    <Modal.Frame width="448px" height={type === 'create' ? '452px' : '412px'} onClick={() => setOpen(false)}>
       <Modal.Header onClick={() => setOpen(false)}>{type === 'create' ? '내역 추가하기' : '상세 내역 수정'}</Modal.Header>
       <div style={{ display: 'flex', flexDirection: 'column', width: '100%' }}>
         <Style.Row>

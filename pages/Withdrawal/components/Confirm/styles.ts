@@ -22,6 +22,7 @@ export const Label = styled.label`
   margin-bottom: 40px;
   input {
     margin-right: 8px;
+    ${({ theme }) => theme.font.subhead_03};
   }
   span {
     color: ${({ theme }) => theme.colors.red_400};

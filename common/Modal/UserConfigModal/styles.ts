@@ -4,6 +4,7 @@ export const Flex = styled.div`
   display: flex;
 `;
 export const SubTitle = styled.span`
+  ${({ theme }) => theme.font.subhead_03};
   white-space: nowrap;
   margin-right: 20px;
 `;
@@ -31,6 +32,11 @@ export const Text = styled.span`
   display: block;
   width: 100%;
   height: 32px;
+  ${({ theme }) => theme.font.subhead_02}
+`;
+
+export const Email = styled(Text)`
+  ${({ theme }) => theme.font.body_01}
 `;
 
 export const Kakao = styled.div`

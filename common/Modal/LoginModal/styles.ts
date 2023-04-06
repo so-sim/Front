@@ -9,10 +9,6 @@ export const Footer = styled.div`
   cursor: pointer;
   color: ${({ theme }) => theme.colors.secondary_500};
   ${({ theme }) => theme.font.caption};
-
-  &:hover {
-    text-decoration: underline;
-  }
 `;
 
 export const LoginBlock = styled.div`
@@ -26,4 +22,10 @@ export const LoginBlock = styled.div`
 export const Text = styled.span`
   color: ${({ theme }) => theme.colors.secondary_600};
   margin-left: 4px;
+`;
+
+export const LinkText = styled(Text)`
+  &:hover {
+    text-decoration: underline;
+  }
 `;

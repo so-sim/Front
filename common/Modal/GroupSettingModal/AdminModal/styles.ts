@@ -33,7 +33,7 @@ export const ButtonFrame = styled.div`
 
 export const DeleteButton = styled.button`
   ${({ theme }) => theme.font.subhead_01};
-  padding: 8px 14px;
+  padding: 5px 12px;
   border-radius: 4px;
   margin-top: 12px;
   border: 2px solid ${({ theme }) => theme.colors.neutral_400_b};
@@ -61,8 +61,8 @@ export const QuitButton = styled.button`
   white-space: nowrap;
   display: flex;
   align-items: center;
-  height: 28px;
-  margin: 2px 0;
+  height: 32px;
+  /* margin: 2px 0; */
   padding: 6px 12px;
   border: 2px solid ${({ theme }) => theme.colors.neutral_400_b};
   border-radius: 2px;

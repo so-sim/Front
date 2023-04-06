@@ -8,7 +8,7 @@ export const Header = styled.header`
   align-items: center;
   text-align: center;
   justify-content: space-between;
-  border: 2px solid ${({ theme }) => theme.colors.neutral_400_b};
+  border-bottom: 2px solid ${({ theme }) => theme.colors.neutral_300_b};
   div {
     cursor: pointer;
   }

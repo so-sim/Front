@@ -18,12 +18,15 @@ export const Element = styled.span`
   display: flex;
   align-items: center;
   position: relative;
-  cursor: pointer;
   &,
   & > * {
     ${({ theme }) => theme.font.subhead_02}
     color: ${({ theme }) => theme.colors.secondary_900}
   }
+`;
+
+export const PointerElement = styled(Element)`
+  cursor: pointer;
 `;
 
 export const Arrow = styled.span`

@@ -16,4 +16,5 @@ export const Desc = styled.div`
   white-space: pre;
   margin-top: 12px;
   margin-bottom: 12px;
+  ${({ theme }) => theme.font.body_03}
 `;

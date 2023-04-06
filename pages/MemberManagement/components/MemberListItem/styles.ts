@@ -11,6 +11,10 @@ export const MemberContainer = styled.div`
   border-bottom: 1px solid ${({ theme }) => theme.colors.neutral_300_b};
 `;
 
+export const Nickname = styled.span`
+  ${({ theme }) => theme.font.subhead_03};
+`;
+
 export const Flex = styled.div`
   display: flex;
   align-items: center;
