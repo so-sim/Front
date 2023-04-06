@@ -2,7 +2,6 @@ import styled from '@emotion/styled';
 
 export const DetailFineFrame = styled.section`
   border-left: 2px solid ${({ theme }) => theme.colors.neutral_200_b};
-  min-width: 780px;
 `;
 
 export const DetailContent = styled.div`
