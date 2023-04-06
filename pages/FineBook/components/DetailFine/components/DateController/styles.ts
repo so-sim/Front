@@ -48,11 +48,11 @@ export const FilterButton = styled.button<{ isActive: boolean }>`
   }
 `;
 
-export const FilterWrapper = styled.button`
+export const FilterWrapper = styled.div`
   border: 2px solid ${({ theme }) => theme.colors.neutral_400_b};
   border-radius: 12px;
-  /* overflow: hidden; */
   position: relative;
+  white-space: nowrap;
 `;
 
 export const Block = styled.span`

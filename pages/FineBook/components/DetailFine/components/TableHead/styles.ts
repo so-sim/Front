@@ -8,6 +8,7 @@ export const TableHead = styled.div`
   border-radius: 4px;
   background-color: ${({ theme }) => theme.colors.neutral_200_b};
   margin-bottom: 4px;
+  white-space: nowrap;
   & > span {
     padding: 8px 16px;
   }
