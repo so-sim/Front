@@ -101,12 +101,11 @@ export const AdminModal: FC<ModalHandlerProps> = ({ modalHandler }) => {
               <Label title="커버 색상" flexDirection="column">
                 <GroupColorList value={coverColor} onChange={setCoverColor} />
               </Label>
-              <Label title="모임 탈퇴" flexDirection="column">
-                <Style.WithDrwal>
-                  <Style.GroupName>{groupData?.content.title}</Style.GroupName>
-                  <Style.QuitButton onClick={handleGroupWithdrawalModal}>탈퇴</Style.QuitButton>
-                </Style.WithDrwal>
-              </Label>
+              <Label title="모임 탈퇴" flexDirection="column" />
+              <Style.WithDrwal>
+                <Style.GroupName>{groupData?.content.title}</Style.GroupName>
+                <Style.QuitButton onClick={handleGroupWithdrawalModal}>탈퇴</Style.QuitButton>
+              </Style.WithDrwal>
               <Style.Flex>
                 <Style.DeleteButton onClick={handleGroupDeleteModal}>모임 삭제</Style.DeleteButton>
               </Style.Flex>

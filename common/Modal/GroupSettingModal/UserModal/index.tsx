@@ -56,12 +56,11 @@ export const UserModal: FC<ModalHandlerProps> = ({ modalHandler }) => {
               <Label title="내 이름" flexDirection="column">
                 <Input value={myName} errorText={errorText} isValid={isValid(myName) && !isError} onChange={setMyName} maxLength={20} />
               </Label>
-              <Label title="모임 탈퇴" flexDirection="column">
-                <Style.WithDrwal>
-                  <Style.GroupName>{groupData?.content.title}</Style.GroupName>
-                  <Style.QuitButton onClick={handleGroupWithdrawalModal}>탈퇴</Style.QuitButton>
-                </Style.WithDrwal>
-              </Label>
+              <Label title="모임 탈퇴" flexDirection="column" />
+              <Style.WithDrwal>
+                <Style.GroupName>{groupData?.content.title}</Style.GroupName>
+                <Style.QuitButton onClick={handleGroupWithdrawalModal}>탈퇴</Style.QuitButton>
+              </Style.WithDrwal>
             </Style.InputContainer>
           </Style.Flex>
         </Modal.Body>
