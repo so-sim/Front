@@ -1,6 +1,6 @@
 type ServerPaymentType = 'non' | 'con' | 'full';
 
-export type PaymentType = '미납' | '확인필요' | '완납' | '' | ServerPaymentType;
+export type PaymentType = '미납' | '확인필요' | '확인요청' | '확인중' | '완납' | '' | ServerPaymentType;
 
 export interface PayMentTpyeCountMap {
   con?: number;

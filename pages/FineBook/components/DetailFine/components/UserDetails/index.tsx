@@ -1,4 +1,4 @@
-import React, { Dispatch, SetStateAction, useEffect, useState } from 'react';
+import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { SYSTEM } from '@/assets/icons/System';
 import { USER } from '@/assets/icons/User';
 import Button from '@/common/Button';
@@ -100,6 +100,26 @@ export const UserDetails = ({ open, setOpen, select, setSelect }: UserDetailsPro
     }
   }, [newStatus]);
 
+  const dropdownStatusList = () => {
+    if (data?.content.isAdmin) {
+      return statusList.filter((status) => {
+        if (newStatus) {
+          return status.title !== newStatus && status.title !== '확인필요';
+        } else {
+          return status.title !== getStatusText(paymentType) && status.title !== '확인필요';
+        }
+      });
+    }
+    if (user.userId === userId) {
+      return statusList.filter((status) => {
+        if (paymentType === 'non') {
+          return status.title === '확인필요';
+        }
+      });
+    }
+    return [];
+  };
+
   return (
     <>
       <Style.UserDetailsFrame>
@@ -121,18 +141,12 @@ export const UserDetails = ({ open, setOpen, select, setSelect }: UserDetailsPro
             </Label>
             <Label title="납부여부" width="80px">
               <DropBox
-                color={user.userId === userId || data?.content.isAdmin ? 'white' : 'disabled'}
+                color={(user.userId === userId && paymentType === 'non' && newStatus !== '확인필요') || data?.content.isAdmin ? 'white' : 'disabled'}
                 boxWidth="112px"
                 width={112}
                 setType={setNewStatus}
                 type={newStatus || getStatusText(paymentType)}
-                dropDownList={statusList.filter((status) => {
-                  if (newStatus) {
-                    return status.title !== newStatus;
-                  } else {
-                    return status.title !== getStatusText(paymentType);
-                  }
-                })}
+                dropDownList={dropdownStatusList()}
               />
             </Label>
           </Style.Row>
