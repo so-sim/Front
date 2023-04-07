@@ -4,6 +4,9 @@ import { Paragraph } from '../Paragraph';
 import { useState } from 'react';
 import { AuthModal } from '@/common/Modal/LoginModal';
 import { GNB_LINK } from '@/constants/ServiceLink';
+import { useRecoilValue } from 'recoil';
+import { userState } from '@/store/userState';
+import UserConfig from './UserConfig';
 
 const GNBLinkList = [
   { title: '서비스 소개', href: GNB_LINK.SERVICE, id: 'introduction' },
@@ -14,6 +17,8 @@ const GNBLinkList = [
 /** 여기에서 로그인 관련 수행 */
 export const Header = () => {
   const [openModal, setOpenModal] = useState(false);
+
+  const user = useRecoilValue(userState);
 
   const loginModalHandler = () => {
     setOpenModal((prev) => !prev);
@@ -33,9 +38,7 @@ export const Header = () => {
               ))}
             </Style.NavSection>
           </Style.HeaderLeft>
-          <Style.HeaderRight>
-            <Style.Login onClick={loginModalHandler}>로그인/회원가입</Style.Login>
-          </Style.HeaderRight>
+          <Style.HeaderRight>{user.userId === null ? <Style.Login onClick={loginModalHandler}>로그인/회원가입</Style.Login> : <UserConfig />}</Style.HeaderRight>
         </Paragraph>
       </Style.Header>
       {openModal && <AuthModal modalHandler={loginModalHandler} />}

@@ -75,7 +75,7 @@ export const AdminModal: FC<ModalHandlerProps> = ({ modalHandler }) => {
     if (!myNickname) return;
     setTitle(groupData?.content.title);
     setCoverColor(groupData.content.coverColor);
-    setType(groupData.content.groupType);
+    setType(groupData?.content.type);
     setNickname(myNickname.content.nickname);
   }, [groupData?.content.title, myNickname?.content.nickname]);
 
@@ -96,7 +96,7 @@ export const AdminModal: FC<ModalHandlerProps> = ({ modalHandler }) => {
                 <Input value={nickname} isValid={isValid(nickname)} onChange={setNickname} maxLength={15} />
               </Label>
               <Label title="모임 유형" flexDirection="column">
-                <DropBox dropDownList={DROPDOWN_LIST} type={type} setType={setType} />
+                <DropBox dropDownList={DROPDOWN_LIST} type={type} setType={setType} boxWidth="170px" />
               </Label>
               <Label title="커버 색상" flexDirection="column">
                 <GroupColorList value={coverColor} onChange={setCoverColor} />
