@@ -22,7 +22,7 @@ export interface GroupDetail {
   adminNickname: string;
   groupId: number;
   coverColor: GroupColor;
-  groupType: string;
+  type: string;
   size: number;
 }
 
