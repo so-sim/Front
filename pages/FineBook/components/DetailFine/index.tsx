@@ -11,9 +11,8 @@ import { UserDetails } from './components/UserDetails';
 import * as Style from './styles';
 import { useRecoilValue } from 'recoil';
 import { dateState } from '@/store/dateState';
-import dayjs from 'dayjs';
 import { useParams } from 'react-router-dom';
-import { DateFilterProperty } from '@/pages/FineBook/utils/dateFilter';
+import { dateFilterMode, DateFilterProperty, updateDateFilterByMode } from '@/pages/FineBook/utils/dateFilter';
 
 export type FilterMode = 'month' | 'week' | 'day';
 
@@ -41,40 +40,16 @@ const DetailFine = () => {
   });
 
   const [page, setPage] = useState(0);
-  const [dateFilter, setDateFilter] = useState<DateFilterProperty>({});
   const [mode, setMode] = useState<FilterMode>('day');
+  const [dateFilter, setDateFilter] = useState<DateFilterProperty>({});
 
   const calendarDate = useRecoilValue(dateState);
   const { data } = useGetDetailList(dateFilter, calendarDate.baseDate, { groupId: Number(param.groupId) });
 
   useEffect(() => {
-    if (calendarDate.selectedDate !== null) setMode('day');
-    if (calendarDate.week !== null) setMode('week');
-    if (calendarDate.selectedDate === null && calendarDate.week === null) setMode('month');
-
-    const [year, month, day] = dayjs(calendarDate.baseDate)
-      .format('YYYY.MM.DD')
-      .split('.')
-      .map((property) => Number(property));
-
-    if (mode === 'week') {
-      setDateFilter((prev) => {
-        const { day, ...rest } = prev;
-        return { ...rest, year, month, week: calendarDate.week, page: 0 };
-      });
-    }
-    if (mode === 'day') {
-      setDateFilter((prev) => {
-        const { week, ...rest } = prev;
-        return { ...rest, year, month, day, page: 0 };
-      });
-    }
-    if (mode === 'month') {
-      setDateFilter((prev) => {
-        const { week, day, ...rest } = prev;
-        return { ...rest, year, month, page: 0 };
-      });
-    }
+    setPage(0);
+    setMode(() => dateFilterMode(calendarDate));
+    setDateFilter((prev) => updateDateFilterByMode(mode, prev, calendarDate));
   }, [calendarDate.selectedDate, calendarDate.baseDate, calendarDate.week, mode]);
 
   useEffect(() => {
