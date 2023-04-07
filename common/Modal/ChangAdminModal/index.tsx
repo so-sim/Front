@@ -21,8 +21,8 @@ const ChangeAdminModal: FC<ChangeAdminModalProps> = ({ modalHandler, onClickConf
         <Button color="white" width="100%" onClick={modalHandler}>
           취소
         </Button>
-        <Button color="black" width="100%" onClick={onClickConfirm}>
-          확인
+        <Button color="black" width="100%" onClick={onClickConfirm} id="toss_manager_modal">
+          넘겨주기
         </Button>
       </Modal.Footer>
     </Modal.Frame>

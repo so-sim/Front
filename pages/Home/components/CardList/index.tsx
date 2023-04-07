@@ -46,7 +46,7 @@ export const CardList = () => {
         ))}
         <div ref={ref} />
       </Style.CardList>
-      {showCreateGroupModal && <CreateGroupModal modalHandler={handleCreateGroupModal} />}
+      {showCreateGroupModal && <CreateGroupModal modalHandler={handleCreateGroupModal} id="create_main_modal" />}
       {showLoginModal && <AuthModal modalHandler={handleCreateGroupModal} />}
     </>
   );

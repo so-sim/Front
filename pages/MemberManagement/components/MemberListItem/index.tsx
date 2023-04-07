@@ -12,7 +12,7 @@ interface MemberListItemProps {
 }
 
 const DropDonwList = [
-  { title: '총무 넘기기', svg: SYSTEM.SETTING_SM },
+  { title: '총무 넘기기', svg: SYSTEM.SETTING_SM, id: 'toss_manager' },
   // { title: '퇴출', svg: SYSTEM.LOGOUT },
 ];
 

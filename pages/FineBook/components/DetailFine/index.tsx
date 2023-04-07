@@ -11,23 +11,17 @@ import { UserDetails } from './components/UserDetails';
 import * as Style from './styles';
 import { useRecoilValue } from 'recoil';
 import { dateState } from '@/store/dateState';
-import { useParams } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 import { dateFilterMode, DateFilterProperty, updateDateFilterByMode } from '@/pages/FineBook/utils/dateFilter';
 
 export type FilterMode = 'month' | 'week' | 'day';
 
-export type Status = 'none' | 'checking' | 'complete';
-
-export interface DateFilter {
-  type: string;
-  value: string;
-  page: number;
-}
-
 const DetailFine = () => {
   const param = useParams<{ groupId: string }>();
 
-  const [openAddModal, setOpenAddModal] = useState(false);
+  const location = useLocation();
+
+  const [openAddModal, setOpenAddModal] = useState(location.state || false);
   const [openUserDetails, setOpenUserDetails] = useState(false);
   const [select, setSelect] = useState<EventInfo>({
     userId: 0,
@@ -56,6 +50,10 @@ const DetailFine = () => {
     setDateFilter((prev) => ({ ...prev, page }));
   }, [page]);
 
+  useEffect(() => {
+    window.history.replaceState(null, '');
+  }, []);
+
   return (
     <>
       <Style.DetailFineFrame>
@@ -63,7 +61,7 @@ const DetailFine = () => {
         <Style.DetailContent>
           <DateController mode={mode} setMode={setMode} setOpenAddModal={setOpenAddModal} dateFilter={dateFilter} setDateFilter={setDateFilter} />
           <TableHead mode={mode} setMode={setMode} dateFilter={dateFilter} setDateFilter={setDateFilter} />
-          <DetailList selectedEventId={select.eventId} details={data?.content.list} page={page} setSelect={setSelect} setOpenUserDetails={setOpenUserDetails} />
+          <DetailList selectedEventId={select.eventId} details={data?.content.list} setSelect={setSelect} setOpenUserDetails={setOpenUserDetails} />
         </Style.DetailContent>
         {Number(data?.content.totalCount) > 16 && <Pagination count={data?.content.totalCount} page={page} setPage={setPage} />}
         <UserDetails open={openUserDetails} setOpen={setOpenUserDetails} select={select} setSelect={setSelect} />

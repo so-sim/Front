@@ -17,9 +17,10 @@ export interface TwoButtonModalProps {
   cancel: ModalButton;
   confirm: ModalButton;
   flexDirection?: 'row' | 'column';
+  id?: string;
 }
 
-export const TwoButtonModal = ({ onClick, title, description, cancel, confirm, flexDirection = 'row', width = '376px', height = '223px' }: TwoButtonModalProps) => {
+export const TwoButtonModal = ({ onClick, title, description, cancel, confirm, flexDirection = 'row', width = '376px', height = '223px', id }: TwoButtonModalProps) => {
   return (
     <Modal.Frame width={width} height={height} onClick={onClick}>
       <Modal.Header>
@@ -32,7 +33,7 @@ export const TwoButtonModal = ({ onClick, title, description, cancel, confirm, f
         <Button width="100%" height="42px" color="white" onClick={cancel.onClick}>
           {cancel.text}
         </Button>
-        <Button width="100%" height="42px" color="black" onClick={confirm.onClick}>
+        <Button width="100%" height="42px" color="black" onClick={confirm.onClick} id={id}>
           {confirm.text}
         </Button>
       </Modal.Footer>

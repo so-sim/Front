@@ -7,12 +7,11 @@ import * as Style from './styles';
 interface DetailListProps {
   selectedEventId: number;
   details?: EventInfo[];
-  page: number;
   setSelect: Dispatch<SetStateAction<EventInfo>>;
   setOpenUserDetails: Dispatch<SetStateAction<boolean>>;
 }
 
-export const DetailList: FC<DetailListProps> = ({ selectedEventId, details, page, setSelect, setOpenUserDetails }) => {
+export const DetailList: FC<DetailListProps> = ({ selectedEventId, details, setSelect, setOpenUserDetails }) => {
   if (details == null) return null;
   if (details.length === 0) return <Style.NotFoundList>내역을 추가해주세요!</Style.NotFoundList>;
 

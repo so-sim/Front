@@ -36,7 +36,7 @@ export const UserDetails = ({ open, setOpen, select, setSelect }: UserDetailsPro
   const [openDeleteDetailModal, setOpenDeleteDetailModal] = useState(false);
   const user = useRecoilValue(userState);
 
-  const statusList: { title: PaymentType }[] = [{ title: '미납' }, { title: '완납' }, { title: '확인필요' }];
+  const statusList: { title: PaymentType; id?: string }[] = [{ title: '미납', id: 'nonpayment_side' }, { title: '완납', id: 'fullpayment_side' }, { title: '확인필요' }];
   const [newStatus, setNewStatus] = useState<PaymentType>('');
 
   const { mutate: update } = useUpdateDetailStatus();

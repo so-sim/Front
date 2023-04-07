@@ -83,12 +83,12 @@ export const updateDateFilterByMode = (mode: FilterMode, prev: DateFilterPropert
     .map((property) => Number(property));
 
   const { day, week, ...rest } = prev;
-
+  console.log(prev);
   switch (mode) {
     case 'week':
       return { ...rest, year, month, week: dateState.week, page: 0 };
     case 'day':
-      return { ...rest, year, month, day, page: 0 };
+      return { ...rest, year, month, day: date, page: 0 };
     case 'month':
       return { ...rest, year, month, page: 0 };
     default:

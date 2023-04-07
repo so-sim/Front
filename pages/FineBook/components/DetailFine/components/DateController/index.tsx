@@ -58,10 +58,10 @@ export const DateController: FC<DateControllerProps> = ({ mode, setMode, setOpen
     setSelectedDate((prev) => updateCalendarByType('decrease', prev, mode));
   };
 
-  const filterButtonList: { mode: FilterMode; text: string }[] = [
-    { mode: 'month', text: '월간' },
-    { mode: 'week', text: '주간' },
-    { mode: 'day', text: '일간' },
+  const filterButtonList: { mode: FilterMode; text: string; id: string }[] = [
+    { mode: 'month', text: '월간', id: 'filter_month' },
+    { mode: 'week', text: '주간', id: 'filter_week_drop' },
+    { mode: 'day', text: '일간', id: 'filter_day' },
   ];
 
   const handleWeeklyFilterDrop = () => {
@@ -79,17 +79,24 @@ export const DateController: FC<DateControllerProps> = ({ mode, setMode, setOpen
       <Style.ControllerFrame>
         <Style.Block>
           <Style.Date mode={mode}>{dateFilterTitle(baseDate, mode, week)}</Style.Date>
-          <Style.ArrowBlock>
-            <Style.ArrowWrapper onClick={decreaseCalendarByMode}>{ARROW.LEFT}</Style.ArrowWrapper>
-            <Style.ArrowWrapper onClick={increaseCalendarByMode}>{ARROW.RIGHT}</Style.ArrowWrapper>
+          <Style.ArrowBlock id="list_skip">
+            <Style.ArrowWrapper onClick={decreaseCalendarByMode} id="list_skip_left">
+              {ARROW.LEFT}
+            </Style.ArrowWrapper>
+            <Style.ArrowWrapper onClick={increaseCalendarByMode} id="list_skip_right">
+              {ARROW.RIGHT}
+            </Style.ArrowWrapper>
           </Style.ArrowBlock>
-          <Style.TodayButton onClick={() => setSelectedDate((prev) => ({ ...prev, baseDate: dayjs(), selectedDate: dayjs(), week: null }))}>오늘</Style.TodayButton>
+          <Style.TodayButton onClick={() => setSelectedDate((prev) => ({ ...prev, baseDate: dayjs(), selectedDate: dayjs(), week: null }))} id="today_list">
+            오늘
+          </Style.TodayButton>
         </Style.Block>
         <Style.Block>
           <Style.FilterWrapper ref={dropDownRef}>
             {filterButtonList.map((btn) => {
               return (
                 <Style.FilterButton
+                  id={btn.id}
                   isActive={mode === btn.mode}
                   onClick={() => {
                     setOpenWeeklyFilterDrop((prev) => !prev);
@@ -117,7 +124,7 @@ export const DateController: FC<DateControllerProps> = ({ mode, setMode, setOpen
             })}
           </Style.FilterWrapper>
           {groupData?.content.isAdmin && (
-            <Button color="black" width="124px" height="40px" onClick={() => setOpenAddModal(true)}>
+            <Button color="black" width="124px" height="40px" onClick={() => setOpenAddModal(true)} id="add_list">
               내역 추가하기
             </Button>
           )}

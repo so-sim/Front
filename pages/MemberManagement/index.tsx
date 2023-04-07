@@ -19,7 +19,7 @@ const MemberManagement = () => {
       <Style.Container>
         <Style.Title>
           <h2>멤버 관리</h2>
-          <Style.ButtonFlex onClick={() => copyInvitationLink(Number(groupId))}>
+          <Style.ButtonFlex onClick={() => copyInvitationLink(Number(groupId))} id="invitation_member">
             {SYSTEM.LINK_BLACK}
             <span>초대링크 복사</span>
           </Style.ButtonFlex>
