@@ -10,15 +10,13 @@ import { getStatusCode } from '@/utils/getStatusIcon';
 import { PaymentType } from '@/types/event';
 
 interface TableHeadProps {
-  mode: FilterMode;
-  setMode: Dispatch<SetStateAction<FilterMode>>;
-  dateFilter: DateFilterProperty;
+  setPage: Dispatch<SetStateAction<number>>;
   setDateFilter: Dispatch<SetStateAction<DateFilterProperty>>;
 }
 
 type PaymentDropdown = PaymentType | '전체';
 
-export const TableHead: FC<TableHeadProps> = ({ dateFilter, setDateFilter }) => {
+export const TableHead: FC<TableHeadProps> = ({ setDateFilter, setPage }) => {
   const param = useParams();
 
   const { data } = useParticipantList({ groupId: Number(param.groupId) });
@@ -44,7 +42,8 @@ export const TableHead: FC<TableHeadProps> = ({ dateFilter, setDateFilter }) => 
   };
 
   useEffect(() => {
-    setDateFilter((prev) => ({ ...prev, member: member === '전체' ? '' : member, paymentType: paymentType === '전체' ? '' : getStatusCode(paymentType) }));
+    setPage(0);
+    setDateFilter((prev) => ({ ...prev, page: 0, member: member === '전체' ? '' : member, paymentType: paymentType === '전체' ? '' : getStatusCode(paymentType) }));
   }, [member, paymentType]);
 
   const paymentTypeList: { title: PaymentDropdown; id?: string }[] = [

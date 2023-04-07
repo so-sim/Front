@@ -61,7 +61,7 @@ const DetailFine = () => {
         <DetailsHeader />
         <Style.DetailContent>
           <DateController mode={mode} setMode={setMode} setOpenAddModal={setOpenAddModal} dateFilter={dateFilter} setDateFilter={setDateFilter} />
-          <TableHead mode={mode} setMode={setMode} dateFilter={dateFilter} setDateFilter={setDateFilter} />
+          <TableHead setPage={setPage} setDateFilter={setDateFilter} />
           <DetailList selectedEventId={select.eventId} details={data?.content.list} setSelect={setSelect} setOpenUserDetails={setOpenUserDetails} />
         </Style.DetailContent>
         {Number(data?.content.totalCount) > 16 && <Pagination count={data?.content.totalCount} page={page} setPage={setPage} />}

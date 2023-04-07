@@ -33,6 +33,7 @@ export const UserDetails = ({ open, setOpen, select, setSelect }: UserDetailsPro
 
   const [openUpdateModal, setOpenUpdateModal] = useState(false);
   const [openUpdateStatusModal, setOpenUpdateStatusModal] = useState(false);
+  const [openRequestStatusModal, setOpenRequestStatusModal] = useState(false);
   const [openDeleteDetailModal, setOpenDeleteDetailModal] = useState(false);
   const user = useRecoilValue(userState);
 
@@ -55,6 +56,18 @@ export const UserDetails = ({ open, setOpen, select, setSelect }: UserDetailsPro
     }
   };
 
+  const requestConfirmStatus = () => {
+    update(
+      { paymentType: 'con', eventId },
+      {
+        onSuccess(data) {
+          setSelect((prev) => ({ ...prev, ...data.content }));
+          setOpenRequestStatusModal(false);
+        },
+      },
+    );
+  };
+
   const deleteDetailInfo = () => {
     deleteDetail(eventId, {
       onSuccess() {
@@ -75,6 +88,10 @@ export const UserDetails = ({ open, setOpen, select, setSelect }: UserDetailsPro
   const cancelUpdateStatus = () => {
     setNewStatus('');
     setOpenUpdateStatusModal(false);
+  };
+
+  const cancelRequestStatus = () => {
+    setOpenRequestStatusModal(false);
   };
 
   const cancelDeleteDetail = () => {
@@ -140,14 +157,18 @@ export const UserDetails = ({ open, setOpen, select, setSelect }: UserDetailsPro
               <DropBox color="disabled" setType={() => undefined} boxWidth="116px" width={116} type={groundsDate.split(' ')[0]} dropDownList={statusList} />
             </Label>
             <Label title="납부여부" width="80px">
-              <DropBox
-                color={(user.userId === userId && paymentType === 'non' && newStatus !== '확인필요') || data?.content.isAdmin ? 'white' : 'disabled'}
-                boxWidth="112px"
-                width={112}
-                setType={setNewStatus}
-                type={newStatus !== '' ? newStatus : paymentType === 'con' && !data?.content.isAdmin ? '확인중' : getStatusText(paymentType)}
-                dropDownList={dropdownStatusList()}
-              />
+              {data?.content.isAdmin ? (
+                <DropBox
+                  color={(user.userId === userId && paymentType === 'non' && newStatus !== '확인필요') || data?.content.isAdmin ? 'white' : 'disabled'}
+                  boxWidth="112px"
+                  width={112}
+                  setType={setNewStatus}
+                  type={newStatus !== '' ? newStatus : paymentType === 'con' && !data?.content.isAdmin ? '확인중' : getStatusText(paymentType)}
+                  dropDownList={dropdownStatusList()}
+                />
+              ) : (
+                <Style.StatusButton status={paymentType}>{paymentType === 'non' ? '미납' : paymentType === 'con' ? '확인 중' : '완납'}</Style.StatusButton>
+              )}
             </Label>
           </Style.Row>
           <Label title="사유" width="30px">
@@ -166,6 +187,13 @@ export const UserDetails = ({ open, setOpen, select, setSelect }: UserDetailsPro
             </Button>
           </Style.Footer>
         )}
+        {!data?.content.isAdmin && user.userId === userId && (
+          <Style.Footer>
+            <Button width="150px" height="42px" color={paymentType === 'non' ? 'black' : 'disabled'} onClick={() => setOpenRequestStatusModal(true)} id="confirming_side">
+              {paymentType === 'non' ? '확인 요청' : paymentType === 'con' ? '요청 완료' : '확인 완료'}
+            </Button>
+          </Style.Footer>
+        )}
       </Style.UserDetailsFrame>
       {openUpdateStatusModal && (
         <TwoButtonModal
@@ -176,6 +204,17 @@ export const UserDetails = ({ open, setOpen, select, setSelect }: UserDetailsPro
           description="납부여부를 변경하시겠습니까?"
           cancel={{ text: '취소', onClick: cancelUpdateStatus }}
           confirm={{ text: '변경하기', onClick: updateStatus }}
+        />
+      )}
+      {openRequestStatusModal && (
+        <TwoButtonModal
+          id="confirming_side_modal"
+          onClick={cancelRequestStatus}
+          title="납부여부 변경"
+          height="240px"
+          description={`총무에게 확인 요청을 보내시겠습니까? \n 요청 후 변경이 불가능합니다.`}
+          cancel={{ text: '취소', onClick: cancelRequestStatus }}
+          confirm={{ text: '요청하기', onClick: requestConfirmStatus }}
         />
       )}
       {openDeleteDetailModal && (

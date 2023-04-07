@@ -1,3 +1,4 @@
+import { PaymentType } from '@/types/event';
 import styled from '@emotion/styled';
 
 export const UserDetailsFrame = styled.div`
@@ -83,4 +84,15 @@ export const Row = styled.div`
 
 export const Text = styled.span`
   ${({ theme }) => theme.font.subhead_04}
+`;
+
+export const StatusButton = styled.button<{ status: PaymentType }>`
+  display: flex;
+  align-items: center;
+  padding: 4px 18px;
+  border-radius: 4px;
+  color: ${({ theme, status }) => (status === 'non' ? theme.colors.red_600 : status === 'con' ? theme.colors.orange_600 : theme.colors.primary_600)};
+  border: 2px solid ${({ theme, status }) => (status === 'non' ? theme.colors.red_600 : status === 'con' ? theme.colors.orange_600 : theme.colors.primary_600)};
+  background-color: ${({ theme, status }) => (status === 'non' ? theme.colors.red_200 : status === 'con' ? theme.colors.orange_200 : theme.colors.blue_200)};
+  ${({ theme }) => theme.font.subhead_02}
 `;
