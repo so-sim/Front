@@ -41,6 +41,8 @@ const GroupLayoutHeader = () => {
 
   const onClickLogOut = () => {
     removeAccessToken();
+    localStorage.removeItem('recoil-persist');
+
     queryClient.setQueryData<GroupListWithIndex>(['groupList'], {
       next: false,
       groupList: [],

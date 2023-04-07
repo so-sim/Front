@@ -59,7 +59,7 @@ const MemberListItem: FC<MemberListItemProps> = ({ nickname }) => {
           <Style.SVG ref={dropDownRef}>
             <div onClick={handleDropDown}>
               {SYSTEM.DOTS}
-              {showDropDown && <DropDown list={DropDonwList} top={'30px'} onClose={handleDropDown} setState={setSelectAction} width={104} dropDownRef={dropDownRef} />}
+              {showDropDown && <DropDown list={DropDonwList} top={'30px'} onClose={handleDropDown} setState={setSelectAction} width={114} dropDownRef={dropDownRef} />}
             </div>
           </Style.SVG>
         )}

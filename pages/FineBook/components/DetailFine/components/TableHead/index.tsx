@@ -69,6 +69,7 @@ export const TableHead: FC<TableHeadProps> = ({ dateFilter, setDateFilter }) => 
             onClose={handlePaymentDropDown}
             direction="right"
             dropDownRef={paymentTypeDropDownRef}
+            id="filter_payment_drop"
           />
         )}
       </Style.PointerElement>
@@ -84,6 +85,7 @@ export const TableHead: FC<TableHeadProps> = ({ dateFilter, setDateFilter }) => 
             top="40px"
             onClose={handleMemeberDropDown}
             direction="right"
+            id="filter_member_drop"
           />
         )}
       </Style.PointerElement>

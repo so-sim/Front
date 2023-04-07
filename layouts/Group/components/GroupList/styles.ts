@@ -7,8 +7,9 @@ export const Layout = styled.div`
   flex-direction: column;
   background-color: ${({ theme }) => theme.colors.neutral_200_b};
   border-right: 2px solid ${({ theme }) => theme.colors.neutral_200_b};
-  padding: 24px;
-  overflow: auto;
+  padding: 24px 0;
+  align-items: center;
+  overflow-y: auto;
 `;
 
 export const EachGroup = styled.button`

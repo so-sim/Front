@@ -169,6 +169,7 @@ export const UserDetails = ({ open, setOpen, select, setSelect }: UserDetailsPro
       </Style.UserDetailsFrame>
       {openUpdateStatusModal && (
         <TwoButtonModal
+          id={getStatusCode(newStatus) === 'full' ? 'fullpayment_side_modal' : ''}
           onClick={cancelUpdateStatus}
           title="납부여부 변경"
           height="215px"

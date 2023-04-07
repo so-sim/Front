@@ -25,7 +25,6 @@ export const DropDownItem = styled.div<DropDownItemProps>`
   justify-content: ${({ align }) => (align === 'center' ? 'center' : 'flex-start')};
   padding: ${(props) => (props.hasSvg ? '4px 8px' : '4px 12px')};
   max-height: 192px;
-  overflow: auto;
   line-height: 7px;
   gap: 4px;
   width: ${(props) => `${props.width - 4}px`};

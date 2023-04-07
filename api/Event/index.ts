@@ -3,7 +3,7 @@ import { GroupId } from '@/types/group';
 import { ServerResponse } from '@/types/serverResponse';
 import api from '..';
 
-export const createEvent = async (detailInfo: Omit<EventInfo, 'eventId'>): Promise<ServerResponse<EvnetId>> => {
+export const createEvent = async (detailInfo: Omit<EventInfo, 'eventId'> & { groupId: number }): Promise<ServerResponse<EvnetId>> => {
   const { data } = await api.post('/api/event/penalty', detailInfo);
   return data;
 };

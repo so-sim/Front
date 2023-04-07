@@ -15,9 +15,10 @@ export interface DropDownProps<T = string> {
   align?: 'center' | 'start';
   direction?: 'left' | 'right';
   dropDownRef: RefObject<HTMLDivElement> | RefObject<HTMLButtonElement>;
+  id?: string;
 }
 
-const DropDown = <T,>({ list, width = 112, align = 'start', setState, onClose, top, direction = 'left', dropDownRef }: DropDownProps<T>) => {
+const DropDown = <T,>({ list, width = 112, align = 'start', setState, onClose, top, direction = 'left', dropDownRef, id }: DropDownProps<T>) => {
   const handleState = (title: T) => {
     setState(title);
     onClose();
@@ -41,7 +42,7 @@ const DropDown = <T,>({ list, width = 112, align = 'start', setState, onClose, t
   }, [dropDownRef.current]);
 
   return (
-    <Style.DorpDownContainer onClick={onClose} top={top} direction={direction}>
+    <Style.DorpDownContainer onClick={onClose} top={top} direction={direction} id={id}>
       {list.map((item) => {
         if (typeof item.title != 'string') return;
         return (

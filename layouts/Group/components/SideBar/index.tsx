@@ -52,7 +52,7 @@ const GroupSideBar = () => {
           <span>기타</span>
           {ETC.map((etc) =>
             etc.link ? (
-              <NavLink to={`/group/${groupId}/${etc.link}`} key={etc.title}>
+              <NavLink to={`/group/${groupId}/${etc.link}`} key={etc.title} id={etc.id}>
                 <Style.Selected isSelected={isSelected(etc.link)} />
                 <Style.Tap key={etc.title}>
                   <div>{etc.svg}</div>
@@ -60,7 +60,7 @@ const GroupSideBar = () => {
                 </Style.Tap>
               </NavLink>
             ) : (
-              <Style.Tap key={etc.title} onClick={handleGroupSettingModal}>
+              <Style.Tap key={etc.title} onClick={handleGroupSettingModal} id={etc.id}>
                 <div>{etc.svg}</div>
                 <span>{etc.title}</span>
               </Style.Tap>
