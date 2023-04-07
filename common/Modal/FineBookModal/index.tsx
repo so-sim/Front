@@ -70,7 +70,7 @@ export const FineBookModal = ({ setOpen, eventId, select }: ModalProps) => {
     create({ userId: user.userId, userName: member, groundsDate, grounds: reason, paymentType: getStatusCode(status), payment: fine });
     setDateState((prev) => ({ ...prev, baseDate: dayjs(groundsDate), selectedDate: dayjs(groundsDate), week: null }));
     if (type === 'continue') {
-      navigate(`/group/${params.groupId}/book/detail`);
+      navigate(`/group/${params.groupId}/book/detail`, { state: true });
       initDetail();
     } else {
       navigate(`/group/${params.groupId}/book/detail`);
@@ -106,7 +106,7 @@ export const FineBookModal = ({ setOpen, eventId, select }: ModalProps) => {
   const participantList = data?.content.nicknameList.map((participant) => ({ title: participant })) || [];
   const memberList = [admin, ...participantList];
 
-  const statusList: { title: PaymentType }[] = [{ title: '미납' }, { title: '완납' }, { title: '확인필요' }];
+  const statusList: { title: PaymentType; id?: string }[] = [{ title: '미납', id: 'nonpayment_modify' }, { title: '완납', id: 'fullpayment_modify' }, { title: '확인필요' }];
 
   return (
     <Modal.Frame width="448px" height={type === 'create' ? '452px' : '412px'} onClick={() => setOpen(false)}>
@@ -155,11 +155,19 @@ export const FineBookModal = ({ setOpen, eventId, select }: ModalProps) => {
               if (isCreate) return createDetail('save');
               updateDetail();
             }}
+            id={isCreate ? 'add_list_normal' : ''}
           >
             {isCreate ? '추가하기' : '저장하기'}
           </Button>
           {isCreate && (
-            <Button color={checkFormIsValid() ? 'white' : 'white-disabled'} width="100%" height="42px" leftIcon={SYSTEM.PLUS_GRAY} onClick={() => createDetail('continue')}>
+            <Button
+              id="add_list_keep"
+              color={checkFormIsValid() ? 'white' : 'white-disabled'}
+              width="100%"
+              height="42px"
+              leftIcon={SYSTEM.PLUS_GRAY}
+              onClick={() => createDetail('continue')}
+            >
               계속해서 추가하기
             </Button>
           )}

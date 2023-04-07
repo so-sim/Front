@@ -31,7 +31,7 @@ export const TableHead: FC<TableHeadProps> = ({ dateFilter, setDateFilter }) => 
 
   const memberDropDownRef = useRef<HTMLDivElement>(null);
   const paymentTypeDropDownRef = useRef<HTMLDivElement>(null);
-  /** filter에 넣을 거임 */
+
   const [member, setMember] = useState('');
 
   const [paymentType, setPaymentType] = useState<PaymentDropdown>('');
@@ -47,12 +47,17 @@ export const TableHead: FC<TableHeadProps> = ({ dateFilter, setDateFilter }) => 
     setDateFilter((prev) => ({ ...prev, member: member === '전체' ? '' : member, paymentType: paymentType === '전체' ? '' : getStatusCode(paymentType) }));
   }, [member, paymentType]);
 
-  const paymentTypeList: { title: PaymentDropdown }[] = [{ title: '전체' }, { title: '미납' }, { title: '완납' }, { title: '확인필요' }];
+  const paymentTypeList: { title: PaymentDropdown; id?: string }[] = [
+    { title: '전체' },
+    { title: '미납', id: 'filter_nonpayment' },
+    { title: '완납', id: 'filter_fullpayment' },
+    { title: '확인필요', id: 'filter_confirming' },
+  ];
 
   return (
     <Style.TableHead>
       <Style.Element>날짜</Style.Element>
-      <Style.PointerElement onClick={handlePaymentDropDown} ref={paymentTypeDropDownRef}>
+      <Style.PointerElement onClick={handlePaymentDropDown} ref={paymentTypeDropDownRef} id="filter_payment">
         <span>납부여부</span>
         <Style.Arrow>{ARROW.DOWN_SM}</Style.Arrow>
         {openPaymentTypeDropdown && (
@@ -67,7 +72,7 @@ export const TableHead: FC<TableHeadProps> = ({ dateFilter, setDateFilter }) => 
           />
         )}
       </Style.PointerElement>
-      <Style.PointerElement ref={memberDropDownRef} onClick={handleMemeberDropDown}>
+      <Style.PointerElement ref={memberDropDownRef} onClick={handleMemeberDropDown} id="filter_member">
         <span>팀원</span>
         <Style.Arrow>{ARROW.DOWN_SM}</Style.Arrow>
         {adminNickname && participants && openMemberDropdown && (

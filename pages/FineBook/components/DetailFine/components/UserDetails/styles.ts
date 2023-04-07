@@ -34,6 +34,7 @@ export const TextArea = styled.textarea<{ disabled?: boolean }>`
   padding: 8px 12px;
   overflow: hidden;
   resize: none;
+  ${({ theme }) => theme.font.body_02}
   &:disabled {
     border: 2px solid ${({ theme }) => theme.colors.neutral_400_b};
     background-color: ${({ theme }) => theme.colors.neutral_200_b};

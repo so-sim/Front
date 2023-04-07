@@ -36,7 +36,7 @@ export const UserDetails = ({ open, setOpen, select, setSelect }: UserDetailsPro
   const [openDeleteDetailModal, setOpenDeleteDetailModal] = useState(false);
   const user = useRecoilValue(userState);
 
-  const statusList: { title: PaymentType }[] = [{ title: '미납' }, { title: '완납' }, { title: '확인필요' }];
+  const statusList: { title: PaymentType; id?: string }[] = [{ title: '미납', id: 'nonpayment_side' }, { title: '완납', id: 'fullpayment_side' }, { title: '확인필요' }];
   const [newStatus, setNewStatus] = useState<PaymentType>('');
 
   const { mutate: update } = useUpdateDetailStatus();
@@ -137,7 +137,7 @@ export const UserDetails = ({ open, setOpen, select, setSelect }: UserDetailsPro
           </Style.Block>
           <Style.Row>
             <Label title="날짜" width="32px">
-              {/* <DropBox color="disabled" boxWidth="116px" width={116} type={groundsDate.split(' ')[0]} dropDownList={statusList} /> */}
+              <DropBox color="disabled" setType={() => undefined} boxWidth="116px" width={116} type={groundsDate.split(' ')[0]} dropDownList={statusList} />
             </Label>
             <Label title="납부여부" width="80px">
               <DropBox

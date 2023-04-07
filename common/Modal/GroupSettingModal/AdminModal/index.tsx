@@ -117,7 +117,7 @@ export const AdminModal: FC<ModalHandlerProps> = ({ modalHandler }) => {
             <Button color="white" onClick={modalHandler}>
               취소
             </Button>
-            <Button color={isValidForm() ? 'black' : 'disabled'} onClick={updateGroupInfo}>
+            <Button color={isValidForm() ? 'black' : 'disabled'} onClick={updateGroupInfo} id="group_modify">
               저장
             </Button>
           </Style.ButtonFrame>

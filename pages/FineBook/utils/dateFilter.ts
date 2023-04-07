@@ -69,6 +69,33 @@ export const updateCalendarByType = (type: 'increase' | 'decrease' | 'none', pre
   };
 };
 
+export const dateFilterMode = (dataState: DateState): FilterMode => {
+  if (dataState.selectedDate !== null) return 'day';
+  if (dataState.week !== null) return 'week';
+  if (dataState.selectedDate === null && dataState.week === null) return 'month';
+  return 'day';
+};
+
+export const updateDateFilterByMode = (mode: FilterMode, prev: DateFilterProperty, dateState: DateState) => {
+  const [year, month, date] = dayjs(dateState.baseDate)
+    .format('YYYY.MM.DD')
+    .split('.')
+    .map((property) => Number(property));
+
+  const { day, week, ...rest } = prev;
+  console.log(prev);
+  switch (mode) {
+    case 'week':
+      return { ...rest, year, month, week: dateState.week, page: 0 };
+    case 'day':
+      return { ...rest, year, month, day: date, page: 0 };
+    case 'month':
+      return { ...rest, year, month, page: 0 };
+    default:
+      return prev;
+  }
+};
+
 const changeDateByType = (type: 'increase' | 'decrease' | 'none', baseDate: Dayjs, mode: FilterMode): Dayjs => {
   if (type === 'increase') {
     return mode === 'week' ? dayjs(baseDate).startOf('week').add(1, mode) : dayjs(baseDate).add(1, mode);
@@ -89,54 +116,3 @@ const changeDateByType = (type: 'increase' | 'decrease' | 'none', baseDate: Dayj
       return dayjs(baseDate);
   }
 };
-
-/** prev랑 base랑 month가 같으면 base로, 다르면 prev로 => 근데 그럼 그냥 prev로 해도 되지 않음? */
-
-// /** 리턴되는 것은 prevDate | null임 */
-// const updatePrevDateByWeek = (type: 'increase' | 'decrease' | 'none', mode: FilterMode, changedDate: Dayjs, prevDate: Dayjs): Dayjs | null => {
-//   if (type === 'none' || mode !== 'week') return null;
-//   if (changedDate.month() === prevDate.month()) return null;
-
-//   if (prevDate.month() !== 0 && type === 'decrease') {
-//     if (changedDate.month() < prevDate.month() && changedDate.endOf('week').month() === prevDate.month()) {
-//       /** prev를 기준으로 달력 보여주고, week는 1로 고정시키고, based는 평소처럼 내려 */
-//       return prevDate.startOf('month');
-//     } else if (changedDate.month() < prevDate.month() && changedDate.endOf('week').month() !== prevDate.month()) {
-//       /** base를 기준으로 그리고, preveDate = null 업데이트 시켜줘 */
-//       return null;
-//     }
-//   } else if (prevDate.month() === 0 && type === 'decrease') {
-//     if (changedDate.month() > prevDate.month() && changedDate.endOf('week').month() === prevDate.month()) {
-//       /** prev를 기준으로 달력 보여주고, week는 1로 고정시키고, based는 평소처럼 내려 */
-//       return prevDate.startOf('month');
-//     } else if (changedDate.month() > prevDate.month() && changedDate.endOf('week').month() !== prevDate.month()) {
-//       /** base를 기준으로 그리고, preveDate = null 업데이트 시켜줘 */
-//       return null;
-//     }
-//   }
-
-//   if (prevDate.month() !== 11 && type === 'increase') {
-//     if (changedDate.month() > prevDate.month() && prevDate.endOf('week').month() !== prevDate.month()) {
-//       /** 올릴 때는 비교해서 만약에 prev와 month가 다르고, prev.endOf(week).month와 prev.month()가 다르면 week = 1로 업데이트 하고, prev를 prev.endOf('week').startOf('month')로 업데이트해  */
-//       return prevDate.endOf('week').startOf('month');
-//     } else if (changedDate.month() > prevDate.month() && changedDate.endOf('week').month() === prevDate.month()) {
-//       /** base를 기준으로 그리고, preveDate = null 업데이트 시켜줘 */
-//       return null;
-//     }
-//   } else if (prevDate.month() === 11 && type === 'increase') {
-//     if (changedDate.month() < prevDate.month() && changedDate.endOf('week').month() !== prevDate.month()) {
-//       return prevDate.endOf('week').startOf('month');
-//     }
-//     // else if (changedDate.month() < prevDate.month() && changedDate.endOf('week').month() !== prevDate.month()) {
-//     //   /** base를 기준으로 그리고, preveDate = null 업데이트 시켜줘 */
-//     //   return null;
-//     // }
-//   }
-
-//   return null;
-// };
-
-/**
- * 1주차일 경우 시간 보여주는거 다르게 출력해야 함
- *
- */

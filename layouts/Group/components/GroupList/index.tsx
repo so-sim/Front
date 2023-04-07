@@ -43,9 +43,11 @@ const GroupList = () => {
           </React.Fragment>
         ))}
         <div ref={ref} />
-        <Stlye.CreateButton onClick={handleCreateModal}>{SYSTEM.PLUS_GRAY}</Stlye.CreateButton>
+        <Stlye.CreateButton onClick={handleCreateModal} id="create_side">
+          {SYSTEM.PLUS_GRAY}
+        </Stlye.CreateButton>
       </Stlye.Layout>
-      {showCreateModal && <CreateGroupModal modalHandler={handleCreateModal} />}
+      {showCreateModal && <CreateGroupModal modalHandler={handleCreateModal} id="create_side_modal" />}
     </>
   );
 };

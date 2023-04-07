@@ -93,9 +93,13 @@ const Calendar: FC<CalnedrProps> = ({ cellType }) => {
         <Style.Header>
           <div>
             <Style.DateHeader>{dayjs(calendarDate).format('YYYY년 MM월')}</Style.DateHeader>
-            <div>
-              <Style.ArrowWrapper onClick={decreaseMonth}>{ARROW.LEFT}</Style.ArrowWrapper>
-              <Style.ArrowWrapper onClick={increaseMonth}>{ARROW.RIGHT}</Style.ArrowWrapper>
+            <div id="calendar_skip">
+              <Style.ArrowWrapper onClick={decreaseMonth} id="calendar_skip_left">
+                {ARROW.LEFT}
+              </Style.ArrowWrapper>
+              <Style.ArrowWrapper onClick={increaseMonth} id="calendar_skip_right">
+                {ARROW.RIGHT}
+              </Style.ArrowWrapper>
             </div>
           </div>
           {cellType === 'Tag' && groupData?.content.isAdmin && (

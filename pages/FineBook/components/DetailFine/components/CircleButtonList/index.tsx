@@ -42,6 +42,16 @@ export const CircleButtonList = ({ status, statusList, eventId, setOpenListEvent
     setShowUpdateStatusModal((prev) => !prev);
   };
 
+  const handleCircleButtonList = (paymentType: PaymentType) => {
+    if (paymentType !== getStatusText(status)) {
+      setShowUpdateStatusModal(true);
+      setNewStatus(getStatusCode(paymentType));
+      return;
+    }
+
+    setOpenListEventId(0);
+  };
+
   const cancelUpdateStatus = async () => {
     await setShowUpdateStatusModal(false);
     setOpenListEventId(0);
@@ -64,17 +74,7 @@ export const CircleButtonList = ({ status, statusList, eventId, setOpenListEvent
       <Style.CircleButtonList>
         {dropdownList.map((paymentType) => {
           return (
-            <Style.CircleButtonBox
-              key={paymentType}
-              onClick={() => {
-                if (paymentType !== getStatusText(status)) {
-                  setShowUpdateStatusModal(true);
-                  setNewStatus(getStatusCode(paymentType));
-                } else {
-                  setOpenListEventId(0);
-                }
-              }}
-            >
+            <Style.CircleButtonBox key={paymentType} onClick={() => handleCircleButtonList(paymentType)}>
               <CircleDropButton status={paymentType} isAdmin={isAdmin} />
             </Style.CircleButtonBox>
           );
@@ -82,6 +82,7 @@ export const CircleButtonList = ({ status, statusList, eventId, setOpenListEvent
       </Style.CircleButtonList>
       {showUpdateStatusModal && (
         <TwoButtonModal
+          id={newStatus === 'con' ? 'confirming_list_modal' : newStatus === 'full' ? 'fullpayment_list_modal' : ''}
           onClick={handleUpdateStatusModal}
           height="215px"
           title="납부여부 변경"

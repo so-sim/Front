@@ -10,7 +10,7 @@ interface AddCardProps {
 export const AddCard: FC<AddCardProps> = ({ onClick }) => {
   return (
     <Card onClick={onClick}>
-      <Style.AddCardFrame>
+      <Style.AddCardFrame id="create_main">
         {SYSTEM.PLUS}
         <Style.AddCardText>모임 만들기</Style.AddCardText>
       </Style.AddCardFrame>

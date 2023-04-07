@@ -14,9 +14,10 @@ import { useRecoilValue } from 'recoil';
 
 export interface ModalHandlerProps {
   modalHandler: () => void;
+  id?: string;
 }
 
-export const CreateGroupModal: FC<ModalHandlerProps> = ({ modalHandler }) => {
+export const CreateGroupModal: FC<ModalHandlerProps> = ({ modalHandler, id }) => {
   const [title, setTitle] = useState('');
   const [nickname, setNickname] = useState('');
   const [type, setType] = useState('');
@@ -67,7 +68,7 @@ export const CreateGroupModal: FC<ModalHandlerProps> = ({ modalHandler }) => {
         </Label>
       </Modal.Body>
       <Modal.Footer>
-        <Button onClick={createGroup} width="100%" height="42px" color={isValidForm() ? 'primary' : 'disabled'}>
+        <Button id={id} onClick={createGroup} width="100%" height="42px" color={isValidForm() ? 'primary' : 'disabled'}>
           만들기
         </Button>
       </Modal.Footer>

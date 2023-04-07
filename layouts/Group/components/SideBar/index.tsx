@@ -13,8 +13,8 @@ const GROUP_TAPS = [
   { title: '벌금 장부', svg: SYSTEM.ARTICLE, disabled: false, link: 'book' },
 ];
 const ETC = [
-  { title: '멤버 관리', svg: USER.GROUP_LG, link: 'member' },
-  { title: '설정', svg: SYSTEM.SETTING_LG },
+  { title: '멤버 관리', svg: USER.GROUP_LG, link: 'member', id: 'member_setting' },
+  { title: '설정', svg: SYSTEM.SETTING_LG, id: 'group_setting' },
 ];
 
 const GroupSideBar = () => {

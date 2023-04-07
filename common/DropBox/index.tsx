@@ -7,7 +7,7 @@ export type DropBoxColor = 'white' | 'gray' | 'disabled';
 
 interface DropBoxProps<T = string> {
   type: T;
-  dropDownList: { title: T }[];
+  dropDownList: { title: T; id?: string }[];
   boxWidth?: string;
   width?: number;
   color?: DropBoxColor;

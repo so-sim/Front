@@ -6,6 +6,7 @@ export interface DropDownProps<T = string> {
   list: {
     title: T;
     svg?: EmotionJSX.Element;
+    id?: string;
   }[];
   top: string;
   width?: number;
@@ -44,7 +45,7 @@ const DropDown = <T,>({ list, width = 112, align = 'start', setState, onClose, t
       {list.map((item) => {
         if (typeof item.title != 'string') return;
         return (
-          <Style.DropDownItem align={align} width={width} hasSvg={hasSvg(item.svg)} key={item.title} onClick={() => handleState(item.title)}>
+          <Style.DropDownItem id={item.id} align={align} width={width} hasSvg={hasSvg(item.svg)} key={item.title} onClick={() => handleState(item.title)}>
             {item.svg && <div>{item.svg}</div>}
             <span>{item.title}</span>
           </Style.DropDownItem>
