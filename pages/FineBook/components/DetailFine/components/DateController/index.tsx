@@ -23,7 +23,7 @@ interface DateControllerProps {
 export const DateController: FC<DateControllerProps> = ({ mode, setMode, setOpenAddModal, setDateFilter }) => {
   const { groupId } = useParams();
   const { data: groupData } = useGroupDetail({ groupId: Number(groupId) });
-  const dropDownRef = useRef<HTMLButtonElement>(null);
+  const dropDownRef = useRef<HTMLDivElement>(null);
 
   const [{ baseDate, week }, setSelectedDate] = useRecoilState(dateState);
 
@@ -64,6 +64,10 @@ export const DateController: FC<DateControllerProps> = ({ mode, setMode, setOpen
     { mode: 'day', text: '일간' },
   ];
 
+  const handleWeeklyFilterDrop = () => {
+    setOpenWeeklyFilterDrop(false);
+  };
+
   useEffect(() => {
     if (mode !== 'week') {
       setOpenWeeklyFilterDrop(false);
@@ -82,12 +86,11 @@ export const DateController: FC<DateControllerProps> = ({ mode, setMode, setOpen
           <Style.TodayButton onClick={() => setSelectedDate((prev) => ({ ...prev, baseDate: dayjs(), selectedDate: dayjs(), week: null }))}>오늘</Style.TodayButton>
         </Style.Block>
         <Style.Block>
-          <Style.FilterWrapper>
+          <Style.FilterWrapper ref={dropDownRef}>
             {filterButtonList.map((btn) => {
               return (
                 <Style.FilterButton
                   isActive={mode === btn.mode}
-                  ref={dropDownRef}
                   onClick={() => {
                     setOpenWeeklyFilterDrop((prev) => !prev);
                     if (mode === btn.mode) return;
@@ -104,7 +107,7 @@ export const DateController: FC<DateControllerProps> = ({ mode, setMode, setOpen
                         setState={setSelectedWeek}
                         list={customedWeek(baseDate)}
                         top="7px"
-                        onClose={() => setOpenWeeklyFilterDrop(false)}
+                        onClose={handleWeeklyFilterDrop}
                         dropDownRef={dropDownRef}
                       />
                     </div>

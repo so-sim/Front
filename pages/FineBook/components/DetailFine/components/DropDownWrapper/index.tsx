@@ -35,7 +35,6 @@ export const DropDownWrapper = ({ detail, openListEventId, setOpenListEventId }:
     }
   };
 
-  console.log(openListEventId);
   return (
     <Style.DropDownWrapper isValid={isValidBeforSelect} onClick={handleCircleDropButton}>
       {isValidOpenDropdown ? (
