@@ -22,6 +22,7 @@ const DetailFine = () => {
   const location = useLocation();
 
   const [openAddModal, setOpenAddModal] = useState(location.state || false);
+
   const [openUserDetails, setOpenUserDetails] = useState(false);
   const [select, setSelect] = useState<EventInfo>({
     userId: 0,
