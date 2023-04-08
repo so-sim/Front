@@ -1,7 +1,7 @@
 import { AdminModal } from '@/common/Modal/GroupSettingModal/AdminModal';
 import { UserModal } from '@/common/Modal/GroupSettingModal/UserModal';
 import { useGroupDetail } from '@/queries/Group';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { NavLink, useNavigate, useParams } from 'react-router-dom';
 import { SYSTEM } from '../../../../assets/icons/System';
 import { USER } from '../../../../assets/icons/User';
@@ -23,7 +23,7 @@ const GroupSideBar = () => {
   const navigate = useNavigate();
   const { groupId } = param;
 
-  const { data: groupData } = useGroupDetail({ groupId: Number(groupId) });
+  const { data: groupData, isError } = useGroupDetail({ groupId: Number(groupId) });
 
   const isSelected = (link: string) => {
     return param['*']?.split('/').includes(link) === true;
@@ -33,11 +33,15 @@ const GroupSideBar = () => {
     setShowGroupSettingModal((prev) => !prev);
   };
 
-  if (groupData && !groupData.content.isInto) {
-    navigate('/');
-  }
+  useEffect(() => {
+    if (groupData && !groupData.content.isInto) {
+      navigate('/');
+    }
+    if (!groupData && isError) {
+      navigate('/');
+    }
+  }, [groupId, isError]);
 
-  console.log(groupData);
   return (
     <>
       <Style.Layout>

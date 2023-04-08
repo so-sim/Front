@@ -27,7 +27,7 @@ export const AdminModal: FC<ModalHandlerProps> = ({ modalHandler }) => {
 
   const { groupId } = useParams();
 
-  const { mutate: updateGroupMutate } = useUpdateGroup({ setErrorText });
+  const { mutate: updateGroupMutate } = useUpdateGroup();
   const { mutate: updateNickname, isError } = useChangeNickname(setErrorText);
   const { mutate: withdrawalGroupMutate } = useWithdrawalGroup();
   const { mutate: deleteGroup } = useDeleteGroup();
