@@ -4,13 +4,17 @@ export const Layout = styled.div`
   border-right: 2px solid ${({ theme }) => theme.colors.neutral_400_b};
 `;
 
+export const Category = styled.span`
+  ${({ theme }) => theme.font.subhead_01}
+`;
+
 export const Header = styled.header`
   padding: 12px 24px;
-  font-size: 18px;
   width: 100%;
   height: 48px;
   border-bottom: 2px solid ${({ theme }) => theme.colors.neutral_200_b};
   margin-bottom: 12px;
+  ${({ theme }) => theme.font.subhead_03}
   @media (max-width: 1718px) {
     font-size: 16px;
   }
@@ -38,6 +42,9 @@ export const Tap = styled.button<TapProps>`
   text-align: center;
   gap: 4px;
   color: ${(props) => (props.disabled ? props.theme.colors.secondary_400 : 'black')};
+  span {
+    ${({ theme }) => theme.font.subhead_02}
+  }
 `;
 
 interface SelectedProps {

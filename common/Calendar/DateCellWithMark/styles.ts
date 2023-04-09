@@ -66,6 +66,7 @@ export const Date = styled.div<DateProps>`
       return props.theme.colors.neutral_200_b;
     }};
   }
+  ${({ theme }) => theme.font.subhead_02}
 `;
 
 export const Mark = styled.div``;
