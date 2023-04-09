@@ -32,7 +32,7 @@ export const DropDownItem = styled.div<DropDownItemProps>`
   cursor: pointer;
   border-bottom: 2px solid ${({ theme }) => theme.colors.neutral_400_b};
   span {
-    ${({ theme }) => theme.font.body_02}
+    ${({ theme }) => theme.font.subhead_01}
   }
   &:hover {
     background-color: ${({ theme }) => theme.colors.neutral_300_b};

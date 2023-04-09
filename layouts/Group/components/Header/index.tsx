@@ -69,7 +69,7 @@ const GroupLayoutHeader = () => {
         <button onClick={handleDropDown} ref={dropDownRef}>
           {USER.PERSON_MD}
           {ARROW.SOLID}
-          {showDropDown && <DropDown list={DorpDownList} width={112} setState={setDropDownState} onClose={handleDropDown} top={'32px'} dropDownRef={dropDownRef} />}
+          {showDropDown && <DropDown list={DorpDownList} width={90} setState={setDropDownState} onClose={handleDropDown} top={'32px'} dropDownRef={dropDownRef} />}
         </button>
       </Style.Header>
       {showLogOutModal && (
