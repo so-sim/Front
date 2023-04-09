@@ -1,6 +1,6 @@
 import { ServerResponse } from './../../types/serverResponse.d';
 import { TOAST_ERROR, TOAST_SUCCESS } from '@/constants/Toast';
-import { message } from './index';
+
 import { deleteGroup } from '@/api/Group';
 import { InfiniteData, useMutation, useQueryClient } from '@tanstack/react-query';
 import { ToastPopUp } from '@/common/Toast';
