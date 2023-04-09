@@ -22,8 +22,8 @@ export const Phrase = styled.p`
   }
 `;
 
-export const ErrorText = styled.span<{ isValid: boolean }>`
-  color: ${({ theme, isValid }) => (isValid ? theme.colors.secondary_500 : theme.colors.red_100)};
+export const ErrorText = styled.span`
+  color: ${({ theme }) => theme.colors.red_100};
 `;
 
 export const Length = styled.span`

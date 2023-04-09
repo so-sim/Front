@@ -3,7 +3,7 @@ import Button from '@/common/Button';
 import { Input } from '@/common/Input';
 import { Label } from '@/common/Label';
 import Modal from '@/common/Modal';
-import { isValid } from '@/utils/validation';
+import { useError, checkCountChar } from '@/utils/validation';
 import * as Style from './styles';
 import { ModalHandlerProps } from '../../CreateGroupModal';
 import { useParams } from 'react-router-dom';
@@ -16,9 +16,12 @@ export const UserModal: FC<ModalHandlerProps> = ({ modalHandler }) => {
   const [myName, setMyName] = useState('');
   const [showGroupWithdrawalModal, setShowGroupWithdrawalModal] = useState(false);
   const { groupId } = useParams();
-  const [errorText, setErrorText] = useState('');
 
-  const { mutate: updateNickname, isError } = useChangeNickname(setErrorText);
+  const [isError, setError] = useError({
+    nickname: '',
+  });
+
+  const { mutate: updateNickname } = useChangeNickname({ setError, modalHandler });
   const { mutate: withdrawalGroupMutate } = useWithdrawalGroup();
   const { data: groupData } = useGroupDetail({ groupId: Number(groupId) });
   const { data: myNickname } = useGetMyNikname({ groupId: Number(groupId) });
@@ -34,8 +37,11 @@ export const UserModal: FC<ModalHandlerProps> = ({ modalHandler }) => {
 
   const updateMyNickname = () => {
     const id = Number(groupId);
-    updateNickname({ groupId: id, nickname: myName });
-    modalHandler();
+    isFormValidate() === '' && updateNickname({ groupId: id, nickname: myName });
+  };
+
+  const isFormValidate = () => {
+    return setError('nickname', checkCountChar(myName));
   };
 
   useEffect(() => {
@@ -54,7 +60,7 @@ export const UserModal: FC<ModalHandlerProps> = ({ modalHandler }) => {
             <Style.SubTitle>사용자 설정</Style.SubTitle>
             <Style.InputContainer>
               <Label title="내 이름" flexDirection="column">
-                <Input value={myName} errorText={errorText} isValid={isValid(myName) && !isError} onChange={setMyName} maxLength={20} />
+                <Input value={myName} errorText={isError.nickname} onChange={setMyName} maxLength={20} />
               </Label>
               <Label title="모임 탈퇴" flexDirection="column" />
               <Style.WithDrwal>

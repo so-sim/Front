@@ -1,5 +1,5 @@
 import { getAccessToken, removeAccessToken } from '@/utils/acceessToken';
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 import { reTakeToken } from './Auth';
 
 export const BASE_URL = 'https://back.sosim-manager.com';
@@ -22,12 +22,9 @@ api.interceptors.response.use(
     return response;
   },
   async (error) => {
-    const {
-      config,
-      response: { status },
-    } = error;
+    const { config, response } = error;
 
-    if (status.code === 403) {
+    if (response.status === 401) {
       const originalRequest = config;
       removeAccessToken();
       reTakeToken();

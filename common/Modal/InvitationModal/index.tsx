@@ -3,7 +3,7 @@ import Button from '../../Button';
 import { Input, Label } from '@/common';
 import Modal from '@/common/Modal';
 import { PLACEHOLDER } from '@/constants/Group';
-import { isValid } from '@/utils/validation';
+import { checkCountChar } from '@/utils/validation';
 import * as Style from './styles';
 import { ModalProps } from '@/common/Modal';
 import { useJoinGroup } from '@/queries/Group';
@@ -38,7 +38,7 @@ export const InvitationModal: FC<InvitationModalProps> = ({ onClick, groupName }
       </Modal.Header>
       <Modal.Body>
         <Label title="내 이름">
-          <Input placeholder={PLACEHOLDER.NAME} errorText={errorText} value={myName} isValid={isInit || (isValid(myName) && !isError)} onChange={setMyName} maxLength={15} />
+          <Input placeholder={PLACEHOLDER.NAME} value={myName} errorText={checkCountChar(myName)} onChange={setMyName} maxLength={15} />
         </Label>
       </Modal.Body>
       <Modal.Footer>
