@@ -79,17 +79,17 @@ export const FineBookModal = ({ setOpen, eventId, select }: ModalProps) => {
       {
         onSuccess() {
           pushDataLayer('add_list', { button: type === 'continue' ? 'keep' : 'normal' });
+          setDateState((prev) => ({ ...prev, baseDate: dayjs(groundsDate), selectedDate: dayjs(groundsDate), week: null }));
+          if (type === 'continue') {
+            navigate(`/group/${groupId}/book/detail`, { state: true });
+            initDetail();
+          } else {
+            navigate(`/group/${groupId}/book/detail`);
+            setOpen(false);
+          }
         },
       },
     );
-    setDateState((prev) => ({ ...prev, baseDate: dayjs(groundsDate), selectedDate: dayjs(groundsDate), week: null }));
-    if (type === 'continue') {
-      navigate(`/group/${groupId}/book/detail`, { state: true });
-      initDetail();
-    } else {
-      navigate(`/group/${groupId}/book/detail`);
-      setOpen(false);
-    }
   };
 
   useEffect(() => {
