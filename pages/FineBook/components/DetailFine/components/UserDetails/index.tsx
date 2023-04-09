@@ -15,6 +15,7 @@ import { useRecoilValue } from 'recoil';
 import { userState } from '@/store/userState';
 import { useGroupDetail } from '@/queries/Group';
 import { useParams } from 'react-router-dom';
+import { pushDataLayer } from '@/utils/pushDataLayer';
 
 interface UserDetailsProps {
   open: boolean;
@@ -30,12 +31,13 @@ export const UserDetails = ({ open, setOpen, select, setSelect }: UserDetailsPro
   const { groupId } = useParams();
 
   const { data } = useGroupDetail({ groupId: Number(groupId) });
-
   const [openUpdateModal, setOpenUpdateModal] = useState(false);
   const [openUpdateStatusModal, setOpenUpdateStatusModal] = useState(false);
   const [openRequestStatusModal, setOpenRequestStatusModal] = useState(false);
   const [openDeleteDetailModal, setOpenDeleteDetailModal] = useState(false);
+
   const user = useRecoilValue(userState);
+  const isAdmin = data?.content.isAdmin;
 
   const statusList: { title: PaymentType; id?: string }[] = [{ title: '미납', id: 'nonpayment_side' }, { title: '완납', id: 'fullpayment_side' }, { title: '확인필요' }];
   const [newStatus, setNewStatus] = useState<PaymentType>('');
@@ -50,6 +52,9 @@ export const UserDetails = ({ open, setOpen, select, setSelect }: UserDetailsPro
         {
           onSuccess() {
             setOpenUpdateStatusModal(false);
+            if (isAdmin === true && getStatusCode(newStatus) === 'full') {
+              pushDataLayer('fullpayment', { route: 'detail' });
+            }
           },
         },
       );
@@ -63,6 +68,9 @@ export const UserDetails = ({ open, setOpen, select, setSelect }: UserDetailsPro
         onSuccess(data) {
           setSelect((prev) => ({ ...prev, ...data.content }));
           setOpenRequestStatusModal(false);
+          if (isAdmin === false) {
+            pushDataLayer('confirming', { route: 'detail' });
+          }
         },
       },
     );

@@ -2,6 +2,7 @@ import { TwoButtonModal } from '@/common/Modal/TwoButtonModal';
 import { useUpdateDetailStatus } from '@/queries/Detail/useUpdateDetailStatus';
 import { PaymentType } from '@/types/event';
 import { getStatusCode, getStatusText } from '@/utils/getStatusIcon';
+import { pushDataLayer } from '@/utils/pushDataLayer';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { CircleDropButton, CircleDropButtonProps } from '../CircleDropButton';
 import * as Style from './styles';
@@ -33,7 +34,20 @@ export const CircleButtonList = ({ status, statusList, eventId, setOpenListEvent
 
   const updateStatus = (paymentType: PaymentType) => {
     if (status != paymentType) {
-      mutate({ paymentType, eventId }, { onSuccess: () => setOpenListEventId(0) });
+      mutate(
+        { paymentType, eventId },
+        {
+          onSuccess: () => {
+            setOpenListEventId(0);
+            if (isAdmin === false && paymentType === 'con') {
+              pushDataLayer('confirming', { route: 'list' });
+            }
+            if (isAdmin === true && paymentType === 'full') {
+              pushDataLayer('fullpayment', { route: 'list' });
+            }
+          },
+        },
+      );
     }
   };
 

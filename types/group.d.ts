@@ -30,7 +30,7 @@ export interface GroupDetail {
 export interface ParticipantList {
   adminId: number;
   adminNickname: string;
-  nicknameList: string[];
+  memberList: { nickname: string; userId: number }[];
 }
 
 export interface CoverGroupInfo {

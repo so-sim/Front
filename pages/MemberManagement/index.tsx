@@ -30,9 +30,9 @@ const MemberManagement = () => {
           <Style.Tage>총무</Style.Tage>
         </Style.AdminContainer>
         {myNickname && !groupData?.content.isAdmin && <MemberListItem nickname={myNickname.content.nickname} />}
-        {participantList?.content.nicknameList.map((nickname) => {
+        {participantList?.content.memberList.map(({ nickname, userId }) => {
           if (nickname !== myNickname?.content.nickname) {
-            return <MemberListItem nickname={nickname} key={nickname} />;
+            return <MemberListItem nickname={nickname} key={userId} />;
           }
         })}
       </Style.Container>

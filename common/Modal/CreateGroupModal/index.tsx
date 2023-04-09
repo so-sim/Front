@@ -9,6 +9,8 @@ import { checkCountChar, useError } from '@/utils/validation';
 import { COLORS, DROPDOWN_LIST, PLACEHOLDER } from '@/constants/Group';
 import { useCreateGroup } from '@/queries/Group';
 import { GroupColor } from '@/types/group';
+import { useLocation } from 'react-router-dom';
+import { pushDataLayer } from '@/utils/pushDataLayer';
 
 export interface ModalHandlerProps {
   modalHandler: () => void;
@@ -25,10 +27,25 @@ export const CreateGroupModal: FC<ModalHandlerProps> = ({ modalHandler, id }) =>
     groupName: '',
   });
 
+  const location = useLocation();
+
+  useEffect(() => {
+    if (title !== '' && isInit.groupName === true) setIsInit((prev) => ({ ...prev, groupName: false }));
+    if (nickname !== '' && isInit.myName === true) setIsInit((prev) => ({ ...prev, myName: false }));
+  }, [title, nickname]);
+
   const { mutate } = useCreateGroup(modalHandler);
+  console.log(location);
 
   const createGroup = () => {
-    mutate({ title, type, coverColor, nickname });
+    mutate(
+      { title, type, coverColor, nickname },
+      {
+        onSuccess() {
+          pushDataLayer('create', { route: location.pathname === '/' ? 'main' : 'side' });
+        },
+      },
+    );
   };
 
   const isValidForm = (): boolean => {
