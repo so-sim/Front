@@ -46,7 +46,7 @@ export const changeAdmin = async (info: GroupNickname & GroupId): Promise<Server
 };
 
 export const withdrawalGroup = async (groupId: GroupId): Promise<ServerResponse> => {
-  const { data } = await api.delete(`/api/group/${groupId.groupId}`);
+  const { data } = await api.delete(`/api/group/${groupId.groupId}/participant`);
   return data;
 };
 

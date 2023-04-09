@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 import { Link } from 'react-router-dom';
 
 export const GuidePhrase = styled.p`
-  /* margin-top: 22px; */
+  padding-bottom: 20px;
 `;
 
 export const Footer = styled.div`
@@ -12,8 +12,8 @@ export const Footer = styled.div`
 `;
 
 export const LoginBlock = styled.div`
-  margin-top: 20px;
-  margin-bottom: 12px;
+  margin-top: 12px;
+  margin-bottom: 24px;
   display: flex;
   flex-direction: column;
   align-items: center;
