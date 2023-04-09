@@ -1,25 +1,40 @@
+import { ServerResponse } from '@/types/serverResponse';
 import { updateGroup } from '@/api/Group';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { TOAST_ERROR, TOAST_SUCCESS } from '@/constants/Toast';
 import { ToastPopUp } from '@/common/Toast';
 import { AxiosError } from 'axios';
+import { GroupDetail } from '@/types/group';
 
-interface UseUpdateGroupProps {
-  setErrorText: React.Dispatch<React.SetStateAction<string>>;
-}
-
-export const useUpdateGroup = ({ setErrorText }: UseUpdateGroupProps) => {
+export const useUpdateGroup = () => {
+  const queryClient = useQueryClient();
   return useMutation(updateGroup, {
-    onSuccess: () => {
-      ToastPopUp({ type: 'success', message: TOAST_SUCCESS.UPDATE_GROUP });
+    onMutate: async ({ groupId, title }) => {
+      await queryClient.cancelQueries(['groupList', groupId]);
+      const previousData = queryClient.getQueryData<ServerResponse<GroupDetail>>(['groupDetail', groupId]);
+
+      console.log(previousData);
+      if (previousData) {
+        queryClient.setQueryData<ServerResponse<GroupDetail>>(['groupDetail', groupId], {
+          ...previousData,
+          content: {
+            ...previousData.content,
+            title,
+          },
+        });
+      }
+      return { previousData };
     },
-    onError: (error) => {
-      const { response } = error as unknown as AxiosError;
-      if (response?.data) {
-        // setErrorText(response.data.filed as string);
-        console.log(response.data);
+
+    onSuccess: () => {},
+    onError: (error, value, context) => {
+      if (context?.previousData) {
+        queryClient.setQueryData(['groupDetail', value.groupId], context.previousData);
       }
       ToastPopUp({ type: 'error', message: TOAST_ERROR.NETWORK });
+    },
+    onSettled: (context) => {
+      queryClient.invalidateQueries(['groupDetail', context?.content.groupId]);
     },
   });
 };

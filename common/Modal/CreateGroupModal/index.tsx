@@ -5,7 +5,7 @@ import Modal from '@/common/Modal';
 import { GroupColorList } from '../GroupColorList';
 import { Input, Label } from '@/common';
 import { DropBox } from '../../DropBox';
-import { isValid } from '@/utils/validation';
+import { checkCountChar, useError } from '@/utils/validation';
 import { COLORS, DROPDOWN_LIST, PLACEHOLDER } from '@/constants/Group';
 import { useCreateGroup } from '@/queries/Group';
 import { GroupColor } from '@/types/group';
@@ -22,9 +22,9 @@ export const CreateGroupModal: FC<ModalHandlerProps> = ({ modalHandler, id }) =>
   const [nickname, setNickname] = useState('');
   const [type, setType] = useState('');
   const [coverColor, setCoverColor] = useState<GroupColor>('#f86565');
-  const [isInit, setIsInit] = useState({
-    groupName: true,
-    myName: true,
+  const [isError, setError] = useError({
+    nickname: '',
+    groupName: '',
   });
 
   const location = useLocation();
@@ -49,8 +49,8 @@ export const CreateGroupModal: FC<ModalHandlerProps> = ({ modalHandler, id }) =>
   };
 
   const isValidForm = (): boolean => {
-    if (!isValid(title)) return false;
-    if (!isValid(nickname)) return false;
+    if (checkCountChar(title)) return false;
+    if (checkCountChar(nickname)) return false;
     if (type === '') return false;
     if (!COLORS.includes(coverColor)) return false;
     return true;
@@ -63,10 +63,10 @@ export const CreateGroupModal: FC<ModalHandlerProps> = ({ modalHandler, id }) =>
       </Modal.Header>
       <Modal.Body>
         <Label title="모임 이름">
-          <Input placeholder={PLACEHOLDER.GROUP} value={title} isValid={isInit.groupName || isValid(title)} onChange={setTitle} maxLength={15} />
+          <Input placeholder={PLACEHOLDER.GROUP} value={title} errorText={isError.groupName} onChange={setTitle} maxLength={15} title="groupName" setError={setError} />
         </Label>
         <Label title="내 이름">
-          <Input placeholder={PLACEHOLDER.NAME} value={nickname} isValid={isInit.myName || isValid(nickname)} onChange={setNickname} maxLength={15} />
+          <Input placeholder={PLACEHOLDER.NAME} value={nickname} errorText={isError.nickname} onChange={setNickname} maxLength={15} title="nickname" setError={setError} />
         </Label>
         <div style={{ position: 'relative' }}>
           <Label title="모임 유형">

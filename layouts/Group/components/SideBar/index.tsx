@@ -1,8 +1,8 @@
 import { AdminModal } from '@/common/Modal/GroupSettingModal/AdminModal';
 import { UserModal } from '@/common/Modal/GroupSettingModal/UserModal';
 import { useGroupDetail } from '@/queries/Group';
-import React, { useState } from 'react';
-import { NavLink, useParams } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { NavLink, useNavigate, useParams } from 'react-router-dom';
 import { SYSTEM } from '../../../../assets/icons/System';
 import { USER } from '../../../../assets/icons/User';
 import * as Style from './styles';
@@ -20,9 +20,10 @@ const ETC = [
 const GroupSideBar = () => {
   const [showGroupSettingModal, setShowGroupSettingModal] = useState(false);
   const param = useParams();
+  const navigate = useNavigate();
   const { groupId } = param;
 
-  const { data: groupData } = useGroupDetail({ groupId: Number(groupId) });
+  const { data: groupData, isError } = useGroupDetail({ groupId: Number(groupId) });
 
   const isSelected = (link: string) => {
     return param['*']?.split('/').includes(link) === true;
@@ -31,6 +32,15 @@ const GroupSideBar = () => {
   const handleGroupSettingModal = () => {
     setShowGroupSettingModal((prev) => !prev);
   };
+
+  useEffect(() => {
+    if (groupData && !groupData.content.isInto) {
+      navigate('/');
+    }
+    if (!groupData && isError) {
+      navigate('/');
+    }
+  }, [groupId, isError]);
 
   return (
     <>

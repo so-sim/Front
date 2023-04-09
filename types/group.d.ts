@@ -18,6 +18,7 @@ export interface GroupNickname {
 
 export interface GroupDetail {
   isAdmin: boolean;
+  isInto: boolean;
   title: string;
   adminNickname: string;
   groupId: number;
