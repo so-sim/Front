@@ -14,7 +14,7 @@ export const getGroupDetail = async (groupId: GroupId): Promise<ServerResponse<G
 
 export const getGroupList = async (pageParam: number): Promise<ServerResponse<GroupListWithIndex>> => {
   const { data } = await api.get(`api/groups?index=${pageParam}`);
-  return { ...data, nextPage: pageParam + 1 };
+  return { ...data, nextPage: data.content.index };
 };
 
 export const getParticipantList = async (groupId: GroupId): Promise<ServerResponse<ParticipantList>> => {

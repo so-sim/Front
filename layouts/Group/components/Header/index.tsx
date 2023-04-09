@@ -51,6 +51,7 @@ const GroupLayoutHeader = () => {
 
     queryClient.setQueryData<GroupListWithIndex>(['groupList'], {
       next: false,
+      index: 0,
       groupList: [],
     });
     navigate('/');
