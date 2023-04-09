@@ -21,6 +21,7 @@ interface DateProps {
   isCurrentMonth: boolean;
 }
 export const Date = styled.div<DateProps>`
+  ${({ theme }) => theme.font.subhead_02}
   display: flex;
   justify-content: center;
   align-items: center;
@@ -83,6 +84,10 @@ export const Tag = styled.div<TagProps>`
     };
     return colors[color];
   }};
+
+  span {
+    ${({ theme }) => theme.font.subhead_02}
+  }
 
   @media (max-width: 1718px) {
     font-size: 12px;

@@ -89,7 +89,7 @@ const Calendar: FC<CalnedrProps> = ({ cellType }) => {
   return (
     <>
       <Style.Layout>
-        <span>벌금 장부</span>
+        <Style.Title>벌금 장부</Style.Title>
         <Style.Header>
           <div>
             <Style.DateHeader>{dayjs(calendarDate).format('YYYY년 MM월')}</Style.DateHeader>

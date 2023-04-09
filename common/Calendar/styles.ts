@@ -7,6 +7,10 @@ export const Layout = styled.div`
   overflow-y: auto;
 `;
 
+export const Title = styled.span`
+  ${({ theme }) => theme.font.body_02}
+`;
+
 export const Header = styled.div`
   display: flex;
   margin-top: 4px;
@@ -21,8 +25,8 @@ export const Header = styled.div`
 
 export const DateHeader = styled.div`
   margin-right: 12px;
-  font-size: 28px;
   white-space: nowrap;
+  ${({ theme }) => theme.font.headline}
 `;
 
 export const ArrowWrapper = styled.button`
@@ -51,6 +55,7 @@ export const WeekDate = styled.div`
     overflow: hidden;
     white-space: nowrap;
     text-align: center;
+    ${({ theme }) => theme.font.subhead_02}
   }
 `;
 

@@ -47,7 +47,7 @@ const GroupSideBar = () => {
       <Style.Layout>
         <Style.Header>{groupData?.content.title}</Style.Header>
         <Style.TapContainer>
-          <span>모임관리</span>
+          <Style.Category>벌금 관리</Style.Category>
           {GROUP_TAPS.map((tap) => (
             <NavLink to={`/group/${groupId}/${tap.link}`} key={tap.title}>
               <Style.Selected isSelected={isSelected(tap.link)} />
@@ -59,7 +59,7 @@ const GroupSideBar = () => {
           ))}
         </Style.TapContainer>
         <Style.TapContainer>
-          <span>기타</span>
+          <Style.Category>기타</Style.Category>
           {ETC.map((etc) =>
             etc.link ? (
               <NavLink to={`/group/${groupId}/${etc.link}`} key={etc.title} id={etc.id}>
