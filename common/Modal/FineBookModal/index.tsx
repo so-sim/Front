@@ -16,6 +16,7 @@ import { CalendarDropBox } from '@/common/DropBox/CalendarDropBox';
 import dayjs from 'dayjs';
 import { dateState } from '@/store/dateState';
 import { getStatusCode, getStatusText } from '@/utils/getStatusIcon';
+import { pushDataLayer } from '@/utils/pushDataLayer';
 
 interface ModalProps {
   setOpen: Dispatch<SetStateAction<boolean>>;
@@ -65,15 +66,22 @@ export const FineBookModal = ({ setOpen, eventId, select }: ModalProps) => {
 
   const createDetail = (type: 'continue' | 'save') => {
     if (user.userId === null) return;
-    create({
-      groupId: Number(groupId),
-      userId: user.userId,
-      userName: member,
-      groundsDate,
-      grounds: reason,
-      paymentType: getStatusCode(status),
-      payment: fine,
-    });
+    create(
+      {
+        groupId: Number(groupId),
+        userId: user.userId,
+        userName: member,
+        groundsDate,
+        grounds: reason,
+        paymentType: getStatusCode(status),
+        payment: fine,
+      },
+      {
+        onSuccess() {
+          pushDataLayer('add_list', { button: type === 'continue' ? 'keep' : 'normal' });
+        },
+      },
+    );
     setDateState((prev) => ({ ...prev, baseDate: dayjs(groundsDate), selectedDate: dayjs(groundsDate), week: null }));
     if (type === 'continue') {
       navigate(`/group/${groupId}/book/detail`, { state: true });

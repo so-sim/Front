@@ -22,6 +22,7 @@ export const useSignInQuery = (code: string | null) => {
         email,
         userId,
       }));
+      window.dataLayer.push({ user_id: userId });
       ToastPopUp({ type: 'success', message: TOAST_SUCCESS.SIGNIN });
       navigate('/');
     },
