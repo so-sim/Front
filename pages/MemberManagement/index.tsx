@@ -24,12 +24,19 @@ const MemberManagement = () => {
             <span>초대링크 복사</span>
           </Style.ButtonFlex>
         </Style.Title>
-        <Style.AdminContainer>
+        <Style.UserContainer>
           <div>{USER.PERSON_XL}</div>
           <span>{participantList?.content.adminNickname}</span>
-          <Style.Tage>총무</Style.Tage>
-        </Style.AdminContainer>
-        {myNickname && !groupData?.content.isAdmin && <MemberListItem nickname={myNickname.content.nickname} />}
+          <Style.Tag>총무</Style.Tag>
+          {groupData?.content.isAdmin && <Style.Tag>나</Style.Tag>}
+        </Style.UserContainer>
+        {myNickname && !groupData?.content.isAdmin && (
+          <Style.UserContainer>
+            <div>{USER.PERSON_XL}</div>
+            <div>{myNickname.content.nickname}</div>
+            <Style.Tag>나</Style.Tag>
+          </Style.UserContainer>
+        )}
         {participantList?.content.memberList.map(({ nickname, userId }) => {
           if (nickname !== myNickname?.content.nickname) {
             return <MemberListItem nickname={nickname} key={userId} />;
