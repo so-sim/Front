@@ -51,7 +51,12 @@ export const AdminModal: FC<ModalHandlerProps> = ({ modalHandler }) => {
     deleteGroup({ groupId: Number(groupId) });
   };
 
+  const isFormValidate = () => {
+    return [setError('nickname', checkCountChar(nickname)), setError('groupName', checkCountChar(title))];
+  };
+
   const updateGroupInfo = () => {
+    console.log(isFormValidate());
     const id = Number(groupId);
     updateGroupMutate({ title, type, coverColor, groupId: id });
     if (nickname !== myNickname?.content.nickname) {
