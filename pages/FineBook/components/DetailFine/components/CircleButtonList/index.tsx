@@ -15,7 +15,7 @@ interface CircleButtonListProps extends CircleDropButtonProps {
 }
 
 export const CircleButtonList = ({ status, statusList, eventId, setOpenListEventId, isAdmin }: CircleButtonListProps) => {
-  const adminStatusList = [
+  const adminStatusList: PaymentType[] = [
     getStatusText(status),
     ...statusList.filter((element) => {
       if (status === 'con') return element !== getStatusText(status);

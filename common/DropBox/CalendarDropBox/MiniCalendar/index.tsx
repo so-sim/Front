@@ -1,6 +1,6 @@
 import { ARROW } from '@/assets/icons/Arrow';
 import createCalendar from '@/utils/createCalendar';
-import dayjs from 'dayjs';
+import dayjs, { Dayjs } from 'dayjs';
 import React, { Dispatch, FC, SetStateAction, useEffect, useRef, useState } from 'react';
 import * as Style from './styles';
 
@@ -15,6 +15,11 @@ const MiniCalendar: FC<MiniCalendarProps> = ({ type, setType, setOpenDrop }) => 
   const calendarArray = createCalendar(baseDate);
 
   const DAY_LIST = ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'];
+
+  const handleDate = (date: Dayjs) => {
+    setType(date.format('YYYY.MM.DD'));
+    setOpenDrop(false);
+  };
 
   const decreaseMonth = () => {
     setBaseDate((prev) => prev.subtract(1, 'month'));
@@ -49,10 +54,7 @@ const MiniCalendar: FC<MiniCalendarProps> = ({ type, setType, setOpenDrop }) => 
                   isOtherMonth={date.month() !== baseDate.month()}
                   isSelected={type === date.format('YYYY.MM.DD')}
                   isSunday={i === 0}
-                  onClick={() => {
-                    setType(date.format('YYYY.MM.DD'));
-                    setOpenDrop(false);
-                  }}
+                  onClick={() => handleDate(date)}
                   key={date.format('YYYY.MM.DD')}
                 >
                   {date.date()}

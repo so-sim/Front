@@ -5,11 +5,13 @@ import { USER } from '@/assets/icons/User';
 import DropDown from '@/common/DropDown';
 import { TwoButtonModal } from '@/common/Modal/TwoButtonModal';
 import UserConfigModal from '@/common/Modal/UserConfigModal';
+import { userState } from '@/store/userState';
 import { GroupListWithIndex } from '@/types/group';
 import { removeAccessToken } from '@/utils/acceessToken';
 import { useQueryClient } from '@tanstack/react-query';
 import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useRecoilState } from 'recoil';
 import * as Style from './styles';
 
 const DorpDownList = [
@@ -19,6 +21,7 @@ const DorpDownList = [
 
 const GroupLayoutHeader = () => {
   const navigate = useNavigate();
+  const [user, setUser] = useRecoilState(userState);
   const [dropDownState, setDropDownState] = useState('');
   const [showConfigModal, setShowConfigModal] = useState(false);
   const [showLogOutModal, setShowLogOutModal] = useState(false);
@@ -41,13 +44,15 @@ const GroupLayoutHeader = () => {
 
   const onClickLogOut = () => {
     removeAccessToken();
-    localStorage.removeItem('recoil-persist');
+    setUser({
+      userId: null,
+      email: '',
+    });
 
     queryClient.setQueryData<GroupListWithIndex>(['groupList'], {
       next: false,
       groupList: [],
     });
-
     navigate('/');
   };
 

@@ -30,7 +30,6 @@ export const CreateGroupModal: FC<ModalHandlerProps> = ({ modalHandler, id }) =>
   const location = useLocation();
 
   const { mutate } = useCreateGroup(modalHandler);
-  console.log(location);
 
   const createGroup = () => {
     mutate(

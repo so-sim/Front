@@ -1,5 +1,4 @@
 import KaKaoSignUp from '@/pages/Auth/KakaoSignUp';
-import Loading from '@/pages/Auth/Loading';
 import Invitation from '@/pages/Invitation';
 import ServiceWithdrawal from '@/pages/Withdrawal';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';

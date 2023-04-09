@@ -1,4 +1,4 @@
-import React, { Dispatch, FC, SetStateAction, useEffect, useRef, useState } from 'react';
+import React, { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react';
 import { ARROW } from '@/assets/icons/Arrow';
 import * as Style from '../styles';
 import MiniCalendar from './MiniCalendar';
@@ -16,8 +16,11 @@ interface CalendarDropBoxProps {
 
 export const CalendarDropBox = ({ setType, type, boxWidth = '138px', color = 'gray' }: CalendarDropBoxProps) => {
   const dropDownRef = useRef<HTMLDivElement>(null);
-
   const [openDrop, setOpenDrop] = useState(false);
+
+  const hadleCalendarDropDown = () => {
+    setOpenDrop((prev) => !prev);
+  };
 
   const isDisabled = color === 'disabled';
 
@@ -35,18 +38,12 @@ export const CalendarDropBox = ({ setType, type, boxWidth = '138px', color = 'gr
 
   return (
     <Style.DropDownBox ref={dropDownRef} boxWidth={boxWidth} color={color}>
-      <Style.Text boxWidth={boxWidth} isDisabled={isDisabled}>
-        {(typeof type === 'string' && type) || '선택해주세요'}
-      </Style.Text>
-      {!isDisabled && (
-        <Style.ArrowIcon
-          onClick={() => {
-            setOpenDrop((prev) => !prev);
-          }}
-        >
-          {ARROW.DOWN_LG}
-        </Style.ArrowIcon>
-      )}
+      <div onClick={hadleCalendarDropDown} style={{ display: 'flex', alignItems: 'center' }}>
+        <Style.Text boxWidth={boxWidth} isDisabled={isDisabled}>
+          {type}
+        </Style.Text>
+        {!isDisabled && <Style.ArrowIcon>{ARROW.DOWN_LG}</Style.ArrowIcon>}
+      </div>
 
       {openDrop && (
         <div style={{ position: 'absolute', top: '34px', left: '-2px' }}>

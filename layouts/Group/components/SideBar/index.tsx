@@ -40,7 +40,7 @@ const GroupSideBar = () => {
     if (!groupData && isError) {
       navigate('/');
     }
-  }, [groupId, isError]);
+  }, [groupId, isError, groupData?.content.isInto]);
 
   return (
     <>
