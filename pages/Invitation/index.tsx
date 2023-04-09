@@ -47,10 +47,12 @@ const Invitation = () => {
   };
 
   useEffect(() => {
-    if (true) {
+    if (data?.content.isInto === true) {
+      navigate(`/group/${groupId}/book`);
     }
+
     sessionStorage.removeItem('invite-group-id');
-  }, []);
+  }, [data?.content.isInto]);
 
   if (!isSuccess) return <Loading />;
 

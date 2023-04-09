@@ -29,11 +29,6 @@ export const CreateGroupModal: FC<ModalHandlerProps> = ({ modalHandler, id }) =>
 
   const location = useLocation();
 
-  useEffect(() => {
-    if (title !== '' && isInit.groupName === true) setIsInit((prev) => ({ ...prev, groupName: false }));
-    if (nickname !== '' && isInit.myName === true) setIsInit((prev) => ({ ...prev, myName: false }));
-  }, [title, nickname]);
-
   const { mutate } = useCreateGroup(modalHandler);
   console.log(location);
 
