@@ -22,7 +22,7 @@ export const TableHead: FC<TableHeadProps> = ({ setDateFilter, setPage }) => {
   const { data } = useParticipantList({ groupId: Number(param.groupId) });
 
   const adminNickname = data?.content.adminNickname;
-  const participants = data?.content.nicknameList.map((nickname) => ({ title: nickname }));
+  const participants = data?.content.memberList.map(({ nickname }) => ({ title: nickname }));
 
   const [openMemberDropdown, setOpenMemberDropdown] = useState(false);
   const [openPaymentTypeDropdown, setOpenPaymentTypeDropdown] = useState(false);
@@ -30,7 +30,7 @@ export const TableHead: FC<TableHeadProps> = ({ setDateFilter, setPage }) => {
   const memberDropDownRef = useRef<HTMLDivElement>(null);
   const paymentTypeDropDownRef = useRef<HTMLDivElement>(null);
 
-  const [member, setMember] = useState('');
+  const [member, setMember] = useState('전체');
 
   const [paymentType, setPaymentType] = useState<PaymentDropdown>('');
 
@@ -43,7 +43,12 @@ export const TableHead: FC<TableHeadProps> = ({ setDateFilter, setPage }) => {
 
   useEffect(() => {
     setPage(0);
-    setDateFilter((prev) => ({ ...prev, page: 0, member: member === '전체' ? '' : member, paymentType: paymentType === '전체' ? '' : getStatusCode(paymentType) }));
+    setDateFilter((prev) => ({
+      ...prev,
+      page: 0,
+      paymentType: paymentType === '전체' ? '' : getStatusCode(paymentType),
+      userId: member === '전체' ? '' : data?.content.memberList.find(({ nickname }) => nickname === member)?.userId || data?.content.adminId,
+    }));
   }, [member, paymentType]);
 
   const paymentTypeList: { title: PaymentDropdown; id?: string }[] = [

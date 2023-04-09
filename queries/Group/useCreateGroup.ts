@@ -1,5 +1,5 @@
 import { useRecoilState } from 'recoil';
-import { message } from './index';
+
 import { createGroup } from '@/api/Group';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';

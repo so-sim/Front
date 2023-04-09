@@ -7,7 +7,7 @@ export interface DateFilterProperty {
   month?: number;
   week?: number | null;
   day?: number;
-  userId?: number;
+  userId?: number | '';
   paymentType?: string;
   page?: number;
 }

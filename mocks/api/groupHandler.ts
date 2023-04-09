@@ -71,7 +71,15 @@ const getGroupParticipant: Parameters<typeof rest.get>[1] = (req, res, ctx) => {
       content: {
         adminId: '125hlkfd',
         adminNickname: '윤하나둘셋넷',
-        nicknameList: ['윤하나둘셋넷', '윤하나', '윤둘', '윤셋', '윤넷', '윤하나둘', '윤하나셋넷', '윤둘셋넷', '윤하나둘넷'],
+        memberList: [
+          { nickname: '윤하나둘셋넷', userId: 0 },
+          { nickname: '윤하나', userId: 1 },
+          { nickname: '윤둘', userId: 2 },
+          { nickname: '윤셋', userId: 3 },
+          { nickname: '윤넷', userId: 4 },
+          { nickname: '윤하나둘', userId: 5 },
+          { nickname: '윤하나셋넷', userId: 6 },
+        ],
       },
     }),
   );

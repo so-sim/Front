@@ -65,7 +65,15 @@ export const FineBookModal = ({ setOpen, eventId, select }: ModalProps) => {
 
   const createDetail = (type: 'continue' | 'save') => {
     if (user.userId === null) return;
-    create({ groupId: Number(groupId), userId: user.userId, userName: member, groundsDate, grounds: reason, paymentType: getStatusCode(status), payment: fine });
+    create({
+      groupId: Number(groupId),
+      userId: user.userId,
+      userName: member,
+      groundsDate,
+      grounds: reason,
+      paymentType: getStatusCode(status),
+      payment: fine,
+    });
     setDateState((prev) => ({ ...prev, baseDate: dayjs(groundsDate), selectedDate: dayjs(groundsDate), week: null }));
     if (type === 'continue') {
       navigate(`/group/${groupId}/book/detail`, { state: true });
@@ -101,7 +109,7 @@ export const FineBookModal = ({ setOpen, eventId, select }: ModalProps) => {
   };
 
   const admin = { title: data?.content.adminNickname as string };
-  const participantList = data?.content.nicknameList.map((participant) => ({ title: participant })) || [];
+  const participantList = data?.content.memberList.map(({ nickname }) => ({ title: nickname })) || [];
   const memberList = [admin, ...participantList];
 
   const statusList: { title: PaymentType; id?: string }[] = [{ title: '미납', id: 'nonpayment_modify' }, { title: '완납', id: 'fullpayment_modify' }, { title: '확인필요' }];
