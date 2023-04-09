@@ -3,15 +3,27 @@ import { useMutation } from '@tanstack/react-query';
 import { ToastPopUp } from '@/common/Toast';
 import { TOAST_ERROR } from '@/constants/Toast';
 import { useNavigate } from 'react-router-dom';
+import { AxiosError } from 'axios';
+import { ServerResponse } from '@/types/serverResponse';
 
-export const useJoinGroup = (setErrorText: (error: string) => void, groupId: number) => {
+interface UseJoinGroupProps {
+  setError: <P extends 'nickname'>(target: P, message: string) => string;
+  groupId: number;
+}
+
+export const useJoinGroup = ({ setError, groupId }: UseJoinGroupProps) => {
   const navigate = useNavigate();
   return useMutation(joinGroup, {
-    onError(error: any) {
-      setErrorText(error.response.data.filed as string);
-      ToastPopUp({ type: 'error', message: TOAST_ERROR.NETWORK });
+    onError: (error: any) => {
+      const axiosError = error as unknown as AxiosError;
+      if (axiosError.response) {
+        const data = axiosError.response.data as ServerResponse;
+        setError('nickname', data.status.message);
+      } else {
+        ToastPopUp({ type: 'error', message: TOAST_ERROR.NETWORK });
+      }
     },
-    onSuccess() {
+    onSuccess: () => {
       navigate(`/group/${groupId}/book`);
     },
   });

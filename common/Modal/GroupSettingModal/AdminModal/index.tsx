@@ -2,7 +2,7 @@ import { FC, useEffect, useState } from 'react';
 import { Input, Label } from '@/common';
 import Button from '@/common/Button';
 import Modal from '@/common/Modal';
-import { isValid } from '@/utils/validation';
+import { checkCountChar, useError } from '@/utils/validation';
 import { GroupColorList } from '../../GroupColorList';
 import { DropBox } from '../../../DropBox';
 import * as Style from './styles';
@@ -15,6 +15,7 @@ import { useGetMyNikname } from '@/queries/Group/useGetMyNickname';
 import { TwoButtonModal } from '../../TwoButtonModal';
 import { GROUP_DELETE, GROUP_WITHDRWWAL_ADMIN } from '@/constants/GroupWithdrawal';
 import { OneButtonModal } from '../../OneButtonModal';
+import { reTakeToken } from '@/api/Auth';
 
 export const AdminModal: FC<ModalHandlerProps> = ({ modalHandler }) => {
   const [title, setTitle] = useState('');
@@ -23,12 +24,15 @@ export const AdminModal: FC<ModalHandlerProps> = ({ modalHandler }) => {
   const [coverColor, setCoverColor] = useState<GroupColor>('#f89a65');
   const [showGroupDeleteModal, setShowGroupDeleteModal] = useState(false);
   const [showGroupWithdrawalModal, setShowGroupWithdrawalModal] = useState(false);
-  const [errorText, setErrorText] = useState('');
+  const [isError, setError] = useError({
+    nickname: '',
+    groupName: '',
+  });
 
   const { groupId } = useParams();
 
   const { mutate: updateGroupMutate } = useUpdateGroup();
-  const { mutate: updateNickname, isError } = useChangeNickname(setErrorText);
+  const { mutate: updateNickname } = useChangeNickname({ setError, modalHandler });
   const { mutate: withdrawalGroupMutate } = useWithdrawalGroup();
   const { mutate: deleteGroup } = useDeleteGroup();
 
@@ -50,8 +54,9 @@ export const AdminModal: FC<ModalHandlerProps> = ({ modalHandler }) => {
   const updateGroupInfo = () => {
     const id = Number(groupId);
     updateGroupMutate({ title, type, coverColor, groupId: id });
-    updateNickname({ nickname, groupId: id });
-    modalHandler();
+    if (nickname !== myNickname?.content.nickname) {
+      !isError.nickname && updateNickname({ nickname, groupId: id });
+    }
   };
 
   const withdrwalGroup = () => {
@@ -60,8 +65,8 @@ export const AdminModal: FC<ModalHandlerProps> = ({ modalHandler }) => {
   };
 
   const isValidForm = () => {
-    if (!isValid(title)) return false;
-    if (!isValid(nickname)) return false;
+    if (checkCountChar(title)) return false;
+    if (checkCountChar(nickname)) return false;
     if (type === '') return false;
     if (!COLORS.includes(coverColor)) return false;
     return true;
@@ -90,10 +95,10 @@ export const AdminModal: FC<ModalHandlerProps> = ({ modalHandler }) => {
             <Style.SubTitle>사용자 설정</Style.SubTitle>
             <Style.Container>
               <Label title="모임 이름" flexDirection="column">
-                <Input value={title} isValid={isValid(title)} onChange={setTitle} maxLength={15} />
+                <Input value={title} errorText={isError.groupName} onChange={setTitle} maxLength={15} setError={setError} title="groupName" />
               </Label>
               <Label title="내 이름" flexDirection="column">
-                <Input value={nickname} isValid={isValid(nickname)} onChange={setNickname} maxLength={15} />
+                <Input value={nickname} errorText={isError.nickname} onChange={setNickname} maxLength={15} setError={setError} title="nickname" />
               </Label>
               <Label title="모임 유형" flexDirection="column">
                 <DropBox dropDownList={DROPDOWN_LIST} type={type} setType={setType} boxWidth="170px" />
