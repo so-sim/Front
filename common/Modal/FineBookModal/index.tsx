@@ -28,12 +28,11 @@ export const FineBookModal = ({ setOpen, eventId, select }: ModalProps) => {
   const type = eventId ? 'update' : 'create';
   const isCreate = type === 'create';
   const isUpdate = select !== undefined;
-
-  const [member, setMember] = useState('');
-  const [status, setStatus] = useState<PaymentType | ''>('미납');
-  const [reason, setReason] = useState('');
-  const [fine, setFine] = useState(0);
-  const [groundsDate, setGroundsDate] = useState('');
+  const [member, setMember] = useState(select?.userName ?? '');
+  const [status, setStatus] = useState<PaymentType>(select?.paymentType ? getStatusText(select?.paymentType) : '미납');
+  const [reason, setReason] = useState(select?.grounds ?? '');
+  const [fine, setFine] = useState(select?.payment ?? 0);
+  const [groundsDate, setGroundsDate] = useState(dayjs().format('YYYY.MM.DD'));
   const [{ selectedDate, baseDate }, setDateState] = useRecoilState(dateState);
 
   const onChangeFine = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -92,16 +91,6 @@ export const FineBookModal = ({ setOpen, eventId, select }: ModalProps) => {
     }
   };
 
-  useEffect(() => {
-    if (select != null) {
-      setMember(select.userName);
-      setGroundsDate(select.groundsDate);
-      setReason(select.grounds);
-      setStatus(getStatusText(select.paymentType));
-      setFine(select.payment);
-    }
-  }, []);
-
   const updateDetail = () => {
     if (status == '' || select == null) return;
     const { eventId, userId } = select;
@@ -128,37 +117,23 @@ export const FineBookModal = ({ setOpen, eventId, select }: ModalProps) => {
       <div style={{ display: 'flex', flexDirection: 'column', width: '100%' }}>
         <Style.Row>
           <Label title="팀원" width="32px">
-            <DropBox boxWidth="148px" width={304} setType={setMember} type={isUpdate && member === '' ? select?.userName : member} dropDownList={memberList} direction="right" />
+            <DropBox boxWidth="148px" width={304} setType={setMember} type={member} dropDownList={memberList} direction="right" />
           </Label>
           <Label title="납부여부" width="56px">
-            <DropBox
-              color="white"
-              boxWidth="112px"
-              width={112}
-              setType={setStatus}
-              type={isUpdate && status === '' ? getStatusText(select?.paymentType) : status}
-              dropDownList={statusList}
-            />
+            <DropBox color="white" boxWidth="112px" width={112} setType={setStatus} type={status} dropDownList={statusList} />
           </Label>
         </Style.Row>
         <Style.Row>
           <Label title="금액" width="32px">
-            <Style.Input
-              type="string"
-              value={isUpdate && fine === 0 ? changeNumberToMoney(select?.payment) : changeNumberToMoney(fine)}
-              onChange={onChangeFine}
-              style={{ height: '32px' }}
-            />
+            <Style.Input type="string" value={changeNumberToMoney(fine)} onChange={onChangeFine} style={{ height: '32px' }} />
           </Label>
           <Label title="날짜" width="32px">
-            <CalendarDropBox type={isUpdate && groundsDate === '' ? select?.groundsDate : groundsDate} setType={setGroundsDate} color="white" />
+            <CalendarDropBox type={groundsDate} setType={setGroundsDate} color="white" />
           </Label>
         </Style.Row>
         <Label title="사유" width="32px">
-          <Style.TextArea maxLength={65} onChange={onChangeReason} defaultValue={reason} value={reason} placeholder="내용을 입력해주세요.">
-            {isUpdate && reason === '' ? select.grounds : reason}
-          </Style.TextArea>
-          <Style.Length>{isUpdate && reason === '' ? select?.grounds.length : reason.length}/65</Style.Length>
+          <Style.TextArea maxLength={65} onChange={onChangeReason} defaultValue={reason} value={reason} placeholder="내용을 입력해주세요." />
+          <Style.Length>{isUpdate ? select?.grounds.length : reason.length}/65</Style.Length>
         </Label>
         <Modal.Footer flexDirection="column">
           <Button

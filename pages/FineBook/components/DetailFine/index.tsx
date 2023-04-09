@@ -55,6 +55,8 @@ const DetailFine = () => {
     window.history.replaceState(null, '');
   }, []);
 
+  console.log(data?.content);
+
   return (
     <>
       <Style.DetailFineFrame>
