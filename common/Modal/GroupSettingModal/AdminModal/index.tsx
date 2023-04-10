@@ -36,8 +36,8 @@ export const AdminModal: FC<ModalHandlerProps> = ({ modalHandler }) => {
   const { mutate: withdrawalGroupMutate } = useWithdrawalGroup();
   const { mutate: deleteGroup } = useDeleteGroup();
 
-  const { data: groupData } = useGroupDetail({ groupId: Number(groupId) });
-  const { data: myNickname } = useGetMyNikname({ groupId: Number(groupId) });
+  const { data: groupData } = useGroupDetail(groupId);
+  const { data: myNickname } = useGetMyNikname(groupId);
 
   const handleGroupDeleteModal = () => {
     setShowGroupDeleteModal((prev) => !prev);

@@ -19,7 +19,7 @@ const Invitation = () => {
 
   const { groupId } = useQueryString();
 
-  const { data, isSuccess } = useGroupDetail({ groupId: Number(groupId) });
+  const { data, isSuccess } = useGroupDetail(groupId);
 
   const handleInvitationModal = () => {
     setShowInvitationModal((prev) => !prev);

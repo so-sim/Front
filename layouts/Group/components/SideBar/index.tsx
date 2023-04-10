@@ -23,7 +23,7 @@ const GroupSideBar = () => {
   const navigate = useNavigate();
   const { groupId } = param;
 
-  const { data: groupData, isError } = useGroupDetail({ groupId: Number(groupId) });
+  const { data: groupData, isError } = useGroupDetail(groupId);
 
   const isSelected = (link: string) => {
     return param['*']?.split('/').includes(link) === true;

@@ -49,7 +49,7 @@ export const FineBookModal = ({ setOpen, eventId, select, setSelect }: ModalProp
   };
 
   const { groupId } = useParams();
-  const { data } = useParticipantList({ groupId: Number(groupId) || 1 });
+  const { data } = useParticipantList(groupId);
   const { mutate: create } = useCreateDetail();
   const { mutate: update } = useUpdateDetail();
 
