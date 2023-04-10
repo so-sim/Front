@@ -52,6 +52,7 @@ export const UserDetails = ({ open, setOpen, select, setSelect }: UserDetailsPro
         {
           onSuccess() {
             setOpenUpdateStatusModal(false);
+            setSelect((prev) => ({ ...prev, paymentType: getStatusCode(newStatus) }));
             if (isAdmin === true && getStatusCode(newStatus) === 'full') {
               pushDataLayer('fullpayment', { route: 'detail' });
             }
@@ -180,9 +181,7 @@ export const UserDetails = ({ open, setOpen, select, setSelect }: UserDetailsPro
             </Label>
           </Style.Row>
           <Label title="사유" width="30px">
-            <Style.TextArea disabled placeholder="내용을 입력해주세요.">
-              {grounds}
-            </Style.TextArea>
+            <Style.TextArea disabled placeholder="내용을 입력해주세요." value={grounds}></Style.TextArea>
           </Label>
         </Style.UserDetailsContent>
         {data?.content.isAdmin && (
@@ -235,7 +234,7 @@ export const UserDetails = ({ open, setOpen, select, setSelect }: UserDetailsPro
           confirm={{ text: '삭제하기', onClick: deleteDetailInfo }}
         />
       )}
-      {openUpdateModal && <FineBookModal eventId={eventId} select={select} setOpen={setOpenUpdateModal} />}
+      {openUpdateModal && <FineBookModal eventId={eventId} select={select} setOpen={setOpenUpdateModal} setSelect={setSelect} />}
     </>
   );
 };

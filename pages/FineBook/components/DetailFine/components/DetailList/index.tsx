@@ -17,19 +17,17 @@ export const DetailList: FC<DetailListProps> = ({ selectedEventId, details, setS
 
   const [openListEventId, setOpenListEventId] = useState(0);
 
+  const handleUserDetailModal = (detail: EventInfo) => {
+    setSelect(detail);
+    setOpenUserDetails(true);
+  };
+
   return (
     <Style.DetailList>
       {details.map((detail, i) => {
         const { groundsDate, userName, payment, grounds } = detail;
         return (
-          <Style.TableRow
-            key={i}
-            isSelected={selectedEventId === detail.eventId}
-            onClick={(e) => {
-              setSelect(detail);
-              setOpenUserDetails(true);
-            }}
-          >
+          <Style.TableRow key={i} isSelected={selectedEventId === detail.eventId} onClick={() => handleUserDetailModal(detail)}>
             <Style.Element hasEllipsis={false}>{groundsDate.slice(2)}</Style.Element>
             <DropDownWrapper detail={detail} openListEventId={openListEventId} setOpenListEventId={setOpenListEventId} />
             <Style.Element hasEllipsis>{userName}</Style.Element>
