@@ -44,7 +44,7 @@ export const ButtonFlex = styled.button`
   border-radius: 4px;
 `;
 
-export const AdminContainer = styled.div`
+export const UserContainer = styled.div`
   padding: 14px 32px;
   display: flex;
   align-items: center;
@@ -54,7 +54,7 @@ export const AdminContainer = styled.div`
   ${({ theme }) => theme.font.subhead_03};
 `;
 
-export const Tage = styled.div`
+export const Tag = styled.div`
   color: ${({ theme }) => theme.colors.white};
   display: flex;
   align-items: center;

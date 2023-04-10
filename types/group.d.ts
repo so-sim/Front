@@ -49,5 +49,6 @@ export interface GropuList {
 
 export interface GroupListWithIndex {
   next: boolean;
+  index: number;
   groupList: GropuList[];
 }

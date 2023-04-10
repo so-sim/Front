@@ -18,7 +18,7 @@ const DropDonwList = [
 
 const MemberListItem: FC<MemberListItemProps> = ({ nickname }) => {
   const { groupId } = useParams();
-  const { data: groupData } = useGroupDetail({ groupId: Number(groupId) });
+  const { data: groupData } = useGroupDetail(groupId);
 
   const [showDropDown, setShowDropDown] = useState(false);
   const [selectAction, setSelectAction] = useState('');
@@ -33,7 +33,7 @@ const MemberListItem: FC<MemberListItemProps> = ({ nickname }) => {
     setShowChangeAdminModal((prev) => !prev);
   };
 
-  const { mutate: changeAdminMutate } = useChangeAdmin();
+  const { mutate: changeAdminMutate } = useChangeAdmin({ groupId });
 
   const onClickConfirm = () => {
     const id = Number(groupId);

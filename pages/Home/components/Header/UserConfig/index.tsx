@@ -36,6 +36,7 @@ const UserConfig = () => {
     localStorage.removeItem('recoil-persist');
     queryClient.setQueryData<GroupListWithIndex>(['groupList'], {
       next: false,
+      index: 0,
       groupList: [],
     });
     window.location.href = process.env.REACT_APP_SERVICE_URL as string;

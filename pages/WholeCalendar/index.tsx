@@ -13,7 +13,7 @@ const WholeCalendar = () => {
   const [{ isFirstVisit }, setIsFirstVisit] = useRecoilState(firstVisitState);
   const [dateObj, setDateObj] = useRecoilState(dateState);
 
-  const { data } = useGroupDetail({ groupId: Number(groupId) });
+  const { data } = useGroupDetail(groupId);
 
   const isAdmin = data?.content.isAdmin;
 

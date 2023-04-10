@@ -22,7 +22,7 @@ interface DateControllerProps {
 
 export const DateController: FC<DateControllerProps> = ({ mode, setMode, setOpenAddModal, setDateFilter }) => {
   const { groupId } = useParams();
-  const { data: groupData } = useGroupDetail({ groupId: Number(groupId) });
+  const { data: groupData } = useGroupDetail(groupId);
   const dropDownRef = useRef<HTMLDivElement>(null);
 
   const [{ baseDate, week }, setSelectedDate] = useRecoilState(dateState);

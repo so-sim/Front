@@ -23,8 +23,8 @@ export const UserModal: FC<ModalHandlerProps> = ({ modalHandler }) => {
 
   const { mutate: updateNickname } = useChangeNickname({ setError, modalHandler });
   const { mutate: withdrawalGroupMutate } = useWithdrawalGroup();
-  const { data: groupData } = useGroupDetail({ groupId: Number(groupId) });
-  const { data: myNickname } = useGetMyNikname({ groupId: Number(groupId) });
+  const { data: groupData } = useGroupDetail(groupId);
+  const { data: myNickname } = useGetMyNikname(groupId);
 
   const withdrwalGroup = () => {
     const id = Number(groupId);
