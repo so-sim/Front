@@ -97,7 +97,7 @@ export const FineBookModal = ({ setOpen, eventId, select, setSelect }: ModalProp
     const { eventId, userId } = select;
 
     update(
-      { eventId, userId, userName: member, groundsDate, grounds: reason, paymentType: status, payment: fine },
+      { eventId, userId, userName: member, groundsDate, grounds: reason, paymentType: getStatusCode(status), payment: fine },
       {
         onSuccess(data) {
           if (setSelect) {

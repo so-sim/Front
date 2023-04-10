@@ -32,6 +32,8 @@ export const dateFilterTitle = (baseDate: Dayjs, mode: FilterMode, week: number 
     case 'day':
       return `${month}월 ${day}일`;
     case 'week':
+      if (week === null) throw new Error('mode가 week일 때 week는 null일 수 없습니다.');
+
       if (week === 1) {
         const baseDateOnFirstWeek = dayjs(baseDate).startOf('week');
         const dateToMonthOnFirstWeek = prependZeroBelowTen(baseDateOnFirstWeek.month() + 1);
