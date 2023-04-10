@@ -10,6 +10,7 @@ import { InvitationTicket } from '@/assets/icons/Invitation';
 import { useNavigate } from 'react-router-dom';
 import { useQueryString } from '@/hooks/useQueryString';
 import Loading from '../Auth/Loading';
+import { NotFoundGroup } from './components/NotFoundGroup';
 
 const Invitation = () => {
   const [showInvitationModal, setShowInvitationModal] = useState(false);
@@ -19,7 +20,7 @@ const Invitation = () => {
 
   const { groupId } = useQueryString();
 
-  const { data, isSuccess } = useGroupDetail({ groupId: Number(groupId) });
+  const { data, isSuccess, isLoading, isError } = useGroupDetail({ groupId: Number(groupId) });
 
   const handleInvitationModal = () => {
     setShowInvitationModal((prev) => !prev);
@@ -54,7 +55,9 @@ const Invitation = () => {
     sessionStorage.removeItem('invite-group-id');
   }, [data?.content.isInto]);
 
-  if (!isSuccess) return <Loading />;
+  if (isLoading) return <Loading />;
+
+  if (!isSuccess) return <NotFoundGroup />;
 
   return (
     <Style.Background>
