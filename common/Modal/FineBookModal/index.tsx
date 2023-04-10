@@ -22,9 +22,10 @@ interface ModalProps {
   setOpen: Dispatch<SetStateAction<boolean>>;
   eventId?: number;
   select?: EventInfo;
+  setSelect?: Dispatch<SetStateAction<EventInfo>>;
 }
 
-export const FineBookModal = ({ setOpen, eventId, select }: ModalProps) => {
+export const FineBookModal = ({ setOpen, eventId, select, setSelect }: ModalProps) => {
   const type = eventId ? 'update' : 'create';
   const isCreate = type === 'create';
   const isUpdate = select !== undefined;
@@ -32,7 +33,7 @@ export const FineBookModal = ({ setOpen, eventId, select }: ModalProps) => {
   const [status, setStatus] = useState<PaymentType>(select?.paymentType ? getStatusText(select?.paymentType) : '미납');
   const [reason, setReason] = useState(select?.grounds ?? '');
   const [fine, setFine] = useState(select?.payment ?? 0);
-  const [groundsDate, setGroundsDate] = useState(dayjs().format('YYYY.MM.DD'));
+  const [groundsDate, setGroundsDate] = useState(dayjs(select?.groundsDate).format('YYYY.MM.DD'));
   const [{ selectedDate, baseDate }, setDateState] = useRecoilState(dateState);
 
   const onChangeFine = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -95,8 +96,18 @@ export const FineBookModal = ({ setOpen, eventId, select }: ModalProps) => {
     if (status == '' || select == null) return;
     const { eventId, userId } = select;
 
-    update({ eventId, userId, userName: member, groundsDate, grounds: reason, paymentType: getStatusCode(status), payment: fine });
-    setOpen(false);
+    update(
+      { eventId, userId, userName: member, groundsDate, grounds: reason, paymentType: status, payment: fine },
+      {
+        onSuccess(data) {
+          if (setSelect) {
+            setSelect((prev) => ({ ...prev, ...data.content, paymentType: getStatusText(status) }));
+            setDateState((prev) => ({ ...prev, baseDate: dayjs(data.content.groundsDate), selectedDate: dayjs(data.content.groundsDate), week: null }));
+            setOpen(false);
+          }
+        },
+      },
+    );
   };
 
   const checkFormIsValid = (): boolean => {
@@ -109,7 +120,10 @@ export const FineBookModal = ({ setOpen, eventId, select }: ModalProps) => {
   const participantList = data?.content.memberList.map(({ nickname }) => ({ title: nickname })) || [];
   const memberList = [admin, ...participantList];
 
-  const statusList: { title: PaymentType; id?: string }[] = [{ title: '미납', id: 'nonpayment_modify' }, { title: '완납', id: 'fullpayment_modify' }, { title: '확인필요' }];
+  const statusList: { title: PaymentType; id?: string }[] = [
+    { title: '미납', id: 'nonpayment_modify' },
+    { title: '완납', id: 'fullpayment_modify' },
+  ];
 
   return (
     <Modal.Frame width="448px" height={type === 'create' ? '452px' : '412px'} onClick={() => setOpen(false)}>
@@ -120,7 +134,7 @@ export const FineBookModal = ({ setOpen, eventId, select }: ModalProps) => {
             <DropBox boxWidth="148px" width={304} setType={setMember} type={member} dropDownList={memberList} direction="right" />
           </Label>
           <Label title="납부여부" width="56px">
-            <DropBox color="white" boxWidth="112px" width={112} setType={setStatus} type={status} dropDownList={statusList} />
+            <DropBox color="white" boxWidth="112px" width={112} setType={setStatus} type={status} dropDownList={statusList.filter((paymentType) => paymentType.title !== status)} />
           </Label>
         </Style.Row>
         <Style.Row>
@@ -133,7 +147,7 @@ export const FineBookModal = ({ setOpen, eventId, select }: ModalProps) => {
         </Style.Row>
         <Label title="사유" width="32px">
           <Style.TextArea maxLength={65} onChange={onChangeReason} defaultValue={reason} value={reason} placeholder="내용을 입력해주세요." />
-          <Style.Length>{isUpdate ? select?.grounds.length : reason.length}/65</Style.Length>
+          <Style.Length>{!isCreate ? select?.grounds.length : reason.length}/65</Style.Length>
         </Label>
         <Modal.Footer flexDirection="column">
           <Button

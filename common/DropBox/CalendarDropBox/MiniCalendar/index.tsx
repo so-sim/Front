@@ -11,7 +11,7 @@ interface MiniCalendarProps {
 }
 
 const MiniCalendar: FC<MiniCalendarProps> = ({ type, setType, setOpenDrop }) => {
-  const [baseDate, setBaseDate] = useState(dayjs());
+  const [baseDate, setBaseDate] = useState(dayjs(type));
   const calendarArray = createCalendar(baseDate);
 
   const DAY_LIST = ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'];
