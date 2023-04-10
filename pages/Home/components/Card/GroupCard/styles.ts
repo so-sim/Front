@@ -44,6 +44,6 @@ export const GroupAdminName = styled.div`
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  padding-left: 8px;
+  padding-left: 4px;
   font-size: 12px;
 `;

@@ -52,6 +52,7 @@ export const UserDetails = ({ open, setOpen, select, setSelect }: UserDetailsPro
         {
           onSuccess() {
             setOpenUpdateStatusModal(false);
+            setSelect((prev) => ({ ...prev, paymentType: getStatusCode(newStatus) }));
             if (isAdmin === true && getStatusCode(newStatus) === 'full') {
               pushDataLayer('fullpayment', { route: 'detail' });
             }

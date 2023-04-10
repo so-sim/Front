@@ -6,7 +6,6 @@ export const GuidePhrase = styled.p`
 `;
 
 export const Footer = styled.div`
-  cursor: pointer;
   color: ${({ theme }) => theme.colors.secondary_500};
   ${({ theme }) => theme.font.caption};
 `;
@@ -25,6 +24,7 @@ export const Text = styled.span`
 `;
 
 export const LinkText = styled(Text)`
+  cursor: pointer;
   &:hover {
     text-decoration: underline;
   }
