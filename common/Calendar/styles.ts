@@ -65,8 +65,9 @@ interface CalendarContainerProps {
 
 export const CalendarContainer = styled.div<CalendarContainerProps>`
   display: grid;
-  border: 1px solid ${({ theme }) => theme.colors.neutral_400_b};
-  max-height: ${(props) => (props.mini ? '50%' : '100%')};
+  border: ${(props) => props.mini || `1px solid ${props.theme.colors.neutral_400_b}`};
+  border-bottom: ${(props) => props.mini && `2px solid ${props.theme.colors.neutral_400_b}`};
+  max-height: ${(props) => (props.mini ? 'fit-content' : '100%')};
   grid-template-rows: ${(props) => `repeat(${props.length},1fr`};
 `;
 
