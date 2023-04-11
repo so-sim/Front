@@ -48,7 +48,8 @@ const UserConfigModal: FC<UserConfigModalProps> = ({ handleModal }) => {
       </Modal.Frame>
       {showWithdrawalModal && (
         <OneButtonModal
-          height="240px"
+          height="265px"
+          width="448px"
           title={WITHDRAWAL_MODAL.HAS_ADMIM.title}
           description={WITHDRAWAL_MODAL.HAS_ADMIM.desc}
           confirm={{ text: '확인', onClick: handleWithdrawalModal }}
