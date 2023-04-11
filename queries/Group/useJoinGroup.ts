@@ -9,7 +9,7 @@ import { GroupDetail } from '@/types/group';
 
 interface UseJoinGroupProps {
   setError: <P extends 'nickname'>(target: P, message: string) => string;
-  groupId: string;
+  groupId: number;
 }
 
 export const useJoinGroup = ({ setError, groupId }: UseJoinGroupProps) => {
@@ -32,7 +32,7 @@ export const useJoinGroup = ({ setError, groupId }: UseJoinGroupProps) => {
 
       return { prevData };
     },
-    onSuccess: () => {
+    onSuccess: (data) => {
       navigate(`/group/${groupId}/book`);
     },
 

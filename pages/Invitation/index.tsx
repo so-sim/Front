@@ -34,6 +34,11 @@ const Invitation = () => {
   };
 
   const checkUserLoginStatus = () => {
+    if (isSuccess && data?.content.isInto === true) {
+      console.log(data?.content.isInto);
+      return navigate(`/group/${groupId}/book`);
+    }
+
     if (user.userId === null) {
       handleLoginModal();
       sessionStorage.setItem('invite-group-id', String(groupId));
@@ -48,12 +53,8 @@ const Invitation = () => {
   };
 
   useEffect(() => {
-    if (data?.content.isInto === true) {
-      navigate(`/group/${groupId}/book`);
-    }
-
     sessionStorage.removeItem('invite-group-id');
-  }, [data?.content.isInto]);
+  }, []);
 
   if (isLoading) return <Loading />;
 
