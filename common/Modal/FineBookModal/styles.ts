@@ -36,4 +36,5 @@ export const Row = styled.div`
   gap: 12px;
   position: relative;
   width: 100%;
+  margin-bottom: 16px;
 `;

@@ -47,7 +47,6 @@ export const WeekDate = styled.div`
   border-radius: 4px;
   justify-content: space-between;
   background-color: ${({ theme }) => theme.colors.neutral_200_b};
-  border: 2px solid ${({ theme }) => theme.colors.neutral_400_b};
   margin-bottom: 12px;
   min-width: 200px;
   div {
@@ -66,9 +65,9 @@ interface CalendarContainerProps {
 
 export const CalendarContainer = styled.div<CalendarContainerProps>`
   display: grid;
+  border: 1px solid ${({ theme }) => theme.colors.neutral_400_b};
   max-height: ${(props) => (props.mini ? '50%' : '100%')};
   grid-template-rows: ${(props) => `repeat(${props.length},1fr`};
-  border: 1px solid ${({ theme }) => theme.colors.neutral_400_b};
 `;
 
 interface WeekWrapProps {
@@ -79,7 +78,6 @@ export const WeekWrap = styled.div<WeekWrapProps>`
   display: grid;
   grid-template-columns: repeat(7, 1fr);
   max-height: ${(props) => props.cellType === 'Mark' && '80px'};
-  border: 1px solid ${({ theme }) => theme.colors.neutral_400_b};
   div {
     overflow: hidden;
     white-space: nowrap;

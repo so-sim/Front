@@ -19,16 +19,18 @@ export const SubTitle = styled.div`
 
 export const Container = styled.div`
   width: 100%;
+  display: flex;
+  flex-direction: column;
   border-left: 2px solid ${({ theme }) => theme.colors.neutral_400_b};
   padding-left: 16px;
+  gap: 24px;
 `;
 
 export const ButtonFrame = styled.div`
   display: flex;
-  margin-top: 12px;
   gap: 12px;
   justify-content: flex-end;
-  width: 100%;
+  width: 100%;s
 `;
 
 export const DeleteButton = styled.button`

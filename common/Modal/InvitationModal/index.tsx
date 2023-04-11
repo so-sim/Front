@@ -32,7 +32,7 @@ export const InvitationModal: FC<InvitationModalProps> = ({ onClick, groupName }
         <Style.Title>{groupName}</Style.Title>
       </Modal.Header>
       <Modal.Body>
-        <Label title="내 이름">
+        <Label title="내 이름" margin="0px">
           <Input placeholder={PLACEHOLDER.NAME} value={myName} errorText={isError.nickname} onChange={setMyName} maxLength={15} title="nickname" setError={setError} />
         </Label>
       </Modal.Body>

@@ -7,7 +7,7 @@ export const DropDownBox = styled.div<{ boxWidth: string; color: DropBoxColor }>
   display: flex;
   align-items: center;
   width: ${({ boxWidth }) => boxWidth};
-  height: 32px;
+  height: 36px;
   padding: 4px 12px;
   margin-right: 0;
   background: ${({ theme, color }) => (color === 'white' ? 'transparent' : color === 'gray' ? theme.colors.secondary_200 : theme.colors.neutral_200_b)};
