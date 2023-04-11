@@ -20,7 +20,7 @@ const Invitation = () => {
 
   const { groupId } = useQueryString();
 
-  const { data, isSuccess, isLoading, isError  } = useGroupDetail(groupId);
+  const { data, isSuccess, isLoading } = useGroupDetail(groupId);
 
   const handleInvitationModal = () => {
     setShowInvitationModal((prev) => !prev);
@@ -49,11 +49,10 @@ const Invitation = () => {
 
   useEffect(() => {
     if (data?.content.isInto === true) {
-      navigate(`/group/${groupId}/book`);
     }
 
     sessionStorage.removeItem('invite-group-id');
-  }, [data?.content.isInto]);
+  }, []);
 
   if (isLoading) return <Loading />;
 
