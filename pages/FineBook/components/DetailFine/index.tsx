@@ -36,7 +36,7 @@ const DetailFine = () => {
 
   const [page, setPage] = useState(0);
   const [mode, setMode] = useState<FilterMode>('day');
-  const [dateFilter, setDateFilter] = useState<DateFilterProperty>({});
+  const [dateFilter, setDateFilter] = useState<DateFilterProperty>({ nickname: '', paymentType: '' });
 
   const calendarDate = useRecoilValue(dateState);
   const { data } = useGetDetailList(dateFilter, calendarDate.baseDate, { groupId: Number(param.groupId) });
@@ -62,7 +62,14 @@ const DetailFine = () => {
         <Style.DetailContent>
           <DateController mode={mode} setMode={setMode} setOpenAddModal={setOpenAddModal} dateFilter={dateFilter} setDateFilter={setDateFilter} />
           <TableHead setPage={setPage} setDateFilter={setDateFilter} />
-          <DetailList mode={mode} selectedEventId={select.eventId} details={data?.content.list} setSelect={setSelect} setOpenUserDetails={setOpenUserDetails} />
+          <DetailList
+            dateFilter={dateFilter}
+            mode={mode}
+            selectedEventId={select.eventId}
+            details={data?.content.list}
+            setSelect={setSelect}
+            setOpenUserDetails={setOpenUserDetails}
+          />
         </Style.DetailContent>
         {Number(data?.content.totalCount) > 16 && <Pagination count={data?.content.totalCount} page={page} setPage={setPage} />}
         <UserDetails open={openUserDetails} setOpen={setOpenUserDetails} select={select} setSelect={setSelect} />
