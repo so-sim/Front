@@ -8,7 +8,7 @@ import { GroupListWithIndex } from '@/types/group';
 import { removeAccessToken } from '@/utils/acceessToken';
 import { useQueryClient } from '@tanstack/react-query';
 import { useEffect, useRef, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import * as Style from './style';
 
 const UserConfig = () => {
   const [dropDownState, setDropDownState] = useState('');
@@ -55,13 +55,13 @@ const UserConfig = () => {
 
   return (
     <>
-      <div style={{ position: 'relative', display: 'flex' }}>
-        <button onClick={handleDropDown} ref={dropDownRef}>
+      <Style.UserConfig>
+        <Style.UserConfigButton onClick={handleDropDown} ref={dropDownRef} style={{ display: 'flex', alignItems: 'center' }}>
           {USER.PERSON_MD}
           {ARROW.SOLID}
           {showDropDown && <DropDown list={DorpDownList} width={112} setState={setDropDownState} onClose={handleDropDown} top={'32px'} dropDownRef={dropDownRef} />}
-        </button>
-      </div>
+        </Style.UserConfigButton>
+      </Style.UserConfig>
       {showLogOutModal && (
         <TwoButtonModal
           title="로그아웃"

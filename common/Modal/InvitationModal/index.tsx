@@ -20,7 +20,7 @@ export const InvitationModal: FC<InvitationModalProps> = ({ onClick, groupName }
     nickname: '',
   });
 
-  const { mutate } = useJoinGroup({ setError, groupId });
+  const { mutate } = useJoinGroup({ setError, groupId: Number(groupId) });
 
   const joinGroup = () => {
     mutate({ nickname: myName, groupId: Number(groupId) });

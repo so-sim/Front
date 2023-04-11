@@ -1,19 +1,22 @@
 import { EventInfo } from '@/types/event';
 import { changeNumberToMoney } from '@/utils/changeNumberToMoney';
 import { Dispatch, FC, SetStateAction, useState } from 'react';
+import { FilterMode } from '../..';
 import { DropDownWrapper } from '../DropDownWrapper';
 import * as Style from './styles';
 
 interface DetailListProps {
   selectedEventId: number;
   details?: EventInfo[];
+  mode: FilterMode;
   setSelect: Dispatch<SetStateAction<EventInfo>>;
   setOpenUserDetails: Dispatch<SetStateAction<boolean>>;
 }
 
-export const DetailList: FC<DetailListProps> = ({ selectedEventId, details, setSelect, setOpenUserDetails }) => {
+export const DetailList: FC<DetailListProps> = ({ mode, selectedEventId, details, setSelect, setOpenUserDetails }) => {
   if (details == null) return null;
-  if (details.length === 0) return <Style.NotFoundList>내역을 추가해주세요!</Style.NotFoundList>;
+  if (details.length === 0 && mode === 'day') return <Style.NotFoundList>내역을 추가해주세요!</Style.NotFoundList>;
+  if (details.length === 0) return <Style.NotFoundList>선택하신 조건에 맞는 벌금 내역이 없습니다.</Style.NotFoundList>;
 
   const [openListEventId, setOpenListEventId] = useState(0);
 

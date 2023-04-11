@@ -19,6 +19,9 @@ export const ArrowWrapper = styled.button`
   &:hover {
     background-color: ${({ theme }) => theme.colors.neutral_200_b};
   }
+  &:first-of-type {
+    border-right: none;
+  }
 `;
 
 export const TodayButton = styled.button`
