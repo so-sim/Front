@@ -18,7 +18,7 @@ const DropDonwList = [
 
 const MemberListItem: FC<MemberListItemProps> = ({ nickname }) => {
   const { groupId } = useParams();
-  const { data: groupData } = useGroupDetail(groupId);
+  const { data: groupData } = useGroupDetail(Number(groupId));
 
   const [showDropDown, setShowDropDown] = useState(false);
   const [selectAction, setSelectAction] = useState('');

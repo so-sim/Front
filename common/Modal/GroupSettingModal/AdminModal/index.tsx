@@ -31,13 +31,12 @@ export const AdminModal: FC<ModalHandlerProps> = ({ modalHandler }) => {
 
   const { groupId } = useParams();
 
-  const { mutate: updateGroupMutate } = useUpdateGroup();
-  const { mutate: updateNickname } = useChangeNickname({ setError, modalHandler });
+  const { mutate: updateGroupMutate } = useUpdateGroup({ setError, modalHandler });
   const { mutate: withdrawalGroupMutate } = useWithdrawalGroup();
   const { mutate: deleteGroup } = useDeleteGroup();
 
-  const { data: groupData } = useGroupDetail(groupId);
-  const { data: myNickname } = useGetMyNikname(groupId);
+  const { data: groupData } = useGroupDetail(Number(groupId));
+  const { data: myNickname } = useGetMyNikname(Number(groupId));
 
   const handleGroupDeleteModal = () => {
     setShowGroupDeleteModal((prev) => !prev);
@@ -58,10 +57,7 @@ export const AdminModal: FC<ModalHandlerProps> = ({ modalHandler }) => {
   const updateGroupInfo = () => {
     console.log(isFormValidate());
     const id = Number(groupId);
-    updateGroupMutate({ title, type, coverColor, groupId: id });
-    if (nickname !== myNickname?.content.nickname) {
-      !isError.nickname && updateNickname({ nickname, groupId: id });
-    }
+    updateGroupMutate({ title, type, coverColor, groupId: id, nickname: myNickname?.content.nickname === nickname ? null : nickname });
   };
 
   const withdrwalGroup = () => {

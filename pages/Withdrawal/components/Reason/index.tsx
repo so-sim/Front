@@ -1,4 +1,4 @@
-import { WITHDRAWAL_REASON } from '@/constants/Withdrawal';
+import { WITHDRAWAL_MODAL, WITHDRAWAL_REASON } from '@/constants/Withdrawal';
 import * as Style from './styles';
 import React, { useState } from 'react';
 import Button from '@/common/Button';
@@ -6,9 +6,11 @@ import { useNavigate } from 'react-router-dom';
 import useUserWithdrawalMutation from '@/queries/Auth/useUserWithdrawalMutation';
 import { useRecoilValue } from 'recoil';
 import { userState } from '@/store/userState';
+import { TwoButtonModal } from '@/common/Modal/TwoButtonModal';
 
 const WithdrawalReason = () => {
   const [selectedReason, setSelectedReason] = useState({ title: '', wording: '' });
+  const [showWithdrawModal, setShowWithdrawModal] = useState(false);
   const user = useRecoilValue(userState);
   const navigate = useNavigate();
 
@@ -16,6 +18,9 @@ const WithdrawalReason = () => {
 
   const isChecked = (reason: string) => {
     return selectedReason.title === reason;
+  };
+  const handleWithdrawModal = () => {
+    setShowWithdrawModal((prev) => !prev);
   };
 
   const handleChecked = (reason: { title: string; wording: string }) => {
@@ -44,10 +49,19 @@ const WithdrawalReason = () => {
         <Button color="white" width="150px" height="42px" onClick={onClickCancle}>
           취소
         </Button>
-        <Button color={selectedReason ? 'black' : 'disabled'} width="150px" height="42px" onClick={onClickWithdrawal}>
+        <Button color={selectedReason ? 'black' : 'disabled'} width="150px" height="42px" onClick={handleWithdrawModal}>
           탈퇴하기
         </Button>
       </Style.Footer>
+      {showWithdrawModal && (
+        <TwoButtonModal
+          title={WITHDRAWAL_MODAL.FINAL.title}
+          description={WITHDRAWAL_MODAL.FINAL.desc}
+          cancel={{ text: '취소', onClick: handleWithdrawModal }}
+          confirm={{ text: '회원 탈퇴', onClick: onClickWithdrawal }}
+          onClick={handleWithdrawModal}
+        />
+      )}
     </>
   );
 };

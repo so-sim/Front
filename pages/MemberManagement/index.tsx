@@ -10,9 +10,9 @@ import * as Style from './styles';
 const MemberManagement = () => {
   const { groupId } = useParams();
 
-  const { data: participantList } = useParticipantList(groupId);
-  const { data: myNickname } = useGetMyNikname(groupId);
-  const { data: groupData } = useGroupDetail(groupId);
+  const { data: participantList } = useParticipantList(Number(groupId));
+  const { data: myNickname } = useGetMyNikname(Number(groupId));
+  const { data: groupData } = useGroupDetail(Number(groupId));
 
   return (
     <>

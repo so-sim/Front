@@ -19,7 +19,7 @@ export const DropDownWrapper = ({ detail, openListEventId, setOpenListEventId }:
   const statusList: PaymentType[] = ['미납', '확인필요', '완납'];
   const { groupId } = useParams();
 
-  const { data } = useGroupDetail(groupId);
+  const { data } = useGroupDetail(Number(groupId));
   const user = useRecoilValue(userState);
 
   const hasPermissionWhenHover = data?.content.isAdmin || (!data?.content.isAdmin && detail.userId === user.userId && detail.paymentType === 'non');

@@ -38,7 +38,7 @@ const Calendar: FC<CalnedrProps> = ({ cellType }) => {
 
   const { data: status } = useGetMonthStatus(groupId, year, month);
 
-  const { data: groupData } = useGroupDetail(groupId);
+  const { data: groupData } = useGroupDetail(Number(groupId));
 
   const filterCorrectDateStatus = (date: Dayjs) => {
     return status?.content.filter((list) => list.day === getDate(date))[0];

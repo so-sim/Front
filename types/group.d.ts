@@ -3,7 +3,7 @@ export type GroupType = '스터디' | '학교, 교내/외 모임' | '회사, 사
 
 export interface GroupInfo {
   title: string;
-  nickname: string;
+  nickname: string | null;
   type: string;
   coverColor: GroupColor;
 }

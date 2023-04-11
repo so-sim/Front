@@ -7,7 +7,7 @@ export const createGroup = async (newGroupInfo: GroupInfo): Promise<ServerRespon
   return data;
 };
 
-export const getGroupDetail = async (groupId: string | undefined): Promise<ServerResponse<GroupDetail>> => {
+export const getGroupDetail = async (groupId: number | undefined): Promise<ServerResponse<GroupDetail>> => {
   const { data } = await api.get(`/api/group/${groupId}`);
   return data;
 };
@@ -17,12 +17,12 @@ export const getGroupList = async (pageParam: number): Promise<ServerResponse<Gr
   return { ...data, nextPage: data.content.index };
 };
 
-export const getParticipantList = async (groupId: string | undefined): Promise<ServerResponse<ParticipantList>> => {
+export const getParticipantList = async (groupId: number | undefined): Promise<ServerResponse<ParticipantList>> => {
   const { data } = await api.get(`/api/group/${groupId}/participants`);
   return data;
 };
 
-export const updateGroup = async (updateGroupInfo: Omit<GroupInfo, 'nickname'> & GroupId): Promise<ServerResponse<GroupId>> => {
+export const updateGroup = async (updateGroupInfo: GroupInfo & GroupId): Promise<ServerResponse<GroupId>> => {
   const { groupId, ...groupInfo } = updateGroupInfo;
   const { data } = await api.patch(`/api/group/${groupId}`, groupInfo);
   return data;
@@ -56,7 +56,7 @@ export const changeNickname = async (info: GroupNickname & GroupId): Promise<Ser
   return data;
 };
 
-export const getMyNickname = async (groupId: string | undefined): Promise<ServerResponse<GroupNickname>> => {
+export const getMyNickname = async (groupId: number | undefined): Promise<ServerResponse<GroupNickname>> => {
   const { data } = await api.get(`/api/group/${groupId}/participant`);
   return data;
 };
