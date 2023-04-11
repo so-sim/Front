@@ -19,3 +19,9 @@ export const Header = styled.header`
     cursor: pointer;
   }
 `;
+
+export const UserConfigButton = styled.button`
+  display: flex;
+  align-items: center;
+  position: relative;
+`;

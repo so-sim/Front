@@ -52,7 +52,7 @@ const GroupSideBar = () => {
             <NavLink to={`/group/${groupId}/${tap.link}`} key={tap.title}>
               <Style.Selected isSelected={isSelected(tap.link)} />
               <Style.Tap disabled={tap.disabled}>
-                <div>{tap.svg}</div>
+                <div style={{ height: '24px' }}>{tap.svg}</div>
                 <span>{tap.title}</span>
               </Style.Tap>
             </NavLink>
@@ -65,13 +65,13 @@ const GroupSideBar = () => {
               <NavLink to={`/group/${groupId}/${etc.link}`} key={etc.title} id={etc.id}>
                 <Style.Selected isSelected={isSelected(etc.link)} />
                 <Style.Tap key={etc.title}>
-                  <div>{etc.svg}</div>
+                  <div style={{ height: '24px' }}>{etc.svg}</div>
                   <span>{etc.title}</span>
                 </Style.Tap>
               </NavLink>
             ) : (
               <Style.Tap key={etc.title} onClick={handleGroupSettingModal} id={etc.id}>
-                <div>{etc.svg}</div>
+                <div style={{ height: '21px' }}>{etc.svg}</div>
                 <span>{etc.title}</span>
               </Style.Tap>
             ),

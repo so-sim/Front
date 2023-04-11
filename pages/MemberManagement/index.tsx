@@ -25,14 +25,14 @@ const MemberManagement = () => {
           </Style.ButtonFlex>
         </Style.Title>
         <Style.UserContainer>
-          <div>{USER.PERSON_XL}</div>
+          <Style.UserIcon>{USER.PERSON_XL}</Style.UserIcon>
           <span>{participantList?.content.adminNickname}</span>
           <Style.Tag>총무</Style.Tag>
           {groupData?.content.isAdmin && <Style.Tag>나</Style.Tag>}
         </Style.UserContainer>
         {myNickname && !groupData?.content.isAdmin && (
           <Style.UserContainer>
-            <div>{USER.PERSON_XL}</div>
+            <Style.UserIcon>{USER.PERSON_XL}</Style.UserIcon>
             <div>{myNickname.content.nickname}</div>
             <Style.Tag>나</Style.Tag>
           </Style.UserContainer>

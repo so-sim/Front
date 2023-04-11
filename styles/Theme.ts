@@ -22,7 +22,7 @@ const theme = {
     red_300: '#f89a65',
     red_400: '#ed4f1d',
     red_600: '#cc4419',
-    orange_100: '#f8e065',
+    orange_100: '#F1D026',
     orange_200: '#fff1d6',
     orange_400: '#eda518',
     orange_600: '#cc8b0b',
