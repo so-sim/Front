@@ -30,7 +30,7 @@ export const UserDetails = ({ open, setOpen, select, setSelect }: UserDetailsPro
 
   const { groupId } = useParams();
 
-  const { data } = useGroupDetail(groupId);
+  const { data } = useGroupDetail(Number(groupId));
   const [openUpdateModal, setOpenUpdateModal] = useState(false);
   const [openUpdateStatusModal, setOpenUpdateStatusModal] = useState(false);
   const [openRequestStatusModal, setOpenRequestStatusModal] = useState(false);

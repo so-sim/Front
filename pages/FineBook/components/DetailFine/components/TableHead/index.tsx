@@ -19,7 +19,7 @@ type PaymentDropdown = PaymentType | '전체';
 export const TableHead: FC<TableHeadProps> = ({ setDateFilter, setPage }) => {
   const param = useParams();
 
-  const { data } = useParticipantList(param.groupId);
+  const { data } = useParticipantList(Number(param.groupId));
 
   const adminNickname = data?.content.adminNickname;
   const participants = data?.content.memberList.map(({ nickname }) => ({ title: nickname }));

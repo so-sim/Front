@@ -3,7 +3,7 @@ import { ToastPopUp } from '@/common/Toast';
 import { TOAST_ERROR } from '@/constants/Toast';
 import { useQuery } from '@tanstack/react-query';
 
-export const useGroupDetail = (groupId: string | undefined) => {
+export const useGroupDetail = (groupId: number | undefined) => {
   return useQuery(['groupDetail', groupId], () => getGroupDetail(groupId), {
     onError: () => {
       ToastPopUp({ type: 'error', message: TOAST_ERROR.DATA });
