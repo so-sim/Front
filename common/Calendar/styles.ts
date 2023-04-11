@@ -29,6 +29,10 @@ export const DateHeader = styled.div`
   ${({ theme }) => theme.font.headline}
 `;
 
+export const ArrowBlock = styled.div`
+  margin-top: 12px;
+`;
+
 export const ArrowWrapper = styled.button`
   display: flex;
   align-items: center;
@@ -37,6 +41,12 @@ export const ArrowWrapper = styled.button`
   width: 24px;
   height: 24px;
   border: 2px solid ${({ theme }) => theme.colors.neutral_400_b};
+  &:first-of-type {
+    border-right: none;
+  }
+  &:hover {
+    background: ${({ theme }) => theme.colors.neutral_200_b};
+  }
 `;
 
 export const WeekDate = styled.div`

@@ -41,8 +41,8 @@ export const Tap = styled.button<TapProps>`
   align-items: center;
   text-align: center;
   gap: 4px;
-  color: ${(props) => (props.disabled ? props.theme.colors.secondary_400 : 'black')};
   span {
+    color: ${(props) => (props.disabled ? props.theme.colors.secondary_400 : props.theme.colors.secondary_800)};
     ${({ theme }) => theme.font.subhead_02}
   }
 `;

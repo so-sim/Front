@@ -54,6 +54,10 @@ export const UserContainer = styled.div`
   ${({ theme }) => theme.font.subhead_03};
 `;
 
+export const UserIcon = styled.div`
+  height: 32px;
+`;
+
 export const Tag = styled.div`
   color: ${({ theme }) => theme.colors.white};
   display: flex;
