@@ -15,4 +15,4 @@ export const DROPDOWN_LIST: { title: GroupType }[] = [
   { title: '기타' },
 ];
 
-export const COLORS: GroupColor[] = ['#f86565', '#f89a65', '#f8e065', '#658ef8', '#9465f8'];
+export const COLORS: GroupColor[] = ['#f86565', '#f89a65', '#f1d026', '#658ef8', '#9465f8'];

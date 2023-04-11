@@ -36,7 +36,7 @@ const theme = {
   cover: {
     red: '#f86565',
     orange: '#f89a65',
-    yellow: '#f8e065',
+    yellow: '#f1d026',
     blue: '#658ef8',
     purple: '#9465f8',
   },

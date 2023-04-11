@@ -1,4 +1,5 @@
 import { ToastPopUp } from '@/common/Toast';
+import { KAKAO_URL } from '@/constants/Auth';
 import { userState } from '@/store/userState';
 import { getAccessToken, removeAccessToken } from '@/utils/acceessToken';
 import axios, { AxiosError } from 'axios';
@@ -28,10 +29,11 @@ api.interceptors.response.use(
     const { config, response } = error;
 
     if (response.status === 401) {
-      const originalRequest = config;
+      // const originalRequest = config;
       removeAccessToken();
-      reTakeToken();
-      return axios(originalRequest);
+      window.location.href = KAKAO_URL.SIGIN;
+      // reTakeToken();
+      // return axios(originalRequest);
     }
     return Promise.reject(error);
   },

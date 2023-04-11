@@ -61,7 +61,7 @@ export const FineBookModal = ({ setOpen, eventId, select, setSelect }: ModalProp
     setStatus('미납');
     setReason('');
     setFine(0);
-    setGroundsDate('');
+    setGroundsDate(dayjs().format('YYYY.MM.DD'));
   };
 
   const createDetail = (type: 'continue' | 'save') => {
