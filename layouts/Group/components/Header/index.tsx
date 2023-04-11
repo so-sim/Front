@@ -3,6 +3,7 @@ import { LOGO } from '@/assets/icons/Logo';
 import { SYSTEM } from '@/assets/icons/System';
 import { USER } from '@/assets/icons/User';
 import DropDown from '@/common/DropDown';
+import { AuthModal } from '@/common/Modal/LoginModal';
 import { TwoButtonModal } from '@/common/Modal/TwoButtonModal';
 import UserConfigModal from '@/common/Modal/UserConfigModal';
 import { userState } from '@/store/userState';
@@ -26,6 +27,7 @@ const GroupLayoutHeader = () => {
   const [showConfigModal, setShowConfigModal] = useState(false);
   const [showLogOutModal, setShowLogOutModal] = useState(false);
   const [showDropDown, setShowDropDown] = useState(false);
+  const [showLoginModal, setShowLoginModal] = useState(false);
 
   const dropDownRef = useRef<HTMLButtonElement>(null);
 
@@ -40,6 +42,10 @@ const GroupLayoutHeader = () => {
     setShowDropDown((prev) => !prev);
   };
 
+  const handleLoginModal = () => {
+    setShowLoginModal((prev) => !prev);
+  };
+
   const queryClient = useQueryClient();
 
   const onClickLogOut = () => {
@@ -47,6 +53,7 @@ const GroupLayoutHeader = () => {
     setUser({
       userId: null,
       email: '',
+      reLogin: false,
     });
 
     queryClient.setQueryData<GroupListWithIndex>(['groupList'], {
@@ -83,6 +90,7 @@ const GroupLayoutHeader = () => {
         />
       )}
       {showConfigModal && <UserConfigModal handleModal={handelShowConfigModal} />}
+      {showLoginModal && <AuthModal modalHandler={handleLoginModal} />}
     </>
   );
 };

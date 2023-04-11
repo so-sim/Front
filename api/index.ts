@@ -1,8 +1,13 @@
+import { ToastPopUp } from '@/common/Toast';
+import { userState } from '@/store/userState';
 import { getAccessToken, removeAccessToken } from '@/utils/acceessToken';
 import axios, { AxiosError } from 'axios';
+import { useRecoilState } from 'recoil';
 import { reTakeToken } from './Auth';
 
 export const BASE_URL = 'https://back.sosim-manager.com';
+
+const [user, setUser] = useRecoilState(userState);
 
 const api = axios.create({
   baseURL: BASE_URL,
@@ -27,8 +32,14 @@ api.interceptors.response.use(
     if (response.status === 401) {
       const originalRequest = config;
       removeAccessToken();
-      reTakeToken();
-      return axios(originalRequest);
+      setUser({
+        userId: null,
+        email: '',
+        reLogin: true,
+      });
+      ToastPopUp({ type: 'error', message: '다시 로그인 해주세요.' });
+      // reTakeToken();
+      // return axios(originalRequest);
     }
     return Promise.reject(error);
   },
