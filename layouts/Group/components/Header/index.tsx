@@ -70,6 +70,12 @@ const GroupLayoutHeader = () => {
     setDropDownState('');
   }, [dropDownState]);
 
+  useEffect(() => {
+    if (user.reLogin) {
+      handleLoginModal();
+    }
+  }, [user.reLogin]);
+
   return (
     <>
       <Style.Header>
