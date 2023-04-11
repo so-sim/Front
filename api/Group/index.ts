@@ -56,7 +56,7 @@ export const changeNickname = async (info: GroupNickname & GroupId): Promise<Ser
   return data;
 };
 
-export const getMyNickname = async (groupId: string | undefined): Promise<ServerResponse<GroupNickname>> => {
+export const getMyNickname = async (groupId: number | undefined): Promise<ServerResponse<GroupNickname>> => {
   const { data } = await api.get(`/api/group/${groupId}/participant`);
   return data;
 };

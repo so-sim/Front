@@ -11,7 +11,7 @@ const MemberManagement = () => {
   const { groupId } = useParams();
 
   const { data: participantList } = useParticipantList(Number(groupId));
-  const { data: myNickname } = useGetMyNikname(groupId);
+  const { data: myNickname } = useGetMyNikname(Number(groupId));
   const { data: groupData } = useGroupDetail(Number(groupId));
 
   return (
