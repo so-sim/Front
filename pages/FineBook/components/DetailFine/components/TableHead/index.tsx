@@ -31,6 +31,7 @@ export const TableHead: FC<TableHeadProps> = ({ setDateFilter, setPage }) => {
   const paymentTypeDropDownRef = useRef<HTMLDivElement>(null);
 
   const [member, setMember] = useState('전체');
+  console.log(member);
 
   const [paymentType, setPaymentType] = useState<PaymentDropdown>('');
 
@@ -47,7 +48,7 @@ export const TableHead: FC<TableHeadProps> = ({ setDateFilter, setPage }) => {
       ...prev,
       page: 0,
       paymentType: paymentType === '전체' ? '' : getStatusCode(paymentType),
-      userId: member === '전체' ? '' : data?.content.memberList.find(({ nickname }) => nickname === member)?.userId || data?.content.adminId,
+      nickname: member === '전체' ? '' : member,
     }));
   }, [member, paymentType]);
 
