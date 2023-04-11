@@ -34,6 +34,7 @@ export const Length = styled.span`
 export const Row = styled.div`
   display: flex;
   gap: 12px;
+  justify-content: space-between;
   position: relative;
   width: 100%;
   margin-bottom: 16px;

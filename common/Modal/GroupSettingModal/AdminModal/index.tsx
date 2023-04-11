@@ -87,7 +87,7 @@ export const AdminModal: FC<ModalHandlerProps> = ({ modalHandler }) => {
   return (
     <>
       <Modal.Frame onClick={modalHandler} width="492px" height="708px">
-        <Modal.Header align="start" onClick={modalHandler}>
+        <Modal.Header align="start" onClick={modalHandler} margin="16px">
           <Style.Title>모임 설정</Style.Title>
         </Modal.Header>
         <Modal.Body>
@@ -104,7 +104,7 @@ export const AdminModal: FC<ModalHandlerProps> = ({ modalHandler }) => {
                 <Label title="모임 유형" flexDirection="column">
                   <DropBox dropDownList={DROPDOWN_LIST} type={type} setType={setType} boxWidth="170px" />
                 </Label>
-                <Label title="커버 색상" flexDirection="column">
+                <Label title="커버 색상" flexDirection="column" margin="0px">
                   <GroupColorList value={coverColor} onChange={setCoverColor} />
                 </Label>
               </div>

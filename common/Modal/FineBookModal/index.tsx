@@ -131,10 +131,10 @@ export const FineBookModal = ({ setOpen, eventId, select, setSelect }: ModalProp
       <div style={{ display: 'flex', flexDirection: 'column', width: '100%' }}>
         <Style.Row>
           <Label title="팀원" width="32px" margin="0px">
-            <DropBox boxWidth="148px" width={304} setType={setMember} type={member} dropDownList={memberList} direction="right" />
+            <DropBox boxWidth="146px" width={304} setType={setMember} type={member} dropDownList={memberList} direction="right" />
           </Label>
           <Label title="납부여부" width="56px" margin="0px">
-            <DropBox color="white" boxWidth="112px" width={112} setType={setStatus} type={status} dropDownList={statusList.filter((paymentType) => paymentType.title !== status)} />
+            <DropBox color="white" boxWidth="110px" width={112} setType={setStatus} type={status} dropDownList={statusList.filter((paymentType) => paymentType.title !== status)} />
           </Label>
         </Style.Row>
         <Style.Row>

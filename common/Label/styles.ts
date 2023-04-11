@@ -9,8 +9,8 @@ export const Label = styled.label<{ flexDirection: CSSProperties['flexDirection'
 `;
 
 export const LabelText = styled.div<{ flexDirection: CSSProperties['flexDirection']; width: string }>`
-  ${({ theme }) => theme.font.subhead_02}
-  margin: 8px 12px ${({ flexDirection }) => (flexDirection === 'row' ? '0 0' : '8px 4px')};
+  ${({ theme }) => theme.font.subhead_03}
+  margin: 8px 8px ${({ flexDirection }) => (flexDirection === 'row' ? '0 0' : '4px 4px')};
   width: ${({ width }) => width};
   display: flex;
   white-space: nowrap;
