@@ -1,7 +1,7 @@
 import * as Style from './styles';
 import { LOGO } from '@/assets/icons/Logo/index';
 import { Paragraph } from '../Paragraph';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { AuthModal } from '@/common/Modal/LoginModal';
 import { GNB_LINK } from '@/constants/ServiceLink';
 import { useRecoilValue } from 'recoil';
