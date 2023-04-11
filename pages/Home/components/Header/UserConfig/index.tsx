@@ -59,7 +59,7 @@ const UserConfig = () => {
         <Style.UserConfigButton onClick={handleDropDown} ref={dropDownRef} style={{ display: 'flex', alignItems: 'center' }}>
           {USER.PERSON_MD}
           {ARROW.SOLID}
-          {showDropDown && <DropDown list={DorpDownList} width={112} setState={setDropDownState} onClose={handleDropDown} top={'32px'} dropDownRef={dropDownRef} />}
+          {showDropDown && <DropDown list={DorpDownList} width={90} setState={setDropDownState} onClose={handleDropDown} top={'32px'} dropDownRef={dropDownRef} />}
         </Style.UserConfigButton>
       </Style.UserConfig>
       {showLogOutModal && (

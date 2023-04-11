@@ -32,7 +32,7 @@ export const Text = styled.span`
   display: block;
   width: 100%;
   height: 32px;
-  ${({ theme }) => theme.font.subhead_02}
+  ${({ theme }) => theme.font.subhead_03}
 `;
 
 export const Email = styled(Text)`

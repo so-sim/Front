@@ -39,7 +39,7 @@ const UserConfigModal: FC<UserConfigModalProps> = ({ handleModal }) => {
               <Style.ContentWrapper>
                 <Style.Text>연동된 소셜 계정</Style.Text>
                 <Style.Kakao>카카오 간편 로그인</Style.Kakao>
-                <Style.Text>{userData.email}</Style.Text>
+                <Style.Email>{userData.email}</Style.Email>
                 <Style.WithDrwalBtn onClick={onClickWithdrawal}>회원 탈퇴</Style.WithDrwalBtn>
               </Style.ContentWrapper>
             </Style.ConfigContainer>

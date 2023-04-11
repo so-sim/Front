@@ -56,6 +56,7 @@ export const WeekDate = styled.div`
   align-items: center;
   border-radius: 4px;
   justify-content: space-between;
+  border: 2px solid ${({ theme }) => theme.colors.neutral_400_b};
   background-color: ${({ theme }) => theme.colors.neutral_200_b};
   margin-bottom: 12px;
   min-width: 200px;
