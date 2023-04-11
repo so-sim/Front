@@ -2,6 +2,7 @@ import { SYSTEM } from '@/assets/icons/System';
 import { USER } from '@/assets/icons/User';
 import DropDown from '@/common/DropDown';
 import { useChangeAdmin, useGroupDetail } from '@/queries/Group';
+import { useGetMyNikname } from '@/queries/Group/useGetMyNickname';
 import React, { FC, useEffect, useRef, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import ChangeAdminModal from '../../../../common/Modal/ChangAdminModal';
@@ -33,7 +34,7 @@ const MemberListItem: FC<MemberListItemProps> = ({ nickname }) => {
     setShowChangeAdminModal((prev) => !prev);
   };
 
-  const { mutate: changeAdminMutate } = useChangeAdmin({ groupId });
+  const { mutate: changeAdminMutate } = useChangeAdmin(Number(groupId));
 
   const onClickConfirm = () => {
     const id = Number(groupId);

@@ -3,26 +3,26 @@ import { ToastPopUp } from './../../common/Toast/index';
 import { changeAdmin } from '@/api/Group';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { ServerResponse } from '@/types/serverResponse';
-import { GroupDetail, ParticipantList } from '@/types/group';
+import { GroupDetail, GroupNickname, ParticipantList } from '@/types/group';
 
-interface UseChangeAdimProps {
-  groupId: string | undefined;
-}
-
-export const useChangeAdmin = ({ groupId }: UseChangeAdimProps) => {
+export const useChangeAdmin = (groupId: number | undefined) => {
   const queryClient = useQueryClient();
   return useMutation(changeAdmin, {
     onMutate: async (context) => {
       const { groupId, nickname } = context;
       await queryClient.cancelQueries(['participantList', groupId]);
-      const prevParticipantList = queryClient.getQueryData<ServerResponse<ParticipantList>>(['particparticipantListipant', { groupId }]);
+      const prevParticipantList = queryClient.getQueryData<ServerResponse<ParticipantList>>(['participantList', groupId]);
       const prevGroupDetail = queryClient.getQueryData<ServerResponse<GroupDetail>>(['groupDetail', groupId]);
+      const myNickname = queryClient.getQueryData<ServerResponse<GroupNickname>>(['myNickname', groupId]);
 
       if (prevParticipantList) {
+        const newList = prevParticipantList.content.memberList.filter((list) => list.nickname !== myNickname?.content.nickname);
+
         queryClient.setQueryData<ServerResponse<ParticipantList>>(['participantList', groupId], {
           ...prevParticipantList,
           content: {
             ...prevParticipantList.content,
+            memberList: newList,
             adminNickname: nickname,
           },
         });
