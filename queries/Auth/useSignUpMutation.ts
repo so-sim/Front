@@ -16,7 +16,7 @@ const useSignUpMutation = () => {
       const { email, userId, accessToken } = content;
       setAccesToken(accessToken);
       setUser((prev) => ({
-        ...prev,
+        reLogin: false,
         email,
         userId,
       }));
