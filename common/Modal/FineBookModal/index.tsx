@@ -126,26 +126,26 @@ export const FineBookModal = ({ setOpen, eventId, select, setSelect }: ModalProp
   ];
 
   return (
-    <Modal.Frame width="448px" height={type === 'create' ? '452px' : '412px'} onClick={() => setOpen(false)}>
+    <Modal.Frame width="448px" height={type === 'create' ? '466px' : '412px'} onClick={() => setOpen(false)}>
       <Modal.Header onClick={() => setOpen(false)}>{type === 'create' ? '내역 추가하기' : '상세 내역 수정'}</Modal.Header>
       <div style={{ display: 'flex', flexDirection: 'column', width: '100%' }}>
         <Style.Row>
-          <Label title="팀원" width="32px">
-            <DropBox boxWidth="148px" width={304} setType={setMember} type={member} dropDownList={memberList} direction="right" />
+          <Label title="팀원" width="32px" margin="0px">
+            <DropBox boxWidth="146px" width={304} setType={setMember} type={member} dropDownList={memberList} direction="right" />
           </Label>
-          <Label title="납부여부" width="56px">
-            <DropBox color="white" boxWidth="112px" width={112} setType={setStatus} type={status} dropDownList={statusList.filter((paymentType) => paymentType.title !== status)} />
+          <Label title="납부여부" width="56px" margin="0px">
+            <DropBox color="white" boxWidth="110px" width={112} setType={setStatus} type={status} dropDownList={statusList.filter((paymentType) => paymentType.title !== status)} />
           </Label>
         </Style.Row>
         <Style.Row>
-          <Label title="금액" width="32px">
+          <Label title="금액" width="32px" margin="0px">
             <Style.Input type="string" value={changeNumberToMoney(fine)} onChange={onChangeFine} style={{ height: '32px' }} />
           </Label>
-          <Label title="날짜" width="32px">
+          <Label title="날짜" width="32px" margin="0px">
             <CalendarDropBox type={groundsDate} setType={setGroundsDate} color="white" />
           </Label>
         </Style.Row>
-        <Label title="사유" width="32px">
+        <Label title="사유" width="32px" margin="0px">
           <Style.TextArea maxLength={65} onChange={onChangeReason} defaultValue={reason} value={reason} placeholder="내용을 입력해주세요." />
           <Style.Length>{!isCreate ? select?.grounds.length : reason.length}/65</Style.Length>
         </Label>
@@ -168,7 +168,7 @@ export const FineBookModal = ({ setOpen, eventId, select, setSelect }: ModalProp
               color={checkFormIsValid() ? 'white' : 'white-disabled'}
               width="100%"
               height="42px"
-              leftIcon={SYSTEM.PLUS_GRAY}
+              leftIcon={SYSTEM.PLUS_GRAY_SM}
               onClick={() => createDetail('continue')}
             >
               계속해서 추가하기

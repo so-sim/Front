@@ -7,9 +7,11 @@ export const DateCell = styled.div`
   flex-direction: column;
   align-items: center;
   width: 100%;
-  min-height: 80px;
+  min-height: 85px;
+  height: 85px;
   padding: 12px 0px;
   gap: 8px;
+  border-top: 2px solid ${({ theme }) => theme.colors.neutral_400_b};
 `;
 
 interface SelectedWeekProps {

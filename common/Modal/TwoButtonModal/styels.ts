@@ -6,7 +6,6 @@ export const Title = styled.div`
   align-items: center;
   justify-content: center;
   height: 32px;
-  margin-bottom: 4px;
 `;
 
 export const Desc = styled.div`
@@ -15,6 +14,5 @@ export const Desc = styled.div`
   align-items: center;
   white-space: pre;
   margin-top: 12px;
-  margin-bottom: 12px;
   ${({ theme }) => theme.font.body_03}
 `;

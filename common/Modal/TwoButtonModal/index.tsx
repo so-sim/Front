@@ -20,7 +20,7 @@ export interface TwoButtonModalProps {
   id?: string;
 }
 
-export const TwoButtonModal = ({ onClick, title, description, cancel, confirm, flexDirection = 'row', width = '376px', height = '223px', id }: TwoButtonModalProps) => {
+export const TwoButtonModal = ({ onClick, title, description, cancel, confirm, flexDirection = 'row', width = '448px', height = '215px', id }: TwoButtonModalProps) => {
   return (
     <Modal.Frame width={width} height={height} onClick={onClick}>
       <Modal.Header>

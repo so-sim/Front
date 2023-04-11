@@ -1,9 +1,9 @@
 import styled from '@emotion/styled';
 
 export const Container = styled.div`
-  padding: 20.5px;
+  ${({ theme }) => theme.font.body_03}
   display: flex;
+  height: 100%;
   justify-content: center;
   align-items: center;
-  border-top: 1px solid ${({ theme }) => theme.colors.neutral_200_b};
 `;

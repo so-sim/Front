@@ -1,4 +1,4 @@
-import { ModalProps, ModalFooterProps } from './index';
+import { ModalProps, ModalFooterProps, ModalHeaderProps } from './index';
 import styled from '@emotion/styled';
 
 export const Overlay = styled.div`
@@ -34,11 +34,11 @@ export const ModalFrame = styled.div<ModalProps>`
   box-shadow: 2px 0px 25px 7px rgba(156, 156, 156, 0.15);
 `;
 
-export const ModalHeader = styled.div<{ align: 'center' | 'start' }>`
+export const ModalHeader = styled.div<ModalHeaderProps>`
   ${({ theme }) => theme.font.headline};
   width: 100%;
   text-align: ${({ align }) => align === 'center' && 'center'};
-  margin-bottom: 20px;
+  margin-bottom: ${(props) => props.margin};
 `;
 
 export const HeaderIcon = styled.div`
@@ -57,6 +57,7 @@ export const HeaderTitle = styled.span``;
 export const ModalBody = styled.div`
   ${({ theme }) => theme.font.body_02};
   width: 100%;
+  height: 100%;
   text-align: center;
 `;
 
@@ -64,5 +65,5 @@ export const ModalFooter = styled.div<Pick<ModalFooterProps, 'flexDirection'>>`
   display: flex;
   flex-direction: ${(props) => props.flexDirection};
   gap: 12px;
-  margin-top: 20px;
+  margin-top: 32px;
 `;

@@ -8,14 +8,13 @@ import { DropBox } from '../../../DropBox';
 import * as Style from './styles';
 import { COLORS, DROPDOWN_LIST } from '@/constants/Group';
 import { ModalHandlerProps } from '../../CreateGroupModal';
-import { useChangeNickname, useDeleteGroup, useGroupDetail, useUpdateGroup, useWithdrawalGroup } from '@/queries/Group';
+import { useDeleteGroup, useGroupDetail, useUpdateGroup, useWithdrawalGroup } from '@/queries/Group';
 import { useParams } from 'react-router-dom';
 import { GroupColor } from '@/types/group';
 import { useGetMyNikname } from '@/queries/Group/useGetMyNickname';
 import { TwoButtonModal } from '../../TwoButtonModal';
 import { GROUP_DELETE, GROUP_WITHDRWWAL_ADMIN } from '@/constants/GroupWithdrawal';
 import { OneButtonModal } from '../../OneButtonModal';
-import { reTakeToken } from '@/api/Auth';
 
 export const AdminModal: FC<ModalHandlerProps> = ({ modalHandler }) => {
   const [title, setTitle] = useState('');
@@ -88,33 +87,38 @@ export const AdminModal: FC<ModalHandlerProps> = ({ modalHandler }) => {
   return (
     <>
       <Modal.Frame onClick={modalHandler} width="492px" height="708px">
-        <Modal.Header align="start" onClick={modalHandler}>
+        <Modal.Header align="start" onClick={modalHandler} margin="16px">
           <Style.Title>모임 설정</Style.Title>
         </Modal.Header>
         <Modal.Body>
           <Style.Layout>
             <Style.SubTitle>사용자 설정</Style.SubTitle>
             <Style.Container>
-              <Label title="모임 이름" flexDirection="column">
-                <Input value={title} errorText={isError.groupName} onChange={setTitle} maxLength={15} setError={setError} title="groupName" />
-              </Label>
-              <Label title="내 이름" flexDirection="column">
-                <Input value={nickname} errorText={isError.nickname} onChange={setNickname} maxLength={15} setError={setError} title="nickname" />
-              </Label>
-              <Label title="모임 유형" flexDirection="column">
-                <DropBox dropDownList={DROPDOWN_LIST} type={type} setType={setType} boxWidth="170px" />
-              </Label>
-              <Label title="커버 색상" flexDirection="column">
-                <GroupColorList value={coverColor} onChange={setCoverColor} />
-              </Label>
-              <Label title="모임 탈퇴" flexDirection="column" />
-              <Style.WithDrwal>
-                <Style.GroupName>{groupData?.content.title}</Style.GroupName>
-                <Style.QuitButton onClick={handleGroupWithdrawalModal}>탈퇴</Style.QuitButton>
-              </Style.WithDrwal>
-              <Style.Flex>
-                <Style.DeleteButton onClick={handleGroupDeleteModal}>모임 삭제</Style.DeleteButton>
-              </Style.Flex>
+              <div>
+                <Label title="모임 이름" flexDirection="column">
+                  <Input value={title} errorText={isError.groupName} onChange={setTitle} maxLength={15} setError={setError} title="groupName" />
+                </Label>
+                <Label title="내 이름" flexDirection="column">
+                  <Input value={nickname} errorText={isError.nickname} onChange={setNickname} maxLength={15} setError={setError} title="nickname" />
+                </Label>
+                <Label title="모임 유형" flexDirection="column">
+                  <DropBox dropDownList={DROPDOWN_LIST} type={type} setType={setType} boxWidth="170px" />
+                </Label>
+                <Label title="커버 색상" flexDirection="column" margin="0px">
+                  <GroupColorList value={coverColor} onChange={setCoverColor} />
+                </Label>
+              </div>
+              <div>
+                <Label title="모임 탈퇴" flexDirection="column">
+                  <Style.WithDrwal>
+                    <Style.GroupName>{groupData?.content.title}</Style.GroupName>
+                    <Style.QuitButton onClick={handleGroupWithdrawalModal}>탈퇴</Style.QuitButton>
+                  </Style.WithDrwal>
+                </Label>
+                <Style.Flex>
+                  <Style.DeleteButton onClick={handleGroupDeleteModal}>모임 삭제</Style.DeleteButton>
+                </Style.Flex>
+              </div>
             </Style.Container>
           </Style.Layout>
         </Modal.Body>

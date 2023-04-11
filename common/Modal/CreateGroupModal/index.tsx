@@ -62,12 +62,12 @@ export const CreateGroupModal: FC<ModalHandlerProps> = ({ modalHandler, id }) =>
         <Label title="내 이름">
           <Input placeholder={PLACEHOLDER.NAME} value={nickname} errorText={isError.nickname} onChange={setNickname} maxLength={15} title="nickname" setError={setError} />
         </Label>
-        <div style={{ position: 'relative' }}>
+        <Style.DropDownContainer>
           <Label title="모임 유형">
             <DropBox dropDownList={DROPDOWN_LIST} type={type} setType={setType} color="gray" width={170} boxWidth="170px" />
           </Label>
-        </div>
-        <Label title="커버 색상">
+        </Style.DropDownContainer>
+        <Label title="커버 색상" margin="0px">
           <GroupColorList value={coverColor} onChange={setCoverColor} />
         </Label>
       </Modal.Body>

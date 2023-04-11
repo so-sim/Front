@@ -14,6 +14,4 @@ export const Desc = styled.div`
   justify-content: center;
   align-items: center;
   white-space: pre;
-  margin-top: 12px;
-  margin-bottom: 12px;
 `;

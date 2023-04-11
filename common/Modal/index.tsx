@@ -15,6 +15,7 @@ export interface ModalProps extends PropsWithChild {
 export interface ModalHeaderProps extends PropsWithChild {
   onClick?: () => void;
   align?: 'center' | 'start';
+  margin?: string;
 }
 
 export interface ModalFooterProps extends PropsWithChild {
@@ -32,9 +33,9 @@ const ModalFrame: FC<ModalProps> = ({ width = '376px', height = '283px', onClick
   );
 };
 
-const ModalHeader: FC<ModalHeaderProps> = ({ children, onClick, align = 'center', ...args }) => {
+const ModalHeader: FC<ModalHeaderProps> = ({ children, onClick, align = 'center', margin = '20px', ...args }) => {
   return (
-    <Style.ModalHeader {...args} align={align}>
+    <Style.ModalHeader {...args} align={align} margin={margin}>
       {onClick && (
         <Style.HeaderIcon>
           <Style.CloseIcon onClick={onClick}>{SYSTEM.CLOSE}</Style.CloseIcon>
