@@ -24,12 +24,6 @@ export const Header = () => {
     setOpenModal((prev) => !prev);
   };
 
-  useEffect(() => {
-    if (user.reLogin) {
-      setOpenModal(true);
-    }
-  }, [user.reLogin]);
-
   return (
     <>
       <Style.Header>

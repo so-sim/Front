@@ -32,14 +32,8 @@ api.interceptors.response.use(
     if (response.status === 401) {
       const originalRequest = config;
       removeAccessToken();
-      setUser({
-        userId: null,
-        email: '',
-        reLogin: true,
-      });
-      ToastPopUp({ type: 'error', message: '다시 로그인 해주세요.' });
-      // reTakeToken();
-      // return axios(originalRequest);
+      reTakeToken();
+      return axios(originalRequest);
     }
     return Promise.reject(error);
   },
