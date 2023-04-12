@@ -47,8 +47,6 @@ const createDetail: Parameters<typeof rest.post>[1] = async (req, res, ctx) => {
 };
 
 const getDetailList: Parameters<typeof rest.post>[1] = (req, res, ctx) => {
-  // console.log(req.url.search);
-
   return res(
     ctx.status(200),
     ctx.json({

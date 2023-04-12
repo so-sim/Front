@@ -54,7 +54,6 @@ export const AdminModal: FC<ModalHandlerProps> = ({ modalHandler }) => {
   };
 
   const updateGroupInfo = () => {
-    console.log(isFormValidate());
     const id = Number(groupId);
     updateGroupMutate({ title, type, coverColor, groupId: id, nickname: myNickname?.content.nickname === nickname ? null : nickname });
   };

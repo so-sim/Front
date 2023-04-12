@@ -31,7 +31,6 @@ export const TableHead: FC<TableHeadProps> = ({ setDateFilter, setPage }) => {
   const paymentTypeDropDownRef = useRef<HTMLDivElement>(null);
 
   const [member, setMember] = useState('전체');
-  console.log(member);
 
   const [paymentType, setPaymentType] = useState<PaymentDropdown>('');
 

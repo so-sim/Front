@@ -30,7 +30,6 @@ const DropDown = <T,>({ list, width = 112, align = 'start', setState, onClose, t
 
   useEffect(() => {
     const onClickOutSide = (event: MouseEvent) => {
-      console.log(dropDownRef.current);
       if (dropDownRef?.current && !dropDownRef.current.contains(event.target as Node)) {
         onClose();
       }
