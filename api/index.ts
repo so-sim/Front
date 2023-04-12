@@ -28,7 +28,7 @@ api.interceptors.response.use(
   async (error) => {
     const { config, response } = error;
 
-    if (response.status === 401) {
+    if (response.status === 403) {
       // const originalRequest = config;
       removeAccessToken();
       window.location.href = KAKAO_URL.SIGIN;
