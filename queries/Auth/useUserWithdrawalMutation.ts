@@ -5,9 +5,12 @@ import { GroupListWithIndex } from '@/types/group';
 import { removeAccessToken } from '@/utils/acceessToken';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
+import { useRecoilState } from 'recoil';
+import { userState } from '@/store/userState';
 
 const useUserWithdrawalMutation = () => {
   const navigate = useNavigate();
+  const [user, setUser] = useRecoilState(userState);
   const queryClient = useQueryClient();
   return useMutation(userWithDrawal, {
     onMutate: async () => {
@@ -25,6 +28,10 @@ const useUserWithdrawalMutation = () => {
     },
     onSuccess: async () => {
       removeAccessToken();
+      setUser({
+        userId: null,
+        email: '',
+      });
       localStorage.removeItem('recoil-persist');
       navigate('/');
     },
