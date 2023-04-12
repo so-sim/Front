@@ -1,7 +1,6 @@
 import { getParticipantList } from '@/api/Group';
 import { ToastPopUp } from '@/common/Toast';
 import { TOAST_ERROR } from '@/constants/Toast';
-import { GroupId } from '@/types/group';
 import { useQuery } from '@tanstack/react-query';
 
 export const useParticipantList = (groupId: number | undefined) => {

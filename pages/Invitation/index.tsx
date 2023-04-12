@@ -35,7 +35,6 @@ const Invitation = () => {
 
   const checkUserLoginStatus = () => {
     if (isSuccess && data?.content.isInto === true) {
-      console.log(data?.content.isInto);
       return navigate(`/group/${groupId}/book`);
     }
 

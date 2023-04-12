@@ -27,8 +27,6 @@ const GroupList = () => {
     }
   }, [inView]);
 
-  console.log(groups);
-
   return (
     <>
       <Stlye.Layout>
