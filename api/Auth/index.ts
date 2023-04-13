@@ -15,7 +15,7 @@ export const kakaoSignIn = async (code: string | null): Promise<ServerResponse<S
 };
 
 export const reTakeToken = async (): Promise<ServerResponse> => {
-  const { data } = await api.get('/login/reIssueToken');
+  const { data } = await api.get('/login/reissueToken');
   setAccesToken(data.accessToken);
   return data;
 };
