@@ -1,9 +1,6 @@
-import { ToastPopUp } from '@/common/Toast';
 import { KAKAO_URL } from '@/constants/Auth';
-import { userState } from '@/store/userState';
 import { getAccessToken, removeAccessToken } from '@/utils/acceessToken';
-import axios, { AxiosError } from 'axios';
-import { useRecoilState } from 'recoil';
+import axios from 'axios';
 import { reTakeToken } from './Auth';
 
 export const BASE_URL = 'https://back.sosim-manager.com';
@@ -28,12 +25,11 @@ api.interceptors.response.use(
   async (error) => {
     const { config, response } = error;
 
-    if (response.status === 403) {
-      // const originalRequest = config;
+    if (response.status === 401) {
+      const originalRequest = config;
       removeAccessToken();
-      window.location.href = KAKAO_URL.SIGIN;
-      // reTakeToken();
-      // return axios(originalRequest);
+      reTakeToken();
+      return axios(originalRequest);
     }
     return Promise.reject(error);
   },
