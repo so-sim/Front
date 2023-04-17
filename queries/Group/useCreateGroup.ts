@@ -1,5 +1,4 @@
 import { useRecoilState } from 'recoil';
-
 import { createGroup } from '@/api/Group';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
@@ -13,7 +12,7 @@ export const useCreateGroup = (modalHandler: () => void) => {
   const [_, setIsFirstVisit] = useRecoilState(firstVisitState);
 
   return useMutation(createGroup, {
-    onSuccess(data) {
+    onSuccess: (data) => {
       navigate(`/group/${data.content.groupId}/book`);
       setIsFirstVisit((prev) => ({ ...prev, isFirstVisit: true }));
       modalHandler();

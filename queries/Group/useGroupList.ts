@@ -8,6 +8,7 @@ import { getAccessToken } from '@/utils/acceessToken';
 
 export const useGroupList = () => {
   return useInfiniteQuery(['groupList'], ({ pageParam = 0 }) => getGroupList(pageParam), {
+    retry: 0,
     getNextPageParam: (context) => {
       return context?.content?.next ? context.nextPage : undefined;
     },

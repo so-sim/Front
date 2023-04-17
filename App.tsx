@@ -7,9 +7,18 @@ import { RecoilRoot } from 'recoil';
 import { Toast } from './common/Toast';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 
-const queryClient = new QueryClient();
-
 const App = () => {
+  const queryClient = new QueryClient({
+    defaultOptions: {
+      mutations: {
+        retry: 2,
+      },
+      queries: {
+        retry: 2,
+      },
+    },
+  });
+
   return (
     <RecoilRoot>
       <QueryClientProvider client={queryClient}>
