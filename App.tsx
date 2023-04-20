@@ -25,7 +25,7 @@ const App = () => {
         retry: 2,
         onError: (error) => {
           const { response } = error as unknown as AxiosError;
-          if (response?.status !== 401) {
+          if (response?.status !== 401 && response?.status !== 400) {
             ToastPopUp({ type: 'error', message: TOAST_ERROR.DATA });
           }
         },
