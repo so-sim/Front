@@ -11,8 +11,5 @@ export const useUpdateDetailStatus = () => {
       queryClient.invalidateQueries(['monthStatus']);
       ToastPopUp({ type: 'success', message: TOAST_SUCCESS.UPDATE_FINE });
     },
-    onError: () => {
-      ToastPopUp({ type: 'error', message: TOAST_ERROR.NETWORK });
-    },
   });
 };

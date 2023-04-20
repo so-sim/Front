@@ -12,8 +12,5 @@ export const useCreateDetail = () => {
       queryClient.invalidateQueries(['monthStatus']);
       ToastPopUp({ type: 'success', message: TOAST_SUCCESS.CREATE_FINE });
     },
-    onError: () => {
-      ToastPopUp({ type: 'error', message: TOAST_ERROR.NETWORK });
-    },
   });
 };
