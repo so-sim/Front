@@ -1,4 +1,4 @@
-import { TOAST_ERROR, TOAST_SUCCESS } from '@/constants/Toast';
+import { TOAST_SUCCESS } from '@/constants/Toast';
 import { ToastPopUp } from '@/common/Toast';
 import { useNavigate } from 'react-router-dom';
 import { withdrawalGroup } from '@/api/Group';
@@ -34,7 +34,6 @@ export const useWithdrawalGroup = () => {
       if (context?.previousData) {
         queryClient.setQueryData(['groupList'], context.previousData);
       }
-      ToastPopUp({ type: 'error', message: TOAST_ERROR.NETWORK });
     },
     onSettled: () => {
       queryClient.invalidateQueries(['groupList']);

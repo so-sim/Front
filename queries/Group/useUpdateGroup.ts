@@ -1,7 +1,7 @@
 import { ServerResponse } from '@/types/serverResponse';
 import { updateGroup } from '@/api/Group';
 import { InfiniteData, useMutation, useQueryClient } from '@tanstack/react-query';
-import { TOAST_ERROR, TOAST_SUCCESS } from '@/constants/Toast';
+import { TOAST_SUCCESS } from '@/constants/Toast';
 import { ToastPopUp } from '@/common/Toast';
 import { AxiosError } from 'axios';
 import { GroupDetail, GroupListWithIndex, GroupNickname, ParticipantList } from '@/types/group';
@@ -83,8 +83,6 @@ export const useUpdateGroup = ({ modalHandler, setError }: UseUpdateGroup) => {
       if (axiosError.response) {
         const data = axiosError.response.data as ServerResponse;
         setError('nickname', data.status.message);
-      } else {
-        ToastPopUp({ type: 'error', message: TOAST_ERROR.NETWORK });
       }
     },
     onSettled: (context) => {

@@ -5,14 +5,14 @@ const { persistAtom } = recoilPersist({
 });
 
 export interface UserState {
-  email: string;
+  email: string | null;
   userId: number | null;
 }
 
 export const userState = atom<UserState>({
   key: 'userState',
   default: {
-    email: '',
+    email: null,
     userId: null,
   },
   effects_UNSTABLE: [persistAtom],

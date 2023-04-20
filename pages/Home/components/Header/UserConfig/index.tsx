@@ -1,12 +1,10 @@
+import { logoutUser } from '@/api/Auth';
 import { ARROW } from '@/assets/icons/Arrow';
 import { SYSTEM } from '@/assets/icons/System';
 import { USER } from '@/assets/icons/User';
 import DropDown from '@/common/DropDown';
 import { TwoButtonModal } from '@/common/Modal/TwoButtonModal';
 import UserConfigModal from '@/common/Modal/UserConfigModal';
-import { GroupListWithIndex } from '@/types/group';
-import { removeAccessToken } from '@/utils/acceessToken';
-import { useQueryClient } from '@tanstack/react-query';
 import { useEffect, useRef, useState } from 'react';
 import * as Style from './style';
 
@@ -29,17 +27,8 @@ const UserConfig = () => {
     setShowDropDown((prev) => !prev);
   };
 
-  const queryClient = useQueryClient();
-
   const onClickLogOut = () => {
-    removeAccessToken();
-    localStorage.removeItem('recoil-persist');
-    queryClient.setQueryData<GroupListWithIndex>(['groupList'], {
-      next: false,
-      index: 0,
-      groupList: [],
-    });
-    window.location.href = process.env.REACT_APP_SERVICE_URL as string;
+    logoutUser();
   };
 
   useEffect(() => {

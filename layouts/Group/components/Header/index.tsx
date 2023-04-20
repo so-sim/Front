@@ -1,15 +1,12 @@
+import { logoutUser } from '@/api/Auth';
 import { ARROW } from '@/assets/icons/Arrow';
 import { LOGO } from '@/assets/icons/Logo';
 import { SYSTEM } from '@/assets/icons/System';
 import { USER } from '@/assets/icons/User';
 import DropDown from '@/common/DropDown';
-import { AuthModal } from '@/common/Modal/LoginModal';
 import { TwoButtonModal } from '@/common/Modal/TwoButtonModal';
 import UserConfigModal from '@/common/Modal/UserConfigModal';
 import { userState } from '@/store/userState';
-import { GroupListWithIndex } from '@/types/group';
-import { removeAccessToken } from '@/utils/acceessToken';
-import { useQueryClient } from '@tanstack/react-query';
 import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
@@ -41,21 +38,8 @@ const GroupLayoutHeader = () => {
     setShowDropDown((prev) => !prev);
   };
 
-  const queryClient = useQueryClient();
-
   const onClickLogOut = () => {
-    removeAccessToken();
-    setUser({
-      userId: null,
-      email: '',
-    });
-
-    queryClient.setQueryData<GroupListWithIndex>(['groupList'], {
-      next: false,
-      index: 0,
-      groupList: [],
-    });
-    navigate('/');
+    logoutUser();
   };
 
   useEffect(() => {

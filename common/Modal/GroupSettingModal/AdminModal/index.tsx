@@ -30,7 +30,7 @@ export const AdminModal: FC<ModalHandlerProps> = ({ modalHandler }) => {
 
   const { groupId } = useParams();
 
-  const { mutate: updateGroupMutate } = useUpdateGroup({ setError, modalHandler });
+  const { mutate: updateGroupMutate, isLoading } = useUpdateGroup({ setError, modalHandler });
   const { mutate: withdrawalGroupMutate } = useWithdrawalGroup();
   const { mutate: deleteGroup } = useDeleteGroup();
 
@@ -47,10 +47,6 @@ export const AdminModal: FC<ModalHandlerProps> = ({ modalHandler }) => {
 
   const onDeleteGroup = () => {
     deleteGroup({ groupId: Number(groupId) });
-  };
-
-  const isFormValidate = () => {
-    return [setError('nickname', checkCountChar(nickname)), setError('groupName', checkCountChar(title))];
   };
 
   const updateGroupInfo = () => {
@@ -126,7 +122,7 @@ export const AdminModal: FC<ModalHandlerProps> = ({ modalHandler }) => {
             <Button color="white" onClick={modalHandler}>
               취소
             </Button>
-            <Button color={isValidForm() ? 'black' : 'disabled'} onClick={updateGroupInfo} id="group_modify">
+            <Button color={isValidForm() ? 'black' : 'disabled'} onClick={updateGroupInfo} id="group_modify" loading={isLoading}>
               저장
             </Button>
           </Style.ButtonFrame>
