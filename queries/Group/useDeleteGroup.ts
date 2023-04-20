@@ -1,6 +1,5 @@
 import { ServerResponse } from './../../types/serverResponse.d';
-import { TOAST_ERROR, TOAST_SUCCESS } from '@/constants/Toast';
-
+import { TOAST_SUCCESS } from '@/constants/Toast';
 import { deleteGroup } from '@/api/Group';
 import { InfiniteData, useMutation, useQueryClient } from '@tanstack/react-query';
 import { ToastPopUp } from '@/common/Toast';
@@ -30,9 +29,7 @@ export const useDeleteGroup = () => {
       navigate('/');
       ToastPopUp({ type: 'success', message: TOAST_SUCCESS.GROUP_DELETE });
     },
-    onError: () => {
-      ToastPopUp({ type: 'error', message: TOAST_ERROR.NETWORK });
-    },
+
     onSettled: () => {
       queryClient.invalidateQueries(['groupList']);
     },

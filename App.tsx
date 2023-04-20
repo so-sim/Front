@@ -4,12 +4,35 @@ import theme from './styles/Theme';
 import Router from './routes/Router';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { RecoilRoot } from 'recoil';
-import { Toast } from './common/Toast';
+import { Toast, ToastPopUp } from './common/Toast';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
-
-const queryClient = new QueryClient();
+import { AxiosError } from 'axios';
+import { TOAST_ERROR } from './constants/Toast';
 
 const App = () => {
+  const queryClient = new QueryClient({
+    defaultOptions: {
+      mutations: {
+        retry: 2,
+        onError: (error) => {
+          const { response } = error as unknown as AxiosError;
+          if (response?.status !== 401) {
+            ToastPopUp({ type: 'error', message: TOAST_ERROR.NETWORK });
+          }
+        },
+      },
+      queries: {
+        retry: 2,
+        onError: (error) => {
+          const { response } = error as unknown as AxiosError;
+          if (response?.status !== 401) {
+            ToastPopUp({ type: 'error', message: TOAST_ERROR.DATA });
+          }
+        },
+      },
+    },
+  });
+
   return (
     <RecoilRoot>
       <QueryClientProvider client={queryClient}>

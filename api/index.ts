@@ -1,5 +1,4 @@
-import { KAKAO_URL } from '@/constants/Auth';
-import { getAccessToken, removeAccessToken } from '@/utils/acceessToken';
+import { getAccessToken } from '@/utils/acceessToken';
 import axios from 'axios';
 import { reTakeToken } from './Auth';
 
@@ -12,11 +11,13 @@ const api = axios.create({
 
 api.interceptors.request.use((config) => {
   const accessToken = getAccessToken();
-  if (config.headers && accessToken && !config.headers.Authorization) {
+  if (config.headers && accessToken) {
     config.headers.Authorization = `Bearer ${accessToken}`;
   }
   return config;
 });
+
+let lock = false;
 
 api.interceptors.response.use(
   (response) => {
@@ -24,12 +25,13 @@ api.interceptors.response.use(
   },
   async (error) => {
     const { config, response } = error;
-
-    if (response.status === 401) {
-      const originalRequest = config;
-      removeAccessToken();
-      reTakeToken();
-      return axios(originalRequest);
+    if (response?.status === 401) {
+      if (!lock) {
+        lock = true;
+        await reTakeToken();
+        lock = false;
+        return;
+      }
     }
     return Promise.reject(error);
   },

@@ -1,4 +1,4 @@
-import { TOAST_ERROR, TOAST_SUCCESS } from '@/constants/Toast';
+import { TOAST_SUCCESS } from '@/constants/Toast';
 import { ToastPopUp } from '@/common/Toast';
 import { changeNickname } from '@/api/Group';
 import { useMutation } from '@tanstack/react-query';
@@ -17,12 +17,10 @@ export const useChangeNickname = ({ modalHandler, setError }: UseChangeNicknameP
       ToastPopUp({ type: 'success', message: TOAST_SUCCESS.UPDATE_GROUP });
     },
     onError: (error) => {
-      const axiosError = error as unknown as AxiosError;
-      if (axiosError.response) {
-        const data = axiosError.response.data as ServerResponse;
+      const { response } = error as unknown as AxiosError;
+      if (response && response.status !== 401) {
+        const data = response.data as ServerResponse;
         setError('nickname', data.status.message);
-      } else {
-        ToastPopUp({ type: 'error', message: TOAST_ERROR.NETWORK });
       }
     },
   });

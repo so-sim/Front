@@ -50,8 +50,8 @@ export const FineBookModal = ({ setOpen, eventId, select, setSelect }: ModalProp
 
   const { groupId } = useParams();
   const { data } = useParticipantList(Number(groupId));
-  const { mutate: create } = useCreateDetail();
-  const { mutate: update } = useUpdateDetail();
+  const { mutate: create, isLoading: createLoading } = useCreateDetail();
+  const { mutate: update, isLoading: updateLoading } = useUpdateDetail();
 
   const user = useRecoilValue(userState);
   const navigate = useNavigate();
@@ -158,6 +158,7 @@ export const FineBookModal = ({ setOpen, eventId, select, setSelect }: ModalProp
               if (isCreate) return createDetail('save');
               updateDetail();
             }}
+            loading={isCreate ? createLoading : updateLoading}
             id={isCreate ? 'add_list_normal' : ''}
           >
             {isCreate ? '추가하기' : '저장하기'}

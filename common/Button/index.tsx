@@ -9,14 +9,23 @@ export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   color?: 'primary' | 'black' | 'white' | 'disabled' | 'white-disabled';
   leftIcon?: JSX.Element;
   id?: string;
+  loading?: boolean;
 }
 
-const Button: FC<ButtonProps> = ({ children, width = '60px', height = '36px', onClick, leftIcon, color = 'primary', id }) => {
+const Button: FC<ButtonProps> = ({ children, width = '60px', height = '36px', onClick, leftIcon, color = 'primary', id, loading = false }) => {
   return (
-    <Style.Button width={width} height={height} color={color} onClick={onClick} disabled={color.includes('disabled')} id={id}>
+    <Style.Button width={width} height={height} color={color} onClick={onClick} disabled={color.includes('disabled') || loading} id={id}>
       <Style.InnerText>
-        {leftIcon && <Style.Icon>{leftIcon}</Style.Icon>}
-        {children}
+        {loading ? (
+          <Style.LoadingCircle color={color}>
+            <circle cx="50%" cy="50%" r="10"></circle>
+          </Style.LoadingCircle>
+        ) : (
+          <>
+            {leftIcon && <Style.Icon>{leftIcon}</Style.Icon>}
+            {children}
+          </>
+        )}
       </Style.InnerText>
     </Style.Button>
   );
