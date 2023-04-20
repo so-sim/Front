@@ -1,31 +1,46 @@
 import { SignUpResult } from './../../types/auth.d';
 import { ServerResponse } from '@/types/serverResponse';
 import api from '..';
-import { removeAccessToken, setAccesToken } from '@/utils/acceessToken';
+import { removeAccessToken } from '@/utils/acceessToken';
+import { AxiosError } from 'axios';
+import { KAKAO_URL } from '@/constants/Auth';
 
 export const kakaoSignUp = async (code: string): Promise<ServerResponse<SignUpResult>> => {
-  const { data } = await api.post(`/login/kakao?code=${code}`);
+  const { data } = await api.post(`/auth/kakao?code=${code}`);
   return data;
 };
 
 export const kakaoSignIn = async (code: string | null): Promise<ServerResponse<SignUpResult>> => {
-  const { data } = await api.get(`/login/kakao?code=${code}`);
+  const { data } = await api.get(`/auth/kakao?code=${code}`);
   return data;
 };
 
-export const logoutUser = async () => {
+export const logoutUser = async (): Promise<ServerResponse> => {
   try {
-    const { data } = await api.post('/logout');
+    const { data } = await api.post('/auth/logout');
     removeAccessToken();
+    window.location.href = process.env.REACT_APP_SERVICE_URL as string;
     return data;
   } catch (error) {
     console.log(error);
+
     throw error;
   }
 };
 
 export const reTakeToken = async (): Promise<ServerResponse> => {
-  const { data } = await api.get('/login/reissueToken');
-  setAccesToken(data.content.accessToken);
-  return data;
+  try {
+    const response = await api.get('/auth/reissueToken');
+    return response.data;
+  } catch (error) {
+    const { response } = error as unknown as AxiosError;
+    if (response?.status === 403) {
+      window.location.href = KAKAO_URL.SIGIN;
+    }
+    if (response?.status === 406) {
+      removeAccessToken();
+      window.location.href = process.env.REACT_APP_SERVICE_URL as string;
+    }
+    throw error;
+  }
 };

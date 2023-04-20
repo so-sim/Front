@@ -25,7 +25,7 @@ api.interceptors.response.use(
   },
   async (error) => {
     const { config, response } = error;
-    if (response.status === 401) {
+    if (response?.status === 401) {
       if (!lock) {
         lock = true;
         await reTakeToken();
