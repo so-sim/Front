@@ -1,7 +1,7 @@
 import { SignUpResult } from './../../types/auth.d';
 import { ServerResponse } from '@/types/serverResponse';
 import api from '..';
-import { removeAccessToken } from '@/utils/acceessToken';
+import { removeAccessToken, setAccesToken } from '@/utils/acceessToken';
 import { AxiosError } from 'axios';
 import { KAKAO_URL } from '@/constants/Auth';
 
@@ -31,6 +31,8 @@ export const logoutUser = async (): Promise<ServerResponse> => {
 export const reTakeToken = async (): Promise<ServerResponse> => {
   try {
     const response = await api.get('/auth/reissueToken');
+    const accessToken = response.data.content.accessToken;
+    setAccesToken(accessToken);
     return response.data;
   } catch (error) {
     const { response } = error as unknown as AxiosError;

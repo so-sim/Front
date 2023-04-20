@@ -11,8 +11,5 @@ export const useDeleteDetail = () => {
       queryClient.invalidateQueries(['monthStatus']);
       ToastPopUp({ type: 'success', message: TOAST_SUCCESS.DELETE_FINE });
     },
-    onError: () => {
-      ToastPopUp({ type: 'error', message: TOAST_ERROR.NETWORK });
-    },
   });
 };
