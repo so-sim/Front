@@ -32,7 +32,6 @@ const useUserWithdrawalMutation = () => {
         userId: null,
         email: '',
       });
-      localStorage.removeItem('recoil-persist');
       navigate('/');
     },
     onError: (error, value, context) => {
