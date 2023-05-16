@@ -1,4 +1,3 @@
-import { TOAST_ERROR } from './../../constants/Toast';
 import { useRecoilState } from 'recoil';
 import { useMutation } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
@@ -22,9 +21,6 @@ const useSignUpMutation = () => {
       }));
       ToastPopUp({ type: 'success', message: TOAST_SUCCESS.SIGNIN });
       navigate('/');
-    },
-    onError: (error) => {
-      ToastPopUp({ type: 'error', message: TOAST_ERROR.NETWORK });
     },
   });
 };

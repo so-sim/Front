@@ -28,18 +28,12 @@ const useUserWithdrawalMutation = () => {
     },
     onSuccess: async () => {
       removeAccessToken();
-      setUser({
-        userId: null,
-        email: '',
-      });
-      localStorage.removeItem('recoil-persist');
       navigate('/');
     },
     onError: (error, value, context) => {
       if (context?.previousData) {
         queryClient.setQueryData(['groupList'], context.previousData);
       }
-      ToastPopUp({ type: 'error', message: TOAST_ERROR.NETWORK });
     },
     onSettled: () => {
       queryClient.invalidateQueries(['groupList']);

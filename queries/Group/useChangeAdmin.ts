@@ -1,4 +1,4 @@
-import { TOAST_ERROR, TOAST_SUCCESS } from '@/constants/Toast';
+import { TOAST_SUCCESS } from '@/constants/Toast';
 import { ToastPopUp } from './../../common/Toast/index';
 import { changeAdmin } from '@/api/Group';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
@@ -50,7 +50,6 @@ export const useChangeAdmin = (groupId: number | undefined) => {
       if (context?.prevGroupDetail) {
         queryClient.setQueryData(['groupDetail', value.groupId], context.prevGroupDetail);
       }
-      ToastPopUp({ type: 'error', message: TOAST_ERROR.NETWORK });
     },
     onSettled: () => {
       queryClient.invalidateQueries(['participantList', groupId]);

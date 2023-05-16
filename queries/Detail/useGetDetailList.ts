@@ -9,9 +9,5 @@ import { Dayjs } from 'dayjs';
 export const useGetDetailList = (dateFilter: Partial<DateFilterProperty>, selectedDate: Dayjs | null, groupId: GroupId) => {
   const query = dateFilterToQuery(dateFilter);
 
-  return useQuery(['detailList', query, selectedDate, groupId.groupId], () => getEventList(query, groupId), {
-    onError: () => {
-      ToastPopUp({ type: 'error', message: TOAST_ERROR.DATA });
-    },
-  });
+  return useQuery(['detailList', query, selectedDate, groupId.groupId], () => getEventList(query, groupId));
 };

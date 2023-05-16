@@ -1,5 +1,6 @@
 import { ButtonProps } from './index';
 import styled from '@emotion/styled';
+import { keyframes } from '@emotion/react';
 
 export const Button = styled.button<ButtonProps>`
   ${({ theme }) => theme.font.subhead_02};
@@ -56,4 +57,44 @@ export const InnerText = styled.span`
 
 export const Icon = styled.span`
   height: 16px;
+`;
+
+const loading = keyframes`
+  100% {
+    transform: rotate(360deg);
+  }
+`;
+const circleAnimation = keyframes`
+  0% {
+    stroke-dashoffset: 56;
+  }
+  75% {
+    stroke-dashoffset: -36;
+  }
+  100% {
+    stroke-dashoffset: -56;
+  }
+`;
+
+export const LoadingCircle = styled.svg<Pick<ButtonProps, 'color'>>`
+  width: 24px;
+  height: 24px;
+  animation: ${loading} 3s infinite;
+  circle {
+    stroke: ${({ theme, color }) => {
+      const colors = {
+        primary: theme.colors.secondary_100,
+        disabled: theme.colors.secondary_700,
+        black: theme.colors.secondary_100,
+        white: theme.colors.secondary_900,
+        ['white-disabled']: theme.colors.secondary_600,
+      };
+      return colors[color ?? 'primary'];
+    }};
+    stroke-width: 2;
+    stroke-dasharray: 56;
+    stroke-dashoffset: 0;
+    fill: none;
+    animation: ${circleAnimation} 1s infinite;
+  }
 `;

@@ -29,7 +29,7 @@ export const CreateGroupModal: FC<ModalHandlerProps> = ({ modalHandler, id }) =>
 
   const location = useLocation();
 
-  const { mutate } = useCreateGroup(modalHandler);
+  const { mutate, isLoading } = useCreateGroup(modalHandler);
 
   const createGroup = () => {
     mutate(
@@ -72,7 +72,7 @@ export const CreateGroupModal: FC<ModalHandlerProps> = ({ modalHandler, id }) =>
         </Label>
       </Modal.Body>
       <Modal.Footer>
-        <Button id={id} onClick={createGroup} width="100%" height="42px" color={isValidForm() ? 'primary' : 'disabled'}>
+        <Button id={id} onClick={createGroup} width="100%" height="42px" color={isValidForm() ? 'primary' : 'disabled'} loading={isLoading}>
           만들기
         </Button>
       </Modal.Footer>
