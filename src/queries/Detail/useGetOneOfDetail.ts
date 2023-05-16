@@ -1,0 +1,8 @@
+import { getOneOfEvent } from '@/api/Event';
+import { ToastPopUp } from '@/components/@common/Toast';
+import { TOAST_ERROR } from '@/constants/Toast';
+import { useQuery } from '@tanstack/react-query';
+
+export const useGetOneOfDetail = (eventId: number) => {
+  return useQuery(['oneOfDetail', eventId], () => getOneOfEvent(eventId));
+};
