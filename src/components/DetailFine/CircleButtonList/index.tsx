@@ -1,6 +1,6 @@
 import { TwoButtonModal } from '@/components/@common/Modal/TwoButtonModal';
 import { useUpdateDetailStatus } from '@/queries/Detail/useUpdateDetailStatus';
-import { PaymentType } from '@/types/event';
+import { PaymentType, ServerPaymentType } from '@/types/event';
 import { getStatusCode, getStatusText } from '@/utils/getStatusIcon';
 import { pushDataLayer } from '@/utils/pushDataLayer';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
@@ -8,23 +8,24 @@ import CircleDropButton, { CircleDropButtonProps } from '../CircleDropButton';
 import * as Style from './styles';
 
 interface CircleButtonListProps extends CircleDropButtonProps {
-  statusList: PaymentType[];
+  isOwn: boolean;
+  statusList: ServerPaymentType[];
   eventId: number;
   isAdmin: boolean;
   setOpenListEventId: Dispatch<SetStateAction<number>>;
 }
 
-const CircleButtonList = ({ status, statusList, eventId, setOpenListEventId, isAdmin }: CircleButtonListProps) => {
-  const adminStatusList: PaymentType[] = [
-    getStatusText(status),
+const CircleButtonList = ({ isOwn, status, statusList, eventId, setOpenListEventId, isAdmin }: CircleButtonListProps) => {
+  const adminStatusList: ServerPaymentType[] = [
+    status,
     ...statusList.filter((element) => {
-      if (status === 'con') return element !== getStatusText(status);
+      if (status === 'con') return element !== status;
 
-      return element !== getStatusText(status) && element !== '확인필요';
+      return element !== status && element !== 'con';
     }),
   ];
 
-  const userStatusList: PaymentType[] = status === 'non' ? [getStatusText(status), '확인요청'] : [];
+  const userStatusList: ServerPaymentType[] = status === 'non' ? [status, 'con'] : [];
 
   const dropdownList = isAdmin ? adminStatusList : userStatusList;
 
@@ -89,7 +90,7 @@ const CircleButtonList = ({ status, statusList, eventId, setOpenListEventId, isA
         {dropdownList.map((paymentType) => {
           return (
             <Style.CircleButtonBox key={paymentType} onClick={() => handleCircleButtonList(paymentType)}>
-              <CircleDropButton status={paymentType} isAdmin={isAdmin} />
+              <CircleDropButton status={paymentType} isAdmin={isAdmin} isOwn={isOwn} originStatus={status} />
             </Style.CircleButtonBox>
           );
         })}

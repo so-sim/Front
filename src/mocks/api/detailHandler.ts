@@ -72,8 +72,4 @@ const updateDetailStatus: Parameters<typeof rest.patch>[1] = async (req, res, ct
   );
 };
 
-export const detailHandler = [
-  rest.post('/api/event/penalty', createDetail),
-  rest.get('/api/event/penalty?year=2023&month=3', getDetailList),
-  rest.patch('/api/event/penalty/*', updateDetailStatus),
-];
+export const detailHandler = [rest.post('/api/event/penalty', createDetail), rest.get('/api/event/penalty', getDetailList), rest.patch('/api/event/penalty/*', updateDetailStatus)];

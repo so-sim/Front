@@ -1,4 +1,6 @@
-type ServerPaymentType = 'non' | 'con' | 'full';
+import { RefactorPayType } from '@/components/DetailFine/DetailList';
+
+export type ServerPaymentType = 'non' | 'con' | 'full';
 
 export type PaymentType = '미납' | '확인필요' | '확인요청' | '확인중' | '완납' | '' | ServerPaymentType;
 
@@ -20,7 +22,7 @@ export interface EventInfo {
 
 export interface EventInfoList {
   totalCount: number;
-  list: EventInfo[];
+  list: RefactorPayType[];
 }
 
 export interface EvnetId {

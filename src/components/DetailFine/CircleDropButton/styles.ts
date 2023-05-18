@@ -7,9 +7,9 @@ export const StatusButton = styled.button<CircleDropButtonProps>`
   padding: 4px 12px;
   margin: 8px 10px;
   border-radius: 16px;
-  color: ${({ theme, status }) => (status === '미납' ? theme.colors.red_600 : status === '확인필요' ? theme.colors.orange_600 : theme.colors.primary_600)};
-  border: 2px solid ${({ theme, status }) => (status === '미납' ? theme.colors.red_600 : status === '확인필요' ? theme.colors.orange_600 : theme.colors.primary_600)};
-  background-color: ${({ theme, status }) => (status === '미납' ? theme.colors.red_200 : status === '확인필요' ? theme.colors.orange_200 : theme.colors.blue_200)};
+  color: ${({ theme, status }) => (status === 'non' ? theme.colors.red_600 : status === 'con' ? theme.colors.orange_600 : theme.colors.primary_600)};
+  border: 2px solid ${({ theme, status }) => (status === 'non' ? theme.colors.red_600 : status === 'con' ? theme.colors.orange_600 : theme.colors.primary_600)};
+  background-color: ${({ theme, status }) => (status === 'non' ? theme.colors.red_200 : status === 'con' ? theme.colors.orange_200 : theme.colors.blue_200)};
 `;
 
 export const Text = styled.span`

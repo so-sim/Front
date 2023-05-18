@@ -1,21 +1,22 @@
 import { useGroupDetail } from '@/queries/Group';
 import { userState } from '@/store/userState';
-import { EventInfo, PaymentType } from '@/types/event';
+import { EventInfo, PaymentType, ServerPaymentType } from '@/types/event';
 import React, { Dispatch, MouseEvent, SetStateAction, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 import { CircleButtonList, CircleDropButton } from '@/components/DetailFine';
 import * as Style from './styles';
+import { RefactorPayType } from '../DetailList';
 
 interface DropDownWrapperProps {
-  detail: EventInfo;
+  detail: RefactorPayType;
   openListEventId: number;
   setOpenListEventId: Dispatch<SetStateAction<number>>;
 }
 
 const DropDownWrapper = ({ detail, openListEventId, setOpenListEventId }: DropDownWrapperProps) => {
-  const { eventId, paymentType } = detail;
-  const statusList: PaymentType[] = ['미납', '확인필요', '완납'];
+  const { eventId, paymentType, userId } = detail;
+  const statusList: ServerPaymentType[] = ['non', 'con', 'full'];
   const { groupId } = useParams();
 
   const { data } = useGroupDetail(Number(groupId));
@@ -37,7 +38,14 @@ const DropDownWrapper = ({ detail, openListEventId, setOpenListEventId }: DropDo
   return (
     <Style.DropDownWrapper isValid={hasPermissionWhenHover} onClick={handleCircleDropButton}>
       {hasPermissionOfChangePaymentType ? (
-        <CircleButtonList isAdmin={data?.content.isAdmin || false} setOpenListEventId={setOpenListEventId} status={paymentType} statusList={statusList} eventId={eventId} />
+        <CircleButtonList
+          isOwn={user.userId === userId}
+          isAdmin={data?.content.isAdmin || false}
+          setOpenListEventId={setOpenListEventId}
+          status={paymentType}
+          statusList={statusList}
+          eventId={eventId}
+        />
       ) : (
         <CircleDropButton status={paymentType} isAdmin={data?.content.isAdmin} />
       )}

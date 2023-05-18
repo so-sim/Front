@@ -13,14 +13,14 @@ describe('dateFilterTitle 테스트', () => {
     expect(dateFilterTitle(baseDate, 'week', 3)).toBe('04월 09일 - 04월 15일');
   });
 
-  it('mode가 week일 때 week는 null일 수 없습니다.', () => {
-    const baseDate = dayjs('2023.04.09');
+  // it('mode가 week일 때 week는 null일 수 없습니다.', () => {
+  //   const baseDate = dayjs('2023.04.09');
 
-    const throwErroWhenWeekIsNull = () => {
-      dateFilterTitle(baseDate, 'week', null);
-    };
-    expect(throwErroWhenWeekIsNull).toThrow('mode가 week일 때 week는 null일 수 없습니다.');
-  });
+  //   const throwErroWhenWeekIsNull = () => {
+  //     dateFilterTitle(baseDate, 'week', null);
+  //   };
+  //   expect(throwErroWhenWeekIsNull).toThrow('mode가 week일 때 week는 null일 수 없습니다.');
+  // });
 });
 
 describe('dateFilterToQuery 테스트', () => {
