@@ -1,12 +1,13 @@
 import { useGroupDetail } from '@/queries/Group';
 import { userState } from '@/store/userState';
-import { EventInfo, PaymentType, ServerPaymentType } from '@/types/event';
+import { ServerPaymentType } from '@/types/event';
 import React, { Dispatch, MouseEvent, SetStateAction, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 import { CircleButtonList, CircleDropButton } from '@/components/DetailFine';
 import * as Style from './styles';
 import { RefactorPayType } from '../DetailList';
+import { STATUS_LIST } from '@/constants/Detail';
 
 interface DropDownWrapperProps {
   detail: RefactorPayType;
@@ -16,17 +17,15 @@ interface DropDownWrapperProps {
 
 const DropDownWrapper = ({ detail, openListEventId, setOpenListEventId }: DropDownWrapperProps) => {
   const { eventId, paymentType, userId } = detail;
-  const statusList: ServerPaymentType[] = ['non', 'con', 'full'];
   const { groupId } = useParams();
 
   const { data } = useGroupDetail(Number(groupId));
   const user = useRecoilValue(userState);
 
-  const hasPermissionWhenHover = data?.content.isAdmin || (!data?.content.isAdmin && detail.userId === user.userId && detail.paymentType === 'non');
+  const hasPermissionWhenHover = data?.content.isAdmin || (!data?.content.isAdmin && userId === user.userId && detail.paymentType === 'non');
 
   const hasPermissionOfChangePaymentType =
-    (data?.content.isAdmin && openListEventId === eventId) ||
-    (!data?.content.isAdmin && detail.userId === user.userId && detail.paymentType === 'non' && openListEventId === eventId);
+    (data?.content.isAdmin && openListEventId === eventId) || (!data?.content.isAdmin && userId === user.userId && detail.paymentType === 'non' && openListEventId === eventId);
 
   const handleCircleDropButton = (e: MouseEvent) => {
     if (hasPermissionWhenHover) {
@@ -43,7 +42,7 @@ const DropDownWrapper = ({ detail, openListEventId, setOpenListEventId }: DropDo
           isAdmin={data?.content.isAdmin || false}
           setOpenListEventId={setOpenListEventId}
           status={paymentType}
-          statusList={statusList}
+          statusList={STATUS_LIST}
           eventId={eventId}
         />
       ) : (
