@@ -103,6 +103,7 @@ const DateController: FC<DateControllerProps> = ({ mode, setMode, setOpenAddModa
               return (
                 <Style.FilterButton
                   id={btn.id}
+                  key={btn.id}
                   isActive={mode === btn.mode}
                   onClick={() => {
                     setOpenWeeklyFilterDrop((prev) => !prev);
