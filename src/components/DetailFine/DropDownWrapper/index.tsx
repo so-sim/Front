@@ -1,13 +1,14 @@
-import { useGroupDetail } from '@/queries/Group';
-import { userState } from '@/store/userState';
-import { ServerPaymentType } from '@/types/event';
-import React, { Dispatch, MouseEvent, SetStateAction, useState } from 'react';
+import { Dispatch, MouseEvent, SetStateAction } from 'react';
 import { useParams } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
+
 import { CircleButtonList, CircleDropButton } from '@/components/DetailFine';
-import * as Style from './styles';
-import { RefactorPayType } from '../DetailList';
+import { useGroupDetail } from '@/queries/Group';
+import { userState } from '@/store/userState';
+
 import { STATUS_LIST } from '@/constants/Detail';
+import { RefactorPayType } from '../DetailList';
+import * as Style from './styles';
 
 interface DropDownWrapperProps {
   detail: RefactorPayType;
@@ -22,20 +23,20 @@ const DropDownWrapper = ({ detail, openListEventId, setOpenListEventId }: DropDo
   const { data } = useGroupDetail(Number(groupId));
   const user = useRecoilValue(userState);
 
-  const hasPermissionWhenHover = data?.content.isAdmin || (!data?.content.isAdmin && userId === user.userId && detail.paymentType === 'non');
+  const hasPermissionOfHover = data?.content.isAdmin || (!data?.content.isAdmin && userId === user.userId && detail.paymentType === 'non');
 
   const hasPermissionOfChangePaymentType =
     (data?.content.isAdmin && openListEventId === eventId) || (!data?.content.isAdmin && userId === user.userId && detail.paymentType === 'non' && openListEventId === eventId);
 
   const handleCircleDropButton = (e: MouseEvent) => {
-    if (hasPermissionWhenHover) {
+    if (hasPermissionOfHover) {
       setOpenListEventId(eventId);
       e.stopPropagation();
     }
   };
 
   return (
-    <Style.DropDownWrapper isValid={hasPermissionWhenHover} onClick={handleCircleDropButton}>
+    <Style.DropDownWrapper isValid={hasPermissionOfHover} onClick={handleCircleDropButton}>
       {hasPermissionOfChangePaymentType ? (
         <CircleButtonList
           isOwn={user.userId === userId}

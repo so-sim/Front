@@ -1,14 +1,13 @@
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { SYSTEM } from '@/assets/icons/System';
 import { USER } from '@/assets/icons/User';
-import Button from '@/components/@common/Button';
-import { Label, DropBox } from '@/components/@common';
+import { Label, DropBox, Button } from '@/components/@common';
 import * as Style from './styles';
 import { EventInfo, PaymentType } from '@/types/event';
-import { FineBookModal } from '@/components/@common/Modal/FineBookModal';
 import { changeNumberToMoney } from '@/utils/changeNumberToMoney';
 import { getStatusCode, getStatusText } from '@/utils/getStatusIcon';
 import { useDeleteDetail, useUpdateDetailStatus } from '@/queries/Detail';
+import { FineBookModal } from '@/components/@common/Modal/FineBookModal';
 import { TwoButtonModal } from '@/components/@common/Modal/TwoButtonModal';
 import { useRecoilValue } from 'recoil';
 import { userState } from '@/store/userState';
@@ -128,19 +127,15 @@ const UserDetails = ({ open, setOpen, select, setSelect }: UserDetailsProps) => 
   const dropdownStatusList = () => {
     if (data?.content.isAdmin) {
       return statusList.filter((status) => {
-        if (newStatus) {
-          return status.title !== newStatus && status.title !== '확인필요';
+        if (newStatus && status.title !== '확인필요') {
+          return status.title !== newStatus;
         } else {
-          return status.title !== getStatusText(paymentType) && status.title !== '확인필요';
+          return status.title !== getStatusText(paymentType);
         }
       });
     }
     if (user.userId === userId) {
-      return statusList.filter((status) => {
-        if (paymentType === 'non') {
-          return status.title === '확인필요';
-        }
-      });
+      return statusList.filter((status) => paymentType === 'non' && status.title === '확인필요');
     }
     return [];
   };

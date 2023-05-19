@@ -1,7 +1,6 @@
 import { Dispatch, FC, SetStateAction } from 'react';
 import { ARROW } from '@/assets/icons/Arrow';
 import * as Style from './styles';
-import { EventInfo } from '@/types/event';
 
 interface PaginationProps {
   count?: number;
