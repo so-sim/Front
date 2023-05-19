@@ -3,6 +3,7 @@
 // expect(element).toHaveTextContent(/react/i)
 // learn more: https://github.com/testing-library/jest-dom
 import { server } from '@/mocks/server';
+import 'react-toastify/dist/ReactToastify.css';
 import '@testing-library/jest-dom';
 import { matchers } from '@emotion/jest';
 
