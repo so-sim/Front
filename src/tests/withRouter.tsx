@@ -6,18 +6,7 @@ import globalStyle from '../styles/GlobalStyle';
 import theme from '../styles/Theme';
 
 export const withRouter = (components: JSX.Element | JSX.Element[], initailEntry = '/') => {
-  const queryClient = new QueryClient({
-    defaultOptions: {
-      queries: {
-        retry: false,
-      },
-    },
-    logger: {
-      log: console.log,
-      warn: console.warn,
-      error: () => {},
-    },
-  });
+  const queryClient = createQueryClient();
 
   return (
     <RecoilRoot>
@@ -31,4 +20,19 @@ export const withRouter = (components: JSX.Element | JSX.Element[], initailEntry
       </MemoryRouter>
     </RecoilRoot>
   );
+};
+
+const createQueryClient = () => {
+  return new QueryClient({
+    defaultOptions: {
+      queries: {
+        retry: false,
+      },
+    },
+    logger: {
+      log: console.log,
+      warn: console.warn,
+      error: () => {},
+    },
+  });
 };
