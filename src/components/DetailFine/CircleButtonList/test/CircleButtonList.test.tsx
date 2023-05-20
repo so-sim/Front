@@ -1,4 +1,4 @@
-import { withRouter } from '@/utils/withRouter';
+import { withRouter } from '@/tests/withRouter';
 import { render, screen } from '@testing-library/react';
 import { STATUS_LIST } from '@/constants/Detail';
 import CircleButtonList from '..';

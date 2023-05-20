@@ -1,4 +1,4 @@
-import { withRouter } from '@/utils/withRouter';
+import { withRouter } from '@/tests/withRouter';
 import { render, screen } from '@testing-library/react';
 import { Route, Routes } from 'react-router-dom';
 import DetailsHeader from '..';
