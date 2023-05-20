@@ -7,6 +7,7 @@ import * as Style from './styles';
 
 const Home = () => {
   const navigate = useNavigate();
+  const user = useRecoilValue(userState);
 
   useEffect(() => {
     if (sessionStorage.getItem('invite-group-id') !== null) {
@@ -14,7 +15,6 @@ const Home = () => {
     }
   }, []);
 
-  const user = useRecoilValue(userState);
   useEffect(() => {
     if (user.userId) {
       window.dataLayer.push({ user_id: user.userId });

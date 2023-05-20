@@ -14,6 +14,7 @@ import { userState } from '@/store/userState';
 import { useGroupDetail } from '@/queries/Group';
 import { useParams } from 'react-router-dom';
 import { pushDataLayer } from '@/utils/pushDataLayer';
+import { initialSelectData } from '@/pages/FineBook/DetailFine';
 
 interface UserDetailsProps {
   open: boolean;
@@ -107,15 +108,7 @@ const UserDetails = ({ open, setOpen, select, setSelect }: UserDetailsProps) => 
 
   const closeUserDetails = () => {
     setOpen(false);
-    setSelect({
-      userId: 0,
-      eventId: 0,
-      groundsDate: '',
-      paymentType: 'non',
-      userName: '',
-      payment: 0,
-      grounds: '',
-    });
+    setSelect(initialSelectData);
   };
 
   useEffect(() => {

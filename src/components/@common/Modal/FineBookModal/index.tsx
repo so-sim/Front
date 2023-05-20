@@ -27,13 +27,12 @@ interface ModalProps {
 export const FineBookModal = ({ setOpen, eventId, select, setSelect }: ModalProps) => {
   const type = eventId ? 'update' : 'create';
   const isCreate = type === 'create';
-  const isUpdate = select !== undefined;
   const [member, setMember] = useState(select?.userName ?? '');
   const [status, setStatus] = useState<PaymentType>(select?.paymentType ? getStatusText(select?.paymentType) : '미납');
   const [reason, setReason] = useState(select?.grounds ?? '');
   const [fine, setFine] = useState(select?.payment ?? 0);
   const [groundsDate, setGroundsDate] = useState(dayjs(select?.groundsDate).format('YYYY.MM.DD'));
-  const [{ selectedDate, baseDate }, setDateState] = useRecoilState(dateState);
+  const [_, setDateState] = useRecoilState(dateState);
 
   const onChangeFine = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target;

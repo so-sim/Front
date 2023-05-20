@@ -11,6 +11,16 @@ import { dateFilterMode, DateFilterProperty, updateDateFilterByMode } from '@/ut
 
 export type FilterMode = 'month' | 'week' | 'day';
 
+export const initialSelectData: EventInfo = {
+  userId: 0,
+  eventId: 0,
+  groundsDate: '',
+  paymentType: 'non',
+  userName: '',
+  payment: 0,
+  grounds: '',
+};
+
 const DetailFine = () => {
   const param = useParams<{ groupId: string }>();
 
@@ -19,15 +29,7 @@ const DetailFine = () => {
   const [openAddModal, setOpenAddModal] = useState(location.state || false);
 
   const [openUserDetails, setOpenUserDetails] = useState(false);
-  const [select, setSelect] = useState<EventInfo>({
-    userId: 0,
-    eventId: 0,
-    groundsDate: '',
-    paymentType: 'non',
-    userName: '',
-    payment: 0,
-    grounds: '',
-  });
+  const [select, setSelect] = useState<EventInfo>(initialSelectData);
 
   const [page, setPage] = useState(0);
   const [mode, setMode] = useState<FilterMode>('day');

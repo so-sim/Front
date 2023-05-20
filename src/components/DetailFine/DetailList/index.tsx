@@ -21,7 +21,7 @@ const DetailList: FC<DetailListProps> = ({ dateFilter, mode, selectedEventId, de
   if (details.length === 0 && mode === 'day' && dateFilter.nickname === '' && dateFilter.paymentType === '') return <Style.NotFoundList>내역을 추가해주세요!</Style.NotFoundList>;
   if (details.length === 0) return <Style.NotFoundList>선택하신 조건에 맞는 벌금 내역이 없습니다.</Style.NotFoundList>;
 
-  const [openListEventId, setOpenListEventId] = useState(0);
+  const [openButtonListId, setOpenButtonListId] = useState(0);
 
   const handleUserDetailModal = (detail: EventInfo) => {
     setSelect(detail);
@@ -31,11 +31,11 @@ const DetailList: FC<DetailListProps> = ({ dateFilter, mode, selectedEventId, de
   return (
     <Style.DetailList>
       {details.map((detail, i) => {
-        const { groundsDate, userName, payment, grounds } = detail;
+        const { groundsDate, userName, payment, grounds, eventId } = detail;
         return (
-          <Style.TableRow key={i} isSelected={selectedEventId === detail.eventId} onClick={() => handleUserDetailModal(detail)}>
+          <Style.TableRow key={i} isSelected={selectedEventId === eventId} onClick={() => handleUserDetailModal(detail)}>
             <Style.Element hasEllipsis={false}>{groundsDate.slice(2)}</Style.Element>
-            <DropDownWrapper detail={detail} openListEventId={openListEventId} setOpenListEventId={setOpenListEventId} />
+            <DropDownWrapper isOpen={eventId === openButtonListId} detail={detail} setOpenButtonListId={setOpenButtonListId} />
             <Style.Element hasEllipsis>{userName}</Style.Element>
             <Style.Element hasEllipsis>{changeNumberToMoney(payment)}</Style.Element>
             <Style.Element hasEllipsis>{grounds}</Style.Element>

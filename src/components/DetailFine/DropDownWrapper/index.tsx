@@ -1,4 +1,4 @@
-import { Dispatch, MouseEvent, SetStateAction } from 'react';
+import { Dispatch, MouseEvent, SetStateAction, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 
@@ -12,36 +12,58 @@ import * as Style from './styles';
 
 interface DropDownWrapperProps {
   detail: RefactorPayType;
-  openListEventId: number;
-  setOpenListEventId: Dispatch<SetStateAction<number>>;
+  isOpen: boolean;
+  setOpenButtonListId: Dispatch<SetStateAction<number>>;
 }
 
-const DropDownWrapper = ({ detail, openListEventId, setOpenListEventId }: DropDownWrapperProps) => {
+const DropDownWrapper = ({ detail, isOpen, setOpenButtonListId }: DropDownWrapperProps) => {
   const { eventId, paymentType, userId } = detail;
-  const { groupId } = useParams();
-
-  const { data } = useGroupDetail(Number(groupId));
   const user = useRecoilValue(userState);
+  const { groupId } = useParams();
+  const { data } = useGroupDetail(Number(groupId));
 
-  const hasPermissionOfHover = data?.content.isAdmin || (!data?.content.isAdmin && userId === user.userId && detail.paymentType === 'non');
+  const [showCircleButtonList, setShowCircleButtonList] = useState(false);
+
+  const isOwn = userId === user.userId;
+
+  const hasPermissionOfHover =
+    data?.content.isAdmin || //
+    (!data?.content.isAdmin && isOwn && paymentType === 'non');
 
   const hasPermissionOfChangePaymentType =
-    (data?.content.isAdmin && openListEventId === eventId) || (!data?.content.isAdmin && userId === user.userId && detail.paymentType === 'non' && openListEventId === eventId);
+    showCircleButtonList &&
+    isOpen && //
+    (data?.content.isAdmin || //
+      (!data?.content.isAdmin && isOwn && paymentType === 'non'));
 
   const handleCircleDropButton = (e: MouseEvent) => {
     if (hasPermissionOfHover) {
-      setOpenListEventId(eventId);
+      setShowCircleButtonList(true);
+      setOpenButtonListId(eventId);
       e.stopPropagation();
     }
   };
+
+  const cancelUpdateStatus = () => {
+    setShowCircleButtonList(false);
+  };
+
+  // 왜 다른 곳 클릭하면 잘 닫히는데, 다른 엘리먼트의 같은 요소를 클릭하면 작동이 안 되는 거지??
+  // isOpen을 제거할 수 없음..
+  useEffect(() => {
+    window.addEventListener('click', cancelUpdateStatus);
+    return () => {
+      window.removeEventListener('click', cancelUpdateStatus);
+    };
+  }, []);
 
   return (
     <Style.DropDownWrapper isValid={hasPermissionOfHover} onClick={handleCircleDropButton}>
       {hasPermissionOfChangePaymentType ? (
         <CircleButtonList
-          isOwn={user.userId === userId}
+          setShowCircleButtonList={setShowCircleButtonList}
+          isOwn={isOwn}
           isAdmin={data?.content.isAdmin || false}
-          setOpenListEventId={setOpenListEventId}
           status={paymentType}
           statusList={STATUS_LIST}
           eventId={eventId}
