@@ -2,6 +2,9 @@
 module.exports = {
   preset: 'ts-jest',
   testEnvironment: 'jsdom',
+  testEnvironmentOptions: {
+    url: 'http://localhost:3090',
+  },
   setupFilesAfterEnv: ['<rootDir>/setupTest.ts'],
   transform: {
     '^.+\\.(ts|tsx|js|jsx)$': 'ts-jest',
