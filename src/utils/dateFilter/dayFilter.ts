@@ -1,4 +1,3 @@
-import { FilterMode } from '@/pages/FineBook/DetailFine';
 import { DateState } from '@/store/dateState';
 import dayjs, { Dayjs } from 'dayjs';
 import { DateFilterProperty } from './dateFilter';
@@ -17,36 +16,22 @@ export class DayFilter extends RootDateFilter {
 
   update = ({ day, week, ...rest }: DateFilterProperty, calendar: DateState) => {
     const [year, month, date] = dayjs(calendar.baseDate).format('YYYY.MM.DD').split('.').map(Number);
-
     return { ...rest, year, month, day: date, page: 0 };
   };
 
   increaseDate = (baseDate: Dayjs) => {
     const changedDate = this.changeMode(dayjs(baseDate).add(1, 'day'), 'day');
-
-    return {
-      baseDate: changedDate,
-      selectedDate: changedDate,
-      week: null,
-    };
+    return this.changedDate(changedDate);
   };
 
   decreaseDate = (baseDate: Dayjs) => {
     const changedDate = this.changeMode(dayjs(baseDate).subtract(1, 'day'), 'day');
-
-    return {
-      baseDate: changedDate,
-      selectedDate: changedDate,
-      week: null,
-    };
+    return this.changedDate(changedDate);
   };
 
-  changeDateMode = (baseDate: Dayjs, newMode: FilterMode) => {
-    const changedDate = this.changeMode(baseDate, newMode);
-    return {
-      baseDate: changedDate,
-      selectedDate: changedDate,
-      week: null,
-    };
-  };
+  protected changedDate = (changedDate: Dayjs): DateState => ({
+    baseDate: changedDate,
+    selectedDate: changedDate,
+    week: null,
+  });
 }

@@ -1,4 +1,3 @@
-import { FilterMode } from '@/pages/FineBook/DetailFine';
 import { DateState } from '@/store/dateState';
 import dayjs, { Dayjs } from 'dayjs';
 import { DateFilterProperty } from './dateFilter';
@@ -41,29 +40,18 @@ export class WeekFilter extends RootDateFilter {
   increaseDate = (baseDate: Dayjs) => {
     const changedDate = this.changeMode(dayjs(baseDate).startOf('week').add(1, 'week'), 'week');
 
-    return {
-      baseDate: changedDate,
-      week: Math.ceil((changedDate.startOf('month').day() + changedDate.date()) / 7),
-      selectedDate: null,
-    };
+    return this.changedDate(changedDate);
   };
 
   decreaseDate = (baseDate: Dayjs) => {
     const changedDate = this.changeMode(dayjs(baseDate).startOf('week').subtract(1, 'week'), 'week');
 
-    return {
-      baseDate: changedDate,
-      week: Math.ceil((changedDate.startOf('month').day() + changedDate.date()) / 7),
-      selectedDate: null,
-    };
+    return this.changedDate(changedDate);
   };
 
-  changeDateMode = (baseDate: Dayjs, newMode: FilterMode) => {
-    const changedDate = this.changeMode(baseDate, newMode);
-    return {
-      baseDate: changedDate,
-      week: Math.ceil((changedDate.startOf('month').day() + changedDate.date()) / 7),
-      selectedDate: null,
-    };
-  };
+  protected changedDate = (changedDate: Dayjs): DateState => ({
+    baseDate: changedDate,
+    week: Math.ceil((changedDate.startOf('month').day() + changedDate.date()) / 7),
+    selectedDate: null,
+  });
 }

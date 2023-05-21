@@ -1,9 +1,25 @@
 import { FilterMode } from '@/pages/FineBook/DetailFine';
 import { DateState } from '@/store/dateState';
 import dayjs, { Dayjs } from 'dayjs';
-import { DateFilterProperty, DetailFilter } from './dateFilter';
+import { DateFilterProperty } from './dateFilter';
 
+export interface DetailFilter {
+  getTitle: (baseDate: Dayjs) => string;
+  update: (prev: DateFilterProperty, calendar: DateState) => DateFilterProperty;
+  increaseDate: (baseDate: Dayjs) => DateState;
+  decreaseDate: (baseDate: Dayjs) => DateState;
+}
 export class RootDateFilter implements DetailFilter {
+  changeDateMode = (baseDate: Dayjs, mode: FilterMode) => {
+    const changedDate: Dayjs = this.changeMode(baseDate, mode);
+
+    return {
+      baseDate: changedDate,
+      week: mode === 'week' ? Math.ceil((changedDate.startOf('month').day() + changedDate.date()) / 7) : null,
+      selectedDate: mode === 'day' ? changedDate : null,
+    };
+  };
+
   protected changeMode = (baseDate: Dayjs, mode: FilterMode): Dayjs => {
     const startDayOfMonth = dayjs(baseDate).startOf('month');
 
@@ -31,5 +47,5 @@ export class RootDateFilter implements DetailFilter {
   update = (prev: DateFilterProperty, calendar: DateState) => ({});
   increaseDate = (baseDate: Dayjs): DateState => ({ baseDate, selectedDate: null, week: null });
   decreaseDate = (baseDate: Dayjs): DateState => ({ baseDate, selectedDate: null, week: null });
-  changeDateMode = (baseDate: Dayjs, newMode: FilterMode): DateState => ({ baseDate, selectedDate: null, week: null });
+  protected changedDate = (changedDate: Dayjs): DateState => ({ baseDate: changedDate, selectedDate: null, week: null });
 }
