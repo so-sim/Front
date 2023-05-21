@@ -1,4 +1,4 @@
-import { EventInfo, EvnetId, EventInfoList, MonthStatus } from '@/types/event';
+import { EvnetId, EventInfoList, MonthStatus, EventInfo } from '@/types/event';
 import { GroupId } from '@/types/group';
 import { ServerResponse } from '@/types/serverResponse';
 import api from '..';

@@ -1,5 +1,5 @@
 import { changeNumberToMoney } from '@/utils/changeNumberToMoney';
-import React, { Dispatch, SetStateAction, useEffect, useState } from 'react';
+import React, { Dispatch, SetStateAction, useState } from 'react';
 import Button from '@/components/@common/Button';
 import Modal from '@/components/@common/Modal';
 import { DropBox, Label } from '@/components/@common';
@@ -8,7 +8,7 @@ import { SYSTEM } from '@/assets/icons/System';
 import { useParticipantList } from '@/queries/Group';
 import { useCreateDetail, useUpdateDetail } from '@/queries/Detail';
 import { useNavigate, useParams } from 'react-router-dom';
-import { EventInfo, PaymentType } from '@/types/event';
+import { ClientEventInfo, PaymentType } from '@/types/event';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { userState } from '@/store/userState';
 import { CalendarDropBox } from '@/components/@common/DropBox/CalendarDropBox';
@@ -20,8 +20,8 @@ import { pushDataLayer } from '@/utils/pushDataLayer';
 interface ModalProps {
   setOpen: Dispatch<SetStateAction<boolean>>;
   eventId?: number;
-  select?: EventInfo;
-  setSelect?: Dispatch<SetStateAction<EventInfo>>;
+  select?: ClientEventInfo;
+  setSelect?: Dispatch<SetStateAction<ClientEventInfo>>;
 }
 
 export const FineBookModal = ({ setOpen, eventId, select, setSelect }: ModalProps) => {
@@ -64,6 +64,7 @@ export const FineBookModal = ({ setOpen, eventId, select, setSelect }: ModalProp
 
   const createDetail = (type: 'continue' | 'save') => {
     if (user.userId === null) return;
+    if (status === '') return;
     create(
       {
         groupId: Number(groupId),

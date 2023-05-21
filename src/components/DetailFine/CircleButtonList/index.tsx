@@ -2,7 +2,7 @@ import { TwoButtonModal } from '@/components/@common/Modal/TwoButtonModal';
 import { useUpdateDetailStatus } from '@/queries/Detail/useUpdateDetailStatus';
 import { ServerPaymentType } from '@/types/event';
 import { pushDataLayerByStatus } from '@/utils/pushDataLayer';
-import { Dispatch, SetStateAction, useEffect, useState } from 'react';
+import { Dispatch, SetStateAction, useState } from 'react';
 import CircleDropButton, { CircleDropButtonProps } from '../CircleDropButton';
 import * as Style from './styles';
 

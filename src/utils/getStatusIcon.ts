@@ -25,7 +25,7 @@ export const getStatusText = (status: PaymentType) => {
   }
 };
 
-export const getStatusCode = (status: PaymentType) => {
+export const getStatusCode = (status: Exclude<PaymentType, ''>): ServerPaymentType => {
   switch (status) {
     case '미납':
       return 'non';

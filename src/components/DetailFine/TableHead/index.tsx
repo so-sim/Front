@@ -45,7 +45,7 @@ const TableHead = ({ setDateFilter, setPage }: Props) => {
     setDateFilter((prev) => ({
       ...prev,
       page: 0,
-      paymentType: paymentType === '전체' ? '' : getStatusCode(paymentType),
+      paymentType: paymentType === '전체' ? '' : paymentType !== '' ? getStatusCode(paymentType) : '',
       nickname: member === '전체' ? '' : member,
     }));
   }, [member, paymentType]);

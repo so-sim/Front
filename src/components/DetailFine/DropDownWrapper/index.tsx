@@ -7,11 +7,11 @@ import { useGroupDetail } from '@/queries/Group';
 import { userState } from '@/store/userState';
 
 import { STATUS_LIST } from '@/constants/Detail';
-import { RefactorPayType } from '../DetailList';
 import * as Style from './styles';
+import { EventInfo } from '@/types/event';
 
 interface DropDownWrapperProps {
-  detail: RefactorPayType;
+  detail: EventInfo;
   isOpen: boolean;
   setOpenButtonListId: Dispatch<SetStateAction<number>>;
 }

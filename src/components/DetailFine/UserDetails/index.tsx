@@ -3,7 +3,7 @@ import { SYSTEM } from '@/assets/icons/System';
 import { USER } from '@/assets/icons/User';
 import { Label, DropBox, Button } from '@/components/@common';
 import * as Style from './styles';
-import { EventInfo, PaymentType } from '@/types/event';
+import { ClientEventInfo, PaymentType } from '@/types/event';
 import { changeNumberToMoney } from '@/utils/changeNumberToMoney';
 import { getStatusCode, getStatusText } from '@/utils/getStatusIcon';
 import { useDeleteDetail, useUpdateDetailStatus } from '@/queries/Detail';
@@ -19,8 +19,8 @@ import { initialSelectData } from '@/pages/FineBook/DetailFine';
 type Props = {
   open: boolean;
   setOpen: Dispatch<SetStateAction<boolean>>;
-  select: EventInfo;
-  setSelect: Dispatch<SetStateAction<EventInfo>>;
+  select: ClientEventInfo;
+  setSelect: Dispatch<SetStateAction<ClientEventInfo>>;
 };
 
 const UserDetails = ({ open, setOpen, select, setSelect }: Props) => {
@@ -45,6 +45,7 @@ const UserDetails = ({ open, setOpen, select, setSelect }: Props) => {
   const { mutate: deleteDetail } = useDeleteDetail();
 
   const updateStatus = () => {
+    if (newStatus === '') return;
     if (getStatusCode(newStatus) !== paymentType) {
       update(
         { paymentType: getStatusCode(newStatus), eventId },
@@ -191,7 +192,7 @@ const UserDetails = ({ open, setOpen, select, setSelect }: Props) => {
       </Style.UserDetailsFrame>
       {openUpdateStatusModal && (
         <TwoButtonModal
-          id={getStatusCode(newStatus) === 'full' ? 'fullpayment_side_modal' : ''}
+          id={newStatus !== '' && getStatusCode(newStatus) === 'full' ? 'fullpayment_side_modal' : ''}
           onClick={cancelUpdateStatus}
           title="납부여부 변경"
           height="215px"

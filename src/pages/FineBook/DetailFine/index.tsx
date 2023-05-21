@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useGetDetailList } from '@/queries/Detail/useGetDetailList';
-import { EventInfo } from '@/types/event';
+import { ClientEventInfo, EventInfo } from '@/types/event';
 import { DateController, DetailList, DetailsHeader, Pagination, TableHead, UserDetails } from '@/components/DetailFine';
 import { FineBookModal } from '@/components/@common/Modal/FineBookModal';
 import * as Style from './styles';
@@ -29,7 +29,7 @@ const DetailFine = () => {
   const [openAddModal, setOpenAddModal] = useState(location.state || false);
 
   const [openUserDetails, setOpenUserDetails] = useState(false);
-  const [select, setSelect] = useState<EventInfo>(initialSelectData);
+  const [select, setSelect] = useState<ClientEventInfo>(initialSelectData);
 
   const [page, setPage] = useState(0);
   const [mode, setMode] = useState<FilterMode>('day');

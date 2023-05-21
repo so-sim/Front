@@ -1,18 +1,17 @@
 import { DateFilterProperty } from '@/utils/dateFilter/dateFilter';
-import { EventInfo, ServerPaymentType } from '@/types/event';
+import { ClientEventInfo, EventInfo, ServerPaymentType } from '@/types/event';
 import { changeNumberToMoney } from '@/utils/changeNumberToMoney';
 import { Dispatch, FC, SetStateAction, useState } from 'react';
 import * as Style from './styles';
 import { FilterMode } from '@/pages/FineBook/DetailFine';
 import { DropDownWrapper } from '@/components/DetailFine';
 
-export type RefactorPayType = EventInfo & { paymentType: ServerPaymentType };
 type Props = {
   selectedEventId: number;
-  details?: RefactorPayType[];
+  details?: EventInfo[];
   mode: FilterMode;
   dateFilterProperty: DateFilterProperty;
-  setSelect: Dispatch<SetStateAction<EventInfo>>;
+  setSelect: Dispatch<SetStateAction<ClientEventInfo>>;
   setOpenUserDetails: Dispatch<SetStateAction<boolean>>;
 };
 
