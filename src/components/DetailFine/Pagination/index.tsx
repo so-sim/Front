@@ -2,13 +2,13 @@ import { Dispatch, FC, SetStateAction } from 'react';
 import { ARROW } from '@/assets/icons/Arrow';
 import * as Style from './styles';
 
-interface PaginationProps {
+type Props = {
   count?: number;
   page: number;
   setPage: Dispatch<SetStateAction<number>>;
-}
+};
 
-const Pagination: FC<PaginationProps> = ({ count = 0, page, setPage }) => {
+const Pagination = ({ count = 0, page, setPage }: Props) => {
   const pageCount = Math.ceil(count / 16 || 1);
 
   const increasePage = () => {

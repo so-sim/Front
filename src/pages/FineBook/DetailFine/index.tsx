@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useGetDetailList } from '@/queries/Detail/useGetDetailList';
 import { EventInfo } from '@/types/event';
 import { DateController, DetailList, DetailsHeader, Pagination, TableHead, UserDetails } from '@/components/DetailFine';
@@ -7,7 +7,7 @@ import * as Style from './styles';
 import { useRecoilValue } from 'recoil';
 import { dateState } from '@/store/dateState';
 import { useLocation, useParams } from 'react-router-dom';
-import { dateFilterMode, DateFilterProperty, updateDateFilterByMode } from '@/utils/dateFilter';
+import { DateFilter, decideMode, DateFilterProperty } from '@/utils/dateFilter/dateFilter';
 
 export type FilterMode = 'month' | 'week' | 'day';
 
@@ -33,15 +33,17 @@ const DetailFine = () => {
 
   const [page, setPage] = useState(0);
   const [mode, setMode] = useState<FilterMode>('day');
-  const [dateFilter, setDateFilter] = useState<DateFilterProperty>({ nickname: '', paymentType: '' });
+  const [dateFilterProperty, setDateFilter] = useState<DateFilterProperty>({ nickname: '', paymentType: '' });
 
   const calendarDate = useRecoilValue(dateState);
-  const { data } = useGetDetailList(dateFilter, calendarDate.baseDate, { groupId: Number(param.groupId) });
+  const { data } = useGetDetailList(dateFilterProperty, calendarDate.baseDate, { groupId: Number(param.groupId) });
+
+  const dateFilter = useMemo(() => new DateFilter(mode, calendarDate.week), [mode]);
 
   useEffect(() => {
     setPage(0);
-    setMode(() => dateFilterMode(calendarDate));
-    setDateFilter((prev) => updateDateFilterByMode(mode, prev, calendarDate));
+    setMode(() => decideMode(calendarDate));
+    setDateFilter((prev) => dateFilter.update(prev, calendarDate));
   }, [calendarDate.selectedDate, calendarDate.baseDate, calendarDate.week, mode]);
 
   useEffect(() => {
@@ -57,10 +59,10 @@ const DetailFine = () => {
       <Style.DetailFineFrame>
         <DetailsHeader />
         <Style.DetailContent>
-          <DateController mode={mode} setMode={setMode} setOpenAddModal={setOpenAddModal} dateFilter={dateFilter} setDateFilter={setDateFilter} />
+          <DateController mode={mode} setMode={setMode} setOpenAddModal={setOpenAddModal} />
           <TableHead setPage={setPage} setDateFilter={setDateFilter} />
           <DetailList
-            dateFilter={dateFilter}
+            dateFilterProperty={dateFilterProperty}
             mode={mode}
             selectedEventId={select.eventId}
             details={data?.content.list}

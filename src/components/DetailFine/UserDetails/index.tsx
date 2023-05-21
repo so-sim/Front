@@ -16,14 +16,14 @@ import { useParams } from 'react-router-dom';
 import { pushDataLayer } from '@/utils/pushDataLayer';
 import { initialSelectData } from '@/pages/FineBook/DetailFine';
 
-interface UserDetailsProps {
+type Props = {
   open: boolean;
   setOpen: Dispatch<SetStateAction<boolean>>;
   select: EventInfo;
   setSelect: Dispatch<SetStateAction<EventInfo>>;
-}
+};
 
-const UserDetails = ({ open, setOpen, select, setSelect }: UserDetailsProps) => {
+const UserDetails = ({ open, setOpen, select, setSelect }: Props) => {
   if (!open) return null;
   const { eventId, groundsDate, paymentType, userName, payment, grounds, userId } = select;
 

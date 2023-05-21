@@ -1,4 +1,4 @@
-import { DateFilterProperty } from '@/utils/dateFilter';
+import { DateFilterProperty } from '@/utils/dateFilter/dateFilter';
 import { EventInfo, ServerPaymentType } from '@/types/event';
 import { changeNumberToMoney } from '@/utils/changeNumberToMoney';
 import { Dispatch, FC, SetStateAction, useState } from 'react';
@@ -7,18 +7,19 @@ import { FilterMode } from '@/pages/FineBook/DetailFine';
 import { DropDownWrapper } from '@/components/DetailFine';
 
 export type RefactorPayType = EventInfo & { paymentType: ServerPaymentType };
-interface DetailListProps {
+type Props = {
   selectedEventId: number;
   details?: RefactorPayType[];
   mode: FilterMode;
-  dateFilter: DateFilterProperty;
+  dateFilterProperty: DateFilterProperty;
   setSelect: Dispatch<SetStateAction<EventInfo>>;
   setOpenUserDetails: Dispatch<SetStateAction<boolean>>;
-}
+};
 
-const DetailList: FC<DetailListProps> = ({ dateFilter, mode, selectedEventId, details, setSelect, setOpenUserDetails }) => {
+const DetailList = ({ dateFilterProperty, mode, selectedEventId, details, setSelect, setOpenUserDetails }: Props) => {
   if (details == null) return null;
-  if (details.length === 0 && mode === 'day' && dateFilter.nickname === '' && dateFilter.paymentType === '') return <Style.NotFoundList>내역을 추가해주세요!</Style.NotFoundList>;
+  if (details.length === 0 && mode === 'day' && dateFilterProperty.nickname === '' && dateFilterProperty.paymentType === '')
+    return <Style.NotFoundList>내역을 추가해주세요!</Style.NotFoundList>;
   if (details.length === 0) return <Style.NotFoundList>선택하신 조건에 맞는 벌금 내역이 없습니다.</Style.NotFoundList>;
 
   const [openButtonListId, setOpenButtonListId] = useState(0);

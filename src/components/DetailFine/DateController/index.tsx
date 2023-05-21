@@ -1,26 +1,30 @@
-import { Dispatch, FC, SetStateAction, useEffect, useRef, useState } from 'react';
+import { Dispatch, SetStateAction, useEffect, useMemo, useRef, useState } from 'react';
 import { ARROW } from '@/assets/icons/Arrow';
 import Button from '@/components/@common/Button';
 import * as Style from './styles';
 import { useRecoilState } from 'recoil';
 import { dateState } from '@/store/dateState';
 import dayjs from 'dayjs';
-import { DateFilterProperty, dateFilterTitle, updateCalendarByType } from '@/utils/dateFilter';
+import { DateFilter } from '@/utils/dateFilter/dateFilter';
 import { customedWeek } from '@/utils/customedWeek';
 import DropDown from '@/components/@common/DropDown';
 import { useGroupDetail } from '@/queries/Group';
 import { useParams } from 'react-router-dom';
 import { FilterMode } from '@/pages/FineBook/DetailFine';
 
-interface DateControllerProps {
+type Props = {
   mode: FilterMode;
   setMode: Dispatch<SetStateAction<FilterMode>>;
   setOpenAddModal: Dispatch<SetStateAction<boolean>>;
-  dateFilter: DateFilterProperty;
-  setDateFilter: Dispatch<SetStateAction<DateFilterProperty>>;
-}
+};
 
-const DateController: FC<DateControllerProps> = ({ mode, setMode, setOpenAddModal, setDateFilter }) => {
+const filterButtonList: { mode: FilterMode; text: string; id: string }[] = [
+  { mode: 'month', text: '월간', id: 'filter_month' },
+  { mode: 'week', text: '주간', id: 'filter_week_drop' },
+  { mode: 'day', text: '일간', id: 'filter_day' },
+];
+
+const DateController = ({ mode, setMode, setOpenAddModal }: Props) => {
   const { groupId } = useParams();
   const { data: groupData } = useGroupDetail(Number(groupId));
   const dropDownRef = useRef<HTMLDivElement>(null);
@@ -28,13 +32,21 @@ const DateController: FC<DateControllerProps> = ({ mode, setMode, setOpenAddModa
   const [{ baseDate, week }, setSelectedDate] = useRecoilState(dateState);
 
   const [openWeeklyFilterDrop, setOpenWeeklyFilterDrop] = useState(false);
-  const [selectedWeek, setSelectedWeek] = useState('0');
+  const [selectedWeek, setSelectedWeek] = useState('');
 
-  useEffect(() => {
-    if (week !== null) {
-      setSelectedWeek(`${week}주`);
-    }
-  }, []);
+  const handleWeeklyFilterDrop = () => {
+    setOpenWeeklyFilterDrop(false);
+  };
+
+  const dateFilter = useMemo(() => new DateFilter(mode, week), [mode]);
+
+  const increaseCalendarByMode = () => {
+    setSelectedDate(({ baseDate }) => dateFilter.increaseDate(baseDate));
+  };
+
+  const decreaseCalendarByMode = () => {
+    setSelectedDate(({ baseDate }) => dateFilter.decreaseDate(baseDate));
+  };
 
   useEffect(() => {
     if (mode === 'week') {
@@ -50,40 +62,24 @@ const DateController: FC<DateControllerProps> = ({ mode, setMode, setOpenAddModa
     }
   }, [selectedWeek]);
 
-  const increaseCalendarByMode = () => {
-    setSelectedDate((prev) => updateCalendarByType('increase', prev, mode));
-  };
-
-  const decreaseCalendarByMode = () => {
-    setSelectedDate((prev) => updateCalendarByType('decrease', prev, mode));
-  };
-
-  const filterButtonList: { mode: FilterMode; text: string; id: string }[] = [
-    { mode: 'month', text: '월간', id: 'filter_month' },
-    { mode: 'week', text: '주간', id: 'filter_week_drop' },
-    { mode: 'day', text: '일간', id: 'filter_day' },
-  ];
-
-  const handleWeeklyFilterDrop = () => {
-    setOpenWeeklyFilterDrop(false);
-  };
+  useEffect(() => {
+    if (week !== null) setSelectedWeek(`${week}주`);
+  }, []);
 
   useEffect(() => {
-    if (mode !== 'week') {
-      setOpenWeeklyFilterDrop(false);
-    }
+    if (mode !== 'week') setOpenWeeklyFilterDrop(false);
   }, [mode]);
 
   return (
     <Style.DateController>
       <Style.ControllerFrame>
         <Style.Block>
-          <Style.Date mode={mode}>{dateFilterTitle(baseDate, mode, week)}</Style.Date>
+          <Style.Date mode={mode}>{dateFilter.getTitle(baseDate)}</Style.Date>
           <Style.ArrowBlock id="list_skip">
-            <Style.ArrowWrapper onClick={decreaseCalendarByMode} id="list_skip_left">
+            <Style.ArrowWrapper onClick={decreaseCalendarByMode} id="list_skip_left" data-testid="list_skip_left">
               {ARROW.LEFT}
             </Style.ArrowWrapper>
-            <Style.ArrowWrapper onClick={increaseCalendarByMode} id="list_skip_right">
+            <Style.ArrowWrapper onClick={increaseCalendarByMode} id="list_skip_right" data-testid="list_skip_right">
               {ARROW.RIGHT}
             </Style.ArrowWrapper>
           </Style.ArrowBlock>
@@ -109,7 +105,7 @@ const DateController: FC<DateControllerProps> = ({ mode, setMode, setOpenAddModa
                     setOpenWeeklyFilterDrop((prev) => !prev);
                     if (mode === btn.mode) return;
                     setMode(btn.mode);
-                    setSelectedDate((prev) => updateCalendarByType('none', prev, btn.mode));
+                    setSelectedDate((prev) => dateFilter.changeDateMode(prev.baseDate, btn.mode));
                   }}
                 >
                   <span>{btn.text}</span>
