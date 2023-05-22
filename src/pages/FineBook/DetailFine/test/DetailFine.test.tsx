@@ -20,7 +20,7 @@ describe('DetailFine', () => {
     week: null,
   };
 
-  describe('날짜 필터링', () => {
+  describe('날짜 필터링, 날짜 변경으로 인해 상세 내역에 표시되는 날짜 테스트', () => {
     const onChange = jest.fn();
     let user: any;
 
@@ -120,4 +120,30 @@ describe('DetailFine', () => {
       expect(screen.getByText('07월 30일')).toBeInTheDocument();
     });
   });
+
+  //서버 코드 변경되면 적용 예정
+  // describe('상세 내역 리스트 필터링 테스트', () => {
+  //   const onChange = jest.fn();
+  //   let user: any;
+
+  //   beforeEach(() => {
+  //     user = userEvent.setup();
+
+  //     render(
+  //       withRouter(
+  //         <>
+  //           <RecoilObserver node={dateState} initValue={initRecoilDateState} onChange={onChange} />
+  //           <DetailFine />
+  //         </>,
+  //         '/group/17/book/detail?year=2023&month=7',
+  //       ),
+  //     );
+  //   });
+
+  //   it('', () => {
+  //     // Arrange
+  //     // Act
+  //     // Assert
+  //   });
+  // });
 });
