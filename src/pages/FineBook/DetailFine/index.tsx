@@ -7,7 +7,7 @@ import * as Style from './styles';
 import { useRecoilValue } from 'recoil';
 import { dateState } from '@/store/dateState';
 import { useLocation, useParams } from 'react-router-dom';
-import { DateFilter, decideMode, DateFilterProperty } from '@/utils/dateFilter/dateFilter';
+import { DateFilter, DateFilterProperty } from '@/utils/dateFilter/dateFilter';
 
 export type FilterMode = 'month' | 'week' | 'day';
 
@@ -42,7 +42,7 @@ const DetailFine = () => {
 
   useEffect(() => {
     setPage(0);
-    setMode(() => decideMode(calendarDate));
+    setMode(() => dateFilter.decideMode(calendarDate));
     setDateFilter((prev) => dateFilter.update(prev, calendarDate));
   }, [calendarDate.selectedDate, calendarDate.baseDate, calendarDate.week, mode]);
 

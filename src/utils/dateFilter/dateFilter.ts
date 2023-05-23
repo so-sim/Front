@@ -3,11 +3,9 @@ import { Dayjs } from 'dayjs';
 import { FilterMode } from '../../pages/FineBook/DetailFine';
 import { DayFilter } from './dayFilter';
 import { MonthFilter } from './monthFilter';
-import { DetailFilter, RootDateFilter } from './rootDateFilter';
+import { RootDateFilter } from './rootDateFilter';
 import { WeekFilter } from './weekFilter';
 
-// 다형성을 이용해보면 어떨까?
-// 각각은 mode에 의해서 분기처리되는데
 export interface DateFilterProperty {
   year?: number;
   month?: number;
@@ -18,7 +16,15 @@ export interface DateFilterProperty {
   page?: number;
 }
 
-const createFilter = (mode: FilterMode, week: number | null): DetailFilter => {
+interface IDateFilter {
+  getTitle: (baseDate: Dayjs) => string;
+  update: (prev: DateFilterProperty, calendar: DateState) => DateFilterProperty;
+  increaseDate: (baseDate: Dayjs) => DateState;
+  decreaseDate: (baseDate: Dayjs) => DateState;
+  updateDateStateByMode: (baseDate: Dayjs, mode: FilterMode) => DateState;
+}
+
+const createFilter = (mode: FilterMode, week: number | null): IDateFilter => {
   switch (mode) {
     case 'day':
       return new DayFilter();
@@ -29,16 +35,8 @@ const createFilter = (mode: FilterMode, week: number | null): DetailFilter => {
   }
 };
 
-// 데이터에 의해 모드를 판별하는 함수 -> decideMode
-export const decideMode = ({ selectedDate, week }: DateState): FilterMode => {
-  if (selectedDate !== null) return 'day';
-  if (week !== null) return 'week';
-  if (selectedDate === null && week === null) return 'month';
-  return 'day';
-};
-
 export class DateFilter extends RootDateFilter {
-  private root: DetailFilter;
+  private root: IDateFilter;
   constructor(private mode: FilterMode, private week: number | null) {
     super();
     this.root = createFilter(this.mode, this.week);
@@ -58,5 +56,12 @@ export class DateFilter extends RootDateFilter {
 
   decreaseDate = (baseDate: Dayjs) => {
     return this.root.decreaseDate(baseDate);
+  };
+
+  decideMode = ({ selectedDate, week }: DateState): FilterMode => {
+    if (selectedDate !== null) return 'day';
+    if (week !== null) return 'week';
+    if (selectedDate === null && week === null) return 'month';
+    return 'day';
   };
 }

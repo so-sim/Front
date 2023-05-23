@@ -1,17 +1,9 @@
 import { FilterMode } from '@/pages/FineBook/DetailFine';
-import { DateState } from '@/store/dateState';
 import dayjs, { Dayjs } from 'dayjs';
-import { DateFilterProperty } from './dateFilter';
 
-export interface DetailFilter {
-  getTitle: (baseDate: Dayjs) => string;
-  update: (prev: DateFilterProperty, calendar: DateState) => DateFilterProperty;
-  increaseDate: (baseDate: Dayjs) => DateState;
-  decreaseDate: (baseDate: Dayjs) => DateState;
-}
-export class RootDateFilter implements DetailFilter {
-  changeDateMode = (baseDate: Dayjs, mode: FilterMode) => {
-    const changedDate: Dayjs = this.changeMode(baseDate, mode);
+export class RootDateFilter {
+  updateDateStateByMode = (baseDate: Dayjs, mode: FilterMode) => {
+    const changedDate: Dayjs = this.setStartDayByMode(baseDate, mode);
 
     return {
       baseDate: changedDate,
@@ -20,7 +12,8 @@ export class RootDateFilter implements DetailFilter {
     };
   };
 
-  protected changeMode = (baseDate: Dayjs, mode: FilterMode): Dayjs => {
+  // --- 내부적으로 서브클래스에서 사용하는 아이들 ---
+  protected setStartDayByMode = (baseDate: Dayjs, mode: FilterMode): Dayjs => {
     const startDayOfMonth = dayjs(baseDate).startOf('month');
 
     switch (mode) {
@@ -42,10 +35,4 @@ export class RootDateFilter implements DetailFilter {
   protected padStart = (number: number): string => {
     return String(number).padStart(2, '0');
   };
-
-  getTitle = (baseDate: Dayjs) => '';
-  update = (prev: DateFilterProperty, calendar: DateState) => ({});
-  increaseDate = (baseDate: Dayjs): DateState => ({ baseDate, selectedDate: null, week: null });
-  decreaseDate = (baseDate: Dayjs): DateState => ({ baseDate, selectedDate: null, week: null });
-  protected changedDate = (changedDate: Dayjs): DateState => ({ baseDate: changedDate, selectedDate: null, week: null });
 }

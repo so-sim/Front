@@ -38,18 +38,18 @@ export class WeekFilter extends RootDateFilter {
   };
 
   increaseDate = (baseDate: Dayjs) => {
-    const changedDate = this.changeMode(dayjs(baseDate).startOf('week').add(1, 'week'), 'week');
+    const changedDate = this.setStartDayByMode(dayjs(baseDate).startOf('week').add(1, 'week'), 'week');
 
-    return this.changedDate(changedDate);
+    return this.getChangedDateState(changedDate);
   };
 
   decreaseDate = (baseDate: Dayjs) => {
-    const changedDate = this.changeMode(dayjs(baseDate).startOf('week').subtract(1, 'week'), 'week');
+    const changedDate = this.setStartDayByMode(dayjs(baseDate).startOf('week').subtract(1, 'week'), 'week');
 
-    return this.changedDate(changedDate);
+    return this.getChangedDateState(changedDate);
   };
 
-  protected changedDate = (changedDate: Dayjs): DateState => ({
+  protected getChangedDateState = (changedDate: Dayjs): DateState => ({
     baseDate: changedDate,
     week: Math.ceil((changedDate.startOf('month').day() + changedDate.date()) / 7),
     selectedDate: null,

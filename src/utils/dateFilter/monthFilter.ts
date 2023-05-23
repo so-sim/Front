@@ -20,18 +20,18 @@ export class MonthFilter extends RootDateFilter {
   };
 
   increaseDate = (baseDate: Dayjs) => {
-    const changedDate = this.changeMode(dayjs(baseDate).add(1, 'month'), 'month');
+    const changedDate = this.setStartDayByMode(dayjs(baseDate).add(1, 'month'), 'month');
 
-    return this.changedDate(changedDate);
+    return this.getChangedDateState(changedDate);
   };
 
   decreaseDate = (baseDate: Dayjs) => {
-    const changedDate = this.changeMode(dayjs(baseDate).subtract(1, 'month'), 'month');
+    const changedDate = this.setStartDayByMode(dayjs(baseDate).subtract(1, 'month'), 'month');
 
-    return this.changedDate(changedDate);
+    return this.getChangedDateState(changedDate);
   };
 
-  protected changedDate = (changedDate: Dayjs): DateState => ({
+  protected getChangedDateState = (changedDate: Dayjs): DateState => ({
     baseDate: changedDate,
     week: null,
     selectedDate: null,

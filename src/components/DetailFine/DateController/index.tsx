@@ -105,7 +105,7 @@ const DateController = ({ mode, setMode, setOpenAddModal }: Props) => {
                     setOpenWeeklyFilterDrop((prev) => !prev);
                     if (mode === btn.mode) return;
                     setMode(btn.mode);
-                    setSelectedDate((prev) => dateFilter.changeDateMode(prev.baseDate, btn.mode));
+                    setSelectedDate((prev) => dateFilter.updateDateStateByMode(prev.baseDate, btn.mode));
                   }}
                 >
                   <span>{btn.text}</span>

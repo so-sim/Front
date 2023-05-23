@@ -38,7 +38,7 @@ describe('updateCalendarByType', () => {
     const dateFilter = new DateFilter(mode, null);
 
     expect(dateFilter.decreaseDate(dateState.baseDate).baseDate.month() + 1).toBe(3);
-    expect(dateFilter.changeDateMode(dateState.baseDate, 'month').baseDate.month() + 1).toBe(4);
+    expect(dateFilter.updateDateStateByMode(dateState.baseDate, 'month').baseDate.month() + 1).toBe(4);
     expect(dateFilter.increaseDate(dateState.baseDate).baseDate.month() + 1).toBe(5);
   });
 
@@ -48,7 +48,7 @@ describe('updateCalendarByType', () => {
       const mode: FilterMode = 'month';
       const dateFilter = new DateFilter(mode, null);
 
-      expect(dateFilter.changeDateMode(dateState.baseDate, 'week').week).toBe(1);
+      expect(dateFilter.updateDateStateByMode(dateState.baseDate, 'week').week).toBe(1);
     });
 
     it('filter가 week일 때 증가/감소', () => {
@@ -67,7 +67,7 @@ describe('updateCalendarByType', () => {
       const dateState = { baseDate: dayjs('2023.04.01'), selectedDate: null, week: null };
       const mode: FilterMode = 'week';
       const dateFilter = new DateFilter(mode, null);
-      const changedDateState = dateFilter.changeDateMode(dateState.baseDate, 'day');
+      const changedDateState = dateFilter.updateDateStateByMode(dateState.baseDate, 'day');
 
       expect(changedDateState.week).toBe(null);
       expect(changedDateState.baseDate.month() === changedDateState.selectedDate?.month()).toBe(true);
