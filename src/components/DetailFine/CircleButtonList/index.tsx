@@ -16,7 +16,13 @@ interface CircleButtonListProps extends CircleDropButtonProps {
 
 // ga 트리거 id 얻기 위한 함수는 컴포넌트 일관적으로 상단에 위치시키는 거 어떤가요
 const getGATrigger = (newStatus: ServerPaymentType): string => {
-  return newStatus === 'con' ? 'confirming_list_modal' : newStatus === 'full' ? 'fullpayment_list_modal' : '';
+  const id = {
+    con: 'confirming_list_modal',
+    full: 'fullpayment_list_modal',
+    non: '',
+  };
+
+  return id[newStatus];
 };
 
 const CircleButtonList = ({ setShowCircleButtonList, isOwn, status, statusList, eventId, isAdmin }: CircleButtonListProps) => {
