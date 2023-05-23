@@ -1,4 +1,3 @@
-import React from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 import { InvitationModal } from '.';
 
@@ -13,4 +12,5 @@ export const InvitationModalComponent = Template.bind({});
 
 InvitationModalComponent.args = {
   onClick: () => undefined,
+  groupName: '테스트입니다',
 };

@@ -3,7 +3,7 @@ import { ComponentStory, ComponentMeta } from '@storybook/react';
 import { AdminModal } from '.';
 
 export default {
-  title: 'Component/Modal/AdminModal',
+  title: 'Component/Modal/GroupSetting',
   component: AdminModal,
 } as ComponentMeta<typeof AdminModal>;
 
