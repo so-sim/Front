@@ -61,7 +61,7 @@ const WithdrawalReason = () => {
           description={WITHDRAWAL_MODAL.FINAL.desc}
           cancel={{ text: '취소', onClick: handleWithdrawModal }}
           confirm={{ text: '회원 탈퇴', onClick: onClickWithdrawal }}
-          onClick={handleWithdrawModal}
+          modalHandler={handleWithdrawModal}
         />
       )}
     </>

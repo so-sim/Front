@@ -88,7 +88,7 @@ const CircleButtonList = ({ setShowCircleButtonList, isOwn, status, statusList, 
       {showUpdateStatusModal && (
         <TwoButtonModal
           id={getGATrigger(newStatus)}
-          onClick={cancelUpdateStatus}
+          modalHandler={cancelUpdateStatus}
           height="215px"
           title="납부여부 변경"
           description="납부여부를 변경하시겠습니까?"

@@ -2,7 +2,7 @@ import * as Style from './styles';
 import { FC, useEffect, useState } from 'react';
 import Button from '@/components/@common/Button';
 import Modal from '@/components/@common/Modal';
-import { GroupColorList } from '../GroupColorList';
+import { GroupColorList } from '../../GroupColorList';
 import { Input, Label, DropBox } from '@/components/@common';
 import { checkCountChar, useError } from '@/utils/validation';
 import { COLORS, DROPDOWN_LIST, PLACEHOLDER } from '@/constants/Group';
@@ -67,7 +67,7 @@ export const CreateGroupModal: FC<ModalHandlerProps> = ({ modalHandler, id }) =>
           </Label>
         </Style.DropDownContainer>
         <Label title="커버 색상" margin="0px">
-          <GroupColorList value={coverColor} onChange={setCoverColor} />
+          <GroupColorList selectedColor={coverColor} onChange={setCoverColor} />
         </Label>
       </Modal.Body>
       <Modal.Footer>

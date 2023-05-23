@@ -3,7 +3,7 @@ import { Input, Label } from '@/components/@common';
 import Button from '@/components/@common/Button';
 import Modal from '@/components/@common/Modal';
 import { checkCountChar, useError } from '@/utils/validation';
-import { GroupColorList } from '../../GroupColorList';
+import { GroupColorList } from '../../../GroupColorList';
 import { DropBox } from '@/components/@common';
 import * as Style from './styles';
 import { COLORS, DROPDOWN_LIST } from '@/constants/Group';
@@ -100,7 +100,7 @@ export const AdminModal: FC<ModalHandlerProps> = ({ modalHandler }) => {
                   <DropBox dropDownList={DROPDOWN_LIST} type={type} setType={setType} boxWidth="170px" />
                 </Label>
                 <Label title="커버 색상" flexDirection="column" margin="0px">
-                  <GroupColorList value={coverColor} onChange={setCoverColor} />
+                  <GroupColorList selectedColor={coverColor} onChange={setCoverColor} />
                 </Label>
               </div>
               <div>
@@ -132,7 +132,7 @@ export const AdminModal: FC<ModalHandlerProps> = ({ modalHandler }) => {
         <OneButtonModal
           width="448px"
           height="265px"
-          onClick={handleGroupWithdrawalModal}
+          modalHandler={handleGroupWithdrawalModal}
           title={GROUP_WITHDRWWAL_ADMIN.HAS_USER.title}
           description={GROUP_WITHDRWWAL_ADMIN.HAS_USER.desc}
           confirm={{ text: '확인', onClick: handleGroupWithdrawalModal }}
@@ -142,7 +142,7 @@ export const AdminModal: FC<ModalHandlerProps> = ({ modalHandler }) => {
         <TwoButtonModal
           width="448px"
           height="265px"
-          onClick={handleGroupWithdrawalModal}
+          modalHandler={handleGroupWithdrawalModal}
           title={GROUP_WITHDRWWAL_ADMIN.NO_USER.title}
           description={GROUP_WITHDRWWAL_ADMIN.NO_USER.desc}
           cancel={{ text: '취소', onClick: handleGroupWithdrawalModal }}
@@ -153,7 +153,7 @@ export const AdminModal: FC<ModalHandlerProps> = ({ modalHandler }) => {
         <TwoButtonModal
           width="448px"
           height="265px"
-          onClick={handleGroupDeleteModal}
+          modalHandler={handleGroupDeleteModal}
           title={GROUP_DELETE.NO_USER.title}
           description={GROUP_DELETE.NO_USER.desc}
           cancel={{ text: '취소', onClick: handleGroupDeleteModal }}
@@ -164,7 +164,7 @@ export const AdminModal: FC<ModalHandlerProps> = ({ modalHandler }) => {
         <OneButtonModal
           width="448px"
           height="240px"
-          onClick={handleGroupDeleteModal}
+          modalHandler={handleGroupDeleteModal}
           title={GROUP_DELETE.HAS_USER.title}
           description={GROUP_DELETE.HAS_USER.desc}
           confirm={{ text: '확인', onClick: handleGroupDeleteModal }}
