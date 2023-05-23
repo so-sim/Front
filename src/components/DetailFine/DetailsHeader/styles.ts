@@ -16,7 +16,7 @@ export const DetailsHeader = styled.div`
   }
 `;
 
-export const BackArrowIcon = styled.span`
+export const BackArrowIcon = styled.button`
   height: 24px;
   margin-right: 4px;
   cursor: pointer;

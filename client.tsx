@@ -4,7 +4,7 @@ import App from './src/App';
 window.React = React;
 
 // if (process.env.NODE_ENV === 'development') {
-//   const { worker } = require('./mocks/browser');
+//   const { worker } = require('./src/mocks/browser');
 //   worker.start();
 // }
 

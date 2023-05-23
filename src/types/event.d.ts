@@ -1,4 +1,4 @@
-type ServerPaymentType = 'non' | 'con' | 'full';
+export type ServerPaymentType = 'non' | 'con' | 'full';
 
 export type PaymentType = '미납' | '확인필요' | '확인요청' | '확인중' | '완납' | '' | ServerPaymentType;
 
@@ -7,8 +7,7 @@ export interface PayMentTpyeCountMap {
   non?: number;
   full?: number;
 }
-
-export interface EventInfo {
+export interface ClientEventInfo {
   eventId: number;
   userId: number;
   payment: number;
@@ -16,6 +15,9 @@ export interface EventInfo {
   groundsDate: string;
   grounds: string;
   paymentType: PaymentType;
+}
+export interface EventInfo extends ClientEventInfo {
+  paymentType: ServerPaymentType;
 }
 
 export interface EventInfoList {

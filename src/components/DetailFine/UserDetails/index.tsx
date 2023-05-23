@@ -1,29 +1,29 @@
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { SYSTEM } from '@/assets/icons/System';
 import { USER } from '@/assets/icons/User';
-import Button from '@/components/@common/Button';
-import { Label, DropBox } from '@/components/@common';
+import { Label, DropBox, Button } from '@/components/@common';
 import * as Style from './styles';
-import { EventInfo, PaymentType } from '@/types/event';
-import { FineBookModal } from '@/components/@common/Modal/FineBookModal';
+import { ClientEventInfo, PaymentType } from '@/types/event';
 import { changeNumberToMoney } from '@/utils/changeNumberToMoney';
 import { getStatusCode, getStatusText } from '@/utils/getStatusIcon';
 import { useDeleteDetail, useUpdateDetailStatus } from '@/queries/Detail';
+import { FineBookModal } from '@/components/@common/Modal/FineBookModal';
 import { TwoButtonModal } from '@/components/@common/Modal/TwoButtonModal';
 import { useRecoilValue } from 'recoil';
 import { userState } from '@/store/userState';
 import { useGroupDetail } from '@/queries/Group';
 import { useParams } from 'react-router-dom';
 import { pushDataLayer } from '@/utils/pushDataLayer';
+import { initialSelectData } from '@/pages/FineBook/DetailFine';
 
-interface UserDetailsProps {
+type Props = {
   open: boolean;
   setOpen: Dispatch<SetStateAction<boolean>>;
-  select: EventInfo;
-  setSelect: Dispatch<SetStateAction<EventInfo>>;
-}
+  select: ClientEventInfo;
+  setSelect: Dispatch<SetStateAction<ClientEventInfo>>;
+};
 
-const UserDetails = ({ open, setOpen, select, setSelect }: UserDetailsProps) => {
+const UserDetails = ({ open, setOpen, select, setSelect }: Props) => {
   if (!open) return null;
   const { eventId, groundsDate, paymentType, userName, payment, grounds, userId } = select;
 
@@ -45,6 +45,7 @@ const UserDetails = ({ open, setOpen, select, setSelect }: UserDetailsProps) => 
   const { mutate: deleteDetail } = useDeleteDetail();
 
   const updateStatus = () => {
+    if (newStatus === '') return;
     if (getStatusCode(newStatus) !== paymentType) {
       update(
         { paymentType: getStatusCode(newStatus), eventId },
@@ -108,15 +109,7 @@ const UserDetails = ({ open, setOpen, select, setSelect }: UserDetailsProps) => 
 
   const closeUserDetails = () => {
     setOpen(false);
-    setSelect({
-      userId: 0,
-      eventId: 0,
-      groundsDate: '',
-      paymentType: 'non',
-      userName: '',
-      payment: 0,
-      grounds: '',
-    });
+    setSelect(initialSelectData);
   };
 
   useEffect(() => {
@@ -128,19 +121,15 @@ const UserDetails = ({ open, setOpen, select, setSelect }: UserDetailsProps) => 
   const dropdownStatusList = () => {
     if (data?.content.isAdmin) {
       return statusList.filter((status) => {
-        if (newStatus) {
-          return status.title !== newStatus && status.title !== '확인필요';
+        if (newStatus && status.title !== '확인필요') {
+          return status.title !== newStatus;
         } else {
-          return status.title !== getStatusText(paymentType) && status.title !== '확인필요';
+          return status.title !== getStatusText(paymentType);
         }
       });
     }
     if (user.userId === userId) {
-      return statusList.filter((status) => {
-        if (paymentType === 'non') {
-          return status.title === '확인필요';
-        }
-      });
+      return statusList.filter((status) => paymentType === 'non' && status.title === '확인필요');
     }
     return [];
   };
@@ -203,7 +192,7 @@ const UserDetails = ({ open, setOpen, select, setSelect }: UserDetailsProps) => 
       </Style.UserDetailsFrame>
       {openUpdateStatusModal && (
         <TwoButtonModal
-          id={getStatusCode(newStatus) === 'full' ? 'fullpayment_side_modal' : ''}
+          id={newStatus !== '' && getStatusCode(newStatus) === 'full' ? 'fullpayment_side_modal' : ''}
           onClick={cancelUpdateStatus}
           title="납부여부 변경"
           height="215px"

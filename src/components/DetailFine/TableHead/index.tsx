@@ -1,21 +1,21 @@
-import React, { Dispatch, FC, SetStateAction, useEffect, useRef, useState } from 'react';
+import { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react';
 import { ARROW } from '@/assets/icons/Arrow';
 import * as Style from './styles';
-import { DateFilterProperty } from '@/utils/dateFilter';
+import { DateFilterProperty } from '@/utils/dateFilter/dateFilter';
 import { useParticipantList } from '@/queries/Group';
 import { useParams } from 'react-router-dom';
 import DropDown from '@/components/@common/DropDown';
 import { getStatusCode } from '@/utils/getStatusIcon';
 import { PaymentType } from '@/types/event';
 
-interface TableHeadProps {
+type Props = {
   setPage: Dispatch<SetStateAction<number>>;
   setDateFilter: Dispatch<SetStateAction<DateFilterProperty>>;
-}
+};
 
 type PaymentDropdown = PaymentType | '전체';
 
-const TableHead: FC<TableHeadProps> = ({ setDateFilter, setPage }) => {
+const TableHead = ({ setDateFilter, setPage }: Props) => {
   const param = useParams();
 
   const { data } = useParticipantList(Number(param.groupId));
@@ -45,7 +45,7 @@ const TableHead: FC<TableHeadProps> = ({ setDateFilter, setPage }) => {
     setDateFilter((prev) => ({
       ...prev,
       page: 0,
-      paymentType: paymentType === '전체' ? '' : getStatusCode(paymentType),
+      paymentType: paymentType === '전체' ? '' : paymentType !== '' ? getStatusCode(paymentType) : '',
       nickname: member === '전체' ? '' : member,
     }));
   }, [member, paymentType]);

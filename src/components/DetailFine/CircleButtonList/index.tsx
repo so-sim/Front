@@ -1,87 +1,78 @@
 import { TwoButtonModal } from '@/components/@common/Modal/TwoButtonModal';
 import { useUpdateDetailStatus } from '@/queries/Detail/useUpdateDetailStatus';
-import { PaymentType } from '@/types/event';
-import { getStatusCode, getStatusText } from '@/utils/getStatusIcon';
-import { pushDataLayer } from '@/utils/pushDataLayer';
-import { Dispatch, SetStateAction, useEffect, useState } from 'react';
+import { ServerPaymentType } from '@/types/event';
+import { pushDataLayerByStatus } from '@/utils/pushDataLayer';
+import { Dispatch, SetStateAction, useState } from 'react';
 import CircleDropButton, { CircleDropButtonProps } from '../CircleDropButton';
 import * as Style from './styles';
 
 interface CircleButtonListProps extends CircleDropButtonProps {
-  statusList: PaymentType[];
+  isOwn: boolean;
+  statusList: ServerPaymentType[];
   eventId: number;
   isAdmin: boolean;
-  setOpenListEventId: Dispatch<SetStateAction<number>>;
+  setShowCircleButtonList: Dispatch<SetStateAction<boolean>>;
 }
 
-const CircleButtonList = ({ status, statusList, eventId, setOpenListEventId, isAdmin }: CircleButtonListProps) => {
-  const adminStatusList: PaymentType[] = [
-    getStatusText(status),
-    ...statusList.filter((element) => {
-      if (status === 'con') return element !== getStatusText(status);
+// ga 트리거 id 얻기 위한 함수는 컴포넌트 일관적으로 상단에 위치시키는 거 어떤가요
+const getGATrigger = (newStatus: ServerPaymentType): string => {
+  const id = {
+    con: 'confirming_list_modal',
+    full: 'fullpayment_list_modal',
+    non: '',
+  };
 
-      return element !== getStatusText(status) && element !== '확인필요';
+  return id[newStatus];
+};
+
+const CircleButtonList = ({ setShowCircleButtonList, isOwn, status, statusList, eventId, isAdmin }: CircleButtonListProps) => {
+  const adminStatusList: ServerPaymentType[] = [
+    status,
+    ...statusList.filter((element) => {
+      if (status === 'con') return element !== status;
+
+      return element !== status && element !== 'con';
     }),
   ];
 
-  const userStatusList: PaymentType[] = status === 'non' ? [getStatusText(status), '확인요청'] : [];
+  const userStatusList: ServerPaymentType[] = status === 'non' ? [status, 'con'] : [];
 
-  const dropdownList = isAdmin ? adminStatusList : userStatusList;
+  const dropdownList: ServerPaymentType[] = isAdmin ? adminStatusList : userStatusList;
 
   const { mutate } = useUpdateDetailStatus();
-  const [newStatus, setNewStatus] = useState<PaymentType>('');
+  const [newStatus, setNewStatus] = useState<ServerPaymentType>('non');
   const [showUpdateStatusModal, setShowUpdateStatusModal] = useState(false);
 
-  const updateStatus = (paymentType: PaymentType) => {
+  const updateStatus = (isAdmin: boolean, paymentType: ServerPaymentType) => {
     if (status != paymentType) {
       mutate(
         { paymentType, eventId },
         {
           onSuccess: () => {
-            setOpenListEventId(0);
-            if (isAdmin === false && paymentType === 'con') {
-              pushDataLayer('confirming', { route: 'list' });
-            }
-            if (isAdmin === true && paymentType === 'full') {
-              pushDataLayer('fullpayment', { route: 'list' });
-            }
+            setShowCircleButtonList(false);
+            // 이거 GA때문에 list에서 변경하는 것과 모달에서 변경하는 것 구분지어 달라고 하셔서 여기에 배치한 거임
+            pushDataLayerByStatus(isAdmin, paymentType);
           },
         },
       );
     }
   };
 
-  const handleUpdateStatusModal = () => {
-    setOpenListEventId(0);
-    setShowUpdateStatusModal((prev) => !prev);
+  const cancelUpdateStatus = () => {
+    new Promise((resolve) => {
+      resolve(setShowUpdateStatusModal(false));
+    }).then(() => {
+      setShowCircleButtonList(false);
+    });
   };
 
-  const handleCircleButtonList = (paymentType: PaymentType) => {
-    if (paymentType !== getStatusText(status)) {
-      setShowUpdateStatusModal(true);
-      setNewStatus(getStatusCode(paymentType));
-      return;
+  const handleCircleButtonList = (paymentType: ServerPaymentType) => {
+    if (paymentType === status) {
+      return cancelUpdateStatus();
     }
-
-    setOpenListEventId(0);
+    setShowUpdateStatusModal(true);
+    setNewStatus(paymentType);
   };
-
-  const cancelUpdateStatus = async () => {
-    await setShowUpdateStatusModal(false);
-    setOpenListEventId(0);
-    setNewStatus('');
-  };
-
-  useEffect(() => {
-    const closeButtonList = () => {
-      setOpenListEventId(0);
-    };
-
-    window.addEventListener('click', closeButtonList);
-    return () => {
-      window.removeEventListener('click', closeButtonList);
-    };
-  }, []);
 
   return (
     <>
@@ -89,20 +80,20 @@ const CircleButtonList = ({ status, statusList, eventId, setOpenListEventId, isA
         {dropdownList.map((paymentType) => {
           return (
             <Style.CircleButtonBox key={paymentType} onClick={() => handleCircleButtonList(paymentType)}>
-              <CircleDropButton status={paymentType} isAdmin={isAdmin} />
+              <CircleDropButton status={paymentType} isAdmin={isAdmin} isOwn={isOwn} originStatus={status} />
             </Style.CircleButtonBox>
           );
         })}
       </Style.CircleButtonList>
       {showUpdateStatusModal && (
         <TwoButtonModal
-          id={newStatus === 'con' ? 'confirming_list_modal' : newStatus === 'full' ? 'fullpayment_list_modal' : ''}
-          onClick={handleUpdateStatusModal}
+          id={getGATrigger(newStatus)}
+          onClick={cancelUpdateStatus}
           height="215px"
           title="납부여부 변경"
           description="납부여부를 변경하시겠습니까?"
           cancel={{ text: '취소', onClick: cancelUpdateStatus }}
-          confirm={{ text: '변경하기', onClick: () => updateStatus(newStatus) }}
+          confirm={{ text: '변경하기', onClick: () => updateStatus(isAdmin, newStatus) }}
         />
       )}
     </>

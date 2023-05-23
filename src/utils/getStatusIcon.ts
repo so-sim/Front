@@ -1,15 +1,13 @@
 import { CIRCLE_DROP } from '@/assets/icons/CircleDrop';
-import { PaymentType } from '@/types/event';
+import { PaymentType, ServerPaymentType } from '@/types/event';
 
-export const getStatusIcon = (status: string) => {
+export const getStatusIcon = (status: ServerPaymentType) => {
   switch (status) {
-    case '미납':
+    case 'non':
       return CIRCLE_DROP.RED;
-    case '확인필요':
-    case '확인요청':
-    case '확인중':
+    case 'con':
       return CIRCLE_DROP.YELLOW;
-    case '완납':
+    case 'full':
       return CIRCLE_DROP.BLUE;
   }
 };
@@ -27,7 +25,7 @@ export const getStatusText = (status: PaymentType) => {
   }
 };
 
-export const getStatusCode = (status: PaymentType) => {
+export const getStatusCode = (status: Exclude<PaymentType, ''>): ServerPaymentType => {
   switch (status) {
     case '미납':
       return 'non';

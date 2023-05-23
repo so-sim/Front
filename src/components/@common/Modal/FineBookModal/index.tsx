@@ -1,5 +1,5 @@
 import { changeNumberToMoney } from '@/utils/changeNumberToMoney';
-import React, { Dispatch, SetStateAction, useEffect, useState } from 'react';
+import React, { Dispatch, SetStateAction, useState } from 'react';
 import Button from '@/components/@common/Button';
 import Modal from '@/components/@common/Modal';
 import { DropBox, Label } from '@/components/@common';
@@ -8,7 +8,7 @@ import { SYSTEM } from '@/assets/icons/System';
 import { useParticipantList } from '@/queries/Group';
 import { useCreateDetail, useUpdateDetail } from '@/queries/Detail';
 import { useNavigate, useParams } from 'react-router-dom';
-import { EventInfo, PaymentType } from '@/types/event';
+import { ClientEventInfo, PaymentType } from '@/types/event';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { userState } from '@/store/userState';
 import { CalendarDropBox } from '@/components/@common/DropBox/CalendarDropBox';
@@ -20,20 +20,19 @@ import { pushDataLayer } from '@/utils/pushDataLayer';
 interface ModalProps {
   setOpen: Dispatch<SetStateAction<boolean>>;
   eventId?: number;
-  select?: EventInfo;
-  setSelect?: Dispatch<SetStateAction<EventInfo>>;
+  select?: ClientEventInfo;
+  setSelect?: Dispatch<SetStateAction<ClientEventInfo>>;
 }
 
 export const FineBookModal = ({ setOpen, eventId, select, setSelect }: ModalProps) => {
   const type = eventId ? 'update' : 'create';
   const isCreate = type === 'create';
-  const isUpdate = select !== undefined;
   const [member, setMember] = useState(select?.userName ?? '');
   const [status, setStatus] = useState<PaymentType>(select?.paymentType ? getStatusText(select?.paymentType) : '미납');
   const [reason, setReason] = useState(select?.grounds ?? '');
   const [fine, setFine] = useState(select?.payment ?? 0);
   const [groundsDate, setGroundsDate] = useState(dayjs(select?.groundsDate).format('YYYY.MM.DD'));
-  const [{ selectedDate, baseDate }, setDateState] = useRecoilState(dateState);
+  const [_, setDateState] = useRecoilState(dateState);
 
   const onChangeFine = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target;
@@ -65,6 +64,7 @@ export const FineBookModal = ({ setOpen, eventId, select, setSelect }: ModalProp
 
   const createDetail = (type: 'continue' | 'save') => {
     if (user.userId === null) return;
+    if (status === '') return;
     create(
       {
         groupId: Number(groupId),
