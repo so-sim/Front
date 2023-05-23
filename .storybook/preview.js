@@ -1,4 +1,4 @@
-import { withRouter } from '../utils/withRouter';
+import { withRouter } from '../src/tests/withRouter';
 
 export const parameters = {
   actions: { argTypesRegex: '^on[A-Z].*' },
