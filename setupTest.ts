@@ -12,7 +12,7 @@ expect.extend(matchers);
 
 const queryCache = new QueryCache();
 
-beforeAll(() => server.listen());
+beforeAll(() => server.listen({ onUnhandledRequest: 'bypass' }));
 afterEach(() => {
   server.resetHandlers();
   queryCache.clear();
