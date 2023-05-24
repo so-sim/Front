@@ -43,7 +43,7 @@ export interface GropuList {
   groupId: number;
   title: string;
   coverColor: GroupColor;
-  groupType: string;
+  type: string;
   adminNickname: string;
 }
 
