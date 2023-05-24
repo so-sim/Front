@@ -6,9 +6,15 @@ import { server } from '@/mocks/server';
 import 'react-toastify/dist/ReactToastify.css';
 import '@testing-library/jest-dom';
 import { matchers } from '@emotion/jest';
+import { QueryCache } from '@tanstack/react-query';
 
 expect.extend(matchers);
 
-beforeAll(() => server.listen({ onUnhandledRequest: 'bypass' }));
-afterEach(() => server.resetHandlers());
+const queryCache = new QueryCache();
+
+beforeAll(() => server.listen());
+afterEach(() => {
+  server.resetHandlers();
+  queryCache.clear();
+});
 afterAll(() => server.close());
