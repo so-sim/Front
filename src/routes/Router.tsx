@@ -1,3 +1,4 @@
+import usePushUserId from '@/hooks/usePushUserId';
 import KaKaoSignUp from '@/pages/Auth/KakaoSignUp';
 import Invitation from '@/pages/Invitation';
 import ServiceWithdrawal from '@/pages/Withdrawal';
@@ -8,6 +9,8 @@ import Home from '../pages/Home';
 import TOS from '../pages/TOS';
 
 const Router = () => {
+  usePushUserId();
+
   return (
     <BrowserRouter>
       <Routes>
