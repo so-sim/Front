@@ -1,5 +1,5 @@
 import { ComponentStory, ComponentMeta } from '@storybook/react';
-import { UserModal } from './';
+import { UserModal } from '..';
 
 export default {
   title: 'Component/Modal/GroupSetting',

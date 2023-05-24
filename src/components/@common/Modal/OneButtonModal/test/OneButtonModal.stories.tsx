@@ -1,6 +1,5 @@
-import React from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
-import { OneButtonModal } from '.';
+import { OneButtonModal } from '..';
 
 export default {
   title: 'Component/Modal/OneButtonModal',

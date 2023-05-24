@@ -1,6 +1,5 @@
-import React from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
-import { AuthModal } from '.';
+import { AuthModal } from '..';
 
 export default {
   title: 'Component/Modal/LoginModal',

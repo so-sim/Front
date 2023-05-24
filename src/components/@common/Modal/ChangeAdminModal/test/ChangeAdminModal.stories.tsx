@@ -1,5 +1,5 @@
 import { ComponentStory, ComponentMeta } from '@storybook/react';
-import ChangeAdminModal from '.';
+import ChangeAdminModal from '..';
 
 export default {
   title: 'Component/Modal/ChangeAdminModal',

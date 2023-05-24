@@ -1,5 +1,5 @@
 import { ComponentStory, ComponentMeta } from '@storybook/react';
-import { GroupColorList } from '.';
+import { GroupColorList } from '..';
 
 export default {
   title: 'Component/GroupColorList',

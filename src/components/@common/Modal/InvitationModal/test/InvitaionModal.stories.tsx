@@ -1,5 +1,5 @@
 import { ComponentStory, ComponentMeta } from '@storybook/react';
-import { InvitationModal } from '.';
+import { InvitationModal } from '..';
 
 export default {
   title: 'Component/Modal/InvitationModal',

@@ -1,5 +1,5 @@
 import { ComponentStory, ComponentMeta } from '@storybook/react';
-import { FineBookModal } from '.';
+import { FineBookModal } from '..';
 
 export default {
   title: 'Component/Modal/FineBookModal',
