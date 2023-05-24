@@ -4,7 +4,8 @@ import { DateFilterProperty } from './dateFilter';
 import { RootDateFilter } from './rootDateFilter';
 
 export class WeekFilter extends RootDateFilter {
-  constructor(private week: number | null) {
+  private week: number | null;
+  constructor(week: number | null) {
     super();
     this.week = week;
   }
