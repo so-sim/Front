@@ -1,6 +1,6 @@
 import { RecoilObserver } from '@/tests/recoilObserver';
 import { withRouter } from '@/tests/withRouter';
-import { render, screen } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import DetailFine from '..';
 import { dateState } from '@/store/dateState';
@@ -146,4 +146,16 @@ describe('DetailFine', () => {
   //     // Assert
   //   });
   // });
+});
+
+describe('test', () => {
+  it('ddf', async () => {
+    // Arrange
+    render(withRouter(<DetailFine />));
+
+    await waitFor(() => screen.findByText('윤하나둘셋'));
+    expect(screen.queryByText('윤하나둘셋')).toBeInTheDocument();
+    // Act
+    // Assert
+  });
 });

@@ -53,7 +53,7 @@ const UserConfigModal: FC<UserConfigModalProps> = ({ handleModal }) => {
           title={WITHDRAWAL_MODAL.HAS_ADMIM.title}
           description={WITHDRAWAL_MODAL.HAS_ADMIM.desc}
           confirm={{ text: '확인', onClick: handleWithdrawalModal }}
-          onClick={handleWithdrawalModal}
+          modalHandler={handleWithdrawalModal}
         />
       )}
     </>

@@ -5,7 +5,7 @@ import { ModalButton } from '../TwoButtonModal';
 import * as Style from './styles';
 
 interface OneButtonModalProps {
-  onClick: () => void;
+  modalHandler: () => void;
   title: string;
   width?: string;
   height?: string;
@@ -13,9 +13,9 @@ interface OneButtonModalProps {
   confirm: ModalButton;
 }
 
-export const OneButtonModal: FC<OneButtonModalProps> = ({ onClick, title, description, confirm, width = '376px', height = '223px' }) => {
+export const OneButtonModal: FC<OneButtonModalProps> = ({ modalHandler, title, description, confirm, width = '376px', height = '223px' }) => {
   return (
-    <Modal.Frame width={width} height={height} onClick={onClick}>
+    <Modal.Frame width={width} height={height} onClick={modalHandler}>
       <Modal.Header>
         <Style.Title>{title}</Style.Title>
       </Modal.Header>

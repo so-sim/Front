@@ -1,6 +1,5 @@
-import React from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
-import { CreateGroupModal } from '.';
+import { CreateGroupModal } from '..';
 
 export default {
   title: 'Component/Modal/CreateGroupModal',

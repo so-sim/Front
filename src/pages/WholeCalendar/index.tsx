@@ -5,7 +5,8 @@ import dayjs from 'dayjs';
 import { useEffect, useState } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
-import { Calendar, InviteModal } from '@/components/@common';
+import { Calendar } from '@/components/@common';
+import InviteModal from '@/components/@common/Modal/UserConfigModal/InviteModal';
 
 const WholeCalendar = () => {
   const { groupId } = useParams();

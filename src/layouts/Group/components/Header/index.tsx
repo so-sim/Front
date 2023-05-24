@@ -62,7 +62,7 @@ const GroupLayoutHeader = () => {
         <TwoButtonModal
           title="로그아웃"
           description="로그아웃 하시겠습니까?"
-          onClick={handleShowLogOutmodal}
+          modalHandler={handleShowLogOutmodal}
           cancel={{ text: '취소', onClick: handleShowLogOutmodal }}
           confirm={{ text: '로그아웃', onClick: onClickLogOut }}
         />

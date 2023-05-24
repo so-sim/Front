@@ -2,28 +2,28 @@ import { GropuList } from '@/types/group';
 import { rest } from 'msw';
 
 const groupList: GropuList[] = [
-  { title: '전국 노래 자랑', adminNickname: '윤하나둘셋넷', coverColor: '#f86565', groupId: 1, groupType: '스터디' },
-  { title: '전국 노래 자랑', adminNickname: '윤하나', coverColor: '#f86565', groupId: 2, groupType: '스터디' },
-  { title: '전국 노래 자랑', adminNickname: '윤둘', coverColor: '#f86565', groupId: 3, groupType: '스터디' },
-  { title: '전국 노래 자랑', adminNickname: '윤셋', coverColor: '#f86565', groupId: 4, groupType: '스터디' },
-  { title: '전국 노래 자랑', adminNickname: '윤넷', coverColor: '#f86565', groupId: 5, groupType: '스터디' },
-  { title: '전국 노래 자랑', adminNickname: '윤하나둘', coverColor: '#f86565', groupId: 6, groupType: '스터디' },
-  { title: '전국 노래 자랑', adminNickname: '윤하나셋넷', coverColor: '#f86565', groupId: 7, groupType: '스터디' },
-  { title: '전국 노래 자랑', adminNickname: '윤둘셋넷', coverColor: '#f86565', groupId: 8, groupType: '스터디' },
-  { title: '전국 노래 자랑', adminNickname: '윤하나둘넷', coverColor: '#f86565', groupId: 9, groupType: '스터디' },
-  { title: '전국 노래 자랑', adminNickname: '윤하나둘넷', coverColor: '#f86565', groupId: 10, groupType: '스터디' },
-  { title: '전국 노래 자랑', adminNickname: '윤하나둘넷', coverColor: '#f86565', groupId: 11, groupType: '스터디' },
-  { title: '전국 노래 자랑', adminNickname: '윤하나둘넷', coverColor: '#f86565', groupId: 12, groupType: '스터디' },
-  { title: '전국 노래 자랑', adminNickname: '윤하나둘넷', coverColor: '#f86565', groupId: 13, groupType: '스터디' },
-  { title: '전국 노래 자랑', adminNickname: '윤하나둘넷', coverColor: '#f86565', groupId: 14, groupType: '스터디' },
-  { title: '전국 노래 자랑', adminNickname: '윤하나둘넷', coverColor: '#f86565', groupId: 15, groupType: '스터디' },
-  { title: '전국 노래 자랑', adminNickname: '윤하나둘넷', coverColor: '#f86565', groupId: 16, groupType: '스터디' },
-  { title: '전국 노래 자랑', adminNickname: '윤하나둘넷', coverColor: '#f86565', groupId: 17, groupType: '스터디' },
-  { title: '전국 노래 자랑', adminNickname: '윤하나둘넷', coverColor: '#f86565', groupId: 18, groupType: '스터디' },
-  { title: '전국 노래 자랑', adminNickname: '윤하나둘넷', coverColor: '#f86565', groupId: 19, groupType: '스터디' },
+  { title: '전국 노래 자랑', adminNickname: '윤하나둘셋넷', coverColor: '#f86565', groupId: 1, type: '스터디' },
+  { title: '전국 노래 자랑', adminNickname: '윤하나', coverColor: '#f86565', groupId: 2, type: '스터디' },
+  { title: '전국 노래 자랑', adminNickname: '윤둘', coverColor: '#f86565', groupId: 3, type: '스터디' },
+  { title: '전국 노래 자랑', adminNickname: '윤셋', coverColor: '#f86565', groupId: 4, type: '스터디' },
+  { title: '전국 노래 자랑', adminNickname: '윤넷', coverColor: '#f86565', groupId: 5, type: '스터디' },
+  { title: '전국 노래 자랑', adminNickname: '윤하나둘', coverColor: '#f86565', groupId: 6, type: '스터디' },
+  { title: '전국 노래 자랑', adminNickname: '윤하나셋넷', coverColor: '#f86565', groupId: 7, type: '스터디' },
+  { title: '전국 노래 자랑', adminNickname: '윤둘셋넷', coverColor: '#f86565', groupId: 8, type: '스터디' },
+  { title: '전국 노래 자랑', adminNickname: '윤하나둘넷', coverColor: '#f86565', groupId: 9, type: '스터디' },
+  { title: '전국 노래 자랑', adminNickname: '윤하나둘넷', coverColor: '#f86565', groupId: 10, type: '스터디' },
+  { title: '전국 노래 자랑', adminNickname: '윤하나둘넷', coverColor: '#f86565', groupId: 11, type: '스터디' },
+  { title: '전국 노래 자랑', adminNickname: '윤하나둘넷', coverColor: '#f86565', groupId: 12, type: '스터디' },
+  { title: '전국 노래 자랑', adminNickname: '윤하나둘넷', coverColor: '#f86565', groupId: 13, type: '스터디' },
+  { title: '전국 노래 자랑', adminNickname: '윤하나둘넷', coverColor: '#f86565', groupId: 14, type: '스터디' },
+  { title: '전국 노래 자랑', adminNickname: '윤하나둘넷', coverColor: '#f86565', groupId: 15, type: '스터디' },
+  { title: '전국 노래 자랑', adminNickname: '윤하나둘넷', coverColor: '#f86565', groupId: 16, type: '스터디' },
+  { title: '전국 노래 자랑', adminNickname: '윤하나둘넷', coverColor: '#f86565', groupId: 17, type: '스터디' },
+  { title: '전국 노래 자랑', adminNickname: '윤하나둘넷', coverColor: '#f86565', groupId: 18, type: '스터디' },
+  { title: '전국 노래 자랑', adminNickname: '윤하나둘넷', coverColor: '#f86565', groupId: 19, type: '스터디' },
 ];
 
-const getGroupList: Parameters<typeof rest.get>[1] = (req, res, ctx) => {
+export const getGroupList: Parameters<typeof rest.get>[1] = async (req, res, ctx) => {
   return res(
     ctx.status(200),
     ctx.json({
@@ -54,7 +54,7 @@ const getGroupDetail: Parameters<typeof rest.get>[1] = (req, res, ctx) => {
         createDate: '',
         updateDate: '',
         coverColor: '#f86565',
-        groupType: '학교, 교내/외 모임',
+        type: '학교, 교내/외 모임',
         isAdmin: false,
       },
     }),
@@ -187,7 +187,7 @@ const getMyNikckname: Parameters<typeof rest.get>[1] = async (req, res, ctx) => 
 };
 
 export const groupHandler = [
-  rest.get('/api/groups', getGroupList),
+  rest.get('https://back.sosim-manager.com/api/groups', getGroupList),
   rest.get('/api/group/1', getGroupDetail),
   rest.get('/api/group/1/participants', getGroupParticipant),
   rest.post('/api/group', createGroup),

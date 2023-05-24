@@ -80,7 +80,7 @@ export const UserModal: FC<ModalHandlerProps> = ({ modalHandler }) => {
         <TwoButtonModal
           width="448px"
           height="265px"
-          onClick={handleGroupWithdrawalModal}
+          modalHandler={handleGroupWithdrawalModal}
           title={GROUP_WITHDRWWAL_USER.titel}
           description={GROUP_WITHDRWWAL_USER.desc}
           cancel={{ text: '취소', onClick: handleGroupWithdrawalModal }}

@@ -59,7 +59,10 @@ const getDetailList: Parameters<typeof rest.get>[1] = (req, res, ctx) => {
         code: 200,
         message: '상세 내역 목록이 성공적으로 조회되었습니다.',
       },
-      content: details,
+      content: {
+        list: details,
+        total: 19,
+      },
     }),
   );
 };

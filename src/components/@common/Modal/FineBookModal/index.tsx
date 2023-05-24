@@ -24,6 +24,11 @@ interface ModalProps {
   setSelect?: Dispatch<SetStateAction<ClientEventInfo>>;
 }
 
+const statusList: { title: PaymentType; id?: string }[] = [
+  { title: '미납', id: 'nonpayment_modify' },
+  { title: '완납', id: 'fullpayment_modify' },
+];
+
 export const FineBookModal = ({ setOpen, eventId, select, setSelect }: ModalProps) => {
   const type = eventId ? 'update' : 'create';
   const isCreate = type === 'create';
@@ -118,11 +123,6 @@ export const FineBookModal = ({ setOpen, eventId, select, setSelect }: ModalProp
   const admin = { title: data?.content.adminNickname as string };
   const participantList = data?.content.memberList.map(({ nickname }) => ({ title: nickname })) || [];
   const memberList = [admin, ...participantList];
-
-  const statusList: { title: PaymentType; id?: string }[] = [
-    { title: '미납', id: 'nonpayment_modify' },
-    { title: '완납', id: 'fullpayment_modify' },
-  ];
 
   return (
     <Modal.Frame width="448px" height={type === 'create' ? '466px' : '412px'} onClick={() => setOpen(false)}>

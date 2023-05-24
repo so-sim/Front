@@ -8,8 +8,8 @@ export interface ModalButton {
   onClick: () => void;
 }
 
-export interface TwoButtonModalProps {
-  onClick: () => void;
+interface Props {
+  modalHandler: () => void;
   title: string;
   width?: string;
   height?: string;
@@ -20,9 +20,9 @@ export interface TwoButtonModalProps {
   id?: string;
 }
 
-export const TwoButtonModal = ({ onClick, title, description, cancel, confirm, flexDirection = 'row', width = '448px', height = '215px', id }: TwoButtonModalProps) => {
+export const TwoButtonModal = ({ modalHandler, title, description, cancel, confirm, flexDirection = 'row', width = '448px', height = '215px', id }: Props) => {
   return (
-    <Modal.Frame width={width} height={height} onClick={onClick}>
+    <Modal.Frame width={width} height={height} onClick={modalHandler}>
       <Modal.Header>
         <Style.Title>{title}</Style.Title>
       </Modal.Header>
