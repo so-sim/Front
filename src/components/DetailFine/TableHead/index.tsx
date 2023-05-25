@@ -6,14 +6,20 @@ import { useParticipantList } from '@/queries/Group';
 import { useParams } from 'react-router-dom';
 import DropDown from '@/components/@common/DropDown';
 import { getStatusCode } from '@/utils/getStatusIcon';
-import { PaymentType } from '@/types/event';
 
 type Props = {
   setPage: Dispatch<SetStateAction<number>>;
   setDateFilter: Dispatch<SetStateAction<DateFilterProperty>>;
 };
 
-type PaymentDropdown = PaymentType | '전체';
+type PaymentDropdown = '전체' | '미납' | '완납' | '확인필요';
+
+const paymentTypeList: { title: PaymentDropdown; id?: string }[] = [
+  { title: '전체' },
+  { title: '미납', id: 'filter_nonpayment' },
+  { title: '완납', id: 'filter_fullpayment' },
+  { title: '확인필요', id: 'filter_confirming' },
+];
 
 const TableHead = ({ setDateFilter, setPage }: Props) => {
   const param = useParams();
@@ -30,8 +36,7 @@ const TableHead = ({ setDateFilter, setPage }: Props) => {
   const paymentTypeDropDownRef = useRef<HTMLDivElement>(null);
 
   const [member, setMember] = useState('전체');
-
-  const [paymentType, setPaymentType] = useState<PaymentDropdown>('');
+  const [paymentType, setPaymentType] = useState<PaymentDropdown>('전체');
 
   const handlePaymentDropDown = () => {
     setOpenPaymentTypeDropdown((prev) => !prev);
@@ -40,22 +45,22 @@ const TableHead = ({ setDateFilter, setPage }: Props) => {
     setOpenMemberDropdown((prev) => !prev);
   };
 
+  const getParticipantList = () => {
+    if (!participants || !adminNickname) return [{ title: '전체' }];
+    const joinParticipants = [...participants, { title: adminNickname }].sort((a, b) => (a.title < b.title ? -1 : a.title > b.title ? 1 : 0));
+
+    return [{ title: '전체' }, ...joinParticipants];
+  };
+
   useEffect(() => {
     setPage(0);
     setDateFilter((prev) => ({
       ...prev,
       page: 0,
-      paymentType: paymentType === '전체' ? '' : paymentType !== '' ? getStatusCode(paymentType) : '',
+      paymentType: paymentType === '전체' ? '' : getStatusCode(paymentType),
       nickname: member === '전체' ? '' : member,
     }));
   }, [member, paymentType]);
-
-  const paymentTypeList: { title: PaymentDropdown; id?: string }[] = [
-    { title: '전체' },
-    { title: '미납', id: 'filter_nonpayment' },
-    { title: '완납', id: 'filter_fullpayment' },
-    { title: '확인필요', id: 'filter_confirming' },
-  ];
 
   return (
     <Style.TableHead>
@@ -79,10 +84,10 @@ const TableHead = ({ setDateFilter, setPage }: Props) => {
       <Style.PointerElement ref={memberDropDownRef} onClick={handleMemeberDropDown} id="filter_member">
         <span>팀원</span>
         <Style.Arrow>{ARROW.DOWN_SM}</Style.Arrow>
-        {adminNickname && participants && openMemberDropdown && (
+        {openMemberDropdown && (
           <DropDown
             dropDownRef={memberDropDownRef}
-            list={[{ title: '전체' }, ...[...participants, { title: adminNickname }].sort((a, b) => (a.title < b.title ? -1 : a.title > b.title ? 1 : 0))]}
+            list={getParticipantList()}
             setState={setMember}
             width={208}
             top="40px"
