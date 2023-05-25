@@ -1,5 +1,5 @@
 import { useGroupDetail } from '@/queries/Group';
-import { firstVisitState } from '@/store/\bfirstVisitState';
+import { firstVisitState } from '@/store/firstVisitState';
 import { dateState } from '@/store/dateState';
 import dayjs from 'dayjs';
 import { useEffect, useState } from 'react';
