@@ -6,7 +6,7 @@ import { server } from '@/mocks/server';
 import 'react-toastify/dist/ReactToastify.css';
 import '@testing-library/jest-dom';
 import { matchers } from '@emotion/jest';
-
+import 'jest-canvas-mock';
 expect.extend(matchers);
 
 beforeAll(() => server.listen({ onUnhandledRequest: 'bypass' }));

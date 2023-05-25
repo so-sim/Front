@@ -23,6 +23,7 @@
     "dayjs": "^1.11.7",
     "dotenv": "^16.0.3",
     "emotion-reset": "^3.0.1",
+    "jest-canvas-mock": "^2.5.1",
     "msw": "^1.0.1",
     "react": "^18.2.0",
     "react-calendar": "^4.1.0",
