@@ -3,9 +3,9 @@ import { SYSTEM } from '@/assets/icons/System';
 import { USER } from '@/assets/icons/User';
 import { Label, DropBox, Button } from '@/components/@common';
 import * as Style from './styles';
-import { ClientEventInfo, PaymentType } from '@/types/event';
+import { ClientEventInfo, PaymentType, ServerPaymentType } from '@/types/event';
 import { changeNumberToMoney } from '@/utils/changeNumberToMoney';
-import { getStatusCode, getStatusText } from '@/utils/getStatusIcon';
+import { getStatusCode, getStatusText, statusText } from '@/utils/getStatusIcon';
 import { useDeleteDetail, useUpdateDetailStatus } from '@/queries/Detail';
 import { FineBookModal } from '@/components/@common/Modal/FineBookModal';
 import { TwoButtonModal } from '@/components/@common/Modal/TwoButtonModal';
@@ -23,58 +23,53 @@ type Props = {
   setSelect: Dispatch<SetStateAction<ClientEventInfo>>;
 };
 
+const requestButtonText: { [key in ServerPaymentType]: string } = {
+  non: '확인 요청',
+  con: '요청 완료',
+  full: '확인 완료',
+};
+
 const UserDetails = ({ open, setOpen, select, setSelect }: Props) => {
   if (!open) return null;
   const { eventId, groundsDate, paymentType, userName, payment, grounds, userId } = select;
 
   const { groupId } = useParams();
 
-  const { data } = useGroupDetail(Number(groupId));
+  const { data: groupDetail } = useGroupDetail(Number(groupId));
+
   const [openUpdateModal, setOpenUpdateModal] = useState(false);
   const [openUpdateStatusModal, setOpenUpdateStatusModal] = useState(false);
   const [openRequestStatusModal, setOpenRequestStatusModal] = useState(false);
   const [openDeleteDetailModal, setOpenDeleteDetailModal] = useState(false);
 
   const user = useRecoilValue(userState);
-  const isAdmin = data?.content.isAdmin;
+
+  const isAdmin = groupDetail?.content.isAdmin as boolean;
+  const isOwn = user.userId === userId;
 
   const statusList: { title: PaymentType; id?: string }[] = [{ title: '미납', id: 'nonpayment_side' }, { title: '완납', id: 'fullpayment_side' }, { title: '확인필요' }];
   const [newStatus, setNewStatus] = useState<PaymentType>('');
 
-  const { mutate: update } = useUpdateDetailStatus();
+  const { mutate: update } = useUpdateDetailStatus(onSuccessUpdateStatus);
   const { mutate: deleteDetail } = useDeleteDetail();
+
+  function onSuccessUpdateStatus() {
+    if (newStatus === '') return;
+
+    setOpenUpdateStatusModal(false);
+    setOpenRequestStatusModal(false);
+    setNewStatus('');
+
+    setSelect((prev) => ({ ...prev, paymentType: getStatusCode(newStatus) }));
+    if (isAdmin === true && getStatusCode(newStatus) === 'full') return pushDataLayer('fullpayment', { route: 'detail' });
+    if (isAdmin === false) pushDataLayer('confirming', { route: 'detail' });
+  }
 
   const updateStatus = () => {
     if (newStatus === '') return;
     if (getStatusCode(newStatus) !== paymentType) {
-      update(
-        { paymentType: getStatusCode(newStatus), eventId },
-        {
-          onSuccess() {
-            setOpenUpdateStatusModal(false);
-            setSelect((prev) => ({ ...prev, paymentType: getStatusCode(newStatus) }));
-            if (isAdmin === true && getStatusCode(newStatus) === 'full') {
-              pushDataLayer('fullpayment', { route: 'detail' });
-            }
-          },
-        },
-      );
+      update({ paymentType: getStatusCode(newStatus), eventId });
     }
-  };
-
-  const requestConfirmStatus = () => {
-    update(
-      { paymentType: 'con', eventId },
-      {
-        onSuccess(data) {
-          setSelect((prev) => ({ ...prev, ...data.content }));
-          setOpenRequestStatusModal(false);
-          if (isAdmin === false) {
-            pushDataLayer('confirming', { route: 'detail' });
-          }
-        },
-      },
-    );
   };
 
   const deleteDetailInfo = () => {
@@ -119,7 +114,7 @@ const UserDetails = ({ open, setOpen, select, setSelect }: Props) => {
   }, [newStatus]);
 
   const dropdownStatusList = () => {
-    if (data?.content.isAdmin) {
+    if (isAdmin) {
       return statusList.filter((status) => {
         if (newStatus && status.title !== '확인필요') {
           return status.title !== newStatus;
@@ -128,7 +123,7 @@ const UserDetails = ({ open, setOpen, select, setSelect }: Props) => {
         }
       });
     }
-    if (user.userId === userId) {
+    if (isOwn) {
       return statusList.filter((status) => paymentType === 'non' && status.title === '확인필요');
     }
     return [];
@@ -154,17 +149,17 @@ const UserDetails = ({ open, setOpen, select, setSelect }: Props) => {
               <DropBox color="disabled" setType={() => undefined} boxWidth="116px" width={116} type={groundsDate.split(' ')[0]} dropDownList={statusList} />
             </Label>
             <Label title="납부여부" width="80px">
-              {data?.content.isAdmin ? (
+              {isAdmin || (isOwn && paymentType === 'non') ? (
                 <DropBox
-                  color={(user.userId === userId && paymentType === 'non' && newStatus !== '확인필요') || data?.content.isAdmin ? 'white' : 'disabled'}
+                  color={newStatus !== 'con' ? 'white' : 'disabled'}
                   boxWidth="112px"
                   width={112}
                   setType={setNewStatus}
-                  type={newStatus !== '' ? newStatus : paymentType === 'con' && !data?.content.isAdmin ? '확인중' : getStatusText(paymentType)}
+                  type={newStatus !== '' ? newStatus : paymentType === 'con' && !isAdmin ? '확인중' : getStatusText(paymentType)}
                   dropDownList={dropdownStatusList()}
                 />
               ) : (
-                <Style.StatusButton status={paymentType}>{paymentType === 'non' ? '미납' : paymentType === 'con' ? '확인 중' : '완납'}</Style.StatusButton>
+                <Style.StatusButton status={paymentType}>{statusText(isAdmin, isOwn, paymentType as ServerPaymentType)}</Style.StatusButton>
               )}
             </Label>
           </Style.Row>
@@ -172,7 +167,7 @@ const UserDetails = ({ open, setOpen, select, setSelect }: Props) => {
             <Style.TextArea disabled placeholder="내용을 입력해주세요." value={grounds}></Style.TextArea>
           </Label>
         </Style.UserDetailsContent>
-        {data?.content.isAdmin && (
+        {isAdmin && (
           <Style.Footer>
             <Button onClick={handleDeleteDetailModal} color="white">
               삭제
@@ -182,10 +177,10 @@ const UserDetails = ({ open, setOpen, select, setSelect }: Props) => {
             </Button>
           </Style.Footer>
         )}
-        {!data?.content.isAdmin && user.userId === userId && (
+        {!isAdmin && isOwn && (
           <Style.Footer>
             <Button width="150px" height="42px" color={paymentType === 'non' ? 'black' : 'disabled'} onClick={() => setOpenRequestStatusModal(true)} id="confirming_side">
-              {paymentType === 'non' ? '확인 요청' : paymentType === 'con' ? '요청 완료' : '확인 완료'}
+              {requestButtonText[paymentType as ServerPaymentType]}
             </Button>
           </Style.Footer>
         )}
@@ -209,7 +204,7 @@ const UserDetails = ({ open, setOpen, select, setSelect }: Props) => {
           height="240px"
           description={`총무에게 확인 요청을 보내시겠습니까? \n 요청 후 변경이 불가능합니다.`}
           cancel={{ text: '취소', onClick: cancelRequestStatus }}
-          confirm={{ text: '요청하기', onClick: requestConfirmStatus }}
+          confirm={{ text: '요청하기', onClick: updateStatus }}
         />
       )}
       {openDeleteDetailModal && (
