@@ -14,7 +14,7 @@ import { userState } from '@/store/userState';
 import { CalendarDropBox } from '@/components/@common/DropBox/CalendarDropBox';
 import dayjs from 'dayjs';
 import { dateState } from '@/store/dateState';
-import { getStatusCode, getStatusText } from '@/utils/getStatusIcon';
+import { getStatusCode, getStatusText } from '@/utils/status';
 import { pushDataLayer } from '@/utils/pushDataLayer';
 
 interface Props {

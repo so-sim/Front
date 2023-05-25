@@ -1,5 +1,5 @@
 import { ServerPaymentType } from '@/types/event';
-import { getStatusIcon } from '@/utils/getStatusIcon';
+import { getStatusIcon } from '@/utils/status';
 import * as Style from './styles';
 
 export interface CircleDropButtonProps {

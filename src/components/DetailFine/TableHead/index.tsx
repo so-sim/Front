@@ -5,7 +5,7 @@ import { DateFilterProperty } from '@/utils/dateFilter/dateFilter';
 import { useParticipantList } from '@/queries/Group';
 import { useParams } from 'react-router-dom';
 import DropDown from '@/components/@common/DropDown';
-import { getStatusCode } from '@/utils/getStatusIcon';
+import { getStatusCode } from '@/utils/status';
 
 type Props = {
   setPage: Dispatch<SetStateAction<number>>;

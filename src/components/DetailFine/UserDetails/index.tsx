@@ -5,7 +5,7 @@ import { Label, DropBox, Button } from '@/components/@common';
 import * as Style from './styles';
 import { ClientEventInfo, PaymentType, ServerPaymentType } from '@/types/event';
 import { changeNumberToMoney } from '@/utils/changeNumberToMoney';
-import { getStatusCode, getStatusText, statusText } from '@/utils/getStatusIcon';
+import { getStatusCode, getStatusText, statusText } from '@/utils/status';
 import { useDeleteDetail, useUpdateDetailStatus } from '@/queries/Detail';
 import { FineBookModal } from '@/components/@common/Modal/FineBookModal';
 import { TwoButtonModal } from '@/components/@common/Modal/TwoButtonModal';
