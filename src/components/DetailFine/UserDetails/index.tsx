@@ -188,7 +188,7 @@ const UserDetails = ({ open, setOpen, select, setSelect }: Props) => {
       {openUpdateStatusModal && (
         <TwoButtonModal
           id={newStatus !== '' && getStatusCode(newStatus) === 'full' ? 'fullpayment_side_modal' : ''}
-          onClick={cancelUpdateStatus}
+          modalHandler={cancelUpdateStatus}
           title="납부여부 변경"
           height="215px"
           description="납부여부를 변경하시겠습니까?"
@@ -199,7 +199,7 @@ const UserDetails = ({ open, setOpen, select, setSelect }: Props) => {
       {openRequestStatusModal && (
         <TwoButtonModal
           id="confirming_side_modal"
-          onClick={cancelRequestStatus}
+          modalHandler={cancelRequestStatus}
           title="납부여부 변경"
           height="240px"
           description={`총무에게 확인 요청을 보내시겠습니까? \n 요청 후 변경이 불가능합니다.`}
@@ -209,7 +209,7 @@ const UserDetails = ({ open, setOpen, select, setSelect }: Props) => {
       )}
       {openDeleteDetailModal && (
         <TwoButtonModal
-          onClick={cancelDeleteDetail}
+          modalHandler={cancelDeleteDetail}
           title="내역 삭제"
           height="240px"
           description={`벌금 내역을 삭제하시겠습니까? \n 삭제된 내역은 복구가 불가능합니다.`}

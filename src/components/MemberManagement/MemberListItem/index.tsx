@@ -1,7 +1,7 @@
 import { SYSTEM } from '@/assets/icons/System';
 import { USER } from '@/assets/icons/User';
 import DropDown from '@/components/@common/DropDown';
-import ChangeAdminModal from '@/components/@common/Modal/ChangAdminModal';
+import ChangeAdminModal from '@/components/@common/Modal/ChangeAdminModal';
 import { useChangeAdmin, useGroupDetail } from '@/queries/Group';
 import { useGetMyNikname } from '@/queries/Group/useGetMyNickname';
 import React, { FC, useEffect, useRef, useState } from 'react';

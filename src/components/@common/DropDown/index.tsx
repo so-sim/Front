@@ -1,5 +1,5 @@
 import { EmotionJSX } from '@emotion/react/types/jsx-namespace';
-import React, { Dispatch, RefObject, SetStateAction, useEffect, useRef } from 'react';
+import { Dispatch, RefObject, SetStateAction, useEffect } from 'react';
 import * as Style from './styles';
 
 export interface DropDownProps<T = string> {

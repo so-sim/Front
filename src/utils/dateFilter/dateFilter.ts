@@ -16,7 +16,7 @@ export interface DateFilterProperty {
   page?: number;
 }
 
-interface IDateFilter {
+export interface IDateFilter {
   getTitle: (baseDate: Dayjs) => string;
   update: (prev: DateFilterProperty, calendar: DateState) => DateFilterProperty;
   increaseDate: (baseDate: Dayjs) => DateState;
@@ -37,8 +37,12 @@ const createFilter = (mode: FilterMode, week: number | null): IDateFilter => {
 
 export class DateFilter extends RootDateFilter {
   private root: IDateFilter;
-  constructor(private mode: FilterMode, private week: number | null) {
+  private mode: FilterMode;
+  private week: number | null;
+  constructor(mode: FilterMode, week: number | null) {
     super();
+    this.mode = mode;
+    this.week = week;
     this.root = createFilter(this.mode, this.week);
   }
 
