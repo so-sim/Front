@@ -17,33 +17,38 @@ import { dateState } from '@/store/dateState';
 import { getStatusCode, getStatusText } from '@/utils/getStatusIcon';
 import { pushDataLayer } from '@/utils/pushDataLayer';
 
-interface ModalProps {
+interface Props {
   setOpen: Dispatch<SetStateAction<boolean>>;
   eventId?: number;
   select?: ClientEventInfo;
   setSelect?: Dispatch<SetStateAction<ClientEventInfo>>;
 }
 
-export const FineBookModal = ({ setOpen, eventId, select, setSelect }: ModalProps) => {
+const STATUS_LIST: { title: PaymentType; id?: string }[] = [
+  { title: '미납', id: 'nonpayment_modify' },
+  { title: '완납', id: 'fullpayment_modify' },
+];
+
+export const FineBookModal = ({ setOpen, eventId, select, setSelect }: Props) => {
   const type = eventId ? 'update' : 'create';
   const isCreate = type === 'create';
-  const [member, setMember] = useState(select?.userName ?? '');
+  const [userName, setUserName] = useState(select?.userName ?? '');
   const [status, setStatus] = useState<PaymentType>(select?.paymentType ? getStatusText(select?.paymentType) : '미납');
-  const [reason, setReason] = useState(select?.grounds ?? '');
-  const [fine, setFine] = useState(select?.payment ?? 0);
+  const [grounds, setGrounds] = useState(select?.grounds ?? '');
+  const [payment, setPayment] = useState(select?.payment ?? 0);
   const [groundsDate, setGroundsDate] = useState(dayjs(select?.groundsDate).format('YYYY.MM.DD'));
   const [_, setDateState] = useRecoilState(dateState);
 
-  const onChangeFine = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const onChangePayment = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target;
     if (value.length > 8) return;
     const removedCommaValue = Number(value.replaceAll(',', ''));
-    if (!isNaN(removedCommaValue)) setFine(removedCommaValue);
+    if (!isNaN(removedCommaValue)) setPayment(removedCommaValue);
   };
 
-  const onChangeReason = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+  const onChangeGrounds = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     if (e.target.value.length > 65) return;
-    setReason(e.target.value);
+    setGrounds(e.target.value);
   };
 
   const { groupId } = useParams();
@@ -55,10 +60,10 @@ export const FineBookModal = ({ setOpen, eventId, select, setSelect }: ModalProp
   const navigate = useNavigate();
 
   const initDetail = () => {
-    setMember('');
+    setUserName('');
     setStatus('미납');
-    setReason('');
-    setFine(0);
+    setGrounds('');
+    setPayment(0);
     setGroundsDate(dayjs().format('YYYY.MM.DD'));
   };
 
@@ -69,11 +74,11 @@ export const FineBookModal = ({ setOpen, eventId, select, setSelect }: ModalProp
       {
         groupId: Number(groupId),
         userId: user.userId,
-        userName: member,
+        userName,
         groundsDate,
-        grounds: reason,
+        grounds,
         paymentType: getStatusCode(status),
-        payment: fine,
+        payment,
       },
       {
         onSuccess() {
@@ -96,7 +101,7 @@ export const FineBookModal = ({ setOpen, eventId, select, setSelect }: ModalProp
     const { eventId, userId } = select;
 
     update(
-      { eventId, userId, userName: member, groundsDate, grounds: reason, paymentType: getStatusCode(status), payment: fine },
+      { eventId, userId, userName, groundsDate, grounds, paymentType: getStatusCode(status), payment },
       {
         onSuccess(data) {
           if (setSelect) {
@@ -110,7 +115,7 @@ export const FineBookModal = ({ setOpen, eventId, select, setSelect }: ModalProp
   };
 
   const checkFormIsValid = (): boolean => {
-    if (!member || !status || !fine || !groundsDate) return false;
+    if (!userName || !status || !payment || !groundsDate) return false;
 
     return true;
   };
@@ -119,34 +124,36 @@ export const FineBookModal = ({ setOpen, eventId, select, setSelect }: ModalProp
   const participantList = data?.content.memberList.map(({ nickname }) => ({ title: nickname })) || [];
   const memberList = [admin, ...participantList];
 
-  const statusList: { title: PaymentType; id?: string }[] = [
-    { title: '미납', id: 'nonpayment_modify' },
-    { title: '완납', id: 'fullpayment_modify' },
-  ];
-
   return (
-    <Modal.Frame width="448px" height={type === 'create' ? '466px' : '412px'} onClick={() => setOpen(false)}>
-      <Modal.Header onClick={() => setOpen(false)}>{type === 'create' ? '내역 추가하기' : '상세 내역 수정'}</Modal.Header>
+    <Modal.Frame width="448px" height={isCreate ? '466px' : '412px'} onClick={() => setOpen(false)}>
+      <Modal.Header onClick={() => setOpen(false)}>{isCreate ? '내역 추가하기' : '상세 내역 수정'}</Modal.Header>
       <div style={{ display: 'flex', flexDirection: 'column', width: '100%' }}>
         <Style.Row>
           <Label title="팀원" width="32px" margin="0px">
-            <DropBox boxWidth="146px" width={304} setType={setMember} type={member} dropDownList={memberList} direction="right" />
+            <DropBox boxWidth="146px" width={304} setType={setUserName} type={userName} dropDownList={memberList} direction="right" />
           </Label>
           <Label title="납부여부" width="56px" margin="0px">
-            <DropBox color="white" boxWidth="110px" width={112} setType={setStatus} type={status} dropDownList={statusList.filter((paymentType) => paymentType.title !== status)} />
+            <DropBox
+              color="white"
+              boxWidth="110px"
+              width={112}
+              setType={setStatus}
+              type={status}
+              dropDownList={STATUS_LIST.filter((paymentType) => paymentType.title !== status)}
+            />
           </Label>
         </Style.Row>
         <Style.Row>
           <Label title="금액" width="32px" margin="0px">
-            <Style.Input type="string" value={changeNumberToMoney(fine)} onChange={onChangeFine} style={{ height: '32px' }} />
+            <Style.Input type="string" value={changeNumberToMoney(payment)} onChange={onChangePayment} style={{ height: '32px' }} />
           </Label>
           <Label title="날짜" width="32px" margin="0px">
             <CalendarDropBox type={groundsDate} setType={setGroundsDate} color="white" />
           </Label>
         </Style.Row>
         <Label title="사유" width="32px" margin="0px">
-          <Style.TextArea maxLength={65} onChange={onChangeReason} defaultValue={reason} value={reason} placeholder="내용을 입력해주세요." />
-          <Style.Length>{!isCreate ? select?.grounds.length : reason.length}/65</Style.Length>
+          <Style.TextArea maxLength={65} onChange={onChangeGrounds} defaultValue={grounds} value={grounds} placeholder="내용을 입력해주세요." />
+          <Style.Length>{grounds.length}/65</Style.Length>
         </Label>
         <Modal.Footer flexDirection="column">
           <Button
