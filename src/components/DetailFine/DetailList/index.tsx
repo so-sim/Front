@@ -1,7 +1,7 @@
 import { DateFilterProperty } from '@/utils/dateFilter/dateFilter';
-import { ClientEventInfo, EventInfo, ServerPaymentType } from '@/types/event';
+import { ClientEventInfo, EventInfo } from '@/types/event';
 import { changeNumberToMoney } from '@/utils/changeNumberToMoney';
-import { Dispatch, FC, SetStateAction, useState } from 'react';
+import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import * as Style from './styles';
 import { FilterMode } from '@/pages/FineBook/DetailFine';
 import { DropDownWrapper } from '@/components/DetailFine';
@@ -28,6 +28,17 @@ const DetailList = ({ dateFilterProperty, mode, selectedEventId, details, setSel
     setOpenUserDetails(true);
   };
 
+  const closeCircleButtonList = () => {
+    setOpenButtonListId(0);
+  };
+
+  useEffect(() => {
+    window.addEventListener('click', closeCircleButtonList);
+    return () => {
+      window.removeEventListener('click', closeCircleButtonList);
+    };
+  }, []);
+
   return (
     <Style.DetailList>
       {details.map((detail, i) => {
@@ -35,7 +46,7 @@ const DetailList = ({ dateFilterProperty, mode, selectedEventId, details, setSel
         return (
           <Style.TableRow key={i} isSelected={selectedEventId === eventId} onClick={() => handleUserDetailModal(detail)}>
             <Style.Element hasEllipsis={false}>{groundsDate.slice(2)}</Style.Element>
-            <DropDownWrapper isOpen={eventId === openButtonListId} detail={detail} setOpenButtonListId={setOpenButtonListId} />
+            <DropDownWrapper openButtonListId={openButtonListId} detail={detail} setOpenButtonListId={setOpenButtonListId} />
             <Style.Element hasEllipsis>{userName}</Style.Element>
             <Style.Element hasEllipsis>{changeNumberToMoney(payment)}</Style.Element>
             <Style.Element hasEllipsis>{grounds}</Style.Element>
