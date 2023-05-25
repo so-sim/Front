@@ -38,21 +38,18 @@ const CircleButtonList = ({ setOpenButtonListId, isOwn, status, statusList, even
 
   const dropdownList: ServerPaymentType[] = isAdmin ? adminStatusList : userStatusList;
 
-  const { mutate: mutateDetailStatus } = useUpdateDetailStatus();
+  const onSuccessUpdateStatus = (paymentType: ServerPaymentType) => {
+    cancelUpdateStatus();
+    pushDataLayerByStatus(isAdmin, paymentType);
+  };
+
+  const { mutate: mutateDetailStatus } = useUpdateDetailStatus(onSuccessUpdateStatus);
   const [newStatus, setNewStatus] = useState<ServerPaymentType>('non');
   const [showUpdateStatusModal, setShowUpdateStatusModal] = useState(false);
 
-  const updateStatus = (isAdmin: boolean, paymentType: ServerPaymentType) => {
+  const updateStatus = (paymentType: ServerPaymentType) => {
     if (status != paymentType) {
-      mutateDetailStatus(
-        { paymentType, eventId },
-        {
-          onSuccess: () => {
-            cancelUpdateStatus();
-            pushDataLayerByStatus(isAdmin, paymentType);
-          },
-        },
-      );
+      mutateDetailStatus({ paymentType, eventId });
     }
   };
 
@@ -87,7 +84,7 @@ const CircleButtonList = ({ setOpenButtonListId, isOwn, status, statusList, even
           title="납부여부 변경"
           description="납부여부를 변경하시겠습니까?"
           cancel={{ text: '취소', onClick: cancelUpdateStatus }}
-          confirm={{ text: '변경하기', onClick: () => updateStatus(isAdmin, newStatus) }}
+          confirm={{ text: '변경하기', onClick: () => updateStatus(newStatus) }}
         />
       )}
     </>

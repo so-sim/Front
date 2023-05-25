@@ -3,7 +3,7 @@ import { SYSTEM } from '@/assets/icons/System';
 import { USER } from '@/assets/icons/User';
 import { Label, DropBox, Button } from '@/components/@common';
 import * as Style from './styles';
-import { ClientEventInfo, PaymentType, ServerPaymentType } from '@/types/event';
+import { ClientEventInfo, EventInfo, PaymentType, ServerPaymentType } from '@/types/event';
 import { changeNumberToMoney } from '@/utils/changeNumberToMoney';
 import { getStatusCode, getStatusText, statusText } from '@/utils/status';
 import { useDeleteDetail, useUpdateDetailStatus } from '@/queries/Detail';
@@ -15,6 +15,7 @@ import { useGroupDetail } from '@/queries/Group';
 import { useParams } from 'react-router-dom';
 import { pushDataLayer } from '@/utils/pushDataLayer';
 import { initialSelectData } from '@/pages/FineBook/DetailFine';
+import { ServerResponse } from '@/types/serverResponse';
 
 type Props = {
   open: boolean;
@@ -50,35 +51,33 @@ const UserDetails = ({ open, setOpen, select, setSelect }: Props) => {
   const statusList: { title: PaymentType; id?: string }[] = [{ title: '미납', id: 'nonpayment_side' }, { title: '완납', id: 'fullpayment_side' }, { title: '확인필요' }];
   const [newStatus, setNewStatus] = useState<PaymentType>('');
 
-  const { mutate: update } = useUpdateDetailStatus(onSuccessUpdateStatus);
-  const { mutate: deleteDetail } = useDeleteDetail();
-
-  function onSuccessUpdateStatus() {
-    if (newStatus === '') return;
-
+  const onSuccessUpdateStatus = (paymentType: ServerPaymentType) => {
     setOpenUpdateStatusModal(false);
     setOpenRequestStatusModal(false);
     setNewStatus('');
 
-    setSelect((prev) => ({ ...prev, paymentType: getStatusCode(newStatus) }));
-    if (isAdmin === true && getStatusCode(newStatus) === 'full') return pushDataLayer('fullpayment', { route: 'detail' });
+    setSelect((prev) => ({ ...prev, paymentType }));
+    if (isAdmin === true && paymentType === 'full') return pushDataLayer('fullpayment', { route: 'detail' });
     if (isAdmin === false) pushDataLayer('confirming', { route: 'detail' });
-  }
+  };
+
+  const onSuccessDeleteInfo = () => {
+    setOpenDeleteDetailModal(false);
+    setOpen(false);
+  };
+
+  const { mutate: mutateDetailStatus } = useUpdateDetailStatus(onSuccessUpdateStatus);
+  const { mutate: deleteDetail } = useDeleteDetail(onSuccessDeleteInfo);
 
   const updateStatus = () => {
     if (newStatus === '') return;
     if (getStatusCode(newStatus) !== paymentType) {
-      update({ paymentType: getStatusCode(newStatus), eventId });
+      mutateDetailStatus({ paymentType: getStatusCode(newStatus), eventId });
     }
   };
 
   const deleteDetailInfo = () => {
-    deleteDetail(eventId, {
-      onSuccess() {
-        setOpenDeleteDetailModal(false);
-        setOpen(false);
-      },
-    });
+    deleteDetail(eventId);
   };
 
   const handleUpdateModal = () => {
