@@ -11,12 +11,15 @@ import { useNavigate } from 'react-router-dom';
 import { useQueryString } from '@/hooks/useQueryString';
 import Loading from '@/components/Auth/Loading';
 import { NotFoundGroup } from '@/components/Invitation/NotFoundGroup';
+import recentlyVisitedGroup from '@/utils/recentlyVisitedGroup';
 
 const Invitation = () => {
   const [showInvitationModal, setShowInvitationModal] = useState(false);
   const [showLoginModal, setShowLoginModal] = useState(false);
   const user = useRecoilValue(userState);
   const navigate = useNavigate();
+
+  const { removeGroupId, setGroupId } = recentlyVisitedGroup('invite-group-id', navigate);
 
   const { groupId } = useQueryString();
 
@@ -27,9 +30,8 @@ const Invitation = () => {
   };
 
   const handleLoginModal = () => {
-    if (showLoginModal) {
-      sessionStorage.removeItem('invite-group-id');
-    }
+    if (showLoginModal) removeGroupId();
+
     setShowLoginModal((prev) => !prev);
   };
 
@@ -40,19 +42,19 @@ const Invitation = () => {
 
     if (user.userId === null) {
       handleLoginModal();
-      sessionStorage.setItem('invite-group-id', String(groupId));
+      setGroupId(groupId);
     } else {
       handleInvitationModal();
     }
   };
 
   const cancelJoinGroup = () => {
-    sessionStorage.removeItem('invite-group-id');
+    removeGroupId();
     navigate('/');
   };
 
   useEffect(() => {
-    sessionStorage.removeItem('invite-group-id');
+    removeGroupId();
   }, []);
 
   if (isLoading) return <Loading />;
