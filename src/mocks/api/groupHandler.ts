@@ -1,5 +1,6 @@
 import { GropuList } from '@/types/group';
 import { rest } from 'msw';
+import { BASE_URL } from '@/api';
 
 const groupList: GropuList[] = [
   { title: '전국 노래 자랑', adminNickname: '윤하나둘셋넷', coverColor: '#f86565', groupId: 1, groupType: '스터디' },
@@ -41,6 +42,8 @@ const getGroupList: Parameters<typeof rest.get>[1] = (req, res, ctx) => {
 };
 
 const getGroupDetail: Parameters<typeof rest.get>[1] = (req, res, ctx) => {
+  const groupId = req.url.searchParams.get('groupId');
+
   return res(
     ctx.status(200),
     ctx.json({
@@ -51,11 +54,12 @@ const getGroupDetail: Parameters<typeof rest.get>[1] = (req, res, ctx) => {
       content: {
         title: '전국 노래 자랑',
         adminNickname: '윤하나둘셋넷',
-        createDate: '',
-        updateDate: '',
         coverColor: '#f86565',
-        groupType: '학교, 교내/외 모임',
+        type: '학교, 교내/외 모임',
         isAdmin: false,
+        isInto: false,
+        groupId,
+        size: 2,
       },
     }),
   );
@@ -188,7 +192,7 @@ const getMyNikckname: Parameters<typeof rest.get>[1] = async (req, res, ctx) => 
 
 export const groupHandler = [
   rest.get('/api/groups', getGroupList),
-  rest.get('/api/group/1', getGroupDetail),
+  rest.get(BASE_URL + '/api/group/:groupId', getGroupDetail),
   rest.get('/api/group/1/participants', getGroupParticipant),
   rest.post('/api/group', createGroup),
   rest.post('/api/group/1/participant', joinGroup),
