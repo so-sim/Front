@@ -8,7 +8,7 @@ import { changeNumberToMoney } from '@/utils/changeNumberToMoney';
 import { getStatusCode, getStatusText, statusText } from '@/utils/status';
 import { useDeleteDetail, useUpdateDetailStatus } from '@/queries/Detail';
 import { FineBookModal } from '@/components/@common/Modal/FineBookModal';
-import { TwoButtonModal } from '@/components/@common/Modal/TwoButtonModal';
+import { ConfirmModal } from '@/components/@common/Modal/ConfirmModal';
 import { useRecoilValue } from 'recoil';
 import { userState } from '@/store/userState';
 import { useGroupDetail } from '@/queries/Group';
@@ -93,12 +93,8 @@ const UserDetails = ({ open, setOpen, select, setSelect }: Props) => {
     setOpenUpdateStatusModal(false);
   };
 
-  const cancelRequestStatus = () => {
-    setOpenRequestStatusModal(false);
-  };
-
-  const cancelDeleteDetail = () => {
-    setOpenDeleteDetailModal(false);
+  const handleRequestStatus = () => {
+    setOpenRequestStatusModal((prev) => !prev);
   };
 
   const closeUserDetails = () => {
@@ -178,41 +174,38 @@ const UserDetails = ({ open, setOpen, select, setSelect }: Props) => {
         )}
         {!isAdmin && isOwn && (
           <Style.Footer>
-            <Button width="150px" height="42px" color={paymentType === 'non' ? 'black' : 'disabled'} onClick={() => setOpenRequestStatusModal(true)} id="confirming_side">
+            <Button width="150px" height="42px" color={paymentType === 'non' ? 'black' : 'disabled'} onClick={handleRequestStatus} id="confirming_side">
               {requestButtonText[paymentType as ServerPaymentType]}
             </Button>
           </Style.Footer>
         )}
       </Style.UserDetailsFrame>
       {openUpdateStatusModal && (
-        <TwoButtonModal
+        <ConfirmModal
           id={newStatus !== '' && getStatusCode(newStatus) === 'full' ? 'fullpayment_side_modal' : ''}
           modalHandler={cancelUpdateStatus}
           title="납부여부 변경"
-          height="215px"
           description="납부여부를 변경하시겠습니까?"
           cancel={{ text: '취소', onClick: cancelUpdateStatus }}
           confirm={{ text: '변경하기', onClick: updateStatus }}
         />
       )}
       {openRequestStatusModal && (
-        <TwoButtonModal
+        <ConfirmModal
           id="confirming_side_modal"
-          modalHandler={cancelRequestStatus}
+          modalHandler={handleRequestStatus}
           title="납부여부 변경"
-          height="240px"
           description={`총무에게 확인 요청을 보내시겠습니까? \n 요청 후 변경이 불가능합니다.`}
-          cancel={{ text: '취소', onClick: cancelRequestStatus }}
+          cancel={{ text: '취소', onClick: handleRequestStatus }}
           confirm={{ text: '요청하기', onClick: updateStatus }}
         />
       )}
       {openDeleteDetailModal && (
-        <TwoButtonModal
-          modalHandler={cancelDeleteDetail}
+        <ConfirmModal
+          modalHandler={handleDeleteDetailModal}
           title="내역 삭제"
-          height="240px"
           description={`벌금 내역을 삭제하시겠습니까? \n 삭제된 내역은 복구가 불가능합니다.`}
-          cancel={{ text: '취소', onClick: cancelDeleteDetail }}
+          cancel={{ text: '취소', onClick: handleDeleteDetailModal }}
           confirm={{ text: '삭제하기', onClick: deleteDetailInfo }}
         />
       )}

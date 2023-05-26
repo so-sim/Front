@@ -1,7 +1,7 @@
 import Button from '@/components/@common/Button';
 import React, { FC } from 'react';
 import Modal from '..';
-import { ModalButton } from '../TwoButtonModal';
+import { ModalButton } from '../ConfirmModal';
 import * as Style from './styles';
 
 interface OneButtonModalProps {

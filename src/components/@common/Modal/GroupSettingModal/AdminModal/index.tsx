@@ -12,7 +12,7 @@ import { useDeleteGroup, useGroupDetail, useUpdateGroup, useWithdrawalGroup } fr
 import { useParams } from 'react-router-dom';
 import { GroupColor } from '@/types/group';
 import { useGetMyNikname } from '@/queries/Group/useGetMyNickname';
-import { TwoButtonModal } from '../../TwoButtonModal';
+import { ConfirmModal } from '../../ConfirmModal';
 import { GROUP_DELETE, GROUP_WITHDRWWAL_ADMIN } from '@/constants/GroupWithdrawal';
 import { OneButtonModal } from '../../OneButtonModal';
 
@@ -139,7 +139,7 @@ export const AdminModal: FC<ModalHandlerProps> = ({ modalHandler }) => {
         />
       )}
       {showGroupWithdrawalModal && hasNoUser && (
-        <TwoButtonModal
+        <ConfirmModal
           width="448px"
           height="265px"
           modalHandler={handleGroupWithdrawalModal}
@@ -150,7 +150,7 @@ export const AdminModal: FC<ModalHandlerProps> = ({ modalHandler }) => {
         />
       )}
       {showGroupDeleteModal && hasNoUser && (
-        <TwoButtonModal
+        <ConfirmModal
           width="448px"
           height="265px"
           modalHandler={handleGroupDeleteModal}

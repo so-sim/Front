@@ -20,7 +20,7 @@ interface Props {
   id?: string;
 }
 
-export const TwoButtonModal = ({ modalHandler, title, description, cancel, confirm, flexDirection = 'row', width = '448px', height = '215px', id }: Props) => {
+export const ConfirmModal = ({ modalHandler, title, description, cancel, confirm, flexDirection = 'row', width = '448px', height = '215px', id }: Props) => {
   return (
     <Modal.Frame width={width} height={height} onClick={modalHandler}>
       <Modal.Header>

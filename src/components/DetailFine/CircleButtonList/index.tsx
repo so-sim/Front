@@ -1,4 +1,4 @@
-import { TwoButtonModal } from '@/components/@common/Modal/TwoButtonModal';
+import { ConfirmModal } from '@/components/@common/Modal/ConfirmModal';
 import { useUpdateDetailStatus } from '@/queries/Detail/useUpdateDetailStatus';
 import { ServerPaymentType } from '@/types/event';
 import { pushDataLayerByStatus } from '@/utils/pushDataLayer';
@@ -77,7 +77,7 @@ const CircleButtonList = ({ setOpenButtonListId, isOwn, status, statusList, even
         })}
       </Style.CircleButtonList>
       {showUpdateStatusModal && (
-        <TwoButtonModal
+        <ConfirmModal
           id={getGATrigger(newStatus)}
           modalHandler={cancelUpdateStatus}
           height="215px"

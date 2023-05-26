@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import useUserWithdrawalMutation from '@/queries/Auth/useUserWithdrawalMutation';
 import { useRecoilValue } from 'recoil';
 import { userState } from '@/store/userState';
-import { TwoButtonModal } from '@/components/@common/Modal/TwoButtonModal';
+import { ConfirmModal } from '@/components/@common/Modal/ConfirmModal';
 
 const WithdrawalReason = () => {
   const [selectedReason, setSelectedReason] = useState({ title: '', wording: '' });
@@ -54,7 +54,7 @@ const WithdrawalReason = () => {
         </Button>
       </Style.Footer>
       {showWithdrawModal && (
-        <TwoButtonModal
+        <ConfirmModal
           width="448px"
           height="240px"
           title={WITHDRAWAL_MODAL.FINAL.title}

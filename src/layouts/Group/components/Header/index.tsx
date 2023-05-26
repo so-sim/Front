@@ -4,7 +4,7 @@ import { LOGO } from '@/assets/icons/Logo';
 import { SYSTEM } from '@/assets/icons/System';
 import { USER } from '@/assets/icons/User';
 import DropDown from '@/components/@common/DropDown';
-import { TwoButtonModal } from '@/components/@common/Modal/TwoButtonModal';
+import { ConfirmModal } from '@/components/@common/Modal/ConfirmModal';
 import UserConfigModal from '@/components/@common/Modal/UserConfigModal';
 import { userState } from '@/store/userState';
 import React, { useEffect, useRef, useState } from 'react';
@@ -59,7 +59,7 @@ const GroupLayoutHeader = () => {
         </Style.UserConfigButton>
       </Style.Header>
       {showLogOutModal && (
-        <TwoButtonModal
+        <ConfirmModal
           title="로그아웃"
           description="로그아웃 하시겠습니까?"
           modalHandler={handleShowLogOutmodal}

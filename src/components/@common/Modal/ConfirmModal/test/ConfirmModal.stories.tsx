@@ -1,16 +1,16 @@
 import { ComponentStory, ComponentMeta } from '@storybook/react';
-import { TwoButtonModal } from '..';
+import { ConfirmModal } from '..';
 
 export default {
-  title: 'Component/Modal/TwoButtonModal',
-  component: TwoButtonModal,
-} as ComponentMeta<typeof TwoButtonModal>;
+  title: 'Component/Modal/ConfirmModal',
+  component: ConfirmModal,
+} as ComponentMeta<typeof ConfirmModal>;
 
-const Template: ComponentStory<typeof TwoButtonModal> = (args) => <TwoButtonModal {...args} />;
+const Template: ComponentStory<typeof ConfirmModal> = (args) => <ConfirmModal {...args} />;
 
-export const TwoButtonModalTemplate = Template.bind({});
+export const ConfirmModalTemplate = Template.bind({});
 
-TwoButtonModalTemplate.args = {
+ConfirmModalTemplate.args = {
   modalHandler: () => {},
   title: '납부여부 변경',
   height: '215px',
