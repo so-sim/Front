@@ -14,7 +14,7 @@ interface Props {
   width?: string;
   height?: string;
   description: string;
-  cancel: ModalButton;
+  cancel?: ModalButton;
   confirm: ModalButton;
   flexDirection?: 'row' | 'column';
   id?: string;
@@ -30,10 +30,12 @@ export const ConfirmModal = ({ modalHandler, title, description, cancel, confirm
         <Style.Desc>{description}</Style.Desc>
       </Modal.Body>
       <Modal.Footer flexDirection={flexDirection}>
-        <Button width="100%" height="42px" color="white" onClick={cancel.onClick}>
-          {cancel.text}
-        </Button>
-        <Button width="100%" height="42px" color="black" onClick={confirm.onClick} id={id}>
+        {cancel && (
+          <Button width="100%" height="42px" color="white" onClick={cancel.onClick}>
+            {cancel.text}
+          </Button>
+        )}
+        <Button width="100%" height="42px" color={cancel ? 'black' : 'white'} onClick={confirm.onClick} id={id}>
           {confirm.text}
         </Button>
       </Modal.Footer>

@@ -14,7 +14,6 @@ import { GroupColor } from '@/types/group';
 import { useGetMyNikname } from '@/queries/Group/useGetMyNickname';
 import { ConfirmModal } from '../../ConfirmModal';
 import { GROUP_DELETE, GROUP_WITHDRWWAL_ADMIN } from '@/constants/GroupWithdrawal';
-import { OneButtonModal } from '../../OneButtonModal';
 
 export const AdminModal: FC<ModalHandlerProps> = ({ modalHandler }) => {
   const [title, setTitle] = useState('');
@@ -129,9 +128,8 @@ export const AdminModal: FC<ModalHandlerProps> = ({ modalHandler }) => {
         </Modal.Footer>
       </Modal.Frame>
       {showGroupWithdrawalModal && hasMoreUser && (
-        <OneButtonModal
+        <ConfirmModal
           width="448px"
-          height="265px"
           modalHandler={handleGroupWithdrawalModal}
           title={GROUP_WITHDRWWAL_ADMIN.HAS_USER.title}
           description={GROUP_WITHDRWWAL_ADMIN.HAS_USER.desc}
@@ -161,7 +159,7 @@ export const AdminModal: FC<ModalHandlerProps> = ({ modalHandler }) => {
         />
       )}
       {showGroupDeleteModal && hasMoreUser && (
-        <OneButtonModal
+        <ConfirmModal
           width="448px"
           height="240px"
           modalHandler={handleGroupDeleteModal}

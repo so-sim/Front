@@ -2,10 +2,9 @@ import { WITHDRAWAL_MODAL } from '@/constants/Withdrawal';
 import { useCanWithdrawl } from '@/queries/Auth/useCanWithdrawal';
 import { userState } from '@/store/userState';
 import React, { FC, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 import Modal from '..';
-import { OneButtonModal } from '../OneButtonModal';
+import { ConfirmModal } from '../ConfirmModal';
 import * as Style from './styles';
 
 interface UserConfigModalProps {
@@ -47,7 +46,7 @@ const UserConfigModal: FC<UserConfigModalProps> = ({ handleModal }) => {
         </Modal.Body>
       </Modal.Frame>
       {showWithdrawalModal && (
-        <OneButtonModal
+        <ConfirmModal
           height="265px"
           width="448px"
           title={WITHDRAWAL_MODAL.HAS_ADMIM.title}
