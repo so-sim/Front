@@ -1,7 +1,7 @@
 import React, { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react';
 import { ARROW } from '@/assets/icons/Arrow';
 import * as Style from '../styles';
-import MiniCalendar from './MiniCalendar';
+import MiniCalendar from '../../MiniCalendar';
 
 export type DropBoxColor = 'white' | 'gray' | 'disabled';
 
@@ -11,7 +11,6 @@ interface CalendarDropBoxProps {
   boxWidth?: string;
   width?: number;
   color?: DropBoxColor;
-  direction?: 'left' | 'right';
 }
 
 export const CalendarDropBox = ({ setType, type, boxWidth = '138px', color = 'gray' }: CalendarDropBoxProps) => {

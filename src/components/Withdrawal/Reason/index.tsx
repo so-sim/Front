@@ -56,7 +56,6 @@ const WithdrawalReason = () => {
       {showWithdrawModal && (
         <ConfirmModal
           width="448px"
-          height="240px"
           title={WITHDRAWAL_MODAL.FINAL.title}
           description={WITHDRAWAL_MODAL.FINAL.desc}
           cancel={{ text: '취소', onClick: handleWithdrawModal }}

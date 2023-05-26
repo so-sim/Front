@@ -139,7 +139,6 @@ export const AdminModal: FC<ModalHandlerProps> = ({ modalHandler }) => {
       {showGroupWithdrawalModal && hasNoUser && (
         <ConfirmModal
           width="448px"
-          height="265px"
           modalHandler={handleGroupWithdrawalModal}
           title={GROUP_WITHDRWWAL_ADMIN.NO_USER.title}
           description={GROUP_WITHDRWWAL_ADMIN.NO_USER.desc}
@@ -150,7 +149,6 @@ export const AdminModal: FC<ModalHandlerProps> = ({ modalHandler }) => {
       {showGroupDeleteModal && hasNoUser && (
         <ConfirmModal
           width="448px"
-          height="265px"
           modalHandler={handleGroupDeleteModal}
           title={GROUP_DELETE.NO_USER.title}
           description={GROUP_DELETE.NO_USER.desc}
@@ -161,7 +159,6 @@ export const AdminModal: FC<ModalHandlerProps> = ({ modalHandler }) => {
       {showGroupDeleteModal && hasMoreUser && (
         <ConfirmModal
           width="448px"
-          height="240px"
           modalHandler={handleGroupDeleteModal}
           title={GROUP_DELETE.HAS_USER.title}
           description={GROUP_DELETE.HAS_USER.desc}

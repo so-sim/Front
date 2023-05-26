@@ -79,7 +79,6 @@ export const UserModal: FC<ModalHandlerProps> = ({ modalHandler }) => {
       {showGroupWithdrawalModal && (
         <ConfirmModal
           width="448px"
-          height="265px"
           modalHandler={handleGroupWithdrawalModal}
           title={GROUP_WITHDRWWAL_USER.titel}
           description={GROUP_WITHDRWWAL_USER.desc}

@@ -1,6 +1,6 @@
-import React from 'react';
 import Button from '@/components/@common/Button';
 import Modal from '@/components/@common/Modal';
+import { ConfirmModalType } from '@/constants/Confirm';
 import * as Style from './styels';
 
 export interface ModalButton {
@@ -12,17 +12,17 @@ interface Props {
   modalHandler: () => void;
   title: string;
   width?: string;
-  height?: string;
   description: string;
   cancel?: ModalButton;
   confirm: ModalButton;
   flexDirection?: 'row' | 'column';
   id?: string;
+  type?: ConfirmModalType;
 }
 
-export const ConfirmModal = ({ modalHandler, title, description, cancel, confirm, flexDirection = 'row', width = '448px', height = '215px', id }: Props) => {
+export const ConfirmModal = ({ modalHandler, title, description, cancel, confirm, flexDirection = 'row', width = '448px', id }: Props) => {
   return (
-    <Modal.Frame width={width} height={height} onClick={modalHandler}>
+    <Modal.Frame width={width} onClick={modalHandler}>
       <Modal.Header>
         <Style.Title>{title}</Style.Title>
       </Modal.Header>

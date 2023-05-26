@@ -47,7 +47,6 @@ const UserConfigModal: FC<UserConfigModalProps> = ({ handleModal }) => {
       </Modal.Frame>
       {showWithdrawalModal && (
         <ConfirmModal
-          height="265px"
           width="448px"
           title={WITHDRAWAL_MODAL.HAS_ADMIM.title}
           description={WITHDRAWAL_MODAL.HAS_ADMIM.desc}

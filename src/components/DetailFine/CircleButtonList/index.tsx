@@ -81,7 +81,6 @@ const CircleButtonList = ({ setOpenButtonListId, isOwn, status, statusList, even
         <ConfirmModal
           id={getGATrigger(newStatus)}
           modalHandler={cancelUpdateStatus}
-          height="215px"
           title={DETAIL_STATUS.CHANGE.title}
           description={DETAIL_STATUS.CHANGE.description}
           cancel={{ text: '취소', onClick: cancelUpdateStatus }}
