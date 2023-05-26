@@ -28,11 +28,11 @@ const DetailList = ({ dateFilterProperty, mode, selectedEventId, details, setSel
     setOpenUserDetails(true);
   };
 
-  const closeCircleButtonList = () => {
-    setOpenButtonListId(0);
-  };
-
   useEffect(() => {
+    const closeCircleButtonList = () => {
+      setOpenButtonListId(0);
+    };
+
     window.addEventListener('click', closeCircleButtonList);
     return () => {
       window.removeEventListener('click', closeCircleButtonList);

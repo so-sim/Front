@@ -76,6 +76,10 @@ const UserDetails = ({ open, setOpen, select, setSelect }: Props) => {
     }
   };
 
+  const requestConfirmStatus = () => {
+    mutateDetailStatus({ paymentType: 'con', eventId });
+  };
+
   const deleteDetailInfo = () => {
     deleteDetail(eventId);
   };
@@ -197,7 +201,7 @@ const UserDetails = ({ open, setOpen, select, setSelect }: Props) => {
           title={DETAIL_STATUS.REQUEST.title}
           description={DETAIL_STATUS.REQUEST.description}
           cancel={{ text: '취소', onClick: handleRequestStatus }}
-          confirm={{ text: '요청하기', onClick: updateStatus }}
+          confirm={{ text: '요청하기', onClick: requestConfirmStatus }}
         />
       )}
       {openDeleteDetailModal && (
