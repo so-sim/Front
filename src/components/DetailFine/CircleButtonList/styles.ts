@@ -3,7 +3,7 @@ import styled from '@emotion/styled';
 export const CircleButtonList = styled.ul`
   position: absolute;
   display: flex;
-  z-index: 30;
+  z-index: 10;
   flex-direction: column;
   align-items: center;
   background: ${({ theme }) => theme.colors.neutral_300_b};

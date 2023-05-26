@@ -16,7 +16,7 @@ export const Overlay = styled.div`
 
 export const ModalFrame = styled.div<ModalProps>`
   width: ${(props) => props.width};
-  height: ${(props) => props.height};
+  height: fit-content;
   background-color: ${({ theme }) => theme.colors.white};
   border-radius: ${(props) => props.borderRadius};
   display: flex;

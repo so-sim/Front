@@ -1,4 +1,5 @@
 import React, { FC, ReactNode } from 'react';
+import { createPortal } from 'react-dom';
 import { SYSTEM } from '../../../assets/icons/System';
 import * as Style from './styles';
 
@@ -23,13 +24,16 @@ export interface ModalFooterProps extends PropsWithChild {
 }
 
 const ModalFrame: FC<ModalProps> = ({ width = '376px', height = '283px', onClick, children, borderRadius = '4px' }) => {
-  return (
+  const portal = document.getElementById('portal') as HTMLDivElement;
+
+  return createPortal(
     <>
       <Style.Overlay onClick={onClick} />
       <Style.ModalFrame width={width} height={height} borderRadius={borderRadius}>
         {children}
       </Style.ModalFrame>
-    </>
+    </>,
+    portal,
   );
 };
 
