@@ -15,7 +15,6 @@ import { useGroupDetail } from '@/queries/Group';
 import { useParams } from 'react-router-dom';
 import { pushDataLayer } from '@/utils/pushDataLayer';
 import { initialSelectData } from '@/pages/FineBook/DetailFine';
-import { DETAIL, DETAIL_STATUS } from '@/constants/Detail';
 
 type Props = {
   open: boolean;
@@ -115,11 +114,10 @@ const UserDetails = ({ open, setOpen, select, setSelect }: Props) => {
   const dropdownStatusList = () => {
     if (isAdmin) {
       return statusList.filter((status) => {
-        if (newStatus && status.title !== '확인필요') {
-          return status.title !== newStatus;
-        } else {
-          return status.title !== getStatusText(paymentType);
-        }
+        if (status.title === '확인필요') return false;
+        if (paymentType === 'con') return true;
+
+        return status.title !== getStatusText(paymentType);
       });
     }
     if (isOwn) {
@@ -148,13 +146,13 @@ const UserDetails = ({ open, setOpen, select, setSelect }: Props) => {
               <DropBox color="disabled" setType={() => undefined} boxWidth="116px" width={116} type={groundsDate.split(' ')[0]} dropDownList={statusList} />
             </Label>
             <Label title="납부여부" width="80px">
-              {isAdmin || (isOwn && paymentType === 'non') ? (
+              {dropdownStatusList().length ? (
                 <DropBox
                   color={newStatus !== 'con' ? 'white' : 'disabled'}
                   boxWidth="112px"
                   width={112}
                   setType={setNewStatus}
-                  type={newStatus !== '' ? newStatus : paymentType === 'con' && !isAdmin ? '확인중' : getStatusText(paymentType)}
+                  type={newStatus !== '' ? newStatus : getStatusText(paymentType)}
                   dropDownList={dropdownStatusList()}
                 />
               ) : (
@@ -184,10 +182,10 @@ const UserDetails = ({ open, setOpen, select, setSelect }: Props) => {
           </Style.Footer>
         )}
       </Style.UserDetailsFrame>
-      {openUpdateStatusModal && (
+      {openUpdateStatusModal && newStatus && (
         <ConfirmModal
           type="CHANGE_STATUS"
-          id={newStatus !== '' && getStatusCode(newStatus) === 'full' ? 'fullpayment_side_modal' : ''}
+          id={getStatusCode(newStatus) === 'full' ? 'fullpayment_side_modal' : ''}
           modalHandler={cancelUpdateStatus}
           cancel={cancelUpdateStatus}
           confirm={updateStatus}
