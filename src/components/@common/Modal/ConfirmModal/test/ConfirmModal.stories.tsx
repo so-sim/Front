@@ -12,10 +12,8 @@ export const ConfirmModalTemplate = Template.bind({});
 
 ConfirmModalTemplate.args = {
   modalHandler: () => {},
-  title: '납부여부 변경',
-  description: '납부여부를 변경하시겠습니까?',
-  cancel: { text: '취소', onClick: () => {} },
-  confirm: { text: '확인', onClick: () => {} },
+  cancel: () => {},
+  confirm: () => {},
   flexDirection: 'row',
 };
 
@@ -23,8 +21,6 @@ export const ConfirmModalTemplateOneButton = Template.bind({});
 
 ConfirmModalTemplateOneButton.args = {
   modalHandler: () => {},
-  title: '납부여부 변경',
-  description: '납부여부를 변경하시겠습니까?',
-  confirm: { text: '확인', onClick: () => {} },
+  confirm: () => {},
   flexDirection: 'row',
 };

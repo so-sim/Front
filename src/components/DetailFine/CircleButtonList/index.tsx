@@ -48,9 +48,9 @@ const CircleButtonList = ({ setOpenButtonListId, isOwn, status, statusList, even
   const [newStatus, setNewStatus] = useState<ServerPaymentType>('non');
   const [showUpdateStatusModal, setShowUpdateStatusModal] = useState(false);
 
-  const updateStatus = (paymentType: ServerPaymentType) => {
-    if (status != paymentType) {
-      mutateDetailStatus({ paymentType, eventId });
+  const updateStatus = () => {
+    if (status != newStatus) {
+      mutateDetailStatus({ paymentType: newStatus, eventId });
     }
   };
 
@@ -78,14 +78,7 @@ const CircleButtonList = ({ setOpenButtonListId, isOwn, status, statusList, even
         })}
       </Style.CircleButtonList>
       {showUpdateStatusModal && (
-        <ConfirmModal
-          id={getGATrigger(newStatus)}
-          modalHandler={cancelUpdateStatus}
-          title={DETAIL_STATUS.CHANGE.title}
-          description={DETAIL_STATUS.CHANGE.description}
-          cancel={{ text: '취소', onClick: cancelUpdateStatus }}
-          confirm={{ text: '변경하기', onClick: () => updateStatus(newStatus) }}
-        />
+        <ConfirmModal type="CHANGE_STATUS" id={getGATrigger(newStatus)} modalHandler={cancelUpdateStatus} cancel={cancelUpdateStatus} confirm={updateStatus} />
       )}
     </>
   );

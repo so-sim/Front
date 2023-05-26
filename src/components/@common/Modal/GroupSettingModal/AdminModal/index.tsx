@@ -128,43 +128,15 @@ export const AdminModal: FC<ModalHandlerProps> = ({ modalHandler }) => {
         </Modal.Footer>
       </Modal.Frame>
       {showGroupWithdrawalModal && hasMoreUser && (
-        <ConfirmModal
-          width="448px"
-          modalHandler={handleGroupWithdrawalModal}
-          title={GROUP_WITHDRWWAL_ADMIN.HAS_USER.title}
-          description={GROUP_WITHDRWWAL_ADMIN.HAS_USER.desc}
-          confirm={{ text: '확인', onClick: handleGroupWithdrawalModal }}
-        />
+        <ConfirmModal type="GROUP_WITHDRAWAL_ADMIN_HAS_USER" width="448px" modalHandler={handleGroupWithdrawalModal} confirm={handleGroupWithdrawalModal} />
       )}
       {showGroupWithdrawalModal && hasNoUser && (
-        <ConfirmModal
-          width="448px"
-          modalHandler={handleGroupWithdrawalModal}
-          title={GROUP_WITHDRWWAL_ADMIN.NO_USER.title}
-          description={GROUP_WITHDRWWAL_ADMIN.NO_USER.desc}
-          cancel={{ text: '취소', onClick: handleGroupWithdrawalModal }}
-          confirm={{ text: '모임 탈퇴', onClick: withdrwalGroup }}
-        />
+        <ConfirmModal type="GROUP_WITHDRAWAL_ADMIN_NO_USER" width="448px" modalHandler={handleGroupWithdrawalModal} cancel={handleGroupWithdrawalModal} confirm={withdrwalGroup} />
       )}
       {showGroupDeleteModal && hasNoUser && (
-        <ConfirmModal
-          width="448px"
-          modalHandler={handleGroupDeleteModal}
-          title={GROUP_DELETE.NO_USER.title}
-          description={GROUP_DELETE.NO_USER.desc}
-          cancel={{ text: '취소', onClick: handleGroupDeleteModal }}
-          confirm={{ text: '삭제하기', onClick: onDeleteGroup }}
-        />
+        <ConfirmModal type="GROUP_DELETE_NO_USER" width="448px" modalHandler={handleGroupDeleteModal} cancel={handleGroupDeleteModal} confirm={onDeleteGroup} />
       )}
-      {showGroupDeleteModal && hasMoreUser && (
-        <ConfirmModal
-          width="448px"
-          modalHandler={handleGroupDeleteModal}
-          title={GROUP_DELETE.HAS_USER.title}
-          description={GROUP_DELETE.HAS_USER.desc}
-          confirm={{ text: '확인', onClick: handleGroupDeleteModal }}
-        />
-      )}
+      {showGroupDeleteModal && hasMoreUser && <ConfirmModal type="GROUP_DELETE_HAS_USER" width="448px" modalHandler={handleGroupDeleteModal} confirm={handleGroupDeleteModal} />}
     </>
   );
 };

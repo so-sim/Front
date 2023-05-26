@@ -77,14 +77,7 @@ export const UserModal: FC<ModalHandlerProps> = ({ modalHandler }) => {
         </Modal.Footer>
       </Modal.Frame>
       {showGroupWithdrawalModal && (
-        <ConfirmModal
-          width="448px"
-          modalHandler={handleGroupWithdrawalModal}
-          title={GROUP_WITHDRWWAL_USER.titel}
-          description={GROUP_WITHDRWWAL_USER.desc}
-          cancel={{ text: '취소', onClick: handleGroupWithdrawalModal }}
-          confirm={{ text: '모임 탈퇴', onClick: withdrwalGroup }}
-        />
+        <ConfirmModal type="GROUP_WITHDRAWAL_USER" width="448px" modalHandler={handleGroupWithdrawalModal} cancel={handleGroupWithdrawalModal} confirm={withdrwalGroup} />
       )}
     </>
   );

@@ -2,41 +2,35 @@ import Button from '@/components/@common/Button';
 import Modal from '@/components/@common/Modal';
 import { ConfirmModalType } from '@/constants/Confirm';
 import * as Style from './styels';
-
-export interface ModalButton {
-  text: string;
-  onClick: () => void;
-}
+import { CONFIRM_MODAL } from '@/constants/Confirm';
 
 interface Props {
   modalHandler: () => void;
-  title: string;
   width?: string;
-  description: string;
-  cancel?: ModalButton;
-  confirm: ModalButton;
+  cancel?: () => void;
+  confirm: () => void;
   flexDirection?: 'row' | 'column';
   id?: string;
-  type?: ConfirmModalType;
+  type: ConfirmModalType;
 }
 
-export const ConfirmModal = ({ modalHandler, title, description, cancel, confirm, flexDirection = 'row', width = '448px', id }: Props) => {
+export const ConfirmModal = ({ modalHandler, cancel, confirm, flexDirection = 'row', width = '448px', id, type }: Props) => {
   return (
     <Modal.Frame width={width} onClick={modalHandler}>
       <Modal.Header>
-        <Style.Title>{title}</Style.Title>
+        <Style.Title>{CONFIRM_MODAL[type].title}</Style.Title>
       </Modal.Header>
       <Modal.Body>
-        <Style.Desc>{description}</Style.Desc>
+        <Style.Desc>{CONFIRM_MODAL[type].description}</Style.Desc>
       </Modal.Body>
       <Modal.Footer flexDirection={flexDirection}>
         {cancel && (
-          <Button width="100%" height="42px" color="white" onClick={cancel.onClick}>
-            {cancel.text}
+          <Button width="100%" height="42px" color="white" onClick={cancel}>
+            취소
           </Button>
         )}
-        <Button width="100%" height="42px" color={cancel ? 'black' : 'white'} onClick={confirm.onClick} id={id}>
-          {confirm.text}
+        <Button width="100%" height="42px" color={cancel ? 'black' : 'white'} onClick={confirm} id={id}>
+          {CONFIRM_MODAL[type].confirm}
         </Button>
       </Modal.Footer>
     </Modal.Frame>

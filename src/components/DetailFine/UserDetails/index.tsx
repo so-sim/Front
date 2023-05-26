@@ -186,33 +186,17 @@ const UserDetails = ({ open, setOpen, select, setSelect }: Props) => {
       </Style.UserDetailsFrame>
       {openUpdateStatusModal && (
         <ConfirmModal
+          type="CHANGE_STATUS"
           id={newStatus !== '' && getStatusCode(newStatus) === 'full' ? 'fullpayment_side_modal' : ''}
           modalHandler={cancelUpdateStatus}
-          title={DETAIL_STATUS.CHANGE.title}
-          description={DETAIL_STATUS.CHANGE.description}
-          cancel={{ text: '취소', onClick: cancelUpdateStatus }}
-          confirm={{ text: '변경하기', onClick: updateStatus }}
+          cancel={cancelUpdateStatus}
+          confirm={updateStatus}
         />
       )}
       {openRequestStatusModal && (
-        <ConfirmModal
-          id="confirming_side_modal"
-          modalHandler={handleRequestStatus}
-          title={DETAIL_STATUS.REQUEST.title}
-          description={DETAIL_STATUS.REQUEST.description}
-          cancel={{ text: '취소', onClick: handleRequestStatus }}
-          confirm={{ text: '요청하기', onClick: requestConfirmStatus }}
-        />
+        <ConfirmModal type="REQUEST_CHANGE_STATUS" id="confirming_side_modal" modalHandler={handleRequestStatus} cancel={handleRequestStatus} confirm={requestConfirmStatus} />
       )}
-      {openDeleteDetailModal && (
-        <ConfirmModal
-          modalHandler={handleDeleteDetailModal}
-          title={DETAIL.DELETE.title}
-          description={DETAIL.DELETE.description}
-          cancel={{ text: '취소', onClick: handleDeleteDetailModal }}
-          confirm={{ text: '삭제하기', onClick: deleteDetailInfo }}
-        />
-      )}
+      {openDeleteDetailModal && <ConfirmModal type="DETAIL_DELETE" modalHandler={handleDeleteDetailModal} cancel={handleDeleteDetailModal} confirm={deleteDetailInfo} />}
       {openUpdateModal && <FineBookModal eventId={eventId} select={select} setOpen={setOpenUpdateModal} setSelect={setSelect} />}
     </>
   );

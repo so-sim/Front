@@ -59,15 +59,7 @@ const GroupLayoutHeader = () => {
           {showDropDown && <DropDown list={DorpDownList} width={90} setState={setDropDownState} onClose={handleDropDown} top={'32px'} dropDownRef={dropDownRef} />}
         </Style.UserConfigButton>
       </Style.Header>
-      {showLogOutModal && (
-        <ConfirmModal
-          title={LOGOUT.title}
-          description={LOGOUT.description}
-          modalHandler={handleShowLogOutmodal}
-          cancel={{ text: '취소', onClick: handleShowLogOutmodal }}
-          confirm={{ text: '로그아웃', onClick: onClickLogOut }}
-        />
-      )}
+      {showLogOutModal && <ConfirmModal type="LOGOUT" modalHandler={handleShowLogOutmodal} cancel={handleShowLogOutmodal} confirm={onClickLogOut} />}
       {showConfigModal && <UserConfigModal handleModal={handelShowConfigModal} />}
     </>
   );
