@@ -6,6 +6,7 @@ import { USER } from '@/assets/icons/User';
 import DropDown from '@/components/@common/DropDown';
 import { ConfirmModal } from '@/components/@common/Modal/ConfirmModal';
 import UserConfigModal from '@/components/@common/Modal/UserConfigModal';
+import { LOGOUT } from '@/constants/Auth';
 import { userState } from '@/store/userState';
 import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -60,8 +61,8 @@ const GroupLayoutHeader = () => {
       </Style.Header>
       {showLogOutModal && (
         <ConfirmModal
-          title="로그아웃"
-          description="로그아웃 하시겠습니까?"
+          title={LOGOUT.title}
+          description={LOGOUT.description}
           modalHandler={handleShowLogOutmodal}
           cancel={{ text: '취소', onClick: handleShowLogOutmodal }}
           confirm={{ text: '로그아웃', onClick: onClickLogOut }}

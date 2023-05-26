@@ -1,4 +1,5 @@
 import { ConfirmModal } from '@/components/@common/Modal/ConfirmModal';
+import { DETAIL_STATUS } from '@/constants/Detail';
 import { useUpdateDetailStatus } from '@/queries/Detail/useUpdateDetailStatus';
 import { ServerPaymentType } from '@/types/event';
 import { pushDataLayerByStatus } from '@/utils/pushDataLayer';
@@ -81,8 +82,8 @@ const CircleButtonList = ({ setOpenButtonListId, isOwn, status, statusList, even
           id={getGATrigger(newStatus)}
           modalHandler={cancelUpdateStatus}
           height="215px"
-          title="납부여부 변경"
-          description="납부여부를 변경하시겠습니까?"
+          title={DETAIL_STATUS.CHANGE.title}
+          description={DETAIL_STATUS.CHANGE.description}
           cancel={{ text: '취소', onClick: cancelUpdateStatus }}
           confirm={{ text: '변경하기', onClick: () => updateStatus(newStatus) }}
         />

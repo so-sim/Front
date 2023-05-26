@@ -3,7 +3,7 @@ import { SYSTEM } from '@/assets/icons/System';
 import { USER } from '@/assets/icons/User';
 import { Label, DropBox, Button } from '@/components/@common';
 import * as Style from './styles';
-import { ClientEventInfo, EventInfo, PaymentType, ServerPaymentType } from '@/types/event';
+import { ClientEventInfo, PaymentType, ServerPaymentType } from '@/types/event';
 import { changeNumberToMoney } from '@/utils/changeNumberToMoney';
 import { getStatusCode, getStatusText, statusText } from '@/utils/status';
 import { useDeleteDetail, useUpdateDetailStatus } from '@/queries/Detail';
@@ -15,7 +15,7 @@ import { useGroupDetail } from '@/queries/Group';
 import { useParams } from 'react-router-dom';
 import { pushDataLayer } from '@/utils/pushDataLayer';
 import { initialSelectData } from '@/pages/FineBook/DetailFine';
-import { ServerResponse } from '@/types/serverResponse';
+import { DETAIL, DETAIL_STATUS } from '@/constants/Detail';
 
 type Props = {
   open: boolean;
@@ -24,7 +24,7 @@ type Props = {
   setSelect: Dispatch<SetStateAction<ClientEventInfo>>;
 };
 
-const requestButtonText: { [key in ServerPaymentType]: string } = {
+const REQUEST_BUTTON: { [key in ServerPaymentType]: string } = {
   non: '확인 요청',
   con: '요청 완료',
   full: '확인 완료',
@@ -175,7 +175,7 @@ const UserDetails = ({ open, setOpen, select, setSelect }: Props) => {
         {!isAdmin && isOwn && (
           <Style.Footer>
             <Button width="150px" height="42px" color={paymentType === 'non' ? 'black' : 'disabled'} onClick={handleRequestStatus} id="confirming_side">
-              {requestButtonText[paymentType as ServerPaymentType]}
+              {REQUEST_BUTTON[paymentType as ServerPaymentType]}
             </Button>
           </Style.Footer>
         )}
@@ -184,8 +184,8 @@ const UserDetails = ({ open, setOpen, select, setSelect }: Props) => {
         <ConfirmModal
           id={newStatus !== '' && getStatusCode(newStatus) === 'full' ? 'fullpayment_side_modal' : ''}
           modalHandler={cancelUpdateStatus}
-          title="납부여부 변경"
-          description="납부여부를 변경하시겠습니까?"
+          title={DETAIL_STATUS.CHANGE.title}
+          description={DETAIL_STATUS.CHANGE.description}
           cancel={{ text: '취소', onClick: cancelUpdateStatus }}
           confirm={{ text: '변경하기', onClick: updateStatus }}
         />
@@ -194,8 +194,8 @@ const UserDetails = ({ open, setOpen, select, setSelect }: Props) => {
         <ConfirmModal
           id="confirming_side_modal"
           modalHandler={handleRequestStatus}
-          title="납부여부 변경"
-          description={`총무에게 확인 요청을 보내시겠습니까? \n 요청 후 변경이 불가능합니다.`}
+          title={DETAIL_STATUS.REQUEST.title}
+          description={DETAIL_STATUS.REQUEST.description}
           cancel={{ text: '취소', onClick: handleRequestStatus }}
           confirm={{ text: '요청하기', onClick: updateStatus }}
         />
@@ -203,8 +203,8 @@ const UserDetails = ({ open, setOpen, select, setSelect }: Props) => {
       {openDeleteDetailModal && (
         <ConfirmModal
           modalHandler={handleDeleteDetailModal}
-          title="내역 삭제"
-          description={`벌금 내역을 삭제하시겠습니까? \n 삭제된 내역은 복구가 불가능합니다.`}
+          title={DETAIL.DELETE.title}
+          description={DETAIL.DELETE.description}
           cancel={{ text: '취소', onClick: handleDeleteDetailModal }}
           confirm={{ text: '삭제하기', onClick: deleteDetailInfo }}
         />

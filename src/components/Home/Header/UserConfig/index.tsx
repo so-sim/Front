@@ -5,6 +5,7 @@ import { USER } from '@/assets/icons/User';
 import DropDown from '@/components/@common/DropDown';
 import { ConfirmModal } from '@/components/@common/Modal/ConfirmModal';
 import UserConfigModal from '@/components/@common/Modal/UserConfigModal';
+import { LOGOUT } from '@/constants/Auth';
 import { useEffect, useRef, useState } from 'react';
 import * as Style from './style';
 
@@ -53,8 +54,8 @@ const UserConfig = () => {
       </Style.UserConfig>
       {showLogOutModal && (
         <ConfirmModal
-          title="로그아웃"
-          description="로그아웃 하시겠습니까?"
+          title={LOGOUT.title}
+          description={LOGOUT.description}
           modalHandler={handleShowLogOutmodal}
           cancel={{ text: '취소', onClick: handleShowLogOutmodal }}
           confirm={{ text: '로그아웃', onClick: onClickLogOut }}
