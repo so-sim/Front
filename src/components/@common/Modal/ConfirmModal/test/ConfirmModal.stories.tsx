@@ -11,6 +11,7 @@ const Template: ComponentStory<typeof ConfirmModal> = (args) => <ConfirmModal {.
 export const ConfirmModalTemplate = Template.bind({});
 
 ConfirmModalTemplate.args = {
+  type: 'CHANGE_ADMIN',
   modalHandler: () => {},
   cancel: () => {},
   confirm: () => {},
@@ -20,6 +21,7 @@ ConfirmModalTemplate.args = {
 export const ConfirmModalTemplateOneButton = Template.bind({});
 
 ConfirmModalTemplateOneButton.args = {
+  type: 'WITHDRAWAL_HAS_ADMIN',
   modalHandler: () => {},
   confirm: () => {},
   flexDirection: 'row',
