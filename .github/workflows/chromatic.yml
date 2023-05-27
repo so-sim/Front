@@ -10,14 +10,14 @@ jobs:
     
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v2
-        with:
-          fetch-depth: 0
-          
+        uses: actions/checkout@v1
+        
       - name: Install Dependencies
-        run: yarn install
+        run: yarn
+        working-directory: storybook-static
         
       - name: Publish to Chromatic
         uses: chromaui/action@v1
         with:
           projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
+          working-directory: storybook-static
