@@ -8,6 +8,7 @@ import '@testing-library/jest-dom';
 import { matchers } from '@emotion/jest';
 import 'jest-canvas-mock';
 import { QueryCache } from '@tanstack/react-query';
+import 'intersection-observer';
 
 expect.extend(matchers);
 

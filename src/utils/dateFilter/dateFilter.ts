@@ -6,7 +6,7 @@ import { MonthFilter } from './monthFilter';
 import { RootDateFilter } from './rootDateFilter';
 import { WeekFilter } from './weekFilter';
 
-export interface DateFilterProperty {
+export interface DetailFilter {
   year?: number;
   month?: number;
   week?: number | null;
@@ -18,7 +18,7 @@ export interface DateFilterProperty {
 
 export interface IDateFilter {
   getTitle: (baseDate: Dayjs) => string;
-  update: (prev: DateFilterProperty, calendar: DateState) => DateFilterProperty;
+  update: (prev: DetailFilter, calendar: DateState) => DetailFilter;
   increaseDate: (baseDate: Dayjs) => DateState;
   decreaseDate: (baseDate: Dayjs) => DateState;
   updateDateStateByMode: (baseDate: Dayjs, mode: FilterMode) => DateState;
@@ -50,7 +50,7 @@ export class DateFilter extends RootDateFilter {
     return this.root.getTitle(baseDate);
   };
 
-  update = (prev: DateFilterProperty, calendar: DateState) => {
+  update = (prev: DetailFilter, calendar: DateState) => {
     return this.root.update(prev, calendar);
   };
 

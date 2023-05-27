@@ -1,4 +1,4 @@
-import { DateFilterProperty } from '@/utils/dateFilter/dateFilter';
+import { DetailFilter } from '@/utils/dateFilter/dateFilter';
 import { ClientEventInfo, EventInfo } from '@/types/event';
 import { changeNumberToMoney } from '@/utils/changeNumberToMoney';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
@@ -10,13 +10,13 @@ type Props = {
   selectedEventId: number;
   details?: EventInfo[];
   mode: FilterMode;
-  dateFilterProperty: DateFilterProperty;
+  detailFilter: DetailFilter;
   setSelect: Dispatch<SetStateAction<ClientEventInfo>>;
   setOpenUserDetails: Dispatch<SetStateAction<boolean>>;
 };
 
-const DetailList = ({ dateFilterProperty, mode, selectedEventId, details, setSelect, setOpenUserDetails }: Props) => {
-  const filteredDataNotFound = details?.length === 0 && mode === 'day' && dateFilterProperty.nickname === '' && dateFilterProperty.paymentType === '';
+const DetailList = ({ detailFilter, mode, selectedEventId, details, setSelect, setOpenUserDetails }: Props) => {
+  const filteredDataNotFound = details?.length === 0 && mode === 'day' && detailFilter.nickname === '' && detailFilter.paymentType === '';
 
   if (filteredDataNotFound) return <Style.NotFoundList>내역을 추가해주세요!</Style.NotFoundList>;
   if (details?.length === 0) return <Style.NotFoundList>선택하신 조건에 맞는 벌금 내역이 없습니다.</Style.NotFoundList>;

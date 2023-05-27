@@ -1,14 +1,14 @@
 import { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react';
 import { ARROW } from '@/assets/icons/Arrow';
 import * as Style from './styles';
-import { DateFilterProperty } from '@/utils/dateFilter/dateFilter';
+import { DetailFilter } from '@/utils/dateFilter/dateFilter';
 import { useParticipantList } from '@/queries/Group';
 import { useParams } from 'react-router-dom';
 import DropDown from '@/components/@common/DropDown';
 import { getStatusCode } from '@/utils/status';
 
 type Props = {
-  setDateFilter: Dispatch<SetStateAction<DateFilterProperty>>;
+  setDetailFilter: Dispatch<SetStateAction<DetailFilter>>;
 };
 
 type PaymentDropdown = '전체' | '미납' | '완납' | '확인필요';
@@ -20,7 +20,7 @@ const paymentTypeList: { title: PaymentDropdown; id?: string }[] = [
   { title: '확인필요', id: 'filter_confirming' },
 ];
 
-const TableHead = ({ setDateFilter }: Props) => {
+const TableHead = ({ setDetailFilter }: Props) => {
   const param = useParams();
 
   const { data } = useParticipantList(Number(param.groupId));
@@ -52,7 +52,7 @@ const TableHead = ({ setDateFilter }: Props) => {
   };
 
   useEffect(() => {
-    setDateFilter((prev) => ({
+    setDetailFilter((prev) => ({
       ...prev,
       page: 0,
       paymentType: paymentType === '전체' ? '' : getStatusCode(paymentType),

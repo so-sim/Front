@@ -1,19 +1,19 @@
 import { Dispatch, FC, SetStateAction } from 'react';
 import { ARROW } from '@/assets/icons/Arrow';
 import * as Style from './styles';
-import { DateFilterProperty } from '@/utils/dateFilter/dateFilter';
+import { DetailFilter } from '@/utils/dateFilter/dateFilter';
 
 type Props = {
   count?: number;
-  dateFilterProperty: DateFilterProperty;
-  setDateFilter: Dispatch<SetStateAction<DateFilterProperty>>;
+  detailFilter: DetailFilter;
+  setDetailFilter: Dispatch<SetStateAction<DetailFilter>>;
 };
 
-const Pagination = ({ count = 0, dateFilterProperty, setDateFilter }: Props) => {
+const Pagination = ({ count = 0, detailFilter, setDetailFilter }: Props) => {
   const pageCount = Math.ceil(count / 16 || 1);
 
   const increasePage = () => {
-    setDateFilter((prev) => {
+    setDetailFilter((prev) => {
       if (prev.page < pageCount - 1) return { ...prev, page: prev.page + 1 };
 
       return prev;
@@ -21,7 +21,7 @@ const Pagination = ({ count = 0, dateFilterProperty, setDateFilter }: Props) => 
   };
 
   const decreasePage = () => {
-    setDateFilter((prev) => {
+    setDetailFilter((prev) => {
       if (prev.page > 0) return { ...prev, page: prev.page - 1 };
 
       return prev;
@@ -29,7 +29,7 @@ const Pagination = ({ count = 0, dateFilterProperty, setDateFilter }: Props) => 
   };
 
   const moveToPage = (page: number) => {
-    setDateFilter((prev) => ({ ...prev, page }));
+    setDetailFilter((prev) => ({ ...prev, page }));
   };
 
   return (
@@ -37,7 +37,7 @@ const Pagination = ({ count = 0, dateFilterProperty, setDateFilter }: Props) => 
       <Style.DoubleArrow onClick={decreasePage}>{ARROW.DOUBLE_LEFT}</Style.DoubleArrow>
       {new Array(pageCount).fill(0).map((_, i) => {
         return (
-          <Style.Page onClick={() => moveToPage(i)} isSelected={dateFilterProperty.page === i}>
+          <Style.Page onClick={() => moveToPage(i)} isSelected={detailFilter.page === i}>
             {i + 1}
           </Style.Page>
         );

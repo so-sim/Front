@@ -17,7 +17,6 @@ import { pushDataLayer } from '@/utils/pushDataLayer';
 import { initialSelectData } from '@/pages/FineBook/DetailFine';
 
 type Props = {
-  open: boolean;
   setOpen: Dispatch<SetStateAction<boolean>>;
   select: ClientEventInfo;
   setSelect: Dispatch<SetStateAction<ClientEventInfo>>;
@@ -29,8 +28,9 @@ const REQUEST_BUTTON: { [key in ServerPaymentType]: string } = {
   full: '확인 완료',
 };
 
-const UserDetails = ({ open, setOpen, select, setSelect }: Props) => {
-  if (!open) return null;
+const STATUS_LIST: { title: PaymentType; id?: string }[] = [{ title: '미납', id: 'nonpayment_side' }, { title: '완납', id: 'fullpayment_side' }, { title: '확인필요' }];
+
+const UserDetails = ({ setOpen, select, setSelect }: Props) => {
   const { eventId, groundsDate, paymentType, userName, payment, grounds, userId } = select;
 
   const { groupId } = useParams();
@@ -47,7 +47,6 @@ const UserDetails = ({ open, setOpen, select, setSelect }: Props) => {
   const isAdmin = groupDetail?.content.isAdmin as boolean;
   const isOwn = user.userId === userId;
 
-  const statusList: { title: PaymentType; id?: string }[] = [{ title: '미납', id: 'nonpayment_side' }, { title: '완납', id: 'fullpayment_side' }, { title: '확인필요' }];
   const [newStatus, setNewStatus] = useState<PaymentType>('');
 
   const onSuccessUpdateStatus = (paymentType: ServerPaymentType) => {
@@ -113,7 +112,7 @@ const UserDetails = ({ open, setOpen, select, setSelect }: Props) => {
 
   const dropdownStatusList = () => {
     if (isAdmin) {
-      return statusList.filter((status) => {
+      return STATUS_LIST.filter((status) => {
         if (status.title === '확인필요') return false;
         if (paymentType === 'con') return true;
 
@@ -121,7 +120,7 @@ const UserDetails = ({ open, setOpen, select, setSelect }: Props) => {
       });
     }
     if (isOwn) {
-      return statusList.filter((status) => paymentType === 'non' && status.title === '확인필요');
+      return STATUS_LIST.filter((status) => paymentType === 'non' && status.title === '확인필요');
     }
     return [];
   };
@@ -143,7 +142,7 @@ const UserDetails = ({ open, setOpen, select, setSelect }: Props) => {
           </Style.Block>
           <Style.Row>
             <Label title="날짜" width="32px">
-              <DropBox color="disabled" setType={() => undefined} boxWidth="116px" width={116} type={groundsDate.split(' ')[0]} dropDownList={statusList} />
+              <DropBox color="disabled" setType={() => undefined} boxWidth="116px" width={116} type={groundsDate.split(' ')[0]} dropDownList={STATUS_LIST} />
             </Label>
             <Label title="납부여부" width="80px">
               {dropdownStatusList().length ? (
