@@ -1,7 +1,9 @@
 name: AWS-DEPLOY
+
 on:
   push:
-    branches: ['master']
+    branches: 
+    - master
 
 jobs:
   build-and-upload:
