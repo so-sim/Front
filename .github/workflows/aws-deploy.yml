@@ -8,6 +8,11 @@ on:
 jobs:
   build-and-upload:
     runs-on: ubuntu-latest
+    env:
+      NODE_ENV: production
+      REACT_APP_KAKAO_CLIENT_ID: ${{ secrets.REACT_APP_KAKAO_CLIENT_ID }}
+      REACT_APP_SERVICE_URL: ${{ secrets.REACT_APP_SERVICE_URL }}
+      
     steps:
       - uses: actions/checkout@v3
 
@@ -16,10 +21,7 @@ jobs:
 
       - name: Build
         run: yarn run build
-          env:
-            NODE_ENV: production
-            REACT_APP_KAKAO_CLIENT_ID: ${{ secrets.REACT_APP_KAKAO_CLIENT_ID }}
-            REACT_APP_SERVICE_URL: ${{ secrets.REACT_APP_SERVICE_URL }}
+
           
       - name: Upload S3 bucket
         uses: jakejarvis/s3-sync-action@master
