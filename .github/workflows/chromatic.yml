@@ -4,16 +4,25 @@ on:
   push:
     branches: ['master', 'dev']
     
+defaults:
+  run:
+    working-directory: storybook-static
+
 jobs:
   chromatic-deployment:
     runs-on: ubuntu-latest
-    
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
-        
+        with:
+          fetch-depth: 0
+          
       - name: Install Dependencies
-        run: yarn install
+        run: yarn
         
       - name: Publish to Chromatic
-        run: yarn chromatic --project-token=${{ secrets.CHROMATIC_PROJECT_TOKEN }}
+        uses: chromaui/action@v1
+        with:
+          workingDir: storybook-static
+          projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
+          exitZeroOnChanges: true
