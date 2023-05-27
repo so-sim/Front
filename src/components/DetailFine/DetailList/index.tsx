@@ -16,10 +16,10 @@ type Props = {
 };
 
 const DetailList = ({ dateFilterProperty, mode, selectedEventId, details, setSelect, setOpenUserDetails }: Props) => {
-  if (details == null) return null;
-  if (details.length === 0 && mode === 'day' && dateFilterProperty.nickname === '' && dateFilterProperty.paymentType === '')
-    return <Style.NotFoundList>내역을 추가해주세요!</Style.NotFoundList>;
-  if (details.length === 0) return <Style.NotFoundList>선택하신 조건에 맞는 벌금 내역이 없습니다.</Style.NotFoundList>;
+  const filteredDataNotFound = details?.length === 0 && mode === 'day' && dateFilterProperty.nickname === '' && dateFilterProperty.paymentType === '';
+
+  if (filteredDataNotFound) return <Style.NotFoundList>내역을 추가해주세요!</Style.NotFoundList>;
+  if (details?.length === 0) return <Style.NotFoundList>선택하신 조건에 맞는 벌금 내역이 없습니다.</Style.NotFoundList>;
 
   const [openButtonListId, setOpenButtonListId] = useState(0);
 
@@ -41,7 +41,7 @@ const DetailList = ({ dateFilterProperty, mode, selectedEventId, details, setSel
 
   return (
     <Style.DetailList>
-      {details.map((detail, i) => {
+      {details?.map((detail, i) => {
         const { groundsDate, userName, payment, grounds, eventId } = detail;
         return (
           <Style.TableRow key={i} isSelected={selectedEventId === eventId} onClick={() => handleUserDetailModal(detail)}>
