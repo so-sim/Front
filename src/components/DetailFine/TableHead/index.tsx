@@ -8,7 +8,6 @@ import DropDown from '@/components/@common/DropDown';
 import { getStatusCode } from '@/utils/status';
 
 type Props = {
-  setPage: Dispatch<SetStateAction<number>>;
   setDateFilter: Dispatch<SetStateAction<DateFilterProperty>>;
 };
 
@@ -21,7 +20,7 @@ const paymentTypeList: { title: PaymentDropdown; id?: string }[] = [
   { title: '확인필요', id: 'filter_confirming' },
 ];
 
-const TableHead = ({ setDateFilter, setPage }: Props) => {
+const TableHead = ({ setDateFilter }: Props) => {
   const param = useParams();
 
   const { data } = useParticipantList(Number(param.groupId));
@@ -53,7 +52,6 @@ const TableHead = ({ setDateFilter, setPage }: Props) => {
   };
 
   useEffect(() => {
-    setPage(0);
     setDateFilter((prev) => ({
       ...prev,
       page: 0,

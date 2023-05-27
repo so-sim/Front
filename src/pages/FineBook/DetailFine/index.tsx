@@ -31,9 +31,8 @@ const DetailFine = () => {
   const [openUserDetails, setOpenUserDetails] = useState(false);
   const [select, setSelect] = useState<ClientEventInfo>(initialSelectData);
 
-  const [page, setPage] = useState(0);
   const [mode, setMode] = useState<FilterMode>('day');
-  const [dateFilterProperty, setDateFilter] = useState<DateFilterProperty>({ nickname: '', paymentType: '' });
+  const [dateFilterProperty, setDateFilter] = useState<DateFilterProperty>({ nickname: '', paymentType: '', page: 0 });
 
   const calendarDate = useRecoilValue(dateState);
   const { data } = useGetDetailList(dateFilterProperty, calendarDate.baseDate, { groupId: Number(param.groupId) });
@@ -41,14 +40,9 @@ const DetailFine = () => {
   const dateFilter = useMemo(() => new DateFilter(mode, calendarDate.week), [mode]);
 
   useEffect(() => {
-    setPage(0);
     setMode(() => dateFilter.decideMode(calendarDate));
-    setDateFilter((prev) => dateFilter.update(prev, calendarDate));
+    setDateFilter((prev) => ({ ...dateFilter.update(prev, calendarDate), page: 0 }));
   }, [calendarDate.selectedDate, calendarDate.baseDate, calendarDate.week, mode]);
-
-  useEffect(() => {
-    setDateFilter((prev) => ({ ...prev, page }));
-  }, [page]);
 
   useEffect(() => {
     window.history.replaceState(null, '');
@@ -60,7 +54,7 @@ const DetailFine = () => {
         <DetailsHeader />
         <Style.DetailContent>
           <DateController mode={mode} setMode={setMode} setOpenAddModal={setOpenAddModal} />
-          <TableHead setPage={setPage} setDateFilter={setDateFilter} />
+          <TableHead setDateFilter={setDateFilter} />
           <DetailList
             dateFilterProperty={dateFilterProperty}
             mode={mode}
@@ -70,7 +64,7 @@ const DetailFine = () => {
             setOpenUserDetails={setOpenUserDetails}
           />
         </Style.DetailContent>
-        {Number(data?.content.totalCount) > 16 && <Pagination count={data?.content.totalCount} page={page} setPage={setPage} />}
+        {Number(data?.content.totalCount) > 16 && <Pagination count={data?.content.totalCount} dateFilterProperty={dateFilterProperty} setDateFilter={setDateFilter} />}
         <UserDetails open={openUserDetails} setOpen={setOpenUserDetails} select={select} setSelect={setSelect} />
       </Style.DetailFineFrame>
       {openAddModal && <FineBookModal setOpen={setOpenAddModal} />}

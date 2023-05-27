@@ -13,7 +13,7 @@ export interface DateFilterProperty {
   day?: number;
   nickname?: string;
   paymentType?: string;
-  page?: number;
+  page: number;
 }
 
 export interface IDateFilter {
