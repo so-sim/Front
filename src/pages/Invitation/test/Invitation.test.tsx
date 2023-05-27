@@ -32,10 +32,10 @@ describe('Invitaion Page 입장하기를 눌렀을 때', () => {
     // Arrange
     render(
       withRouter(
-        <>
+        <div id="portal">
           <RecoilObserver node={userState} initValue={{ userId: null, email: null }} />
           <Invitation />
-        </>,
+        </div>,
         '/invitation?groupId=1',
       ),
     );
@@ -77,10 +77,10 @@ describe('Invitaion Page 입장하기를 눌렀을 때', () => {
       // );
       render(
         withRouter(
-          <>
+          <div id="portal">
             <RecoilObserver node={userState} initValue={{ userId: 1, email: 'antoni@nana.com' }} />
             <Invitation />
-          </>,
+          </div>,
           '/invitation?groupId=1',
         ),
       );
@@ -124,13 +124,13 @@ describe('Invitaion Page 입장하기를 눌렀을 때', () => {
       const groupId = 1;
       render(
         withRouter(
-          <>
+          <div id="portal">
             <RecoilObserver node={userState} initValue={{ userId: 1, email: 'antoni@nana.com' }} />
             <Routes>
               <Route path={`/group/${groupId}/book`} element={<p>{groupId}번 그룹 페이지입니다.</p>} />
               <Route path={`/invitation`} element={<Invitation />} />
             </Routes>
-          </>,
+          </div>,
           `/invitation?groupId=${groupId}`,
         ),
       );
