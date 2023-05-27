@@ -12,13 +12,18 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
+      - name: Generate Environment Variables File for Production
+        run: |
+          echo "REACT_APP_KAKAO_CLIENT_ID=$REACT_APP_KAKAO_CLIENT_ID" >> .env.production
+          echo "REACT_APP_SERVICE_URL=$REACT_APP_SERVICE_URL" >> .env.production
+        env:
+          REACT_APP_KAKAO_CLIENT_ID: ${{ secrets.REACT_APP_KAKAO_CLIENT_ID }}
+          REACT_APP_SERVICE_URL: ${{ secrets.REACT_APP_SERVICE_URL }}
+
       - name: Install Dependencies
         run: yarn install
 
       - name: Build
-        env:
-          REACT_APP_KAKAO_CLIENT_ID: ${{ secrets.REACT_APP_KAKAO_CLIENT_ID }}
-          REACT_APP_SERVICE_URL: ${{ secrets.REACT_APP_SERVICE_URL }}
         run: yarn run build
 
       - name: Upload S3 bucket
@@ -32,3 +37,7 @@ jobs:
           AWS_REGION: 'ap-northeast-2'
           SOURCE_DIR: 'dist'
           DEST_DIR: 'dist'
+
+      - name: Invalidate CloudFront
+        uses: chetan/invalidate-cloudfront-action@master
+        env:
