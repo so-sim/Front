@@ -17,7 +17,6 @@ import { pushDataLayer } from '@/utils/pushDataLayer';
 import { initialSelectData } from '@/pages/FineBook/DetailFine';
 
 type Props = {
-  setOpen: Dispatch<SetStateAction<boolean>>;
   select: ClientEventInfo;
   setSelect: Dispatch<SetStateAction<ClientEventInfo>>;
 };
@@ -30,7 +29,7 @@ const REQUEST_BUTTON: { [key in ServerPaymentType]: string } = {
 
 const STATUS_LIST: { title: PaymentType; id?: string }[] = [{ title: '미납', id: 'nonpayment_side' }, { title: '완납', id: 'fullpayment_side' }, { title: '확인필요' }];
 
-const UserDetails = ({ setOpen, select, setSelect }: Props) => {
+const UserDetails = ({ select, setSelect }: Props) => {
   const { eventId, groundsDate, paymentType, userName, payment, grounds, userId } = select;
 
   const { groupId } = useParams();
@@ -61,7 +60,7 @@ const UserDetails = ({ setOpen, select, setSelect }: Props) => {
 
   const onSuccessDeleteInfo = () => {
     setOpenDeleteDetailModal(false);
-    setOpen(false);
+    closeUserDetails();
   };
 
   const { mutate: mutateDetailStatus } = useUpdateDetailStatus(onSuccessUpdateStatus);
@@ -100,7 +99,6 @@ const UserDetails = ({ setOpen, select, setSelect }: Props) => {
   };
 
   const closeUserDetails = () => {
-    setOpen(false);
     setSelect(initialSelectData);
   };
 

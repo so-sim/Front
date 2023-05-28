@@ -23,8 +23,8 @@ export const initialSelectData: EventInfo = {
 const DetailFine = () => {
   const { groupId } = useParams();
 
-  const [openUserDetails, setOpenUserDetails] = useState(false);
   const [select, setSelect] = useState<ClientEventInfo>(initialSelectData);
+  const hasSelectedInfo: boolean = select.eventId !== 0;
 
   const [mode, setMode] = useState<FilterMode>('day');
   const [detailFilter, setDetailFilter] = useState<DetailFilter>({ nickname: '', paymentType: '', page: 0 });
@@ -45,17 +45,10 @@ const DetailFine = () => {
       <Style.DetailContent>
         <DateController mode={mode} setMode={setMode} />
         <TableHead setDetailFilter={setDetailFilter} />
-        <DetailList
-          detailFilter={detailFilter}
-          mode={mode}
-          selectedEventId={select.eventId}
-          details={data?.content.list}
-          setSelect={setSelect}
-          setOpenUserDetails={setOpenUserDetails}
-        />
+        <DetailList detailFilter={detailFilter} mode={mode} selectedEventId={select.eventId} details={data?.content.list} setSelect={setSelect} />
       </Style.DetailContent>
       {Number(data?.content.totalCount) > 16 && <Pagination count={data?.content.totalCount} detailFilter={detailFilter} setDetailFilter={setDetailFilter} />}
-      {openUserDetails && <UserDetails setOpen={setOpenUserDetails} select={select} setSelect={setSelect} />}
+      {hasSelectedInfo && <UserDetails select={select} setSelect={setSelect} />}
     </Style.DetailFineFrame>
   );
 };

@@ -12,10 +12,9 @@ type Props = {
   mode: FilterMode;
   detailFilter: DetailFilter;
   setSelect: Dispatch<SetStateAction<ClientEventInfo>>;
-  setOpenUserDetails: Dispatch<SetStateAction<boolean>>;
 };
 
-const DetailList = ({ detailFilter, mode, selectedEventId, details, setSelect, setOpenUserDetails }: Props) => {
+const DetailList = ({ detailFilter, mode, selectedEventId, details, setSelect }: Props) => {
   const filteredDataNotFound = details?.length === 0 && mode === 'day' && detailFilter.nickname === '' && detailFilter.paymentType === '';
 
   if (filteredDataNotFound) return <Style.NotFoundList>내역을 추가해주세요!</Style.NotFoundList>;
@@ -25,7 +24,6 @@ const DetailList = ({ detailFilter, mode, selectedEventId, details, setSelect, s
 
   const handleUserDetailModal = (detail: EventInfo) => {
     setSelect(detail);
-    setOpenUserDetails(true);
   };
 
   useEffect(() => {
