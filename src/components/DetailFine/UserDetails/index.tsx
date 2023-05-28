@@ -16,6 +16,7 @@ import { useParams } from 'react-router-dom';
 import { pushDataLayer } from '@/utils/pushDataLayer';
 import { initialSelectData } from '@/pages/FineBook/DetailFine';
 import useModal from '@/hooks/useModal';
+import { GA } from '@/constants/GA';
 
 type Props = {
   select: ClientEventInfo;
@@ -28,7 +29,7 @@ const REQUEST_BUTTON: { [key in ServerPaymentType]: string } = {
   full: '확인 완료',
 };
 
-const STATUS_LIST: { title: PaymentType; id?: string }[] = [{ title: '미납', id: 'nonpayment_side' }, { title: '완납', id: 'fullpayment_side' }, { title: '확인필요' }];
+const STATUS_LIST: { title: PaymentType; id?: string }[] = [{ title: '미납', id: GA.NON.SIDE_BUTTON }, { title: '완납', id: GA.FULL.SIDE_BUTTON }, { title: '확인필요' }];
 
 const UserDetails = ({ select, setSelect }: Props) => {
   const { eventId, groundsDate, paymentType, userName, payment, grounds, userId } = select;
@@ -155,7 +156,7 @@ const UserDetails = ({ select, setSelect }: Props) => {
         )}
         {!isAdmin && isOwn && (
           <Style.Footer>
-            <Button width="150px" height="42px" color={paymentType === 'non' ? 'black' : 'disabled'} onClick={handleRequestConfirmModal} id="confirming_side">
+            <Button width="150px" height="42px" color={paymentType === 'non' ? 'black' : 'disabled'} onClick={handleRequestConfirmModal} id={GA.CON.SIDE_BUTTON}>
               {REQUEST_BUTTON[paymentType as ServerPaymentType]}
             </Button>
           </Style.Footer>
@@ -164,7 +165,7 @@ const UserDetails = ({ select, setSelect }: Props) => {
       {showUpdateConfirmModal && newStatus && (
         <ConfirmModal
           type="CHANGE_STATUS"
-          id={getStatusCode(newStatus) === 'full' ? 'fullpayment_side_modal' : ''}
+          id={getStatusCode(newStatus) === 'full' ? GA.FULL.SIDE_MODAL : ''}
           modalHandler={cancelUpdateStatus}
           cancel={cancelUpdateStatus}
           confirm={updateStatus}
@@ -173,7 +174,7 @@ const UserDetails = ({ select, setSelect }: Props) => {
       {showRequestConfirmModal && (
         <ConfirmModal
           type="REQUEST_CHANGE_STATUS"
-          id="confirming_side_modal"
+          id={GA.CON.SIDE_MODAL}
           modalHandler={handleRequestConfirmModal}
           cancel={handleRequestConfirmModal}
           confirm={requestConfirmStatus}

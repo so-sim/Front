@@ -9,6 +9,7 @@ import { useRecoilValue } from 'recoil';
 import { AuthModal } from '@/components/@common/Modal/LoginModal';
 import { useInView } from 'react-intersection-observer';
 import React from 'react';
+import { GA } from '@/constants/GA';
 
 export const CardList = () => {
   const { userId } = useRecoilValue(userState);
@@ -46,7 +47,7 @@ export const CardList = () => {
         ))}
         <div ref={ref} />
       </Style.CardList>
-      {showCreateGroupModal && <CreateGroupModal modalHandler={handleCreateGroupModal} id="create_main_modal" />}
+      {showCreateGroupModal && <CreateGroupModal modalHandler={handleCreateGroupModal} id={GA.CREATE.MAIN_MODAL} />}
       {showLoginModal && <AuthModal modalHandler={handleCreateGroupModal} />}
     </>
   );

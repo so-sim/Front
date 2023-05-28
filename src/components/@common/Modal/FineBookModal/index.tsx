@@ -18,6 +18,7 @@ import { getStatusCode, getStatusText } from '@/utils/status';
 import { pushDataLayer } from '@/utils/pushDataLayer';
 import { ServerResponse } from '@/types/serverResponse';
 import { removeCommaFromPayment } from '@/utils/removeCommaFromPayment';
+import { GA } from '@/constants/GA';
 
 interface Props {
   modalHandler: () => void;
@@ -27,8 +28,8 @@ interface Props {
 }
 
 const STATUS_LIST: { title: PaymentType; id?: string }[] = [
-  { title: '미납', id: 'nonpayment_modify' },
-  { title: '완납', id: 'fullpayment_modify' },
+  { title: '미납', id: GA.NON.LIST_MODAL },
+  { title: '완납', id: GA.FULL.LIST_MODAL },
 ];
 
 export const FineBookModal = ({ modalHandler, eventId, select, setSelect }: Props) => {
@@ -166,13 +167,13 @@ export const FineBookModal = ({ modalHandler, eventId, select, setSelect }: Prop
               updateDetail();
             }}
             loading={isCreate ? createLoading : updateLoading}
-            id={isCreate ? 'add_list_normal' : ''}
+            id={isCreate ? GA.ADD_LIST.NORMAL : ''}
           >
             {isCreate ? '추가하기' : '저장하기'}
           </Button>
           {isCreate && (
             <Button
-              id="add_list_keep"
+              id={GA.ADD_LIST.KEEP}
               color={checkFormIsValid() ? 'white' : 'white-disabled'}
               width="100%"
               height="42px"

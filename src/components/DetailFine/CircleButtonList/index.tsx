@@ -1,5 +1,6 @@
 import { ConfirmModal } from '@/components/@common/Modal/ConfirmModal';
 import { STATUS_LIST } from '@/constants/Detail';
+import { GA } from '@/constants/GA';
 import { useUpdateDetailStatus } from '@/queries/Detail/useUpdateDetailStatus';
 import { ServerPaymentType } from '@/types/event';
 import { pushDataLayerByStatus } from '@/utils/pushDataLayer';
@@ -15,8 +16,8 @@ interface Props extends CircleDropButtonProps {
 
 const getGATrigger = (newStatus: ServerPaymentType): string => {
   const id = {
-    con: 'confirming_list_modal',
-    full: 'fullpayment_list_modal',
+    con: GA.CON.LIST_MODAL,
+    full: GA.FULL.LIST_MODAL,
     non: '',
   };
 

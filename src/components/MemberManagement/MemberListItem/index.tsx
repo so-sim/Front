@@ -2,6 +2,7 @@ import { SYSTEM } from '@/assets/icons/System';
 import { USER } from '@/assets/icons/User';
 import DropDown from '@/components/@common/DropDown';
 import { ConfirmModal } from '@/components/@common/Modal/ConfirmModal';
+import { GA } from '@/constants/GA';
 import { useChangeAdmin, useGroupDetail } from '@/queries/Group';
 import React, { FC, useEffect, useRef, useState } from 'react';
 import { useParams } from 'react-router-dom';
@@ -12,7 +13,7 @@ interface MemberListItemProps {
 }
 
 const DropDonwList = [
-  { title: '총무 넘기기', svg: SYSTEM.SETTING_SM, id: 'toss_manager' },
+  { title: '총무 넘기기', svg: SYSTEM.SETTING_SM, id: GA.TOSS_MANAGER.BUTTON },
   // { title: '퇴출', svg: SYSTEM.LOGOUT },
 ];
 
@@ -65,7 +66,14 @@ const MemberListItem: FC<MemberListItemProps> = ({ nickname }) => {
         )}
       </Style.MemberContainer>
       {showChangeAdminModal && (
-        <ConfirmModal type="CHANGE_ADMIN" width="448px" modalHandler={handleShowChangeAdminModal} cancel={handleShowChangeAdminModal} confirm={onClickConfirm} />
+        <ConfirmModal
+          type="CHANGE_ADMIN"
+          width="448px"
+          modalHandler={handleShowChangeAdminModal}
+          cancel={handleShowChangeAdminModal}
+          confirm={onClickConfirm}
+          id={GA.TOSS_MANAGER.MODAL}
+        />
       )}
     </>
   );

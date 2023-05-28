@@ -6,6 +6,7 @@ import { useParticipantList } from '@/queries/Group';
 import { useParams } from 'react-router-dom';
 import DropDown from '@/components/@common/DropDown';
 import { getStatusCode } from '@/utils/status';
+import { GA } from '@/constants/GA';
 
 type Props = {
   setDetailFilter: Dispatch<SetStateAction<DetailFilter>>;
@@ -15,9 +16,9 @@ type PaymentDropdown = '전체' | '미납' | '완납' | '확인필요';
 
 const paymentTypeList: { title: PaymentDropdown; id?: string }[] = [
   { title: '전체' },
-  { title: '미납', id: 'filter_nonpayment' },
-  { title: '완납', id: 'filter_fullpayment' },
-  { title: '확인필요', id: 'filter_confirming' },
+  { title: '미납', id: GA.FILTER.NON },
+  { title: '완납', id: GA.FILTER.FULL },
+  { title: '확인필요', id: GA.FILTER.CON },
 ];
 
 const TableHead = ({ setDetailFilter }: Props) => {
@@ -63,7 +64,7 @@ const TableHead = ({ setDetailFilter }: Props) => {
   return (
     <Style.TableHead>
       <Style.Element>날짜</Style.Element>
-      <Style.PointerElement onClick={handlePaymentDropDown} ref={paymentTypeDropDownRef} id="filter_payment">
+      <Style.PointerElement onClick={handlePaymentDropDown} ref={paymentTypeDropDownRef}>
         <span>납부여부</span>
         <Style.Arrow>{ARROW.DOWN_SM}</Style.Arrow>
         {openPaymentTypeDropdown && (
@@ -75,23 +76,23 @@ const TableHead = ({ setDetailFilter }: Props) => {
             onClose={handlePaymentDropDown}
             direction="right"
             dropDownRef={paymentTypeDropDownRef}
-            id="filter_payment_drop"
+            id={GA.FILTER.PAYMENT_BUTTON}
           />
         )}
       </Style.PointerElement>
-      <Style.PointerElement ref={memberDropDownRef} onClick={handleMemeberDropDown} id="filter_member">
+      <Style.PointerElement ref={memberDropDownRef} onClick={handleMemeberDropDown}>
         <span>팀원</span>
         <Style.Arrow>{ARROW.DOWN_SM}</Style.Arrow>
         {openMemberDropdown && (
           <DropDown
             dropDownRef={memberDropDownRef}
-            list={getParticipantList()}
+            list={getParticipantList().map((v) => ({ ...v, id: GA.FILTER.MEMBER_DROP }))}
             setState={setMember}
             width={208}
             top="40px"
             onClose={handleMemeberDropDown}
             direction="right"
-            id="filter_member_drop"
+            id={GA.FILTER.MEMBER_BUTTON}
           />
         )}
       </Style.PointerElement>

@@ -6,6 +6,7 @@ import { ModalProps } from '@/components/@common/Modal';
 import { SYSTEM } from '@/assets/icons/System';
 import { useParams } from 'react-router-dom';
 import { copyInvitationLink } from '@/utils/copyInvitationLink';
+import { GA } from '@/constants/GA';
 
 const InviteModal: FC<Partial<ModalProps>> = ({ onClick }) => {
   const { groupId } = useParams();
@@ -23,7 +24,7 @@ const InviteModal: FC<Partial<ModalProps>> = ({ onClick }) => {
       </Modal.Body>
       <div style={{ height: '12px' }} />
       <Modal.Footer>
-        <Button color="primary" width="100%" leftIcon={SYSTEM.LINK} height="42px" onClick={() => copyInvitationLink(Number(groupId))} id="invitation_modal">
+        <Button color="primary" width="100%" leftIcon={SYSTEM.LINK} height="42px" onClick={() => copyInvitationLink(Number(groupId))} id={GA.INVITATION.MODAL}>
           초대링크 복사하기
         </Button>
       </Modal.Footer>
