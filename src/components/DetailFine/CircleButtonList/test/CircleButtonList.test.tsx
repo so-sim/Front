@@ -1,6 +1,5 @@
 import { withRouter } from '@/tests/withRouter';
 import { render, screen } from '@testing-library/react';
-import { STATUS_LIST } from '@/constants/Detail';
 import CircleButtonList from '..';
 
 describe('CircleButtonList', () => {
@@ -17,7 +16,6 @@ describe('CircleButtonList', () => {
             isOwn={false}
             eventId={1}
             isAdmin={isAdmin}
-            statusList={STATUS_LIST}
           />,
         ),
       );
@@ -36,7 +34,6 @@ describe('CircleButtonList', () => {
             isOwn={true}
             eventId={1}
             isAdmin={isAdmin}
-            statusList={STATUS_LIST}
           />,
         ),
       );
@@ -61,7 +58,6 @@ describe('CircleButtonList', () => {
             isOwn={true}
             eventId={1}
             isAdmin={isAdmin}
-            statusList={STATUS_LIST}
           />,
         ),
       );

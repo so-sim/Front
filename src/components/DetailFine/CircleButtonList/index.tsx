@@ -1,5 +1,5 @@
 import { ConfirmModal } from '@/components/@common/Modal/ConfirmModal';
-import { DETAIL_STATUS } from '@/constants/Detail';
+import { STATUS_LIST } from '@/constants/Detail';
 import { useUpdateDetailStatus } from '@/queries/Detail/useUpdateDetailStatus';
 import { ServerPaymentType } from '@/types/event';
 import { pushDataLayerByStatus } from '@/utils/pushDataLayer';
@@ -7,11 +7,9 @@ import { Dispatch, SetStateAction, useState } from 'react';
 import CircleDropButton, { CircleDropButtonProps } from '../CircleDropButton';
 import * as Style from './styles';
 
-interface CircleButtonListProps extends CircleDropButtonProps {
+interface Props extends CircleDropButtonProps {
   isOwn: boolean;
-  statusList: ServerPaymentType[];
   eventId: number;
-  isAdmin: boolean;
   setOpenButtonListId: Dispatch<SetStateAction<number>>;
 }
 
@@ -25,10 +23,10 @@ const getGATrigger = (newStatus: ServerPaymentType): string => {
   return id[newStatus];
 };
 
-const CircleButtonList = ({ setOpenButtonListId, isOwn, status, statusList, eventId, isAdmin }: CircleButtonListProps) => {
+const CircleButtonList = ({ setOpenButtonListId, isOwn, status, eventId, isAdmin = false }: Props) => {
   const adminStatusList: ServerPaymentType[] = [
     status,
-    ...statusList.filter((element) => {
+    ...STATUS_LIST.filter((element) => {
       if (status === 'con') return element !== status;
 
       return element !== status && element !== 'con';
