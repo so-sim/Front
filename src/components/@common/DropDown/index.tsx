@@ -1,5 +1,5 @@
 import { EmotionJSX } from '@emotion/react/types/jsx-namespace';
-import { Dispatch, RefObject, SetStateAction, useEffect } from 'react';
+import { RefObject, useEffect } from 'react';
 import * as Style from './styles';
 
 export interface DropDownProps<T = string> {
@@ -11,7 +11,7 @@ export interface DropDownProps<T = string> {
   top: string;
   width?: number;
   onClose: () => void;
-  setState: Dispatch<SetStateAction<T>>;
+  setState: (title: T) => void;
   align?: 'center' | 'start';
   direction?: 'left' | 'right';
   dropDownRef: RefObject<HTMLDivElement> | RefObject<HTMLButtonElement>;
