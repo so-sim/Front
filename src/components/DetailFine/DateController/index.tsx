@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react';
+import { Dispatch, SetStateAction, useEffect, useMemo, useRef, useState } from 'react';
 import { ARROW } from '@/assets/icons/Arrow';
 import Button from '@/components/@common/Button';
 import * as Style from './styles';
@@ -29,17 +29,19 @@ const DateController = ({ mode, setMode }: Props) => {
   const { groupId } = useParams();
   const { data: groupData } = useGroupDetail(Number(groupId));
   const dropDownRef = useRef<HTMLDivElement>(null);
+  const initialAddModalState = useCheckLocationState();
 
   const [{ baseDate, week }, setSelectedDate] = useRecoilState(dateState);
 
+  const [openAddModal, setOpenAddModal] = useState<boolean>(initialAddModalState);
   const [openWeeklyFilterDrop, setOpenWeeklyFilterDrop] = useState(false);
-  const [selectedWeek, setSelectedWeek] = useState('');
-
-  const handleWeeklyFilterDrop = () => {
-    setOpenWeeklyFilterDrop(false);
-  };
 
   const dateFilter = new DateFilter(mode, week);
+
+  const handleDateStateWeek = (weekTitle: string) => {
+    const week = Number(weekTitle[0]);
+    setSelectedDate((prev) => dateFilter.goToWeek(prev, week));
+  };
 
   const increaseCalendarByMode = () => {
     setSelectedDate(({ baseDate }) => dateFilter.increaseDate(baseDate));
@@ -49,33 +51,24 @@ const DateController = ({ mode, setMode }: Props) => {
     setSelectedDate(({ baseDate }) => dateFilter.decreaseDate(baseDate));
   };
 
-  useEffect(() => {
-    if (mode === 'week') {
-      const weekNumber = Number(selectedWeek[0]);
-      const startOfMonthDay = dayjs(baseDate).set('date', 1).startOf('month').day();
-      const startOfWeekDate = (weekNumber - 1) * 7 + 1 - startOfMonthDay;
-
-      setSelectedDate((prev) => ({
-        ...prev,
-        week: weekNumber,
-        baseDate: weekNumber === 1 ? dayjs(prev.baseDate).startOf('month') : dayjs(prev.baseDate).set('date', startOfWeekDate),
-      }));
-    }
-  }, [selectedWeek]);
-
-  useEffect(() => {
-    if (week !== null) setSelectedWeek(`${week}주`);
-  }, []);
-
-  useEffect(() => {
-    if (mode !== 'week') setOpenWeeklyFilterDrop(false);
-  }, [mode]);
-
-  const initialAddModalState = useCheckLocationState();
-  const [openAddModal, setOpenAddModal] = useState<boolean>(initialAddModalState);
+  const handleWeeklyFilterDrop = () => {
+    setOpenWeeklyFilterDrop((prev) => !prev);
+  };
 
   const handleAddModal = () => {
     setOpenAddModal((prev) => !prev);
+  };
+
+  const handleDateFilterMode = (buttonMode: FilterMode) => {
+    handleWeeklyFilterDrop();
+    if (mode === buttonMode) return;
+    setMode(buttonMode);
+    setSelectedDate((prev) => dateFilter.updateDateStateByMode(prev.baseDate, buttonMode));
+  };
+
+  const updateToToday = () => {
+    setMode('day');
+    setSelectedDate((prev) => ({ ...prev, baseDate: dayjs(), selectedDate: dayjs(), week: null }));
   };
 
   return (
@@ -92,13 +85,7 @@ const DateController = ({ mode, setMode }: Props) => {
                 {ARROW.RIGHT}
               </Style.ArrowWrapper>
             </Style.ArrowBlock>
-            <Style.TodayButton
-              onClick={() => {
-                setMode('day');
-                setSelectedDate((prev) => ({ ...prev, baseDate: dayjs(), selectedDate: dayjs(), week: null }));
-              }}
-              id="today_list"
-            >
+            <Style.TodayButton onClick={updateToToday} id="today_list">
               오늘
             </Style.TodayButton>
           </Style.Block>
@@ -107,15 +94,10 @@ const DateController = ({ mode, setMode }: Props) => {
               {filterButtonList.map((btn) => {
                 return (
                   <Style.FilterButton
-                    id={btn.id}
+                    id={btn.id} // ga
                     key={btn.id}
                     isActive={mode === btn.mode}
-                    onClick={() => {
-                      setOpenWeeklyFilterDrop((prev) => !prev);
-                      if (mode === btn.mode) return;
-                      setMode(btn.mode);
-                      setSelectedDate((prev) => dateFilter.updateDateStateByMode(prev.baseDate, btn.mode));
-                    }}
+                    onClick={() => handleDateFilterMode(btn.mode)}
                   >
                     <span>{btn.text}</span>
                     {btn.mode === 'week' && mode === 'week' && openWeeklyFilterDrop && (
@@ -123,7 +105,7 @@ const DateController = ({ mode, setMode }: Props) => {
                         <DropDown
                           width={60}
                           align="center"
-                          setState={setSelectedWeek}
+                          setState={handleDateStateWeek}
                           list={customedWeek(baseDate)}
                           top="7px"
                           onClose={handleWeeklyFilterDrop}

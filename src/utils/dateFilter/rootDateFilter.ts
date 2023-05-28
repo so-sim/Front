@@ -1,4 +1,5 @@
 import { FilterMode } from '@/pages/FineBook/DetailFine';
+import { DateState } from '@/store/dateState';
 import dayjs, { Dayjs } from 'dayjs';
 
 export class RootDateFilter {
@@ -9,6 +10,17 @@ export class RootDateFilter {
       baseDate: changedDate,
       week: mode === 'week' ? Math.ceil((changedDate.startOf('month').day() + changedDate.date()) / 7) : null,
       selectedDate: mode === 'day' ? changedDate : null,
+    };
+  };
+
+  goToWeek = ({ baseDate }: DateState, week: number): DateState => {
+    const startOfMonthDay = dayjs(baseDate).set('date', 1).startOf('month').day();
+    const startOfWeekDate = (week - 1) * 7 + 1 - startOfMonthDay;
+
+    return {
+      baseDate: week === 1 ? dayjs(baseDate).startOf('month') : dayjs(baseDate).set('date', startOfWeekDate),
+      week,
+      selectedDate: null,
     };
   };
 
