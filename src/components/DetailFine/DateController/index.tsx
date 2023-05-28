@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction, useEffect, useMemo, useRef, useState } from 'react';
+import { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react';
 import { ARROW } from '@/assets/icons/Arrow';
 import Button from '@/components/@common/Button';
 import * as Style from './styles';
@@ -39,7 +39,7 @@ const DateController = ({ mode, setMode }: Props) => {
     setOpenWeeklyFilterDrop(false);
   };
 
-  const dateFilter = useMemo(() => new DateFilter(mode, week), [mode]);
+  const dateFilter = new DateFilter(mode, week);
 
   const increaseCalendarByMode = () => {
     setSelectedDate(({ baseDate }) => dateFilter.increaseDate(baseDate));
