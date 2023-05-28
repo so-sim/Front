@@ -2,11 +2,10 @@ import { useEffect, useMemo, useState } from 'react';
 import { useGetDetailList } from '@/queries/Detail/useGetDetailList';
 import { ClientEventInfo, EventInfo } from '@/types/event';
 import { DateController, DetailList, DetailsHeader, Pagination, TableHead, UserDetails } from '@/components/DetailFine';
-import { FineBookModal } from '@/components/@common/Modal/FineBookModal';
 import * as Style from './styles';
 import { useRecoilValue } from 'recoil';
 import { dateState } from '@/store/dateState';
-import { useLocation, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { DateFilter, DetailFilter } from '@/utils/dateFilter/dateFilter';
 
 export type FilterMode = 'month' | 'week' | 'day';
@@ -39,9 +38,6 @@ const DetailFine = () => {
     setMode(() => dateFilter.decideMode(calendarDate));
     setDetailFilter((prev) => ({ ...dateFilter.update(prev, calendarDate), page: 0 }));
   }, [calendarDate.selectedDate, calendarDate.baseDate, calendarDate.week, mode]);
-
-  // 캘린더에서 내역 계속해서 추가하기를 했을 때 모달이 꺼지지 않고, 켜져 있어야 함
-  // 처음 렌더링 되었을 때 켜져있고, 그 이후 동작에 맡겨야 하기 때문에 아래 useEffect에서 state null로 바꿔줌
 
   return (
     <Style.DetailFineFrame>

@@ -9,9 +9,10 @@ import { DateFilter } from '@/utils/dateFilter/dateFilter';
 import { customedWeek } from '@/utils/customedWeek';
 import DropDown from '@/components/@common/DropDown';
 import { useGroupDetail } from '@/queries/Group';
-import { useLocation, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { FilterMode } from '@/pages/FineBook/DetailFine';
 import { FineBookModal } from '@/components/@common/Modal/FineBookModal';
+import useCheckLocationState from '@/hooks/useCheckLocationState';
 
 type Props = {
   mode: FilterMode;
@@ -70,11 +71,9 @@ const DateController = ({ mode, setMode }: Props) => {
     if (mode !== 'week') setOpenWeeklyFilterDrop(false);
   }, [mode]);
 
-  const location = useLocation();
-  const [openAddModal, setOpenAddModal] = useState<boolean>(location.state || false);
-  useEffect(() => {
-    window.history.replaceState(null, '');
-  }, []);
+  const initialAddModalState = useCheckLocationState();
+  const [openAddModal, setOpenAddModal] = useState<boolean>(initialAddModalState);
+
   const handleAddModal = () => {
     setOpenAddModal((prev) => !prev);
   };
