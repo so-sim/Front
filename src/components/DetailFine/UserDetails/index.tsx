@@ -15,6 +15,7 @@ import { useGroupDetail } from '@/queries/Group';
 import { useParams } from 'react-router-dom';
 import { pushDataLayer } from '@/utils/pushDataLayer';
 import { initialSelectData } from '@/pages/FineBook/DetailFine';
+import useModal from '@/hooks/useModal';
 
 type Props = {
   select: ClientEventInfo;
@@ -36,21 +37,21 @@ const UserDetails = ({ select, setSelect }: Props) => {
 
   const { data: groupDetail } = useGroupDetail(Number(groupId));
 
-  const [openUpdateModal, setOpenUpdateModal] = useState(false);
-  const [openUpdateStatusModal, setOpenUpdateStatusModal] = useState(false);
-  const [openRequestStatusModal, setOpenRequestStatusModal] = useState(false);
-  const [openDeleteDetailModal, setOpenDeleteDetailModal] = useState(false);
+  const { show: showUpdateModal, toggle: handleUpdateModal } = useModal(false);
+  const { show: showUpdateConfirmModal, open: openUpdateConfirmModal, close: closeUpdateConfirmModal } = useModal(false);
+  const { show: showRequestConfirmModal, close: closeRequestConfirmModal, toggle: handleRequestConfirmModal } = useModal(false);
+  const { show: showDeleteConfirmModal, toggle: handleDeleteConfirmModal } = useModal(false);
+
+  const [newStatus, setNewStatus] = useState<PaymentType>('');
 
   const user = useRecoilValue(userState);
 
   const isAdmin = groupDetail?.content.isAdmin as boolean;
   const isOwn = user.userId === userId;
 
-  const [newStatus, setNewStatus] = useState<PaymentType>('');
-
   const onSuccessUpdateStatus = (paymentType: ServerPaymentType) => {
-    setOpenUpdateStatusModal(false);
-    setOpenRequestStatusModal(false);
+    closeUpdateConfirmModal();
+    closeRequestConfirmModal();
     setNewStatus('');
 
     setSelect((prev) => ({ ...prev, paymentType }));
@@ -58,13 +59,12 @@ const UserDetails = ({ select, setSelect }: Props) => {
     if (isAdmin === false) pushDataLayer('confirming', { route: 'detail' });
   };
 
-  const onSuccessDeleteInfo = () => {
-    setOpenDeleteDetailModal(false);
-    closeUserDetails();
+  const closeUserDetails = () => {
+    setSelect(initialSelectData);
   };
 
   const { mutate: mutateDetailStatus } = useUpdateDetailStatus(onSuccessUpdateStatus);
-  const { mutate: deleteDetail } = useDeleteDetail(onSuccessDeleteInfo);
+  const { mutate: deleteDetail } = useDeleteDetail(closeUserDetails);
 
   const updateStatus = () => {
     if (newStatus === '') return;
@@ -81,31 +81,13 @@ const UserDetails = ({ select, setSelect }: Props) => {
     deleteDetail(eventId);
   };
 
-  const handleUpdateModal = () => {
-    setOpenUpdateModal((prev) => !prev);
-  };
-
-  const handleDeleteDetailModal = () => {
-    setOpenDeleteDetailModal((prev) => !prev);
-  };
-
   const cancelUpdateStatus = () => {
     setNewStatus('');
-    setOpenUpdateStatusModal(false);
-  };
-
-  const handleRequestStatus = () => {
-    setOpenRequestStatusModal((prev) => !prev);
-  };
-
-  const closeUserDetails = () => {
-    setSelect(initialSelectData);
+    closeUpdateConfirmModal();
   };
 
   useEffect(() => {
-    if (newStatus !== '') {
-      setOpenUpdateStatusModal(true);
-    }
+    if (newStatus !== '') openUpdateConfirmModal();
   }, [newStatus]);
 
   const dropdownStatusList = () => {
@@ -145,7 +127,7 @@ const UserDetails = ({ select, setSelect }: Props) => {
             <Label title="납부여부" width="80px">
               {dropdownStatusList().length ? (
                 <DropBox
-                  color={newStatus !== 'con' ? 'white' : 'disabled'}
+                  color="white"
                   boxWidth="112px"
                   width={112}
                   setType={setNewStatus}
@@ -163,7 +145,7 @@ const UserDetails = ({ select, setSelect }: Props) => {
         </Style.UserDetailsContent>
         {isAdmin && (
           <Style.Footer>
-            <Button onClick={handleDeleteDetailModal} color="white">
+            <Button onClick={handleDeleteConfirmModal} color="white">
               삭제
             </Button>
             <Button onClick={handleUpdateModal} color="black">
@@ -173,13 +155,13 @@ const UserDetails = ({ select, setSelect }: Props) => {
         )}
         {!isAdmin && isOwn && (
           <Style.Footer>
-            <Button width="150px" height="42px" color={paymentType === 'non' ? 'black' : 'disabled'} onClick={handleRequestStatus} id="confirming_side">
+            <Button width="150px" height="42px" color={paymentType === 'non' ? 'black' : 'disabled'} onClick={handleRequestConfirmModal} id="confirming_side">
               {REQUEST_BUTTON[paymentType as ServerPaymentType]}
             </Button>
           </Style.Footer>
         )}
       </Style.UserDetailsFrame>
-      {openUpdateStatusModal && newStatus && (
+      {showUpdateConfirmModal && newStatus && (
         <ConfirmModal
           type="CHANGE_STATUS"
           id={getStatusCode(newStatus) === 'full' ? 'fullpayment_side_modal' : ''}
@@ -188,11 +170,17 @@ const UserDetails = ({ select, setSelect }: Props) => {
           confirm={updateStatus}
         />
       )}
-      {openRequestStatusModal && (
-        <ConfirmModal type="REQUEST_CHANGE_STATUS" id="confirming_side_modal" modalHandler={handleRequestStatus} cancel={handleRequestStatus} confirm={requestConfirmStatus} />
+      {showRequestConfirmModal && (
+        <ConfirmModal
+          type="REQUEST_CHANGE_STATUS"
+          id="confirming_side_modal"
+          modalHandler={handleRequestConfirmModal}
+          cancel={handleRequestConfirmModal}
+          confirm={requestConfirmStatus}
+        />
       )}
-      {openDeleteDetailModal && <ConfirmModal type="DETAIL_DELETE" modalHandler={handleDeleteDetailModal} cancel={handleDeleteDetailModal} confirm={deleteDetailInfo} />}
-      {openUpdateModal && <FineBookModal eventId={eventId} select={select} modalHandler={handleUpdateModal} setSelect={setSelect} />}
+      {showDeleteConfirmModal && <ConfirmModal type="DETAIL_DELETE" modalHandler={handleDeleteConfirmModal} cancel={handleDeleteConfirmModal} confirm={deleteDetailInfo} />}
+      {showUpdateModal && <FineBookModal eventId={eventId} select={select} modalHandler={handleUpdateModal} setSelect={setSelect} />}
     </>
   );
 };
