@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useState } from 'react';
 import { useGetDetailList } from '@/queries/Detail/useGetDetailList';
 import { ClientEventInfo, EventInfo } from '@/types/event';
 import { DateController, DetailList, DetailsHeader, Pagination, TableHead, UserDetails } from '@/components/DetailFine';
@@ -6,7 +6,7 @@ import * as Style from './styles';
 import { useRecoilValue } from 'recoil';
 import { dateState } from '@/store/dateState';
 import { useParams } from 'react-router-dom';
-import { DateFilter, DetailFilter } from '@/utils/dateFilter/dateFilter';
+import { DetailFilter } from '@/utils/dateFilter/dateFilter';
 
 export type FilterMode = 'month' | 'week' | 'day';
 
@@ -26,26 +26,18 @@ const DetailFine = () => {
   const [select, setSelect] = useState<ClientEventInfo>(initialSelectData);
   const hasSelectedInfo: boolean = select.eventId !== 0;
 
-  const [mode, setMode] = useState<FilterMode>('day');
   const [detailFilter, setDetailFilter] = useState<DetailFilter>({ nickname: '', paymentType: '', page: 0 });
 
   const calendarDate = useRecoilValue(dateState);
   const { data } = useGetDetailList(detailFilter, calendarDate.baseDate, { groupId: Number(groupId) });
 
-  const dateFilter = useMemo(() => new DateFilter(mode, calendarDate.week), [mode]);
-
-  useEffect(() => {
-    setMode(() => dateFilter.decideMode(calendarDate));
-    setDetailFilter((prev) => ({ ...dateFilter.update(prev, calendarDate), page: 0 }));
-  }, [calendarDate.selectedDate, calendarDate.baseDate, calendarDate.week, mode]);
-
   return (
     <Style.DetailFineFrame>
       <DetailsHeader />
       <Style.DetailContent>
-        <DateController mode={mode} setMode={setMode} />
+        <DateController setDetailFilter={setDetailFilter} />
         <TableHead setDetailFilter={setDetailFilter} />
-        <DetailList detailFilter={detailFilter} mode={mode} selectedEventId={select.eventId} details={data?.content.list} setSelect={setSelect} />
+        <DetailList detailFilter={detailFilter} selectedEventId={select.eventId} details={data?.content.list} setSelect={setSelect} />
       </Style.DetailContent>
       {Number(data?.content.totalCount) > 16 && <Pagination count={data?.content.totalCount} detailFilter={detailFilter} setDetailFilter={setDetailFilter} />}
       {hasSelectedInfo && <UserDetails select={select} setSelect={setSelect} />}
