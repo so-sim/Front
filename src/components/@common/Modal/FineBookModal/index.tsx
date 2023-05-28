@@ -46,7 +46,8 @@ export const FineBookModal = ({ modalHandler, eventId, select, setSelect }: Prop
     const { value: payment } = e.target;
     if (payment.length > 8) return;
 
-    setPayment(removeCommaFromPayment(payment));
+    const paymentWithoutComma = removeCommaFromPayment(payment);
+    if (!isNaN(paymentWithoutComma)) setPayment(paymentWithoutComma);
   };
 
   const onChangeGrounds = (e: React.ChangeEvent<HTMLTextAreaElement>) => {

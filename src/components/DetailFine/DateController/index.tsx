@@ -9,13 +9,13 @@ import { DateFilter } from '@/utils/dateFilter/dateFilter';
 import { customedWeek } from '@/utils/customedWeek';
 import DropDown from '@/components/@common/DropDown';
 import { useGroupDetail } from '@/queries/Group';
-import { useParams } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 import { FilterMode } from '@/pages/FineBook/DetailFine';
+import { FineBookModal } from '@/components/@common/Modal/FineBookModal';
 
 type Props = {
   mode: FilterMode;
   setMode: Dispatch<SetStateAction<FilterMode>>;
-  addModalHandler: () => void;
 };
 
 const filterButtonList: { mode: FilterMode; text: string; id: string }[] = [
@@ -24,7 +24,7 @@ const filterButtonList: { mode: FilterMode; text: string; id: string }[] = [
   { mode: 'day', text: '일간', id: 'filter_day' },
 ];
 
-const DateController = ({ mode, setMode, addModalHandler }: Props) => {
+const DateController = ({ mode, setMode }: Props) => {
   const { groupId } = useParams();
   const { data: groupData } = useGroupDetail(Number(groupId));
   const dropDownRef = useRef<HTMLDivElement>(null);
@@ -70,70 +70,82 @@ const DateController = ({ mode, setMode, addModalHandler }: Props) => {
     if (mode !== 'week') setOpenWeeklyFilterDrop(false);
   }, [mode]);
 
+  const location = useLocation();
+  const [openAddModal, setOpenAddModal] = useState<boolean>(location.state || false);
+  useEffect(() => {
+    window.history.replaceState(null, '');
+  }, []);
+  const handleAddModal = () => {
+    setOpenAddModal((prev) => !prev);
+  };
+
   return (
-    <Style.DateController>
-      <Style.ControllerFrame>
-        <Style.Block>
-          <Style.Date mode={mode}>{dateFilter.getTitle(baseDate)}</Style.Date>
-          <Style.ArrowBlock id="list_skip">
-            <Style.ArrowWrapper onClick={decreaseCalendarByMode} id="list_skip_left" data-testid="list_skip_left">
-              {ARROW.LEFT}
-            </Style.ArrowWrapper>
-            <Style.ArrowWrapper onClick={increaseCalendarByMode} id="list_skip_right" data-testid="list_skip_right">
-              {ARROW.RIGHT}
-            </Style.ArrowWrapper>
-          </Style.ArrowBlock>
-          <Style.TodayButton
-            onClick={() => {
-              setMode('day');
-              setSelectedDate((prev) => ({ ...prev, baseDate: dayjs(), selectedDate: dayjs(), week: null }));
-            }}
-            id="today_list"
-          >
-            오늘
-          </Style.TodayButton>
-        </Style.Block>
-        <Style.Block>
-          <Style.FilterWrapper ref={dropDownRef}>
-            {filterButtonList.map((btn) => {
-              return (
-                <Style.FilterButton
-                  id={btn.id}
-                  key={btn.id}
-                  isActive={mode === btn.mode}
-                  onClick={() => {
-                    setOpenWeeklyFilterDrop((prev) => !prev);
-                    if (mode === btn.mode) return;
-                    setMode(btn.mode);
-                    setSelectedDate((prev) => dateFilter.updateDateStateByMode(prev.baseDate, btn.mode));
-                  }}
-                >
-                  <span>{btn.text}</span>
-                  {btn.mode === 'week' && mode === 'week' && openWeeklyFilterDrop && (
-                    <div style={{ position: 'relative', left: '1px' }}>
-                      <DropDown
-                        width={60}
-                        align="center"
-                        setState={setSelectedWeek}
-                        list={customedWeek(baseDate)}
-                        top="7px"
-                        onClose={handleWeeklyFilterDrop}
-                        dropDownRef={dropDownRef}
-                      />
-                    </div>
-                  )}
-                </Style.FilterButton>
-              );
-            })}
-          </Style.FilterWrapper>
-          {groupData?.content.isAdmin && (
-            <Button color="black" width="124px" height="40px" onClick={addModalHandler} id="add_list">
-              내역 추가하기
-            </Button>
-          )}
-        </Style.Block>
-      </Style.ControllerFrame>
-    </Style.DateController>
+    <>
+      <Style.DateController>
+        <Style.ControllerFrame>
+          <Style.Block>
+            <Style.Date mode={mode}>{dateFilter.getTitle(baseDate)}</Style.Date>
+            <Style.ArrowBlock id="list_skip">
+              <Style.ArrowWrapper onClick={decreaseCalendarByMode} id="list_skip_left" data-testid="list_skip_left">
+                {ARROW.LEFT}
+              </Style.ArrowWrapper>
+              <Style.ArrowWrapper onClick={increaseCalendarByMode} id="list_skip_right" data-testid="list_skip_right">
+                {ARROW.RIGHT}
+              </Style.ArrowWrapper>
+            </Style.ArrowBlock>
+            <Style.TodayButton
+              onClick={() => {
+                setMode('day');
+                setSelectedDate((prev) => ({ ...prev, baseDate: dayjs(), selectedDate: dayjs(), week: null }));
+              }}
+              id="today_list"
+            >
+              오늘
+            </Style.TodayButton>
+          </Style.Block>
+          <Style.Block>
+            <Style.FilterWrapper ref={dropDownRef}>
+              {filterButtonList.map((btn) => {
+                return (
+                  <Style.FilterButton
+                    id={btn.id}
+                    key={btn.id}
+                    isActive={mode === btn.mode}
+                    onClick={() => {
+                      setOpenWeeklyFilterDrop((prev) => !prev);
+                      if (mode === btn.mode) return;
+                      setMode(btn.mode);
+                      setSelectedDate((prev) => dateFilter.updateDateStateByMode(prev.baseDate, btn.mode));
+                    }}
+                  >
+                    <span>{btn.text}</span>
+                    {btn.mode === 'week' && mode === 'week' && openWeeklyFilterDrop && (
+                      <div style={{ position: 'relative', left: '1px' }}>
+                        <DropDown
+                          width={60}
+                          align="center"
+                          setState={setSelectedWeek}
+                          list={customedWeek(baseDate)}
+                          top="7px"
+                          onClose={handleWeeklyFilterDrop}
+                          dropDownRef={dropDownRef}
+                        />
+                      </div>
+                    )}
+                  </Style.FilterButton>
+                );
+              })}
+            </Style.FilterWrapper>
+            {groupData?.content.isAdmin && (
+              <Button color="black" width="124px" height="40px" onClick={handleAddModal} id="add_list">
+                내역 추가하기
+              </Button>
+            )}
+          </Style.Block>
+        </Style.ControllerFrame>
+      </Style.DateController>
+      {openAddModal && <FineBookModal modalHandler={handleAddModal} />}
+    </>
   );
 };
 

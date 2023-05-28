@@ -42,36 +42,25 @@ const DetailFine = () => {
 
   // 캘린더에서 내역 계속해서 추가하기를 했을 때 모달이 꺼지지 않고, 켜져 있어야 함
   // 처음 렌더링 되었을 때 켜져있고, 그 이후 동작에 맡겨야 하기 때문에 아래 useEffect에서 state null로 바꿔줌
-  const location = useLocation();
-  const [openAddModal, setOpenAddModal] = useState<boolean>(location.state || false);
-  useEffect(() => {
-    window.history.replaceState(null, '');
-  }, []);
-  const handleAddModal = () => {
-    setOpenAddModal((prev) => !prev);
-  };
 
   return (
-    <>
-      <Style.DetailFineFrame>
-        <DetailsHeader />
-        <Style.DetailContent>
-          <DateController mode={mode} setMode={setMode} addModalHandler={handleAddModal} />
-          <TableHead setDetailFilter={setDetailFilter} />
-          <DetailList
-            detailFilter={detailFilter}
-            mode={mode}
-            selectedEventId={select.eventId}
-            details={data?.content.list}
-            setSelect={setSelect}
-            setOpenUserDetails={setOpenUserDetails}
-          />
-        </Style.DetailContent>
-        {Number(data?.content.totalCount) > 16 && <Pagination count={data?.content.totalCount} detailFilter={detailFilter} setDetailFilter={setDetailFilter} />}
-        {openUserDetails && <UserDetails setOpen={setOpenUserDetails} select={select} setSelect={setSelect} />}
-      </Style.DetailFineFrame>
-      {openAddModal && <FineBookModal modalHandler={handleAddModal} />}
-    </>
+    <Style.DetailFineFrame>
+      <DetailsHeader />
+      <Style.DetailContent>
+        <DateController mode={mode} setMode={setMode} />
+        <TableHead setDetailFilter={setDetailFilter} />
+        <DetailList
+          detailFilter={detailFilter}
+          mode={mode}
+          selectedEventId={select.eventId}
+          details={data?.content.list}
+          setSelect={setSelect}
+          setOpenUserDetails={setOpenUserDetails}
+        />
+      </Style.DetailContent>
+      {Number(data?.content.totalCount) > 16 && <Pagination count={data?.content.totalCount} detailFilter={detailFilter} setDetailFilter={setDetailFilter} />}
+      {openUserDetails && <UserDetails setOpen={setOpenUserDetails} select={select} setSelect={setSelect} />}
+    </Style.DetailFineFrame>
   );
 };
 
