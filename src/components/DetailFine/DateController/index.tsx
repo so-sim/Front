@@ -15,7 +15,7 @@ import { FilterMode } from '@/pages/FineBook/DetailFine';
 type Props = {
   mode: FilterMode;
   setMode: Dispatch<SetStateAction<FilterMode>>;
-  setOpenAddModal: Dispatch<SetStateAction<boolean>>;
+  addModalHandler: () => void;
 };
 
 const filterButtonList: { mode: FilterMode; text: string; id: string }[] = [
@@ -24,7 +24,7 @@ const filterButtonList: { mode: FilterMode; text: string; id: string }[] = [
   { mode: 'day', text: '일간', id: 'filter_day' },
 ];
 
-const DateController = ({ mode, setMode, setOpenAddModal }: Props) => {
+const DateController = ({ mode, setMode, addModalHandler }: Props) => {
   const { groupId } = useParams();
   const { data: groupData } = useGroupDetail(Number(groupId));
   const dropDownRef = useRef<HTMLDivElement>(null);
@@ -127,7 +127,7 @@ const DateController = ({ mode, setMode, setOpenAddModal }: Props) => {
             })}
           </Style.FilterWrapper>
           {groupData?.content.isAdmin && (
-            <Button color="black" width="124px" height="40px" onClick={() => setOpenAddModal(true)} id="add_list">
+            <Button color="black" width="124px" height="40px" onClick={addModalHandler} id="add_list">
               내역 추가하기
             </Button>
           )}

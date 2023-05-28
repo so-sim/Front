@@ -194,7 +194,7 @@ const UserDetails = ({ setOpen, select, setSelect }: Props) => {
         <ConfirmModal type="REQUEST_CHANGE_STATUS" id="confirming_side_modal" modalHandler={handleRequestStatus} cancel={handleRequestStatus} confirm={requestConfirmStatus} />
       )}
       {openDeleteDetailModal && <ConfirmModal type="DETAIL_DELETE" modalHandler={handleDeleteDetailModal} cancel={handleDeleteDetailModal} confirm={deleteDetailInfo} />}
-      {openUpdateModal && <FineBookModal eventId={eventId} select={select} setOpen={setOpenUpdateModal} setSelect={setSelect} />}
+      {openUpdateModal && <FineBookModal eventId={eventId} select={select} modalHandler={handleUpdateModal} setSelect={setSelect} />}
     </>
   );
 };

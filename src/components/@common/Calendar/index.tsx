@@ -136,7 +136,7 @@ const Calendar: FC<CalnedrProps> = ({ cellType }) => {
           ))}
         </Style.CalendarContainer>
       </Style.Layout>
-      {showCreateDetailModal && <FineBookModal setOpen={setShowCreateDetailModal} />}
+      {showCreateDetailModal && <FineBookModal modalHandler={handleShowCreateDetailModal} />}
     </>
   );
 };

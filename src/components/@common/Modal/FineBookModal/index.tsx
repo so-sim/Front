@@ -8,7 +8,7 @@ import { SYSTEM } from '@/assets/icons/System';
 import { useParticipantList } from '@/queries/Group';
 import { useCreateDetail, useUpdateDetail } from '@/queries/Detail';
 import { useNavigate, useParams } from 'react-router-dom';
-import { ClientEventInfo, PaymentType } from '@/types/event';
+import { ClientEventInfo, EventInfo, PaymentType } from '@/types/event';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { userState } from '@/store/userState';
 import { CalendarDropBox } from '@/components/@common/DropBox/CalendarDropBox';
@@ -16,9 +16,11 @@ import dayjs from 'dayjs';
 import { dateState } from '@/store/dateState';
 import { getStatusCode, getStatusText } from '@/utils/status';
 import { pushDataLayer } from '@/utils/pushDataLayer';
+import { ServerResponse } from '@/types/serverResponse';
+import { removeCommaFromPayment } from '@/utils/removeCommaFromPayment';
 
 interface Props {
-  setOpen: Dispatch<SetStateAction<boolean>>;
+  modalHandler: () => void;
   eventId?: number;
   select?: ClientEventInfo;
   setSelect?: Dispatch<SetStateAction<ClientEventInfo>>;
@@ -29,9 +31,10 @@ const STATUS_LIST: { title: PaymentType; id?: string }[] = [
   { title: '완납', id: 'fullpayment_modify' },
 ];
 
-export const FineBookModal = ({ setOpen, eventId, select, setSelect }: Props) => {
+export const FineBookModal = ({ modalHandler, eventId, select, setSelect }: Props) => {
   const type = eventId ? 'update' : 'create';
   const isCreate = type === 'create';
+
   const [userName, setUserName] = useState(select?.userName ?? '');
   const [status, setStatus] = useState<PaymentType>(select?.paymentType ? getStatusText(select?.paymentType) : '미납');
   const [grounds, setGrounds] = useState(select?.grounds ?? '');
@@ -40,10 +43,10 @@ export const FineBookModal = ({ setOpen, eventId, select, setSelect }: Props) =>
   const [_, setDateState] = useRecoilState(dateState);
 
   const onChangePayment = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { value } = e.target;
-    if (value.length > 8) return;
-    const removedCommaValue = Number(value.replaceAll(',', ''));
-    if (!isNaN(removedCommaValue)) setPayment(removedCommaValue);
+    const { value: payment } = e.target;
+    if (payment.length > 8) return;
+
+    setPayment(removeCommaFromPayment(payment));
   };
 
   const onChangeGrounds = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -51,10 +54,18 @@ export const FineBookModal = ({ setOpen, eventId, select, setSelect }: Props) =>
     setGrounds(e.target.value);
   };
 
+  const onSuccessUpdateDetail = (data: ServerResponse<EventInfo>) => {
+    if (setSelect) {
+      setSelect((prev) => ({ ...prev, ...data.content, paymentType: getStatusText(status) }));
+      setDateState((prev) => ({ ...prev, baseDate: dayjs(data.content.groundsDate), selectedDate: dayjs(data.content.groundsDate), week: null }));
+      modalHandler();
+    }
+  };
+
   const { groupId } = useParams();
   const { data } = useParticipantList(Number(groupId));
   const { mutate: create, isLoading: createLoading } = useCreateDetail();
-  const { mutate: update, isLoading: updateLoading } = useUpdateDetail();
+  const { mutate: update, isLoading: updateLoading } = useUpdateDetail(onSuccessUpdateDetail);
 
   const user = useRecoilValue(userState);
   const navigate = useNavigate();
@@ -89,7 +100,7 @@ export const FineBookModal = ({ setOpen, eventId, select, setSelect }: Props) =>
             initDetail();
           } else {
             navigate(`/group/${groupId}/book/detail`);
-            setOpen(false);
+            modalHandler();
           }
         },
       },
@@ -100,18 +111,7 @@ export const FineBookModal = ({ setOpen, eventId, select, setSelect }: Props) =>
     if (status == '' || select == null) return;
     const { eventId, userId } = select;
 
-    update(
-      { eventId, userId, userName, groundsDate, grounds, paymentType: getStatusCode(status), payment },
-      {
-        onSuccess(data) {
-          if (setSelect) {
-            setSelect((prev) => ({ ...prev, ...data.content, paymentType: getStatusText(status) }));
-            setDateState((prev) => ({ ...prev, baseDate: dayjs(data.content.groundsDate), selectedDate: dayjs(data.content.groundsDate), week: null }));
-            setOpen(false);
-          }
-        },
-      },
-    );
+    update({ eventId, userId, userName, groundsDate, grounds, paymentType: getStatusCode(status), payment });
   };
 
   const checkFormIsValid = (): boolean => {
@@ -125,8 +125,8 @@ export const FineBookModal = ({ setOpen, eventId, select, setSelect }: Props) =>
   const memberList = [admin, ...participantList];
 
   return (
-    <Modal.Frame width="448px" height={isCreate ? '466px' : '412px'} onClick={() => setOpen(false)}>
-      <Modal.Header onClick={() => setOpen(false)}>{isCreate ? '내역 추가하기' : '상세 내역 수정'}</Modal.Header>
+    <Modal.Frame width="448px" height={isCreate ? '466px' : '412px'} onClick={modalHandler}>
+      <Modal.Header onClick={modalHandler}>{isCreate ? '내역 추가하기' : '상세 내역 수정'}</Modal.Header>
       <div style={{ display: 'flex', flexDirection: 'column', width: '100%' }}>
         <Style.Row>
           <Label title="팀원" width="32px" margin="0px">
