@@ -92,10 +92,13 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["file-loader", "virtual:2012bb92bd3c02c31c208dd19c7a30b32c4e004bc22c4ac67376a0b485daeffa61f9ac1dd14f7ec2e6d9f117f17b40d67db4154a3f2abfb8e2cf15cea16c14d6#npm:6.2.0"],\
             ["fork-ts-checker-webpack-plugin", "virtual:2012bb92bd3c02c31c208dd19c7a30b32c4e004bc22c4ac67376a0b485daeffa61f9ac1dd14f7ec2e6d9f117f17b40d67db4154a3f2abfb8e2cf15cea16c14d6#npm:7.3.0"],\
             ["global", "npm:4.4.0"],\
+            ["intersection-observer", "npm:0.12.2"],\
             ["jest", "virtual:2012bb92bd3c02c31c208dd19c7a30b32c4e004bc22c4ac67376a0b485daeffa61f9ac1dd14f7ec2e6d9f117f17b40d67db4154a3f2abfb8e2cf15cea16c14d6#npm:29.4.3"],\
+            ["jest-canvas-mock", "npm:2.5.1"],\
             ["jest-environment-jsdom", "virtual:2012bb92bd3c02c31c208dd19c7a30b32c4e004bc22c4ac67376a0b485daeffa61f9ac1dd14f7ec2e6d9f117f17b40d67db4154a3f2abfb8e2cf15cea16c14d6#npm:29.4.3"],\
             ["jest-transformer-svg", "virtual:2012bb92bd3c02c31c208dd19c7a30b32c4e004bc22c4ac67376a0b485daeffa61f9ac1dd14f7ec2e6d9f117f17b40d67db4154a3f2abfb8e2cf15cea16c14d6#npm:2.0.0"],\
             ["msw", "virtual:2012bb92bd3c02c31c208dd19c7a30b32c4e004bc22c4ac67376a0b485daeffa61f9ac1dd14f7ec2e6d9f117f17b40d67db4154a3f2abfb8e2cf15cea16c14d6#npm:1.0.1"],\
+            ["msw-storybook-addon", "virtual:2012bb92bd3c02c31c208dd19c7a30b32c4e004bc22c4ac67376a0b485daeffa61f9ac1dd14f7ec2e6d9f117f17b40d67db4154a3f2abfb8e2cf15cea16c14d6#npm:1.8.0"],\
             ["prettier", "npm:2.8.3"],\
             ["react", "npm:18.2.0"],\
             ["react-calendar", "virtual:2012bb92bd3c02c31c208dd19c7a30b32c4e004bc22c4ac67376a0b485daeffa61f9ac1dd14f7ec2e6d9f117f17b40d67db4154a3f2abfb8e2cf15cea16c14d6#npm:4.1.0"],\
@@ -13924,6 +13927,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD"\
         }]\
       ]],\
+      ["cssfontparser", [\
+        ["npm:1.2.1", {\
+          "packageLocation": "./.yarn/cache/cssfontparser-npm-1.2.1-f48947509b-952d487cdd.zip/node_modules/cssfontparser/",\
+          "packageDependencies": [\
+            ["cssfontparser", "npm:1.2.1"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
       ["csso", [\
         ["npm:4.2.0", {\
           "packageLocation": "./.yarn/cache/csso-npm-4.2.0-b277db8d71-380ba9663d.zip/node_modules/csso/",\
@@ -17817,6 +17829,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD"\
         }]\
       ]],\
+      ["intersection-observer", [\
+        ["npm:0.12.2", {\
+          "packageLocation": "./.yarn/cache/intersection-observer-npm-0.12.2-2ad6771d14-d1fa9ebbb1.zip/node_modules/intersection-observer/",\
+          "packageDependencies": [\
+            ["intersection-observer", "npm:0.12.2"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
       ["ip", [\
         ["npm:2.0.0", {\
           "packageLocation": "./.yarn/cache/ip-npm-2.0.0-204facb3cc-cfcfac6b87.zip/node_modules/ip/",\
@@ -18748,6 +18769,17 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packagePeers": [\
             "@types/node-notifier",\
             "node-notifier"\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["jest-canvas-mock", [\
+        ["npm:2.5.1", {\
+          "packageLocation": "./.yarn/cache/jest-canvas-mock-npm-2.5.1-b4aca87443-b8ff56c1b7.zip/node_modules/jest-canvas-mock/",\
+          "packageDependencies": [\
+            ["jest-canvas-mock", "npm:2.5.1"],\
+            ["cssfontparser", "npm:1.2.1"],\
+            ["moo-color", "npm:1.0.3"]\
           ],\
           "linkType": "HARD"\
         }]\
@@ -20854,6 +20886,16 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD"\
         }]\
       ]],\
+      ["moo-color", [\
+        ["npm:1.0.3", {\
+          "packageLocation": "./.yarn/cache/moo-color-npm-1.0.3-50b8650764-02bf59b6bb.zip/node_modules/moo-color/",\
+          "packageDependencies": [\
+            ["moo-color", "npm:1.0.3"],\
+            ["color-name", "npm:1.1.4"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
       ["move-concurrently", [\
         ["npm:1.0.1", {\
           "packageLocation": "./.yarn/cache/move-concurrently-npm-1.0.1-e1e3c7e2cf-4ea3296c15.zip/node_modules/move-concurrently/",\
@@ -20936,6 +20978,29 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packagePeers": [\
             "@types/typescript",\
             "typescript"\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["msw-storybook-addon", [\
+        ["npm:1.8.0", {\
+          "packageLocation": "./.yarn/cache/msw-storybook-addon-npm-1.8.0-62c7737ede-14d7ab064f.zip/node_modules/msw-storybook-addon/",\
+          "packageDependencies": [\
+            ["msw-storybook-addon", "npm:1.8.0"]\
+          ],\
+          "linkType": "SOFT"\
+        }],\
+        ["virtual:2012bb92bd3c02c31c208dd19c7a30b32c4e004bc22c4ac67376a0b485daeffa61f9ac1dd14f7ec2e6d9f117f17b40d67db4154a3f2abfb8e2cf15cea16c14d6#npm:1.8.0", {\
+          "packageLocation": "./.yarn/__virtual__/msw-storybook-addon-virtual-19664ec8e5/0/cache/msw-storybook-addon-npm-1.8.0-62c7737ede-14d7ab064f.zip/node_modules/msw-storybook-addon/",\
+          "packageDependencies": [\
+            ["msw-storybook-addon", "virtual:2012bb92bd3c02c31c208dd19c7a30b32c4e004bc22c4ac67376a0b485daeffa61f9ac1dd14f7ec2e6d9f117f17b40d67db4154a3f2abfb8e2cf15cea16c14d6#npm:1.8.0"],\
+            ["@types/msw", null],\
+            ["is-node-process", "npm:1.0.1"],\
+            ["msw", "virtual:2012bb92bd3c02c31c208dd19c7a30b32c4e004bc22c4ac67376a0b485daeffa61f9ac1dd14f7ec2e6d9f117f17b40d67db4154a3f2abfb8e2cf15cea16c14d6#npm:1.0.1"]\
+          ],\
+          "packagePeers": [\
+            "@types/msw",\
+            "msw"\
           ],\
           "linkType": "HARD"\
         }]\
@@ -24841,10 +24906,13 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["file-loader", "virtual:2012bb92bd3c02c31c208dd19c7a30b32c4e004bc22c4ac67376a0b485daeffa61f9ac1dd14f7ec2e6d9f117f17b40d67db4154a3f2abfb8e2cf15cea16c14d6#npm:6.2.0"],\
             ["fork-ts-checker-webpack-plugin", "virtual:2012bb92bd3c02c31c208dd19c7a30b32c4e004bc22c4ac67376a0b485daeffa61f9ac1dd14f7ec2e6d9f117f17b40d67db4154a3f2abfb8e2cf15cea16c14d6#npm:7.3.0"],\
             ["global", "npm:4.4.0"],\
+            ["intersection-observer", "npm:0.12.2"],\
             ["jest", "virtual:2012bb92bd3c02c31c208dd19c7a30b32c4e004bc22c4ac67376a0b485daeffa61f9ac1dd14f7ec2e6d9f117f17b40d67db4154a3f2abfb8e2cf15cea16c14d6#npm:29.4.3"],\
+            ["jest-canvas-mock", "npm:2.5.1"],\
             ["jest-environment-jsdom", "virtual:2012bb92bd3c02c31c208dd19c7a30b32c4e004bc22c4ac67376a0b485daeffa61f9ac1dd14f7ec2e6d9f117f17b40d67db4154a3f2abfb8e2cf15cea16c14d6#npm:29.4.3"],\
             ["jest-transformer-svg", "virtual:2012bb92bd3c02c31c208dd19c7a30b32c4e004bc22c4ac67376a0b485daeffa61f9ac1dd14f7ec2e6d9f117f17b40d67db4154a3f2abfb8e2cf15cea16c14d6#npm:2.0.0"],\
             ["msw", "virtual:2012bb92bd3c02c31c208dd19c7a30b32c4e004bc22c4ac67376a0b485daeffa61f9ac1dd14f7ec2e6d9f117f17b40d67db4154a3f2abfb8e2cf15cea16c14d6#npm:1.0.1"],\
+            ["msw-storybook-addon", "virtual:2012bb92bd3c02c31c208dd19c7a30b32c4e004bc22c4ac67376a0b485daeffa61f9ac1dd14f7ec2e6d9f117f17b40d67db4154a3f2abfb8e2cf15cea16c14d6#npm:1.8.0"],\
             ["prettier", "npm:2.8.3"],\
             ["react", "npm:18.2.0"],\
             ["react-calendar", "virtual:2012bb92bd3c02c31c208dd19c7a30b32c4e004bc22c4ac67376a0b485daeffa61f9ac1dd14f7ec2e6d9f117f17b40d67db4154a3f2abfb8e2cf15cea16c14d6#npm:4.1.0"],\

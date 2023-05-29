@@ -2,7 +2,11 @@
   "compilerOptions": {
     "esModuleInterop": true,
     "sourceMap": true,
-    "lib": ["ES2020", "DOM", "ES2021.String"],
+    "lib": [
+      "ES2020",
+      "DOM",
+      "ES2021.String"
+    ],
     "module": "esnext",
     "moduleResolution": "Node",
     "target": "ES6",
@@ -11,12 +15,18 @@
     "jsx": "react-jsx",
     "outDir": "./dist",
     "allowJs": true,
-    "baseUrl": ".",
+    "baseUrl": "./src",
     "paths": {
-      "@/*": ["./*"]
+      "@/*": [
+        "./*"
+      ]
     }
   },
-  "include": ["**/*.ts", "**/*.tsx", "types/svg.d.ts"],
+  "include": [
+    "**/*.ts",
+    "**/*.tsx",
+    "types/svg.d.ts"
+  ],
   "ts-node": {
     "compilerOptions": {
       "module": "commonJS",
