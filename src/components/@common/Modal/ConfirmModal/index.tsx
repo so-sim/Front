@@ -15,6 +15,8 @@ interface Props {
 }
 
 export const ConfirmModal = ({ modalHandler, cancel, confirm, flexDirection = 'row', width = '448px', id, type }: Props) => {
+  const hasCancelProperty = cancel && CONFIRM_MODAL[type].hasOwnProperty('cancel');
+
   return (
     <Modal.Frame width={width} onClick={modalHandler}>
       <Modal.Header>
@@ -24,12 +26,12 @@ export const ConfirmModal = ({ modalHandler, cancel, confirm, flexDirection = 'r
         <Style.Desc>{CONFIRM_MODAL[type].description}</Style.Desc>
       </Modal.Body>
       <Modal.Footer flexDirection={flexDirection}>
-        {cancel && (
+        {hasCancelProperty && (
           <Button width="100%" height="42px" color="white" onClick={cancel}>
             취소
           </Button>
         )}
-        <Button width="100%" height="42px" color={cancel ? 'black' : 'white'} onClick={confirm} id={id}>
+        <Button width="100%" height="42px" color={hasCancelProperty ? 'black' : 'white'} onClick={confirm} id={id}>
           {CONFIRM_MODAL[type].confirm}
         </Button>
       </Modal.Footer>

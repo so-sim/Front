@@ -17,12 +17,3 @@ ConfirmModalTemplate.args = {
   confirm: () => {},
   flexDirection: 'row',
 };
-
-export const ConfirmModalTemplateOneButton = Template.bind({});
-
-ConfirmModalTemplateOneButton.args = {
-  type: 'WITHDRAWAL_HAS_ADMIN',
-  modalHandler: () => {},
-  confirm: () => {},
-  flexDirection: 'row',
-};
