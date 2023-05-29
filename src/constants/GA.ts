@@ -1,3 +1,5 @@
+export type GATriggerId = keyof typeof GA;
+
 export const GA = {
   INTRODUCTION: 'indroduction',
   FEEDBACK: 'feedback',
@@ -28,7 +30,7 @@ export const GA = {
   CON: {
     LIST_BUTTON: 'confirming_list_button',
     LIST_MODAL: 'confirming_list_modal',
-    SIDE_BUTTON: 'confirming_side_modal',
+    SIDE_BUTTON: 'confirming_side_button',
     SIDE_MODAL: 'confirming_side_modal',
   },
   NON: {

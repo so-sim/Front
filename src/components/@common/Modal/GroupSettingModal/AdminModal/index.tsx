@@ -14,6 +14,7 @@ import { GroupColor } from '@/types/group';
 import { useGetMyNikname } from '@/queries/Group/useGetMyNickname';
 import { ConfirmModal } from '../../ConfirmModal';
 import { GROUP_DELETE, GROUP_WITHDRWWAL_ADMIN } from '@/constants/GroupWithdrawal';
+import { GA } from '@/constants/GA';
 
 export const AdminModal: FC<ModalHandlerProps> = ({ modalHandler }) => {
   const [title, setTitle] = useState('');
@@ -121,7 +122,7 @@ export const AdminModal: FC<ModalHandlerProps> = ({ modalHandler }) => {
             <Button color="white" onClick={modalHandler}>
               취소
             </Button>
-            <Button color={isValidForm() ? 'black' : 'disabled'} onClick={updateGroupInfo} id="group_modify" loading={isLoading}>
+            <Button color={isValidForm() ? 'black' : 'disabled'} onClick={updateGroupInfo} id={GA.GROUP.MODIFY} loading={isLoading}>
               저장
             </Button>
           </Style.ButtonFrame>

@@ -13,11 +13,12 @@ import { useParams } from 'react-router-dom';
 import { FilterMode } from '@/pages/FineBook/DetailFine';
 import { FineBookModal } from '@/components/@common/Modal/FineBookModal';
 import useCheckLocationState from '@/hooks/useCheckLocationState';
+import { GA } from '@/constants/GA';
 
 export const FILTER_BUTTON_LIST: { mode: FilterMode; text: string; id: string }[] = [
-  { mode: 'month', text: '월간', id: 'filter_month' },
-  { mode: 'week', text: '주간', id: 'filter_week_drop' },
-  { mode: 'day', text: '일간', id: 'filter_day' },
+  { mode: 'month', text: '월간', id: GA.FILTER.MONTH },
+  { mode: 'week', text: '주간', id: GA.FILTER.WEEK_DROP },
+  { mode: 'day', text: '일간', id: GA.FILTER.DAY },
 ];
 
 type Props = {
@@ -81,16 +82,15 @@ const DateController = ({ setDetailFilter }: Props) => {
         <Style.ControllerFrame>
           <Style.Block>
             <Style.Date mode={mode}>{dateFilter.getTitle(calendarDate.baseDate)}</Style.Date>
-            <Style.ArrowBlock id="list_skip">
-              {/* // ga */}
-              <Style.ArrowWrapper onClick={decreaseCalendarByMode} id="list_skip_left" data-testid="list_skip_left">
+            <Style.ArrowBlock id={GA.LIST_SKIP.ALL}>
+              <Style.ArrowWrapper onClick={decreaseCalendarByMode} id={GA.LIST_SKIP.LEFT} data-testid={GA.LIST_SKIP.LEFT}>
                 {ARROW.LEFT}
               </Style.ArrowWrapper>
-              <Style.ArrowWrapper onClick={increaseCalendarByMode} id="list_skip_right" data-testid="list_skip_right">
+              <Style.ArrowWrapper onClick={increaseCalendarByMode} id={GA.LIST_SKIP.RIGHT} data-testid={GA.LIST_SKIP.RIGHT}>
                 {ARROW.RIGHT}
               </Style.ArrowWrapper>
             </Style.ArrowBlock>
-            <Style.TodayButton onClick={updateToToday} id="today_list">
+            <Style.TodayButton onClick={updateToToday} id={GA.TODAY_LIST}>
               오늘
             </Style.TodayButton>
           </Style.Block>
@@ -98,12 +98,7 @@ const DateController = ({ setDetailFilter }: Props) => {
             <Style.FilterWrapper ref={dropDownRef}>
               {FILTER_BUTTON_LIST.map((btn) => {
                 return (
-                  <Style.FilterButton
-                    id={btn.id} // ga
-                    key={btn.id}
-                    isActive={mode === btn.mode}
-                    onClick={() => handleDateFilterMode(btn.mode)}
-                  >
+                  <Style.FilterButton id={btn.id} key={btn.id} isActive={mode === btn.mode} onClick={() => handleDateFilterMode(btn.mode)}>
                     <span>{btn.text}</span>
                     {btn.mode === 'week' && mode === 'week' && openWeeklyFilterDrop && (
                       <div style={{ position: 'relative', left: '1px' }}>

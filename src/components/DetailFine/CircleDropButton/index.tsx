@@ -1,3 +1,4 @@
+import { GA } from '@/constants/GA';
 import { ServerPaymentType } from '@/types/event';
 import { getStatusIcon, statusText } from '@/utils/status';
 import * as Style from './styles';
@@ -10,22 +11,10 @@ export interface CircleDropButtonProps {
 }
 
 const CircleDropButton = ({ status, isAdmin = false, isOwn = false, originStatus }: CircleDropButtonProps) => {
-  const getStatusId = (status: ServerPaymentType) => {
-    switch (status) {
-      case 'con':
-        if (isOwn) {
-          return 'confirming_list';
-        }
-        return '';
-      case 'non':
-        return 'nonpayment_list';
-      case 'full':
-        return 'fullpayment_list';
-    }
-  };
+  const PAYMENT_TYPE = status.toUpperCase() as 'NON' | 'FULL' | 'CON';
 
   return (
-    <Style.StatusButton status={status} id={getStatusId(status)}>
+    <Style.StatusButton status={status} id={GA[PAYMENT_TYPE].LIST_BUTTON}>
       <Style.Text>{statusText(isAdmin, isOwn, status, originStatus)}</Style.Text>
       <Style.Icon>{getStatusIcon(status)}</Style.Icon>
     </Style.StatusButton>

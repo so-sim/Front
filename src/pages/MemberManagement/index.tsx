@@ -1,6 +1,7 @@
 import { SYSTEM } from '@/assets/icons/System';
 import { USER } from '@/assets/icons/User';
 import MemberListItem from '@/components/MemberManagement/MemberListItem';
+import { GA } from '@/constants/GA';
 import { useGroupDetail, useParticipantList } from '@/queries/Group';
 import { useGetMyNikname } from '@/queries/Group/useGetMyNickname';
 import { copyInvitationLink } from '@/utils/copyInvitationLink';
@@ -19,7 +20,7 @@ const MemberManagement = () => {
       <Style.Container>
         <Style.Title>
           <h2>멤버 관리</h2>
-          <Style.ButtonFlex onClick={() => copyInvitationLink(Number(groupId))} id="invitation_member">
+          <Style.ButtonFlex onClick={() => copyInvitationLink(Number(groupId))} id={GA.INVITATION.MEMBER}>
             {SYSTEM.LINK_BLACK}
             <span>초대링크 복사</span>
           </Style.ButtonFlex>
