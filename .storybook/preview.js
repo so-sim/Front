@@ -11,9 +11,6 @@ export const parameters = {
       date: /Date$/,
     },
   },
-  msw: {
-    handlers: handler,
-  },
   backgrounds: {
     default: 'lightgray',
     values: [
