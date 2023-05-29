@@ -1,7 +1,7 @@
 import { ARROW } from '@/assets/icons/Arrow';
 import createCalendar from '@/utils/createCalendar';
 import dayjs, { Dayjs } from 'dayjs';
-import React, { Dispatch, FC, SetStateAction, useEffect, useRef, useState } from 'react';
+import { Dispatch, FC, SetStateAction, useState } from 'react';
 import * as Style from './styles';
 
 interface MiniCalendarProps {

@@ -8,6 +8,7 @@ export const Calendar = styled.div`
   border-radius: 8px;
   background-color: white;
   box-shadow: 2px 0px 25px 7px rgba(156, 156, 156, 0.15);
+  max-width: 268px;
 `;
 
 export const Date = styled.span`
@@ -22,6 +23,7 @@ export const ArrowIcon = styled.span`
 export const ArrowBlock = styled.span`
   display: flex;
   gap: 12px;
+  cursor: pointer;
 `;
 
 export const FlexGap = styled.div`
@@ -45,6 +47,7 @@ export const Day = styled.div<{ isSunday: boolean; isSelected?: boolean; isOther
   &:hover {
     background-color: ${({ theme }) => theme.colors.neutral_400_b};
   }
+  cursor: pointer;
 `;
 
 export const DateTitle = styled.div`
