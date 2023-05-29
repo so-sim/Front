@@ -73,7 +73,7 @@ const getGroupParticipant: Parameters<typeof rest.get>[1] = (req, res, ctx) => {
         message: '모임 참가자 리스트가 정상적으로 조회되었습니다.',
       },
       content: {
-        adminId: '125hlkfd',
+        adminId: '1',
         adminNickname: '윤하나둘셋넷',
         memberList: [
           { nickname: '윤하나둘셋넷', userId: 0 },
@@ -193,13 +193,13 @@ const getMyNikckname: Parameters<typeof rest.get>[1] = async (req, res, ctx) => 
 export const groupHandler = [
   rest.get(BASE_URL + '/api/group/:groupId', getGroupDetail),
   rest.get(BASE_URL + '/api/groups', getGroupList),
-  rest.get('/api/group/1/participants', getGroupParticipant),
-  rest.post('/api/group', createGroup),
-  rest.post('/api/group/1/participant', joinGroup),
-  rest.put('/api/group/1', modifyGroup),
-  rest.patch('/api/group/admin/1', changeAdmin),
-  rest.patch('/api/participant/1', changeNickname),
-  rest.delete('/api/group/1', deleteGroup),
-  rest.delete('/api/group/1', withdrawalGroup),
-  rest.get('/api/group/1/participant', getMyNikckname),
+  rest.get(BASE_URL + '/api/group/1/participants', getGroupParticipant),
+  rest.post(BASE_URL + '/api/group', createGroup),
+  rest.post(BASE_URL + '/api/group/1/participant', joinGroup),
+  rest.put(BASE_URL + '/api/group/1', modifyGroup),
+  rest.patch(BASE_URL + '/api/group/admin/1', changeAdmin),
+  rest.patch(BASE_URL + '/api/participant/1', changeNickname),
+  rest.delete(BASE_URL + '/api/group/1', deleteGroup),
+  rest.delete(BASE_URL + '/api/group/1', withdrawalGroup),
+  rest.get(BASE_URL + '/api/group/1/participant', getMyNikckname),
 ];
