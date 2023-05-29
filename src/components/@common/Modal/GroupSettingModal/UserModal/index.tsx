@@ -8,7 +8,7 @@ import { ModalHandlerProps } from '../../CreateGroupModal';
 import { useParams } from 'react-router-dom';
 import { useChangeNickname, useGroupDetail, useWithdrawalGroup } from '@/queries/Group';
 import { useGetMyNikname } from '@/queries/Group/useGetMyNickname';
-import { TwoButtonModal } from '../../TwoButtonModal';
+import { ConfirmModal } from '../../ConfirmModal';
 import { GROUP_WITHDRWWAL_USER } from '@/constants/GroupWithdrawal';
 
 export const UserModal: FC<ModalHandlerProps> = ({ modalHandler }) => {
@@ -77,15 +77,7 @@ export const UserModal: FC<ModalHandlerProps> = ({ modalHandler }) => {
         </Modal.Footer>
       </Modal.Frame>
       {showGroupWithdrawalModal && (
-        <TwoButtonModal
-          width="448px"
-          height="265px"
-          modalHandler={handleGroupWithdrawalModal}
-          title={GROUP_WITHDRWWAL_USER.titel}
-          description={GROUP_WITHDRWWAL_USER.desc}
-          cancel={{ text: '취소', onClick: handleGroupWithdrawalModal }}
-          confirm={{ text: '모임 탈퇴', onClick: withdrwalGroup }}
-        />
+        <ConfirmModal type="GROUP_WITHDRAWAL_USER" width="448px" modalHandler={handleGroupWithdrawalModal} cancel={handleGroupWithdrawalModal} confirm={withdrwalGroup} />
       )}
     </>
   );

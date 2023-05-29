@@ -4,8 +4,9 @@ import { LOGO } from '@/assets/icons/Logo';
 import { SYSTEM } from '@/assets/icons/System';
 import { USER } from '@/assets/icons/User';
 import DropDown from '@/components/@common/DropDown';
-import { TwoButtonModal } from '@/components/@common/Modal/TwoButtonModal';
+import { ConfirmModal } from '@/components/@common/Modal/ConfirmModal';
 import UserConfigModal from '@/components/@common/Modal/UserConfigModal';
+import { LOGOUT } from '@/constants/Auth';
 import { userState } from '@/store/userState';
 import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -58,15 +59,7 @@ const GroupLayoutHeader = () => {
           {showDropDown && <DropDown list={DorpDownList} width={90} setState={setDropDownState} onClose={handleDropDown} top={'32px'} dropDownRef={dropDownRef} />}
         </Style.UserConfigButton>
       </Style.Header>
-      {showLogOutModal && (
-        <TwoButtonModal
-          title="로그아웃"
-          description="로그아웃 하시겠습니까?"
-          modalHandler={handleShowLogOutmodal}
-          cancel={{ text: '취소', onClick: handleShowLogOutmodal }}
-          confirm={{ text: '로그아웃', onClick: onClickLogOut }}
-        />
-      )}
+      {showLogOutModal && <ConfirmModal type="LOGOUT" modalHandler={handleShowLogOutmodal} cancel={handleShowLogOutmodal} confirm={onClickLogOut} />}
       {showConfigModal && <UserConfigModal handleModal={handelShowConfigModal} />}
     </>
   );

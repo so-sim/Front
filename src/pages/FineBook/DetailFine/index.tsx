@@ -1,13 +1,12 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useState } from 'react';
 import { useGetDetailList } from '@/queries/Detail/useGetDetailList';
 import { ClientEventInfo, EventInfo } from '@/types/event';
 import { DateController, DetailList, DetailsHeader, Pagination, TableHead, UserDetails } from '@/components/DetailFine';
-import { FineBookModal } from '@/components/@common/Modal/FineBookModal';
 import * as Style from './styles';
 import { useRecoilValue } from 'recoil';
 import { dateState } from '@/store/dateState';
-import { useLocation, useParams } from 'react-router-dom';
-import { DateFilter, DateFilterProperty } from '@/utils/dateFilter/dateFilter';
+import { useParams } from 'react-router-dom';
+import { DetailFilter } from '@/utils/dateFilter/dateFilter';
 
 export type FilterMode = 'month' | 'week' | 'day';
 
@@ -22,59 +21,27 @@ export const initialSelectData: EventInfo = {
 };
 
 const DetailFine = () => {
-  const param = useParams<{ groupId: string }>();
+  const { groupId } = useParams();
 
-  const location = useLocation();
-
-  const [openAddModal, setOpenAddModal] = useState(location.state || false);
-
-  const [openUserDetails, setOpenUserDetails] = useState(false);
   const [select, setSelect] = useState<ClientEventInfo>(initialSelectData);
+  const hasSelectedInfo: boolean = select.eventId !== 0;
 
-  const [page, setPage] = useState(0);
-  const [mode, setMode] = useState<FilterMode>('day');
-  const [dateFilterProperty, setDateFilter] = useState<DateFilterProperty>({ nickname: '', paymentType: '' });
+  const [detailFilter, setDetailFilter] = useState<DetailFilter>({ nickname: '', paymentType: '', page: 0 });
 
   const calendarDate = useRecoilValue(dateState);
-  const { data } = useGetDetailList(dateFilterProperty, calendarDate.baseDate, { groupId: Number(param.groupId) });
-
-  const dateFilter = useMemo(() => new DateFilter(mode, calendarDate.week), [mode]);
-
-  useEffect(() => {
-    setPage(0);
-    setMode(() => dateFilter.decideMode(calendarDate));
-    setDateFilter((prev) => dateFilter.update(prev, calendarDate));
-  }, [calendarDate.selectedDate, calendarDate.baseDate, calendarDate.week, mode]);
-
-  useEffect(() => {
-    setDateFilter((prev) => ({ ...prev, page }));
-  }, [page]);
-
-  useEffect(() => {
-    window.history.replaceState(null, '');
-  }, []);
+  const { data } = useGetDetailList(detailFilter, calendarDate.baseDate, { groupId: Number(groupId) });
 
   return (
-    <>
-      <Style.DetailFineFrame>
-        <DetailsHeader />
-        <Style.DetailContent>
-          <DateController mode={mode} setMode={setMode} setOpenAddModal={setOpenAddModal} />
-          <TableHead setPage={setPage} setDateFilter={setDateFilter} />
-          <DetailList
-            dateFilterProperty={dateFilterProperty}
-            mode={mode}
-            selectedEventId={select.eventId}
-            details={data?.content.list}
-            setSelect={setSelect}
-            setOpenUserDetails={setOpenUserDetails}
-          />
-        </Style.DetailContent>
-        {Number(data?.content.totalCount) > 16 && <Pagination count={data?.content.totalCount} page={page} setPage={setPage} />}
-        <UserDetails open={openUserDetails} setOpen={setOpenUserDetails} select={select} setSelect={setSelect} />
-      </Style.DetailFineFrame>
-      {openAddModal && <FineBookModal setOpen={setOpenAddModal} />}
-    </>
+    <Style.DetailFineFrame>
+      <DetailsHeader />
+      <Style.DetailContent>
+        <DateController setDetailFilter={setDetailFilter} />
+        <TableHead setDetailFilter={setDetailFilter} />
+        <DetailList detailFilter={detailFilter} selectedEventId={select.eventId} details={data?.content.list} setSelect={setSelect} />
+      </Style.DetailContent>
+      {Number(data?.content.totalCount) > 16 && <Pagination count={data?.content.totalCount} detailFilter={detailFilter} setDetailFilter={setDetailFilter} />}
+      {hasSelectedInfo && <UserDetails select={select} setSelect={setSelect} />}
+    </Style.DetailFineFrame>
   );
 };
 

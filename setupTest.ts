@@ -3,10 +3,12 @@
 // expect(element).toHaveTextContent(/react/i)
 // learn more: https://github.com/testing-library/jest-dom
 import { server } from '@/mocks/server';
+import { QueryCache } from '@tanstack/react-query';
+import { matchers } from '@emotion/jest';
 import 'react-toastify/dist/ReactToastify.css';
 import '@testing-library/jest-dom';
-import { matchers } from '@emotion/jest';
-import { QueryCache } from '@tanstack/react-query';
+import 'jest-canvas-mock';
+import 'intersection-observer';
 
 expect.extend(matchers);
 

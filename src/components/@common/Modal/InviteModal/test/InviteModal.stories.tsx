@@ -1,6 +1,6 @@
 import React from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
-import InviteModal from '.';
+import InviteModal from '..';
 
 export default {
   title: 'Component/Modal/InviteModal',
@@ -9,8 +9,8 @@ export default {
 
 const Template: ComponentStory<typeof InviteModal> = (args) => <InviteModal {...args} />;
 
-export const InviteModalComponent = Template.bind({});
+export const Default = Template.bind({});
 
-InviteModalComponent.args = {
+Default.args = {
   onClick: () => undefined,
 };

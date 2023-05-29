@@ -1,5 +1,6 @@
 import { AdminModal } from '@/components/@common/Modal/GroupSettingModal/AdminModal';
 import { UserModal } from '@/components/@common/Modal/GroupSettingModal/UserModal';
+import { GA } from '@/constants/GA';
 import { useGroupDetail } from '@/queries/Group';
 import React, { useEffect, useState } from 'react';
 import { NavLink, useNavigate, useParams } from 'react-router-dom';
@@ -13,8 +14,8 @@ const GROUP_TAPS = [
   { title: '벌금 장부', svg: SYSTEM.ARTICLE, disabled: false, link: 'book' },
 ];
 const ETC = [
-  { title: '멤버 관리', svg: USER.GROUP_LG, link: 'member', id: 'member_setting' },
-  { title: '설정', svg: SYSTEM.SETTING_LG, id: 'group_setting' },
+  { title: '멤버 관리', svg: USER.GROUP_LG, link: 'member', id: GA.MEMBER_SETTING },
+  { title: '설정', svg: SYSTEM.SETTING_LG, id: GA.GROUP.SETTING },
 ];
 
 const GroupSideBar = () => {

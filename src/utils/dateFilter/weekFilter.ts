@@ -1,6 +1,6 @@
 import { DateState } from '@/store/dateState';
 import dayjs, { Dayjs } from 'dayjs';
-import { DateFilterProperty } from './dateFilter';
+import { DetailFilter } from './dateFilter';
 import { RootDateFilter } from './rootDateFilter';
 
 export class WeekFilter extends RootDateFilter {
@@ -32,7 +32,7 @@ export class WeekFilter extends RootDateFilter {
     return `${month}월 ${day}일 - ${lastDayToMonth}월 ${lastDayToDay}일`;
   };
 
-  update = ({ day, week, ...rest }: DateFilterProperty, calendar: DateState) => {
+  update = ({ day, week, ...rest }: DetailFilter, calendar: DateState) => {
     const [year, month, date] = dayjs(calendar.baseDate).format('YYYY.MM.DD').split('.').map(Number);
 
     return { ...rest, year, month, week: calendar.week, page: 0 };

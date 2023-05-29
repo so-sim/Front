@@ -94,6 +94,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["global", "npm:4.4.0"],\
             ["intersection-observer", "npm:0.12.2"],\
             ["jest", "virtual:2012bb92bd3c02c31c208dd19c7a30b32c4e004bc22c4ac67376a0b485daeffa61f9ac1dd14f7ec2e6d9f117f17b40d67db4154a3f2abfb8e2cf15cea16c14d6#npm:29.4.3"],\
+            ["jest-canvas-mock", "npm:2.5.1"],\
             ["jest-environment-jsdom", "virtual:2012bb92bd3c02c31c208dd19c7a30b32c4e004bc22c4ac67376a0b485daeffa61f9ac1dd14f7ec2e6d9f117f17b40d67db4154a3f2abfb8e2cf15cea16c14d6#npm:29.4.3"],\
             ["jest-transformer-svg", "virtual:2012bb92bd3c02c31c208dd19c7a30b32c4e004bc22c4ac67376a0b485daeffa61f9ac1dd14f7ec2e6d9f117f17b40d67db4154a3f2abfb8e2cf15cea16c14d6#npm:2.0.0"],\
             ["msw", "virtual:2012bb92bd3c02c31c208dd19c7a30b32c4e004bc22c4ac67376a0b485daeffa61f9ac1dd14f7ec2e6d9f117f17b40d67db4154a3f2abfb8e2cf15cea16c14d6#npm:1.0.1"],\
@@ -13926,6 +13927,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD"\
         }]\
       ]],\
+      ["cssfontparser", [\
+        ["npm:1.2.1", {\
+          "packageLocation": "./.yarn/cache/cssfontparser-npm-1.2.1-f48947509b-952d487cdd.zip/node_modules/cssfontparser/",\
+          "packageDependencies": [\
+            ["cssfontparser", "npm:1.2.1"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
       ["csso", [\
         ["npm:4.2.0", {\
           "packageLocation": "./.yarn/cache/csso-npm-4.2.0-b277db8d71-380ba9663d.zip/node_modules/csso/",\
@@ -18763,6 +18773,17 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD"\
         }]\
       ]],\
+      ["jest-canvas-mock", [\
+        ["npm:2.5.1", {\
+          "packageLocation": "./.yarn/cache/jest-canvas-mock-npm-2.5.1-b4aca87443-b8ff56c1b7.zip/node_modules/jest-canvas-mock/",\
+          "packageDependencies": [\
+            ["jest-canvas-mock", "npm:2.5.1"],\
+            ["cssfontparser", "npm:1.2.1"],\
+            ["moo-color", "npm:1.0.3"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
       ["jest-changed-files", [\
         ["npm:29.4.3", {\
           "packageLocation": "./.yarn/cache/jest-changed-files-npm-29.4.3-7102b696f2-9a70bd8e92.zip/node_modules/jest-changed-files/",\
@@ -20861,6 +20882,16 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/mkdirp-npm-1.0.4-37f6ef56b9-a96865108c.zip/node_modules/mkdirp/",\
           "packageDependencies": [\
             ["mkdirp", "npm:1.0.4"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["moo-color", [\
+        ["npm:1.0.3", {\
+          "packageLocation": "./.yarn/cache/moo-color-npm-1.0.3-50b8650764-02bf59b6bb.zip/node_modules/moo-color/",\
+          "packageDependencies": [\
+            ["moo-color", "npm:1.0.3"],\
+            ["color-name", "npm:1.1.4"]\
           ],\
           "linkType": "HARD"\
         }]\
@@ -24877,6 +24908,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["global", "npm:4.4.0"],\
             ["intersection-observer", "npm:0.12.2"],\
             ["jest", "virtual:2012bb92bd3c02c31c208dd19c7a30b32c4e004bc22c4ac67376a0b485daeffa61f9ac1dd14f7ec2e6d9f117f17b40d67db4154a3f2abfb8e2cf15cea16c14d6#npm:29.4.3"],\
+            ["jest-canvas-mock", "npm:2.5.1"],\
             ["jest-environment-jsdom", "virtual:2012bb92bd3c02c31c208dd19c7a30b32c4e004bc22c4ac67376a0b485daeffa61f9ac1dd14f7ec2e6d9f117f17b40d67db4154a3f2abfb8e2cf15cea16c14d6#npm:29.4.3"],\
             ["jest-transformer-svg", "virtual:2012bb92bd3c02c31c208dd19c7a30b32c4e004bc22c4ac67376a0b485daeffa61f9ac1dd14f7ec2e6d9f117f17b40d67db4154a3f2abfb8e2cf15cea16c14d6#npm:2.0.0"],\
             ["msw", "virtual:2012bb92bd3c02c31c208dd19c7a30b32c4e004bc22c4ac67376a0b485daeffa61f9ac1dd14f7ec2e6d9f117f17b40d67db4154a3f2abfb8e2cf15cea16c14d6#npm:1.0.1"],\

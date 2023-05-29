@@ -12,9 +12,9 @@ import { useDeleteGroup, useGroupDetail, useUpdateGroup, useWithdrawalGroup } fr
 import { useParams } from 'react-router-dom';
 import { GroupColor } from '@/types/group';
 import { useGetMyNikname } from '@/queries/Group/useGetMyNickname';
-import { TwoButtonModal } from '../../TwoButtonModal';
+import { ConfirmModal } from '../../ConfirmModal';
 import { GROUP_DELETE, GROUP_WITHDRWWAL_ADMIN } from '@/constants/GroupWithdrawal';
-import { OneButtonModal } from '../../OneButtonModal';
+import { GA } from '@/constants/GA';
 
 export const AdminModal: FC<ModalHandlerProps> = ({ modalHandler }) => {
   const [title, setTitle] = useState('');
@@ -122,54 +122,22 @@ export const AdminModal: FC<ModalHandlerProps> = ({ modalHandler }) => {
             <Button color="white" onClick={modalHandler}>
               취소
             </Button>
-            <Button color={isValidForm() ? 'black' : 'disabled'} onClick={updateGroupInfo} id="group_modify" loading={isLoading}>
+            <Button color={isValidForm() ? 'black' : 'disabled'} onClick={updateGroupInfo} id={GA.GROUP.MODIFY} loading={isLoading}>
               저장
             </Button>
           </Style.ButtonFrame>
         </Modal.Footer>
       </Modal.Frame>
       {showGroupWithdrawalModal && hasMoreUser && (
-        <OneButtonModal
-          width="448px"
-          height="265px"
-          modalHandler={handleGroupWithdrawalModal}
-          title={GROUP_WITHDRWWAL_ADMIN.HAS_USER.title}
-          description={GROUP_WITHDRWWAL_ADMIN.HAS_USER.desc}
-          confirm={{ text: '확인', onClick: handleGroupWithdrawalModal }}
-        />
+        <ConfirmModal type="GROUP_WITHDRAWAL_ADMIN_HAS_USER" width="448px" modalHandler={handleGroupWithdrawalModal} confirm={handleGroupWithdrawalModal} />
       )}
       {showGroupWithdrawalModal && hasNoUser && (
-        <TwoButtonModal
-          width="448px"
-          height="265px"
-          modalHandler={handleGroupWithdrawalModal}
-          title={GROUP_WITHDRWWAL_ADMIN.NO_USER.title}
-          description={GROUP_WITHDRWWAL_ADMIN.NO_USER.desc}
-          cancel={{ text: '취소', onClick: handleGroupWithdrawalModal }}
-          confirm={{ text: '모임 탈퇴', onClick: withdrwalGroup }}
-        />
+        <ConfirmModal type="GROUP_WITHDRAWAL_ADMIN_NO_USER" width="448px" modalHandler={handleGroupWithdrawalModal} cancel={handleGroupWithdrawalModal} confirm={withdrwalGroup} />
       )}
       {showGroupDeleteModal && hasNoUser && (
-        <TwoButtonModal
-          width="448px"
-          height="265px"
-          modalHandler={handleGroupDeleteModal}
-          title={GROUP_DELETE.NO_USER.title}
-          description={GROUP_DELETE.NO_USER.desc}
-          cancel={{ text: '취소', onClick: handleGroupDeleteModal }}
-          confirm={{ text: '삭제하기', onClick: onDeleteGroup }}
-        />
+        <ConfirmModal type="GROUP_DELETE_NO_USER" width="448px" modalHandler={handleGroupDeleteModal} cancel={handleGroupDeleteModal} confirm={onDeleteGroup} />
       )}
-      {showGroupDeleteModal && hasMoreUser && (
-        <OneButtonModal
-          width="448px"
-          height="240px"
-          modalHandler={handleGroupDeleteModal}
-          title={GROUP_DELETE.HAS_USER.title}
-          description={GROUP_DELETE.HAS_USER.desc}
-          confirm={{ text: '확인', onClick: handleGroupDeleteModal }}
-        />
-      )}
+      {showGroupDeleteModal && hasMoreUser && <ConfirmModal type="GROUP_DELETE_HAS_USER" width="448px" modalHandler={handleGroupDeleteModal} confirm={handleGroupDeleteModal} />}
     </>
   );
 };

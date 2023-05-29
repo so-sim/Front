@@ -39,3 +39,24 @@ export const getStatusCode = (status: Exclude<PaymentType, ''>): ServerPaymentTy
       return status;
   }
 };
+
+export const statusText = (isAdmin: boolean, isOwn: boolean, newPaymentType: ServerPaymentType, originPaymentType?: ServerPaymentType) => {
+  if (isAdmin) {
+    const statusText = {
+      non: '미납',
+      con: '확인필요',
+      full: '완납',
+    };
+    return statusText[newPaymentType];
+  }
+
+  if (isOwn && originPaymentType === 'non' && newPaymentType === 'con') return '확인요청';
+
+  const statusText = {
+    non: '미납',
+    con: '확인중',
+    full: '완납',
+  };
+
+  return statusText[newPaymentType];
+};

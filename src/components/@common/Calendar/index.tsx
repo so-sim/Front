@@ -1,3 +1,4 @@
+import { GA } from '@/constants/GA';
 import { useGetMonthStatus } from '@/queries/Detail/useGetMonthStatus';
 import { useGroupDetail } from '@/queries/Group';
 import { dateState } from '@/store/dateState';
@@ -93,17 +94,17 @@ const Calendar: FC<CalnedrProps> = ({ cellType }) => {
         <Style.Header>
           <div>
             <Style.DateHeader>{dayjs(calendarDate).format('YYYY년 MM월')}</Style.DateHeader>
-            <Style.ArrowBlock id="calendar_skip">
-              <Style.ArrowWrapper onClick={decreaseMonth} id="calendar_skip_left">
+            <Style.ArrowBlock id={GA.CALENDAR_SKIP.ALL}>
+              <Style.ArrowWrapper onClick={decreaseMonth} id={GA.CALENDAR_SKIP.LEFT}>
                 {ARROW.LEFT}
               </Style.ArrowWrapper>
-              <Style.ArrowWrapper onClick={increaseMonth} id="calendar_skip_right">
+              <Style.ArrowWrapper onClick={increaseMonth} id={GA.CALENDAR_SKIP.RIGHT}>
                 {ARROW.RIGHT}
               </Style.ArrowWrapper>
             </Style.ArrowBlock>
           </div>
           {cellType === 'Tag' && groupData?.content.isAdmin && (
-            <Button width="124px" color="black" onClick={handleShowCreateDetailModal}>
+            <Button width="124px" color="black" onClick={handleShowCreateDetailModal} id={GA.ADD_LIST.BUTTON}>
               내역 추가하기
             </Button>
           )}
@@ -136,7 +137,7 @@ const Calendar: FC<CalnedrProps> = ({ cellType }) => {
           ))}
         </Style.CalendarContainer>
       </Style.Layout>
-      {showCreateDetailModal && <FineBookModal setOpen={setShowCreateDetailModal} />}
+      {showCreateDetailModal && <FineBookModal modalHandler={handleShowCreateDetailModal} />}
     </>
   );
 };

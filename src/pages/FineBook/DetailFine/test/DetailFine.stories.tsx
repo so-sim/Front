@@ -13,4 +13,13 @@ export const DetailFineComponent = Template.bind({});
 
 DetailFineComponent.parameters = {
   msw: handler,
+  backgrounds: {
+    default: 'twitter',
+    values: [
+      {
+        name: 'twitter',
+        value: '#FFFFFF',
+      },
+    ],
+  },
 };

@@ -8,7 +8,7 @@ import { RecoilState, useRecoilState } from 'recoil';
  */
 type RecoilObserverProp<T> = {
   node: RecoilState<T>;
-  onChange: (node: T) => void;
+  onChange?: (node: T) => void;
   initValue?: T;
 };
 
