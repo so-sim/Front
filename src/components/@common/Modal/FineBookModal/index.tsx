@@ -19,6 +19,7 @@ import { pushDataLayer } from '@/utils/pushDataLayer';
 import { ServerResponse } from '@/types/serverResponse';
 import { removeCommaFromPayment } from '@/utils/removeCommaFromPayment';
 import { GA } from '@/constants/GA';
+import { LIMIT_PAYMENT } from '@/constants/Payment';
 
 interface Props {
   modalHandler: () => void;
@@ -47,7 +48,8 @@ export const FineBookModal = ({ modalHandler, eventId, select, setSelect }: Prop
     const { value: payment } = e.target;
     if (payment.length > 8) return;
 
-    const paymentWithoutComma = removeCommaFromPayment(payment);
+    let paymentWithoutComma = removeCommaFromPayment(payment);
+    if (paymentWithoutComma > LIMIT_PAYMENT) paymentWithoutComma = LIMIT_PAYMENT;
     if (!isNaN(paymentWithoutComma)) setPayment(paymentWithoutComma);
   };
 
