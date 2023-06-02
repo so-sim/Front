@@ -1,6 +1,5 @@
 import * as Style from './styles';
 import { LOGO } from '@/assets/icons/Logo/index';
-import { Paragraph } from '../Paragraph';
 import { useState } from 'react';
 import { AuthModal } from '@/components/@common/Modal/LoginModal';
 import { GNB_LINK } from '@/constants/ServiceLink';
@@ -28,7 +27,7 @@ export const Header = () => {
   return (
     <>
       <Style.Header>
-        <Paragraph>
+        <Style.Wrapper>
           <Style.HeaderLeft>
             <Style.HeaderLogo onClick={() => (window.location.href = process.env.REACT_APP_SERVICE_URL as string)}>{LOGO.SM}</Style.HeaderLogo>
             <Style.NavSection>
@@ -40,7 +39,7 @@ export const Header = () => {
             </Style.NavSection>
           </Style.HeaderLeft>
           <Style.HeaderRight>{user.userId === null ? <Style.Login onClick={loginModalHandler}>로그인/회원가입</Style.Login> : <UserConfig />}</Style.HeaderRight>
-        </Paragraph>
+        </Style.Wrapper>
       </Style.Header>
       {openModal && <AuthModal modalHandler={loginModalHandler} />}
     </>

@@ -10,3 +10,11 @@ export const Title = styled.div`
   margin-bottom: 16px;
   ${({ theme }) => theme.font.headline}
 `;
+
+export const Wrapper = styled.section`
+  max-width: 1200px;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  margin: auto;
+`;

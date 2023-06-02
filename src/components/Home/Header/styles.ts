@@ -56,3 +56,12 @@ export const Login = styled.button`
   color: ${({ theme }) => theme.colors.primary_400};
   ${({ theme }) => theme.font.subhead_02}
 `;
+
+export const Wrapper = styled.section`
+  max-width: 1200px;
+  width: 100%;
+  height: 40px;
+  display: flex;
+  justify-content: space-between;
+  margin: auto;
+`;
