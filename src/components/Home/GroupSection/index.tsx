@@ -1,15 +1,13 @@
-import React from 'react';
-import { Paragraph } from '../Paragraph';
 import { CardList } from '../CardList';
 import * as Style from './styles';
 
 export const GroupSection = () => {
   return (
-    <Paragraph>
+    <Style.Wrapper>
       <Style.GroupSection>
         <Style.Title>참여 모임</Style.Title>
         <CardList />
       </Style.GroupSection>
-    </Paragraph>
+    </Style.Wrapper>
   );
 };
