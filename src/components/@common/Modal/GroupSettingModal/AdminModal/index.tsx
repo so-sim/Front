@@ -12,17 +12,16 @@ import { useDeleteGroup, useGroupDetail, useUpdateGroup, useWithdrawalGroup } fr
 import { useParams } from 'react-router-dom';
 import { GroupColor } from '@/types/group';
 import { useGetMyNikname } from '@/queries/Group/useGetMyNickname';
-import { ConfirmModal } from '../../ConfirmModal';
-import { GROUP_DELETE, GROUP_WITHDRWWAL_ADMIN } from '@/constants/GroupWithdrawal';
 import { GA } from '@/constants/GA';
+import useConfirmModal from '@/hooks/useConfirmModal';
 
 export const AdminModal: FC<ModalHandlerProps> = ({ modalHandler }) => {
   const [title, setTitle] = useState('');
   const [nickname, setNickname] = useState('');
   const [type, setType] = useState('');
   const [coverColor, setCoverColor] = useState<GroupColor>('#f89a65');
-  const [showGroupDeleteModal, setShowGroupDeleteModal] = useState(false);
-  const [showGroupWithdrawalModal, setShowGroupWithdrawalModal] = useState(false);
+  const { openConfirmModal, closeConfirmModal } = useConfirmModal();
+
   const [isError, setError] = useError({
     nickname: '',
     groupName: '',
@@ -38,25 +37,51 @@ export const AdminModal: FC<ModalHandlerProps> = ({ modalHandler }) => {
   const { data: myNickname } = useGetMyNikname(Number(groupId));
 
   const handleGroupDeleteModal = () => {
-    setShowGroupDeleteModal((prev) => !prev);
+    if (hasMoreUser) {
+      openConfirmModal({
+        type: 'GROUP_DELETE_HAS_USER',
+        confirm: closeConfirmModal,
+      });
+    }
+
+    if (hasNoUser) {
+      openConfirmModal({
+        type: 'GROUP_DELETE_NO_USER',
+        confirm: onDeleteGroup,
+        cancel: closeConfirmModal,
+      });
+    }
   };
 
   const handleGroupWithdrawalModal = () => {
-    setShowGroupWithdrawalModal((prev) => !prev);
+    if (hasMoreUser) {
+      openConfirmModal({
+        type: 'GROUP_WITHDRAWAL_ADMIN_HAS_USER',
+        confirm: closeConfirmModal,
+      });
+    }
+
+    if (hasNoUser) {
+      openConfirmModal({
+        type: 'GROUP_WITHDRAWAL_ADMIN_NO_USER',
+        confirm: withdrwalGroup,
+        cancel: closeConfirmModal,
+      });
+    }
   };
 
   const onDeleteGroup = () => {
     deleteGroup({ groupId: Number(groupId) });
   };
 
-  const updateGroupInfo = () => {
-    const id = Number(groupId);
-    updateGroupMutate({ title, type, coverColor, groupId: id, nickname: myNickname?.content.nickname === nickname ? null : nickname });
-  };
-
   const withdrwalGroup = () => {
     const id = Number(groupId);
     withdrawalGroupMutate({ groupId: id });
+  };
+
+  const updateGroupInfo = () => {
+    const id = Number(groupId);
+    updateGroupMutate({ title, type, coverColor, groupId: id, nickname: myNickname?.content.nickname === nickname ? null : nickname });
   };
 
   const isValidForm = () => {
@@ -80,64 +105,52 @@ export const AdminModal: FC<ModalHandlerProps> = ({ modalHandler }) => {
   }, [groupData?.content.title, myNickname?.content.nickname]);
 
   return (
-    <>
-      <Modal.Frame onClick={modalHandler} width="492px" height="708px">
-        <Modal.Header align="start" onClick={modalHandler} margin="16px">
-          <Style.Title>모임 설정</Style.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <Style.Layout>
-            <Style.SubTitle>사용자 설정</Style.SubTitle>
-            <Style.Container>
-              <div>
-                <Label title="모임 이름" flexDirection="column">
-                  <Input value={title} errorText={isError.groupName} onChange={setTitle} maxLength={15} setError={setError} title="groupName" />
-                </Label>
-                <Label title="내 이름" flexDirection="column">
-                  <Input value={nickname} errorText={isError.nickname} onChange={setNickname} maxLength={15} setError={setError} title="nickname" />
-                </Label>
-                <Label title="모임 유형" flexDirection="column">
-                  <DropBox dropDownList={DROPDOWN_LIST} type={type} setType={setType} boxWidth="170px" />
-                </Label>
-                <Label title="커버 색상" flexDirection="column" margin="0px">
-                  <GroupColorList selectedColor={coverColor} onChange={setCoverColor} />
-                </Label>
-              </div>
-              <div>
-                <Label title="모임 탈퇴" flexDirection="column">
-                  <Style.WithDrwal>
-                    <Style.GroupName>{groupData?.content.title}</Style.GroupName>
-                    <Style.QuitButton onClick={handleGroupWithdrawalModal}>탈퇴</Style.QuitButton>
-                  </Style.WithDrwal>
-                </Label>
-                <Style.Flex>
-                  <Style.DeleteButton onClick={handleGroupDeleteModal}>모임 삭제</Style.DeleteButton>
-                </Style.Flex>
-              </div>
-            </Style.Container>
-          </Style.Layout>
-        </Modal.Body>
-        <Modal.Footer>
-          <Style.ButtonFrame>
-            <Button color="white" onClick={modalHandler}>
-              취소
-            </Button>
-            <Button color={isValidForm() ? 'black' : 'disabled'} onClick={updateGroupInfo} id={GA.GROUP.MODIFY} loading={isLoading}>
-              저장
-            </Button>
-          </Style.ButtonFrame>
-        </Modal.Footer>
-      </Modal.Frame>
-      {showGroupWithdrawalModal && hasMoreUser && (
-        <ConfirmModal type="GROUP_WITHDRAWAL_ADMIN_HAS_USER" width="448px" modalHandler={handleGroupWithdrawalModal} confirm={handleGroupWithdrawalModal} />
-      )}
-      {showGroupWithdrawalModal && hasNoUser && (
-        <ConfirmModal type="GROUP_WITHDRAWAL_ADMIN_NO_USER" width="448px" modalHandler={handleGroupWithdrawalModal} cancel={handleGroupWithdrawalModal} confirm={withdrwalGroup} />
-      )}
-      {showGroupDeleteModal && hasNoUser && (
-        <ConfirmModal type="GROUP_DELETE_NO_USER" width="448px" modalHandler={handleGroupDeleteModal} cancel={handleGroupDeleteModal} confirm={onDeleteGroup} />
-      )}
-      {showGroupDeleteModal && hasMoreUser && <ConfirmModal type="GROUP_DELETE_HAS_USER" width="448px" modalHandler={handleGroupDeleteModal} confirm={handleGroupDeleteModal} />}
-    </>
+    <Modal.Frame onClick={modalHandler} width="492px" height="708px">
+      <Modal.Header align="start" onClick={modalHandler} margin="16px">
+        <Style.Title>모임 설정</Style.Title>
+      </Modal.Header>
+      <Modal.Body>
+        <Style.Layout>
+          <Style.SubTitle>사용자 설정</Style.SubTitle>
+          <Style.Container>
+            <div>
+              <Label title="모임 이름" flexDirection="column">
+                <Input value={title} errorText={isError.groupName} onChange={setTitle} maxLength={15} setError={setError} title="groupName" />
+              </Label>
+              <Label title="내 이름" flexDirection="column">
+                <Input value={nickname} errorText={isError.nickname} onChange={setNickname} maxLength={15} setError={setError} title="nickname" />
+              </Label>
+              <Label title="모임 유형" flexDirection="column">
+                <DropBox dropDownList={DROPDOWN_LIST} type={type} setType={setType} boxWidth="170px" />
+              </Label>
+              <Label title="커버 색상" flexDirection="column" margin="0px">
+                <GroupColorList selectedColor={coverColor} onChange={setCoverColor} />
+              </Label>
+            </div>
+            <div>
+              <Label title="모임 탈퇴" flexDirection="column">
+                <Style.WithDrwal>
+                  <Style.GroupName>{groupData?.content.title}</Style.GroupName>
+                  <Style.QuitButton onClick={handleGroupWithdrawalModal}>탈퇴</Style.QuitButton>
+                </Style.WithDrwal>
+              </Label>
+              <Style.Flex>
+                <Style.DeleteButton onClick={handleGroupDeleteModal}>모임 삭제</Style.DeleteButton>
+              </Style.Flex>
+            </div>
+          </Style.Container>
+        </Style.Layout>
+      </Modal.Body>
+      <Modal.Footer>
+        <Style.ButtonFrame>
+          <Button color="white" onClick={modalHandler}>
+            취소
+          </Button>
+          <Button color={isValidForm() ? 'black' : 'disabled'} onClick={updateGroupInfo} id={GA.GROUP.MODIFY} loading={isLoading}>
+            저장
+          </Button>
+        </Style.ButtonFrame>
+      </Modal.Footer>
+    </Modal.Frame>
   );
 };

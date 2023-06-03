@@ -8,12 +8,11 @@ import { ModalHandlerProps } from '../../CreateGroupModal';
 import { useParams } from 'react-router-dom';
 import { useChangeNickname, useGroupDetail, useWithdrawalGroup } from '@/queries/Group';
 import { useGetMyNikname } from '@/queries/Group/useGetMyNickname';
-import { ConfirmModal } from '../../ConfirmModal';
-import { GROUP_WITHDRWWAL_USER } from '@/constants/GroupWithdrawal';
+import useConfirmModal from '@/hooks/useConfirmModal';
 
 export const UserModal: FC<ModalHandlerProps> = ({ modalHandler }) => {
   const [myName, setMyName] = useState('');
-  const [showGroupWithdrawalModal, setShowGroupWithdrawalModal] = useState(false);
+  const { openConfirmModal, closeConfirmModal } = useConfirmModal();
   const { groupId } = useParams();
 
   const [isError, setError] = useError({
@@ -31,7 +30,11 @@ export const UserModal: FC<ModalHandlerProps> = ({ modalHandler }) => {
   };
 
   const handleGroupWithdrawalModal = () => {
-    setShowGroupWithdrawalModal((prev) => !prev);
+    openConfirmModal({
+      type: 'GROUP_WITHDRAWAL_USER',
+      confirm: withdrwalGroup,
+      cancel: closeConfirmModal,
+    });
   };
 
   const updateMyNickname = () => {
@@ -45,40 +48,35 @@ export const UserModal: FC<ModalHandlerProps> = ({ modalHandler }) => {
   }, [myNickname?.content.nickname]);
 
   return (
-    <>
-      <Modal.Frame onClick={modalHandler} width="492px" height="380px">
-        <Modal.Header onClick={modalHandler}>
-          <Style.Title>모임 설정</Style.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <Style.Flex>
-            <Style.SubTitle>사용자 설정</Style.SubTitle>
-            <Style.InputContainer>
-              <Label title="내 이름" flexDirection="column">
-                <Input value={myName} errorText={isError.nickname} onChange={setMyName} maxLength={20} setError={setError} title="nickname" />
-              </Label>
-              <Label title="모임 탈퇴" flexDirection="column" />
-              <Style.WithDrwal>
-                <Style.GroupName>{groupData?.content.title}</Style.GroupName>
-                <Style.QuitButton onClick={handleGroupWithdrawalModal}>탈퇴</Style.QuitButton>
-              </Style.WithDrwal>
-            </Style.InputContainer>
-          </Style.Flex>
-        </Modal.Body>
-        <Modal.Footer>
-          <Style.ButtonFrame>
-            <Button color="white" onClick={modalHandler}>
-              취소
-            </Button>
-            <Button color="black" onClick={updateMyNickname}>
-              저장
-            </Button>
-          </Style.ButtonFrame>
-        </Modal.Footer>
-      </Modal.Frame>
-      {showGroupWithdrawalModal && (
-        <ConfirmModal type="GROUP_WITHDRAWAL_USER" width="448px" modalHandler={handleGroupWithdrawalModal} cancel={handleGroupWithdrawalModal} confirm={withdrwalGroup} />
-      )}
-    </>
+    <Modal.Frame onClick={modalHandler} width="492px" height="380px">
+      <Modal.Header onClick={modalHandler}>
+        <Style.Title>모임 설정</Style.Title>
+      </Modal.Header>
+      <Modal.Body>
+        <Style.Flex>
+          <Style.SubTitle>사용자 설정</Style.SubTitle>
+          <Style.InputContainer>
+            <Label title="내 이름" flexDirection="column">
+              <Input value={myName} errorText={isError.nickname} onChange={setMyName} maxLength={20} setError={setError} title="nickname" />
+            </Label>
+            <Label title="모임 탈퇴" flexDirection="column" />
+            <Style.WithDrwal>
+              <Style.GroupName>{groupData?.content.title}</Style.GroupName>
+              <Style.QuitButton onClick={handleGroupWithdrawalModal}>탈퇴</Style.QuitButton>
+            </Style.WithDrwal>
+          </Style.InputContainer>
+        </Style.Flex>
+      </Modal.Body>
+      <Modal.Footer>
+        <Style.ButtonFrame>
+          <Button color="white" onClick={modalHandler}>
+            취소
+          </Button>
+          <Button color="black" onClick={updateMyNickname}>
+            저장
+          </Button>
+        </Style.ButtonFrame>
+      </Modal.Footer>
+    </Modal.Frame>
   );
 };

@@ -1,16 +1,17 @@
-import { WITHDRAWAL_MODAL, WITHDRAWAL_REASON } from '@/constants/Withdrawal';
+import { WITHDRAWAL_REASON } from '@/constants/Withdrawal';
 import * as Style from './styles';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import Button from '@/components/@common/Button';
 import { useNavigate } from 'react-router-dom';
 import useUserWithdrawalMutation from '@/queries/Auth/useUserWithdrawalMutation';
 import { useRecoilValue } from 'recoil';
 import { userState } from '@/store/userState';
-import { ConfirmModal } from '@/components/@common/Modal/ConfirmModal';
+import useConfirmModal from '@/hooks/useConfirmModal';
 
 const WithdrawalReason = () => {
   const [selectedReason, setSelectedReason] = useState({ title: '', wording: '' });
-  const [showWithdrawModal, setShowWithdrawModal] = useState(false);
+  const { openConfirmModal, closeConfirmModal } = useConfirmModal();
+
   const user = useRecoilValue(userState);
   const navigate = useNavigate();
 
@@ -20,7 +21,11 @@ const WithdrawalReason = () => {
     return selectedReason.title === reason;
   };
   const handleWithdrawModal = () => {
-    setShowWithdrawModal((prev) => !prev);
+    openConfirmModal({
+      type: 'WITHDRAWAL_FINAL',
+      confirm: onClickWithdrawal,
+      cancel: closeConfirmModal,
+    });
   };
 
   const handleChecked = (reason: { title: string; wording: string }) => {
@@ -53,7 +58,6 @@ const WithdrawalReason = () => {
           탈퇴하기
         </Button>
       </Style.Footer>
-      {showWithdrawModal && <ConfirmModal type="WITHDRAWAL_FINAL" width="448px" cancel={handleWithdrawModal} confirm={onClickWithdrawal} modalHandler={handleWithdrawModal} />}
     </>
   );
 };

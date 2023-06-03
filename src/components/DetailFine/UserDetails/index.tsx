@@ -8,15 +8,14 @@ import { changeNumberToMoney } from '@/utils/changeNumberToMoney';
 import { getStatusCode, getStatusText, statusText } from '@/utils/status';
 import { useDeleteDetail, useUpdateDetailStatus } from '@/queries/Detail';
 import { FineBookModal } from '@/components/@common/Modal/FineBookModal';
-import { ConfirmModal } from '@/components/@common/Modal/ConfirmModal';
 import { useRecoilValue } from 'recoil';
 import { userState } from '@/store/userState';
 import { useGroupDetail } from '@/queries/Group';
 import { useParams } from 'react-router-dom';
 import { pushDataLayer } from '@/utils/pushDataLayer';
 import { initialSelectData } from '@/pages/FineBook/DetailFine';
-import useModal from '@/hooks/useModal';
 import { GA } from '@/constants/GA';
+import useConfirmModal from '@/hooks/useConfirmModal';
 
 type Props = {
   select: ClientEventInfo;
@@ -34,14 +33,43 @@ const STATUS_LIST: { title: PaymentType; id?: string }[] = [{ title: '미납', i
 const UserDetails = ({ select, setSelect }: Props) => {
   const { eventId, groundsDate, paymentType, userName, payment, grounds, userId } = select;
 
+  const { openConfirmModal, closeConfirmModal } = useConfirmModal();
   const { groupId } = useParams();
 
   const { data: groupDetail } = useGroupDetail(Number(groupId));
 
-  const { show: showUpdateModal, toggle: handleUpdateModal } = useModal(false);
-  const { show: showUpdateConfirmModal, open: openUpdateConfirmModal, close: closeUpdateConfirmModal } = useModal(false);
-  const { show: showRequestConfirmModal, close: closeRequestConfirmModal, toggle: handleRequestConfirmModal } = useModal(false);
-  const { show: showDeleteConfirmModal, toggle: handleDeleteConfirmModal } = useModal(false);
+  const [showUpdateModal, setShowUpdateModal] = useState(false);
+  const handleUpdateModal = () => {
+    setShowUpdateModal((prev) => !prev);
+  };
+
+  const handleDeleteConfirmModal = () => {
+    openConfirmModal({
+      type: 'DETAIL_DELETE',
+      confirm: deleteDetailInfo,
+      cancel: closeConfirmModal,
+    });
+  };
+
+  const handleRequestConfirmModal = () => {
+    openConfirmModal({
+      type: 'REQUEST_CHANGE_STATUS',
+      confirm: requestConfirmStatus,
+      cancel: closeConfirmModal,
+      id: GA.CON.SIDE_MODAL,
+    });
+  };
+
+  const handleUpdateStatusConfirmModal = (newStatus: PaymentType) => {
+    if (newStatus !== '') {
+      openConfirmModal({
+        type: 'CHANGE_STATUS',
+        confirm: updateStatus,
+        cancel: cancelUpdateStatus,
+        id: getStatusCode(newStatus) === 'full' ? GA.FULL.SIDE_MODAL : '',
+      });
+    }
+  };
 
   const [newStatus, setNewStatus] = useState<PaymentType>('');
 
@@ -51,8 +79,7 @@ const UserDetails = ({ select, setSelect }: Props) => {
   const isOwn = user.userId === userId;
 
   const onSuccessUpdateStatus = (paymentType: ServerPaymentType) => {
-    closeUpdateConfirmModal();
-    closeRequestConfirmModal();
+    closeConfirmModal();
     setNewStatus('');
 
     setSelect((prev) => ({ ...prev, paymentType }));
@@ -78,17 +105,17 @@ const UserDetails = ({ select, setSelect }: Props) => {
     mutateDetailStatus({ paymentType: 'con', eventId });
   };
 
-  const deleteDetailInfo = () => {
+  const deleteDetailInfo = async () => {
     deleteDetail(eventId);
   };
 
   const cancelUpdateStatus = () => {
     setNewStatus('');
-    closeUpdateConfirmModal();
+    closeConfirmModal();
   };
 
   useEffect(() => {
-    if (newStatus !== '') openUpdateConfirmModal();
+    handleUpdateStatusConfirmModal(newStatus);
   }, [newStatus]);
 
   const dropdownStatusList = () => {
@@ -144,6 +171,7 @@ const UserDetails = ({ select, setSelect }: Props) => {
             <Style.TextArea disabled placeholder="내용을 입력해주세요." value={grounds}></Style.TextArea>
           </Label>
         </Style.UserDetailsContent>
+        {/* 여기부터 */}
         {isAdmin && (
           <Style.Footer>
             <Button onClick={handleDeleteConfirmModal} color="white">
@@ -161,28 +189,11 @@ const UserDetails = ({ select, setSelect }: Props) => {
             </Button>
           </Style.Footer>
         )}
+        {/* 여기까지 수정 예정 */}
       </Style.UserDetailsFrame>
-      {showUpdateConfirmModal && newStatus && (
-        <ConfirmModal
-          type="CHANGE_STATUS"
-          id={getStatusCode(newStatus) === 'full' ? GA.FULL.SIDE_MODAL : ''}
-          modalHandler={cancelUpdateStatus}
-          cancel={cancelUpdateStatus}
-          confirm={updateStatus}
-        />
-      )}
-      {showRequestConfirmModal && (
-        <ConfirmModal
-          type="REQUEST_CHANGE_STATUS"
-          id={GA.CON.SIDE_MODAL}
-          modalHandler={handleRequestConfirmModal}
-          cancel={handleRequestConfirmModal}
-          confirm={requestConfirmStatus}
-        />
-      )}
-      {showDeleteConfirmModal && <ConfirmModal type="DETAIL_DELETE" modalHandler={handleDeleteConfirmModal} cancel={handleDeleteConfirmModal} confirm={deleteDetailInfo} />}
       {showUpdateModal && <FineBookModal eventId={eventId} select={select} modalHandler={handleUpdateModal} setSelect={setSelect} />}
     </>
   );
 };
+
 export default UserDetails;

@@ -4,13 +4,14 @@ import { ConfirmModalType } from '@/constants/Confirm';
 import * as Style from './styels';
 import { CONFIRM_MODAL } from '@/constants/Confirm';
 import { useRecoilState } from 'recoil';
-import { confirmModalState } from '@/store/confirmModalState';
+import { confirmModalState, initialConfirmModalState } from '@/store/confirmModalState';
+import useConfirmModal from '@/hooks/useConfirmModal';
 
 interface Props {
   modalHandler: () => void;
   width?: string;
   cancel?: () => void;
-  confirm: () => Promise<void>;
+  confirm: (() => Promise<void>) | (() => void);
   flexDirection?: 'row' | 'column';
   id?: string;
   type: ConfirmModalType;
@@ -18,9 +19,11 @@ interface Props {
 
 export const ConfirmModal = ({ modalHandler, cancel, confirm, flexDirection = 'row', width = '448px', id, type }: Props) => {
   const hasCancelProperty = cancel && CONFIRM_MODAL[type].hasOwnProperty('cancel');
+  const { closeConfirmModal } = useConfirmModal();
 
-  const closeModalAfterSuccessConfirm = () => {
-    confirm().then(cancel);
+  const closeModalAfterSuccessConfirm = async () => {
+    await confirm();
+    closeConfirmModal();
   };
 
   return (
@@ -49,7 +52,7 @@ export const GlobalConfirmModal = () => {
   const [confirmModal, setConfirmModal] = useRecoilState(confirmModalState);
 
   const modalHandler = () => {
-    setConfirmModal((prev) => ({ ...prev, type: null }));
+    setConfirmModal(initialConfirmModalState);
   };
 
   const renderer = () => {
@@ -57,7 +60,7 @@ export const GlobalConfirmModal = () => {
       return null;
     }
 
-    return <ConfirmModal modalHandler={modalHandler} cancel={confirmModal.cancel} type={confirmModal.type} confirm={confirmModal.confirm} />;
+    return <ConfirmModal id={confirmModal.id || ''} modalHandler={modalHandler} cancel={confirmModal.cancel} type={confirmModal.type} confirm={confirmModal.confirm} />;
   };
 
   return <>{renderer()}</>;
