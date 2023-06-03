@@ -1,16 +1,20 @@
-import { Dispatch, FC, SetStateAction } from 'react';
+import { Dispatch, SetStateAction } from 'react';
 import { ARROW } from '@/assets/icons/Arrow';
 import * as Style from './styles';
 import { DetailFilter } from '@/utils/dateFilter/dateFilter';
 
 type Props = {
-  count?: number;
+  totalCount?: number;
   detailFilter: DetailFilter;
   setDetailFilter: Dispatch<SetStateAction<DetailFilter>>;
 };
 
-const Pagination = ({ count = 0, detailFilter, setDetailFilter }: Props) => {
-  const pageCount = Math.ceil(count / 16 || 1);
+const ITEMS_PER_PAGE = 16;
+
+const Pagination = ({ totalCount = 0, detailFilter, setDetailFilter }: Props) => {
+  if (totalCount < ITEMS_PER_PAGE) return null;
+
+  const pageCount = Math.ceil(totalCount / 16 || 1);
 
   const increasePage = () => {
     setDetailFilter((prev) => {

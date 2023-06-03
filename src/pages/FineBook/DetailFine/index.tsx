@@ -39,7 +39,7 @@ const DetailFine = () => {
         <TableHead setDetailFilter={setDetailFilter} />
         <DetailList detailFilter={detailFilter} selectedEventId={select.eventId} details={data?.content.list} setSelect={setSelect} />
       </Style.DetailContent>
-      {Number(data?.content.totalCount) > 16 && <Pagination count={data?.content.totalCount} detailFilter={detailFilter} setDetailFilter={setDetailFilter} />}
+      <Pagination totalCount={data?.content.totalCount} detailFilter={detailFilter} setDetailFilter={setDetailFilter} />
       {hasSelectedInfo && <UserDetails select={select} setSelect={setSelect} />}
     </Style.DetailFineFrame>
   );
