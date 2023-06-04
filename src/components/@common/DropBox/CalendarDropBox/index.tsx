@@ -7,7 +7,7 @@ export type DropBoxColor = 'white' | 'gray' | 'disabled';
 
 interface CalendarDropBoxProps {
   type: string;
-  setType: Dispatch<SetStateAction<string>>;
+  setType: (value: string) => void;
   boxWidth?: string;
   width?: number;
   color?: DropBoxColor;

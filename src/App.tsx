@@ -8,6 +8,7 @@ import Toast, { ToastPopUp } from './components/@common/Toast';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { AxiosError } from 'axios';
 import { TOAST_ERROR } from './constants/Toast';
+import { GlobalConfirmModal } from './components/@common/Modal/ConfirmModal';
 
 const App = () => {
   const queryClient = new QueryClient({
@@ -39,6 +40,7 @@ const App = () => {
         <ThemeProvider theme={theme}>
           <Router />
           <Toast />
+          <GlobalConfirmModal />
           <Global styles={globalStyle} />
         </ThemeProvider>
         <ReactQueryDevtools initialIsOpen={true} position={'bottom-right'} />

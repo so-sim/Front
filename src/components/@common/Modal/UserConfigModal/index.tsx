@@ -1,10 +1,9 @@
-import { WITHDRAWAL_MODAL } from '@/constants/Withdrawal';
+import useConfirmModal from '@/hooks/useConfirmModal';
 import { useCanWithdrawl } from '@/queries/Auth/useCanWithdrawal';
 import { userState } from '@/store/userState';
-import React, { FC, useState } from 'react';
+import { FC, useState } from 'react';
 import { useRecoilValue } from 'recoil';
 import Modal from '..';
-import { ConfirmModal } from '../ConfirmModal';
 import * as Style from './styles';
 
 interface UserConfigModalProps {
@@ -12,12 +11,12 @@ interface UserConfigModalProps {
 }
 
 const UserConfigModal: FC<UserConfigModalProps> = ({ handleModal }) => {
-  const [showWithdrawalModal, setShowWithdarawalModal] = useState(false);
   const [trigger, setTrigger] = useState(false);
   const userData = useRecoilValue(userState);
+  const { openConfirmModal, closeConfirmModal } = useConfirmModal();
 
   const handleWithdrawalModal = () => {
-    setShowWithdarawalModal((prev) => !prev);
+    openConfirmModal({ type: 'WITHDRAWAL_HAS_ADMIN', confirm: closeConfirmModal });
   };
   const { data } = useCanWithdrawl({ modalHandler: handleWithdrawalModal, trigger });
 
@@ -26,27 +25,24 @@ const UserConfigModal: FC<UserConfigModalProps> = ({ handleModal }) => {
   };
 
   return (
-    <>
-      <Modal.Frame width="493px" height="284px" onClick={handleModal}>
-        <Modal.Header align="start" onClick={handleModal}>
-          환경설정
-        </Modal.Header>
-        <Modal.Body>
-          <Style.Flex>
-            <Style.SubTitle>사용자 설정</Style.SubTitle>
-            <Style.ConfigContainer>
-              <Style.ContentWrapper>
-                <Style.Text>연동된 소셜 계정</Style.Text>
-                <Style.Kakao>카카오 간편 로그인</Style.Kakao>
-                <Style.Email>{userData.email}</Style.Email>
-                <Style.WithDrwalBtn onClick={onClickWithdrawal}>회원 탈퇴</Style.WithDrwalBtn>
-              </Style.ContentWrapper>
-            </Style.ConfigContainer>
-          </Style.Flex>
-        </Modal.Body>
-      </Modal.Frame>
-      {showWithdrawalModal && <ConfirmModal type="WITHDRAWAL_HAS_ADMIN" width="448px" confirm={handleWithdrawalModal} modalHandler={handleWithdrawalModal} />}
-    </>
+    <Modal.Frame width="493px" height="284px" onClick={handleModal}>
+      <Modal.Header align="start" onClick={handleModal}>
+        환경설정
+      </Modal.Header>
+      <Modal.Body>
+        <Style.Flex>
+          <Style.SubTitle>사용자 설정</Style.SubTitle>
+          <Style.ConfigContainer>
+            <Style.ContentWrapper>
+              <Style.Text>연동된 소셜 계정</Style.Text>
+              <Style.Kakao>카카오 간편 로그인</Style.Kakao>
+              <Style.Email>{userData.email}</Style.Email>
+              <Style.WithDrwalBtn onClick={onClickWithdrawal}>회원 탈퇴</Style.WithDrwalBtn>
+            </Style.ContentWrapper>
+          </Style.ConfigContainer>
+        </Style.Flex>
+      </Modal.Body>
+    </Modal.Frame>
   );
 };
 

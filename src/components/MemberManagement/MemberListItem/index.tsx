@@ -1,10 +1,10 @@
 import { SYSTEM } from '@/assets/icons/System';
 import { USER } from '@/assets/icons/User';
 import DropDown from '@/components/@common/DropDown';
-import { ConfirmModal } from '@/components/@common/Modal/ConfirmModal';
 import { GA } from '@/constants/GA';
+import useConfirmModal from '@/hooks/useConfirmModal';
 import { useChangeAdmin, useGroupDetail } from '@/queries/Group';
-import React, { FC, useEffect, useRef, useState } from 'react';
+import { FC, useEffect, useRef, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import * as Style from './styles';
 
@@ -23,7 +23,7 @@ const MemberListItem: FC<MemberListItemProps> = ({ nickname }) => {
 
   const [showDropDown, setShowDropDown] = useState(false);
   const [selectAction, setSelectAction] = useState('');
-  const [showChangeAdminModal, setShowChangeAdminModal] = useState(false);
+  const { openConfirmModal, closeConfirmModal } = useConfirmModal();
 
   const dropDownRef = useRef<HTMLDivElement>(null);
 
@@ -31,7 +31,12 @@ const MemberListItem: FC<MemberListItemProps> = ({ nickname }) => {
     setShowDropDown((prev) => !prev);
   };
   const handleShowChangeAdminModal = () => {
-    setShowChangeAdminModal((prev) => !prev);
+    openConfirmModal({
+      type: 'CHANGE_ADMIN',
+      confirm: onClickConfirm,
+      cancel: closeConfirmModal,
+      id: GA.TOSS_MANAGER.MODAL,
+    });
   };
 
   const { mutate: changeAdminMutate } = useChangeAdmin(Number(groupId));
@@ -39,7 +44,6 @@ const MemberListItem: FC<MemberListItemProps> = ({ nickname }) => {
   const onClickConfirm = () => {
     const id = Number(groupId);
     changeAdminMutate({ groupId: id, nickname });
-    handleShowChangeAdminModal();
   };
 
   useEffect(() => {
@@ -50,32 +54,20 @@ const MemberListItem: FC<MemberListItemProps> = ({ nickname }) => {
   }, [selectAction]);
 
   return (
-    <>
-      <Style.MemberContainer>
-        <Style.Flex>
-          <div>{USER.PERSON_XL}</div>
-          <Style.Nickname>{nickname}</Style.Nickname>
-        </Style.Flex>
-        {groupData?.content.isAdmin && (
-          <Style.SVG ref={dropDownRef}>
-            <div onClick={handleDropDown}>
-              {SYSTEM.DOTS}
-              {showDropDown && <DropDown list={DropDonwList} top={'30px'} onClose={handleDropDown} setState={setSelectAction} width={114} dropDownRef={dropDownRef} />}
-            </div>
-          </Style.SVG>
-        )}
-      </Style.MemberContainer>
-      {showChangeAdminModal && (
-        <ConfirmModal
-          type="CHANGE_ADMIN"
-          width="448px"
-          modalHandler={handleShowChangeAdminModal}
-          cancel={handleShowChangeAdminModal}
-          confirm={onClickConfirm}
-          id={GA.TOSS_MANAGER.MODAL}
-        />
+    <Style.MemberContainer>
+      <Style.Flex>
+        <div>{USER.PERSON_XL}</div>
+        <Style.Nickname>{nickname}</Style.Nickname>
+      </Style.Flex>
+      {groupData?.content.isAdmin && (
+        <Style.SVG ref={dropDownRef}>
+          <div onClick={handleDropDown}>
+            {SYSTEM.DOTS}
+            {showDropDown && <DropDown list={DropDonwList} top={'30px'} onClose={handleDropDown} setState={setSelectAction} width={114} dropDownRef={dropDownRef} />}
+          </div>
+        </Style.SVG>
       )}
-    </>
+    </Style.MemberContainer>
   );
 };
 
