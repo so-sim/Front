@@ -16,6 +16,7 @@ import { pushDataLayer } from '@/utils/pushDataLayer';
 import { initialSelectData } from '@/pages/FineBook/DetailFine';
 import { GA } from '@/constants/GA';
 import useConfirmModal from '@/hooks/useConfirmModal';
+import { getAdminDropdownStatusList, getOwnDropdownStatusList } from '@/utils/statusList';
 
 type Props = {
   select: ClientEventInfo;
@@ -27,8 +28,6 @@ const REQUEST_BUTTON: { [key in ServerPaymentType]: string } = {
   con: '요청 완료',
   full: '확인 완료',
 };
-
-const STATUS_LIST: { title: PaymentType; id?: string }[] = [{ title: '미납', id: GA.NON.SIDE_BUTTON }, { title: '완납', id: GA.FULL.SIDE_BUTTON }, { title: '확인필요' }];
 
 const UserDetails = ({ select, setSelect }: Props) => {
   const { eventId, groundsDate, paymentType, userName, payment, grounds, userId } = select;
@@ -105,7 +104,7 @@ const UserDetails = ({ select, setSelect }: Props) => {
     mutateDetailStatus({ paymentType: 'con', eventId });
   };
 
-  const deleteDetailInfo = async () => {
+  const deleteDetailInfo = () => {
     deleteDetail(eventId);
   };
 
@@ -118,20 +117,13 @@ const UserDetails = ({ select, setSelect }: Props) => {
     handleUpdateStatusConfirmModal(newStatus);
   }, [newStatus]);
 
-  const dropdownStatusList = () => {
-    if (isAdmin) {
-      return STATUS_LIST.filter((status) => {
-        if (status.title === '확인필요') return false;
-        if (paymentType === 'con') return true;
-
-        return status.title !== getStatusText(paymentType);
-      });
-    }
-    if (isOwn) {
-      return STATUS_LIST.filter((status) => paymentType === 'non' && status.title === '확인필요');
-    }
+  const getDropdownStatusList = () => {
+    if (isAdmin) return getAdminDropdownStatusList(paymentType);
+    if (isOwn) return getOwnDropdownStatusList(paymentType);
     return [];
   };
+
+  const dropdownStatusList = getDropdownStatusList();
 
   return (
     <>
@@ -150,17 +142,17 @@ const UserDetails = ({ select, setSelect }: Props) => {
           </Style.Block>
           <Style.Row>
             <Label title="날짜" width="32px">
-              <DropBox color="disabled" setType={() => undefined} boxWidth="116px" width={116} type={groundsDate.split(' ')[0]} dropDownList={STATUS_LIST} />
+              <DropBox color="disabled" setType={() => undefined} boxWidth="116px" width={116} type={groundsDate.split(' ')[0]} dropDownList={[]} />
             </Label>
             <Label title="납부여부" width="80px">
-              {dropdownStatusList().length ? (
+              {dropdownStatusList.length ? (
                 <DropBox
                   color="white"
                   boxWidth="112px"
                   width={112}
                   setType={setNewStatus}
                   type={newStatus !== '' ? newStatus : getStatusText(paymentType)}
-                  dropDownList={dropdownStatusList()}
+                  dropDownList={dropdownStatusList}
                 />
               ) : (
                 <Style.StatusButton status={paymentType}>{statusText(isAdmin, isOwn, paymentType as ServerPaymentType)}</Style.StatusButton>
@@ -171,25 +163,23 @@ const UserDetails = ({ select, setSelect }: Props) => {
             <Style.TextArea disabled placeholder="내용을 입력해주세요." value={grounds}></Style.TextArea>
           </Label>
         </Style.UserDetailsContent>
-        {/* 여기부터 */}
-        {isAdmin && (
-          <Style.Footer>
-            <Button onClick={handleDeleteConfirmModal} color="white">
-              삭제
-            </Button>
-            <Button onClick={handleUpdateModal} color="black">
-              수정
-            </Button>
-          </Style.Footer>
-        )}
-        {!isAdmin && isOwn && (
-          <Style.Footer>
+        <Style.Footer>
+          {isAdmin && (
+            <>
+              <Button onClick={handleDeleteConfirmModal} color="white">
+                삭제
+              </Button>
+              <Button onClick={handleUpdateModal} color="black">
+                수정
+              </Button>
+            </>
+          )}
+          {!isAdmin && isOwn && (
             <Button width="150px" height="42px" color={paymentType === 'non' ? 'black' : 'disabled'} onClick={handleRequestConfirmModal} id={GA.CON.SIDE_BUTTON}>
               {REQUEST_BUTTON[paymentType as ServerPaymentType]}
             </Button>
-          </Style.Footer>
-        )}
-        {/* 여기까지 수정 예정 */}
+          )}
+        </Style.Footer>
       </Style.UserDetailsFrame>
       {showUpdateModal && <FineBookModal eventId={eventId} select={select} modalHandler={handleUpdateModal} setSelect={setSelect} />}
     </>
