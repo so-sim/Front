@@ -11,7 +11,7 @@ interface Props<T = string> {
   boxWidth?: string;
   width?: number;
   color?: DropBoxColor;
-  setType: Dispatch<SetStateAction<T>>;
+  setType: (value: T) => void;
   direction?: 'left' | 'right';
   align?: 'start' | 'center';
 }

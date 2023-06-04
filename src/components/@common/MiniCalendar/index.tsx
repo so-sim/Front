@@ -6,7 +6,7 @@ import * as Style from './styles';
 
 interface MiniCalendarProps {
   type: string;
-  setType: Dispatch<SetStateAction<string>>;
+  setType: (value: string) => void;
   setOpenDrop: Dispatch<SetStateAction<boolean>>;
 }
 
