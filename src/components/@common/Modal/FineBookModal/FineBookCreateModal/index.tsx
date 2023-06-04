@@ -1,89 +1,35 @@
-import { Dispatch, SetStateAction, useReducer } from 'react';
+import { useReducer } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+import { useRecoilState, useRecoilValue } from 'recoil';
+import { useCreateDetail } from '@/queries/Detail';
+import dayjs from 'dayjs';
+
 import Button from '@/components/@common/Button';
 import Modal from '@/components/@common/Modal';
-import * as Style from '../styles';
 import { SYSTEM } from '@/assets/icons/System';
-import { useCreateDetail, useUpdateDetail } from '@/queries/Detail';
-import { useNavigate, useParams } from 'react-router-dom';
-import { ClientEventInfo, EventInfo, PaymentType } from '@/types/event';
-import { useRecoilState, useRecoilValue } from 'recoil';
 import { userState } from '@/store/userState';
-import dayjs from 'dayjs';
 import { dateState } from '@/store/dateState';
-import { getStatusCode, getStatusText } from '@/utils/status';
-import { pushDataLayer } from '@/utils/pushDataLayer';
-import { ServerResponse } from '@/types/serverResponse';
-import { convertFromPriceFormat } from '@/utils/convertPriceFormat';
-import { GA } from '@/constants/GA';
 import { initialSelectData } from '@/pages/FineBook/DetailFine';
+
+import { selectedDataReducer } from '../reducer/selectedDataReducer';
+import { getStatusCode } from '@/utils/status';
+import { pushDataLayer } from '@/utils/pushDataLayer';
+import { checkFormIsValid } from '@/utils/validation';
+import { GA } from '@/constants/GA';
 import FormFileds from '../FormFileds';
+import * as Style from '../styles';
 
 interface Props {
   modalHandler: () => void;
-  eventId?: number;
-  select?: ClientEventInfo;
-  setSelect?: Dispatch<SetStateAction<ClientEventInfo>>;
 }
 
-type Action =
-  | { type: 'USER_NAME'; userName: string }
-  | { type: 'GROUNDS'; grounds: string }
-  | { type: 'GROUNDS_DATE'; groundsDate: string }
-  | { type: 'PAYMENT'; payment: string }
-  | { type: 'PAYMENT_TYPE'; paymentType: PaymentType }
-  | { type: 'INIT'; initialData: ClientEventInfo };
-
-const selectedDataReducer = (state: ClientEventInfo, actions: Action) => {
-  switch (actions.type) {
-    case 'USER_NAME':
-      const { userName } = actions;
-      return { ...state, userName };
-    case 'GROUNDS':
-      const { grounds } = actions;
-      if (grounds.length > 65) return state;
-
-      return { ...state, grounds };
-    case 'GROUNDS_DATE':
-      const { groundsDate } = actions;
-      return { ...state, groundsDate };
-    case 'PAYMENT':
-      const { payment } = actions;
-      if (payment.length > 8) return state;
-
-      const convertPayment = convertFromPriceFormat(payment);
-      if (!isNaN(convertPayment)) return { ...state, payment: convertPayment };
-      return state;
-    case 'PAYMENT_TYPE':
-      const { paymentType } = actions;
-      return { ...state, paymentType };
-    case 'INIT':
-      const { initialData } = actions;
-      return { ...state, initialData };
-    default:
-      throw new Error('정의되지 않은 타입입니다.');
-  }
-};
-
-export const FineBookModal = ({ modalHandler }: Props) => {
-  const [selectData, dispatch] = useReducer(selectedDataReducer, initialSelectData);
-
+const FineBookCreateModal = ({ modalHandler }: Props) => {
   const [_, setDateState] = useRecoilState(dateState);
-
-  /** 공통 로직 */
   const { groupId } = useParams();
   const user = useRecoilValue(userState);
   const navigate = useNavigate();
 
-  const initDetail = () => {
-    dispatch({ type: 'INIT', initialData: initialSelectData });
-  };
-  const checkFormIsValid = (): boolean => {
-    const { userName, payment, paymentType, groundsDate } = selectData;
-    if (!userName || !paymentType || !payment || !groundsDate) return false;
-
-    return true;
-  };
-  /** 공통 로직 */
+  const [selectData, dispatch] = useReducer(selectedDataReducer, initialSelectData);
 
   const createDetail = (type: 'continue' | 'save') => {
     if (user.userId === null) return;
@@ -101,7 +47,7 @@ export const FineBookModal = ({ modalHandler }: Props) => {
           setDateState((prev) => ({ ...prev, baseDate: dayjs(selectData.groundsDate), selectedDate: dayjs(selectData.groundsDate), week: null }));
           if (type === 'continue') {
             navigate(`/group/${groupId}/book/detail`, { state: true });
-            initDetail();
+            dispatch({ type: 'INIT', initialData: initialSelectData });
           } else {
             navigate(`/group/${groupId}/book/detail`);
             modalHandler();
@@ -119,7 +65,7 @@ export const FineBookModal = ({ modalHandler }: Props) => {
         <FormFileds dispatch={dispatch} selectData={selectData} />
         <Modal.Footer flexDirection="column">
           <Button //
-            color={checkFormIsValid() ? 'black' : 'disabled'}
+            color={checkFormIsValid(selectData) ? 'black' : 'disabled'}
             width="100%"
             height="42px"
             onClick={() => createDetail('save')}
@@ -129,7 +75,7 @@ export const FineBookModal = ({ modalHandler }: Props) => {
             추가하기
           </Button>
           <Button
-            color={checkFormIsValid() ? 'white' : 'white-disabled'}
+            color={checkFormIsValid(selectData) ? 'white' : 'white-disabled'}
             width="100%"
             height="42px"
             onClick={() => createDetail('continue')}
@@ -143,3 +89,4 @@ export const FineBookModal = ({ modalHandler }: Props) => {
     </Modal.Frame>
   );
 };
+export default FineBookCreateModal;
