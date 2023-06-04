@@ -5,6 +5,7 @@ import { GA } from '@/constants/GA';
 import { useParticipantList } from '@/queries/Group';
 import { ClientEventInfo, PaymentType } from '@/types/event';
 import { convertToPriceFormat } from '@/utils/convertPriceFormat';
+import { getStatusText } from '@/utils/status';
 import React from 'react';
 import { useParams } from 'react-router-dom';
 import * as Style from '../styles';
@@ -58,8 +59,8 @@ const FormFileds = ({ selectData, dispatch }: Props) => {
             boxWidth="110px"
             width={112}
             setType={onChanePaymentType}
-            type={selectData.paymentType}
-            dropDownList={STATUS_LIST.filter((paymentType) => paymentType.title !== selectData.paymentType)}
+            type={getStatusText(selectData.paymentType)}
+            dropDownList={STATUS_LIST.filter((paymentType) => paymentType.title !== getStatusText(selectData.paymentType))}
           />
         </Label>
       </Style.Row>

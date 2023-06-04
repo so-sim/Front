@@ -25,15 +25,17 @@ const FineBookUpdateModal = ({ modalHandler, select, setSelect }: Props) => {
   const [_, setDateState] = useRecoilState(dateState);
 
   const onSuccessUpdateDetail = (data: ServerResponse<EventInfo>) => {
+    const groundsDate = dayjs(data.content.groundsDate);
+
     setSelect((prev) => ({ ...prev, ...data.content, paymentType: getStatusText(selectData.paymentType) }));
-    setDateState((prev) => ({ ...prev, baseDate: dayjs(data.content.groundsDate), selectedDate: dayjs(data.content.groundsDate), week: null }));
+    setDateState((prev) => ({ ...prev, baseDate: groundsDate, selectedDate: groundsDate, week: null }));
     modalHandler();
   };
 
   const { mutate: update, isLoading: updateLoading } = useUpdateDetail(onSuccessUpdateDetail);
 
   const updateDetail = () => {
-    if (selectData.paymentType == '' || select == null) return;
+    if (selectData.paymentType == '') return;
     const { eventId, userId } = select;
 
     update({ ...selectData, eventId, userId, paymentType: getStatusCode(selectData.paymentType) });
@@ -45,7 +47,13 @@ const FineBookUpdateModal = ({ modalHandler, select, setSelect }: Props) => {
       <Style.FlexColumn>
         <FormFileds dispatch={dispatch} selectData={selectData} />
         <Modal.Footer>
-          <Button color={checkFormIsValid(selectData) ? 'black' : 'disabled'} width="100%" height="42px" onClick={updateDetail} loading={updateLoading}>
+          <Button //
+            color={checkFormIsValid(selectData) ? 'black' : 'disabled'}
+            width="100%"
+            height="42px"
+            onClick={updateDetail}
+            loading={updateLoading}
+          >
             저장하기
           </Button>
         </Modal.Footer>

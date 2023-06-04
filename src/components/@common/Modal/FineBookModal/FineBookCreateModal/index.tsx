@@ -44,7 +44,10 @@ const FineBookCreateModal = ({ modalHandler }: Props) => {
       {
         onSuccess() {
           pushDataLayer('add_list', { button: type === 'continue' ? 'keep' : 'normal' });
-          setDateState((prev) => ({ ...prev, baseDate: dayjs(selectData.groundsDate), selectedDate: dayjs(selectData.groundsDate), week: null }));
+
+          const groundsDate = dayjs(selectData.groundsDate);
+          setDateState((prev) => ({ ...prev, baseDate: groundsDate, selectedDate: groundsDate, week: null }));
+
           if (type === 'continue') {
             navigate(`/group/${groupId}/book/detail`, { state: true });
             dispatch({ type: 'INIT', initialData: initialSelectData });
@@ -56,6 +59,7 @@ const FineBookCreateModal = ({ modalHandler }: Props) => {
       },
     );
   };
+
   const { mutate: create, isLoading: createLoading } = useCreateDetail();
 
   return (
@@ -89,4 +93,5 @@ const FineBookCreateModal = ({ modalHandler }: Props) => {
     </Modal.Frame>
   );
 };
+
 export default FineBookCreateModal;
