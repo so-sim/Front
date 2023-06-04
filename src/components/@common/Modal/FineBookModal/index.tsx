@@ -1,25 +1,22 @@
-import { changeNumberToMoney } from '@/utils/changeNumberToMoney';
-import React, { Dispatch, SetStateAction, useState } from 'react';
+import { Dispatch, SetStateAction, useReducer } from 'react';
 import Button from '@/components/@common/Button';
 import Modal from '@/components/@common/Modal';
-import { DropBox, Label } from '@/components/@common';
 import * as Style from './styles';
 import { SYSTEM } from '@/assets/icons/System';
-import { useParticipantList } from '@/queries/Group';
 import { useCreateDetail, useUpdateDetail } from '@/queries/Detail';
 import { useNavigate, useParams } from 'react-router-dom';
 import { ClientEventInfo, EventInfo, PaymentType } from '@/types/event';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { userState } from '@/store/userState';
-import { CalendarDropBox } from '@/components/@common/DropBox/CalendarDropBox';
 import dayjs from 'dayjs';
 import { dateState } from '@/store/dateState';
 import { getStatusCode, getStatusText } from '@/utils/status';
 import { pushDataLayer } from '@/utils/pushDataLayer';
 import { ServerResponse } from '@/types/serverResponse';
-import { removeCommaFromPayment } from '@/utils/removeCommaFromPayment';
+import { convertFromPriceFormat } from '@/utils/convertPriceFormat';
 import { GA } from '@/constants/GA';
-import { LIMIT_PAYMENT } from '@/constants/Payment';
+import { initialSelectData } from '@/pages/FineBook/DetailFine';
+import FormFileds from './FormFileds';
 
 interface Props {
   modalHandler: () => void;
@@ -28,77 +25,84 @@ interface Props {
   setSelect?: Dispatch<SetStateAction<ClientEventInfo>>;
 }
 
-const STATUS_LIST: { title: PaymentType; id?: string }[] = [
-  { title: '미납', id: GA.NON.LIST_MODAL },
-  { title: '완납', id: GA.FULL.LIST_MODAL },
-];
+type Action =
+  | { type: 'USER_NAME'; userName: string }
+  | { type: 'GROUNDS'; grounds: string }
+  | { type: 'GROUNDS_DATE'; groundsDate: string }
+  | { type: 'PAYMENT'; payment: string }
+  | { type: 'PAYMENT_TYPE'; paymentType: PaymentType }
+  | { type: 'INIT'; initialData: ClientEventInfo };
+
+const selectedDataReducer = (state: ClientEventInfo, actions: Action) => {
+  switch (actions.type) {
+    case 'USER_NAME':
+      const { userName } = actions;
+      return { ...state, userName };
+    case 'GROUNDS':
+      const { grounds } = actions;
+      if (grounds.length > 65) return state;
+
+      return { ...state, grounds };
+    case 'GROUNDS_DATE':
+      const { groundsDate } = actions;
+      return { ...state, groundsDate };
+    case 'PAYMENT':
+      const { payment } = actions;
+      if (payment.length > 8) return state;
+
+      const convertPayment = convertFromPriceFormat(payment);
+      if (!isNaN(convertPayment)) return { ...state, payment: convertPayment };
+      return state;
+    case 'PAYMENT_TYPE':
+      const { paymentType } = actions;
+      return { ...state, paymentType };
+    case 'INIT':
+      const { initialData } = actions;
+      return { ...state, initialData };
+    default:
+      throw new Error('정의되지 않은 타입입니다.');
+  }
+};
 
 export const FineBookModal = ({ modalHandler, eventId, select, setSelect }: Props) => {
   const type = eventId ? 'update' : 'create';
   const isCreate = type === 'create';
+  const [selectData, dispatch] = useReducer(selectedDataReducer, select ?? initialSelectData);
 
-  const [userName, setUserName] = useState(select?.userName ?? '');
-  const [status, setStatus] = useState<PaymentType>(select?.paymentType ? getStatusText(select?.paymentType) : '미납');
-  const [grounds, setGrounds] = useState(select?.grounds ?? '');
-  const [payment, setPayment] = useState(select?.payment ?? 0);
-  const [groundsDate, setGroundsDate] = useState(dayjs(select?.groundsDate).format('YYYY.MM.DD'));
   const [_, setDateState] = useRecoilState(dateState);
 
-  const onChangePayment = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { value: payment } = e.target;
-    if (payment.length > 8) return;
-
-    let paymentWithoutComma = removeCommaFromPayment(payment);
-    if (paymentWithoutComma > LIMIT_PAYMENT) paymentWithoutComma = LIMIT_PAYMENT;
-    if (!isNaN(paymentWithoutComma)) setPayment(paymentWithoutComma);
-  };
-
-  const onChangeGrounds = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    if (e.target.value.length > 65) return;
-    setGrounds(e.target.value);
-  };
-
-  const onSuccessUpdateDetail = (data: ServerResponse<EventInfo>) => {
-    if (setSelect) {
-      setSelect((prev) => ({ ...prev, ...data.content, paymentType: getStatusText(status) }));
-      setDateState((prev) => ({ ...prev, baseDate: dayjs(data.content.groundsDate), selectedDate: dayjs(data.content.groundsDate), week: null }));
-      modalHandler();
-    }
-  };
-
+  /** 공통 로직 */
   const { groupId } = useParams();
-  const { data } = useParticipantList(Number(groupId));
-  const { mutate: create, isLoading: createLoading } = useCreateDetail();
-  const { mutate: update, isLoading: updateLoading } = useUpdateDetail(onSuccessUpdateDetail);
-
   const user = useRecoilValue(userState);
   const navigate = useNavigate();
 
   const initDetail = () => {
-    setUserName('');
-    setStatus('미납');
-    setGrounds('');
-    setPayment(0);
-    setGroundsDate(dayjs().format('YYYY.MM.DD'));
+    dispatch({ type: 'INIT', initialData: initialSelectData });
   };
+  const checkFormIsValid = (): boolean => {
+    const { userName, payment, paymentType, groundsDate } = selectData;
+    if (!userName || !paymentType || !payment || !groundsDate) return false;
+
+    return true;
+  };
+  /** 공통 로직 */
+
+  /** create 로직 */
 
   const createDetail = (type: 'continue' | 'save') => {
     if (user.userId === null) return;
-    if (status === '') return;
+    if (selectData.paymentType === '') return;
     create(
       {
+        ...selectData,
         groupId: Number(groupId),
         userId: user.userId,
-        userName,
-        groundsDate,
-        grounds,
-        paymentType: getStatusCode(status),
-        payment,
+        paymentType: getStatusCode(selectData.paymentType),
       },
       {
         onSuccess() {
           pushDataLayer('add_list', { button: type === 'continue' ? 'keep' : 'normal' });
-          setDateState((prev) => ({ ...prev, baseDate: dayjs(groundsDate), selectedDate: dayjs(groundsDate), week: null }));
+          setDateState((prev) => ({ ...prev, baseDate: dayjs(selectData.groundsDate), selectedDate: dayjs(selectData.groundsDate), week: null }));
           if (type === 'continue') {
             navigate(`/group/${groupId}/book/detail`, { state: true });
             initDetail();
@@ -110,55 +114,33 @@ export const FineBookModal = ({ modalHandler, eventId, select, setSelect }: Prop
       },
     );
   };
+  const { mutate: create, isLoading: createLoading } = useCreateDetail();
+  /** create 로직 */
+
+  /** update 로직 */
+  const onSuccessUpdateDetail = (data: ServerResponse<EventInfo>) => {
+    if (setSelect) {
+      setSelect((prev) => ({ ...prev, ...data.content, paymentType: getStatusText(selectData.paymentType) }));
+      setDateState((prev) => ({ ...prev, baseDate: dayjs(data.content.groundsDate), selectedDate: dayjs(data.content.groundsDate), week: null }));
+      modalHandler();
+    }
+  };
+  const { mutate: update, isLoading: updateLoading } = useUpdateDetail(onSuccessUpdateDetail);
 
   const updateDetail = () => {
-    if (status == '' || select == null) return;
+    if (selectData.paymentType == '' || select == null) return;
     const { eventId, userId } = select;
 
-    update({ eventId, userId, userName, groundsDate, grounds, paymentType: getStatusCode(status), payment });
+    update({ ...selectData, eventId, userId, paymentType: getStatusCode(selectData.paymentType) });
   };
 
-  const checkFormIsValid = (): boolean => {
-    if (!userName || !status || !payment || !groundsDate) return false;
-
-    return true;
-  };
-
-  const admin = { title: data?.content.adminNickname as string };
-  const participantList = data?.content.memberList.map(({ nickname }) => ({ title: nickname })) || [];
-  const memberList = [admin, ...participantList];
+  /** update 로직 */
 
   return (
     <Modal.Frame width="448px" height={isCreate ? '466px' : '412px'} onClick={modalHandler}>
       <Modal.Header onClick={modalHandler}>{isCreate ? '내역 추가하기' : '상세 내역 수정'}</Modal.Header>
-      <div style={{ display: 'flex', flexDirection: 'column', width: '100%' }}>
-        <Style.Row>
-          <Label title="팀원" width="32px" margin="0px">
-            <DropBox boxWidth="146px" width={304} setType={setUserName} type={userName} dropDownList={memberList} direction="right" />
-          </Label>
-          <Label title="납부여부" width="56px" margin="0px">
-            <DropBox
-              color="white"
-              boxWidth="110px"
-              width={112}
-              setType={setStatus}
-              type={status}
-              dropDownList={STATUS_LIST.filter((paymentType) => paymentType.title !== status)}
-            />
-          </Label>
-        </Style.Row>
-        <Style.Row>
-          <Label title="금액" width="32px" margin="0px">
-            <Style.Input type="string" value={changeNumberToMoney(payment)} onChange={onChangePayment} style={{ height: '32px' }} />
-          </Label>
-          <Label title="날짜" width="32px" margin="0px">
-            <CalendarDropBox type={groundsDate} setType={setGroundsDate} color="white" />
-          </Label>
-        </Style.Row>
-        <Label title="사유" width="32px" margin="0px">
-          <Style.TextArea maxLength={65} onChange={onChangeGrounds} defaultValue={grounds} value={grounds} placeholder="내용을 입력해주세요." />
-          <Style.Length>{grounds.length}/65</Style.Length>
-        </Label>
+      <Style.FlexColumn>
+        <FormFileds dispatch={dispatch} selectData={selectData} />
         <Modal.Footer flexDirection="column">
           <Button
             color={checkFormIsValid() ? 'black' : 'disabled'}
@@ -186,7 +168,7 @@ export const FineBookModal = ({ modalHandler, eventId, select, setSelect }: Prop
             </Button>
           )}
         </Modal.Footer>
-      </div>
+      </Style.FlexColumn>
     </Modal.Frame>
   );
 };
