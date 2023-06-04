@@ -5,12 +5,12 @@ import { dateState } from '@/store/dateState';
 import createCalendar from '@/utils/createCalendar';
 import { handleDate } from '@/utils/handleDate';
 import dayjs, { Dayjs } from 'dayjs';
-import React, { FC, useEffect, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
 import { ARROW } from '../../../assets/icons/Arrow';
 import Button from '../Button';
-import { FineBookModal } from '../Modal/FineBookModal';
+import FineBookCreateModal from '../Modal/FineBookModal/FineBookCreateModal';
 import DateCellWithMark from './DateCellWithMark';
 import DateCellWithTag from './DateCellWithTag';
 
@@ -137,7 +137,7 @@ const Calendar: FC<CalnedrProps> = ({ cellType }) => {
           ))}
         </Style.CalendarContainer>
       </Style.Layout>
-      {showCreateDetailModal && <FineBookModal modalHandler={handleShowCreateDetailModal} />}
+      {showCreateDetailModal && <FineBookCreateModal modalHandler={handleShowCreateDetailModal} />}
     </>
   );
 };

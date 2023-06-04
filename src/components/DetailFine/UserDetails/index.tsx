@@ -7,7 +7,6 @@ import { ClientEventInfo, PaymentType, ServerPaymentType } from '@/types/event';
 import { changeNumberToMoney } from '@/utils/changeNumberToMoney';
 import { getStatusCode, getStatusText, statusText } from '@/utils/status';
 import { useDeleteDetail, useUpdateDetailStatus } from '@/queries/Detail';
-import { FineBookModal } from '@/components/@common/Modal/FineBookModal';
 import { useRecoilValue } from 'recoil';
 import { userState } from '@/store/userState';
 import { useGroupDetail } from '@/queries/Group';
@@ -17,6 +16,7 @@ import { initialSelectData } from '@/pages/FineBook/DetailFine';
 import { GA } from '@/constants/GA';
 import useConfirmModal from '@/hooks/useConfirmModal';
 import { getAdminDropdownStatusList, getOwnDropdownStatusList } from '@/utils/statusList';
+import FineBookUpdateModal from '@/components/@common/Modal/FineBookModal/FineBookUpdateModal';
 
 type Props = {
   select: ClientEventInfo;
@@ -181,7 +181,7 @@ const UserDetails = ({ select, setSelect }: Props) => {
           )}
         </Style.Footer>
       </Style.UserDetailsFrame>
-      {showUpdateModal && <FineBookModal eventId={eventId} select={select} modalHandler={handleUpdateModal} setSelect={setSelect} />}
+      {showUpdateModal && <FineBookUpdateModal select={select} modalHandler={handleUpdateModal} setSelect={setSelect} />}
     </>
   );
 };
