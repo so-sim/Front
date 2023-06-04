@@ -7,13 +7,14 @@ import { useRecoilValue } from 'recoil';
 import { dateState } from '@/store/dateState';
 import { useParams } from 'react-router-dom';
 import { DetailFilter } from '@/utils/dateFilter/dateFilter';
+import dayjs from 'dayjs';
 
 export type FilterMode = 'month' | 'week' | 'day';
 
 export const initialSelectData: EventInfo = {
   userId: 0,
   eventId: 0,
-  groundsDate: '',
+  groundsDate: dayjs().format('YYYY.MM.DD'),
   paymentType: 'non',
   userName: '',
   payment: 0,
