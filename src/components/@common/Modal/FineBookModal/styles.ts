@@ -8,6 +8,12 @@ export const Input = styled.input`
   width: 148px;
 `;
 
+export const FlexColumn = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+`;
+
 export const TextArea = styled.textarea`
   width: 100%;
   border: 2px solid ${({ theme }) => theme.colors.secondary_200};

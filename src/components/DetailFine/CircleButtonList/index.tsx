@@ -1,10 +1,10 @@
-import { ConfirmModal } from '@/components/@common/Modal/ConfirmModal';
 import { STATUS_LIST } from '@/constants/Detail';
 import { GA } from '@/constants/GA';
+import useConfirmModal from '@/hooks/useConfirmModal';
 import { useUpdateDetailStatus } from '@/queries/Detail/useUpdateDetailStatus';
 import { ServerPaymentType } from '@/types/event';
 import { pushDataLayerByStatus } from '@/utils/pushDataLayer';
-import { Dispatch, SetStateAction, useState } from 'react';
+import { Dispatch, SetStateAction } from 'react';
 import CircleDropButton, { CircleDropButtonProps } from '../CircleDropButton';
 import * as Style from './styles';
 
@@ -44,42 +44,40 @@ const CircleButtonList = ({ setOpenButtonListId, isOwn, status, eventId, isAdmin
   };
 
   const { mutate: mutateDetailStatus } = useUpdateDetailStatus(onSuccessUpdateStatus);
-  const [newStatus, setNewStatus] = useState<ServerPaymentType>('non');
-  const [showUpdateStatusModal, setShowUpdateStatusModal] = useState(false);
+  const { openConfirmModal, closeConfirmModal } = useConfirmModal();
 
-  const updateStatus = () => {
-    if (status != newStatus) {
-      mutateDetailStatus({ paymentType: newStatus, eventId });
-    }
+  const updateStatus = async (paymentType: ServerPaymentType) => {
+    if (status != paymentType) mutateDetailStatus({ paymentType, eventId });
   };
 
   const cancelUpdateStatus = () => {
     setOpenButtonListId(0);
+    closeConfirmModal();
   };
 
   const handleCircleButtonList = (paymentType: ServerPaymentType) => {
     if (paymentType === status) {
       return cancelUpdateStatus();
     }
-    setShowUpdateStatusModal(true);
-    setNewStatus(paymentType);
+
+    openConfirmModal({
+      type: 'CHANGE_STATUS',
+      confirm: () => updateStatus(paymentType),
+      cancel: cancelUpdateStatus,
+      id: getGATrigger(paymentType),
+    });
   };
 
   return (
-    <>
-      <Style.CircleButtonList>
-        {dropdownList.map((paymentType) => {
-          return (
-            <Style.CircleButtonBox key={paymentType} onClick={() => handleCircleButtonList(paymentType)}>
-              <CircleDropButton status={paymentType} isAdmin={isAdmin} isOwn={isOwn} originStatus={status} />
-            </Style.CircleButtonBox>
-          );
-        })}
-      </Style.CircleButtonList>
-      {showUpdateStatusModal && (
-        <ConfirmModal type="CHANGE_STATUS" id={getGATrigger(newStatus)} modalHandler={cancelUpdateStatus} cancel={cancelUpdateStatus} confirm={updateStatus} />
-      )}
-    </>
+    <Style.CircleButtonList>
+      {dropdownList.map((paymentType) => {
+        return (
+          <Style.CircleButtonBox key={paymentType} onClick={() => handleCircleButtonList(paymentType)}>
+            <CircleDropButton status={paymentType} isAdmin={isAdmin} isOwn={isOwn} originStatus={status} />
+          </Style.CircleButtonBox>
+        );
+      })}
+    </Style.CircleButtonList>
   );
 };
 

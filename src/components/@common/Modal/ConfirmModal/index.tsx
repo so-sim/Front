@@ -3,12 +3,15 @@ import Modal from '@/components/@common/Modal';
 import { ConfirmModalType } from '@/constants/Confirm';
 import * as Style from './styels';
 import { CONFIRM_MODAL } from '@/constants/Confirm';
+import { useRecoilState } from 'recoil';
+import { confirmModalState, initialConfirmModalState } from '@/store/confirmModalState';
+import useConfirmModal from '@/hooks/useConfirmModal';
 
 interface Props {
   modalHandler: () => void;
   width?: string;
   cancel?: () => void;
-  confirm: () => void;
+  confirm: (() => Promise<void>) | (() => void);
   flexDirection?: 'row' | 'column';
   id?: string;
   type: ConfirmModalType;
@@ -16,6 +19,12 @@ interface Props {
 
 export const ConfirmModal = ({ modalHandler, cancel, confirm, flexDirection = 'row', width = '448px', id, type }: Props) => {
   const hasCancelProperty = cancel && CONFIRM_MODAL[type].hasOwnProperty('cancel');
+  const { closeConfirmModal } = useConfirmModal();
+
+  const closeModalAfterSuccessConfirm = async () => {
+    await confirm();
+    closeConfirmModal();
+  };
 
   return (
     <Modal.Frame width={width} onClick={modalHandler}>
@@ -31,10 +40,28 @@ export const ConfirmModal = ({ modalHandler, cancel, confirm, flexDirection = 'r
             취소
           </Button>
         )}
-        <Button width="100%" height="42px" color={hasCancelProperty ? 'black' : 'white'} onClick={confirm} id={id}>
+        <Button width="100%" height="42px" color={hasCancelProperty ? 'black' : 'white'} onClick={closeModalAfterSuccessConfirm} id={id}>
           {CONFIRM_MODAL[type].confirm}
         </Button>
       </Modal.Footer>
     </Modal.Frame>
   );
+};
+
+export const GlobalConfirmModal = () => {
+  const [confirmModal, setConfirmModal] = useRecoilState(confirmModalState);
+
+  const modalHandler = () => {
+    setConfirmModal(initialConfirmModalState);
+  };
+
+  const renderer = () => {
+    if (confirmModal.type === null) {
+      return null;
+    }
+
+    return <ConfirmModal id={confirmModal.id || ''} modalHandler={modalHandler} cancel={confirmModal.cancel} type={confirmModal.type} confirm={confirmModal.confirm} />;
+  };
+
+  return <>{renderer()}</>;
 };

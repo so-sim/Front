@@ -7,16 +7,16 @@ import { ClientEventInfo, PaymentType, ServerPaymentType } from '@/types/event';
 import { changeNumberToMoney } from '@/utils/changeNumberToMoney';
 import { getStatusCode, getStatusText, statusText } from '@/utils/status';
 import { useDeleteDetail, useUpdateDetailStatus } from '@/queries/Detail';
-import { FineBookModal } from '@/components/@common/Modal/FineBookModal';
-import { ConfirmModal } from '@/components/@common/Modal/ConfirmModal';
 import { useRecoilValue } from 'recoil';
 import { userState } from '@/store/userState';
 import { useGroupDetail } from '@/queries/Group';
 import { useParams } from 'react-router-dom';
 import { pushDataLayer } from '@/utils/pushDataLayer';
 import { initialSelectData } from '@/pages/FineBook/DetailFine';
-import useModal from '@/hooks/useModal';
 import { GA } from '@/constants/GA';
+import useConfirmModal from '@/hooks/useConfirmModal';
+import { getAdminDropdownStatusList, getOwnDropdownStatusList } from '@/utils/statusList';
+import FineBookUpdateModal from '@/components/@common/Modal/FineBookModal/FineBookUpdateModal';
 
 type Props = {
   select: ClientEventInfo;
@@ -29,19 +29,46 @@ const REQUEST_BUTTON: { [key in ServerPaymentType]: string } = {
   full: '확인 완료',
 };
 
-const STATUS_LIST: { title: PaymentType; id?: string }[] = [{ title: '미납', id: GA.NON.SIDE_BUTTON }, { title: '완납', id: GA.FULL.SIDE_BUTTON }, { title: '확인필요' }];
-
 const UserDetails = ({ select, setSelect }: Props) => {
   const { eventId, groundsDate, paymentType, userName, payment, grounds, userId } = select;
 
+  const { openConfirmModal, closeConfirmModal } = useConfirmModal();
   const { groupId } = useParams();
 
   const { data: groupDetail } = useGroupDetail(Number(groupId));
 
-  const { show: showUpdateModal, toggle: handleUpdateModal } = useModal(false);
-  const { show: showUpdateConfirmModal, open: openUpdateConfirmModal, close: closeUpdateConfirmModal } = useModal(false);
-  const { show: showRequestConfirmModal, close: closeRequestConfirmModal, toggle: handleRequestConfirmModal } = useModal(false);
-  const { show: showDeleteConfirmModal, toggle: handleDeleteConfirmModal } = useModal(false);
+  const [showUpdateModal, setShowUpdateModal] = useState(false);
+  const handleUpdateModal = () => {
+    setShowUpdateModal((prev) => !prev);
+  };
+
+  const handleDeleteConfirmModal = () => {
+    openConfirmModal({
+      type: 'DETAIL_DELETE',
+      confirm: deleteDetailInfo,
+      cancel: closeConfirmModal,
+    });
+  };
+
+  const handleRequestConfirmModal = () => {
+    openConfirmModal({
+      type: 'REQUEST_CHANGE_STATUS',
+      confirm: requestConfirmStatus,
+      cancel: closeConfirmModal,
+      id: GA.CON.SIDE_MODAL,
+    });
+  };
+
+  const handleUpdateStatusConfirmModal = (newStatus: PaymentType) => {
+    if (newStatus !== '') {
+      openConfirmModal({
+        type: 'CHANGE_STATUS',
+        confirm: updateStatus,
+        cancel: cancelUpdateStatus,
+        id: getStatusCode(newStatus) === 'full' ? GA.FULL.SIDE_MODAL : '',
+      });
+    }
+  };
 
   const [newStatus, setNewStatus] = useState<PaymentType>('');
 
@@ -51,8 +78,7 @@ const UserDetails = ({ select, setSelect }: Props) => {
   const isOwn = user.userId === userId;
 
   const onSuccessUpdateStatus = (paymentType: ServerPaymentType) => {
-    closeUpdateConfirmModal();
-    closeRequestConfirmModal();
+    closeConfirmModal();
     setNewStatus('');
 
     setSelect((prev) => ({ ...prev, paymentType }));
@@ -84,27 +110,20 @@ const UserDetails = ({ select, setSelect }: Props) => {
 
   const cancelUpdateStatus = () => {
     setNewStatus('');
-    closeUpdateConfirmModal();
+    closeConfirmModal();
   };
 
   useEffect(() => {
-    if (newStatus !== '') openUpdateConfirmModal();
+    handleUpdateStatusConfirmModal(newStatus);
   }, [newStatus]);
 
-  const dropdownStatusList = () => {
-    if (isAdmin) {
-      return STATUS_LIST.filter((status) => {
-        if (status.title === '확인필요') return false;
-        if (paymentType === 'con') return true;
-
-        return status.title !== getStatusText(paymentType);
-      });
-    }
-    if (isOwn) {
-      return STATUS_LIST.filter((status) => paymentType === 'non' && status.title === '확인필요');
-    }
+  const getDropdownStatusList = () => {
+    if (isAdmin) return getAdminDropdownStatusList(paymentType);
+    if (isOwn) return getOwnDropdownStatusList(paymentType);
     return [];
   };
+
+  const dropdownStatusList = getDropdownStatusList();
 
   return (
     <>
@@ -123,17 +142,17 @@ const UserDetails = ({ select, setSelect }: Props) => {
           </Style.Block>
           <Style.Row>
             <Label title="날짜" width="32px">
-              <DropBox color="disabled" setType={() => undefined} boxWidth="116px" width={116} type={groundsDate.split(' ')[0]} dropDownList={STATUS_LIST} />
+              <DropBox color="disabled" setType={() => undefined} boxWidth="116px" width={116} type={groundsDate.split(' ')[0]} dropDownList={[]} />
             </Label>
             <Label title="납부여부" width="80px">
-              {dropdownStatusList().length ? (
+              {dropdownStatusList.length ? (
                 <DropBox
                   color="white"
                   boxWidth="112px"
                   width={112}
                   setType={setNewStatus}
                   type={newStatus !== '' ? newStatus : getStatusText(paymentType)}
-                  dropDownList={dropdownStatusList()}
+                  dropDownList={dropdownStatusList}
                 />
               ) : (
                 <Style.StatusButton status={paymentType}>{statusText(isAdmin, isOwn, paymentType as ServerPaymentType)}</Style.StatusButton>
@@ -144,45 +163,27 @@ const UserDetails = ({ select, setSelect }: Props) => {
             <Style.TextArea disabled placeholder="내용을 입력해주세요." value={grounds}></Style.TextArea>
           </Label>
         </Style.UserDetailsContent>
-        {isAdmin && (
-          <Style.Footer>
-            <Button onClick={handleDeleteConfirmModal} color="white">
-              삭제
-            </Button>
-            <Button onClick={handleUpdateModal} color="black">
-              수정
-            </Button>
-          </Style.Footer>
-        )}
-        {!isAdmin && isOwn && (
-          <Style.Footer>
+        <Style.Footer>
+          {isAdmin && (
+            <>
+              <Button onClick={handleDeleteConfirmModal} color="white">
+                삭제
+              </Button>
+              <Button onClick={handleUpdateModal} color="black">
+                수정
+              </Button>
+            </>
+          )}
+          {!isAdmin && isOwn && (
             <Button width="150px" height="42px" color={paymentType === 'non' ? 'black' : 'disabled'} onClick={handleRequestConfirmModal} id={GA.CON.SIDE_BUTTON}>
               {REQUEST_BUTTON[paymentType as ServerPaymentType]}
             </Button>
-          </Style.Footer>
-        )}
+          )}
+        </Style.Footer>
       </Style.UserDetailsFrame>
-      {showUpdateConfirmModal && newStatus && (
-        <ConfirmModal
-          type="CHANGE_STATUS"
-          id={getStatusCode(newStatus) === 'full' ? GA.FULL.SIDE_MODAL : ''}
-          modalHandler={cancelUpdateStatus}
-          cancel={cancelUpdateStatus}
-          confirm={updateStatus}
-        />
-      )}
-      {showRequestConfirmModal && (
-        <ConfirmModal
-          type="REQUEST_CHANGE_STATUS"
-          id={GA.CON.SIDE_MODAL}
-          modalHandler={handleRequestConfirmModal}
-          cancel={handleRequestConfirmModal}
-          confirm={requestConfirmStatus}
-        />
-      )}
-      {showDeleteConfirmModal && <ConfirmModal type="DETAIL_DELETE" modalHandler={handleDeleteConfirmModal} cancel={handleDeleteConfirmModal} confirm={deleteDetailInfo} />}
-      {showUpdateModal && <FineBookModal eventId={eventId} select={select} modalHandler={handleUpdateModal} setSelect={setSelect} />}
+      {showUpdateModal && <FineBookUpdateModal select={select} modalHandler={handleUpdateModal} setSelect={setSelect} />}
     </>
   );
 };
+
 export default UserDetails;

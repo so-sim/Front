@@ -11,9 +11,9 @@ import DropDown from '@/components/@common/DropDown';
 import { useGroupDetail } from '@/queries/Group';
 import { useParams } from 'react-router-dom';
 import { FilterMode } from '@/pages/FineBook/DetailFine';
-import { FineBookModal } from '@/components/@common/Modal/FineBookModal';
 import useCheckLocationState from '@/hooks/useCheckLocationState';
 import { GA } from '@/constants/GA';
+import FineBookCreateModal from '@/components/@common/Modal/FineBookModal/FineBookCreateModal';
 
 export const FILTER_BUTTON_LIST: { mode: FilterMode; text: string; id: string }[] = [
   { mode: 'month', text: '월간', id: GA.FILTER.MONTH },
@@ -125,7 +125,7 @@ const DateController = ({ setDetailFilter }: Props) => {
           </Style.Block>
         </Style.ControllerFrame>
       </Style.DateController>
-      {openAddModal && <FineBookModal modalHandler={handleAddModal} />}
+      {openAddModal && <FineBookCreateModal modalHandler={handleAddModal} />}
     </>
   );
 };
