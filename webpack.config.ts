@@ -11,7 +11,8 @@ interface Configuration extends WebpackConfiguration {
 
 import ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin';
 
-const isDevelopment = process.env.NODE_ENV !== 'production';
+const isDevelopment = process.env.NODE_ENV === 'development';
+console.log(isDevelopment);
 
 const config: Configuration = {
   name: 'sosim_front',
