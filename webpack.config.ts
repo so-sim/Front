@@ -75,14 +75,14 @@ const config: Configuration = {
       async: false,
     }),
     new webpack.EnvironmentPlugin({
-      NODE_ENV: isDevelopment ? 'development' : 'production',
+      // NODE_ENV: process.env.NODE_ENV,
     }),
     new CleanWebpackPlugin({
       verbose: true,
       cleanOnceBeforeBuildPatterns: ['**/*', path.resolve(process.cwd(), 'build/**/*')],
     }),
     new Dotenv({
-      path: isDevelopment ? '.env' : '.env.production',
+      path: isDevelopment ? '.env' : `.env.${process.env.NODE_ENV}`,
     }),
   ],
   output: {
