@@ -2,7 +2,7 @@
   "name": "sosim_front",
   "packageManager": "yarn@3.3.1",
   "scripts": {
-    "dev": "webpack serve --env development",
+    "dev": "cross-env NODE_ENV=development webpack serve",
     "build:production": "cross-env NODE_ENV=production webpack",
     "build:staging": "cross-env NODE_ENV=staging webpack",
     "storybook": "start-storybook -p 6006",
