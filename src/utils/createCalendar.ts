@@ -4,10 +4,13 @@ const createCalendar = (baseDate: Dayjs) => {
   const WEEK = 7;
 
   const monthStart = baseDate.startOf('month');
+
   const monthEnd = baseDate.endOf('month');
   const startDay = monthStart.day();
+  // 요일 가져오는 부분
   const endDate = monthEnd.date();
   const totalWeek = Math.ceil((startDay + endDate) / 7);
+  // 로우 갯수 계산
 
   const getFirstWeek = () => {
     const weekList = [];
