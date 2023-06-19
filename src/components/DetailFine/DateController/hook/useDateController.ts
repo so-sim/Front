@@ -11,7 +11,12 @@ const useDateController = (mode: FilterMode) => {
     setSelectedDateTest(baseDate);
   };
 
-  const action = { goToWeek };
+  const changeDateByButtonMode = (buttonMode: FilterMode) => {
+    const baseDate = updateDateByButtonMode(calendarDateTest.baseDateTest, buttonMode);
+    setSelectedDateTest(baseDate);
+  };
+
+  const action = { goToWeek, changeDateByButtonMode };
 
   return action;
 };
@@ -36,4 +41,32 @@ export function moveDateToWeek(baseDate: Dayjs, week: number) {
   const endDate = dayjs(baseDate).set('date', startOfWeekDate).endOf('week');
 
   return { baseDateTest: startDate, startDate, endDate };
+}
+
+export function updateDateByButtonMode(baseDate: Dayjs, buttonMode: FilterMode) {
+  const startDate = getBaseDateByChangedMode(baseDate, buttonMode);
+
+  return {
+    baseDateTest: startDate,
+    startDate: startDate.startOf(buttonMode),
+    endDate: startDate.endOf(buttonMode),
+  };
+}
+
+function getBaseDateByChangedMode(baseDate: Dayjs, mode: FilterMode) {
+  const startDayOfMonth = dayjs(baseDate).startOf('month');
+  switch (mode) {
+    case 'month':
+      return startDayOfMonth;
+    case 'week':
+      const startDay = dayjs(baseDate).startOf('week');
+      const endDay = dayjs(baseDate).endOf('week');
+
+      if (startDay.month() === endDay.month()) return startDay;
+      if (startDay.date() > dayjs(baseDate).date()) return startDayOfMonth;
+
+      return startDay;
+    case 'day':
+      return dayjs(baseDate);
+  }
 }
