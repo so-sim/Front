@@ -1,7 +1,6 @@
 import { GA } from '@/constants/GA';
 import { useGetMonthStatus } from '@/queries/Detail/useGetMonthStatus';
 import { useGroupDetail } from '@/queries/Group';
-import { dateState } from '@/store/dateState';
 import { dateStateTest } from '@/store/dateStateTest';
 import createCalendar from '@/utils/createCalendar';
 import { handleDate } from '@/utils/handleDate';
@@ -25,11 +24,9 @@ interface CalnedrProps {
 
 const Calendar: FC<CalnedrProps> = ({ cellType }) => {
   const today = dayjs();
-  const [dateObj, setDateObj] = useRecoilState(dateState);
 
   const [{ baseDateTest, startDate, endDate }, setDateTestObj] = useRecoilState(dateStateTest);
 
-  const { baseDate, week, selectedDate } = dateObj;
   const [showCreateDetailModal, setShowCreateDetailModal] = useState(false);
   const [calendarDate, setCalendarDate] = useState(baseDateTest);
 
@@ -68,6 +65,7 @@ const Calendar: FC<CalnedrProps> = ({ cellType }) => {
     return dateToFormmating(date) === dateToFormmating(today);
   };
 
+  // Todo 커스텀기간 필터링 추가 시 리팩토링 예정
   // const isSelectedWeek = (index: number) => {
   //   return getMonth(baseDateTest) === getMonth(calendarDate) && index + 1 === week;
   // };
