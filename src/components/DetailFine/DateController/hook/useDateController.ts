@@ -1,5 +1,6 @@
 import { FilterMode } from '@/pages/FineBook/DetailFine';
-import { dateStateTest } from '@/store/dateStateTest';
+import { DateStateTest, dateStateTest } from '@/store/dateStateTest';
+import { padStart } from '@/utils/padStart';
 import dayjs, { Dayjs } from 'dayjs';
 import { useRecoilState } from 'recoil';
 
@@ -16,7 +17,11 @@ const useDateController = (mode: FilterMode) => {
     setSelectedDateTest(baseDate);
   };
 
-  const action = { goToWeek, changeDateByButtonMode };
+  const getTitle = () => {
+    return getTitleByMode(calendarDateTest, mode);
+  };
+
+  const action = { goToWeek, changeDateByButtonMode, getTitle };
 
   return action;
 };
@@ -68,5 +73,25 @@ function getBaseDateByChangedMode(baseDate: Dayjs, mode: FilterMode) {
       return startDay;
     case 'day':
       return dayjs(baseDate);
+  }
+}
+
+export function getTitleByMode(calendarDate: DateStateTest, mode: FilterMode) {
+  const month = padStart(dayjs(calendarDate.baseDateTest).month() + 1);
+
+  switch (mode) {
+    case 'month':
+      return `${month}월`;
+    case 'week':
+      const startMonth = padStart(dayjs(calendarDate.startDate).month() + 1);
+      const startDate = padStart(dayjs(calendarDate.startDate).date());
+      const endMonth = padStart(dayjs(calendarDate.endDate).month() + 1);
+      const endDate = padStart(dayjs(calendarDate.endDate).date());
+
+      return `${startMonth}월 ${startDate}일 - ${endMonth}월 ${endDate}일`;
+    default:
+      const day = padStart(dayjs(calendarDate.baseDateTest).date());
+
+      return `${month}월 ${day}일`;
   }
 }
