@@ -4,10 +4,10 @@ import { ClientEventInfo, EventInfo } from '@/types/event';
 import { DateController, DetailList, DetailsHeader, Pagination, TableHead, UserDetails } from '@/components/DetailFine';
 import * as Style from './styles';
 import { useRecoilValue } from 'recoil';
-import { dateState } from '@/store/dateState';
 import { useParams } from 'react-router-dom';
 import { DetailFilter } from '@/utils/dateFilter/dateFilter';
 import dayjs from 'dayjs';
+import { dateStateTest } from '@/store/dateStateTest';
 
 export type FilterMode = 'month' | 'week' | 'day';
 
@@ -29,8 +29,8 @@ const DetailFine = () => {
 
   const [detailFilter, setDetailFilter] = useState<DetailFilter>({ nickname: '', paymentType: '', page: 0 });
 
-  const calendarDate = useRecoilValue(dateState);
-  const { data } = useGetDetailList(detailFilter, calendarDate.baseDate, { groupId: Number(groupId) });
+  const calendarDate = useRecoilValue(dateStateTest);
+  const { data } = useGetDetailList(detailFilter, calendarDate.baseDateTest, { groupId: Number(groupId) });
 
   return (
     <Style.DetailFineFrame>
