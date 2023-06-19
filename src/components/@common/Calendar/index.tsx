@@ -2,6 +2,7 @@ import { GA } from '@/constants/GA';
 import { useGetMonthStatus } from '@/queries/Detail/useGetMonthStatus';
 import { useGroupDetail } from '@/queries/Group';
 import { dateState } from '@/store/dateState';
+import { dateStateTest } from '@/store/dateStateTest';
 import createCalendar from '@/utils/createCalendar';
 import { handleDate } from '@/utils/handleDate';
 import dayjs, { Dayjs } from 'dayjs';
@@ -25,11 +26,14 @@ interface CalnedrProps {
 const Calendar: FC<CalnedrProps> = ({ cellType }) => {
   const today = dayjs();
   const [dateObj, setDateObj] = useRecoilState(dateState);
+
+  const [{ baseDateTest, startDate, endDate }, setDateTestObj] = useRecoilState(dateStateTest);
+
   const { baseDate, week, selectedDate } = dateObj;
   const [showCreateDetailModal, setShowCreateDetailModal] = useState(false);
-  const [calendarDate, setCalendarDate] = useState(baseDate);
+  const [calendarDate, setCalendarDate] = useState(baseDateTest);
 
-  const monthList = createCalendar(dayjs(calendarDate));
+  const monthList = createCalendar(dayjs(baseDateTest));
   const navigate = useNavigate();
   const { groupId } = useParams();
 
@@ -64,28 +68,28 @@ const Calendar: FC<CalnedrProps> = ({ cellType }) => {
     return dateToFormmating(date) === dateToFormmating(today);
   };
 
-  const isSelectedWeek = (index: number) => {
-    return getMonth(baseDate) === getMonth(calendarDate) && index + 1 === week;
-  };
+  // const isSelectedWeek = (index: number) => {
+  //   return getMonth(baseDateTest) === getMonth(calendarDate) && index + 1 === week;
+  // };
 
   const isSelectedDate = (date: Dayjs) => {
-    if (!selectedDate) return false;
-    return dateToFormmating(selectedDate) === dateToFormmating(date);
+    if (!dayjs(startDate).isSame(dayjs(endDate))) return false;
+    return dateToFormmating(startDate) === dateToFormmating(date);
   };
 
   const goDetail = (date: Dayjs) => {
-    setDateObj((prev) => ({
+    setDateTestObj((prev) => ({
       ...prev,
-      baseDate: date,
-      selectedDate: date,
-      week: null,
+      baseDateTest: date,
+      startDate: date,
+      endDate: date,
     }));
     navigate(`/group/${groupId}/book/detail`);
   };
 
   useEffect(() => {
-    setCalendarDate(baseDate);
-  }, [baseDate, week, selectedDate]);
+    setCalendarDate(baseDateTest);
+  }, [baseDateTest, startDate, endDate]);
 
   return (
     <>
@@ -127,7 +131,7 @@ const Calendar: FC<CalnedrProps> = ({ cellType }) => {
                       isCurrentMonth={isCurrentMonth}
                       isToday={isToday}
                       isSelectedDate={isSelectedDate}
-                      isSelectedWeek={isSelectedWeek(idx)}
+                      isSelectedWeek={false}
                       status={filterCorrectDateStatus(date)}
                     />
                   )}
