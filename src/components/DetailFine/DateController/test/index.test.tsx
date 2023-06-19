@@ -1,5 +1,5 @@
 import dayjs from 'dayjs';
-import { moveDateToWeek, updateDateByButtonMode } from '../hook/useDateController';
+import { getTitleByMode, moveDateToWeek, updateDateByButtonMode } from '../hook/useDateController';
 
 describe('DateController', () => {
   describe('moveDateToWeek', () => {
@@ -51,6 +51,42 @@ describe('DateController', () => {
       expect(calendarDateState.startDate.date()).toBe(1);
       expect(calendarDateState.endDate.date()).toBe(30);
       expect(calendarDateState.baseDateTest.date()).toBe(1);
+    });
+  });
+
+  describe('getTitleByMode', () => {
+    let dateState;
+    it('6월 19일의 title은 "06월 19일"이다', () => {
+      dateState = {
+        baseDateTest: dayjs('2023-06-19'),
+        startDate: dayjs('2023-06-19'),
+        endDate: dayjs('2023-06-19'),
+      };
+      const title = getTitleByMode(dateState, 'day');
+
+      expect(title).toBe('06월 19일');
+    });
+
+    it('6월 4주차의 title은 "06월 18일 - 06월 24일"이다', () => {
+      dateState = {
+        baseDateTest: dayjs('2023-06-19'),
+        startDate: dayjs('2023-06-18'),
+        endDate: dayjs('2023-06-24'),
+      };
+      const title = getTitleByMode(dateState, 'week');
+
+      expect(title).toBe('06월 18일 - 06월 24일');
+    });
+
+    it('6월의 title은 "06월"이다', () => {
+      dateState = {
+        baseDateTest: dayjs('2023-06-01'),
+        startDate: dayjs('2023-06-01'),
+        endDate: dayjs('2023-06-30'),
+      };
+      const title = getTitleByMode(dateState, 'month');
+
+      expect(title).toBe('06월');
     });
   });
 });
