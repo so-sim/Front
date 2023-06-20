@@ -81,6 +81,7 @@ const Calendar: FC<CalnedrProps> = ({ cellType }) => {
       baseDateTest: date,
       startDate: date,
       endDate: date,
+      mode: 'day',
     }));
     navigate(`/group/${groupId}/book/detail`);
   };
