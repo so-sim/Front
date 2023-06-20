@@ -15,6 +15,7 @@ import useCheckLocationState from '@/hooks/useCheckLocationState';
 import { GA } from '@/constants/GA';
 import FineBookCreateModal from '@/components/@common/Modal/FineBookModal/FineBookCreateModal';
 import { dateStateTest } from '@/store/dateStateTest';
+import useDateController from './hook/useDateController';
 
 export const FILTER_BUTTON_LIST: { mode: FilterMode; text: string; id: string }[] = [
   { mode: 'month', text: '월간', id: GA.FILTER.MONTH },
@@ -34,17 +35,11 @@ const DateController = ({ setDetailFilter }: Props) => {
 
   const [calendarDateTest, setSelectedDateTest] = useRecoilState(dateStateTest);
   // const [calendarDate, setSelectedDate] = useRecoilState(dateState);
-  const [mode, setMode] = useState<FilterMode>('day');
+
   const [openAddModal, setOpenAddModal] = useState<boolean>(initialAddModalState);
   const [openWeeklyFilterDrop, setOpenWeeklyFilterDrop] = useState(false);
 
-  // const increaseCalendarByMode = () => {
-  //   setSelectedDate(({ baseDate }) => dateFilter.increaseDate(baseDate));
-  // };
-
-  // const decreaseCalendarByMode = () => {
-  //   setSelectedDate(({ baseDate }) => dateFilter.decreaseDate(baseDate));
-  // };
+  const { getTitle, goToWeek, changeDateByButtonMode, increase, decrease } = useDateController(calendarDateTest.mode);
 
   const handleWeeklyFilterDrop = () => {
     setOpenWeeklyFilterDrop((prev) => !prev);
@@ -54,21 +49,20 @@ const DateController = ({ setDetailFilter }: Props) => {
     setOpenAddModal((prev) => !prev);
   };
 
-  // const handleDateFilterMode = (buttonMode: FilterMode) => {
-  //   handleWeeklyFilterDrop();
-  //   if (mode === buttonMode) return;
-  //   setMode(buttonMode);
-  //   setSelectedDate((prev) => dateFilter.updateDateStateByMode(prev.baseDate, buttonMode));
-  // };
+  const handleDateFilterMode = (buttonMode: FilterMode) => {
+    handleWeeklyFilterDrop();
+    if (calendarDateTest.mode === buttonMode) return;
+
+    changeDateByButtonMode(buttonMode);
+  };
 
   const updateToToday = () => {
-    setMode('day');
-    setSelectedDateTest((prev) => ({ ...prev, baseDate: dayjs(), startDate: dayjs(), endDate: dayjs() }));
+    setSelectedDateTest((prev) => ({ ...prev, baseDate: dayjs(), startDate: dayjs(), endDate: dayjs(), mode: 'day' as FilterMode }));
   };
 
   // useEffect(() => {
   //   setMode(() => dateFilter.decideMode(calendarDate));
-  //   setDetailFilter((prev) => ({ ...dateFilter.update(prev, calendarDate), page: 0 }));
+  //    setDetailFilter((prev) => ({ ...dateFilter.update(prev, calendarDate), page: 0 }));
   // }, [calendarDate, mode]);
 
   return (
@@ -76,12 +70,12 @@ const DateController = ({ setDetailFilter }: Props) => {
       <Style.DateController>
         <Style.ControllerFrame>
           <Style.Block>
-            <Style.Date mode={mode}>{dateFilter.getTitle(calendarDateTest.baseDateTest)}</Style.Date>
+            <Style.Date mode={calendarDateTest.mode}>{getTitle()}</Style.Date>
             <Style.ArrowBlock id={GA.LIST_SKIP.ALL}>
-              <Style.ArrowWrapper onClick={decreaseCalendarByMode} id={GA.LIST_SKIP.LEFT} data-testid={GA.LIST_SKIP.LEFT}>
+              <Style.ArrowWrapper onClick={decrease} id={GA.LIST_SKIP.LEFT} data-testid={GA.LIST_SKIP.LEFT}>
                 {ARROW.LEFT}
               </Style.ArrowWrapper>
-              <Style.ArrowWrapper onClick={increaseCalendarByMode} id={GA.LIST_SKIP.RIGHT} data-testid={GA.LIST_SKIP.RIGHT}>
+              <Style.ArrowWrapper onClick={increase} id={GA.LIST_SKIP.RIGHT} data-testid={GA.LIST_SKIP.RIGHT}>
                 {ARROW.RIGHT}
               </Style.ArrowWrapper>
             </Style.ArrowBlock>
@@ -93,9 +87,9 @@ const DateController = ({ setDetailFilter }: Props) => {
             <Style.FilterWrapper ref={dropDownRef}>
               {FILTER_BUTTON_LIST.map((btn) => {
                 return (
-                  <Style.FilterButton id={btn.id} key={btn.id} isActive={mode === btn.mode} onClick={() => handleDateFilterMode(btn.mode)}>
+                  <Style.FilterButton id={btn.id} key={btn.id} isActive={calendarDateTest.mode === btn.mode} onClick={() => handleDateFilterMode(btn.mode)}>
                     <span>{btn.text}</span>
-                    {btn.mode === 'week' && mode === 'week' && openWeeklyFilterDrop && (
+                    {btn.mode === 'week' && calendarDateTest.mode === 'week' && openWeeklyFilterDrop && (
                       <div style={{ position: 'relative', left: '1px' }}>
                         <DropDown
                           width={60}
