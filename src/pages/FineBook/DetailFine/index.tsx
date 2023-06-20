@@ -5,9 +5,10 @@ import { DateController, DetailList, DetailsHeader, Pagination, TableHead, UserD
 import * as Style from './styles';
 import { useRecoilValue } from 'recoil';
 import { useParams } from 'react-router-dom';
-import { DetailFilter } from '@/utils/dateFilter/dateFilter';
+// import { DetailFilter } from '@/utils/dateFilter/dateFilter';
 import dayjs from 'dayjs';
 import { dateStateTest } from '@/store/dateStateTest';
+import { DetailFilter } from '@/store/detailFilter';
 
 export type FilterMode = 'month' | 'week' | 'day';
 
@@ -27,7 +28,7 @@ const DetailFine = () => {
   const [select, setSelect] = useState<ClientEventInfo>(initialSelectData);
   const hasSelectedInfo: boolean = select.eventId !== 0;
 
-  const [detailFilter, setDetailFilter] = useState<DetailFilter>({ nickname: '', paymentType: '', page: 0 });
+  const [detailFilter, setDetailFilter] = useState<DetailFilter>({ nickname: '', situation: '', page: 0, size: 16, groupId: Number(groupId) });
 
   const calendarDate = useRecoilValue(dateStateTest);
   const { data } = useGetDetailList(detailFilter, calendarDate.baseDateTest, { groupId: Number(groupId) });

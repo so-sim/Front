@@ -1,12 +1,12 @@
 import { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react';
 import { ARROW } from '@/assets/icons/Arrow';
 import * as Style from './styles';
-import { DetailFilter } from '@/utils/dateFilter/dateFilter';
 import { useParticipantList } from '@/queries/Group';
 import { useParams } from 'react-router-dom';
 import DropDown from '@/components/@common/DropDown';
 import { getStatusCode } from '@/utils/status';
 import { GA } from '@/constants/GA';
+import { DetailFilter } from '@/store/detailFilter';
 
 type Props = {
   setDetailFilter: Dispatch<SetStateAction<DetailFilter>>;
@@ -56,7 +56,7 @@ const TableHead = ({ setDetailFilter }: Props) => {
     setDetailFilter((prev) => ({
       ...prev,
       page: 0,
-      paymentType: paymentType === '전체' ? '' : getStatusCode(paymentType),
+      situation: paymentType === '전체' ? '' : getStatusCode(paymentType),
       nickname: member === '전체' ? '' : member,
     }));
   }, [member, paymentType]);

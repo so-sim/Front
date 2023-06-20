@@ -1,7 +1,7 @@
 import { Dispatch, SetStateAction } from 'react';
 import { ARROW } from '@/assets/icons/Arrow';
 import * as Style from './styles';
-import { DetailFilter } from '@/utils/dateFilter/dateFilter';
+import { DetailFilter } from '@/store/detailFilter';
 
 type Props = {
   totalCount?: number;

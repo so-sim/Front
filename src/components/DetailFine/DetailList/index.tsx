@@ -1,9 +1,11 @@
-import { DetailFilter } from '@/utils/dateFilter/dateFilter';
 import { ClientEventInfo, EventInfo } from '@/types/event';
 import { changeNumberToMoney } from '@/utils/changeNumberToMoney';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import * as Style from './styles';
 import { DropDownWrapper } from '@/components/DetailFine';
+import { DetailFilter } from '@/store/detailFilter';
+import { useRecoilState } from 'recoil';
+import { dateStateTest } from '@/store/dateStateTest';
 
 type Props = {
   selectedEventId: number;
@@ -13,7 +15,9 @@ type Props = {
 };
 
 const DetailList = ({ detailFilter, selectedEventId, details, setSelect }: Props) => {
-  const filteredDataNotFound = details?.length === 0 && detailFilter.day && detailFilter.nickname === '' && detailFilter.paymentType === '';
+  const [calendarStateTest, setCalendarStateTest] = useRecoilState(dateStateTest);
+
+  const filteredDataNotFound = details?.length === 0 && calendarStateTest.mode === 'day' && detailFilter.nickname === '' && detailFilter.situation === '';
 
   if (filteredDataNotFound) return <Style.NotFoundList>내역을 추가해주세요!</Style.NotFoundList>;
   if (details?.length === 0) return <Style.NotFoundList>선택하신 조건에 맞는 벌금 내역이 없습니다.</Style.NotFoundList>;
