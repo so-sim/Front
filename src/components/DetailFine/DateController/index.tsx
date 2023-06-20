@@ -5,7 +5,6 @@ import * as Style from './styles';
 import { useRecoilState } from 'recoil';
 
 import dayjs from 'dayjs';
-import { DateFilter, DetailFilter } from '@/utils/dateFilter/dateFilter';
 import { customedWeek } from '@/utils/customedWeek';
 import DropDown from '@/components/@common/DropDown';
 import { useGroupDetail } from '@/queries/Group';
@@ -16,6 +15,7 @@ import { GA } from '@/constants/GA';
 import FineBookCreateModal from '@/components/@common/Modal/FineBookModal/FineBookCreateModal';
 import { dateStateTest } from '@/store/dateStateTest';
 import useDateController from './hook/useDateController';
+import { DetailFilter } from '@/store/detailFilter';
 
 export const FILTER_BUTTON_LIST: { mode: FilterMode; text: string; id: string }[] = [
   { mode: 'month', text: '월간', id: GA.FILTER.MONTH },
@@ -60,10 +60,9 @@ const DateController = ({ setDetailFilter }: Props) => {
     setSelectedDateTest((prev) => ({ ...prev, baseDate: dayjs(), startDate: dayjs(), endDate: dayjs(), mode: 'day' as FilterMode }));
   };
 
-  // useEffect(() => {
-  //   setMode(() => dateFilter.decideMode(calendarDate));
-  //    setDetailFilter((prev) => ({ ...dateFilter.update(prev, calendarDate), page: 0 }));
-  // }, [calendarDate, mode]);
+  useEffect(() => {
+    setDetailFilter((prev) => ({ ...prev, page: 0 }));
+  }, [calendarDateTest.mode]);
 
   return (
     <>

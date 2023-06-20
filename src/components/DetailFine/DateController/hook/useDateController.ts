@@ -23,11 +23,13 @@ const useDateController = (mode: FilterMode) => {
   };
 
   const increase = () => {
-    return increaseTest(calendarDateTest.baseDateTest, mode);
+    const baseDate = increaseTest(calendarDateTest.baseDateTest, mode);
+    setSelectedDateTest(baseDate);
   };
 
   const decrease = () => {
-    return increaseTest(calendarDateTest.baseDateTest, mode);
+    const baseDate = decreaseTest(calendarDateTest.baseDateTest, mode);
+    setSelectedDateTest(baseDate);
   };
 
   const action = { goToWeek, changeDateByButtonMode, getTitle, increase, decrease };
