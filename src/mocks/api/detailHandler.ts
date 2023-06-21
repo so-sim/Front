@@ -1,5 +1,6 @@
 import { BASE_URL } from '@/api';
-import { rest } from 'msw';
+import { PathParams, rest, RestRequest } from 'msw';
+import dayjs from 'dayjs';
 
 /**
  * 상세 내역 생성시 데이터
@@ -11,6 +12,10 @@ import { rest } from 'msw';
  * "memo" : String-"${메모}" 밥먹다 지각
  * "situation" : String-"${납부 여부}" 미납, 완납, 확인중
  */
+
+const getSearchParams = (req: RestRequest<never, PathParams<string>>, param: string) => {
+  return req.url.searchParams.get(param);
+};
 
 type Ground = '지각' | '결석' | '과제 안 함' | '기타';
 type Situation = '미납' | '완납' | '확인중';
@@ -77,26 +82,49 @@ const getDetail = () => {
   });
 };
 
-//서버 코드 변경되면 적용 예정
-const getDetailList: Parameters<typeof rest.get>[1] = (req, res, ctx) => {
-  // console.log(req.url.searchParams.get('year'));
-  // console.log(req.url.searchParams.get('month'));
-  // console.log(req.url.searchParams.get('day'));
+const getDetailList = () => {
+  return rest.get(BASE_URL + '/api/event/penalty/list/:groupId', (req, res, ctx) => {
+    const { groupId } = req.params;
 
-  return res(
-    ctx.status(200),
-    ctx.json({
-      status: {
-        code: 200,
-        message: '상세 내역 목록이 성공적으로 조회되었습니다.',
-      },
-      content: {
-        list: details,
-        total: 19,
-      },
-    }),
-  );
+    const page = getSearchParams(req, 'page');
+    const size = getSearchParams(req, 'size');
+    const startDate = getSearchParams(req, 'startDate');
+    const endDate = getSearchParams(req, 'endDate');
+
+    const startIndex = Number(page) * Number(size);
+
+    const filteredDetails = details.filter((detail) => {
+      if (
+        Number(groupId) === detail.groupId &&
+        dayjs(detail.date).isAfter(dayjs(startDate as string)) &&
+        dayjs(detail.date).isBefore(dayjs(endDate as string)) &&
+        req.params.nickname &&
+        req.params.situation &&
+        req.params.nickname === detail.nickname &&
+        req.params.situation === detail.situation
+      ) {
+        return true;
+      }
+      return false;
+    });
+
+    return res(
+      ctx.status(200),
+      ctx.json({
+        status: {
+          code: 200,
+          message: '상세 내역 목록이 성공적으로 조회되었습니다.',
+        },
+        content: {
+          totlaCount: filteredDetails.length,
+          eventList: filteredDetails.slice(startIndex, startIndex + Number(size)),
+        },
+      }),
+    );
+  });
 };
+
+//서버 코드 변경되면 적용 예정
 
 const updateDetailStatus: Parameters<typeof rest.post>[1] = async (req, res, ctx) => {
   return res(
@@ -129,7 +157,7 @@ const deleteDetailStatus: Parameters<typeof rest.put>[1] = async (req, res, ctx)
 export const detailHandler = [
   createDetail(),
   getDetail(),
-  rest.get(BASE_URL + '/api/event/penalty/list/:groupId', getDetailList),
+  getDetailList(),
   rest.post(BASE_URL + '/api/event/penalty/:eventId', updateDetailStatus),
   rest.put(BASE_URL + '/api/event/penalty/:eventId', deleteDetailStatus),
 ];
