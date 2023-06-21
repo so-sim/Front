@@ -1,49 +1,60 @@
 import { BASE_URL } from '@/api';
-import { EventInfo } from '@/types/event';
 import { rest } from 'msw';
 
+/**
+ * 상세 내역 생성시 데이터
+ * groupId: number
+ * "nickname" : String-"${팀원이름}"
+ * "date" : String-"${사유 발생 날짜}" 23.06.01
+ * "amount" : int-"${금액}" 1000
+ * "ground" : String-"${사유}" 지각 | 결석 | 과제 안 함 | 기타
+ * "memo" : String-"${메모}" 밥먹다 지각
+ * "situation" : String-"${납부 여부}" 미납, 완납, 확인중
+ */
+
+type Ground = '지각' | '결석' | '과제 안 함' | '기타';
+type Situation = '미납' | '완납' | '확인중';
+
+type EventInfo = {
+  eventId: number;
+  groupId: number;
+  nickname: string;
+  date: string;
+  amount: number;
+  ground: Ground;
+  memo: string;
+  situation: Situation;
+};
+
 const details: EventInfo[] = [
-  { userId: 1, eventId: 1, groundsDate: '2023.07.01', paymentType: 'con', userName: '윤하나둘셋', payment: 1_000_000, grounds: '밥먹다 지각' },
-  { userId: 2, eventId: 2, groundsDate: '2023.07.04', paymentType: 'non', userName: '윤하나둘셋13', payment: 1_000_000, grounds: '밥먹다 지각' },
-  { userId: 3, eventId: 3, groundsDate: '2023.07.15', paymentType: 'full', userName: '윤하나둘셋23', payment: 1_000_000, grounds: '밥먹다 지각' },
-  { userId: 4, eventId: 4, groundsDate: '2023.07.08', paymentType: 'con', userName: '윤하나둘셋33', payment: 1_000_000, grounds: '밥먹다 지각' },
-  { userId: 5, eventId: 5, groundsDate: '2023.07.29', paymentType: 'full', userName: '윤하나둘셋45', payment: 1_000_000, grounds: '밥먹다 지각' },
-  { userId: 6, eventId: 6, groundsDate: '2023.07.22', paymentType: 'non', userName: '윤하나둘셋14', payment: 1_000_000, grounds: '밥먹다 지각' },
-  { userId: 7, eventId: 7, groundsDate: '2023.02.22', paymentType: 'con', userName: '윤하나둘셋245', payment: 1_000_000, grounds: '밥먹다 지각' },
-  { userId: 8, eventId: 8, groundsDate: '2023.07.04', paymentType: 'con', userName: '윤하나둘셋614', payment: 1_000_000, grounds: '밥먹다 지각' },
-  { userId: 9, eventId: 9, groundsDate: '2023.07.15', paymentType: 'full', userName: '윤하나둘셋fdas', payment: 1_000_000, grounds: '밥먹다 지각' },
-  { userId: 10, eventId: 10, groundsDate: '2023.07.08', paymentType: 'con', userName: '윤하나둘셋6136', payment: 1_000_000, grounds: '밥먹다 지각' },
-  { userId: 11, eventId: 11, groundsDate: '2023.07.29', paymentType: 'full', userName: '윤하나둘셋66', payment: 1_000_000, grounds: '밥먹다 지각' },
-  { userId: 12, eventId: 12, groundsDate: '2023.02.22', paymentType: 'con', userName: '윤하나둘셋141', payment: 1_000_000, grounds: '밥먹다 지각' },
-  { userId: 13, eventId: 13, groundsDate: '2023.08.04', paymentType: 'non', userName: '윤하나둘셋3214', payment: 1_000_000, grounds: '밥먹다 지각' },
-  { userId: 14, eventId: 14, groundsDate: '2023.08.15', paymentType: 'full', userName: '윤하나532둘셋', payment: 1_000_000, grounds: '밥먹다 지각' },
-  { userId: 15, eventId: 15, groundsDate: '2023.08.08', paymentType: 'con', userName: '윤하나둘1616셋', payment: 1_000_000, grounds: '밥먹다 지각' },
-  { userId: 16, eventId: 16, groundsDate: '2023.08.29', paymentType: 'full', userName: '윤하나둘5124셋', payment: 1_000_000, grounds: '밥먹다 지각' },
-  { userId: 17, eventId: 17, groundsDate: '2023.07.22', paymentType: 'non', userName: '윤하나둘셋g', payment: 1_000_000, grounds: '밥먹다 지각' },
-  { userId: 18, eventId: 18, groundsDate: '2023.02.22', paymentType: 'con', userName: '윤하나둘셋1', payment: 1_000_000, grounds: '밥먹다 지각' },
-  { userId: 19, eventId: 19, groundsDate: '2023.07.04', paymentType: 'non', userName: '윤하나둘셋6', payment: 1_000_000, grounds: '밥먹다 지각' },
-  { userId: 20, eventId: 20, groundsDate: '2023.07.15', paymentType: 'full', userName: '윤하나둘셋b', payment: 1_000_000, grounds: '밥먹다 지각' },
-  { userId: 21, eventId: 21, groundsDate: '2023.07.30', paymentType: 'con', userName: '윤하나둘셋e', payment: 1_000_000, grounds: '밥먹다 지각' },
-  { userId: 22, eventId: 22, groundsDate: '2023.07.29', paymentType: 'full', userName: '윤하나둘셋g', payment: 1_000_000, grounds: '밥먹다 지각' },
+  { eventId: 1, groupId: 1, nickname: '종현', date: '2023.06.25', amount: 10_000, ground: '지각', memo: '', situation: '미납' },
+  { eventId: 2, groupId: 1, nickname: '정민', date: '2023.06.30', amount: 10_000, ground: '결석', memo: '', situation: '완납' },
+  { eventId: 3, groupId: 1, nickname: '윤하나', date: '2023.07.01', amount: 10_000, ground: '지각', memo: '', situation: '미납' },
+  { eventId: 4, groupId: 1, nickname: '가람', date: '2023.06.25', amount: 10_000, ground: '과제 안 함', memo: '', situation: '확인중' },
+  { eventId: 5, groupId: 1, nickname: '나경', date: '2023.07.04', amount: 10_000, ground: '지각', memo: '', situation: '확인중' },
+  { eventId: 6, groupId: 1, nickname: '현교', date: '2023.07.04', amount: 10_000, ground: '지각', memo: '', situation: '미납' },
+  { eventId: 7, groupId: 1, nickname: '재민', date: '2023.07.04', amount: 10_000, ground: '지각', memo: '', situation: '완납' },
 ];
 
-const createDetail: Parameters<typeof rest.post>[1] = async (req, res, ctx) => {
-  const detail = await req.json();
-  const eventId = details.length;
-  details.push({ ...detail, eventId });
+const createDetail = () => {
+  return rest.post(BASE_URL + '/api/event/penalty', async (req, res, ctx) => {
+    const newDetail = await req.json();
+    const eventId = details.length;
+    details.push({ ...newDetail, eventId });
 
-  return res(
-    ctx.status(200),
-    ctx.json({
-      status: {
-        code: 200,
-        message: '상세 내역이 성공적으로 생성되었습니다.',
-      },
-      content: {
-        eventId,
-      },
-    }),
-  );
+    return res(
+      ctx.status(200),
+      ctx.json({
+        status: {
+          code: 900,
+          message: '상세 내역이 성공적으로 생성되었습니다.',
+        },
+        content: {
+          eventId,
+        },
+      }),
+    );
+  });
 };
 
 //서버 코드 변경되면 적용 예정
@@ -96,7 +107,7 @@ const deleteDetailStatus: Parameters<typeof rest.put>[1] = async (req, res, ctx)
 };
 
 export const detailHandler = [
-  rest.post(BASE_URL + '/api/event/penalty', createDetail),
+  createDetail(),
   rest.get(BASE_URL + '/api/event/penalty/list/:groupId', getDetailList),
   rest.post(BASE_URL + '/api/event/penalty/:eventId', updateDetailStatus),
   rest.put(BASE_URL + '/api/event/penalty/:eventId', deleteDetailStatus),
