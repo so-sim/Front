@@ -1,13 +1,10 @@
 import { BASE_URL } from '@/api';
-import { PathParams, rest, RestRequest } from 'msw';
+import { rest } from 'msw';
 import dayjs from 'dayjs';
 import { DETAILS } from '../data/detailData';
+import { getSearchParams } from '../utils/getSearchParams';
 
 let details = DETAILS;
-
-const getSearchParams = (req: RestRequest<never, PathParams<string>>, param: string) => {
-  return req.url.searchParams.get(param);
-};
 
 const createDetail = () => {
   return rest.post(BASE_URL + '/api/event/penalty', async (req, res, ctx) => {
