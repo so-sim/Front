@@ -31,7 +31,7 @@ type EventInfo = {
   situation: Situation;
 };
 
-const details: EventInfo[] = [
+let details: EventInfo[] = [
   { eventId: 1, groupId: 1, nickname: '종현', date: '2023.06.25', amount: 10_000, ground: '지각', memo: '', situation: '미납' },
   { eventId: 2, groupId: 1, nickname: '정민', date: '2023.06.30', amount: 10_000, ground: '결석', memo: '', situation: '완납' },
   { eventId: 3, groupId: 1, nickname: '윤하나', date: '2023.07.01', amount: 10_000, ground: '지각', memo: '', situation: '미납' },
@@ -124,40 +124,78 @@ const getDetailList = () => {
   });
 };
 
-//서버 코드 변경되면 적용 예정
+const updateDetailListStatus = () => {
+  return rest.patch(BASE_URL + '/api/event/penalty', async (req, res, ctx) => {
+    const { eventId } = req.params;
 
-const updateDetailStatus: Parameters<typeof rest.post>[1] = async (req, res, ctx) => {
-  return res(
-    ctx.status(200),
-    ctx.json({
-      status: {
-        code: 200,
-        message: '납부 여부가 성공적으로 변경되었습니다.',
-      },
-      content: details[1],
-    }),
-  );
+    const { eventIdList, situation } = await req.json();
+
+    details = details.map((detail) => {
+      if (eventIdList.includes(detail.eventId)) {
+        return { ...detail, situation };
+      }
+      return detail;
+    });
+
+    return res(
+      ctx.status(200),
+      ctx.json({
+        status: {
+          code: 900,
+          message: '상세 내역 목록이 성공적으로 조회되었습니다.',
+        },
+        content: eventIdList,
+      }),
+    );
+  });
 };
 
-const deleteDetailStatus: Parameters<typeof rest.put>[1] = async (req, res, ctx) => {
-  const { eventId } = req.params;
+const updateDetail = () => {
+  return rest.patch(BASE_URL + '/api/event/penalty/:eventId', async (req, res, ctx) => {
+    const updatedDetail = await req.json();
+    const { eventId } = req.params;
+    let detail = details.find((detail) => detail.eventId === Number(eventId));
+    detail = updatedDetail;
 
-  return res(
-    ctx.status(200),
-    ctx.json({
-      status: {
-        code: 200,
-        message: '납부 여부가 성공적으로 변경되었습니다.',
-      },
-      content: details[1],
-    }),
-  );
+    return res(
+      ctx.status(200),
+      ctx.json({
+        status: {
+          code: 900,
+          message: '상세 내역이 성공적으로 생성되었습니다.',
+        },
+        content: {
+          eventId,
+        },
+      }),
+    );
+  });
+};
+
+const deleteDetail = () => {
+  return rest.delete(BASE_URL + '/api/event/penalty/:eventId', async (req, res, ctx) => {
+    const { eventId } = req.params;
+
+    details = details.filter((detail) => detail.eventId === Number(eventId));
+
+    return res(
+      ctx.status(200),
+      ctx.json({
+        status: {
+          code: 900,
+          message: '상세 내역이 성공적으로 삭제되었습니다.',
+        },
+        content: null,
+      }),
+    );
+  });
 };
 
 export const detailHandler = [
-  createDetail(),
+  createDetail(), //
   getDetail(),
   getDetailList(),
-  rest.post(BASE_URL + '/api/event/penalty/:eventId', updateDetailStatus),
-  rest.put(BASE_URL + '/api/event/penalty/:eventId', deleteDetailStatus),
+  updateDetailListStatus(),
+  updateDetail(),
+  deleteDetail(),
 ];
