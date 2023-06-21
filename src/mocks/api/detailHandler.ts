@@ -57,6 +57,26 @@ const createDetail = () => {
   });
 };
 
+const getDetail = () => {
+  return rest.get(BASE_URL + '/api/event/penalty/:eventId', async (req, res, ctx) => {
+    const { eventId } = req.params;
+
+    const detail = details.find((detail) => detail.eventId === Number(eventId));
+    return res(
+      ctx.status(200),
+      ctx.json({
+        status: {
+          code: 900,
+          message: '상세 내역이 성공적으로 조회되었습니다.',
+        },
+        content: {
+          ...detail,
+        },
+      }),
+    );
+  });
+};
+
 //서버 코드 변경되면 적용 예정
 const getDetailList: Parameters<typeof rest.get>[1] = (req, res, ctx) => {
   // console.log(req.url.searchParams.get('year'));
@@ -108,6 +128,7 @@ const deleteDetailStatus: Parameters<typeof rest.put>[1] = async (req, res, ctx)
 
 export const detailHandler = [
   createDetail(),
+  getDetail(),
   rest.get(BASE_URL + '/api/event/penalty/list/:groupId', getDetailList),
   rest.post(BASE_URL + '/api/event/penalty/:eventId', updateDetailStatus),
   rest.put(BASE_URL + '/api/event/penalty/:eventId', deleteDetailStatus),
