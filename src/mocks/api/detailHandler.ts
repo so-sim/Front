@@ -191,6 +191,44 @@ const deleteDetail = () => {
   });
 };
 
+const getCalendarStatus = () => {
+  return rest.get(BASE_URL + '/api/event/penalty/calendar', async (req, res, ctx) => {
+    const groupId = getSearchParams(req, 'groupId');
+    const startDate = getSearchParams(req, 'startDate');
+    const endDate = getSearchParams(req, 'endDate');
+
+    const filteredDetails = details.filter((detail) => {
+      if (
+        Number(groupId) === detail.groupId && //
+        dayjs(detail.date).isAfter(dayjs(startDate as string)) &&
+        dayjs(detail.date).isBefore(dayjs(endDate as string))
+      ) {
+        return true;
+      }
+      return false;
+    });
+
+    const statusOfDay = filteredDetails.reduce((accr: { [date: string]: { 미납: number; 완납: number; 확인중: number } }, curr) => {
+      const date = dayjs(curr.date).date();
+      const statusOfDay = accr[date] ?? { 미납: 0, 완납: 0, 확인중: 0 };
+      statusOfDay[curr.situation]++;
+
+      return { ...accr, [date]: statusOfDay };
+    }, {});
+
+    return res(
+      ctx.status(200),
+      ctx.json({
+        status: {
+          code: 900,
+          message: '상세 내역 캘린더가 성공적으로 조회되었습니다.',
+        },
+        content: { statusOfDay },
+      }),
+    );
+  });
+};
+
 export const detailHandler = [
   createDetail(), //
   getDetail(),
@@ -198,4 +236,5 @@ export const detailHandler = [
   updateDetailListStatus(),
   updateDetail(),
   deleteDetail(),
+  getCalendarStatus(),
 ];
