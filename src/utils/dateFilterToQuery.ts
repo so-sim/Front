@@ -1,4 +1,4 @@
-import { DetailFilter } from './dateFilter/dateFilter';
+import { DetailFilter } from '@/store/detailFilter';
 
 export const dateFilterToQuery = (detailFilter: Partial<DetailFilter>): string => {
   const queries = Object.entries(detailFilter)

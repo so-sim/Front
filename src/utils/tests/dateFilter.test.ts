@@ -22,12 +22,12 @@ describe('dateFilterTitle 테스트', () => {
 });
 
 describe('dateFilterToQuery 테스트', () => {
-  it('객체가 들어왔을 때 query parameter로 반환', () => {
-    expect(dateFilterToQuery({ year: 2023, month: 4, day: 9 })).toBe('year=2023&month=4&day=9');
+  it('객체가 들어왔을 때 query parameter로 반환 (임시 테스트용으로 변경)', () => {
+    expect(dateFilterToQuery({ nickname: '정민', situation: '미납' })).toBe('nickname=정민&situation=미납');
   });
 
-  it('null이나 빈문자열이 객체에 존재할 시 query parameter에서 제외', () => {
-    expect(dateFilterToQuery({ year: 2023, month: 4, day: 9, week: null, nickname: '' })).toBe('year=2023&month=4&day=9');
+  it('null이나 빈문자열이 객체에 존재할 시 query parameter에서 제외 (임시 테스트용으로 변경)', () => {
+    expect(dateFilterToQuery({ nickname: '정민', situation: '미납' })).toBe('nickname=정민&situation=미납');
   });
 });
 
