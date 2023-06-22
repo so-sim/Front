@@ -57,7 +57,8 @@ const DateController = ({ setDetailFilter }: Props) => {
   };
 
   const updateToToday = () => {
-    setSelectedDateTest((prev) => ({ ...prev, baseDate: dayjs(), startDate: dayjs(), endDate: dayjs(), mode: 'day' as FilterMode }));
+    // 여기 Type을 정해줬는데도 baseDate로 들어가있었다.. 왜 Type 체크를 안해줬을까?
+    setSelectedDateTest((prev) => ({ ...prev, baseDateTest: dayjs(), startDate: dayjs(), endDate: dayjs(), mode: 'day' as FilterMode }));
   };
 
   useEffect(() => {
