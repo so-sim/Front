@@ -23,6 +23,18 @@ const paymentTypeList: { title: PaymentDropdown; id?: string }[] = [
 
 const TableHead = ({ setDetailFilter }: Props) => {
   const param = useParams();
+  const [member, setMember] = useState('전체');
+  // console.log(member);
+  const [paymentType, setPaymentType] = useState<PaymentDropdown>('전체');
+
+  useEffect(() => {
+    setDetailFilter((prev) => ({
+      ...prev,
+      page: 0,
+      situation: paymentType === '전체' ? '' : getStatusCode(paymentType),
+      nickname: member === '전체' ? '' : member,
+    }));
+  }, [member, paymentType]);
 
   const { data } = useParticipantList(Number(param.groupId));
 
@@ -34,9 +46,6 @@ const TableHead = ({ setDetailFilter }: Props) => {
 
   const memberDropDownRef = useRef<HTMLDivElement>(null);
   const paymentTypeDropDownRef = useRef<HTMLDivElement>(null);
-
-  const [member, setMember] = useState('전체');
-  const [paymentType, setPaymentType] = useState<PaymentDropdown>('전체');
 
   const handlePaymentDropDown = () => {
     setOpenPaymentTypeDropdown((prev) => !prev);
@@ -51,15 +60,6 @@ const TableHead = ({ setDetailFilter }: Props) => {
 
     return [{ title: '전체' }, ...joinParticipants];
   };
-
-  useEffect(() => {
-    setDetailFilter((prev) => ({
-      ...prev,
-      page: 0,
-      situation: paymentType === '전체' ? '' : getStatusCode(paymentType),
-      nickname: member === '전체' ? '' : member,
-    }));
-  }, [member, paymentType]);
 
   return (
     <Style.TableHead>

@@ -17,17 +17,6 @@ type Props = {
 const DetailList = ({ detailFilter, selectedEventId, details, setSelect }: Props) => {
   const [calendarStateTest, setCalendarStateTest] = useRecoilState(dateStateTest);
 
-  const filteredDataNotFound = details?.length === 0 && calendarStateTest.mode === 'day' && detailFilter.nickname === '' && detailFilter.situation === '';
-
-  if (filteredDataNotFound) return <Style.NotFoundList>내역을 추가해주세요!</Style.NotFoundList>;
-  if (details?.length === 0) return <Style.NotFoundList>선택하신 조건에 맞는 벌금 내역이 없습니다.</Style.NotFoundList>;
-
-  const [openButtonListId, setOpenButtonListId] = useState(0);
-
-  const handleUserDetailModal = (detail: EventInfo) => {
-    setSelect(detail);
-  };
-
   useEffect(() => {
     const closeCircleButtonList = () => {
       setOpenButtonListId(0);
@@ -39,6 +28,18 @@ const DetailList = ({ detailFilter, selectedEventId, details, setSelect }: Props
     };
   }, []);
 
+  const filteredDataNotFound = details?.length === 0 && calendarStateTest.mode === 'day' && detailFilter.nickname === '' && detailFilter.situation === '';
+
+  const [openButtonListId, setOpenButtonListId] = useState(0);
+
+  const handleUserDetailModal = (detail: EventInfo) => {
+    setSelect(detail);
+  };
+
+  // 아잇 겁나 헤맸다... hooks rules 참고 무조건 조건 렌더링은 hooks 다음!
+
+  if (filteredDataNotFound) return <Style.NotFoundList>내역을 추가해주세요!</Style.NotFoundList>;
+  if (details?.length === 0) return <Style.NotFoundList>선택하신 조건에 맞는 벌금 내역이 없습니다.</Style.NotFoundList>;
   return (
     <Style.DetailList>
       {details?.map((detail, i) => {
