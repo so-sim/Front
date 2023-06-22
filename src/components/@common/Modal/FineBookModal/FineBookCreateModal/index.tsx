@@ -8,7 +8,7 @@ import Button from '@/components/@common/Button';
 import Modal from '@/components/@common/Modal';
 import { SYSTEM } from '@/assets/icons/System';
 import { userState } from '@/store/userState';
-import { dateState } from '@/store/dateState';
+import { dateStateTest } from '@/store/dateStateTest';
 import { initialSelectData } from '@/pages/FineBook/DetailFine';
 
 import { selectedDataReducer } from '../reducer/selectedDataReducer';
@@ -24,7 +24,7 @@ interface Props {
 }
 
 const FineBookCreateModal = ({ modalHandler }: Props) => {
-  const [_, setDateState] = useRecoilState(dateState);
+  const [_, setDateState] = useRecoilState(dateStateTest);
   const { groupId } = useParams();
   const user = useRecoilValue(userState);
   const navigate = useNavigate();

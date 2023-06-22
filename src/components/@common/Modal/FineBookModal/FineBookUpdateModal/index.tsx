@@ -6,7 +6,7 @@ import { useUpdateDetail } from '@/queries/Detail';
 import { ClientEventInfo, EventInfo } from '@/types/event';
 import { useRecoilState } from 'recoil';
 import dayjs from 'dayjs';
-import { dateState } from '@/store/dateState';
+import { dateStateTest } from '@/store/dateStateTest';
 import { getStatusCode, getStatusText } from '@/utils/status';
 import { ServerResponse } from '@/types/serverResponse';
 import FormFileds from '../FormFileds';
@@ -22,7 +22,7 @@ interface Props {
 const FineBookUpdateModal = ({ modalHandler, select, setSelect }: Props) => {
   const [selectData, dispatch] = useReducer(selectedDataReducer, select);
 
-  const [_, setDateState] = useRecoilState(dateState);
+  const [_, setDateState] = useRecoilState(dateStateTest);
 
   const onSuccessUpdateDetail = (data: ServerResponse<EventInfo>) => {
     const groundsDate = dayjs(data.content.groundsDate);
