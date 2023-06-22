@@ -36,7 +36,7 @@ const DetailList = ({ detailFilter, selectedEventId, details, setSelect }: Props
     setSelect(detail);
   };
 
-  // 아잇 겁나 헤맸다... hooks rules 참고 무조건 조건 렌더링은 hooks 다음!
+  // hooks rules 참고 (무조건 조건 렌더링은 hooks 다음)!
 
   if (filteredDataNotFound) return <Style.NotFoundList>내역을 추가해주세요!</Style.NotFoundList>;
   if (details?.length === 0) return <Style.NotFoundList>선택하신 조건에 맞는 벌금 내역이 없습니다.</Style.NotFoundList>;
