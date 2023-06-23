@@ -22,11 +22,11 @@ interface SelectedWeekProps {
   mode: FilterMode;
 }
 
-export const selectedWeek = styled.div<SelectedWeekProps>`
+export const SelectedPeriod = styled.div<SelectedWeekProps>`
   position: absolute;
   width: 100%;
   height: 28px;
-  background-color: ${({ theme, mode }) => mode === 'week' && theme.colors.secondary_800};
+  background-color: ${({ theme, mode }) => mode !== 'day' && mode !== 'month' && theme.colors.secondary_800};
 
   margin-left: ${(props) => props.isFirst && '12px'};
   margin-right: ${(props) => props.isLast && '12px'};

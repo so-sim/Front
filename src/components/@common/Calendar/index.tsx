@@ -26,7 +26,6 @@ const Calendar: FC<CalnedrProps> = ({ cellType }) => {
   const today = dayjs();
 
   const [{ baseDateTest, startDate, endDate, mode }, setDateTestObj] = useRecoilState(dateStateTest);
-
   const [showCreateDetailModal, setShowCreateDetailModal] = useState(false);
   const [calendarDate, setCalendarDate] = useState(baseDateTest);
 
@@ -34,16 +33,19 @@ const Calendar: FC<CalnedrProps> = ({ cellType }) => {
   const navigate = useNavigate();
   const { groupId } = useParams();
 
-  const { addMonth, subMonth, dateToFormmating, getMonth, getDateArray, getDate, dateToUnixTime } = handleDate;
+  const { addMonth, subMonth, dateToFormmating, getMonth, getDate, dateToUnixTime } = handleDate;
 
-  const [year, month, day] = getDateArray(calendarDate);
+  const startDateOfMonth = dateToFormmating(dayjs(baseDateTest).startOf('month'));
+  const endDateOfMonth = dateToFormmating(dayjs(baseDateTest).endOf('month'));
 
-  const { data: status } = useGetMonthStatus(groupId, year, month);
+  const { data: status } = useGetMonthStatus(groupId, startDateOfMonth, endDateOfMonth);
 
   const { data: groupData } = useGroupDetail(Number(groupId));
 
   const filterCorrectDateStatus = (date: Dayjs) => {
-    return status?.content.filter((list) => list.day === getDate(date))[0];
+    const hasStatusOfDay = status?.content.statusOfDay.hasOwnProperty(getDate(date));
+
+    if (hasStatusOfDay) return status?.content.statusOfDay[getDate(date)];
   };
 
   const handleShowCreateDetailModal = () => {
@@ -122,10 +124,19 @@ const Calendar: FC<CalnedrProps> = ({ cellType }) => {
               {weeks.map((date) => (
                 <div key={dateToFormmating(date)} onClick={() => goDetail(date)}>
                   {cellType === 'Tag' ? (
-                    <DateCellWithTag date={date} isCurrentMonth={isCurrentMonth} isToday={isToday} isSelectedDate={isSelectedDate} status={filterCorrectDateStatus(date)} />
+                    <DateCellWithTag //
+                      date={date}
+                      isCurrentMonth={isCurrentMonth}
+                      isToday={isToday}
+                      isSelectedDate={isSelectedDate}
+                      status={filterCorrectDateStatus(date)}
+                    />
                   ) : (
                     <DateCellWithMark
                       date={date}
+                      startDate={startDate}
+                      endDate={endDate}
+                      mode={mode}
                       isCurrentMonth={isCurrentMonth}
                       isToday={isToday}
                       isSelectedDate={isSelectedDate}
