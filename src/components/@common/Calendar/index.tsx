@@ -25,25 +25,27 @@ interface CalnedrProps {
 const Calendar: FC<CalnedrProps> = ({ cellType }) => {
   const today = dayjs();
 
-  const [{ baseDateTest, startDate, endDate }, setDateTestObj] = useRecoilState(dateStateTest);
-
+  const [{ baseDateTest, startDate, endDate, mode }, setDateTestObj] = useRecoilState(dateStateTest);
   const [showCreateDetailModal, setShowCreateDetailModal] = useState(false);
   const [calendarDate, setCalendarDate] = useState(baseDateTest);
 
-  const monthList = createCalendar(dayjs(baseDateTest));
+  const monthList = createCalendar(dayjs(calendarDate));
   const navigate = useNavigate();
   const { groupId } = useParams();
 
-  const { addMonth, subMonth, dateToFormmating, getMonth, getDateArray, getDate } = handleDate;
+  const { addMonth, subMonth, dateToFormatting, getMonth, getDate, dateToUnixTime } = handleDate;
 
-  const [year, month, day] = getDateArray(calendarDate);
+  const startDateOfMonth = dateToFormatting(dayjs(calendarDate).startOf('month'));
+  const endDateOfMonth = dateToFormatting(dayjs(calendarDate).endOf('month'));
 
-  const { data: status } = useGetMonthStatus(groupId, year, month);
+  const { data: status } = useGetMonthStatus(groupId, startDateOfMonth, endDateOfMonth);
 
   const { data: groupData } = useGroupDetail(Number(groupId));
 
   const filterCorrectDateStatus = (date: Dayjs) => {
-    return status?.content.filter((list) => list.day === getDate(date))[0];
+    const hasStatusOfDay = status?.content.statusOfDay.hasOwnProperty(getDate(date));
+
+    if (hasStatusOfDay) return status?.content.statusOfDay[getDate(date)];
   };
 
   const handleShowCreateDetailModal = () => {
@@ -62,17 +64,16 @@ const Calendar: FC<CalnedrProps> = ({ cellType }) => {
   };
 
   const isToday = (date: Dayjs) => {
-    return dateToFormmating(date) === dateToFormmating(today);
+    return dateToFormatting(date) === dateToFormatting(today);
   };
 
-  // Todo 커스텀기간 필터링 추가 시 리팩토링 예정
-  // const isSelectedWeek = (index: number) => {
-  //   return getMonth(baseDateTest) === getMonth(calendarDate) && index + 1 === week;
-  // };
+  const isSelectedPeriod = (date: Dayjs) => {
+    return dateToUnixTime(startDate) <= dateToUnixTime(date) && dateToUnixTime(endDate) >= dateToUnixTime(date);
+  };
 
   const isSelectedDate = (date: Dayjs) => {
-    if (!dayjs(startDate).isSame(dayjs(endDate))) return false;
-    return dateToFormmating(startDate) === dateToFormmating(date);
+    if (mode !== 'day') return false;
+    return dateToFormatting(startDate) === dateToFormatting(date);
   };
 
   const goDetail = (date: Dayjs) => {
@@ -121,16 +122,25 @@ const Calendar: FC<CalnedrProps> = ({ cellType }) => {
           {monthList.map((weeks, idx) => (
             <Style.WeekWrap key={idx} cellType={cellType}>
               {weeks.map((date) => (
-                <div key={dateToFormmating(date)} onClick={() => goDetail(date)}>
+                <div key={dateToFormatting(date)} onClick={() => goDetail(date)}>
                   {cellType === 'Tag' ? (
-                    <DateCellWithTag date={date} isCurrentMonth={isCurrentMonth} isToday={isToday} isSelectedDate={isSelectedDate} status={filterCorrectDateStatus(date)} />
-                  ) : (
-                    <DateCellWithMark
+                    <DateCellWithTag //
                       date={date}
                       isCurrentMonth={isCurrentMonth}
                       isToday={isToday}
                       isSelectedDate={isSelectedDate}
-                      isSelectedWeek={false}
+                      status={filterCorrectDateStatus(date)}
+                    />
+                  ) : (
+                    <DateCellWithMark
+                      date={date}
+                      startDate={startDate}
+                      endDate={endDate}
+                      mode={mode}
+                      isCurrentMonth={isCurrentMonth}
+                      isToday={isToday}
+                      isSelectedDate={isSelectedDate}
+                      isSelectedPeriod={isSelectedPeriod(date)}
                       status={filterCorrectDateStatus(date)}
                     />
                   )}

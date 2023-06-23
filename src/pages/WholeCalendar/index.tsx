@@ -1,6 +1,6 @@
 import { useGroupDetail } from '@/queries/Group';
 import { firstVisitState } from '@/store/firstVisitState';
-import { dateState } from '@/store/dateState';
+import { dateStateTest } from '@/store/dateStateTest';
 import dayjs from 'dayjs';
 import { useEffect, useState } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
@@ -11,7 +11,7 @@ import InviteModal from '@/components/@common/Modal/InviteModal';
 const WholeCalendar = () => {
   const { groupId } = useParams();
   const [{ isFirstVisit }, setIsFirstVisit] = useRecoilState(firstVisitState);
-  const [dateObj, setDateObj] = useRecoilState(dateState);
+  const [dateObj, setDateObj] = useRecoilState(dateStateTest);
 
   const { data } = useGroupDetail(Number(groupId));
 
