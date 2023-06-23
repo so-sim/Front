@@ -1,7 +1,7 @@
 export interface PayMentTpyeCountMap {
-  con?: number;
-  non?: number;
-  full?: number;
+  확인중: number;
+  미납: number;
+  완납: number;
 }
 
 //삭제 예정
@@ -14,8 +14,7 @@ export type EvnetId = {
 };
 
 export interface MonthStatus {
-  day: number;
-  paymentTypeCountMap: PayMentTpyeCountMap;
+  statusOfDay: { [key in number]: PayMentTpyeCountMap };
 }
 
 export type Ground = '지각' | '결석' | '과제 안 함' | '기타';
