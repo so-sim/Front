@@ -4,7 +4,6 @@ import * as Style from './styles';
 import { useParticipantList } from '@/queries/Group';
 import { useParams } from 'react-router-dom';
 import DropDown from '@/components/@common/DropDown';
-import { getStatusCode } from '@/utils/status';
 import { GA } from '@/constants/GA';
 import { DetailFilter } from '@/store/detailFilter';
 
@@ -12,13 +11,13 @@ type Props = {
   setDetailFilter: Dispatch<SetStateAction<DetailFilter>>;
 };
 
-type PaymentDropdown = '전체' | '미납' | '완납' | '확인필요';
+type PaymentDropdown = '전체' | '미납' | '완납' | '확인중';
 
 const paymentTypeList: { title: PaymentDropdown; id?: string }[] = [
   { title: '전체' },
   { title: '미납', id: GA.FILTER.NON },
   { title: '완납', id: GA.FILTER.FULL },
-  { title: '확인필요', id: GA.FILTER.CON },
+  { title: '확인중', id: GA.FILTER.CON },
 ];
 
 const TableHead = ({ setDetailFilter }: Props) => {
@@ -31,7 +30,7 @@ const TableHead = ({ setDetailFilter }: Props) => {
     setDetailFilter((prev) => ({
       ...prev,
       page: 0,
-      situation: paymentType === '전체' ? '' : getStatusCode(paymentType),
+      situation: paymentType === '전체' ? '' : paymentType,
       nickname: member === '전체' ? '' : member,
     }));
   }, [member, paymentType]);
@@ -39,7 +38,7 @@ const TableHead = ({ setDetailFilter }: Props) => {
   const { data } = useParticipantList(Number(param.groupId));
 
   const adminNickname = data?.content.adminNickname;
-  const participants = data?.content.memberList.map(({ nickname }) => ({ title: nickname }));
+  const participants = data?.content.nicknameList.map((nickname) => ({ title: nickname }));
 
   const [openMemberDropdown, setOpenMemberDropdown] = useState(false);
   const [openPaymentTypeDropdown, setOpenPaymentTypeDropdown] = useState(false);

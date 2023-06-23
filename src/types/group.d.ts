@@ -28,9 +28,8 @@ export interface GroupDetail {
 }
 
 export interface ParticipantList {
-  adminId: number;
   adminNickname: string;
-  memberList: { nickname: string; userId: number }[];
+  nicknameList: string[];
 }
 
 export interface CoverGroupInfo {
@@ -48,7 +47,6 @@ export interface GropuList {
 }
 
 export interface GroupListWithIndex {
-  next: boolean;
-  index: number;
+  hasNext: boolean;
   groupList: GropuList[];
 }
