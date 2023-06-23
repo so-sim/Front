@@ -12,7 +12,6 @@ import { dateState } from '@/store/dateState';
 import { initialSelectData } from '@/pages/FineBook/DetailFine';
 
 import { selectedDataReducer } from '../reducer/selectedDataReducer';
-import { getStatusCode } from '@/utils/status';
 import { pushDataLayer } from '@/utils/pushDataLayer';
 import { checkFormIsValid } from '@/utils/validation';
 import { GA } from '@/constants/GA';
@@ -33,19 +32,17 @@ const FineBookCreateModal = ({ modalHandler }: Props) => {
 
   const createDetail = (type: 'continue' | 'save') => {
     if (user.userId === null) return;
-    if (selectData.paymentType === '') return;
     create(
       {
         ...selectData,
         groupId: Number(groupId),
-        userId: user.userId,
-        paymentType: getStatusCode(selectData.paymentType),
+        situation: selectData.situation,
       },
       {
         onSuccess() {
           pushDataLayer('add_list', { button: type === 'continue' ? 'keep' : 'normal' });
 
-          const groundsDate = dayjs(selectData.groundsDate);
+          const groundsDate = dayjs(selectData.date);
           setDateState((prev) => ({ ...prev, baseDate: groundsDate, selectedDate: groundsDate, week: null }));
 
           if (type === 'continue') {

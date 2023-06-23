@@ -22,22 +22,22 @@ describe('관리자일 경우', () => {
 
   it('status가 "con"일 경우 text가 "확인요청"이어야 한다. ', () => {
     // Arrange
-    const status = 'con';
-    render(withRouter(<CircleDropButton status={status} isAdmin={isAdmin} />));
+    const situation = '확인중';
+    render(withRouter(<CircleDropButton situation={situation} isAdmin={isAdmin} />));
     // Assert
     expect(screen.getByText('확인필요')).toBeInTheDocument();
     expect(screen.getByRole('button')).toHaveStyleRule('background-color', '#fff1d6');
   });
   it('status가 "non"일 경우 text가 "미납"이어야 한다. ', () => {
     // Arrange
-    render(withRouter(<CircleDropButton status="non" isAdmin={isAdmin} />));
+    render(withRouter(<CircleDropButton situation="미납" isAdmin={isAdmin} />));
     // Assert
     expect(screen.getByText('미납')).toBeInTheDocument();
     expect(screen.getByRole('button')).toHaveStyleRule('background-color', '#FFECE5');
   });
   it('status가 "full"일 경우 text가 "완납"이어야 한다. ', () => {
     // Arrange
-    render(withRouter(<CircleDropButton status="full" isAdmin={isAdmin} />));
+    render(withRouter(<CircleDropButton situation="완납" isAdmin={isAdmin} />));
     // Assert
     expect(screen.getByText('완납')).toBeInTheDocument();
     expect(screen.getByRole('button')).toHaveStyleRule('background-color', '#f0f6ff');
@@ -50,7 +50,7 @@ describe('일반 사용자일 경우', () => {
   describe('status가 "con"일 경우', () => {
     it('만약에 자신의 목록이고, 저장되어 있는 상태값이 "non"일 경우 "확인요청"이어야한다., ', () => {
       // Arrange
-      render(withRouter(<CircleDropButton status="con" isAdmin={isAdmin} isOwn={true} originStatus="non" />));
+      render(withRouter(<CircleDropButton situation="확인중" isAdmin={isAdmin} isOwn={true} originStatus="미납" />));
 
       // Assert
       expect(screen.getByText('확인요청')).toBeInTheDocument();
@@ -58,7 +58,7 @@ describe('일반 사용자일 경우', () => {
     });
     it('status가 "con"일 경우만약에 자신의 목록이고, 저장되어 있는 상태값이 "non"이 아닐 경우 "확인중"이어야한다., ', () => {
       // Arrange
-      render(withRouter(<CircleDropButton status="con" isAdmin={isAdmin} isOwn={true} />));
+      render(withRouter(<CircleDropButton situation="확인중" isAdmin={isAdmin} isOwn={true} />));
 
       // Assert
       expect(screen.getByText('확인중')).toBeInTheDocument();
@@ -68,14 +68,14 @@ describe('일반 사용자일 경우', () => {
 
   it('status가 "non"일 경우 text가 "미납"이어야 한다. ', () => {
     // Arrange
-    render(withRouter(<CircleDropButton status="non" isAdmin={isAdmin} />));
+    render(withRouter(<CircleDropButton situation="미납" isAdmin={isAdmin} />));
     // Assert
     expect(screen.getByText('미납')).toBeInTheDocument();
     expect(screen.getByRole('button')).toHaveStyleRule('background-color', '#FFECE5');
   });
   it('status가 "full"일 경우 text가 "완납"이어야 한다. ', () => {
     // Arrange
-    render(withRouter(<CircleDropButton status="full" isAdmin={isAdmin} />));
+    render(withRouter(<CircleDropButton situation="완납" isAdmin={isAdmin} />));
     // Assert
     expect(screen.getByText('완납')).toBeInTheDocument();
     expect(screen.getByRole('button')).toHaveStyleRule('background-color', '#f0f6ff');
