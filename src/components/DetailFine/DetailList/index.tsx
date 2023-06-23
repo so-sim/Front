@@ -1,4 +1,3 @@
-import { ClientEventInfo, EventInfo } from '@/types/event';
 import { changeNumberToMoney } from '@/utils/changeNumberToMoney';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import * as Style from './styles';
@@ -6,12 +5,13 @@ import { DropDownWrapper } from '@/components/DetailFine';
 import { DetailFilter } from '@/store/detailFilter';
 import { useRecoilState } from 'recoil';
 import { dateStateTest } from '@/store/dateStateTest';
+import { SelectedEventInfo } from '@/types/event';
 
 type Props = {
   selectedEventId: number;
-  details?: EventInfo[];
+  details?: SelectedEventInfo[];
   detailFilter: DetailFilter;
-  setSelect: Dispatch<SetStateAction<ClientEventInfo>>;
+  setSelect: Dispatch<SetStateAction<SelectedEventInfo>>;
 };
 
 const DetailList = ({ detailFilter, selectedEventId, details, setSelect }: Props) => {
@@ -24,7 +24,7 @@ const DetailList = ({ detailFilter, selectedEventId, details, setSelect }: Props
 
   const [openButtonListId, setOpenButtonListId] = useState(0);
 
-  const handleUserDetailModal = (detail: EventInfo) => {
+  const handleUserDetailModal = (detail: SelectedEventInfo) => {
     setSelect(detail);
   };
 
@@ -42,14 +42,14 @@ const DetailList = ({ detailFilter, selectedEventId, details, setSelect }: Props
   return (
     <Style.DetailList>
       {details?.map((detail, i) => {
-        const { groundsDate, userName, payment, grounds, eventId } = detail;
+        const { date, nickname, amount, memo, eventId } = detail;
         return (
           <Style.TableRow key={i} isSelected={selectedEventId === eventId} onClick={() => handleUserDetailModal(detail)}>
-            <Style.Element hasEllipsis={false}>{groundsDate.slice(2)}</Style.Element>
+            <Style.Element hasEllipsis={false}>{date.slice(2)}</Style.Element>
             <DropDownWrapper openButtonListId={openButtonListId} detail={detail} setOpenButtonListId={setOpenButtonListId} />
-            <Style.Element hasEllipsis>{userName}</Style.Element>
-            <Style.Element hasEllipsis>{changeNumberToMoney(payment)}</Style.Element>
-            <Style.Element hasEllipsis>{grounds}</Style.Element>
+            <Style.Element hasEllipsis>{nickname}</Style.Element>
+            <Style.Element hasEllipsis>{changeNumberToMoney(amount)}</Style.Element>
+            <Style.Element hasEllipsis>{memo}</Style.Element>
           </Style.TableRow>
         );
       })}

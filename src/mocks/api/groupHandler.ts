@@ -6,7 +6,7 @@ import { getSearchParams } from '../utils/getSearchParams';
 let groupList = GROUP_LIST;
 
 const getGroupList = () => {
-  rest.get(BASE_URL + '/api/groups', async (req, res, ctx) => {
+  return rest.get(BASE_URL + '/api/groups', async (req, res, ctx) => {
     const page = getSearchParams(req, 'page');
 
     return res(

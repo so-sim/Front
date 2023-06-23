@@ -7,25 +7,25 @@ import { useGroupDetail } from '@/queries/Group';
 import { userState } from '@/store/userState';
 
 import * as Style from './styles';
-import { EventInfo } from '@/types/event';
+import { SelectedEventInfo } from '@/types/event';
 
 interface Props {
-  detail: EventInfo;
+  detail: SelectedEventInfo;
   openButtonListId: number;
   setOpenButtonListId: Dispatch<SetStateAction<number>>;
 }
 
 const DropDownWrapper = ({ detail, openButtonListId, setOpenButtonListId }: Props) => {
-  const { eventId, paymentType, userId } = detail;
+  const { eventId, situation, nickname } = detail;
   const user = useRecoilValue(userState);
   const { groupId } = useParams();
   const { data } = useGroupDetail(Number(groupId));
 
   const isAdmin = data?.content.isAdmin;
-  const isOwn = userId === user.userId;
+  const isOwn = nickname === 'user.userId';
   const isSelectedEvent = openButtonListId === eventId;
 
-  const hasPermissionOfHover = isAdmin || (!isAdmin && isOwn && paymentType === 'non');
+  const hasPermissionOfHover = isAdmin || (!isAdmin && isOwn && situation === '미납');
   const hasPermissionOfChangePaymentType = hasPermissionOfHover && isSelectedEvent;
 
   const handleCircleDropButton = (e: MouseEvent) => {
@@ -38,9 +38,9 @@ const DropDownWrapper = ({ detail, openButtonListId, setOpenButtonListId }: Prop
   return (
     <Style.DropDownWrapper isValid={hasPermissionOfHover} onClick={handleCircleDropButton}>
       {hasPermissionOfChangePaymentType ? (
-        <CircleButtonList isOwn={isOwn} setOpenButtonListId={setOpenButtonListId} isAdmin={isAdmin} status={paymentType} eventId={eventId} />
+        <CircleButtonList isOwn={isOwn} setOpenButtonListId={setOpenButtonListId} isAdmin={isAdmin} situation={situation} eventId={eventId} />
       ) : (
-        <CircleDropButton status={paymentType} isAdmin={isAdmin} />
+        <CircleDropButton situation={situation} isAdmin={isAdmin} />
       )}
     </Style.DropDownWrapper>
   );

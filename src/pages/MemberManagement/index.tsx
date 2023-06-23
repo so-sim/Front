@@ -38,9 +38,9 @@ const MemberManagement = () => {
             <Style.Tag>나</Style.Tag>
           </Style.UserContainer>
         )}
-        {participantList?.content.memberList.map(({ nickname, userId }) => {
+        {participantList?.content.nicknameList.map((nickname) => {
           if (nickname !== myNickname?.content.nickname) {
-            return <MemberListItem nickname={nickname} key={userId} />;
+            return <MemberListItem nickname={nickname} key={nickname} />;
           }
         })}
       </Style.Container>

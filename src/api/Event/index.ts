@@ -1,24 +1,25 @@
-import { EvnetId, EventInfoList, MonthStatus, EventInfo } from '@/types/event';
+import { SelectedEventInfo } from '@/types/event';
+import { EvnetId, MonthStatus, EventInfoTest, EventInfoListTest } from '@/types/event';
 import { GroupId } from '@/types/group';
 import { ServerResponse } from '@/types/serverResponse';
 import api from '..';
 
-export const createEvent = async (detailInfo: Omit<EventInfo, 'eventId'> & { groupId: number }): Promise<ServerResponse<EvnetId>> => {
+export const createEvent = async (detailInfo: Omit<EventInfoTest, 'eventId'>): Promise<ServerResponse<EvnetId>> => {
   const { data } = await api.post('/api/event/penalty', detailInfo);
   return data;
 };
 
-export const getOneOfEvent = async (eventId?: number): Promise<ServerResponse<Omit<EventInfo, 'eventId' | 'userId'>>> => {
+export const getOneOfEvent = async (eventId?: number): Promise<ServerResponse<Omit<EventInfoTest, 'groupId'>>> => {
   const { data } = await api.get(`/api/event/penalty/${eventId}`);
   return data;
 };
 
-export const getEventList = async (query: string, groupId: GroupId): Promise<ServerResponse<EventInfoList>> => {
+export const getEventList = async (query: string, groupId: GroupId): Promise<ServerResponse<EventInfoListTest>> => {
   const { data } = await api.get(`/api/event/penalty/list/${groupId.groupId}?${query}`);
   return data;
 };
 
-export const updateEvent = async (info: EventInfo & EvnetId): Promise<ServerResponse<EventInfo>> => {
+export const updateEvent = async (info: SelectedEventInfo): Promise<ServerResponse<EventInfoTest>> => {
   const { eventId, ...detailInfo } = info;
   const { data } = await api.post(`/api/event/penalty/${eventId}`, detailInfo);
   return data;
@@ -29,9 +30,9 @@ export const deleteEvent = async (eventId: number): Promise<ServerResponse<Evnet
   return data;
 };
 
-export const updateEventStatus = async (info: EvnetId & Pick<EventInfo, 'paymentType'>): Promise<ServerResponse<EventInfo>> => {
-  const { eventId, paymentType } = info;
-  const { data } = await api.patch(`/api/event/penalty/${String(eventId)}`, { paymentType });
+export const updateEventStatus = async (info: Pick<EventInfoTest, 'eventId' | 'situation'>): Promise<ServerResponse<EventInfoTest>> => {
+  const { eventId, situation } = info;
+  const { data } = await api.patch(`/api/event/penalty/${String(eventId)}`, { situation });
   return data;
 };
 

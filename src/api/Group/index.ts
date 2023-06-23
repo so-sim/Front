@@ -13,8 +13,8 @@ export const getGroupDetail = async (groupId: number | undefined): Promise<Serve
 };
 
 export const getGroupList = async (pageParam: number): Promise<ServerResponse<GroupListWithIndex>> => {
-  const { data } = await api.get(`/api/groups?index=${pageParam}`);
-  return { ...data, nextPage: data.content.index };
+  const { data } = await api.get(`/api/groups?page=${pageParam}`);
+  return data;
 };
 
 export const getParticipantList = async (groupId: number | undefined): Promise<ServerResponse<ParticipantList>> => {

@@ -1,18 +1,6 @@
-type Ground = '지각' | '결석' | '과제 안 함' | '기타';
-type Situation = '미납' | '완납' | '확인중';
+import { EventInfoTest, Ground, Situation } from '@/types/event';
 
-type EventInfo = {
-  eventId: number;
-  groupId: number;
-  nickname: string;
-  date: string;
-  amount: number;
-  ground: Ground;
-  memo: string;
-  situation: Situation;
-};
-
-export const DETAILS: EventInfo[] = [
+export const DETAILS: EventInfoTest[] = [
   { eventId: 1, groupId: 1, nickname: '종현', date: '2023.06.25', amount: 10_000, ground: '지각', memo: '', situation: '미납' },
   { eventId: 2, groupId: 1, nickname: '정민', date: '2023.06.30', amount: 10_000, ground: '결석', memo: '', situation: '완납' },
   { eventId: 3, groupId: 1, nickname: '윤하나', date: '2023.07.01', amount: 10_000, ground: '지각', memo: '', situation: '미납' },

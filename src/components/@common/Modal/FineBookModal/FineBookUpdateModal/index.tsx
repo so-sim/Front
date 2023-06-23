@@ -3,20 +3,20 @@ import Button from '@/components/@common/Button';
 import Modal from '@/components/@common/Modal';
 import * as Style from '../styles';
 import { useUpdateDetail } from '@/queries/Detail';
-import { ClientEventInfo, EventInfo } from '@/types/event';
+import { EventInfoTest } from '@/types/event';
 import { useRecoilState } from 'recoil';
 import dayjs from 'dayjs';
 import { dateState } from '@/store/dateState';
-import { getStatusCode, getStatusText } from '@/utils/status';
 import { ServerResponse } from '@/types/serverResponse';
 import FormFileds from '../FormFileds';
 import { selectedDataReducer } from '../reducer/selectedDataReducer';
 import { checkFormIsValid } from '@/utils/validation';
+import { SelectedEventInfo } from '@/types/event';
 
 interface Props {
   modalHandler: () => void;
-  select: ClientEventInfo;
-  setSelect: Dispatch<SetStateAction<ClientEventInfo>>;
+  select: SelectedEventInfo;
+  setSelect: Dispatch<SetStateAction<SelectedEventInfo>>;
 }
 
 const FineBookUpdateModal = ({ modalHandler, select, setSelect }: Props) => {
@@ -24,10 +24,10 @@ const FineBookUpdateModal = ({ modalHandler, select, setSelect }: Props) => {
 
   const [_, setDateState] = useRecoilState(dateState);
 
-  const onSuccessUpdateDetail = (data: ServerResponse<EventInfo>) => {
-    const groundsDate = dayjs(data.content.groundsDate);
+  const onSuccessUpdateDetail = (data: ServerResponse<EventInfoTest>) => {
+    const groundsDate = dayjs(data.content.date);
 
-    setSelect((prev) => ({ ...prev, ...data.content, paymentType: getStatusText(selectData.paymentType) }));
+    setSelect((prev) => ({ ...prev, ...data.content, situation: selectData.situation }));
     setDateState((prev) => ({ ...prev, baseDate: groundsDate, selectedDate: groundsDate, week: null }));
     modalHandler();
   };
@@ -35,10 +35,7 @@ const FineBookUpdateModal = ({ modalHandler, select, setSelect }: Props) => {
   const { mutate: update, isLoading: updateLoading } = useUpdateDetail(onSuccessUpdateDetail);
 
   const updateDetail = () => {
-    if (selectData.paymentType == '') return;
-    const { eventId, userId } = select;
-
-    update({ ...selectData, eventId, userId, paymentType: getStatusCode(selectData.paymentType) });
+    update(selectData);
   };
 
   return (
