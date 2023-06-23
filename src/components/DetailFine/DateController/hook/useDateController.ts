@@ -110,7 +110,7 @@ export function increaseTest(baseDate: Dayjs, mode: FilterMode) {
 
   return {
     baseDateTest: modeFilterObj[mode].add(1, mode),
-    startDate: modeFilterObj[mode].add(1, mode),
+    startDate: modeFilterObj[mode].add(1, mode).startOf(mode),
     endDate: modeFilterObj[mode].add(1, mode).endOf(mode),
     mode,
   };
@@ -128,7 +128,7 @@ export function decreaseTest(baseDate: Dayjs, mode: FilterMode) {
 
   return {
     baseDateTest: modeFilterObj[mode].subtract(1, mode),
-    startDate: modeFilterObj[mode].subtract(1, mode),
+    startDate: modeFilterObj[mode].subtract(1, mode).startOf(mode),
     endDate: modeFilterObj[mode].subtract(1, mode).endOf(mode),
     mode,
   };
