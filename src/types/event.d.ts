@@ -4,11 +4,6 @@ export interface PayMentTpyeCountMap {
   완납: number;
 }
 
-//삭제 예정
-export interface EventInfo {
-  // paymentType: ServerPaymentType;
-}
-
 export type EvnetId = {
   eventId: number;
 };
