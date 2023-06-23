@@ -33,10 +33,10 @@ const Calendar: FC<CalnedrProps> = ({ cellType }) => {
   const navigate = useNavigate();
   const { groupId } = useParams();
 
-  const { addMonth, subMonth, dateToFormmating, getMonth, getDate, dateToUnixTime } = handleDate;
+  const { addMonth, subMonth, dateToFormatting, getMonth, getDate, dateToUnixTime } = handleDate;
 
-  const startDateOfMonth = dateToFormmating(dayjs(calendarDate).startOf('month'));
-  const endDateOfMonth = dateToFormmating(dayjs(calendarDate).endOf('month'));
+  const startDateOfMonth = dateToFormatting(dayjs(calendarDate).startOf('month'));
+  const endDateOfMonth = dateToFormatting(dayjs(calendarDate).endOf('month'));
 
   const { data: status } = useGetMonthStatus(groupId, startDateOfMonth, endDateOfMonth);
 
@@ -64,7 +64,7 @@ const Calendar: FC<CalnedrProps> = ({ cellType }) => {
   };
 
   const isToday = (date: Dayjs) => {
-    return dateToFormmating(date) === dateToFormmating(today);
+    return dateToFormatting(date) === dateToFormatting(today);
   };
 
   const isSelectedPeriod = (date: Dayjs) => {
@@ -73,7 +73,7 @@ const Calendar: FC<CalnedrProps> = ({ cellType }) => {
 
   const isSelectedDate = (date: Dayjs) => {
     if (mode !== 'day') return false;
-    return dateToFormmating(startDate) === dateToFormmating(date);
+    return dateToFormatting(startDate) === dateToFormatting(date);
   };
 
   const goDetail = (date: Dayjs) => {
@@ -122,7 +122,7 @@ const Calendar: FC<CalnedrProps> = ({ cellType }) => {
           {monthList.map((weeks, idx) => (
             <Style.WeekWrap key={idx} cellType={cellType}>
               {weeks.map((date) => (
-                <div key={dateToFormmating(date)} onClick={() => goDetail(date)}>
+                <div key={dateToFormatting(date)} onClick={() => goDetail(date)}>
                   {cellType === 'Tag' ? (
                     <DateCellWithTag //
                       date={date}

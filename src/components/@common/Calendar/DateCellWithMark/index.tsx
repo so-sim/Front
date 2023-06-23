@@ -19,11 +19,11 @@ interface DateCellWithMarkProps {
 }
 
 const DateCellWithMark: FC<DateCellWithMarkProps> = ({ date, isCurrentMonth, isToday, isSelectedDate, isSelectedPeriod, status, startDate, endDate, mode }) => {
-  const { dateToFormmating } = handleDate;
+  const { dateToFormatting } = handleDate;
 
   const currentMonth = isCurrentMonth(date);
-  const isFirst = dateToFormmating(startDate) === dateToFormmating(date);
-  const isLast = dateToFormmating(endDate) === dateToFormmating(date);
+  const isFirst = dateToFormatting(startDate) === dateToFormatting(date);
+  const isLast = dateToFormatting(endDate) === dateToFormatting(date);
 
   return (
     <Style.DateCell>
@@ -32,9 +32,13 @@ const DateCellWithMark: FC<DateCellWithMarkProps> = ({ date, isCurrentMonth, isT
         {date.date()}
       </Style.Date>
       <Style.Mark>
-        {status && (status['완납'] && currentMonth && !status['확인중'] && !status['미납'] ? <span>{MARK.BLUE}</span> : null)}
-        {status && status['확인중'] && currentMonth ? <span>{MARK.YELLOW}</span> : null}
-        {status && status['미납'] && currentMonth ? <span>{MARK.RED}</span> : null}
+        {status && currentMonth && (
+          <>
+            {status['완납'] && !status['확인중'] && !status['미납'] && <span>{MARK.BLUE}</span>}
+            {status['확인중'] && <span>{MARK.YELLOW}</span>}
+            {status['미납'] && <span>{MARK.RED}</span>}
+          </>
+        )}
       </Style.Mark>
     </Style.DateCell>
   );

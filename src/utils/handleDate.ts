@@ -1,6 +1,6 @@
 import dayjs, { Dayjs } from 'dayjs';
 
-const dateToFormmating = (date: Dayjs) => {
+const dateToFormatting = (date: Dayjs) => {
   return dayjs(date).format('YYYY.MM.DD');
 };
 
@@ -43,7 +43,7 @@ const dateToUnixTime = (date: Dayjs): number => {
 };
 
 export const handleDate = {
-  dateToFormmating,
+  dateToFormatting,
   addMonth,
   subMonth,
   getDate,
