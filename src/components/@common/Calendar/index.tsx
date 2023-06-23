@@ -35,8 +35,8 @@ const Calendar: FC<CalnedrProps> = ({ cellType }) => {
 
   const { addMonth, subMonth, dateToFormmating, getMonth, getDate, dateToUnixTime } = handleDate;
 
-  const startDateOfMonth = dateToFormmating(dayjs(baseDateTest).startOf('month'));
-  const endDateOfMonth = dateToFormmating(dayjs(baseDateTest).endOf('month'));
+  const startDateOfMonth = dateToFormmating(dayjs(calendarDate).startOf('month'));
+  const endDateOfMonth = dateToFormmating(dayjs(calendarDate).endOf('month'));
 
   const { data: status } = useGetMonthStatus(groupId, startDateOfMonth, endDateOfMonth);
 
