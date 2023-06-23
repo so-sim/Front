@@ -1,6 +1,9 @@
+import { dateStateTest } from '@/store/dateStateTest';
 import { MonthStatus } from '@/types/event';
+import { handleDate } from '@/utils/handleDate';
 import { Dayjs } from 'dayjs';
-import React, { FC } from 'react';
+import { FC } from 'react';
+import { useRecoilState } from 'recoil';
 import { MARK } from '../../../../assets/icons/Mark';
 import * as Style from './styles';
 
@@ -9,20 +12,21 @@ interface DateCellWithMarkProps {
   isCurrentMonth: (date: Dayjs) => boolean;
   isToday: (date: Dayjs) => boolean;
   isSelectedDate: (date: Dayjs) => boolean;
-  isSelectedWeek: boolean;
+  isSelectedPeriod: boolean;
   status: MonthStatus | undefined;
 }
 
-const DateCellWithMark: FC<DateCellWithMarkProps> = ({ date, isCurrentMonth, isToday, isSelectedDate, isSelectedWeek, status }) => {
-  const day = date.day();
+const DateCellWithMark: FC<DateCellWithMarkProps> = ({ date, isCurrentMonth, isToday, isSelectedDate, isSelectedPeriod, status }) => {
+  const [{ startDate, endDate, mode }] = useRecoilState(dateStateTest);
+  const { dateToFormmating } = handleDate;
   const currentMonth = isCurrentMonth(date);
-  const isFirst = day === 0;
-  const isLast = day === 6;
+  const isFirst = dateToFormmating(startDate) === dateToFormmating(date);
+  const isLast = dateToFormmating(endDate) === dateToFormmating(date);
 
   return (
     <Style.DateCell>
-      <Style.Date isToday={isToday(date)} isSelectedDate={isSelectedDate(date)} isCurrentMonth={isCurrentMonth(date)} isSelectedWeek={isSelectedWeek}>
-        {isSelectedWeek && <Style.selectedWeek isSelectedWeek={isSelectedWeek} isFirst={isFirst} isLast={isLast} />}
+      <Style.Date mode={mode} isToday={isToday(date)} isSelectedDate={isSelectedDate(date)} isCurrentMonth={isCurrentMonth(date)} isSelectedPeriod={isSelectedPeriod}>
+        {isSelectedPeriod && <Style.selectedWeek mode={mode} isSelectedPeriod={isSelectedPeriod} isFirst={isFirst} isLast={isLast} />}
         {date.date()}
       </Style.Date>
       <Style.Mark>

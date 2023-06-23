@@ -25,16 +25,16 @@ interface CalnedrProps {
 const Calendar: FC<CalnedrProps> = ({ cellType }) => {
   const today = dayjs();
 
-  const [{ baseDateTest, startDate, endDate }, setDateTestObj] = useRecoilState(dateStateTest);
+  const [{ baseDateTest, startDate, endDate, mode }, setDateTestObj] = useRecoilState(dateStateTest);
 
   const [showCreateDetailModal, setShowCreateDetailModal] = useState(false);
   const [calendarDate, setCalendarDate] = useState(baseDateTest);
 
-  const monthList = createCalendar(dayjs(baseDateTest));
+  const monthList = createCalendar(dayjs(calendarDate));
   const navigate = useNavigate();
   const { groupId } = useParams();
 
-  const { addMonth, subMonth, dateToFormmating, getMonth, getDateArray, getDate } = handleDate;
+  const { addMonth, subMonth, dateToFormmating, getMonth, getDateArray, getDate, dateToUnixTime } = handleDate;
 
   const [year, month, day] = getDateArray(calendarDate);
 
@@ -65,13 +65,12 @@ const Calendar: FC<CalnedrProps> = ({ cellType }) => {
     return dateToFormmating(date) === dateToFormmating(today);
   };
 
-  // Todo 커스텀기간 필터링 추가 시 리팩토링 예정
-  // const isSelectedWeek = (index: number) => {
-  //   return getMonth(baseDateTest) === getMonth(calendarDate) && index + 1 === week;
-  // };
+  const isSelectedPeriod = (date: Dayjs) => {
+    return dateToUnixTime(startDate) <= dateToUnixTime(date) && dateToUnixTime(endDate) >= dateToUnixTime(date);
+  };
 
   const isSelectedDate = (date: Dayjs) => {
-    if (!dayjs(startDate).isSame(dayjs(endDate))) return false;
+    if (mode !== 'day') return false;
     return dateToFormmating(startDate) === dateToFormmating(date);
   };
 
@@ -130,7 +129,7 @@ const Calendar: FC<CalnedrProps> = ({ cellType }) => {
                       isCurrentMonth={isCurrentMonth}
                       isToday={isToday}
                       isSelectedDate={isSelectedDate}
-                      isSelectedWeek={false}
+                      isSelectedPeriod={isSelectedPeriod(date)}
                       status={filterCorrectDateStatus(date)}
                     />
                   )}

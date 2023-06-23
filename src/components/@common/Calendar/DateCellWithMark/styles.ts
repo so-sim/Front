@@ -1,3 +1,4 @@
+import { FilterMode } from '@/pages/FineBook/DetailFine';
 import styled from '@emotion/styled';
 
 export const DateCell = styled.div`
@@ -15,16 +16,17 @@ export const DateCell = styled.div`
 `;
 
 interface SelectedWeekProps {
-  isSelectedWeek: boolean;
+  isSelectedPeriod: boolean;
   isFirst: boolean;
   isLast: boolean;
+  mode: FilterMode;
 }
 
 export const selectedWeek = styled.div<SelectedWeekProps>`
   position: absolute;
   width: 100%;
   height: 28px;
-  background-color: ${({ theme }) => theme.colors.secondary_800};
+  background-color: ${({ theme, mode }) => mode === 'week' && theme.colors.secondary_800};
 
   margin-left: ${(props) => props.isFirst && '12px'};
   margin-right: ${(props) => props.isLast && '12px'};
@@ -41,7 +43,8 @@ interface DateProps {
   isToday: boolean;
   isSelectedDate: boolean;
   isCurrentMonth: boolean;
-  isSelectedWeek: boolean;
+  isSelectedPeriod: boolean;
+  mode: FilterMode;
 }
 
 export const Date = styled.div<DateProps>`
@@ -53,7 +56,7 @@ export const Date = styled.div<DateProps>`
   border-radius: 30px;
   background-color: ${(props) => props.isSelectedDate && props.theme.colors.secondary_800};
   color: ${(props) => {
-    if (props.isSelectedDate || props.isSelectedWeek) return props.theme.colors.white;
+    if (props.mode !== 'month' && (props.isSelectedDate || props.isSelectedPeriod)) return props.theme.colors.white;
     if (!props.isCurrentMonth) return props.theme.colors.secondary_400;
     return props.theme.colors.secondary_900;
   }};
@@ -62,7 +65,7 @@ export const Date = styled.div<DateProps>`
 
   :hover {
     background-color: ${(props) => {
-      if (props.isSelectedWeek || props.isSelectedDate) {
+      if (props.isSelectedPeriod || props.isSelectedDate) {
         return props.theme.colors.secondary_600;
       }
       return props.theme.colors.neutral_200_b;

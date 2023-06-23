@@ -38,6 +38,9 @@ const getDateArray = (date: Dayjs) => {
   const [year, month, day] = dayjs(date).format('YYYY-MM-DD').split('-');
   return [year, month, day];
 };
+const dateToUnixTime = (date: Dayjs): number => {
+  return new Date(dayjs(date).format('YYYY.MM.DD')).getTime();
+};
 
 export const handleDate = {
   dateToFormmating,
@@ -47,4 +50,5 @@ export const handleDate = {
   getMonth,
   getDay,
   getDateArray,
+  dateToUnixTime,
 };
