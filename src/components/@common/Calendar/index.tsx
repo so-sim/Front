@@ -5,7 +5,7 @@ import { dateStateTest } from '@/store/dateStateTest';
 import createCalendar from '@/utils/createCalendar';
 import { handleDate } from '@/utils/handleDate';
 import dayjs, { Dayjs } from 'dayjs';
-import { FC, useEffect, useState } from 'react';
+import { FC, useEffect, useLayoutEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
 import { ARROW } from '../../../assets/icons/Arrow';
@@ -87,7 +87,7 @@ const Calendar: FC<CalnedrProps> = ({ cellType }) => {
     navigate(`/group/${groupId}/book/detail`);
   };
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     setCalendarDate(baseDateTest);
   }, [baseDateTest, startDate, endDate]);
 
