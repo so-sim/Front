@@ -34,9 +34,9 @@ const DateCellWithMark: FC<DateCellWithMarkProps> = ({ date, isCurrentMonth, isT
       <Style.Mark>
         {status && currentMonth && (
           <>
-            {status['완납'] && !status['확인중'] && !status['미납'] && <span>{MARK.BLUE}</span>}
-            {status['확인중'] && <span>{MARK.YELLOW}</span>}
-            {status['미납'] && <span>{MARK.RED}</span>}
+            {status['완납'] && !status['확인중'] && !status['미납'] ? <span>{MARK.BLUE}</span> : null}
+            {status['확인중'] ? <span>{MARK.YELLOW}</span> : null}
+            {status['미납'] ? <span>{MARK.RED}</span> : null}
           </>
         )}
       </Style.Mark>
