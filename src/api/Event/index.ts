@@ -36,7 +36,7 @@ export const updateEventStatus = async (info: Pick<EventInfoTest, 'eventId' | 's
   return data;
 };
 
-export const getMonthStatus = async (groupId: string | undefined, year: string, month: string): Promise<ServerResponse<MonthStatus[]>> => {
-  const { data } = await api.get(`/api/event/penalty/mstatus/${groupId}?year=${year}&month=${month}`);
+export const getMonthStatus = async (groupId: string | undefined, startDate: string, endDate: string): Promise<ServerResponse<MonthStatus>> => {
+  const { data } = await api.get(`/api/event/penalty/calendar/?groupId=${groupId}&startDate=${startDate}&endDate=${endDate}`);
   return data;
 };

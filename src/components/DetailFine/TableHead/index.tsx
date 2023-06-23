@@ -22,9 +22,16 @@ const paymentTypeList: { title: PaymentDropdown; id?: string }[] = [
 
 const TableHead = ({ setDetailFilter }: Props) => {
   const param = useParams();
+
   const [member, setMember] = useState('전체');
-  // console.log(member);
   const [paymentType, setPaymentType] = useState<PaymentDropdown>('전체');
+  const [openMemberDropdown, setOpenMemberDropdown] = useState(false);
+  const [openPaymentTypeDropdown, setOpenPaymentTypeDropdown] = useState(false);
+
+  const memberDropDownRef = useRef<HTMLDivElement>(null);
+  const paymentTypeDropDownRef = useRef<HTMLDivElement>(null);
+
+  const { data } = useParticipantList(Number(param.groupId));
 
   useEffect(() => {
     setDetailFilter((prev) => ({
@@ -35,16 +42,8 @@ const TableHead = ({ setDetailFilter }: Props) => {
     }));
   }, [member, paymentType]);
 
-  const { data } = useParticipantList(Number(param.groupId));
-
   const adminNickname = data?.content.adminNickname;
   const participants = data?.content.nicknameList.map((nickname) => ({ title: nickname }));
-
-  const [openMemberDropdown, setOpenMemberDropdown] = useState(false);
-  const [openPaymentTypeDropdown, setOpenPaymentTypeDropdown] = useState(false);
-
-  const memberDropDownRef = useRef<HTMLDivElement>(null);
-  const paymentTypeDropDownRef = useRef<HTMLDivElement>(null);
 
   const handlePaymentDropDown = () => {
     setOpenPaymentTypeDropdown((prev) => !prev);
