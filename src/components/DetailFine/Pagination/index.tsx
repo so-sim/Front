@@ -41,7 +41,7 @@ const Pagination = ({ totalCount = 0, detailFilter, setDetailFilter }: Props) =>
       <Style.DoubleArrow onClick={decreasePage}>{ARROW.DOUBLE_LEFT}</Style.DoubleArrow>
       {new Array(pageCount).fill(0).map((_, i) => {
         return (
-          <Style.Page onClick={() => moveToPage(i)} isSelected={detailFilter.page === i}>
+          <Style.Page key={i} onClick={() => moveToPage(i)} isSelected={detailFilter.page === i}>
             {i + 1}
           </Style.Page>
         );

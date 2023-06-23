@@ -14,8 +14,8 @@ export const getOneOfEvent = async (eventId?: number): Promise<ServerResponse<Om
   return data;
 };
 
-export const getEventList = async (query: string, groupId: GroupId): Promise<ServerResponse<EventInfoListTest>> => {
-  const { data } = await api.get(`/api/event/penalty/list/${groupId.groupId}?${query}`);
+export const getDetailList = async (query: string): Promise<ServerResponse<EventInfoListTest>> => {
+  const { data } = await api.get(`/api/event/penalties?${query}`);
   return data;
 };
 

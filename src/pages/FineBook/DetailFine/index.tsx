@@ -31,7 +31,7 @@ const DetailFine = () => {
   const [detailFilter, setDetailFilter] = useState<DetailFilter>({ nickname: '', situation: '', page: 0, size: 16, groupId: Number(groupId) });
 
   const calendarDate = useRecoilValue(dateStateTest);
-  const { data } = useGetDetailList(detailFilter, calendarDate.baseDateTest, { groupId: Number(groupId) });
+  const { data } = useGetDetailList(detailFilter, calendarDate);
 
   return (
     <Style.DetailFineFrame>
