@@ -1,7 +1,7 @@
 import { FilterMode } from '@/pages/FineBook/DetailFine';
 import dayjs from 'dayjs';
 import { DateFilter } from '../dateFilter/dateFilter';
-import { dateFilterToQuery } from '../dateFilterToQuery';
+import { detailFilterToQuery } from '../detailFilterToQuery';
 
 describe('dateFilterTitle 테스트', () => {
   it('mode가 day일 때 리턴 값은 "00월 00일로 리턴되어야 함"', () => {
@@ -23,11 +23,11 @@ describe('dateFilterTitle 테스트', () => {
 
 describe('dateFilterToQuery 테스트', () => {
   it('객체가 들어왔을 때 query parameter로 반환 (임시 테스트용으로 변경)', () => {
-    expect(dateFilterToQuery({ nickname: '정민', situation: '미납' })).toBe('nickname=정민&situation=미납');
+    expect(detailFilterToQuery({ nickname: '정민', situation: '미납' })).toBe('nickname=정민&situation=미납');
   });
 
   it('null이나 빈문자열이 객체에 존재할 시 query parameter에서 제외 (임시 테스트용으로 변경)', () => {
-    expect(dateFilterToQuery({ nickname: '정민', situation: '미납' })).toBe('nickname=정민&situation=미납');
+    expect(detailFilterToQuery({ nickname: '정민', situation: '미납' })).toBe('nickname=정민&situation=미납');
   });
 });
 
