@@ -9,7 +9,7 @@ export type EvnetId = {
 };
 
 export interface MonthStatus {
-  statusOfDay: { [key in number]: PayMentTpyeCountMap };
+  statusOfDay: { [date in number]: PayMentTpyeCountMap };
 }
 
 export type Ground = '지각' | '결석' | '과제 안 함' | '기타';
