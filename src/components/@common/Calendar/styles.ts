@@ -78,7 +78,7 @@ export const CalendarContainer = styled.div<CalendarContainerProps>`
   display: grid;
   border: ${(props) => props.mini || `1px solid ${props.theme.colors.neutral_400_b}`};
   border-bottom: ${(props) => props.mini && `2px solid ${props.theme.colors.neutral_400_b}`};
-  max-height: ${(props) => (props.mini ? 'fit-content' : '100%')};
+  max-height: fit-content;
   grid-template-rows: ${(props) => `repeat(${props.length},1fr`};
 `;
 
