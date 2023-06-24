@@ -48,7 +48,7 @@ const CircleButtonList = ({ setOpenButtonListId, isOwn, situation, eventId, isAd
   const { openConfirmModal, closeConfirmModal } = useConfirmModal();
 
   const updateStatus = async (buttonSituation: Situation) => {
-    mutateDetailStatus({ situation: buttonSituation, eventId });
+    mutateDetailStatus({ situation: buttonSituation, eventIdList: [eventId] });
   };
 
   const cancelUpdateStatus = () => {

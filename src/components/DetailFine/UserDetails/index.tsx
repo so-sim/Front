@@ -95,12 +95,12 @@ const UserDetails = ({ select, setSelect }: Props) => {
   const updateStatus = () => {
     if (newStatus === '') return;
     if (newStatus !== situation) {
-      mutateDetailStatus({ situation: newStatus, eventId });
+      mutateDetailStatus({ situation: newStatus, eventIdList: [eventId] });
     }
   };
 
   const requestConfirmStatus = () => {
-    mutateDetailStatus({ situation: '확인중', eventId });
+    mutateDetailStatus({ situation: '확인중', eventIdList: [eventId] });
   };
 
   const deleteDetailInfo = () => {
