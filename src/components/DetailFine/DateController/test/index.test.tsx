@@ -1,11 +1,11 @@
 import { FilterMode } from '@/pages/FineBook/DetailFine';
 import dayjs from 'dayjs';
-import { getTitleByMode, moveDateToWeek, updateDateByButtonMode, increaseTest, decreaseTest } from '../hook/useDateController';
+import { getTitleByMode, moveDateToWeek, updateDateByButtonMode, increaseDateByMode, decreaseDateByMode } from '../hook/useDateController';
 
 describe('DateController', () => {
   describe('increaseDate', () => {
     it('mode가 month이며 baseDate가 6월인 상태에서 실행 시, 7월로 변경이 되어야하며, endDate는 7월의 마지막 일로 지정되어야 한다..', () => {
-      const calendarDateState = increaseTest(dayjs('2023-06-17'), 'month');
+      const calendarDateState = increaseDateByMode(dayjs('2023-06-17'), 'month');
 
       expect(calendarDateState.baseDate.date()).toBe(1);
       expect(calendarDateState.startDate.date()).toBe(1);
@@ -14,7 +14,7 @@ describe('DateController', () => {
     });
 
     it('mode가 week이며 baseDate가 6월 20일 상태에서 실행 시, startDate는 6월25일 endDate는 7월1일이여야한다.', () => {
-      const calendarDateState = increaseTest(dayjs('2023-06-20'), 'week');
+      const calendarDateState = increaseDateByMode(dayjs('2023-06-20'), 'week');
 
       expect(calendarDateState.baseDate.date()).toBe(25);
       expect(calendarDateState.startDate.date()).toBe(25);
@@ -22,7 +22,7 @@ describe('DateController', () => {
     });
 
     it('mode가 week이며 baseDate가 6월 28일 상태에서 실행 시, startDate는 7월2일 endDate는 7월 8일이여야한다.', () => {
-      const calendarDateState = increaseTest(dayjs('2023-06-28'), 'week');
+      const calendarDateState = increaseDateByMode(dayjs('2023-06-28'), 'week');
 
       expect(calendarDateState.baseDate.date()).toBe(2);
       expect(calendarDateState.startDate.date()).toBe(2);
@@ -30,7 +30,7 @@ describe('DateController', () => {
     });
 
     it('mode가 day이며 baseDate가 6월 29일 상태에서 실행 시, startDate는 6월30일 endDate는 6월30일이여야한다.', () => {
-      const calendarDateState = increaseTest(dayjs('2023-06-29'), 'day');
+      const calendarDateState = increaseDateByMode(dayjs('2023-06-29'), 'day');
 
       expect(calendarDateState.baseDate.date()).toBe(30);
       expect(calendarDateState.startDate.date()).toBe(30);
@@ -40,7 +40,7 @@ describe('DateController', () => {
 
   describe('decreaseTest', () => {
     it('mode가 month이며 baseDate가 6월인 상태에서 실행 시, 5월로 변경이 되어야하며, endDate는 5월의 마지막 일로 지정되어야 한다.', () => {
-      const calendarDateState = decreaseTest(dayjs('2023-06-29'), 'month');
+      const calendarDateState = decreaseDateByMode(dayjs('2023-06-29'), 'month');
 
       expect(calendarDateState.baseDate.date()).toBe(1);
       expect(calendarDateState.startDate.date()).toBe(1);
@@ -49,7 +49,7 @@ describe('DateController', () => {
     });
 
     it('mode가 week이며 baseDate가 6월 20일 상태에서 실행 시, startDate는 6월11일 endDate는 6월17일이여야 한다.', () => {
-      const calendarDateState = decreaseTest(dayjs('2023-06-20'), 'week');
+      const calendarDateState = decreaseDateByMode(dayjs('2023-06-20'), 'week');
 
       expect(calendarDateState.baseDate.date()).toBe(11);
       expect(calendarDateState.startDate.date()).toBe(11);
@@ -57,7 +57,7 @@ describe('DateController', () => {
     });
 
     it('mode가 week이며 baseDate가 7월 3일 상태에서 실행 시, startDate는 6월25일 endDate는 7월 1일이여야 한다', () => {
-      const calendarDateState = decreaseTest(dayjs('2023-07-03'), 'week');
+      const calendarDateState = decreaseDateByMode(dayjs('2023-07-03'), 'week');
 
       expect(calendarDateState.baseDate.date()).toBe(25);
       expect(calendarDateState.startDate.date()).toBe(25);
@@ -65,7 +65,7 @@ describe('DateController', () => {
     });
 
     it('mode가 day이며 baseDate가 6월 29일 상태에서 실행 시, startDate는 6월28일 endDate는 6월28일이여야한다.', () => {
-      const calendarDateState = decreaseTest(dayjs('2023-06-29'), 'day');
+      const calendarDateState = decreaseDateByMode(dayjs('2023-06-29'), 'day');
 
       expect(calendarDateState.baseDate.date()).toBe(28);
       expect(calendarDateState.startDate.date()).toBe(28);

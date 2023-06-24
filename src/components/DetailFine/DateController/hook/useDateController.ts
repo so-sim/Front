@@ -23,12 +23,12 @@ const useDateController = (mode: FilterMode) => {
   };
 
   const increase = () => {
-    const baseDate = increaseTest(calendarDate.baseDate, mode);
+    const baseDate = increaseDateByMode(calendarDate.baseDate, mode);
     setSelectedDate(baseDate);
   };
 
   const decrease = () => {
-    const baseDate = decreaseTest(calendarDate.baseDate, mode);
+    const baseDate = decreaseDateByMode(calendarDate.baseDate, mode);
     setSelectedDate(baseDate);
   };
 
@@ -96,7 +96,7 @@ type ModeTilerType = {
   [key: string]: Dayjs;
 };
 
-export function increaseTest(baseDate: Dayjs, mode: FilterMode) {
+export function increaseDateByMode(baseDate: Dayjs, mode: FilterMode) {
   const startDayOfMonth = dayjs(baseDate).startOf('month');
   const startDay = dayjs(baseDate).startOf('week');
 
@@ -116,7 +116,7 @@ export function increaseTest(baseDate: Dayjs, mode: FilterMode) {
   };
 }
 
-export function decreaseTest(baseDate: Dayjs, mode: FilterMode) {
+export function decreaseDateByMode(baseDate: Dayjs, mode: FilterMode) {
   const startDayOfMonth = dayjs(baseDate).startOf('month');
   const startDay = dayjs(baseDate).startOf('week');
 
