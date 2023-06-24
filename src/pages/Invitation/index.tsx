@@ -11,28 +11,31 @@ import { useNavigate } from 'react-router-dom';
 import { useQueryString } from '@/hooks/useQueryString';
 import Loading from '@/components/Auth/Loading';
 import { NotFoundGroup } from '@/components/Invitation/NotFoundGroup';
-import recentlyVisitedGroup from '@/utils/recentlyVisitedGroup';
+import useRecentlyVisitedGroup from '@/hooks/useRecentlyVisitedGroup';
 
 const Invitation = () => {
-  const [showInvitationModal, setShowInvitationModal] = useState(false);
-  const [showLoginModal, setShowLoginModal] = useState(false);
-  const user = useRecoilValue(userState);
   const navigate = useNavigate();
 
-  const { removeGroupId, setGroupId } = recentlyVisitedGroup('invite-group-id', navigate);
+  const user = useRecoilValue(userState);
+  const [showInvitationModal, setShowInvitationModal] = useState(false);
+  const [showLoginModal, setShowLoginModal] = useState(false);
 
   const { groupId } = useQueryString();
-
   const { data, isSuccess, isLoading } = useGroupDetail(Number(groupId));
+  const { removeGroupId, setGroupId } = useRecentlyVisitedGroup();
 
-  const handleInvitationModal = () => {
-    setShowInvitationModal((prev) => !prev);
-  };
+  useEffect(() => {
+    removeGroupId();
+  }, []);
 
   const handleLoginModal = () => {
     if (showLoginModal) removeGroupId();
 
     setShowLoginModal((prev) => !prev);
+  };
+
+  const handleInvitationModal = () => {
+    setShowInvitationModal((prev) => !prev);
   };
 
   const checkUserLoginStatus = () => {
@@ -52,10 +55,6 @@ const Invitation = () => {
     removeGroupId();
     navigate('/');
   };
-
-  useEffect(() => {
-    removeGroupId();
-  }, []);
 
   if (isLoading) return <Loading />;
 
