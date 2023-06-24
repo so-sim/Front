@@ -21,7 +21,7 @@ export const getDetailList = async (query: string): Promise<ServerResponse<Event
 
 export const updateEvent = async (info: SelectedEventInfo): Promise<ServerResponse<EventInfoTest>> => {
   const { eventId, ...detailInfo } = info;
-  const { data } = await api.post(`/api/event/penalty/${eventId}`, detailInfo);
+  const { data } = await api.patch(`/api/event/penalty/${eventId}`, detailInfo);
   return data;
 };
 
