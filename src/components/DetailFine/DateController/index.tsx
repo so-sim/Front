@@ -13,7 +13,7 @@ import { FilterMode } from '@/pages/FineBook/DetailFine';
 import useCheckLocationState from '@/hooks/useCheckLocationState';
 import { GA } from '@/constants/GA';
 import FineBookCreateModal from '@/components/@common/Modal/FineBookModal/FineBookCreateModal';
-import { dateStateTest } from '@/store/dateStateTest';
+import { dateState } from '@/store/dateState';
 import useDateController from './hook/useDateController';
 import { DetailFilter } from '@/store/detailFilter';
 
@@ -33,13 +33,13 @@ const DateController = ({ setDetailFilter }: Props) => {
   const dropDownRef = useRef<HTMLDivElement>(null);
   const initialAddModalState = useCheckLocationState();
 
-  const [calendarDateTest, setSelectedDateTest] = useRecoilState(dateStateTest);
+  const [calendarDate, setSelectedDate] = useRecoilState(dateState);
   // const [calendarDate, setSelectedDate] = useRecoilState(dateState);
 
   const [openAddModal, setOpenAddModal] = useState<boolean>(initialAddModalState);
   const [openWeeklyFilterDrop, setOpenWeeklyFilterDrop] = useState(false);
 
-  const { getTitle, goToWeek, changeDateByButtonMode, increase, decrease } = useDateController(calendarDateTest.mode);
+  const { getTitle, goToWeek, changeDateByButtonMode, increase, decrease } = useDateController(calendarDate.mode);
 
   const handleWeeklyFilterDrop = () => {
     setOpenWeeklyFilterDrop((prev) => !prev);
@@ -51,26 +51,26 @@ const DateController = ({ setDetailFilter }: Props) => {
 
   const handleDateFilterMode = (buttonMode: FilterMode) => {
     handleWeeklyFilterDrop();
-    if (calendarDateTest.mode === buttonMode) return;
+    if (calendarDate.mode === buttonMode) return;
 
     changeDateByButtonMode(buttonMode);
   };
 
   const updateToToday = () => {
     // 여기 Type을 정해줬는데도 baseDate로 들어가있었다.. 왜 Type 체크를 안해줬을까?
-    setSelectedDateTest((prev) => ({ ...prev, baseDateTest: dayjs(), startDate: dayjs(), endDate: dayjs(), mode: 'day' as FilterMode }));
+    setSelectedDate((prev) => ({ ...prev, baseDate: dayjs(), startDate: dayjs(), endDate: dayjs(), mode: 'day' as FilterMode }));
   };
 
   useEffect(() => {
     setDetailFilter((prev) => ({ ...prev, page: 0 }));
-  }, [calendarDateTest.mode]);
+  }, [calendarDate.mode]);
 
   return (
     <>
       <Style.DateController>
         <Style.ControllerFrame>
           <Style.Block>
-            <Style.Date mode={calendarDateTest.mode}>{getTitle()}</Style.Date>
+            <Style.Date mode={calendarDate.mode}>{getTitle()}</Style.Date>
             <Style.ArrowBlock id={GA.LIST_SKIP.ALL}>
               <Style.ArrowWrapper onClick={decrease} id={GA.LIST_SKIP.LEFT} data-testid={GA.LIST_SKIP.LEFT}>
                 {ARROW.LEFT}
@@ -87,15 +87,15 @@ const DateController = ({ setDetailFilter }: Props) => {
             <Style.FilterWrapper ref={dropDownRef}>
               {FILTER_BUTTON_LIST.map((btn) => {
                 return (
-                  <Style.FilterButton id={btn.id} key={btn.id} isActive={calendarDateTest.mode === btn.mode} onClick={() => handleDateFilterMode(btn.mode)}>
+                  <Style.FilterButton id={btn.id} key={btn.id} isActive={calendarDate.mode === btn.mode} onClick={() => handleDateFilterMode(btn.mode)}>
                     <span>{btn.text}</span>
-                    {btn.mode === 'week' && calendarDateTest.mode === 'week' && openWeeklyFilterDrop && (
+                    {btn.mode === 'week' && calendarDate.mode === 'week' && openWeeklyFilterDrop && (
                       <div style={{ position: 'relative', left: '1px' }}>
                         <DropDown
                           width={60}
                           align="center"
                           setState={goToWeek}
-                          list={customedWeek(calendarDateTest.baseDateTest)}
+                          list={customedWeek(calendarDate.baseDate)}
                           top="7px"
                           onClose={handleWeeklyFilterDrop}
                           dropDownRef={dropDownRef}

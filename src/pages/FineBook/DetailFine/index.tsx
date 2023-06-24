@@ -7,7 +7,7 @@ import { useRecoilValue } from 'recoil';
 import { useParams } from 'react-router-dom';
 
 import dayjs from 'dayjs';
-import { dateStateTest } from '@/store/dateStateTest';
+import { dateState } from '@/store/dateState';
 import { DetailFilter } from '@/store/detailFilter';
 
 export type FilterMode = 'month' | 'week' | 'day';
@@ -30,7 +30,7 @@ const DetailFine = () => {
 
   const [detailFilter, setDetailFilter] = useState<DetailFilter>({ nickname: '', situation: '', page: 0, size: 16, groupId: Number(groupId) });
 
-  const calendarDate = useRecoilValue(dateStateTest);
+  const calendarDate = useRecoilValue(dateState);
   const { data } = useGetDetailList(detailFilter, calendarDate);
 
   return (
