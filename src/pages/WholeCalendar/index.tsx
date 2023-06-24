@@ -1,6 +1,6 @@
 import { useGroupDetail } from '@/queries/Group';
 import { firstVisitState } from '@/store/firstVisitState';
-import { dateStateTest } from '@/store/dateStateTest';
+import { dateState } from '@/store/dateState';
 import dayjs from 'dayjs';
 import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
@@ -11,7 +11,7 @@ import InviteModal from '@/components/@common/Modal/InviteModal';
 const WholeCalendar = () => {
   const { groupId } = useParams();
   const [{ isFirstVisit }, setIsFirstVisit] = useRecoilState(firstVisitState);
-  const [dateObj, setDateObj] = useRecoilState(dateStateTest);
+  const [dateObj, setDateObj] = useRecoilState(dateState);
 
   const { data } = useGroupDetail(Number(groupId));
 
@@ -29,6 +29,7 @@ const WholeCalendar = () => {
       endDate: dayjs(),
       mode: 'day',
     }));
+    // 여기 부분 로직 고민중
   }, []);
 
   return (

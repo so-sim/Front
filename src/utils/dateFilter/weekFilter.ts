@@ -35,7 +35,7 @@ export class WeekFilter extends RootDateFilter {
   update = ({ day, week, ...rest }: DetailFilter, calendar: DateState) => {
     const [year, month, date] = dayjs(calendar.baseDate).format('YYYY.MM.DD').split('.').map(Number);
 
-    return { ...rest, year, month, week: calendar.week, page: 0 };
+    return { ...rest, year, month, week: calendar.mode, page: 0 };
   };
 
   increaseDate = (baseDate: Dayjs) => {
@@ -52,7 +52,8 @@ export class WeekFilter extends RootDateFilter {
 
   protected getChangedDateState = (changedDate: Dayjs): DateState => ({
     baseDate: changedDate,
-    week: Math.ceil((changedDate.startOf('month').day() + changedDate.date()) / 7),
-    selectedDate: null,
+    startDate: changedDate.startOf('month'),
+    endDate: changedDate.endOf('month'),
+    mode: 'week',
   });
 }

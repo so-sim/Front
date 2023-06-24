@@ -17,11 +17,20 @@ export class RootDateFilter {
     const startOfMonthDay = dayjs(baseDate).set('date', 1).startOf('month').day();
     const startOfWeekDate = (week - 1) * 7 + 1 - startOfMonthDay;
 
-    return {
-      baseDate: week === 1 ? dayjs(baseDate).startOf('month') : dayjs(baseDate).set('date', startOfWeekDate),
-      week,
-      selectedDate: null,
-    };
+    if (week === 1) {
+      const startDateOfMonth = dayjs(baseDate).startOf('month');
+
+      return {
+        baseDate: startDateOfMonth,
+        startDate: startDateOfMonth.startOf('week'),
+        endDate: startDateOfMonth.endOf('week'),
+        mode: 'week' as FilterMode,
+      };
+    }
+    const startDate = dayjs(baseDate).set('date', startOfWeekDate);
+    const endDate = dayjs(baseDate).set('date', startOfWeekDate).endOf('week');
+
+    return { baseDate: startDate, startDate, endDate, mode: 'week' as FilterMode };
   };
 
   // --- 내부적으로 서브클래스에서 사용하는 아이들 ---
