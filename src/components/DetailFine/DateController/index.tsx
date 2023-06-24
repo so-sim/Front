@@ -33,8 +33,7 @@ const DateController = ({ setDetailFilter }: Props) => {
   const dropDownRef = useRef<HTMLDivElement>(null);
   const initialAddModalState = useCheckLocationState();
 
-  const [calendarDate, setSelectedDate] = useRecoilState(dateState);
-  // const [calendarDate, setSelectedDate] = useRecoilState(dateState);
+  const [calendarDate, setCalendarDate] = useRecoilState(dateState);
 
   const [openAddModal, setOpenAddModal] = useState<boolean>(initialAddModalState);
   const [openWeeklyFilterDrop, setOpenWeeklyFilterDrop] = useState(false);
@@ -58,7 +57,7 @@ const DateController = ({ setDetailFilter }: Props) => {
 
   const updateToToday = () => {
     // 여기 Type을 정해줬는데도 baseDate로 들어가있었다.. 왜 Type 체크를 안해줬을까?
-    setSelectedDate((prev) => ({ ...prev, baseDate: dayjs(), startDate: dayjs(), endDate: dayjs(), mode: 'day' as FilterMode }));
+    setCalendarDate((prev) => ({ ...prev, baseDate: dayjs(), startDate: dayjs(), endDate: dayjs(), mode: 'day' as FilterMode }));
   };
 
   useEffect(() => {

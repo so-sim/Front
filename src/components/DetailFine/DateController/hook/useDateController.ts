@@ -5,17 +5,17 @@ import dayjs, { Dayjs } from 'dayjs';
 import { useRecoilState } from 'recoil';
 
 const useDateController = (mode: FilterMode) => {
-  const [calendarDate, setSelectedDate] = useRecoilState(dateState);
+  const [calendarDate, setCalendarDate] = useRecoilState(dateState);
 
   const goToWeek = (week: string) => {
     const numberWeek = Number(week[0]);
     const baseDate = moveDateToWeek(calendarDate.baseDate, numberWeek);
-    setSelectedDate(baseDate);
+    setCalendarDate(baseDate);
   };
 
   const changeDateByButtonMode = (buttonMode: FilterMode) => {
     const baseDate = updateDateByButtonMode(calendarDate.baseDate, buttonMode);
-    setSelectedDate(baseDate);
+    setCalendarDate(baseDate);
   };
 
   const getTitle = () => {
@@ -24,12 +24,12 @@ const useDateController = (mode: FilterMode) => {
 
   const increase = () => {
     const baseDate = increaseDateByMode(calendarDate.baseDate, mode);
-    setSelectedDate(baseDate);
+    setCalendarDate(baseDate);
   };
 
   const decrease = () => {
     const baseDate = decreaseDateByMode(calendarDate.baseDate, mode);
-    setSelectedDate(baseDate);
+    setCalendarDate(baseDate);
   };
 
   const action = { goToWeek, changeDateByButtonMode, getTitle, increase, decrease };
