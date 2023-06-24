@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction, useEffect, useState } from 'react';
+import { Dispatch, SetStateAction, useState } from 'react';
 import { SYSTEM } from '@/assets/icons/System';
 import { USER } from '@/assets/icons/User';
 import { Label, DropBox, Button } from '@/components/@common';
@@ -6,8 +6,6 @@ import * as Style from './styles';
 import { Situation, SelectedEventInfo } from '@/types/event';
 import { changeNumberToMoney } from '@/utils/changeNumberToMoney';
 import { useDeleteDetail, useUpdateDetailStatus } from '@/queries/Detail';
-import { useRecoilValue } from 'recoil';
-import { userState } from '@/store/userState';
 import { useGroupDetail } from '@/queries/Group';
 import { useParams } from 'react-router-dom';
 import { pushDataLayer } from '@/utils/pushDataLayer';
@@ -39,7 +37,6 @@ const UserDetails = ({ select, setSelect }: Props) => {
   const { data: groupDetail } = useGroupDetail(Number(groupId));
   const { data: myNickname } = useGetMyNikname(Number(groupId));
 
-  const [newStatus, setNewStatus] = useState<Situation | ''>('');
   const [showUpdateModal, setShowUpdateModal] = useState(false);
   const handleUpdateModal = () => {
     setShowUpdateModal((prev) => !prev);
@@ -62,15 +59,13 @@ const UserDetails = ({ select, setSelect }: Props) => {
     });
   };
 
-  const handleUpdateStatusConfirmModal = (situation: Situation | '') => {
-    if (situation !== '') {
-      openConfirmModal({
-        type: 'CHANGE_STATUS',
-        confirm: updateStatus,
-        cancel: cancelUpdateStatus,
-        id: situation === '완납' ? GA.FULL.SIDE_MODAL : '',
-      });
-    }
+  const handleUpdateStatusConfirmModal = (situation: Situation) => {
+    openConfirmModal({
+      type: 'CHANGE_STATUS',
+      confirm: () => updateStatus(situation),
+      cancel: closeConfirmModal,
+      id: situation === '완납' ? GA.FULL.SIDE_MODAL : '',
+    });
   };
 
   const isAdmin = groupDetail?.content.isAdmin as boolean;
@@ -78,8 +73,6 @@ const UserDetails = ({ select, setSelect }: Props) => {
 
   const onSuccessUpdateStatus = (situation: Situation) => {
     closeConfirmModal();
-    setNewStatus('');
-
     setSelect((prev) => ({ ...prev, situation }));
     if (isAdmin === true && situation === '완납') return pushDataLayer('fullpayment', { route: 'detail' });
     if (isAdmin === false) pushDataLayer('confirming', { route: 'detail' });
@@ -92,29 +85,17 @@ const UserDetails = ({ select, setSelect }: Props) => {
   const { mutate: mutateDetailStatus } = useUpdateDetailStatus(onSuccessUpdateStatus);
   const { mutate: deleteDetail } = useDeleteDetail(closeUserDetails);
 
-  const updateStatus = () => {
-    if (newStatus === '') return;
-    if (newStatus !== situation) {
-      mutateDetailStatus({ situation: newStatus, eventId });
-    }
+  const updateStatus = (situation: Situation) => {
+    mutateDetailStatus({ situation, eventIdList: [eventId] });
   };
 
   const requestConfirmStatus = () => {
-    mutateDetailStatus({ situation: '확인중', eventId });
+    mutateDetailStatus({ situation: '확인중', eventIdList: [eventId] });
   };
 
   const deleteDetailInfo = () => {
     deleteDetail(eventId);
   };
-
-  const cancelUpdateStatus = () => {
-    setNewStatus('');
-    closeConfirmModal();
-  };
-
-  useEffect(() => {
-    handleUpdateStatusConfirmModal(newStatus);
-  }, [newStatus]);
 
   const getDropdownStatusList = () => {
     if (isAdmin) return getAdminDropdownStatusList(situation);
@@ -145,7 +126,7 @@ const UserDetails = ({ select, setSelect }: Props) => {
             </Label>
             <Label title="납부여부" width="80px">
               {dropdownStatusList.length ? (
-                <DropBox color="white" boxWidth="112px" width={112} setType={setNewStatus} type={newStatus !== '' ? newStatus : situation} dropDownList={dropdownStatusList} />
+                <DropBox color="white" boxWidth="112px" width={112} setType={handleUpdateStatusConfirmModal} type={situation} dropDownList={dropdownStatusList} />
               ) : (
                 <Style.StatusButton situation={situation}>{situation}</Style.StatusButton>
               )}
