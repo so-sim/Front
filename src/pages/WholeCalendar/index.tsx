@@ -2,8 +2,8 @@ import { useGroupDetail } from '@/queries/Group';
 import { firstVisitState } from '@/store/firstVisitState';
 import { dateStateTest } from '@/store/dateStateTest';
 import dayjs from 'dayjs';
-import { useEffect, useState } from 'react';
-import { useLocation, useParams } from 'react-router-dom';
+import { useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
 import { Calendar } from '@/components/@common';
 import InviteModal from '@/components/@common/Modal/InviteModal';
@@ -25,8 +25,9 @@ const WholeCalendar = () => {
     setDateObj((prev) => ({
       ...prev,
       baseDate: dayjs(),
-      selectedDate: null,
-      week: null,
+      startDate: dayjs(),
+      endDate: dayjs(),
+      mode: 'day',
     }));
   }, []);
 
