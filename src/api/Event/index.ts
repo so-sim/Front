@@ -26,7 +26,7 @@ export const updateEvent = async (info: SelectedEventInfo): Promise<ServerRespon
 };
 
 export const deleteEvent = async (eventId: number): Promise<ServerResponse<EvnetId>> => {
-  const { data } = await api.put(`/api/event/penalty/${eventId}`);
+  const { data } = await api.delete(`/api/event/penalty/${eventId}`);
   return data;
 };
 
