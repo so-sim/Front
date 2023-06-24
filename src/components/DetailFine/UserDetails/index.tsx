@@ -78,9 +78,9 @@ const UserDetails = ({ select, setSelect }: Props) => {
 
   const onSuccessUpdateStatus = (situation: Situation) => {
     closeConfirmModal();
+    if (newStatus === '') return;
+    setSelect((prev) => ({ ...prev, situation: newStatus }));
     setNewStatus('');
-
-    setSelect((prev) => ({ ...prev, situation }));
     if (isAdmin === true && situation === '완납') return pushDataLayer('fullpayment', { route: 'detail' });
     if (isAdmin === false) pushDataLayer('confirming', { route: 'detail' });
   };
