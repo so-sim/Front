@@ -8,7 +8,7 @@ import Button from '@/components/@common/Button';
 import Modal from '@/components/@common/Modal';
 import { SYSTEM } from '@/assets/icons/System';
 import { userState } from '@/store/userState';
-import { dateStateTest } from '@/store/dateStateTest';
+import { dateState } from '@/store/dateState';
 import { initialSelectData } from '@/pages/FineBook/DetailFine';
 
 import { selectedDataReducer } from '../reducer/selectedDataReducer';
@@ -23,7 +23,7 @@ interface Props {
 }
 
 const FineBookCreateModal = ({ modalHandler }: Props) => {
-  const [_, setDateState] = useRecoilState(dateStateTest);
+  const [_, setDateState] = useRecoilState(dateState);
   const { groupId } = useParams();
   const user = useRecoilValue(userState);
   const navigate = useNavigate();
@@ -43,7 +43,7 @@ const FineBookCreateModal = ({ modalHandler }: Props) => {
           pushDataLayer('add_list', { button: type === 'continue' ? 'keep' : 'normal' });
 
           const groundsDate = dayjs(selectData.date);
-          setDateState((prev) => ({ ...prev, baseDate: groundsDate, selectedDate: groundsDate, week: null }));
+          setDateState((prev) => ({ ...prev, baseDate: groundsDate, startDate: groundsDate, endDate: groundsDate, mode: 'day' }));
 
           if (type === 'continue') {
             navigate(`/group/${groupId}/book/detail`, { state: true });

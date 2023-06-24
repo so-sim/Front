@@ -31,7 +31,9 @@ export class DayFilter extends RootDateFilter {
 
   protected getChangedDateState = (changedDate: Dayjs): DateState => ({
     baseDate: changedDate,
-    selectedDate: changedDate,
-    week: null,
+    startDate: changedDate,
+    endDate: changedDate,
+    mode: 'day',
   });
+  // 임시로 수정
 }

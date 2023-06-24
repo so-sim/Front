@@ -1,7 +1,7 @@
 import { GA } from '@/constants/GA';
 import { useGetMonthStatus } from '@/queries/Detail/useGetMonthStatus';
 import { useGroupDetail } from '@/queries/Group';
-import { dateStateTest } from '@/store/dateStateTest';
+import { dateState } from '@/store/dateState';
 import createCalendar from '@/utils/createCalendar';
 import { handleDate } from '@/utils/handleDate';
 import dayjs, { Dayjs } from 'dayjs';
@@ -25,9 +25,9 @@ interface CalnedrProps {
 const Calendar: FC<CalnedrProps> = ({ cellType }) => {
   const today = dayjs();
 
-  const [{ baseDateTest, startDate, endDate, mode }, setDateTestObj] = useRecoilState(dateStateTest);
+  const [{ baseDate, startDate, endDate, mode }, setDateTestObj] = useRecoilState(dateState);
   const [showCreateDetailModal, setShowCreateDetailModal] = useState(false);
-  const [calendarDate, setCalendarDate] = useState(baseDateTest);
+  const [calendarDate, setCalendarDate] = useState(baseDate);
 
   const monthList = createCalendar(dayjs(calendarDate));
   const navigate = useNavigate();
@@ -88,8 +88,8 @@ const Calendar: FC<CalnedrProps> = ({ cellType }) => {
   };
 
   useLayoutEffect(() => {
-    setCalendarDate(baseDateTest);
-  }, [baseDateTest, startDate, endDate]);
+    setCalendarDate(baseDate);
+  }, [baseDate, startDate, endDate]);
 
   return (
     <>

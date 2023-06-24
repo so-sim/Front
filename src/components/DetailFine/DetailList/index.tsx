@@ -4,7 +4,7 @@ import * as Style from './styles';
 import { DropDownWrapper } from '@/components/DetailFine';
 import { DetailFilter } from '@/store/detailFilter';
 import { useRecoilState } from 'recoil';
-import { dateStateTest } from '@/store/dateStateTest';
+import { dateState } from '@/store/dateState';
 import { SelectedEventInfo } from '@/types/event';
 
 type Props = {
@@ -15,7 +15,7 @@ type Props = {
 };
 
 const DetailList = ({ detailFilter, selectedEventId, details, setSelect }: Props) => {
-  const [calendarStateTest, setCalendarStateTest] = useRecoilState(dateStateTest);
+  const [calendarState, setCalendarState] = useRecoilState(dateState);
 
   const [openButtonListId, setOpenButtonListId] = useState(0);
 
@@ -34,7 +34,7 @@ const DetailList = ({ detailFilter, selectedEventId, details, setSelect }: Props
     };
   }, []);
 
-  const filteredDataNotFound = details?.length === 0 && calendarStateTest.mode === 'day' && detailFilter.nickname === '' && detailFilter.situation === '';
+  const filteredDataNotFound = details?.length === 0 && calendarState.mode === 'day' && detailFilter.nickname === '' && detailFilter.situation === '';
 
   // hooks rules 참고 (무조건 조건 렌더링은 hooks 다음)!
 
