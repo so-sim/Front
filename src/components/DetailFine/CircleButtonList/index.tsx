@@ -1,8 +1,7 @@
-import { STATUS_LIST } from '@/constants/Detail';
 import { GA } from '@/constants/GA';
 import useConfirmModal from '@/hooks/useConfirmModal';
 import { useUpdateDetailStatus } from '@/queries/Detail/useUpdateDetailStatus';
-import { ServerPaymentType } from '@/types/event';
+import { Situation } from '@/types/event';
 import { pushDataLayerByStatus } from '@/utils/pushDataLayer';
 import { Dispatch, SetStateAction } from 'react';
 import CircleDropButton, { CircleDropButtonProps } from '../CircleDropButton';
@@ -14,40 +13,42 @@ interface Props extends CircleDropButtonProps {
   setOpenButtonListId: Dispatch<SetStateAction<number>>;
 }
 
-const getGATrigger = (newStatus: ServerPaymentType): string => {
+const getGATrigger = (situation: Situation): string => {
   const id = {
-    con: GA.CON.LIST_MODAL,
-    full: GA.FULL.LIST_MODAL,
-    non: '',
+    확인중: GA.CON.LIST_MODAL,
+    완납: GA.FULL.LIST_MODAL,
+    미납: '',
   };
 
-  return id[newStatus];
+  return id[situation];
 };
 
-const CircleButtonList = ({ setOpenButtonListId, isOwn, status, eventId, isAdmin = false }: Props) => {
-  const adminStatusList: ServerPaymentType[] = [
-    status,
-    ...STATUS_LIST.filter((element) => {
-      if (status === 'con') return element !== status;
+const SITUATION_LIST: Situation[] = ['미납', '확인중', '완납'];
 
-      return element !== status && element !== 'con';
+const CircleButtonList = ({ setOpenButtonListId, isOwn, situation, eventId, isAdmin = false }: Props) => {
+  const adminStatusList: Situation[] = [
+    situation,
+    ...SITUATION_LIST.filter((element) => {
+      if (situation === '확인중') return element !== situation;
+
+      return element !== situation && element !== '확인중';
     }),
   ];
 
-  const userStatusList: ServerPaymentType[] = status === 'non' ? [status, 'con'] : [];
+  const userStatusList: Situation[] = situation === '미납' ? [situation, '확인중'] : [];
 
-  const dropdownList: ServerPaymentType[] = isAdmin ? adminStatusList : userStatusList;
+  const dropdownList: Situation[] = isAdmin ? adminStatusList : userStatusList;
 
-  const onSuccessUpdateStatus = (paymentType: ServerPaymentType) => {
+  const onSuccessUpdateStatus = (buttonSituation: Situation) => {
     cancelUpdateStatus();
-    pushDataLayerByStatus(isAdmin, paymentType);
+    pushDataLayerByStatus(isAdmin, buttonSituation);
   };
 
   const { mutate: mutateDetailStatus } = useUpdateDetailStatus(onSuccessUpdateStatus);
   const { openConfirmModal, closeConfirmModal } = useConfirmModal();
 
-  const updateStatus = async (paymentType: ServerPaymentType) => {
-    if (status != paymentType) mutateDetailStatus({ paymentType, eventId });
+  const updateStatus = async (buttonSituation: Situation) => {
+    mutateDetailStatus({ situation: buttonSituation, eventIdList: [eventId] });
   };
 
   const cancelUpdateStatus = () => {
@@ -55,25 +56,23 @@ const CircleButtonList = ({ setOpenButtonListId, isOwn, status, eventId, isAdmin
     closeConfirmModal();
   };
 
-  const handleCircleButtonList = (paymentType: ServerPaymentType) => {
-    if (paymentType === status) {
-      return cancelUpdateStatus();
-    }
+  const handleCircleButtonList = (buttonSituation: Situation) => {
+    if (buttonSituation === situation) return cancelUpdateStatus();
 
     openConfirmModal({
       type: 'CHANGE_STATUS',
-      confirm: () => updateStatus(paymentType),
+      confirm: () => updateStatus(buttonSituation),
       cancel: cancelUpdateStatus,
-      id: getGATrigger(paymentType),
+      id: getGATrigger(buttonSituation),
     });
   };
 
   return (
     <Style.CircleButtonList>
-      {dropdownList.map((paymentType) => {
+      {dropdownList.map((buttonSituation) => {
         return (
-          <Style.CircleButtonBox key={paymentType} onClick={() => handleCircleButtonList(paymentType)}>
-            <CircleDropButton status={paymentType} isAdmin={isAdmin} isOwn={isOwn} originStatus={status} />
+          <Style.CircleButtonBox key={buttonSituation} onClick={() => handleCircleButtonList(buttonSituation)}>
+            <CircleDropButton situation={buttonSituation} isAdmin={isAdmin} isOwn={isOwn} originStatus={situation} />
           </Style.CircleButtonBox>
         );
       })}

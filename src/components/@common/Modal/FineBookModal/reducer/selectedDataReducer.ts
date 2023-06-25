@@ -1,37 +1,39 @@
-import { ClientEventInfo, PaymentType } from '@/types/event';
+import { SelectedEventInfo } from '@/types/event';
+import { Situation } from '@/types/event';
 import { convertFromPriceFormat } from '@/utils/convertPriceFormat';
 
 type Action =
-  | { type: 'USER_NAME'; userName: string }
-  | { type: 'GROUNDS'; grounds: string }
-  | { type: 'GROUNDS_DATE'; groundsDate: string }
-  | { type: 'PAYMENT'; payment: string }
-  | { type: 'PAYMENT_TYPE'; paymentType: PaymentType }
-  | { type: 'INIT'; initialData: ClientEventInfo };
+  | { type: 'USER_NAME'; nickname: string }
+  | { type: 'GROUNDS'; memo: string }
+  | { type: 'GROUNDS_DATE'; date: string }
+  | { type: 'PAYMENT'; amount: string }
+  | { type: 'PAYMENT_TYPE'; situation: Situation }
+  | { type: 'INIT'; initialData: SelectedEventInfo };
 
-export const selectedDataReducer = (state: ClientEventInfo, actions: Action) => {
+// memo, amount에서 오류 발생
+export const selectedDataReducer = (state: SelectedEventInfo, actions: Action) => {
   switch (actions.type) {
     case 'USER_NAME':
-      const { userName } = actions;
-      return { ...state, userName };
+      const { nickname } = actions;
+      return { ...state, nickname };
     case 'GROUNDS':
-      const { grounds } = actions;
-      if (grounds.length > 65) return state;
+      const { memo } = actions;
+      if (memo.length > 65) return state;
 
-      return { ...state, grounds };
+      return { ...state, memo };
     case 'GROUNDS_DATE':
-      const { groundsDate } = actions;
-      return { ...state, groundsDate };
+      const { date } = actions;
+      return { ...state, date };
     case 'PAYMENT':
-      const { payment } = actions;
-      if (payment.length > 8) return state;
+      const { amount } = actions;
+      if (amount.length > 8) return state;
 
-      const convertPayment = convertFromPriceFormat(payment);
-      if (!isNaN(convertPayment)) return { ...state, payment: convertPayment };
+      const convertPayment = convertFromPriceFormat(amount);
+      if (!isNaN(convertPayment)) return { ...state, amount: convertPayment };
       return state;
     case 'PAYMENT_TYPE':
-      const { paymentType } = actions;
-      return { ...state, paymentType };
+      const { situation } = actions;
+      return { ...state, situation };
     case 'INIT':
       const { initialData } = actions;
       return { ...state, initialData };

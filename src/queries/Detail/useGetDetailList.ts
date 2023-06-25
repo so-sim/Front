@@ -1,12 +1,19 @@
-import { getEventList } from '@/api/Event';
-import { DetailFilter } from '@/utils/dateFilter/dateFilter';
+import { getDetailList } from '@/api/Event';
+// import { DetailFilter } from '@/utils/dateFilter/dateFilter';
+
 import { GroupId } from '@/types/group';
 import { useQuery } from '@tanstack/react-query';
-import { Dayjs } from 'dayjs';
-import { dateFilterToQuery } from '@/utils/dateFilterToQuery';
+import dayjs, { Dayjs } from 'dayjs';
+import { detailFilterToQuery } from '@/utils/detailFilterToQuery';
+import { DetailFilter } from '@/store/detailFilter';
+import { DateState } from '@/store/dateState';
 
-export const useGetDetailList = (dateFilter: Partial<DetailFilter>, selectedDate: Dayjs | null, groupId: GroupId) => {
-  const query = dateFilterToQuery(dateFilter);
+export const useGetDetailList = (detailFilter: Partial<DetailFilter>, calendarDate: DateState) => {
+  const query = detailFilterToQuery({ ...detailFilter, startDate: dayjs(calendarDate.startDate).format('YYYY.MM.DD'), endDate: dayjs(calendarDate.endDate).format('YYYY.MM.DD') });
 
-  return useQuery(['detailList', query, selectedDate, groupId.groupId], () => getEventList(query, groupId), { enabled: !!query });
+  const data = useQuery(['detailList', query, calendarDate], () => getDetailList(query), { enabled: !!query });
+
+  console.log(data);
+
+  return useQuery(['detailList', query, calendarDate], () => getDetailList(query), { enabled: !!query });
 };

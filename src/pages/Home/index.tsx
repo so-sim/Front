@@ -1,15 +1,12 @@
 import { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { Header, Banner, GroupSection, Footer } from '@/components/Home';
 import * as Style from './styles';
-import recentlyVisitedGroup from '@/utils/recentlyVisitedGroup';
+import useRecentlyVisitedGroup from '@/hooks/useRecentlyVisitedGroup';
 
 const Home = () => {
-  const navigate = useNavigate();
+  const { isExist, navigateToSavedGroup } = useRecentlyVisitedGroup();
 
   useEffect(() => {
-    const { isExist, navigateToSavedGroup } = recentlyVisitedGroup('invite-group-id', navigate);
-
     if (isExist) navigateToSavedGroup();
   }, []);
 

@@ -1,11 +1,11 @@
 import { updateEvent } from '@/api/Event';
 import { ToastPopUp } from '@/components/@common/Toast';
 import { TOAST_ERROR, TOAST_SUCCESS } from '@/constants/Toast';
-import { EventInfo } from '@/types/event';
+import { EventInfoTest } from '@/types/event';
 import { ServerResponse } from '@/types/serverResponse';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
-export const useUpdateDetail = (onSuccessUpdateDetail: (data: ServerResponse<EventInfo>) => void) => {
+export const useUpdateDetail = (onSuccessUpdateDetail: (data: ServerResponse<EventInfoTest>) => void) => {
   const queryClient = useQueryClient();
   return useMutation(updateEvent, {
     onSuccess: (data) => {

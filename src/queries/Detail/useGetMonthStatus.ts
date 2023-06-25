@@ -1,10 +1,8 @@
 import { getMonthStatus } from '@/api/Event';
-import { ToastPopUp } from '@/components/@common/Toast';
-import { TOAST_ERROR } from '@/constants/Toast';
 import { useQuery } from '@tanstack/react-query';
 
-export const useGetMonthStatus = (groupId: string | undefined, year: string, month: string) => {
-  return useQuery(['monthStatus', groupId, year, month], () => getMonthStatus(groupId, year, month), {
+export const useGetMonthStatus = (groupId: string | undefined, startDate: string, endDate: string) => {
+  return useQuery(['monthStatus', groupId, startDate, endDate], () => getMonthStatus(groupId, startDate, endDate), {
     enabled: !!groupId,
   });
 };
