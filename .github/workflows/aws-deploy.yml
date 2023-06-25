@@ -16,9 +16,11 @@ jobs:
         run: |
           echo "REACT_APP_KAKAO_CLIENT_ID=$REACT_APP_KAKAO_CLIENT_ID" >> .env.production
           echo "REACT_APP_SERVICE_URL=$REACT_APP_SERVICE_URL" >> .env.production
+          echo "REACT_APP_SERVER_URL=$REACT_APP_SERVER_URL" >> .env.production
         env:
           REACT_APP_KAKAO_CLIENT_ID: ${{ secrets.REACT_APP_KAKAO_CLIENT_ID }}
           REACT_APP_SERVICE_URL: ${{ secrets.REACT_APP_SERVICE_URL }}
+          REACT_APP_SERVER_URL: ${{ secrets.REACT_APP_SERVER_URL }}
 
       - name: Install Dependencies
         run: yarn install

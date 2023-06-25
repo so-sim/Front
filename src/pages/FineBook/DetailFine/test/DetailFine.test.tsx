@@ -16,8 +16,8 @@ import dayjs from 'dayjs';
 describe('DetailFine', () => {
   const initRecoilDateState = {
     baseDate: dayjs('2023-07-01'),
-    selectedDate: null,
-    week: null,
+    startDate: dayjs('2023-07-01'),
+    endDate: dayjs('2023-07-01'),
   };
 
   describe('날짜 필터링, 날짜 변경으로 인해 상세 내역에 표시되는 날짜 테스트', () => {
@@ -30,7 +30,7 @@ describe('DetailFine', () => {
       render(
         withRouter(
           <>
-            <RecoilObserver node={dateState} initValue={initRecoilDateState} onChange={onChange} />
+            {/* <RecoilObserver node={dateState} initValue={initRecoilDateState} onChange={onChange} /> */}
             <DetailFine />
           </>,
           '/group/17/book/detail',

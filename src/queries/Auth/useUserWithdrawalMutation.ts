@@ -19,8 +19,7 @@ const useUserWithdrawalMutation = () => {
 
       if (previousData) {
         queryClient.setQueryData<GroupListWithIndex>(['groupList'], {
-          next: false,
-          index: 0,
+          hasNext: false,
           groupList: [],
         });
       }

@@ -1,7 +1,7 @@
 import { BASE_URL } from '@/api';
 import { UserState, userState } from '@/store/userState';
 import { RecoilObserver } from '@/tests/recoilObserver';
-import { ClientEventInfo } from '@/types/event';
+import { EventInfoTest } from '@/types/event';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 import { rest } from 'msw';
 import UserDetails from '..';
@@ -11,14 +11,14 @@ export default {
   component: UserDetails,
 } as ComponentMeta<typeof UserDetails>;
 
-const selectState: ClientEventInfo = {
+const selectState: Omit<EventInfoTest, 'groupId'> = {
   eventId: 12,
-  userId: 1,
-  userName: 'JONHYUN',
-  payment: 123_000,
-  groundsDate: '2023.05.01',
-  grounds: '사유없음',
-  paymentType: 'non',
+  nickname: 'JONHYUN',
+  amount: 123_000,
+  date: '2023.05.01',
+  memo: '사유없음',
+  situation: '미납',
+  ground: '지각',
 };
 
 const Template: ComponentStory<typeof UserDetails> = (args) => {

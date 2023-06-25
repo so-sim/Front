@@ -1,4 +1,4 @@
-import { ClientEventInfo } from '@/types/event';
+import { EventInfoTest } from '@/types/event';
 import { useState } from 'react';
 
 export const checkCountChar = (text: string, min: number = 1, max: number = 15): string => {
@@ -26,9 +26,9 @@ export const useError = <T extends object>(initialState: T): [T, <P extends keyo
   return [isError, setError];
 };
 
-export const checkFormIsValid = (selectData: ClientEventInfo): boolean => {
-  const { userName, payment, paymentType, groundsDate } = selectData;
-  if (!userName || !paymentType || !payment || !groundsDate) return false;
+export const checkFormIsValid = (selectData: Omit<EventInfoTest, 'groupId'>): boolean => {
+  const { nickname, amount, situation, date } = selectData;
+  if (!nickname || !situation || !amount || !date) return false;
 
   return true;
 };
