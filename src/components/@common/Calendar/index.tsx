@@ -43,7 +43,7 @@ const Calendar: FC<CalnedrProps> = ({ cellType }) => {
   const { data: groupData } = useGroupDetail(Number(groupId));
 
   const filterCorrectDateStatus = (date: Dayjs) => {
-    const hasStatusOfDay = status?.content.statusOfDay.hasOwnProperty(getDate(date));
+    const hasStatusOfDay = (status?.content.statusOfDay ?? {}).hasOwnProperty(getDate(date));
 
     if (hasStatusOfDay) return status?.content.statusOfDay[getDate(date)];
   };
