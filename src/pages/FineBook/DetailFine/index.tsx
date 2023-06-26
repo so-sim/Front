@@ -9,6 +9,7 @@ import { useParams } from 'react-router-dom';
 import dayjs from 'dayjs';
 import { dateState } from '@/store/dateState';
 import { DetailFilter } from '@/store/detailFilter';
+import SelectedFineContextProvider from '@/contexts/SelectedFineContext';
 
 export type FilterMode = 'month' | 'week' | 'day';
 
@@ -26,7 +27,6 @@ const DetailFine = () => {
   const { groupId } = useParams();
 
   const [select, setSelect] = useState<SelectedEventInfo>(initialSelectData);
-  const hasSelectedInfo: boolean = select.eventId !== 0;
 
   const [detailFilter, setDetailFilter] = useState<DetailFilter>({ nickname: '', situation: '', page: 0, size: 16, groupId: Number(groupId) });
 
@@ -34,16 +34,18 @@ const DetailFine = () => {
   const { data } = useGetDetailList(detailFilter, calendarDate);
 
   return (
-    <Style.DetailFineFrame>
-      <DetailsHeader />
-      <Style.DetailContent>
-        <DateController setDetailFilter={setDetailFilter} />
-        <TableHead setDetailFilter={setDetailFilter} />
-        <DetailList detailFilter={detailFilter} selectedEventId={select.eventId} details={data?.content.eventList} setSelect={setSelect} />
-      </Style.DetailContent>
-      <Pagination totalCount={data?.content.totalCount} detailFilter={detailFilter} setDetailFilter={setDetailFilter} />
-      {hasSelectedInfo && <UserDetails select={select} setSelect={setSelect} />}
-    </Style.DetailFineFrame>
+    <SelectedFineContextProvider>
+      <Style.DetailFineFrame>
+        <DetailsHeader />
+        <Style.DetailContent>
+          <DateController setDetailFilter={setDetailFilter} />
+          <TableHead setDetailFilter={setDetailFilter} />
+          <DetailList detailFilter={detailFilter} selectedEventId={select.eventId} details={data?.content.eventList} setSelect={setSelect} />
+        </Style.DetailContent>
+        <Pagination totalCount={data?.content.totalCount} detailFilter={detailFilter} setDetailFilter={setDetailFilter} />
+        <UserDetails select={select} setSelect={setSelect} />
+      </Style.DetailFineFrame>
+    </SelectedFineContextProvider>
   );
 };
 

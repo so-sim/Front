@@ -16,6 +16,7 @@ import useConfirmModal from '@/hooks/useConfirmModal';
 import { getAdminDropdownStatusList, getOwnDropdownStatusList } from '@/utils/statusList';
 import FineBookUpdateModal from '@/components/@common/Modal/FineBookModal/FineBookUpdateModal';
 import { useGetMyNikname } from '@/queries/Group/useGetMyNickname';
+import { useSelectedContext } from '@/contexts/SelectedFineContext';
 
 type Props = {
   select: SelectedEventInfo;
@@ -29,7 +30,11 @@ const REQUEST_BUTTON: { [key in Situation]: string } = {
 };
 
 const UserDetails = ({ select, setSelect }: Props) => {
+  const { selectedFine, setSelectedFine } = useSelectedContext('userDetails');
+
   const { eventId, date, situation, nickname, amount, memo, ground } = select;
+
+  const hasSelectedInfo: boolean = eventId !== 0;
 
   const { openConfirmModal, closeConfirmModal } = useConfirmModal();
   const { groupId } = useParams();
@@ -105,6 +110,7 @@ const UserDetails = ({ select, setSelect }: Props) => {
 
   const dropdownStatusList = getDropdownStatusList();
 
+  if (!hasSelectedInfo) return null;
   return (
     <>
       <Style.UserDetailsFrame>
