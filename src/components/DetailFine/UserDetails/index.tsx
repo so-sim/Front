@@ -16,6 +16,8 @@ import useConfirmModal from '@/hooks/useConfirmModal';
 import { getAdminDropdownStatusList, getOwnDropdownStatusList } from '@/utils/statusList';
 import FineBookUpdateModal from '@/components/@common/Modal/FineBookModal/FineBookUpdateModal';
 import { useGetMyNikname } from '@/queries/Group/useGetMyNickname';
+import { userState } from '@/store/userState';
+import { useRecoilState } from 'recoil';
 
 type Props = {
   select: SelectedEventInfo;
@@ -30,14 +32,15 @@ const REQUEST_BUTTON: { [key in Situation]: string } = {
 
 const UserDetails = ({ select, setSelect }: Props) => {
   const { eventId, date, situation, nickname, amount, memo, ground } = select;
-
-  const { openConfirmModal, closeConfirmModal } = useConfirmModal();
   const { groupId } = useParams();
 
+  const [{ isAdmin }, setUser] = useRecoilState(userState);
+  const [showUpdateModal, setShowUpdateModal] = useState(false);
+
+  const { openConfirmModal, closeConfirmModal } = useConfirmModal();
   const { data: groupDetail } = useGroupDetail(Number(groupId));
   const { data: myNickname } = useGetMyNikname(Number(groupId));
 
-  const [showUpdateModal, setShowUpdateModal] = useState(false);
   const handleUpdateModal = () => {
     setShowUpdateModal((prev) => !prev);
   };
@@ -68,7 +71,6 @@ const UserDetails = ({ select, setSelect }: Props) => {
     });
   };
 
-  const isAdmin = groupDetail?.content.isAdmin as boolean;
   const isOwn = nickname === myNickname?.content.nickname;
 
   const onSuccessUpdateStatus = (situation: Situation) => {

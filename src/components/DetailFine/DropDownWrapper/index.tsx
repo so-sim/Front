@@ -2,11 +2,12 @@ import { Dispatch, MouseEvent, SetStateAction } from 'react';
 import { useParams } from 'react-router-dom';
 
 import { CircleButtonList, CircleDropButton } from '@/components/DetailFine';
-import { useGroupDetail } from '@/queries/Group';
 
 import * as Style from './styles';
 import { SelectedEventInfo } from '@/types/event';
 import { useGetMyNikname } from '@/queries/Group/useGetMyNickname';
+import { userState } from '@/store/userState';
+import { useRecoilState } from 'recoil';
 
 interface Props {
   detail: SelectedEventInfo;
@@ -17,11 +18,10 @@ interface Props {
 const DropDownWrapper = ({ detail, openButtonListId, setOpenButtonListId }: Props) => {
   const { eventId, situation, nickname } = detail;
   const { groupId } = useParams();
+  const [{ isAdmin }, setUser] = useRecoilState(userState);
 
-  const { data } = useGroupDetail(Number(groupId));
   const { data: myNickname } = useGetMyNikname(Number(groupId));
 
-  const isAdmin = data?.content.isAdmin;
   const isOwn = nickname === myNickname?.content.nickname;
   const isSelectedEvent = openButtonListId === eventId;
 

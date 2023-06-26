@@ -2,6 +2,7 @@ import { GA } from '@/constants/GA';
 import { useGetMonthStatus } from '@/queries/Detail/useGetMonthStatus';
 import { useGroupDetail } from '@/queries/Group';
 import { dateState } from '@/store/dateState';
+import { userState } from '@/store/userState';
 import createCalendar from '@/utils/createCalendar';
 import { handleDate } from '@/utils/handleDate';
 import dayjs, { Dayjs } from 'dayjs';
@@ -25,6 +26,7 @@ interface CalnedrProps {
 const Calendar: FC<CalnedrProps> = ({ cellType }) => {
   const today = dayjs();
 
+  const [{ isAdmin }, setUser] = useRecoilState(userState);
   const [{ baseDate, startDate, endDate, mode }, setDateTestObj] = useRecoilState(dateState);
   const [showCreateDetailModal, setShowCreateDetailModal] = useState(false);
   const [calendarDate, setCalendarDate] = useState(baseDate);
@@ -39,8 +41,6 @@ const Calendar: FC<CalnedrProps> = ({ cellType }) => {
   const endDateOfMonth = dateToFormatting(dayjs(calendarDate).endOf('month'));
 
   const { data: status } = useGetMonthStatus(groupId, startDateOfMonth, endDateOfMonth);
-
-  const { data: groupData } = useGroupDetail(Number(groupId));
 
   const filterCorrectDateStatus = (date: Dayjs) => {
     const hasStatusOfDay = (status?.content.statusOfDay ?? {}).hasOwnProperty(getDate(date));
@@ -107,7 +107,7 @@ const Calendar: FC<CalnedrProps> = ({ cellType }) => {
               </Style.ArrowWrapper>
             </Style.ArrowBlock>
           </div>
-          {cellType === 'Tag' && groupData?.content.isAdmin && (
+          {cellType === 'Tag' && isAdmin && (
             <Button width="124px" color="black" onClick={handleShowCreateDetailModal} id={GA.ADD_LIST.BUTTON}>
               내역 추가하기
             </Button>

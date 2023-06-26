@@ -7,7 +7,6 @@ import dayjs from 'dayjs';
 import Button from '@/components/@common/Button';
 import Modal from '@/components/@common/Modal';
 import { SYSTEM } from '@/assets/icons/System';
-import { userState } from '@/store/userState';
 import { dateState } from '@/store/dateState';
 import { initialSelectData } from '@/pages/FineBook/DetailFine';
 
@@ -25,13 +24,11 @@ interface Props {
 const FineBookCreateModal = ({ modalHandler }: Props) => {
   const [_, setDateState] = useRecoilState(dateState);
   const { groupId } = useParams();
-  const user = useRecoilValue(userState);
   const navigate = useNavigate();
 
   const [selectData, dispatch] = useReducer(selectedDataReducer, initialSelectData);
 
   const createDetail = (type: 'continue' | 'save') => {
-    if (user.userId === null) return;
     create(
       {
         ...selectData,

@@ -2,8 +2,10 @@ import { AdminModal } from '@/components/@common/Modal/GroupSettingModal/AdminMo
 import { UserModal } from '@/components/@common/Modal/GroupSettingModal/UserModal';
 import { GA } from '@/constants/GA';
 import { useGroupDetail } from '@/queries/Group';
+import { userState } from '@/store/userState';
 import React, { useEffect, useState } from 'react';
 import { NavLink, useNavigate, useParams } from 'react-router-dom';
+import { useRecoilState } from 'recoil';
 import { SYSTEM } from '../../../../assets/icons/System';
 import { USER } from '../../../../assets/icons/User';
 import * as Style from './styles';
@@ -19,11 +21,12 @@ const ETC = [
 ];
 
 const GroupSideBar = () => {
-  const [showGroupSettingModal, setShowGroupSettingModal] = useState(false);
   const param = useParams();
   const navigate = useNavigate();
   const { groupId } = param;
 
+  const [{ isAdmin }, setUser] = useRecoilState(userState);
+  const [showGroupSettingModal, setShowGroupSettingModal] = useState(false);
   const { data: groupData, isError } = useGroupDetail(Number(groupId));
 
   const isSelected = (link: string) => {
@@ -79,8 +82,8 @@ const GroupSideBar = () => {
           )}
         </Style.TapContainer>
       </Style.Layout>
-      {groupData?.content.isAdmin && showGroupSettingModal && <AdminModal modalHandler={handleGroupSettingModal} />}
-      {!groupData?.content.isAdmin && showGroupSettingModal && <UserModal modalHandler={handleGroupSettingModal} />}
+      {isAdmin && showGroupSettingModal && <AdminModal modalHandler={handleGroupSettingModal} />}
+      {!isAdmin && showGroupSettingModal && <UserModal modalHandler={handleGroupSettingModal} />}
     </>
   );
 };
