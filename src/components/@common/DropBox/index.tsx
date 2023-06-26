@@ -5,7 +5,7 @@ import * as Style from './styles';
 
 export type DropBoxColor = 'white' | 'gray' | 'disabled';
 
-interface Props<T = string> {
+interface Props<T> {
   type: T;
   dropDownList: { title: T; id?: string }[];
   boxWidth?: string;
@@ -36,7 +36,16 @@ const DropBox = <T,>({ align = 'start', setType, type, dropDownList, width = 152
         {!isDisabled && <Style.ArrowIcon>{ARROW.DOWN_LG}</Style.ArrowIcon>}
       </Style.Content>
       {openDrop && (
-        <DropDown align={align} list={dropDownList} width={width} setState={setType} top="34px" onClose={handleDropDown} direction={direction} dropDownRef={dropDownRef} />
+        <DropDown
+          align={align} //
+          list={dropDownList}
+          width={width}
+          setState={setType}
+          top="34px"
+          onClose={handleDropDown}
+          direction={direction}
+          dropDownRef={dropDownRef}
+        />
       )}
     </Style.DropDownBox>
   );
