@@ -40,7 +40,7 @@ const DetailFine = () => {
         <Style.DetailContent>
           <DateController setDetailFilter={setDetailFilter} />
           <TableHead setDetailFilter={setDetailFilter} />
-          <DetailList detailFilter={detailFilter} selectedEventId={select.eventId} details={data?.content.eventList} setSelect={setSelect} />
+          <DetailList detailFilter={detailFilter} details={data?.content.eventList} />
         </Style.DetailContent>
         <Pagination totalCount={data?.content.totalCount} detailFilter={detailFilter} setDetailFilter={setDetailFilter} />
         <UserDetails select={select} setSelect={setSelect} />
