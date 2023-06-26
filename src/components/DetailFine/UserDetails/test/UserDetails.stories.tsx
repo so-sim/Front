@@ -29,7 +29,7 @@ const Template: ComponentStory<typeof UserDetails> = (args) => {
   return (
     <>
       <RecoilObserver onChange={() => {}} node={userState} initValue={loggedInUser} />
-      <UserDetails {...args} />
+      <UserDetails />
     </>
   );
 };
@@ -46,7 +46,7 @@ const OwnTemplate: ComponentStory<typeof UserDetails> = (args) => {
   return (
     <>
       <RecoilObserver onChange={() => {}} node={userState} initValue={loggedInUser} />
-      <UserDetails {...args} />
+      <UserDetails />
     </>
   );
 };
@@ -63,7 +63,7 @@ const AdminTemplate: ComponentStory<typeof UserDetails> = (args) => {
   return (
     <>
       <RecoilObserver onChange={() => {}} node={userState} initValue={loggedInUser} />
-      <UserDetails {...args} />
+      <UserDetails />
     </>
   );
 };
