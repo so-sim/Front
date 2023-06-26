@@ -155,7 +155,7 @@ const UserDetails = () => {
           )}
         </Style.Footer>
       </Style.UserDetailsFrame>
-      {showUpdateModal && <FineBookUpdateModal select={selectedFine} modalHandler={handleUpdateModal} setSelect={setSelectedFine} />}
+      {showUpdateModal && <FineBookUpdateModal modalHandler={handleUpdateModal} />}
     </>
   );
 };
