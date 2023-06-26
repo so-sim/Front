@@ -18,11 +18,6 @@ import FineBookUpdateModal from '@/components/@common/Modal/FineBookModal/FineBo
 import { useGetMyNikname } from '@/queries/Group/useGetMyNickname';
 import { useSelectedContext } from '@/contexts/SelectedFineContext';
 
-type Props = {
-  select: SelectedEventInfo;
-  setSelect: Dispatch<SetStateAction<SelectedEventInfo>>;
-};
-
 const REQUEST_BUTTON: { [key in Situation]: string } = {
   미납: '확인 요청',
   확인중: '요청 완료',
