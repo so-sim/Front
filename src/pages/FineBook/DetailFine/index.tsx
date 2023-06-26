@@ -43,7 +43,7 @@ const DetailFine = () => {
           <DetailList detailFilter={detailFilter} details={data?.content.eventList} />
         </Style.DetailContent>
         <Pagination totalCount={data?.content.totalCount} detailFilter={detailFilter} setDetailFilter={setDetailFilter} />
-        <UserDetails select={select} setSelect={setSelect} />
+        <UserDetails />
       </Style.DetailFineFrame>
     </SelectedFineContextProvider>
   );

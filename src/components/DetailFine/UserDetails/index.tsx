@@ -29,10 +29,10 @@ const REQUEST_BUTTON: { [key in Situation]: string } = {
   완납: '확인 완료',
 };
 
-const UserDetails = ({ select, setSelect }: Props) => {
+const UserDetails = () => {
   const { selectedFine, setSelectedFine } = useSelectedContext('userDetails');
 
-  const { eventId, date, situation, nickname, amount, memo, ground } = select;
+  const { eventId, date, situation, nickname, amount, memo, ground } = selectedFine;
 
   const hasSelectedInfo: boolean = eventId !== 0;
 
@@ -78,13 +78,13 @@ const UserDetails = ({ select, setSelect }: Props) => {
 
   const onSuccessUpdateStatus = (situation: Situation) => {
     closeConfirmModal();
-    setSelect((prev) => ({ ...prev, situation }));
+    setSelectedFine((prev) => ({ ...prev, situation }));
     if (isAdmin === true && situation === '완납') return pushDataLayer('fullpayment', { route: 'detail' });
     if (isAdmin === false) pushDataLayer('confirming', { route: 'detail' });
   };
 
   const closeUserDetails = () => {
-    setSelect(initialSelectData);
+    setSelectedFine(initialSelectData);
   };
 
   const { mutate: mutateDetailStatus } = useUpdateDetailStatus(onSuccessUpdateStatus);
@@ -160,7 +160,7 @@ const UserDetails = ({ select, setSelect }: Props) => {
           )}
         </Style.Footer>
       </Style.UserDetailsFrame>
-      {showUpdateModal && <FineBookUpdateModal select={select} modalHandler={handleUpdateModal} setSelect={setSelect} />}
+      {showUpdateModal && <FineBookUpdateModal select={selectedFine} modalHandler={handleUpdateModal} setSelect={setSelectedFine} />}
     </>
   );
 };
