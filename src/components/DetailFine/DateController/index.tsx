@@ -16,6 +16,7 @@ import FineBookCreateModal from '@/components/@common/Modal/FineBookModal/FineBo
 import { dateState } from '@/store/dateState';
 import useDateController from './hook/useDateController';
 import { DetailFilter } from '@/store/detailFilter';
+import { userState } from '@/store/userState';
 
 export const FILTER_BUTTON_LIST: { mode: FilterMode; text: string; id: string }[] = [
   { mode: 'month', text: '월간', id: GA.FILTER.MONTH },
@@ -28,8 +29,7 @@ type Props = {
 };
 
 const DateController = ({ setDetailFilter }: Props) => {
-  const { groupId } = useParams();
-  const { data: groupData } = useGroupDetail(Number(groupId));
+  const [{ isAdmin }, setUser] = useRecoilState(userState);
   const dropDownRef = useRef<HTMLDivElement>(null);
   const initialAddModalState = useCheckLocationState();
 
@@ -105,7 +105,7 @@ const DateController = ({ setDetailFilter }: Props) => {
                 );
               })}
             </Style.FilterWrapper>
-            {groupData?.content.isAdmin && (
+            {isAdmin && (
               <Button color="black" width="124px" height="40px" onClick={handleAddModal} id="add_list">
                 내역 추가하기
               </Button>

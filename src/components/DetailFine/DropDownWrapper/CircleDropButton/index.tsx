@@ -3,11 +3,9 @@ import { Situation } from '@/types/event';
 import { getStatusIcon } from '@/utils/status';
 import * as Style from './styles';
 
-export interface CircleDropButtonProps {
+interface Props {
   situation: Situation;
-  isAdmin?: boolean;
-  isOwn?: boolean;
-  originStatus?: Situation;
+  text: string;
 }
 
 const SITUATION_CODE: { [key in Situation]: 'NON' | 'CON' | 'FULL' } = {
@@ -16,12 +14,12 @@ const SITUATION_CODE: { [key in Situation]: 'NON' | 'CON' | 'FULL' } = {
   완납: 'FULL',
 };
 
-const CircleDropButton = ({ situation, isAdmin = false, isOwn = false, originStatus }: CircleDropButtonProps) => {
+const CircleDropButton = ({ situation, text }: Props) => {
   const PAYMENT_TYPE = SITUATION_CODE[situation];
 
   return (
     <Style.StatusButton situation={situation} id={GA[PAYMENT_TYPE].LIST_BUTTON}>
-      <Style.Text>{situation}</Style.Text>
+      <Style.Text>{text}</Style.Text>
       <Style.Icon>{getStatusIcon(situation)}</Style.Icon>
     </Style.StatusButton>
   );

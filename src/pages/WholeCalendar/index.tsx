@@ -7,15 +7,12 @@ import { useParams } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
 import { Calendar } from '@/components/@common';
 import InviteModal from '@/components/@common/Modal/InviteModal';
+import { userState } from '@/store/userState';
 
 const WholeCalendar = () => {
-  const { groupId } = useParams();
   const [{ isFirstVisit }, setIsFirstVisit] = useRecoilState(firstVisitState);
   const [dateObj, setDateObj] = useRecoilState(dateState);
-
-  const { data } = useGroupDetail(Number(groupId));
-
-  const isAdmin = data?.content.isAdmin;
+  const [{ isAdmin }, setUser] = useRecoilState(userState);
 
   const handleGroupInviteModal = () => {
     setIsFirstVisit((prev) => ({ ...prev, isFirstVisit: false }));
