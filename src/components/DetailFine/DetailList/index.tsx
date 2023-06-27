@@ -45,14 +45,18 @@ const DetailList = ({ detailFilter, details }: Props) => {
   return (
     <Style.DetailList>
       {details?.map((detail, i) => {
-        const { date, nickname, amount, memo, eventId } = detail;
+        const { date, nickname, amount, memo, eventId, ground } = detail;
         return (
           <Style.TableRow key={i} isSelected={selectedFine.eventId === eventId} onClick={() => handleUserDetailModal(detail)}>
             <Style.Element hasEllipsis={false}>{date.slice(2)}</Style.Element>
             <DropDownWrapper openButtonListId={openButtonListId} detail={detail} setOpenButtonListId={setOpenButtonListId} />
             <Style.Element hasEllipsis>{nickname}</Style.Element>
             <Style.Element hasEllipsis>{changeNumberToMoney(amount)}</Style.Element>
-            <Style.Element hasEllipsis>{memo}</Style.Element>
+            <Style.Element hasEllipsis>
+              <span style={{ fontWeight: 600 }}>{ground}&#12539;</span>
+              {/* Katakana middle dot 이라고 합니다..(저도 잘 몰라요 하하) */}
+              {memo}
+            </Style.Element>
           </Style.TableRow>
         );
       })}
