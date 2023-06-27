@@ -9,7 +9,7 @@ type Props = {
 const CirCleCheckBox = ({ id, isChecked, onChange }: Props) => {
   return (
     <CheckBoxContainer>
-      <Input type="checkbox" id={id} checked={isChecked} />
+      <Input type="checkbox" id={id} checked={isChecked} readOnly />
       <CheckBoxWrapper onClick={onChange}>
         <CheckBox checked={isChecked} />
         <Text htmlFor={id}>{id}</Text>
