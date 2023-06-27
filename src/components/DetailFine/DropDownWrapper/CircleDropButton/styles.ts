@@ -1,5 +1,7 @@
+import { Situation } from '@/types/event';
 import styled from '@emotion/styled';
-import { CircleDropButtonProps } from '.';
+
+type CircleDropButtonProps = { situation: Situation };
 
 export const StatusButton = styled.button<CircleDropButtonProps>`
   display: flex;

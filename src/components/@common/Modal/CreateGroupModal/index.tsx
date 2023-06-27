@@ -63,7 +63,7 @@ export const CreateGroupModal: FC<ModalHandlerProps> = ({ modalHandler, id }) =>
         </Label>
         <Style.DropDownContainer>
           <Label title="모임 유형">
-            <DropBox dropDownList={DROPDOWN_LIST} type={type} setType={setType} color="gray" width={170} boxWidth="170px" />
+            <DropBox dropDownList={DROPDOWN_LIST} type={type} setType={setType} width={170} boxWidth="170px" />
           </Label>
         </Style.DropDownContainer>
         <Label title="커버 색상" margin="0px">

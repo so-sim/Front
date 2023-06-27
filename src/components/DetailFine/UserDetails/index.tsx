@@ -6,16 +6,17 @@ import * as Style from './styles';
 import { Situation, SelectedEventInfo } from '@/types/event';
 import { changeNumberToMoney } from '@/utils/changeNumberToMoney';
 import { useDeleteDetail, useUpdateDetailStatus } from '@/queries/Detail';
-import { useGroupDetail } from '@/queries/Group';
 import { useParams } from 'react-router-dom';
 import { pushDataLayer } from '@/utils/pushDataLayer';
 import { initialSelectData } from '@/pages/FineBook/DetailFine';
 
 import { GA } from '@/constants/GA';
 import useConfirmModal from '@/hooks/useConfirmModal';
-import { getAdminDropdownStatusList, getOwnDropdownStatusList } from '@/utils/statusList';
 import FineBookUpdateModal from '@/components/@common/Modal/FineBookModal/FineBookUpdateModal';
 import { useGetMyNikname } from '@/queries/Group/useGetMyNickname';
+import { userState } from '@/store/userState';
+import { useRecoilState } from 'recoil';
+import useSituationList, { SituationText } from '@/hooks/useSituationList';
 
 type Props = {
   select: SelectedEventInfo;
@@ -30,14 +31,11 @@ const REQUEST_BUTTON: { [key in Situation]: string } = {
 
 const UserDetails = ({ select, setSelect }: Props) => {
   const { eventId, date, situation, nickname, amount, memo, ground } = select;
-
-  const { openConfirmModal, closeConfirmModal } = useConfirmModal();
   const { groupId } = useParams();
 
-  const { data: groupDetail } = useGroupDetail(Number(groupId));
-  const { data: myNickname } = useGetMyNikname(Number(groupId));
-
+  const [{ isAdmin }, setUser] = useRecoilState(userState);
   const [showUpdateModal, setShowUpdateModal] = useState(false);
+
   const handleUpdateModal = () => {
     setShowUpdateModal((prev) => !prev);
   };
@@ -59,17 +57,15 @@ const UserDetails = ({ select, setSelect }: Props) => {
     });
   };
 
-  const handleUpdateStatusConfirmModal = (situation: Situation) => {
+  const handleUpdateStatusConfirmModal = (situation: SituationText) => {
+    const convertedSituation = convertTextToSituation(situation);
     openConfirmModal({
       type: 'CHANGE_STATUS',
-      confirm: () => updateStatus(situation),
+      confirm: () => updateStatus(convertedSituation),
       cancel: closeConfirmModal,
       id: situation === '완납' ? GA.FULL.SIDE_MODAL : '',
     });
   };
-
-  const isAdmin = groupDetail?.content.isAdmin as boolean;
-  const isOwn = nickname === myNickname?.content.nickname;
 
   const onSuccessUpdateStatus = (situation: Situation) => {
     closeConfirmModal();
@@ -82,6 +78,9 @@ const UserDetails = ({ select, setSelect }: Props) => {
     setSelect(initialSelectData);
   };
 
+  const { openConfirmModal, closeConfirmModal } = useConfirmModal();
+  const { data: myNickname } = useGetMyNikname(Number(groupId));
+  const { dropdownList, convertTextToSituation, convertSituationToText } = useSituationList(situation);
   const { mutate: mutateDetailStatus } = useUpdateDetailStatus(onSuccessUpdateStatus);
   const { mutate: deleteDetail } = useDeleteDetail(closeUserDetails);
 
@@ -97,13 +96,10 @@ const UserDetails = ({ select, setSelect }: Props) => {
     deleteDetail(eventId);
   };
 
-  const getDropdownStatusList = () => {
-    if (isAdmin) return getAdminDropdownStatusList(situation);
-    if (isOwn) return getOwnDropdownStatusList(situation);
-    return [];
-  };
-
-  const dropdownStatusList = getDropdownStatusList();
+  const isOwn = nickname === myNickname?.content.nickname;
+  const filteredSituationList = dropdownList //
+    .filter((title) => convertTextToSituation(title) !== situation)
+    .map((title) => ({ title }));
 
   return (
     <>
@@ -113,6 +109,17 @@ const UserDetails = ({ select, setSelect }: Props) => {
           <span>닫기</span>
         </Style.Header>
         <Style.UserDetailsContent>
+          <Style.BetweenBlock>
+            <Style.Date>{date.slice(2)}</Style.Date>
+            {isAdmin ? (
+              <Style.ButtonBox>
+                <Style.AdminButton onClick={handleDeleteConfirmModal}>삭제</Style.AdminButton>
+                <Style.AdminButton onClick={handleUpdateModal}>수정</Style.AdminButton>
+              </Style.ButtonBox>
+            ) : (
+              <div />
+            )}
+          </Style.BetweenBlock>
           <Style.Block>
             <Style.PersonIcon>{USER.PERSON_XL}</Style.PersonIcon>
             <Style.Text>{nickname}</Style.Text>
@@ -121,12 +128,19 @@ const UserDetails = ({ select, setSelect }: Props) => {
             <Style.Text>{changeNumberToMoney(amount)}원</Style.Text>
           </Style.Block>
           <Style.Row>
-            <Label title="날짜" width="32px">
-              <DropBox color="disabled" setType={() => undefined} boxWidth="116px" width={116} type={date.split(' ')[0]} dropDownList={[]} />
+            <Label title="사유" width="32px">
+              <Style.GroundBox>{ground}</Style.GroundBox>
             </Label>
             <Label title="납부여부" width="80px">
-              {dropdownStatusList.length ? (
-                <DropBox color="white" boxWidth="112px" width={112} setType={handleUpdateStatusConfirmModal} type={situation} dropDownList={dropdownStatusList} />
+              {isAdmin ? (
+                <DropBox
+                  color="white"
+                  boxWidth="112px"
+                  width={112}
+                  setType={handleUpdateStatusConfirmModal}
+                  type={convertSituationToText(situation)} //Todo: GA 코드 추가해야됨
+                  dropDownList={filteredSituationList}
+                />
               ) : (
                 <Style.StatusButton situation={situation}>{situation}</Style.StatusButton>
               )}
@@ -137,18 +151,14 @@ const UserDetails = ({ select, setSelect }: Props) => {
           </Label>
         </Style.UserDetailsContent>
         <Style.Footer>
-          {isAdmin && (
-            <>
-              <Button onClick={handleDeleteConfirmModal} color="white">
-                삭제
-              </Button>
-              <Button onClick={handleUpdateModal} color="black">
-                수정
-              </Button>
-            </>
-          )}
           {!isAdmin && isOwn && (
-            <Button width="150px" height="42px" color={situation === '미납' ? 'black' : 'disabled'} onClick={handleRequestConfirmModal} id={GA.CON.SIDE_BUTTON}>
+            <Button
+              width="150px"
+              height="42px"
+              color={situation === '미납' ? 'black' : 'disabled'} //
+              onClick={handleRequestConfirmModal}
+              id={GA.CON.SIDE_BUTTON}
+            >
               {REQUEST_BUTTON[situation]}
             </Button>
           )}
