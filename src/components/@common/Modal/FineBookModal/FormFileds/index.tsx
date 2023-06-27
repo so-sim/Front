@@ -9,7 +9,7 @@ import { convertToPriceFormat } from '@/utils/convertPriceFormat';
 import React from 'react';
 import { useParams } from 'react-router-dom';
 import * as Style from '../styles';
-import CirCleCheckBox from '../CircleCheckBox';
+import CirCleCheckBox from './CircleCheckBox';
 import useSituationList, { SituationText } from '@/hooks/useSituationList';
 
 const GA_SITUATION = { 미납: GA.NON.LIST_MODAL, 완납: GA.FULL.LIST_MODAL, 확인중: '' };
