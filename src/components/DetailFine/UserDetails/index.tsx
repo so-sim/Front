@@ -109,6 +109,17 @@ const UserDetails = ({ select, setSelect }: Props) => {
           <span>닫기</span>
         </Style.Header>
         <Style.UserDetailsContent>
+          <Style.BetweenBlock>
+            <Style.Date>{date.slice(2)}</Style.Date>
+            {isAdmin ? (
+              <Style.ButtonBox>
+                <Style.AdminButton onClick={handleDeleteConfirmModal}>삭제</Style.AdminButton>
+                <Style.AdminButton onClick={handleUpdateModal}>수정</Style.AdminButton>
+              </Style.ButtonBox>
+            ) : (
+              <div />
+            )}
+          </Style.BetweenBlock>
           <Style.Block>
             <Style.PersonIcon>{USER.PERSON_XL}</Style.PersonIcon>
             <Style.Text>{nickname}</Style.Text>
@@ -117,18 +128,11 @@ const UserDetails = ({ select, setSelect }: Props) => {
             <Style.Text>{changeNumberToMoney(amount)}원</Style.Text>
           </Style.Block>
           <Style.Row>
-            <Label title="날짜" width="32px">
-              <DropBox
-                color="disabled" //
-                setType={() => undefined}
-                boxWidth="116px"
-                width={116}
-                type={date.split(' ')[0]}
-                dropDownList={[]}
-              />
+            <Label title="사유" width="32px">
+              <Style.GroundBox>{ground}</Style.GroundBox>
             </Label>
             <Label title="납부여부" width="80px">
-              {isAdmin || (isOwn && dropdownList.length > 0) ? (
+              {isAdmin ? (
                 <DropBox
                   color="white"
                   boxWidth="112px"
@@ -147,16 +151,6 @@ const UserDetails = ({ select, setSelect }: Props) => {
           </Label>
         </Style.UserDetailsContent>
         <Style.Footer>
-          {isAdmin && (
-            <>
-              <Button onClick={handleDeleteConfirmModal} color="white">
-                삭제
-              </Button>
-              <Button onClick={handleUpdateModal} color="black">
-                수정
-              </Button>
-            </>
-          )}
           {!isAdmin && isOwn && (
             <Button
               width="150px"
