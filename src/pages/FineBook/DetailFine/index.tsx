@@ -26,8 +26,6 @@ export const initialSelectData: SelectedEventInfo = {
 const DetailFine = () => {
   const { groupId } = useParams();
 
-  const [select, setSelect] = useState<SelectedEventInfo>(initialSelectData);
-
   const [detailFilter, setDetailFilter] = useState<DetailFilter>({ nickname: '', situation: '', page: 0, size: 16, groupId: Number(groupId) });
 
   const calendarDate = useRecoilValue(dateState);
