@@ -34,21 +34,21 @@ const FormFileds = ({ selectData, dispatch }: Props) => {
   const participantList = participants?.content.nicknameList.map((nickname) => ({ title: nickname })) || [];
   const memberList = [admin, ...participantList];
 
-  const onChangeUserName = (nickname: string) => {
-    dispatch({ type: 'USER_NAME', nickname });
+  const onChangeNickName = (nickname: string) => {
+    dispatch({ type: 'NICKNAME', nickname });
   };
 
-  const onChanePaymentType = (situation: SituationText) => {
-    dispatch({ type: 'PAYMENT_TYPE', situation });
+  const onChaneSituation = (situation: SituationText) => {
+    dispatch({ type: 'SITUATION', situation });
   };
 
-  const onChangePayment = (e: React.ChangeEvent<HTMLInputElement>) => {
-    dispatch({ type: 'PAYMENT', amount: e.target.value });
+  const onChangeAmount = (e: React.ChangeEvent<HTMLInputElement>) => {
+    dispatch({ type: 'AMOUNT', amount: e.target.value });
     // console.log(e.target.value);
   };
 
-  const onChangeGroundsDate = (date: string) => {
-    dispatch({ type: 'GROUNDS_DATE', date });
+  const onChangeDate = (date: string) => {
+    dispatch({ type: 'DATE', date });
   };
 
   const onChangeGround = (ground: Ground) => {
@@ -62,25 +62,18 @@ const FormFileds = ({ selectData, dispatch }: Props) => {
     <>
       <Style.Row>
         <Label title="팀원" width="32px" margin="0px">
-          <DropBox boxWidth="146px" width={304} setType={onChangeUserName} type={selectData.nickname} dropDownList={memberList} direction="right" />
+          <DropBox boxWidth="146px" width={304} setType={onChangeNickName} type={selectData.nickname} dropDownList={memberList} direction="right" />
         </Label>
         <Label title="납부여부" width="56px" margin="0px">
-          <DropBox
-            color="white"
-            boxWidth="110px"
-            width={112}
-            setType={onChanePaymentType}
-            type={convertSituationToText(selectData.situation)}
-            dropDownList={filteredSituationList}
-          />
+          <DropBox color="white" boxWidth="110px" width={112} setType={onChaneSituation} type={convertSituationToText(selectData.situation)} dropDownList={filteredSituationList} />
         </Label>
       </Style.Row>
       <Style.Row>
         <Label title="금액" width="32px" margin="0px">
-          <Style.Input type="string" value={convertToPriceFormat(selectData.amount)} onChange={onChangePayment} style={{ height: '32px' }} />
+          <Style.Input type="string" value={convertToPriceFormat(selectData.amount)} onChange={onChangeAmount} style={{ height: '32px' }} />
         </Label>
         <Label title="날짜" width="32px" margin="0px">
-          <CalendarDropBox type={selectData.date} setType={onChangeGroundsDate} color="white" />
+          <CalendarDropBox type={selectData.date} setType={onChangeDate} color="white" />
         </Label>
       </Style.Row>
       <Style.Row>

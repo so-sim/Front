@@ -5,7 +5,7 @@ import { convertFromPriceFormat } from '@/utils/convertPriceFormat';
 type Action =
   | { type: 'INIT'; initialData: SelectedEventInfo }
   | { type: 'NICKNAME'; nickname: string }
-  | { type: 'SITUACTION'; situation: Situation }
+  | { type: 'SITUATION'; situation: Situation }
   | { type: 'AMOUNT'; amount: string }
   | { type: 'DATE'; date: string }
   | { type: 'GROUND'; ground: Ground }
@@ -20,7 +20,7 @@ export const selectedDataReducer = (state: SelectedEventInfo, actions: Action) =
     case 'NICKNAME':
       const { nickname } = actions;
       return { ...state, nickname };
-    case 'SITUACTION':
+    case 'SITUATION':
       const { situation } = actions;
       return { ...state, situation };
     case 'AMOUNT':
