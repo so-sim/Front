@@ -26,7 +26,7 @@ export const CheckBox = styled.div<{ checked: boolean }>`
   padding: 0.5rem;
 
   box-shadow: inset 0 0 0 1px ${({ theme }) => theme.colors.secondary_400};
-  background-color: ${({ theme }) => theme.colors.neutral_200_b}
+  background-color: ${({ theme }) => theme.colors.neutral_200_b};
 
   &::after {
     content: '';
