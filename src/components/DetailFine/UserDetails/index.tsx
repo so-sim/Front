@@ -30,6 +30,7 @@ const REQUEST_BUTTON: { [key in Situation]: string } = {
   완납: '확인 완료',
 };
 
+
 const UserDetails = () => {
   const { selectedFine, setSelectedFine } = useSelectedContext('userDetails');
 
@@ -38,6 +39,7 @@ const UserDetails = () => {
   const hasSelectedInfo: boolean = eventId !== 0;
 
   const { groupId } = useParams();
+
 
   const [{ isAdmin }, setUser] = useRecoilState(userState);
   const [showUpdateModal, setShowUpdateModal] = useState(false);
