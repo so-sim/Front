@@ -31,22 +31,6 @@ const FormFileds = ({ selectData, dispatch }: Props) => {
   const participantList = participants?.content.nicknameList.map((nickname) => ({ title: nickname })) || [];
   const memberList = [admin, ...participantList];
 
-  const onChangePayment = (e: React.ChangeEvent<HTMLInputElement>) => {
-    dispatch({ type: 'PAYMENT', amount: e.target.value });
-    // console.log(e.target.value);
-  };
-
-  const onChangeMemo = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    dispatch({ type: 'MEMO', memo: e.target.value });
-  };
-
-  const onChangeGround = (ground: Ground) => {
-    dispatch({ type: 'GROUND', ground });
-  };
-  const onChangeGroundsDate = (date: string) => {
-    dispatch({ type: 'GROUNDS_DATE', date });
-  };
-
   const onChangeUserName = (nickname: string) => {
     dispatch({ type: 'USER_NAME', nickname });
   };
@@ -54,6 +38,23 @@ const FormFileds = ({ selectData, dispatch }: Props) => {
   const onChanePaymentType = (situation: Situation) => {
     dispatch({ type: 'PAYMENT_TYPE', situation });
   };
+
+  const onChangePayment = (e: React.ChangeEvent<HTMLInputElement>) => {
+    dispatch({ type: 'PAYMENT', amount: e.target.value });
+    // console.log(e.target.value);
+  };
+
+  const onChangeGroundsDate = (date: string) => {
+    dispatch({ type: 'GROUNDS_DATE', date });
+  };
+
+  const onChangeGround = (ground: Ground) => {
+    dispatch({ type: 'GROUND', ground });
+  };
+  const onChangeMemo = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    dispatch({ type: 'MEMO', memo: e.target.value });
+  };
+
   return (
     <>
       <Style.Row>
