@@ -12,22 +12,23 @@ import FormFileds from '../FormFileds';
 import { selectedDataReducer } from '../reducer/selectedDataReducer';
 import { checkFormIsValid } from '@/utils/validation';
 import { SelectedEventInfo } from '@/types/event';
+import { useSelectedContext } from '@/contexts/SelectedFineContext';
 
 interface Props {
   modalHandler: () => void;
-  select: SelectedEventInfo;
-  setSelect: Dispatch<SetStateAction<SelectedEventInfo>>;
 }
 
-const FineBookUpdateModal = ({ modalHandler, select, setSelect }: Props) => {
-  const [selectData, dispatch] = useReducer(selectedDataReducer, select);
+const FineBookUpdateModal = ({ modalHandler }: Props) => {
+  const { selectedFine, setSelectedFine } = useSelectedContext('userDetails');
+
+  const [selectData, dispatch] = useReducer(selectedDataReducer, selectedFine);
 
   const [_, setDateState] = useRecoilState(dateState);
 
   const onSuccessUpdateDetail = (data: ServerResponse<EventInfoTest>) => {
     const groundsDate = dayjs(data.content.date);
 
-    setSelect((prev) => ({ ...prev, ...data.content, situation: selectData.situation }));
+    setSelectedFine((prev) => ({ ...prev, ...data.content, situation: selectData.situation }));
     setDateState((prev) => ({ ...prev, baseDate: groundsDate, startDate: groundsDate, endDate: groundsDate }));
     modalHandler();
   };

@@ -11,9 +11,5 @@ import { DateState } from '@/store/dateState';
 export const useGetDetailList = (detailFilter: Partial<DetailFilter>, calendarDate: DateState) => {
   const query = detailFilterToQuery({ ...detailFilter, startDate: dayjs(calendarDate.startDate).format('YYYY.MM.DD'), endDate: dayjs(calendarDate.endDate).format('YYYY.MM.DD') });
 
-  const data = useQuery(['detailList', query, calendarDate], () => getDetailList(query), { enabled: !!query });
-
-  console.log(data);
-
   return useQuery(['detailList', query, calendarDate], () => getDetailList(query), { enabled: !!query });
 };
