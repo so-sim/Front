@@ -3,13 +3,13 @@ import { Situation } from '@/types/event';
 import { convertFromPriceFormat } from '@/utils/convertPriceFormat';
 
 type Action =
-  | { type: 'USER_NAME'; nickname: string }
-  | { type: 'MEMO'; memo: string }
+  | { type: 'INIT'; initialData: SelectedEventInfo }
+  | { type: 'NICKNAME'; nickname: string }
+  | { type: 'SITUACTION'; situation: Situation }
+  | { type: 'AMOUNT'; amount: string }
+  | { type: 'DATE'; date: string }
   | { type: 'GROUND'; ground: Ground }
-  | { type: 'GROUNDS_DATE'; date: string }
-  | { type: 'PAYMENT'; amount: string }
-  | { type: 'PAYMENT_TYPE'; situation: Situation }
-  | { type: 'INIT'; initialData: SelectedEventInfo };
+  | { type: 'MEMO'; memo: string };
 
 // memo, amount에서 오류 발생
 export const selectedDataReducer = (state: SelectedEventInfo, actions: Action) => {
@@ -17,20 +17,20 @@ export const selectedDataReducer = (state: SelectedEventInfo, actions: Action) =
     case 'INIT':
       const { initialData } = actions;
       return { ...state, initialData };
-    case 'USER_NAME':
+    case 'NICKNAME':
       const { nickname } = actions;
       return { ...state, nickname };
-    case 'PAYMENT_TYPE':
+    case 'SITUACTION':
       const { situation } = actions;
       return { ...state, situation };
-    case 'PAYMENT':
+    case 'AMOUNT':
       const { amount } = actions;
       if (amount.length > 8) return state;
 
       const convertPayment = convertFromPriceFormat(amount);
       if (!isNaN(convertPayment)) return { ...state, amount: convertPayment };
       return state;
-    case 'GROUNDS_DATE':
+    case 'DATE':
       const { date } = actions;
       return { ...state, date };
     case 'GROUND':
