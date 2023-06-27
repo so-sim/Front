@@ -25,8 +25,8 @@ export const CheckBox = styled.div<{ checked: boolean }>`
   border-radius: 9999px;
   padding: 0.5rem;
 
-  box-shadow: inset 0 0 0 1px #bdbdbd;
-  background-color: #f1f2f3;
+  box-shadow: inset 0 0 0 1px ${({ theme }) => theme.colors.secondary_400};
+  background-color: ${({ theme }) => theme.colors.neutral_200_b}
 
   &::after {
     content: '';
@@ -37,14 +37,12 @@ export const CheckBox = styled.div<{ checked: boolean }>`
     border-radius: 9999px;
     padding: 0.25rem;
 
-    background-color: ${({ checked }) => (checked ? `#1c6ee9 ` : `#f1f1f3`)};
+    background-color: ${({ checked, theme }) => (checked ? theme.colors.primary_500 : theme.colors.neutral_200_b)};
 
     transform: translate(-50%, -50%);
   }
 `;
 
 export const Text = styled.label`
-  color: #2d2d2d;
-
-  font-weight: 500;
+  ${({ theme }) => theme.font.body_02};
 `;
