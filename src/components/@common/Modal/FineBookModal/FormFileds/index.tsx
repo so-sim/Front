@@ -24,6 +24,7 @@ const FormFileds = ({ selectData, dispatch }: Props) => {
   const { groupId } = useParams();
   const { data: participants } = useParticipantList(Number(groupId));
   console.log(selectData);
+
   const { dropdownList, convertSituationToText, convertTextToSituation } = useSituationList(selectData.situation);
 
   const filteredSituationList = dropdownList
@@ -54,8 +55,11 @@ const FormFileds = ({ selectData, dispatch }: Props) => {
   const onChangeGround = (ground: Ground) => {
     dispatch({ type: 'GROUND', ground });
   };
+
   const onChangeMemo = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     dispatch({ type: 'MEMO', memo: e.target.value });
+
+
   };
 
   return (
