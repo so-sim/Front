@@ -2,7 +2,7 @@ import DropBox from '@/components/@common/DropBox';
 import { CalendarDropBox } from '@/components/@common/DropBox/CalendarDropBox';
 import Label from '@/components/@common/Label';
 import { GA } from '@/constants/GA';
-import { SelectedEventInfo } from '@/types/event';
+import { Ground, SelectedEventInfo } from '@/types/event';
 import { useParticipantList } from '@/queries/Group';
 import { Situation } from '@/types/event';
 import { convertToPriceFormat } from '@/utils/convertPriceFormat';
@@ -16,6 +16,7 @@ const STATUS_LIST: { title: Situation; id?: string }[] = [
   { title: '완납', id: GA.FULL.LIST_MODAL },
 ];
 
+const GroundArr: Ground[] = ['지각', '결석', '과제 안 함', '기타'];
 type Props = {
   dispatch: any;
   selectData: SelectedEventInfo;
@@ -24,6 +25,7 @@ type Props = {
 const FormFileds = ({ selectData, dispatch }: Props) => {
   const { groupId } = useParams();
   const { data: participants } = useParticipantList(Number(groupId));
+  console.log(selectData);
 
   const admin = { title: participants?.content.adminNickname as string };
   const participantList = participants?.content.nicknameList.map((nickname) => ({ title: nickname })) || [];
@@ -34,10 +36,13 @@ const FormFileds = ({ selectData, dispatch }: Props) => {
     // console.log(e.target.value);
   };
 
-  const onChangeGrounds = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    dispatch({ type: 'GROUNDS', memo: e.target.value });
+  const onChangeMemo = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    dispatch({ type: 'MEMO', memo: e.target.value });
   };
 
+  const onChangeGround = (ground: Ground) => {
+    dispatch({ type: 'GROUND', ground });
+  };
   const onChangeGroundsDate = (date: string) => {
     dispatch({ type: 'GROUNDS_DATE', date });
   };
@@ -77,15 +82,20 @@ const FormFileds = ({ selectData, dispatch }: Props) => {
       <Style.Row>
         <Label title="사유" width="32px" margin="0px">
           <Style.ContainerForLabel>
-            <CirCleCheckBox id="지각" isChecked={true} onChange={() => {}} />
-            <CirCleCheckBox id="결석" isChecked={true} onChange={() => {}} />
-            <CirCleCheckBox id="과제 안 함" isChecked={true} onChange={() => {}} />
-            <CirCleCheckBox id="기타" isChecked={true} onChange={() => {}} />
+            {GroundArr.map((item: Ground) => (
+              <CirCleCheckBox
+                id={item}
+                isChecked={selectData.ground === item}
+                onChange={() => {
+                  onChangeGround(item);
+                }}
+              />
+            ))}
           </Style.ContainerForLabel>
         </Label>
       </Style.Row>
       <Label title="메모" width="32px" margin="0px">
-        <Style.TextArea maxLength={65} onChange={onChangeGrounds} defaultValue={selectData.memo} placeholder="내용을 입력해주세요." />
+        <Style.TextArea maxLength={65} onChange={onChangeMemo} defaultValue={selectData.memo} placeholder="내용을 입력해주세요." />
         <Style.Length>{selectData.memo.length}/65</Style.Length>
       </Label>
     </>

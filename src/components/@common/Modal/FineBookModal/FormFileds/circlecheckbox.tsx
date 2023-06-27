@@ -9,8 +9,8 @@ type Props = {
 const CirCleCheckBox = ({ id, isChecked, onChange }: Props) => {
   return (
     <CheckBoxContainer>
-      <Input type="checkbox" id={id} checked={isChecked} onChange={onChange} />
-      <CheckBoxWrapper>
+      <Input type="checkbox" id={id} checked={isChecked} />
+      <CheckBoxWrapper onClick={onChange}>
         <CheckBox checked={isChecked} />
         <Text htmlFor={id}>{id}</Text>
       </CheckBoxWrapper>
@@ -57,7 +57,7 @@ const CheckBox = styled.div<{ checked: boolean }>`
     border-radius: 9999px;
     padding: 0.25rem;
 
-    background-color: #1c6ee9;
+    background-color: ${({ checked }) => (checked ? `#1c6ee9 ` : `#f1f1f3`)};
 
     transform: translate(-50%, -50%);
   }

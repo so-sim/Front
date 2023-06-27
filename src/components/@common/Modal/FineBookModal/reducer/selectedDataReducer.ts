@@ -1,10 +1,11 @@
-import { SelectedEventInfo } from '@/types/event';
+import { SelectedEventInfo, Ground } from '@/types/event';
 import { Situation } from '@/types/event';
 import { convertFromPriceFormat } from '@/utils/convertPriceFormat';
 
 type Action =
   | { type: 'USER_NAME'; nickname: string }
-  | { type: 'GROUNDS'; memo: string }
+  | { type: 'MEMO'; memo: string }
+  | { type: 'GROUND'; ground: Ground }
   | { type: 'GROUNDS_DATE'; date: string }
   | { type: 'PAYMENT'; amount: string }
   | { type: 'PAYMENT_TYPE'; situation: Situation }
@@ -16,7 +17,10 @@ export const selectedDataReducer = (state: SelectedEventInfo, actions: Action) =
     case 'USER_NAME':
       const { nickname } = actions;
       return { ...state, nickname };
-    case 'GROUNDS':
+    case 'GROUND':
+      const { ground } = actions;
+      return { ...state, ground };
+    case 'MEMO':
       const { memo } = actions;
       if (memo.length > 65) return state;
 
