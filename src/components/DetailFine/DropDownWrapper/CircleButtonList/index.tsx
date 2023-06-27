@@ -4,12 +4,14 @@ import { useUpdateDetailStatus } from '@/queries/Detail/useUpdateDetailStatus';
 import { Situation } from '@/types/event';
 import { pushDataLayerByStatus } from '@/utils/pushDataLayer';
 import { Dispatch, SetStateAction } from 'react';
-import CircleDropButton, { CircleDropButtonProps } from '../CircleDropButton';
+import CircleDropButton from '../CircleDropButton';
+import useSituationList from '@/hooks/useSituationList';
 import * as Style from './styles';
 
-interface Props extends CircleDropButtonProps {
-  isOwn: boolean;
+interface Props {
+  isAdmin?: boolean;
   eventId: number;
+  situation: Situation;
   setOpenButtonListId: Dispatch<SetStateAction<number>>;
 }
 
@@ -23,22 +25,7 @@ const getGATrigger = (situation: Situation): string => {
   return id[situation];
 };
 
-const SITUATION_LIST: Situation[] = ['미납', '확인중', '완납'];
-
-const CircleButtonList = ({ setOpenButtonListId, isOwn, situation, eventId, isAdmin = false }: Props) => {
-  const adminStatusList: Situation[] = [
-    situation,
-    ...SITUATION_LIST.filter((element) => {
-      if (situation === '확인중') return element !== situation;
-
-      return element !== situation && element !== '확인중';
-    }),
-  ];
-
-  const userStatusList: Situation[] = situation === '미납' ? [situation, '확인중'] : [];
-
-  const dropdownList: Situation[] = isAdmin ? adminStatusList : userStatusList;
-
+const CircleButtonList = ({ setOpenButtonListId, situation, eventId, isAdmin = false }: Props) => {
   const onSuccessUpdateStatus = (buttonSituation: Situation) => {
     cancelUpdateStatus();
     pushDataLayerByStatus(isAdmin, buttonSituation);
@@ -46,6 +33,7 @@ const CircleButtonList = ({ setOpenButtonListId, isOwn, situation, eventId, isAd
 
   const { mutate: mutateDetailStatus } = useUpdateDetailStatus(onSuccessUpdateStatus);
   const { openConfirmModal, closeConfirmModal } = useConfirmModal();
+  const { dropdownList, convertTextToSituation } = useSituationList(situation);
 
   const updateStatus = async (buttonSituation: Situation) => {
     mutateDetailStatus({ situation: buttonSituation, eventIdList: [eventId] });
@@ -70,9 +58,11 @@ const CircleButtonList = ({ setOpenButtonListId, isOwn, situation, eventId, isAd
   return (
     <Style.CircleButtonList>
       {dropdownList.map((buttonSituation) => {
+        const convertedSituation = convertTextToSituation(buttonSituation);
+
         return (
-          <Style.CircleButtonBox key={buttonSituation} onClick={() => handleCircleButtonList(buttonSituation)}>
-            <CircleDropButton situation={buttonSituation} isAdmin={isAdmin} isOwn={isOwn} originStatus={situation} />
+          <Style.CircleButtonBox key={buttonSituation} onClick={() => handleCircleButtonList(convertedSituation)}>
+            <CircleDropButton situation={convertedSituation} text={buttonSituation} />
           </Style.CircleButtonBox>
         );
       })}

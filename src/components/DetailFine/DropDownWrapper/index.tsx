@@ -2,11 +2,13 @@ import { Dispatch, MouseEvent, SetStateAction } from 'react';
 import { useParams } from 'react-router-dom';
 
 import { CircleButtonList, CircleDropButton } from '@/components/DetailFine';
-import { useGroupDetail } from '@/queries/Group';
 
 import * as Style from './styles';
 import { SelectedEventInfo } from '@/types/event';
 import { useGetMyNikname } from '@/queries/Group/useGetMyNickname';
+import { userState } from '@/store/userState';
+import { useRecoilState } from 'recoil';
+import useSituationList from '@/hooks/useSituationList';
 
 interface Props {
   detail: SelectedEventInfo;
@@ -17,11 +19,11 @@ interface Props {
 const DropDownWrapper = ({ detail, openButtonListId, setOpenButtonListId }: Props) => {
   const { eventId, situation, nickname } = detail;
   const { groupId } = useParams();
+  const [{ isAdmin }, setUser] = useRecoilState(userState);
 
-  const { data } = useGroupDetail(Number(groupId));
   const { data: myNickname } = useGetMyNikname(Number(groupId));
+  const { convertSituationToText } = useSituationList(situation);
 
-  const isAdmin = data?.content.isAdmin;
   const isOwn = nickname === myNickname?.content.nickname;
   const isSelectedEvent = openButtonListId === eventId;
 
@@ -38,9 +40,9 @@ const DropDownWrapper = ({ detail, openButtonListId, setOpenButtonListId }: Prop
   return (
     <Style.DropDownWrapper isValid={hasPermissionOfHover} onClick={handleCircleDropButton}>
       {hasPermissionOfChangePaymentType ? (
-        <CircleButtonList isOwn={isOwn} setOpenButtonListId={setOpenButtonListId} isAdmin={isAdmin} situation={situation} eventId={eventId} />
+        <CircleButtonList setOpenButtonListId={setOpenButtonListId} isAdmin={isAdmin} situation={situation} eventId={eventId} />
       ) : (
-        <CircleDropButton situation={situation} isAdmin={isAdmin} />
+        <CircleDropButton situation={situation} text={convertSituationToText(situation)} />
       )}
     </Style.DropDownWrapper>
   );

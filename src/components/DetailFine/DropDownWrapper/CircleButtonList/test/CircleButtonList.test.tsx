@@ -13,7 +13,6 @@ describe('CircleButtonList', () => {
           <CircleButtonList
             setOpenButtonListId={() => {}} //
             situation="확인중"
-            isOwn={false}
             eventId={1}
             isAdmin={isAdmin}
           />,
@@ -31,7 +30,6 @@ describe('CircleButtonList', () => {
           <CircleButtonList
             setOpenButtonListId={() => {}} //
             situation="미납"
-            isOwn={true}
             eventId={1}
             isAdmin={isAdmin}
           />,
@@ -55,7 +53,6 @@ describe('CircleButtonList', () => {
           <CircleButtonList
             setOpenButtonListId={() => {}} //
             situation="미납"
-            isOwn={true}
             eventId={1}
             isAdmin={isAdmin}
           />,

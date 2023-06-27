@@ -30,7 +30,7 @@ export const logoutUser = async (): Promise<ServerResponse> => {
 
 export const reTakeToken = async (): Promise<ServerResponse> => {
   try {
-    const response = await api.get('/auth/reissueToken');
+    const response = await api.get('/auth/refresh');
     const accessToken = response.data.content.accessToken;
     setAccesToken(accessToken);
     return response.data;
