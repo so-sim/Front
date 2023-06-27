@@ -9,6 +9,7 @@ import { convertToPriceFormat } from '@/utils/convertPriceFormat';
 import React from 'react';
 import { useParams } from 'react-router-dom';
 import * as Style from '../styles';
+import CirCleCheckBox from './circlecheckbox';
 
 const STATUS_LIST: { title: Situation; id?: string }[] = [
   { title: '미납', id: GA.NON.LIST_MODAL },
@@ -73,7 +74,17 @@ const FormFileds = ({ selectData, dispatch }: Props) => {
           <CalendarDropBox type={selectData.date} setType={onChangeGroundsDate} color="white" />
         </Label>
       </Style.Row>
-      <Label title="사유" width="32px" margin="0px">
+      <Style.Row>
+        <Label title="사유" width="32px" margin="0px">
+          <Style.ContainerForLabel>
+            <CirCleCheckBox id="지각" isChecked={true} onChange={() => {}} />
+            <CirCleCheckBox id="결석" isChecked={true} onChange={() => {}} />
+            <CirCleCheckBox id="과제 안 함" isChecked={true} onChange={() => {}} />
+            <CirCleCheckBox id="기타" isChecked={true} onChange={() => {}} />
+          </Style.ContainerForLabel>
+        </Label>
+      </Style.Row>
+      <Label title="메모" width="32px" margin="0px">
         <Style.TextArea maxLength={65} onChange={onChangeGrounds} defaultValue={selectData.memo} placeholder="내용을 입력해주세요." />
         <Style.Length>{selectData.memo.length}/65</Style.Length>
       </Label>
