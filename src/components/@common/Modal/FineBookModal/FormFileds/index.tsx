@@ -9,7 +9,7 @@ import { convertToPriceFormat } from '@/utils/convertPriceFormat';
 import React from 'react';
 import { useParams } from 'react-router-dom';
 import * as Style from '../styles';
-import CirCleCheckBox from './circlecheckbox';
+import CirCleCheckBox from '../CircleCheckBox';
 
 const STATUS_LIST: { title: Situation; id?: string }[] = [
   { title: '미납', id: GA.NON.LIST_MODAL },
