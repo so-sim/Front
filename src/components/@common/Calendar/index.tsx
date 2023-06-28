@@ -79,7 +79,7 @@ const Calendar: FC<CalnedrProps> = ({ cellType }) => {
   const goDetail = (date: Dayjs) => {
     setDateTestObj((prev) => ({
       ...prev,
-      baseDateTest: date,
+      baseDate: date,
       startDate: date,
       endDate: date,
       mode: 'day',
