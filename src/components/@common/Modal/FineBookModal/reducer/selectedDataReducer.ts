@@ -3,7 +3,7 @@ import { Situation } from '@/types/event';
 import { convertFromPriceFormat } from '@/utils/convertPriceFormat';
 
 type Action =
-  | { type: 'INIT'; initialData: SelectedEventInfo }
+  | { type: 'INIT'; initialData: Partial<SelectedEventInfo> }
   | { type: 'NICKNAME'; nickname: string }
   | { type: 'SITUATION'; situation: Situation }
   | { type: 'AMOUNT'; amount: string }
@@ -16,7 +16,7 @@ export const selectedDataReducer = (state: SelectedEventInfo, actions: Action) =
   switch (actions.type) {
     case 'INIT':
       const { initialData } = actions;
-      return { ...state, initialData };
+      return { ...state, ...initialData };
     case 'NICKNAME':
       const { nickname } = actions;
       return { ...state, nickname };
