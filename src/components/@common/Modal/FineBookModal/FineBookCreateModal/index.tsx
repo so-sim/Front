@@ -42,7 +42,7 @@ const FineBookCreateModal = ({ modalHandler }: Props) => {
   useEffect(() => {
     console.log(calendarState);
     if (calendarState.mode === 'day') {
-      const date = calendarState.baseDate.format('YYYY.MM.DD');
+      const date = dayjs(calendarState.baseDate).format('YYYY.MM.DD');
       dispatch({ type: 'DATE', date });
     }
   }, []);
@@ -63,7 +63,7 @@ const FineBookCreateModal = ({ modalHandler }: Props) => {
 
           if (type === 'continue') {
             navigate(`/group/${groupId}/book/detail`, { state: true });
-            dispatch({ type: 'INIT', initialData: doNotInitProperty('nickname', 'date') });
+            dispatch({ type: 'INIT', initialData: doNotInitProperty('nickname', 'memo') });
           } else {
             navigate(`/group/${groupId}/book/detail`);
             modalHandler();
