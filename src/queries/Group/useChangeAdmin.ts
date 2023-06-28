@@ -16,7 +16,9 @@ export const useChangeAdmin = (groupId: number | undefined) => {
       const myNickname = queryClient.getQueryData<ServerResponse<GroupNickname>>(['myNickname', groupId]);
 
       if (prevParticipantList) {
-        const newList = prevParticipantList.content.nicknameList.filter((nickname) => nickname !== myNickname?.content.nickname);
+        const newList = prevParticipantList.content.nicknameList.filter(
+          (participantNickname) => participantNickname !== myNickname?.content.nickname && participantNickname !== nickname,
+        );
 
         queryClient.setQueryData<ServerResponse<ParticipantList>>(['participantList', groupId], {
           ...prevParticipantList,

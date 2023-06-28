@@ -15,9 +15,8 @@ import useConfirmModal from '@/hooks/useConfirmModal';
 import FineBookUpdateModal from '@/components/@common/Modal/FineBookModal/FineBookUpdateModal';
 import { useGetMyNikname } from '@/queries/Group/useGetMyNickname';
 import { useSelectedContext } from '@/contexts/SelectedFineContext';
-import { userState } from '@/store/userState';
-import { useRecoilState } from 'recoil';
 import useSituationList, { SituationText } from '@/hooks/useSituationList';
+import { useGroupDetail } from '@/queries/Group';
 
 type Props = {
   select: SelectedEventInfo;
@@ -30,7 +29,6 @@ const REQUEST_BUTTON: { [key in Situation]: string } = {
   완납: '확인 완료',
 };
 
-
 const UserDetails = () => {
   const { selectedFine, setSelectedFine } = useSelectedContext('userDetails');
 
@@ -39,9 +37,9 @@ const UserDetails = () => {
   const hasSelectedInfo: boolean = eventId !== 0;
 
   const { groupId } = useParams();
+  const { data: group } = useGroupDetail(Number(groupId));
+  const isAdmin = group?.content.isAdmin;
 
-
-  const [{ isAdmin }, setUser] = useRecoilState(userState);
   const [showUpdateModal, setShowUpdateModal] = useState(false);
 
   const handleUpdateModal = () => {

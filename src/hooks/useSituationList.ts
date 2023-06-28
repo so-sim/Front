@@ -1,6 +1,6 @@
-import { userState } from '@/store/userState';
+import { useGroupDetail } from '@/queries/Group';
 import { Situation } from '@/types/event';
-import { useRecoilState } from 'recoil';
+import { useParams } from 'react-router-dom';
 
 type ConfirmButtonText = '확인요청' | '확인필요' | '확인중';
 export type SituationText = Situation | ConfirmButtonText;
@@ -8,7 +8,9 @@ export type SituationText = Situation | ConfirmButtonText;
 const SITUATION_LIST: Situation[] = ['미납', '확인중', '완납'];
 
 const useSituationList = (situation: Situation) => {
-  const [{ isAdmin }, setUser] = useRecoilState(userState);
+  const { groupId } = useParams();
+  const { data: group } = useGroupDetail(Number(groupId));
+  const isAdmin = group?.content.isAdmin;
 
   const adminStatusList: SituationText[] = [
     situation === '확인중' ? '확인필요' : situation,

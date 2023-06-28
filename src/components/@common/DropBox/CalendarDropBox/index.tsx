@@ -44,7 +44,7 @@ export const CalendarDropBox = ({ setType, type, boxWidth = '138px', color = 'wh
         {!isDisabled && <Style.ArrowIcon focus={openDrop}>{openDrop ? ARROW.DOWN_LG : ARROW.DOWN_LG_NON_FOCUS}</Style.ArrowIcon>}
       </div>
       {openDrop && (
-        <div style={{ position: 'absolute', top: '34px', left: '-2px' }}>
+        <div style={{ position: 'absolute', top: '38px', left: '-2px', zIndex: 20 }}>
           <MiniCalendar type={type} setType={setType} setOpenDrop={setOpenDrop} />
         </div>
       )}
