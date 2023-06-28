@@ -1,4 +1,4 @@
-import { useReducer } from 'react';
+import { useEffect, useReducer } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { useCreateDetail } from '@/queries/Detail';
@@ -9,6 +9,7 @@ import Modal from '@/components/@common/Modal';
 import { SYSTEM } from '@/assets/icons/System';
 import { dateState } from '@/store/dateState';
 import { initialSelectData } from '@/pages/FineBook/DetailFine';
+import { SelectedEventInfo } from '@/types/event';
 
 import { selectedDataReducer } from '../reducer/selectedDataReducer';
 import { pushDataLayer } from '@/utils/pushDataLayer';
@@ -21,12 +22,30 @@ interface Props {
   modalHandler: () => void;
 }
 
+const doNotInitProperty = <K extends keyof SelectedEventInfo>(...arg: K[]) => {
+  const newObj: Partial<SelectedEventInfo> = {};
+
+  arg.forEach((key) => {
+    newObj[key] = initialSelectData[key];
+  });
+
+  return newObj;
+};
+
 const FineBookCreateModal = ({ modalHandler }: Props) => {
-  const [_, setDateState] = useRecoilState(dateState);
+  const [calendarState, setDateState] = useRecoilState(dateState);
   const { groupId } = useParams();
   const navigate = useNavigate();
 
   const [selectData, dispatch] = useReducer(selectedDataReducer, initialSelectData);
+
+  useEffect(() => {
+    console.log(calendarState);
+    if (calendarState.mode === 'day') {
+      const date = calendarState.baseDate.format('YYYY.MM.DD');
+      dispatch({ type: 'DATE', date });
+    }
+  }, []);
 
   const createDetail = (type: 'continue' | 'save') => {
     create(
@@ -44,7 +63,7 @@ const FineBookCreateModal = ({ modalHandler }: Props) => {
 
           if (type === 'continue') {
             navigate(`/group/${groupId}/book/detail`, { state: true });
-            dispatch({ type: 'INIT', initialData: initialSelectData });
+            dispatch({ type: 'INIT', initialData: doNotInitProperty('nickname', 'date') });
           } else {
             navigate(`/group/${groupId}/book/detail`);
             modalHandler();
