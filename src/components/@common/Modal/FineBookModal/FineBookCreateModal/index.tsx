@@ -40,7 +40,6 @@ const FineBookCreateModal = ({ modalHandler }: Props) => {
   const [selectData, dispatch] = useReducer(selectedDataReducer, initialSelectData);
 
   useEffect(() => {
-    console.log(calendarState);
     if (calendarState.mode === 'day') {
       const date = dayjs(calendarState.baseDate).format('YYYY.MM.DD');
       dispatch({ type: 'DATE', date });
