@@ -41,7 +41,7 @@ const DropBox = <T,>({ align = 'start', setType, type, dropDownList, width = 152
           list={dropDownList}
           width={width}
           setState={setType}
-          top="34px"
+          top="38px"
           onClose={handleDropDown}
           direction={direction}
           dropDownRef={dropDownRef}
