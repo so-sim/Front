@@ -2,12 +2,10 @@ import { AdminModal } from '@/components/@common/Modal/GroupSettingModal/AdminMo
 import { UserModal } from '@/components/@common/Modal/GroupSettingModal/UserModal';
 import { GA } from '@/constants/GA';
 import { useGroupDetail } from '@/queries/Group';
-import { userState } from '@/store/userState';
 import React, { useEffect, useState } from 'react';
 import { NavLink, useNavigate, useParams } from 'react-router-dom';
-import { useRecoilState } from 'recoil';
-import { SYSTEM } from '../../../../assets/icons/System';
-import { USER } from '../../../../assets/icons/User';
+import { SYSTEM } from '@/assets/icons/System';
+import { USER } from '@/assets/icons/User';
 import * as Style from './styles';
 
 const GROUP_TAPS = [
@@ -25,7 +23,9 @@ const GroupSideBar = () => {
   const navigate = useNavigate();
   const { groupId } = param;
 
-  const [{ isAdmin }, setUser] = useRecoilState(userState);
+  const { data: group } = useGroupDetail(Number(groupId));
+  const isAdmin = group?.content.isAdmin;
+
   const [showGroupSettingModal, setShowGroupSettingModal] = useState(false);
   const { data: groupData, isError } = useGroupDetail(Number(groupId));
 

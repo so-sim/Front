@@ -4,10 +4,8 @@ import DropDown from '@/components/@common/DropDown';
 import { GA } from '@/constants/GA';
 import useConfirmModal from '@/hooks/useConfirmModal';
 import { useChangeAdmin, useGroupDetail } from '@/queries/Group';
-import { userState } from '@/store/userState';
 import { FC, useEffect, useRef, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { useRecoilState } from 'recoil';
 import * as Style from './styles';
 
 interface MemberListItemProps {
@@ -21,7 +19,8 @@ const DropDonwList = [
 
 const MemberListItem: FC<MemberListItemProps> = ({ nickname }) => {
   const { groupId } = useParams();
-  const [{ isAdmin }, setUser] = useRecoilState(userState);
+  const { data: group } = useGroupDetail(Number(groupId));
+  const isAdmin = group?.content.isAdmin;
 
   const [showDropDown, setShowDropDown] = useState(false);
   const [selectAction, setSelectAction] = useState('');
