@@ -7,12 +7,12 @@ import { useParams } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
 import { Calendar } from '@/components/@common';
 import InviteModal from '@/components/@common/Modal/InviteModal';
-import { userState } from '@/store/userState';
 
 const WholeCalendar = () => {
   const [{ isFirstVisit }, setIsFirstVisit] = useRecoilState(firstVisitState);
   const [dateObj, setDateObj] = useRecoilState(dateState);
-  const [{ isAdmin }, setUser] = useRecoilState(userState);
+  const { groupId } = useParams();
+  const { data: group } = useGroupDetail(Number(groupId));
 
   const handleGroupInviteModal = () => {
     setIsFirstVisit((prev) => ({ ...prev, isFirstVisit: false }));
@@ -32,7 +32,7 @@ const WholeCalendar = () => {
   return (
     <>
       <Calendar cellType="Tag" />
-      {isAdmin && isFirstVisit && <InviteModal onClick={handleGroupInviteModal} />}
+      {group?.content.isAdmin && isFirstVisit && <InviteModal onClick={handleGroupInviteModal} />}
     </>
   );
 };

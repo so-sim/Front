@@ -6,9 +6,8 @@ import { CircleButtonList, CircleDropButton } from '@/components/DetailFine';
 import * as Style from './styles';
 import { SelectedEventInfo } from '@/types/event';
 import { useGetMyNikname } from '@/queries/Group/useGetMyNickname';
-import { userState } from '@/store/userState';
-import { useRecoilState } from 'recoil';
 import useSituationList from '@/hooks/useSituationList';
+import { useGroupDetail } from '@/queries/Group';
 
 interface Props {
   detail: SelectedEventInfo;
@@ -19,11 +18,12 @@ interface Props {
 const DropDownWrapper = ({ detail, openButtonListId, setOpenButtonListId }: Props) => {
   const { eventId, situation, nickname } = detail;
   const { groupId } = useParams();
-  const [{ isAdmin }, setUser] = useRecoilState(userState);
 
+  const { data: group } = useGroupDetail(Number(groupId));
   const { data: myNickname } = useGetMyNikname(Number(groupId));
   const { convertSituationToText } = useSituationList(situation);
 
+  const isAdmin = group?.content.isAdmin;
   const isOwn = nickname === myNickname?.content.nickname;
   const isSelectedEvent = openButtonListId === eventId;
 
