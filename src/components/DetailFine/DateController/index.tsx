@@ -82,13 +82,14 @@ const DateController = ({ setDetailFilter }: Props) => {
             <Style.TodayButton onClick={updateToToday} id={GA.TODAY_LIST}>
               오늘
             </Style.TodayButton>
-          </Style.Block>
-          <Style.Block>
             <Style.FilterWrapper ref={dropDownRef}>
               {FILTER_BUTTON_LIST.map((btn) => {
                 return (
                   <Style.FilterButton id={btn.id} key={btn.id} isActive={calendarDate.mode === btn.mode} onClick={() => handleDateFilterMode(btn.mode)}>
-                    <span>{btn.text}</span>
+                    <Style.FlexCenter>
+                      <span>{btn.text}</span>
+                      {btn.mode === 'week' && <Style.ArrowIcon>{ARROW.DOWN_SM}</Style.ArrowIcon>}
+                    </Style.FlexCenter>
                     {btn.mode === 'week' && calendarDate.mode === 'week' && openWeeklyFilterDrop && (
                       <div style={{ position: 'relative', left: '1px' }}>
                         <DropDown
@@ -106,6 +107,8 @@ const DateController = ({ setDetailFilter }: Props) => {
                 );
               })}
             </Style.FilterWrapper>
+          </Style.Block>
+          <Style.Block>
             {group?.content.isAdmin && (
               <Button color="black" width="124px" height="40px" onClick={handleAddModal} id="add_list">
                 내역 추가하기
