@@ -1,10 +1,11 @@
-import React, { Dispatch, SetStateAction } from 'react';
-import * as Style from './styles';
+import { Dispatch, SetStateAction } from 'react';
 import { DetailFilter } from '@/store/detailFilter';
 import { SYSTEM } from '@/assets/icons/System';
 import { Situation } from '@/types/event';
 import { convertToPriceFormat } from '@/utils/convertPriceFormat';
 import { USER } from '@/assets/icons/User';
+import { AutoComplete } from './AutoComplete';
+import * as Style from './styles';
 
 type Props = {
   detailFilter: DetailFilter;
@@ -16,10 +17,9 @@ const SITUATION_FILTER: Situation[] = ['미납', '완납', '확인중'];
 
 const FilterController = ({ detailFilter, setDetailFilter, totalAmount }: Props) => {
   const updateSituationFilter = (situation: Situation) => {
-    if (detailFilter.situation === situation) {
-      return setDetailFilter((prev) => ({ ...prev, situation: '' }));
-    }
-    setDetailFilter((prev) => ({ ...prev, situation }));
+    const isSameSituationFilter = detailFilter.situation === situation;
+
+    setDetailFilter((prev) => ({ ...prev, situation: isSameSituationFilter ? '' : situation }));
   };
 
   return (
@@ -38,15 +38,15 @@ const FilterController = ({ detailFilter, setDetailFilter, totalAmount }: Props)
           })}
         </Style.ButtonContainer>
         <Style.SearchContainer>
-          <Style.Icon_LG>{SYSTEM.SEARCH}</Style.Icon_LG>
+          <Style.Icon_LG>{SYSTEM.SEARCH_BLACK}</Style.Icon_LG>
           {Boolean(detailFilter.nickname) ? (
             <Style.SelectedMember>
               <Style.Icon_SM>{USER.PERSON_SM}</Style.Icon_SM>
               <span>{detailFilter.nickname}</span>
               <Style.Icon_SM>{SYSTEM.CLOSE_SM}</Style.Icon_SM>
-            </Style.SelectedMember> //
+            </Style.SelectedMember>
           ) : (
-            <Style.SearchBar type="text" placeholder="팀원을 검색해주세요." />
+            <AutoComplete setDetailFilter={setDetailFilter} />
           )}
         </Style.SearchContainer>
       </Style.LeftContainer>
