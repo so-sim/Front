@@ -26,9 +26,9 @@ const FineBookUpdateModal = ({ modalHandler }: Props) => {
   const [_, setDateState] = useRecoilState(dateState);
 
   const onSuccessUpdateDetail = (data: ServerResponse<EventInfoTest>) => {
-    const groundsDate = dayjs(data.content.date);
+    const groundsDate = dayjs(selectData.date);
 
-    setSelectedFine((prev) => ({ ...prev, ...data.content, situation: selectData.situation }));
+    setSelectedFine((prev) => ({ ...prev, ...selectData }));
     setDateState((prev) => ({ ...prev, baseDate: groundsDate, startDate: groundsDate, endDate: groundsDate }));
     modalHandler();
   };
