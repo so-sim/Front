@@ -1,11 +1,10 @@
-import dayjs, { Dayjs } from 'dayjs';
+import { Situation } from '@/types/event';
 import { atom } from 'recoil';
-import { recoilPersist } from 'recoil-persist';
 
 export interface DetailFilter {
   groupId: number;
-  nickname?: string;
-  situation?: string;
+  nickname: string;
+  situation: Situation | '';
   page: number;
   size: number;
 }
