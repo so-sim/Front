@@ -27,5 +27,6 @@ export const SYSTEM = {
   SETTING_LG: <Settings width={21} height={21} />,
   DOTS: <Dots />,
   PREPARING: <PreParing />,
-  SEARCH: <Search />,
+  SEARCH_BLACK: <Search fill="#3C3C3C" />,
+  SEARCH_GRAY: <Search fill="#9C9C9C" />,
 };
