@@ -27,6 +27,8 @@ export const selectedDataReducer = (state: SelectedEventInfo, actions: Action) =
       const { amount } = actions;
       if (amount.length > 8) return state;
 
+      if (Number(amount.replaceAll(',', '')) > 1000000) return state;
+
       const convertPayment = convertFromPriceFormat(amount);
       if (!isNaN(convertPayment)) return { ...state, amount: convertPayment };
       return state;
