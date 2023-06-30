@@ -153,7 +153,7 @@ const UserDetails = () => {
               )}
             </Label>
           </Style.Row>
-          <Label title="사유" width="30px">
+          <Label title="메모" width="30px">
             <Style.TextArea disabled placeholder="내용을 입력해주세요." value={memo} />
           </Label>
         </Style.UserDetailsContent>
