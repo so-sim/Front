@@ -17,6 +17,14 @@ const Input = ({ onChange, value, placeholder = '', maxLength = 10, errorText = 
     if (e.target.value.length <= maxLength) {
       onChange(e.target.value);
     }
+    if (title === 'nickname' && setError) {
+      const emojiRegExp = /^[a-zA-Z0-9ㄱ-ㅎㅏ-ㅣ가-힣!"#$%&'()*+,-./:;<=>?@[\]^_`{|}~\s]+$/;
+      const text = e.target.value;
+
+      const result = emojiRegExp.test(text);
+      !result && text !== '' ? setError(title, '이모지가 포함되면 안 됨') : setError(title, checkCountChar(text));
+      return;
+    }
     if (setError) {
       setError(title, checkCountChar(e.target.value));
     }
