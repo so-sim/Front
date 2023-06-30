@@ -14,7 +14,9 @@ interface InputProps<T = any> {
 
 const Input = ({ onChange, value, placeholder = '', maxLength = 10, errorText = '', setError, title }: InputProps) => {
   const onChangeData = (e: React.ChangeEvent<HTMLInputElement>) => {
-    onChange(e.target.value);
+    if (e.target.value.length <= maxLength) {
+      onChange(e.target.value);
+    }
     if (setError) {
       setError(title, checkCountChar(e.target.value));
     }
@@ -22,7 +24,14 @@ const Input = ({ onChange, value, placeholder = '', maxLength = 10, errorText = 
 
   return (
     <>
-      <Style.Input type="text" placeholder={placeholder} isValid={errorText === '' ? true : false} value={value} onChange={onChangeData} maxLength={maxLength} />
+      <Style.Input
+        type="text" //
+        placeholder={placeholder}
+        isValid={errorText === ''}
+        value={value}
+        onChange={onChangeData}
+        maxLength={maxLength}
+      />
       <Style.Phrase>
         <Style.ErrorText>{errorText}</Style.ErrorText>
         <Style.Length>

@@ -57,7 +57,14 @@ export const UserModal: FC<ModalHandlerProps> = ({ modalHandler }) => {
           <Style.SubTitle>사용자 설정</Style.SubTitle>
           <Style.InputContainer>
             <Label title="내 이름" flexDirection="column">
-              <Input value={myName} errorText={isError.nickname} onChange={setMyName} maxLength={20} setError={setError} title="nickname" />
+              <Input
+                value={myName} //
+                errorText={isError.nickname}
+                onChange={setMyName}
+                maxLength={15}
+                setError={setError}
+                title="nickname"
+              />
             </Label>
             <Label title="모임 탈퇴" flexDirection="column" />
             <Style.WithDrwal>
