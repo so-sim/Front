@@ -25,10 +25,12 @@ const FilterController = ({ detailFilter, setDetailFilter, totalAmount }: Props)
   return (
     <Style.FilterContainer>
       <Style.LeftContainer>
+        <Style.FilterText>필터</Style.FilterText>
         <Style.ButtonContainer>
           {SITUATION_FILTER.map((buttonText) => {
             return (
               <Style.SituationButton
+                key={buttonText}
                 onClick={() => updateSituationFilter(buttonText)} //
                 isActive={detailFilter.situation === buttonText}
               >

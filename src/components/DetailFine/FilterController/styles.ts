@@ -14,6 +14,10 @@ export const LeftContainer = styled.div`
   align-items: center;
 `;
 
+export const FilterText = styled.div`
+  margin-right: 8px;
+`;
+
 export const SituationButton = styled.button<{ isActive: boolean }>`
   height: 24px;
   width: 56px;
