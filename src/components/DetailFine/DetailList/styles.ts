@@ -40,3 +40,7 @@ export const Element = styled.span<{ hasEllipsis: boolean }>`
   overflow: hidden;
   text-overflow: ${({ hasEllipsis }) => hasEllipsis && 'ellipsis'};
 `;
+
+export const GroundText = styled.span`
+  ${({ theme }) => theme.font.subhead_02}
+`;
