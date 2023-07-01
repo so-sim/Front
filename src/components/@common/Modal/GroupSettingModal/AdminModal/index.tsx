@@ -121,7 +121,7 @@ export const AdminModal: FC<ModalHandlerProps> = ({ modalHandler }) => {
                 <Input value={nickname} errorText={isError.nickname} onChange={setNickname} maxLength={15} setError={setError} title="nickname" />
               </Label>
               <Label title="모임 유형" flexDirection="column">
-                <DropBox dropDownList={DROPDOWN_LIST} type={type} setType={setType} boxWidth="170px" />
+                <DropBox dropDownList={DROPDOWN_LIST} type={type} setType={setType} boxWidth="170px" width={170} />
               </Label>
               <Label title="커버 색상" flexDirection="column" margin="0px">
                 <GroupColorList selectedColor={coverColor} onChange={setCoverColor} />
