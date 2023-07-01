@@ -53,10 +53,10 @@ const DetailList = ({ detailFilter, details }: Props) => {
             <Style.Element hasEllipsis>{nickname}</Style.Element>
             <Style.Element hasEllipsis>{changeNumberToMoney(amount)}</Style.Element>
             <Style.Element hasEllipsis>
-              <span style={{ fontWeight: 600 }}>
+              <Style.GroundText>
                 {ground}
                 {memo && <span>&#12539;</span>}
-              </span>
+              </Style.GroundText>
               {/* Katakana middle dot 이라고 합니다..(저도 잘 몰라요 하하) */}
               {memo}
             </Style.Element>
