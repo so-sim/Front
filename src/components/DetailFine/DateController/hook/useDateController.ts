@@ -3,13 +3,14 @@ import { DateState, dateState } from '@/store/dateState';
 import { padStart } from '@/utils/padStart';
 import dayjs, { Dayjs } from 'dayjs';
 import { useRecoilState } from 'recoil';
-import { numberOfWeek } from '@/utils/customedWeek';
+import { weekList } from '@/utils/customedWeek';
 
 const useDateController = (mode: FilterMode) => {
   const [calendarDate, setCalendarDate] = useRecoilState(dateState);
 
   const goToWeek = (weekText: string) => {
-    const baseDate = moveDateToWeek(calendarDate.baseDate, numberOfWeek[weekText]);
+    const week = weekList.indexOf(weekText) + 1;
+    const baseDate = moveDateToWeek(calendarDate.baseDate, week);
     setCalendarDate(baseDate);
   };
 
