@@ -25,15 +25,16 @@ export const Content = styled.div`
 
 type TextProps = { boxWidth: string; isDisabled: boolean; isSelected: boolean; focus: boolean };
 export const Text = styled.div<TextProps>`
+  height: 20px;
+
   color: ${({ theme, isSelected, focus }) => (focus ? theme.colors.secondary_900 : isSelected ? theme.colors.secondary_900 : theme.colors.secondary_600)};
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
   text-align: start;
-  height: 20px;
-  width: ${({ boxWidth, isDisabled }) => (isDisabled ? `${boxWidth}` : `calc(${boxWidth} - 52px)}`)};
-  /* margin-right: 4px; */
   ${({ theme }) => theme.font.body_02};
+  width: ${({ boxWidth, isDisabled }) => (isDisabled ? `${boxWidth}` : `calc(${boxWidth} - 52px)}`)};
+  /* 지금 해당 calc 이후로는 스타일이 적용이 안되고 있네요??   */
 `;
 
 export const ArrowIcon = styled.div<{ focus: boolean }>`
