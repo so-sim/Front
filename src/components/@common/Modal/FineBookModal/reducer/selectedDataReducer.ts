@@ -25,11 +25,12 @@ export const selectedDataReducer = (state: SelectedEventInfo, actions: Action) =
       return { ...state, situation };
     case 'AMOUNT':
       const { amount } = actions;
+      const convertPayment = convertFromPriceFormat(amount);
+
       if (amount.length > 8) return state;
 
-      if (Number(amount.replaceAll(',', '')) > 1000000) return state;
+      if (convertPayment > 1000000) return state;
 
-      const convertPayment = convertFromPriceFormat(amount);
       if (!isNaN(convertPayment)) return { ...state, amount: convertPayment };
       return state;
     case 'DATE':
