@@ -10,7 +10,7 @@ interface Props {
 
 export const GroupColorList = ({ selectedColor, onChange }: Props) => {
   return (
-    <Style.GroupColorList onClick={(e) => e.preventDefault()}>
+    <Style.GroupColorList>
       {COLORS.map((color) => {
         return (
           <Style.SelectedButton select={selectedColor === color} key={color}>
