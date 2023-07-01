@@ -21,7 +21,7 @@ const Input = ({ onChange, value, placeholder = '', maxLength = 10, errorText = 
     }
 
     if (title === 'nickname' && setError) {
-      checkEmoji(text) ? setError(title, '이모지가 포함되면 안 됨') : setError(title, checkCountChar(text));
+      checkEmoji(text) ? setError(title, '한글/영문/숫자/특수문자만 입력해주세요.') : setError(title, checkCountChar(text));
       return;
     }
 
