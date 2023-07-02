@@ -74,10 +74,12 @@ const GroupSideBar = () => {
                 </Style.Tap>
               </NavLink>
             ) : (
-              <Style.Tap key={etc.title} onClick={handleGroupSettingModal} id={etc.id}>
-                <div style={{ height: '21px' }}>{etc.svg}</div>
-                <span>{etc.title}</span>
-              </Style.Tap>
+              <Style.GroupSettingContainer onClick={handleGroupSettingModal}>
+                <Style.Tap key={etc.title} id={etc.id}>
+                  <div style={{ height: '21px' }}>{etc.svg}</div>
+                  <span>{etc.title}</span>
+                </Style.Tap>
+              </Style.GroupSettingContainer>
             ),
           )}
         </Style.TapContainer>
