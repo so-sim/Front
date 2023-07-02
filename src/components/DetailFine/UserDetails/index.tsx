@@ -155,7 +155,7 @@ const UserDetails = () => {
             </Label>
           </Style.Row>
           <Label title="메모" width="30px">
-            <Style.TextArea disabled placeholder="내용을 입력해주세요." value={memo} />
+            <Style.TextArea disabled placeholder="(선택) 내용을 입력해주세요." value={memo} />
           </Label>
         </Style.UserDetailsContent>
         <Style.Footer>
