@@ -25,8 +25,6 @@ export const Content = styled.div`
 
 type TextProps = { boxWidth: string; isDisabled: boolean; isSelected: boolean; focus: boolean };
 export const Text = styled.div<TextProps>`
-  height: 20px;
-
   color: ${({ theme, isSelected, focus }) => (focus ? theme.colors.secondary_900 : isSelected ? theme.colors.secondary_900 : theme.colors.secondary_600)};
   overflow: hidden;
   white-space: nowrap;
@@ -35,12 +33,13 @@ export const Text = styled.div<TextProps>`
   ${({ theme }) => theme.font.body_02};
   width: ${({ boxWidth, isDisabled }) => (isDisabled ? `${boxWidth}` : `calc(${boxWidth} - 52px)}`)};
   /* 지금 해당 calc 이후로는 스타일이 적용이 안되고 있네요??   */
+  /* 현재 너무 불필요한 height 값들이 많이있다. line-height까지 있는데  굳이 넣을 필요없고,  여기서부턴 개인적이지만 line-height도 그냥 padding으로 처리하는걸 좋아합니다. */
 `;
 
 export const ArrowIcon = styled.div<{ focus: boolean }>`
   display: flex;
   align-items: center;
-  height: 16px;
+  /* height: 16px; */
   transform: ${({ focus }) => (focus ? `rotate(180deg)` : '')};
   transition: 0.15s ease-in-out;
 `;
