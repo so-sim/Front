@@ -60,3 +60,7 @@ export const Selected = styled.div<SelectedProps>`
   background-color: ${({ theme }) => theme.colors.secondary_900};
   border-radius: 0px 4px 4px 0px;
 `;
+
+export const GroupSettingContainer = styled.div`
+  cursor: pointer;
+`;
