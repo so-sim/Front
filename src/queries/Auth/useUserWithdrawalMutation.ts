@@ -27,7 +27,7 @@ const useUserWithdrawalMutation = () => {
     },
     onSuccess: async () => {
       removeAccessToken();
-      navigate('/');
+      window.location.href = process.env.REACT_APP_SERVICE_URL as string;
     },
     onError: (error, value, context) => {
       if (context?.previousData) {
