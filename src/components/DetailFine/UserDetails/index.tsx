@@ -24,9 +24,9 @@ type Props = {
 };
 
 const REQUEST_BUTTON: { [key in Situation]: string } = {
-  미납: '확인 요청',
+  미납: '납부 완료',
   확인중: '승인 대기',
-  완납: '확인 완료',
+  완납: '납부 완료',
 };
 
 const UserDetails = () => {
