@@ -35,6 +35,9 @@ interface TapProps {
 
 export const Tap = styled.button<TapProps>`
   cursor: pointer;
+  /* width: 100%; */
+  /* width 100프로하니 disabled:true인 애들이 route 이동이 안되는 issue 발생 (Tap이 button이여서 기본프로퍼티 disabled 적용때문이였음) */
+  /* 추후 li태그로 변경필요 */
   height: 36px;
   padding: 8px 0;
   display: flex;
