@@ -1,9 +1,6 @@
-import { LIMIT_PAYMENT } from '@/constants/Payment';
-
 export const convertFromPriceFormat = (payment: string) => {
   let paymentWithoutComma = Number(payment.replaceAll(',', ''));
 
-  if (paymentWithoutComma > LIMIT_PAYMENT) paymentWithoutComma = LIMIT_PAYMENT;
   return paymentWithoutComma;
 };
 

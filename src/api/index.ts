@@ -2,7 +2,7 @@ import { getAccessToken } from '@/utils/acceessToken';
 import axios from 'axios';
 import { reTakeToken } from './Auth';
 
-export const BASE_URL = 'https://back.sosim-manager.com';
+export const BASE_URL = process.env.REACT_APP_SERVER_URL;
 
 const api = axios.create({
   baseURL: BASE_URL,

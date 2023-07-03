@@ -12,14 +12,4 @@ export const Update = Template.bind({});
 
 Update.args = {
   modalHandler: () => {},
-  select: {
-    userName: '종현팔',
-    payment: 12_000,
-    paymentType: 'non',
-    groundsDate: '2023.06.04',
-    grounds: '걍 늦음',
-    userId: 1,
-    eventId: 12,
-  },
-  setSelect: () => {},
 };

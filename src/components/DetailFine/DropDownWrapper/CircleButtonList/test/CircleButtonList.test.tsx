@@ -6,14 +6,13 @@ describe('CircleButtonList', () => {
   describe('관리자일 경우', () => {
     const isAdmin = true;
 
-    it('자신의 상세 내역이 아니고, 상태가 "con"일 경우 "확인필요", "미납", "완납" 버튼이 존재해야 함', () => {
-      const buttonList = ['확인필요', '미납', '완납'];
+    it('자신의 상세 내역이 아니고, 상태가 "con"일 경우 "확인중", "미납", "완납" 버튼이 존재해야 함', () => {
+      const buttonList = ['확인중', '미납', '완납'];
       render(
         withRouter(
           <CircleButtonList
             setOpenButtonListId={() => {}} //
-            status="con"
-            isOwn={false}
+            situation="확인중"
             eventId={1}
             isAdmin={isAdmin}
           />,
@@ -30,8 +29,7 @@ describe('CircleButtonList', () => {
         withRouter(
           <CircleButtonList
             setOpenButtonListId={() => {}} //
-            status="non"
-            isOwn={true}
+            situation="미납"
             eventId={1}
             isAdmin={isAdmin}
           />,
@@ -39,9 +37,9 @@ describe('CircleButtonList', () => {
       );
 
       buttonList.forEach((text) => expect(screen.getByText(text)).toBeInTheDocument());
-      expect(screen.queryByText('확인필요')).toBeNull();
+      expect(screen.queryByText('확인중')).toBeNull();
       // queryBy는 해당 element가 없을 때 null을 반환하고, getByText는 error반환
-      // expect(screen.getByText('확인필요')).toThrow();
+      // expect(screen.getByText('확인중')).toThrow();
       expect(screen.getAllByRole('button').length).toBe(2);
     });
   });
@@ -54,8 +52,7 @@ describe('CircleButtonList', () => {
         withRouter(
           <CircleButtonList
             setOpenButtonListId={() => {}} //
-            status="non"
-            isOwn={true}
+            situation="미납"
             eventId={1}
             isAdmin={isAdmin}
           />,

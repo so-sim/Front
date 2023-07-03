@@ -33,7 +33,8 @@ export class MonthFilter extends RootDateFilter {
 
   protected getChangedDateState = (changedDate: Dayjs): DateState => ({
     baseDate: changedDate,
-    week: null,
-    selectedDate: null,
+    startDate: changedDate,
+    endDate: changedDate,
+    mode: 'month',
   });
 }

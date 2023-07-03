@@ -3,9 +3,8 @@ import { ARROW } from '@/assets/icons/Arrow';
 import Button from '@/components/@common/Button';
 import * as Style from './styles';
 import { useRecoilState } from 'recoil';
-import { dateState } from '@/store/dateState';
+
 import dayjs from 'dayjs';
-import { DateFilter, DetailFilter } from '@/utils/dateFilter/dateFilter';
 import { customedWeek } from '@/utils/customedWeek';
 import DropDown from '@/components/@common/DropDown';
 import { useGroupDetail } from '@/queries/Group';
@@ -14,6 +13,9 @@ import { FilterMode } from '@/pages/FineBook/DetailFine';
 import useCheckLocationState from '@/hooks/useCheckLocationState';
 import { GA } from '@/constants/GA';
 import FineBookCreateModal from '@/components/@common/Modal/FineBookModal/FineBookCreateModal';
+import { dateState } from '@/store/dateState';
+import useDateController from './hook/useDateController';
+import { DetailFilter } from '@/store/detailFilter';
 
 export const FILTER_BUTTON_LIST: { mode: FilterMode; text: string; id: string }[] = [
   { mode: 'month', text: '월간', id: GA.FILTER.MONTH },
@@ -27,29 +29,17 @@ type Props = {
 
 const DateController = ({ setDetailFilter }: Props) => {
   const { groupId } = useParams();
-  const { data: groupData } = useGroupDetail(Number(groupId));
+  const { data: group } = useGroupDetail(Number(groupId));
+
   const dropDownRef = useRef<HTMLDivElement>(null);
   const initialAddModalState = useCheckLocationState();
 
-  const [calendarDate, setSelectedDate] = useRecoilState(dateState);
-  const [mode, setMode] = useState<FilterMode>('day');
+  const [calendarDate, setCalendarDate] = useRecoilState(dateState);
+
   const [openAddModal, setOpenAddModal] = useState<boolean>(initialAddModalState);
   const [openWeeklyFilterDrop, setOpenWeeklyFilterDrop] = useState(false);
 
-  const dateFilter = new DateFilter(mode, calendarDate.week);
-
-  const goToWeek = (weekTitle: string) => {
-    const week = Number(weekTitle[0]);
-    setSelectedDate((prev) => dateFilter.goToWeek(prev, week));
-  };
-
-  const increaseCalendarByMode = () => {
-    setSelectedDate(({ baseDate }) => dateFilter.increaseDate(baseDate));
-  };
-
-  const decreaseCalendarByMode = () => {
-    setSelectedDate(({ baseDate }) => dateFilter.decreaseDate(baseDate));
-  };
+  const { getTitle, goToWeek, changeDateByButtonMode, increase, decrease } = useDateController(calendarDate.mode);
 
   const handleWeeklyFilterDrop = () => {
     setOpenWeeklyFilterDrop((prev) => !prev);
@@ -61,46 +51,46 @@ const DateController = ({ setDetailFilter }: Props) => {
 
   const handleDateFilterMode = (buttonMode: FilterMode) => {
     handleWeeklyFilterDrop();
-    if (mode === buttonMode) return;
-    setMode(buttonMode);
-    setSelectedDate((prev) => dateFilter.updateDateStateByMode(prev.baseDate, buttonMode));
+    if (calendarDate.mode === buttonMode) return;
+
+    changeDateByButtonMode(buttonMode);
   };
 
   const updateToToday = () => {
-    setMode('day');
-    setSelectedDate((prev) => ({ ...prev, baseDate: dayjs(), selectedDate: dayjs(), week: null }));
+    // 여기 Type을 정해줬는데도 baseDate로 들어가있었다.. 왜 Type 체크를 안해줬을까?
+    setCalendarDate((prev) => ({ ...prev, baseDate: dayjs(), startDate: dayjs(), endDate: dayjs(), mode: 'day' as FilterMode }));
   };
 
   useEffect(() => {
-    setMode(() => dateFilter.decideMode(calendarDate));
-    setDetailFilter((prev) => ({ ...dateFilter.update(prev, calendarDate), page: 0 }));
-  }, [calendarDate, mode]);
+    setDetailFilter((prev) => ({ ...prev, page: 0 }));
+  }, [calendarDate.mode]);
 
   return (
     <>
       <Style.DateController>
         <Style.ControllerFrame>
           <Style.Block>
-            <Style.Date mode={mode}>{dateFilter.getTitle(calendarDate.baseDate)}</Style.Date>
+            <Style.Date mode={calendarDate.mode}>{getTitle()}</Style.Date>
             <Style.ArrowBlock id={GA.LIST_SKIP.ALL}>
-              <Style.ArrowWrapper onClick={decreaseCalendarByMode} id={GA.LIST_SKIP.LEFT} data-testid={GA.LIST_SKIP.LEFT}>
+              <Style.ArrowWrapper onClick={decrease} id={GA.LIST_SKIP.LEFT} data-testid={GA.LIST_SKIP.LEFT}>
                 {ARROW.LEFT}
               </Style.ArrowWrapper>
-              <Style.ArrowWrapper onClick={increaseCalendarByMode} id={GA.LIST_SKIP.RIGHT} data-testid={GA.LIST_SKIP.RIGHT}>
+              <Style.ArrowWrapper onClick={increase} id={GA.LIST_SKIP.RIGHT} data-testid={GA.LIST_SKIP.RIGHT}>
                 {ARROW.RIGHT}
               </Style.ArrowWrapper>
             </Style.ArrowBlock>
             <Style.TodayButton onClick={updateToToday} id={GA.TODAY_LIST}>
               오늘
             </Style.TodayButton>
-          </Style.Block>
-          <Style.Block>
             <Style.FilterWrapper ref={dropDownRef}>
               {FILTER_BUTTON_LIST.map((btn) => {
                 return (
-                  <Style.FilterButton id={btn.id} key={btn.id} isActive={mode === btn.mode} onClick={() => handleDateFilterMode(btn.mode)}>
-                    <span>{btn.text}</span>
-                    {btn.mode === 'week' && mode === 'week' && openWeeklyFilterDrop && (
+                  <Style.FilterButton id={btn.id} key={btn.id} isActive={calendarDate.mode === btn.mode} onClick={() => handleDateFilterMode(btn.mode)}>
+                    <Style.FlexCenter>
+                      <span>{btn.text}</span>
+                      {btn.mode === 'week' && <Style.ArrowIcon>{ARROW.DOWN_SM}</Style.ArrowIcon>}
+                    </Style.FlexCenter>
+                    {btn.mode === 'week' && calendarDate.mode === 'week' && openWeeklyFilterDrop && (
                       <div style={{ position: 'relative', left: '1px' }}>
                         <DropDown
                           width={60}
@@ -117,7 +107,9 @@ const DateController = ({ setDetailFilter }: Props) => {
                 );
               })}
             </Style.FilterWrapper>
-            {groupData?.content.isAdmin && (
+          </Style.Block>
+          <Style.Block>
+            {group?.content.isAdmin && (
               <Button color="black" width="124px" height="40px" onClick={handleAddModal} id="add_list">
                 내역 추가하기
               </Button>

@@ -19,7 +19,8 @@ const DropDonwList = [
 
 const MemberListItem: FC<MemberListItemProps> = ({ nickname }) => {
   const { groupId } = useParams();
-  const { data: groupData } = useGroupDetail(Number(groupId));
+  const { data: group } = useGroupDetail(Number(groupId));
+  const isAdmin = group?.content.isAdmin;
 
   const [showDropDown, setShowDropDown] = useState(false);
   const [selectAction, setSelectAction] = useState('');
@@ -59,7 +60,7 @@ const MemberListItem: FC<MemberListItemProps> = ({ nickname }) => {
         <div>{USER.PERSON_XL}</div>
         <Style.Nickname>{nickname}</Style.Nickname>
       </Style.Flex>
-      {groupData?.content.isAdmin && (
+      {isAdmin && (
         <Style.SVG ref={dropDownRef}>
           <div onClick={handleDropDown}>
             {SYSTEM.DOTS}

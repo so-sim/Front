@@ -1,4 +1,4 @@
-import { checkCountChar } from '@/utils/validation';
+import { checkCountChar, checkEmoji } from '@/utils/validation';
 import React, { useEffect } from 'react';
 import * as Style from './styles';
 
@@ -14,15 +14,32 @@ interface InputProps<T = any> {
 
 const Input = ({ onChange, value, placeholder = '', maxLength = 10, errorText = '', setError, title }: InputProps) => {
   const onChangeData = (e: React.ChangeEvent<HTMLInputElement>) => {
-    onChange(e.target.value);
+    const text = e.target.value;
+
+    if (text.length <= maxLength) {
+      onChange(text);
+    }
+
+    if (title === 'nickname' && setError) {
+      checkEmoji(text) ? setError(title, '한글/영문/숫자/특수문자만 입력해주세요.') : setError(title, checkCountChar(text));
+      return;
+    }
+
     if (setError) {
-      setError(title, checkCountChar(e.target.value));
+      setError(title, checkCountChar(text));
     }
   };
 
   return (
     <>
-      <Style.Input type="text" placeholder={placeholder} isValid={errorText === '' ? true : false} value={value} onChange={onChangeData} maxLength={maxLength} />
+      <Style.Input
+        type="text" //
+        placeholder={placeholder}
+        isValid={errorText === ''}
+        value={value}
+        onChange={onChangeData}
+        maxLength={maxLength}
+      />
       <Style.Phrase>
         <Style.ErrorText>{errorText}</Style.ErrorText>
         <Style.Length>

@@ -5,7 +5,7 @@ import { dateState } from '@/store/dateState';
 import createCalendar from '@/utils/createCalendar';
 import { handleDate } from '@/utils/handleDate';
 import dayjs, { Dayjs } from 'dayjs';
-import { FC, useEffect, useState } from 'react';
+import { FC, useLayoutEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
 import { ARROW } from '../../../assets/icons/Arrow';
@@ -24,8 +24,8 @@ interface CalnedrProps {
 
 const Calendar: FC<CalnedrProps> = ({ cellType }) => {
   const today = dayjs();
-  const [dateObj, setDateObj] = useRecoilState(dateState);
-  const { baseDate, week, selectedDate } = dateObj;
+
+  const [{ baseDate, startDate, endDate, mode }, setDateTestObj] = useRecoilState(dateState);
   const [showCreateDetailModal, setShowCreateDetailModal] = useState(false);
   const [calendarDate, setCalendarDate] = useState(baseDate);
 
@@ -33,16 +33,18 @@ const Calendar: FC<CalnedrProps> = ({ cellType }) => {
   const navigate = useNavigate();
   const { groupId } = useParams();
 
-  const { addMonth, subMonth, dateToFormmating, getMonth, getDateArray, getDate } = handleDate;
+  const { addMonth, subMonth, dateToFormatting, getMonth, getDate, dateToUnixTime } = handleDate;
 
-  const [year, month, day] = getDateArray(calendarDate);
+  const startDateOfMonth = dateToFormatting(dayjs(calendarDate).startOf('month'));
+  const endDateOfMonth = dateToFormatting(dayjs(calendarDate).endOf('month'));
 
-  const { data: status } = useGetMonthStatus(groupId, year, month);
-
-  const { data: groupData } = useGroupDetail(Number(groupId));
+  const { data: status } = useGetMonthStatus(groupId, startDateOfMonth, endDateOfMonth);
+  const { data: group } = useGroupDetail(Number(groupId));
 
   const filterCorrectDateStatus = (date: Dayjs) => {
-    return status?.content.filter((list) => list.day === getDate(date))[0];
+    const hasStatusOfDay = (status?.content.statusOfDay ?? {}).hasOwnProperty(getDate(date));
+
+    if (hasStatusOfDay) return status?.content.statusOfDay[getDate(date)];
   };
 
   const handleShowCreateDetailModal = () => {
@@ -61,31 +63,31 @@ const Calendar: FC<CalnedrProps> = ({ cellType }) => {
   };
 
   const isToday = (date: Dayjs) => {
-    return dateToFormmating(date) === dateToFormmating(today);
+    return dateToFormatting(date) === dateToFormatting(today);
   };
 
-  const isSelectedWeek = (index: number) => {
-    return getMonth(baseDate) === getMonth(calendarDate) && index + 1 === week;
+  const isSelectedPeriod = (date: Dayjs) => {
+    return dateToUnixTime(startDate) <= dateToUnixTime(date) && dateToUnixTime(endDate) >= dateToUnixTime(date);
   };
 
   const isSelectedDate = (date: Dayjs) => {
-    if (!selectedDate) return false;
-    return dateToFormmating(selectedDate) === dateToFormmating(date);
+    if (mode !== 'day') return false;
+    return dateToFormatting(startDate) === dateToFormatting(date);
   };
 
   const goDetail = (date: Dayjs) => {
-    setDateObj((prev) => ({
-      ...prev,
+    setDateTestObj({
       baseDate: date,
-      selectedDate: date,
-      week: null,
-    }));
+      startDate: date,
+      endDate: date,
+      mode: 'day',
+    });
     navigate(`/group/${groupId}/book/detail`);
   };
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     setCalendarDate(baseDate);
-  }, [baseDate, week, selectedDate]);
+  }, [baseDate, startDate, endDate]);
 
   return (
     <>
@@ -103,7 +105,7 @@ const Calendar: FC<CalnedrProps> = ({ cellType }) => {
               </Style.ArrowWrapper>
             </Style.ArrowBlock>
           </div>
-          {cellType === 'Tag' && groupData?.content.isAdmin && (
+          {cellType === 'Tag' && group?.content.isAdmin && (
             <Button width="124px" color="black" onClick={handleShowCreateDetailModal} id={GA.ADD_LIST.BUTTON}>
               내역 추가하기
             </Button>
@@ -118,16 +120,25 @@ const Calendar: FC<CalnedrProps> = ({ cellType }) => {
           {monthList.map((weeks, idx) => (
             <Style.WeekWrap key={idx} cellType={cellType}>
               {weeks.map((date) => (
-                <div key={dateToFormmating(date)} onClick={() => goDetail(date)}>
+                <div key={dateToFormatting(date)} onClick={() => goDetail(date)}>
                   {cellType === 'Tag' ? (
-                    <DateCellWithTag date={date} isCurrentMonth={isCurrentMonth} isToday={isToday} isSelectedDate={isSelectedDate} status={filterCorrectDateStatus(date)} />
-                  ) : (
-                    <DateCellWithMark
+                    <DateCellWithTag //
                       date={date}
                       isCurrentMonth={isCurrentMonth}
                       isToday={isToday}
                       isSelectedDate={isSelectedDate}
-                      isSelectedWeek={isSelectedWeek(idx)}
+                      status={filterCorrectDateStatus(date)}
+                    />
+                  ) : (
+                    <DateCellWithMark
+                      date={date}
+                      startDate={startDate}
+                      endDate={endDate}
+                      mode={mode}
+                      isCurrentMonth={isCurrentMonth}
+                      isToday={isToday}
+                      isSelectedDate={isSelectedDate}
+                      isSelectedPeriod={isSelectedPeriod(date)}
                       status={filterCorrectDateStatus(date)}
                     />
                   )}

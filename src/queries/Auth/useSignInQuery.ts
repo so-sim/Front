@@ -7,6 +7,7 @@ import { userState } from '@/store/userState';
 import { setAccesToken } from '@/utils/acceessToken';
 import { AxiosError } from 'axios';
 import { ToastPopUp } from '@/components/@common/Toast';
+import { pushDataLayer } from '@/utils/pushDataLayer';
 
 export const useSignInQuery = (code: string | null) => {
   const navigate = useNavigate();
@@ -22,7 +23,7 @@ export const useSignInQuery = (code: string | null) => {
         email,
         userId,
       }));
-      window.dataLayer.push({ user_id: userId });
+      // pushDataLayer('login', { user_id: userId });
       ToastPopUp({ type: 'success', message: TOAST_SUCCESS.SIGNIN });
       navigate('/');
     },

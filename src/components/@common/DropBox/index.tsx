@@ -1,11 +1,11 @@
-import React, { Dispatch, FC, SetStateAction, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import { ARROW } from '@/assets/icons/Arrow';
 import DropDown from '@/components/@common/DropDown';
 import * as Style from './styles';
 
-export type DropBoxColor = 'white' | 'gray' | 'disabled';
+export type DropBoxColor = 'white' | 'disabled';
 
-interface Props<T = string> {
+interface Props<T> {
   type: T;
   dropDownList: { title: T; id?: string }[];
   boxWidth?: string;
@@ -16,7 +16,7 @@ interface Props<T = string> {
   align?: 'start' | 'center';
 }
 
-const DropBox = <T,>({ align = 'start', setType, type, dropDownList, width = 152, boxWidth = '148px', color = 'gray', direction }: Props<T>) => {
+const DropBox = <T,>({ align = 'start', setType, type, dropDownList, width = 152, boxWidth = '148px', color = 'white', direction }: Props<T>) => {
   const [openDrop, setOpenDrop] = useState(false);
   const isDisabled = color === 'disabled';
 
@@ -28,15 +28,24 @@ const DropBox = <T,>({ align = 'start', setType, type, dropDownList, width = 152
   };
 
   return (
-    <Style.DropDownBox boxWidth={boxWidth} color={color} ref={dropDownRef} onClick={handleDropDown}>
+    <Style.DropDownBox boxWidth={boxWidth} color={color} focus={openDrop} ref={dropDownRef} onClick={handleDropDown}>
       <Style.Content>
-        <Style.Text boxWidth={boxWidth} isDisabled={isDisabled}>
+        <Style.Text boxWidth={boxWidth} isDisabled={isDisabled} isSelected={!!type} focus={openDrop}>
           {(typeof type === 'string' && type) || '선택해주세요'}
         </Style.Text>
-        {!isDisabled && <Style.ArrowIcon>{ARROW.DOWN_LG}</Style.ArrowIcon>}
+        {!isDisabled && <Style.ArrowIcon focus={openDrop}>{openDrop ? ARROW.DOWN_LG : ARROW.DOWN_LG_NON_FOCUS}</Style.ArrowIcon>}
       </Style.Content>
       {openDrop && (
-        <DropDown align={align} list={dropDownList} width={width} setState={setType} top="34px" onClose={handleDropDown} direction={direction} dropDownRef={dropDownRef} />
+        <DropDown
+          align={align} //
+          list={dropDownList}
+          width={width}
+          setState={setType}
+          top="38px"
+          onClose={handleDropDown}
+          direction={direction}
+          dropDownRef={dropDownRef}
+        />
       )}
     </Style.DropDownBox>
   );

@@ -27,19 +27,21 @@ export const ArrowWrapper = styled.button`
 export const TodayButton = styled.button`
   height: 32px;
   width: 56px;
-  background-color: ${({ theme }) => theme.colors.neutral_200_b};
-  border: 2px solid ${({ theme }) => theme.colors.neutral_400_b};
+  border: 1px solid ${({ theme }) => theme.colors.neutral_400_b};
   color: ${({ theme }) => theme.colors.secondary_900};
   border-radius: 4px;
-  ${({ theme }) => theme.font.subhead_02}
+  ${({ theme }) => theme.font.subhead_02};
+  &:hover {
+    background-color: ${({ theme }) => theme.colors.neutral_200_b};
+  }
 `;
 
 export const FilterButton = styled.button<{ isActive: boolean }>`
   width: 56px;
   height: 32px;
   ${({ theme }) => theme.font.subhead_01}
-  border-right: 2px solid ${({ theme }) => theme.colors.neutral_400_b};
-  background-color: ${({ theme, isActive }) => (isActive ? theme.colors.neutral_200_b : '')};
+  border-right: 1px solid ${({ theme }) => theme.colors.neutral_400_b};
+  background-color: ${({ theme, isActive }) => (isActive ? theme.colors.neutral_300_b : '')};
   color: ${({ theme }) => theme.colors.secondary_900};
   &:hover {
     background-color: ${({ theme }) => theme.colors.neutral_200_b};
@@ -53,8 +55,19 @@ export const FilterButton = styled.button<{ isActive: boolean }>`
   }
 `;
 
+export const FlexCenter = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+export const ArrowIcon = styled.span`
+  display: flex;
+  align-items: center;
+`;
+
 export const FilterWrapper = styled.div`
-  border: 2px solid ${({ theme }) => theme.colors.neutral_400_b};
+  border: 1px solid ${({ theme }) => theme.colors.neutral_400_b};
   border-radius: 12px;
   position: relative;
   white-space: nowrap;

@@ -4,8 +4,8 @@ import { GA } from '@/constants/GA';
 import { useGroupDetail } from '@/queries/Group';
 import React, { useEffect, useState } from 'react';
 import { NavLink, useNavigate, useParams } from 'react-router-dom';
-import { SYSTEM } from '../../../../assets/icons/System';
-import { USER } from '../../../../assets/icons/User';
+import { SYSTEM } from '@/assets/icons/System';
+import { USER } from '@/assets/icons/User';
 import * as Style from './styles';
 
 const GROUP_TAPS = [
@@ -19,11 +19,14 @@ const ETC = [
 ];
 
 const GroupSideBar = () => {
-  const [showGroupSettingModal, setShowGroupSettingModal] = useState(false);
   const param = useParams();
   const navigate = useNavigate();
   const { groupId } = param;
 
+  const { data: group } = useGroupDetail(Number(groupId));
+  const isAdmin = group?.content.isAdmin;
+
+  const [showGroupSettingModal, setShowGroupSettingModal] = useState(false);
   const { data: groupData, isError } = useGroupDetail(Number(groupId));
 
   const isSelected = (link: string) => {
@@ -71,16 +74,18 @@ const GroupSideBar = () => {
                 </Style.Tap>
               </NavLink>
             ) : (
-              <Style.Tap key={etc.title} onClick={handleGroupSettingModal} id={etc.id}>
-                <div style={{ height: '21px' }}>{etc.svg}</div>
-                <span>{etc.title}</span>
-              </Style.Tap>
+              <Style.GroupSettingContainer onClick={handleGroupSettingModal}>
+                <Style.Tap key={etc.title} id={etc.id}>
+                  <div style={{ height: '21px' }}>{etc.svg}</div>
+                  <span>{etc.title}</span>
+                </Style.Tap>
+              </Style.GroupSettingContainer>
             ),
           )}
         </Style.TapContainer>
       </Style.Layout>
-      {groupData?.content.isAdmin && showGroupSettingModal && <AdminModal modalHandler={handleGroupSettingModal} />}
-      {!groupData?.content.isAdmin && showGroupSettingModal && <UserModal modalHandler={handleGroupSettingModal} />}
+      {isAdmin && showGroupSettingModal && <AdminModal modalHandler={handleGroupSettingModal} />}
+      {!isAdmin && showGroupSettingModal && <UserModal modalHandler={handleGroupSettingModal} />}
     </>
   );
 };

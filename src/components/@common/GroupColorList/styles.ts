@@ -1,7 +1,7 @@
 import { GroupColor } from '@/types/group';
 import styled from '@emotion/styled';
 
-export const ColorButton = styled.button<{ color: GroupColor }>`
+export const ColorButton = styled.span<{ color: GroupColor }>`
   background-color: ${({ color }) => color};
   width: 20px;
   height: 20px;

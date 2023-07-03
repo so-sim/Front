@@ -1,18 +1,17 @@
 import { GA } from '@/constants/GA';
-import { PaymentType } from '@/types/event';
-import { getStatusText } from './status';
+import { Situation } from '@/types/event';
 
-const STATUS_LIST: { title: PaymentType; id?: string }[] = [{ title: '미납', id: GA.NON.SIDE_BUTTON }, { title: '완납', id: GA.FULL.SIDE_BUTTON }, { title: '확인필요' }];
+const STATUS_LIST: { title: Situation; id?: string }[] = [{ title: '미납', id: GA.NON.SIDE_BUTTON }, { title: '완납', id: GA.FULL.SIDE_BUTTON }, { title: '확인중' }];
 
-export const getAdminDropdownStatusList = (paymentType: PaymentType) => {
+export const getAdminDropdownStatusList = (situation: Situation) => {
   return STATUS_LIST.filter((status) => {
-    if (status.title === '확인필요') return false;
-    if (paymentType === 'con') return true;
+    if (status.title === '확인중') return false;
+    if (situation === '확인중') return true;
 
-    return status.title !== getStatusText(paymentType);
+    return status.title !== situation;
   });
 };
 
-export const getOwnDropdownStatusList = (paymentType: PaymentType) => {
-  return STATUS_LIST.filter((status) => paymentType === 'non' && status.title === '확인필요');
+export const getOwnDropdownStatusList = (situation: Situation) => {
+  return STATUS_LIST.filter((status) => situation === '미납' && status.title === '확인중');
 };

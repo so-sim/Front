@@ -1,4 +1,4 @@
-import { ClientEventInfo } from '@/types/event';
+import { EventInfoTest } from '@/types/event';
 import { useState } from 'react';
 
 export const checkCountChar = (text: string, min: number = 1, max: number = 15): string => {
@@ -26,9 +26,18 @@ export const useError = <T extends object>(initialState: T): [T, <P extends keyo
   return [isError, setError];
 };
 
-export const checkFormIsValid = (selectData: ClientEventInfo): boolean => {
-  const { userName, payment, paymentType, groundsDate } = selectData;
-  if (!userName || !paymentType || !payment || !groundsDate) return false;
+export const checkFormIsValid = (selectData: Omit<EventInfoTest, 'groupId'>): boolean => {
+  const { nickname, amount, situation, date } = selectData;
+  if (!nickname || !situation || !amount || !date) return false;
 
   return true;
+};
+
+/**
+ * 이모지 포함 여부만 체크하는 함수
+ * text가 빈 문자열일 경우에는 걸러주면 안 되기에 text !== ''옵션 추가
+ */
+export const checkEmoji = (text: string) => {
+  const regExp = /^[a-zA-Z0-9ㄱ-ㅎㅏ-ㅣ가-힣!"#$%&'()*+,-./:;<=>?@[\]^_`{|}~\s]+$/;
+  return !regExp.test(text) && text !== '';
 };

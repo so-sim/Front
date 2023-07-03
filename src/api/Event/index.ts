@@ -1,41 +1,41 @@
-import { EvnetId, EventInfoList, MonthStatus, EventInfo } from '@/types/event';
+import { SelectedEventInfo, Situation } from '@/types/event';
+import { EvnetId, MonthStatus, EventInfoTest, EventInfoListTest } from '@/types/event';
 import { GroupId } from '@/types/group';
 import { ServerResponse } from '@/types/serverResponse';
 import api from '..';
 
-export const createEvent = async (detailInfo: Omit<EventInfo, 'eventId'> & { groupId: number }): Promise<ServerResponse<EvnetId>> => {
+export const createEvent = async (detailInfo: Omit<EventInfoTest, 'eventId'>): Promise<ServerResponse<EvnetId>> => {
   const { data } = await api.post('/api/event/penalty', detailInfo);
   return data;
 };
 
-export const getOneOfEvent = async (eventId?: number): Promise<ServerResponse<Omit<EventInfo, 'eventId' | 'userId'>>> => {
+export const getOneOfEvent = async (eventId?: number): Promise<ServerResponse<Omit<EventInfoTest, 'groupId'>>> => {
   const { data } = await api.get(`/api/event/penalty/${eventId}`);
   return data;
 };
 
-export const getEventList = async (query: string, groupId: GroupId): Promise<ServerResponse<EventInfoList>> => {
-  const { data } = await api.get(`/api/event/penalty/list/${groupId.groupId}?${query}`);
+export const getDetailList = async (query: string): Promise<ServerResponse<EventInfoListTest>> => {
+  const { data } = await api.get(`/api/event/penalties?${query}`);
   return data;
 };
 
-export const updateEvent = async (info: EventInfo & EvnetId): Promise<ServerResponse<EventInfo>> => {
+export const updateEvent = async (info: SelectedEventInfo): Promise<ServerResponse<EventInfoTest>> => {
   const { eventId, ...detailInfo } = info;
-  const { data } = await api.post(`/api/event/penalty/${eventId}`, detailInfo);
+  const { data } = await api.patch(`/api/event/penalty/${eventId}`, detailInfo);
   return data;
 };
 
 export const deleteEvent = async (eventId: number): Promise<ServerResponse<EvnetId>> => {
-  const { data } = await api.put(`/api/event/penalty/${eventId}`);
+  const { data } = await api.delete(`/api/event/penalty/${eventId}`);
   return data;
 };
 
-export const updateEventStatus = async (info: EvnetId & Pick<EventInfo, 'paymentType'>): Promise<ServerResponse<EventInfo>> => {
-  const { eventId, paymentType } = info;
-  const { data } = await api.patch(`/api/event/penalty/${String(eventId)}`, { paymentType });
+export const updateEventStatus = async (info: { eventIdList: number[]; situation: Situation }): Promise<ServerResponse<EventInfoTest>> => {
+  const { data } = await api.patch(`/api/event/penalty`, { ...info });
   return data;
 };
 
-export const getMonthStatus = async (groupId: string | undefined, year: string, month: string): Promise<ServerResponse<MonthStatus[]>> => {
-  const { data } = await api.get(`/api/event/penalty/mstatus/${groupId}?year=${year}&month=${month}`);
+export const getMonthStatus = async (groupId: string | undefined, startDate: string, endDate: string): Promise<ServerResponse<MonthStatus>> => {
+  const { data } = await api.get(`/api/event/penalty/calendar/?groupId=${groupId}&startDate=${startDate}&endDate=${endDate}`);
   return data;
 };
