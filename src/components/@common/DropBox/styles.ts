@@ -39,7 +39,6 @@ export const Text = styled.div<TextProps>`
 export const ArrowIcon = styled.div<{ focus: boolean }>`
   display: flex;
   align-items: center;
-  /* height: 16px; */
   transform: ${({ focus }) => (focus ? `rotate(180deg)` : '')};
   transition: 0.15s ease-in-out;
 `;
