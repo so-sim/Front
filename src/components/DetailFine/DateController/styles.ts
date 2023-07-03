@@ -62,7 +62,8 @@ export const FlexCenter = styled.div`
 `;
 
 export const ArrowIcon = styled.span`
-  height: 16px;
+  display: flex;
+  align-items: center;
 `;
 
 export const FilterWrapper = styled.div`
