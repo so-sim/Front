@@ -94,7 +94,7 @@ const FormFileds = ({ selectData, dispatch }: Props) => {
         </Label>
       </Style.Row>
       <Label title="메모" width="32px" margin="0px">
-        <Style.TextArea maxLength={65} onChange={onChangeMemo} value={selectData.memo} placeholder="내용을 입력해주세요." />
+        <Style.TextArea maxLength={65} onChange={onChangeMemo} value={selectData.memo} placeholder="(선택) 내용을 입력해주세요." />
         <Style.Length>{selectData.memo.length}/65</Style.Length>
       </Label>
     </>

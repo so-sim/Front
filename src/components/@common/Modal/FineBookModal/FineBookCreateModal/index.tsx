@@ -55,7 +55,7 @@ const FineBookCreateModal = ({ modalHandler }: Props) => {
       },
       {
         onSuccess() {
-          pushDataLayer('add_list', { button: type === 'continue' ? 'keep' : 'normal' });
+          pushDataLayer('add_list', { button: type === 'continue' ? 'keep' : 'add' });
 
           const groundsDate = dayjs(selectData.date);
           setDateState((prev) => ({ ...prev, baseDate: groundsDate, startDate: groundsDate, endDate: groundsDate, mode: 'day' }));

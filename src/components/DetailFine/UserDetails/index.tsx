@@ -76,6 +76,7 @@ const UserDetails = () => {
   const onSuccessUpdateStatus = (situation: Situation) => {
     closeConfirmModal();
     setSelectedFine((prev) => ({ ...prev, situation }));
+    if (situation === '미납') pushDataLayer('nonpayment', { route: 'detail' });
     if (isAdmin === true && situation === '완납') return pushDataLayer('fullpayment', { route: 'detail' });
     if (isAdmin === false) pushDataLayer('confirming', { route: 'detail' });
   };
@@ -153,8 +154,8 @@ const UserDetails = () => {
               )}
             </Label>
           </Style.Row>
-          <Label title="사유" width="30px">
-            <Style.TextArea disabled placeholder="내용을 입력해주세요." value={memo} />
+          <Label title="메모" width="30px">
+            <Style.TextArea disabled placeholder="(선택) 내용을 입력해주세요." value={memo} />
           </Label>
         </Style.UserDetailsContent>
         <Style.Footer>
