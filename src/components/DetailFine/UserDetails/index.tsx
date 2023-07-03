@@ -69,7 +69,7 @@ const UserDetails = () => {
       type: 'CHANGE_STATUS',
       confirm: () => updateStatus(convertedSituation),
       cancel: closeConfirmModal,
-      id: situation === '완납' ? GA.FULL.SIDE_MODAL : '',
+      // id: situation === '완납' ? GA.FULL.SIDE_MODAL : '',
     });
   };
 
@@ -150,7 +150,7 @@ const UserDetails = () => {
                   dropDownList={filteredSituationList}
                 />
               ) : (
-                <Style.StatusButton situation={situation}>{situation}</Style.StatusButton>
+                <Style.StatusButton situation={situation}>{convertSituationToText(situation)}</Style.StatusButton>
               )}
             </Label>
           </Style.Row>
