@@ -2,10 +2,11 @@ import { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react';
 import { ARROW } from '@/assets/icons/Arrow';
 import * as Style from './styles';
 import { useParticipantList } from '@/queries/Group';
-import { useParams } from 'react-router-dom';
+import { useParams, useSearchParams } from 'react-router-dom';
 import DropDown from '@/components/@common/DropDown';
 import { GA } from '@/constants/GA';
 import { DetailFilter } from '@/store/detailFilter';
+import CheckboxContainer from '../UserDetails/checkBox';
 
 type Props = {
   setDetailFilter: Dispatch<SetStateAction<DetailFilter>>;
@@ -23,6 +24,7 @@ const paymentTypeList: { title: PaymentDropdown; id?: string }[] = [
 const TableHead = ({ setDetailFilter }: Props) => {
   const param = useParams();
 
+  const [searchParams, setSearchParams] = useSearchParams();
   const [member, setMember] = useState('전체');
   const [paymentType, setPaymentType] = useState<PaymentDropdown>('전체');
   const [openMemberDropdown, setOpenMemberDropdown] = useState(false);
@@ -59,8 +61,21 @@ const TableHead = ({ setDetailFilter }: Props) => {
     return [{ title: '전체' }, ...joinParticipants];
   };
 
+  const setCheckedParams = () => {
+    if (searchParams.get('checked') === 'All') {
+      searchParams.set('checked', 'None');
+      setSearchParams(searchParams);
+      return;
+    }
+    searchParams.set('checked', 'All');
+    setSearchParams(searchParams);
+  };
+
   return (
     <Style.TableHead>
+      <CheckboxContainer id={'checkedAll'} isChecked={searchParams.get('checked') === 'All'} onChange={setCheckedParams}>
+        <CheckboxContainer.Checkbox />
+      </CheckboxContainer>
       <Style.Element>날짜</Style.Element>
       <Style.PointerElement onClick={handlePaymentDropDown} ref={paymentTypeDropDownRef}>
         <span>납부여부</span>
