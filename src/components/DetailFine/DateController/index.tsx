@@ -9,18 +9,19 @@ import { customedWeek } from '@/utils/customedWeek';
 import DropDown from '@/components/@common/DropDown';
 import { useGroupDetail } from '@/queries/Group';
 import { useParams } from 'react-router-dom';
-import { FilterMode } from '@/pages/FineBook/DetailFine';
 import useCheckLocationState from '@/hooks/useCheckLocationState';
 import { GA } from '@/constants/GA';
 import FineBookCreateModal from '@/components/@common/Modal/FineBookModal/FineBookCreateModal';
 import { dateState } from '@/store/dateState';
-import useDateController from './hook/useDateController';
 import { DetailFilter } from '@/store/detailFilter';
+import { FilterModeTest, useDateFilter } from './hook/useDateFilter';
+import PeriodSettingModal from './PeriodSettingModal';
 
-export const FILTER_BUTTON_LIST: { mode: FilterMode; text: string; id: string }[] = [
+export const FILTER_BUTTON_LIST: { mode: FilterModeTest; text: string; id?: string }[] = [
   { mode: 'month', text: '월간', id: GA.FILTER.MONTH },
   { mode: 'week', text: '주간', id: GA.FILTER.WEEK_DROP },
   { mode: 'day', text: '일간', id: GA.FILTER.DAY },
+  { mode: 'custom', text: '상세' },
 ];
 
 type Props = {
@@ -38,8 +39,9 @@ const DateController = ({ setDetailFilter }: Props) => {
 
   const [openAddModal, setOpenAddModal] = useState<boolean>(initialAddModalState);
   const [openWeeklyFilterDrop, setOpenWeeklyFilterDrop] = useState(false);
+  const [openCustomFilterDrop, setOpenCustomFilterDrop] = useState(false);
 
-  const { getTitle, goToWeek, changeDateByButtonMode, increase, decrease } = useDateController(calendarDate.mode);
+  const { getTitle, goToWeek, changeDateByButtonMode, increaseDate, decreaseDate } = useDateFilter();
 
   const handleWeeklyFilterDrop = () => {
     setOpenWeeklyFilterDrop((prev) => !prev);
@@ -49,7 +51,15 @@ const DateController = ({ setDetailFilter }: Props) => {
     setOpenAddModal((prev) => !prev);
   };
 
-  const handleDateFilterMode = (buttonMode: FilterMode) => {
+  const handleCustomFilterDrop = () => {
+    setOpenCustomFilterDrop((prev) => !prev);
+  };
+
+  const handleDateFilterMode = (buttonMode: FilterModeTest) => {
+    if (buttonMode === 'custom') {
+      handleCustomFilterDrop();
+      return;
+    }
     handleWeeklyFilterDrop();
     if (calendarDate.mode === buttonMode) return;
 
@@ -58,7 +68,7 @@ const DateController = ({ setDetailFilter }: Props) => {
 
   const updateToToday = () => {
     // 여기 Type을 정해줬는데도 baseDate로 들어가있었다.. 왜 Type 체크를 안해줬을까?
-    setCalendarDate((prev) => ({ ...prev, baseDate: dayjs(), startDate: dayjs(), endDate: dayjs(), mode: 'day' as FilterMode }));
+    setCalendarDate((prev) => ({ ...prev, baseDate: dayjs(), startDate: dayjs(), endDate: dayjs(), mode: 'day' }));
   };
 
   useEffect(() => {
@@ -72,10 +82,10 @@ const DateController = ({ setDetailFilter }: Props) => {
           <Style.Block>
             <Style.Date mode={calendarDate.mode}>{getTitle()}</Style.Date>
             <Style.ArrowBlock id={GA.LIST_SKIP.ALL}>
-              <Style.ArrowWrapper onClick={decrease} id={GA.LIST_SKIP.LEFT} data-testid={GA.LIST_SKIP.LEFT}>
+              <Style.ArrowWrapper onClick={decreaseDate} id={GA.LIST_SKIP.LEFT} data-testid={GA.LIST_SKIP.LEFT}>
                 {ARROW.LEFT}
               </Style.ArrowWrapper>
-              <Style.ArrowWrapper onClick={increase} id={GA.LIST_SKIP.RIGHT} data-testid={GA.LIST_SKIP.RIGHT}>
+              <Style.ArrowWrapper onClick={increaseDate} id={GA.LIST_SKIP.RIGHT} data-testid={GA.LIST_SKIP.RIGHT}>
                 {ARROW.RIGHT}
               </Style.ArrowWrapper>
             </Style.ArrowBlock>
@@ -85,25 +95,28 @@ const DateController = ({ setDetailFilter }: Props) => {
             <Style.FilterWrapper ref={dropDownRef}>
               {FILTER_BUTTON_LIST.map((btn) => {
                 return (
-                  <Style.FilterButton id={btn.id} key={btn.id} isActive={calendarDate.mode === btn.mode} onClick={() => handleDateFilterMode(btn.mode)}>
-                    <Style.FlexCenter>
-                      <span>{btn.text}</span>
-                      {btn.mode === 'week' && <Style.ArrowIcon>{ARROW.DOWN_SM}</Style.ArrowIcon>}
-                    </Style.FlexCenter>
-                    {btn.mode === 'week' && calendarDate.mode === 'week' && openWeeklyFilterDrop && (
-                      <div style={{ position: 'relative', left: '1px' }}>
-                        <DropDown
-                          width={60}
-                          align="center"
-                          setState={goToWeek}
-                          list={customedWeek(calendarDate.baseDate)}
-                          top="7px"
-                          onClose={handleWeeklyFilterDrop}
-                          dropDownRef={dropDownRef}
-                        />
-                      </div>
-                    )}
-                  </Style.FilterButton>
+                  <>
+                    <Style.FilterButton id={btn.id} key={btn.id} isActive={calendarDate.mode === btn.mode} onClick={() => handleDateFilterMode(btn.mode)}>
+                      <Style.FlexCenter>
+                        <span>{btn.text}</span>
+                        {(btn.mode === 'week' || btn.mode === 'custom') && <Style.ArrowIcon>{ARROW.DOWN_SM}</Style.ArrowIcon>}
+                      </Style.FlexCenter>
+                      {btn.mode === 'week' && calendarDate.mode === 'week' && openWeeklyFilterDrop && (
+                        <div style={{ position: 'relative', left: '1px' }}>
+                          <DropDown
+                            width={60}
+                            align="center"
+                            setState={goToWeek}
+                            list={customedWeek(calendarDate.baseDate)}
+                            top="7px"
+                            onClose={handleWeeklyFilterDrop}
+                            dropDownRef={dropDownRef}
+                          />
+                        </div>
+                      )}
+                    </Style.FilterButton>
+                    {btn.mode === 'custom' && openCustomFilterDrop && <PeriodSettingModal />}
+                  </>
                 );
               })}
             </Style.FilterWrapper>
