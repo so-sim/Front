@@ -1,5 +1,5 @@
-import { FilterMode } from '@/pages/FineBook/DetailFine';
 import styled from '@emotion/styled';
+import { FilterModeTest } from './hook/useDateFilter';
 
 export const DateController = styled.div`
   display: flex;
@@ -89,8 +89,8 @@ export const ArrowBlock = styled.span`
   display: flex;
 `;
 
-export const Date = styled.span<{ mode: FilterMode }>`
-  width: ${({ mode }) => (mode === 'week' ? '272px' : mode === 'day' ? '118px' : '60px')};
+export const Date = styled.span<{ mode: FilterModeTest }>`
+  width: ${({ mode }) => (mode === 'week' || mode === 'custom' ? '272px' : mode === 'day' ? '118px' : '60px')};
   white-space: nowrap;
   ${({ theme }) => theme.font.headline}
 `;

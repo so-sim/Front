@@ -1,4 +1,4 @@
-import { FilterMode } from '@/pages/FineBook/DetailFine';
+import { FilterModeTest } from '@/components/DetailFine/DateController/hook/useDateFilter';
 import styled from '@emotion/styled';
 
 export const DateCell = styled.div`
@@ -19,7 +19,7 @@ interface SelectedWeekProps {
   isSelectedPeriod: boolean;
   isFirst: boolean;
   isLast: boolean;
-  mode: FilterMode;
+  mode: FilterModeTest;
 }
 
 export const SelectedPeriod = styled.div<SelectedWeekProps>`
@@ -44,7 +44,7 @@ interface DateProps {
   isSelectedDate: boolean;
   isCurrentMonth: boolean;
   isSelectedPeriod: boolean;
-  mode: FilterMode;
+  mode: FilterModeTest;
 }
 
 export const Date = styled.div<DateProps>`
