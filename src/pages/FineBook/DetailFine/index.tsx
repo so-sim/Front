@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useGetDetailList } from '@/queries/Detail/useGetDetailList';
-import { EventInfoTest, SelectedEventInfo } from '@/types/event';
+import { SelectedEventInfo } from '@/types/event';
 import { DateController, DetailList, DetailsHeader, Pagination, TableHead, UserDetails } from '@/components/DetailFine';
 import * as Style from './styles';
 import { useRecoilValue } from 'recoil';
@@ -10,6 +10,7 @@ import dayjs from 'dayjs';
 import { dateState } from '@/store/dateState';
 import { DetailFilter } from '@/store/detailFilter';
 import SelectedFineContextProvider from '@/contexts/SelectedFineContext';
+import useCheckDetailFine from '@/hooks/useCheckDetailFine';
 
 export type FilterMode = 'month' | 'week' | 'day';
 
@@ -31,14 +32,16 @@ const DetailFine = () => {
   const calendarDate = useRecoilValue(dateState);
   const { data } = useGetDetailList(detailFilter, calendarDate);
 
+  const { checkDetailFine, setCheckDetailFine } = useCheckDetailFine();
+
   return (
     <SelectedFineContextProvider>
       <Style.DetailFineFrame>
         <DetailsHeader />
         <Style.DetailContent>
           <DateController setDetailFilter={setDetailFilter} />
-          <TableHead setDetailFilter={setDetailFilter} />
-          <DetailList detailFilter={detailFilter} details={data?.content.eventList} />
+          <TableHead setDetailFilter={setDetailFilter} details={data?.content.eventList} checkDetailFine={checkDetailFine} setCheckDetailFine={setCheckDetailFine} />
+          <DetailList detailFilter={detailFilter} details={data?.content.eventList} checkDetailFine={checkDetailFine} setCheckDetailFine={setCheckDetailFine} />
         </Style.DetailContent>
         <Pagination totalCount={data?.content.totalCount} detailFilter={detailFilter} setDetailFilter={setDetailFilter} />
         <UserDetails />

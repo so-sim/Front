@@ -2,14 +2,20 @@ import { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react';
 import { ARROW } from '@/assets/icons/Arrow';
 import * as Style from './styles';
 import { useParticipantList } from '@/queries/Group';
-import { useParams, useSearchParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import DropDown from '@/components/@common/DropDown';
 import { GA } from '@/constants/GA';
 import { DetailFilter } from '@/store/detailFilter';
 import CheckboxContainer from '../UserDetails/checkBox';
+import { SelectedEventInfo } from '@/types/event';
+import { CheckDetailFine, SetCheckDetailFine } from '@/hooks/useCheckDetailFine';
 
 type Props = {
   setDetailFilter: Dispatch<SetStateAction<DetailFilter>>;
+  details?: SelectedEventInfo[];
+
+  checkDetailFine: CheckDetailFine;
+  setCheckDetailFine: SetCheckDetailFine;
 };
 
 type PaymentDropdown = '전체' | '미납' | '완납' | '확인중';
@@ -21,14 +27,14 @@ const paymentTypeList: { title: PaymentDropdown; id?: string }[] = [
   { title: '확인중', id: GA.FILTER.CON },
 ];
 
-const TableHead = ({ setDetailFilter }: Props) => {
+const TableHead = ({ details, setDetailFilter, checkDetailFine, setCheckDetailFine }: Props) => {
   const param = useParams();
 
-  const [searchParams, setSearchParams] = useSearchParams();
   const [member, setMember] = useState('전체');
   const [paymentType, setPaymentType] = useState<PaymentDropdown>('전체');
   const [openMemberDropdown, setOpenMemberDropdown] = useState(false);
   const [openPaymentTypeDropdown, setOpenPaymentTypeDropdown] = useState(false);
+  const { setAddCheckDetailFine, setSubtractCheckDetailFine } = setCheckDetailFine;
 
   const memberDropDownRef = useRef<HTMLDivElement>(null);
   const paymentTypeDropDownRef = useRef<HTMLDivElement>(null);
@@ -61,19 +67,24 @@ const TableHead = ({ setDetailFilter }: Props) => {
     return [{ title: '전체' }, ...joinParticipants];
   };
 
-  const setCheckedParams = () => {
-    if (searchParams.get('checked') === 'All') {
-      searchParams.set('checked', 'None');
-      setSearchParams(searchParams);
+  const isCheckedAll = details?.every((item) => Object.keys(checkDetailFine).includes(String(item.eventId)));
+
+  const checkedAllProperty = () => {
+    if (isCheckedAll) {
+      details?.forEach((item) => {
+        setSubtractCheckDetailFine(item);
+      });
       return;
     }
-    searchParams.set('checked', 'All');
-    setSearchParams(searchParams);
+
+    details?.forEach((item) => {
+      setAddCheckDetailFine(item);
+    });
   };
 
   return (
     <Style.TableHead>
-      <CheckboxContainer id={'checkedAll'} isChecked={searchParams.get('checked') === 'All'} onChange={setCheckedParams}>
+      <CheckboxContainer id={'checkedAll'} isChecked={!!isCheckedAll} onChange={checkedAllProperty}>
         <CheckboxContainer.Checkbox />
       </CheckboxContainer>
       <Style.Element>날짜</Style.Element>
@@ -114,4 +125,5 @@ const TableHead = ({ setDetailFilter }: Props) => {
     </Style.TableHead>
   );
 };
+
 export default TableHead;
