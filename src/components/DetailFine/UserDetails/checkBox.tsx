@@ -4,7 +4,7 @@ import { createContext, useContext, PropsWithChildren } from 'react';
 type CheckboxContextProps = {
   id: string;
   isChecked: boolean;
-  onChange: () => void;
+  onChange: (event: React.MouseEvent<HTMLInputElement>) => void;
 };
 
 type CheckboxProps = CheckboxContextProps & React.PropsWithChildren<{}>;
@@ -24,17 +24,20 @@ const CheckboxContainer = ({ id, isChecked, onChange, children }: CheckboxProps)
 
   return <CheckboxContext.Provider value={value}>{children}</CheckboxContext.Provider>;
 };
+// Context
 
 const useCheckboxContext = () => {
   const context = useContext(CheckboxContext);
   return context;
 };
+// useContext hook
 
 const Checkbox = ({ ...props }) => {
   const { id, isChecked, onChange } = useCheckboxContext();
+
   return (
     <>
-      <input type="checkbox" id={id} checked={isChecked} onChange={onChange} {...props} />
+      <input type="checkbox" id={id} checked={isChecked} onClick={onChange} readOnly {...props} />
     </>
   );
 };
