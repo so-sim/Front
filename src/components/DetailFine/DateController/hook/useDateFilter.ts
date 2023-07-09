@@ -1,27 +1,16 @@
 import { FilterMode } from '@/pages/FineBook/DetailFine';
 import { dateState, DateState } from '@/store/dateState';
 import { weekList } from '@/utils/customedWeek';
-import { padStart } from '@/utils/padStart';
 import dayjs, { Dayjs } from 'dayjs';
 import { useRecoilState } from 'recoil';
+import { DateFilter } from './DateFilter';
 
-type FilterModeTest = FilterMode;
-
-const createFilter = (mode: FilterModeTest) => {
-  switch (mode) {
-    case 'day':
-      return new DayFilter();
-    case 'week':
-      return new WeekFilter();
-    case 'month':
-      return new MonthFilter();
-  }
-};
+export type FilterModeTest = FilterMode | 'custom';
 
 export const useDateFilter = () => {
   const [calendarDate, setCalendarDate] = useRecoilState(dateState);
 
-  const dateFilter = createFilter(calendarDate.mode);
+  const dateFilter = new DateFilter(calendarDate.mode);
 
   const goToWeek = (weekText: string) => {
     const week = weekList.indexOf(weekText) + 1;
@@ -30,12 +19,12 @@ export const useDateFilter = () => {
   };
 
   const increaseDate = () => {
-    const changedDateState = dateFilter.increaseDateByMode(calendarDate.baseDate);
+    const changedDateState = dateFilter.increaseDateByMode(calendarDate);
     setCalendarDate(changedDateState);
   };
 
   const decreaseDate = () => {
-    const changedDateState = dateFilter.decreaseDateByMode(calendarDate.baseDate);
+    const changedDateState = dateFilter.decreaseDateByMode(calendarDate);
     setCalendarDate(changedDateState);
   };
 
@@ -45,166 +34,12 @@ export const useDateFilter = () => {
   };
 
   const changeDateByButtonMode = (buttonMode: FilterModeTest) => {
-    const changedDateState = dateFilter.updateDateByButtonMode(calendarDate.baseDate, buttonMode);
+    const changedDateState = dateFilter.updateDateByButtonMode(calendarDate, buttonMode);
     setCalendarDate(changedDateState);
   };
 
   return { increaseDate, decreaseDate, getTitle, changeDateByButtonMode, goToWeek };
 };
-
-class WeekFilter {
-  private mode: FilterMode = 'week';
-
-  getTitle = (calendarDate: DateState) => {
-    const startMonth = padStart(dayjs(calendarDate.startDate).month() + 1);
-    const startDate = padStart(dayjs(calendarDate.startDate).date());
-    const endMonth = padStart(dayjs(calendarDate.endDate).month() + 1);
-    const endDate = padStart(dayjs(calendarDate.endDate).date());
-
-    return `${startMonth}월 ${startDate}일 - ${endMonth}월 ${endDate}일`;
-  };
-
-  increaseDateByMode = (baseDate: Dayjs) => {
-    const startDate = dayjs(baseDate).startOf(this.mode).add(1, this.mode);
-
-    return {
-      baseDate: startDate,
-      startDate: startDate,
-      endDate: startDate.endOf(this.mode),
-      mode: this.mode,
-    };
-  };
-
-  decreaseDateByMode = (baseDate: Dayjs) => {
-    const startDayOfMonth = dayjs(baseDate).startOf('month');
-    const startDay = dayjs(baseDate).startOf('week');
-    const changedStartDate = startDay.date() > dayjs(baseDate).date() ? startDayOfMonth : startDay;
-    const changedDate = changedStartDate.subtract(1, this.mode);
-
-    return {
-      baseDate: changedDate,
-      startDate: changedDate.startOf(this.mode),
-      endDate: changedDate.endOf(this.mode),
-      mode: this.mode,
-    };
-  };
-
-  updateDateByButtonMode = (baseDate: Dayjs, buttonMode: FilterMode) => {
-    const startDate = this.getBaseDateByChangedMode(baseDate, buttonMode);
-
-    return {
-      baseDate: startDate,
-      startDate: startDate.startOf(buttonMode),
-      endDate: startDate.endOf(buttonMode),
-      mode: buttonMode,
-    };
-  };
-
-  getBaseDateByChangedMode = (baseDate: Dayjs, mode: FilterMode) => {
-    const startDayOfMonth = dayjs(baseDate).startOf('month');
-    const startDay = dayjs(baseDate).startOf('week');
-    const endDay = dayjs(baseDate).endOf('week');
-
-    if (startDay.month() === endDay.month()) return startDay;
-    if (startDay.date() > dayjs(baseDate).date()) return startDayOfMonth;
-
-    return startDay;
-  };
-}
-
-class DayFilter {
-  private mode: FilterMode = 'day';
-
-  getTitle = (calendarDate: DateState) => {
-    const month = padStart(dayjs(calendarDate.baseDate).month() + 1);
-    const day = padStart(dayjs(calendarDate.baseDate).date());
-
-    return `${month}월 ${day}일`;
-  };
-
-  increaseDateByMode = (baseDate: Dayjs) => {
-    const startDate = dayjs(baseDate).startOf(this.mode).add(1, this.mode);
-
-    return {
-      baseDate: startDate,
-      startDate: startDate,
-      endDate: startDate,
-      mode: this.mode,
-    };
-  };
-
-  decreaseDateByMode = (baseDate: Dayjs) => {
-    const changedDate = dayjs(baseDate).subtract(1, this.mode);
-
-    return {
-      baseDate: changedDate,
-      startDate: changedDate,
-      endDate: changedDate,
-      mode: this.mode,
-    };
-  };
-
-  updateDateByButtonMode = (baseDate: Dayjs, buttonMode: FilterMode) => {
-    const startDate = this.getBaseDateByChangedMode(baseDate, buttonMode);
-
-    return {
-      baseDate: startDate,
-      startDate: startDate,
-      endDate: startDate,
-      mode: buttonMode,
-    };
-  };
-
-  getBaseDateByChangedMode = (baseDate: Dayjs, mode: FilterMode) => {
-    return dayjs(baseDate);
-  };
-}
-
-class MonthFilter {
-  private mode: FilterMode = 'month';
-
-  getTitle = (calendarDate: DateState) => {
-    const month = padStart(dayjs(calendarDate.baseDate).month() + 1);
-    return `${month}월`;
-  };
-
-  increaseDateByMode = (baseDate: Dayjs) => {
-    const startDate = dayjs(baseDate).startOf(this.mode).add(1, this.mode);
-
-    return {
-      baseDate: startDate,
-      startDate: startDate,
-      endDate: startDate.endOf(this.mode),
-      mode: this.mode,
-    };
-  };
-
-  decreaseDateByMode = (baseDate: Dayjs) => {
-    const startDayOfMonth = dayjs(baseDate).startOf(this.mode).subtract(1, this.mode);
-    return {
-      baseDate: startDayOfMonth,
-      startDate: startDayOfMonth.startOf(this.mode),
-      endDate: startDayOfMonth.endOf(this.mode),
-      mode: this.mode,
-    };
-  };
-
-  updateDateByButtonMode = (baseDate: Dayjs, buttonMode: FilterMode) => {
-    const startDate = this.getBaseDateByChangedMode(baseDate, buttonMode);
-
-    return {
-      baseDate: startDate,
-      startDate: startDate.startOf(buttonMode),
-      endDate: startDate.endOf(buttonMode),
-      mode: buttonMode,
-    };
-  };
-
-  getBaseDateByChangedMode = (baseDate: Dayjs, mode: FilterMode) => {
-    const startDayOfMonth = dayjs(baseDate).startOf(mode);
-    return startDayOfMonth;
-  };
-}
 
 export function moveDateToWeek(baseDate: Dayjs, week: number): DateState {
   const startOfMonthDay = dayjs(baseDate).set('date', 1).startOf('month').day();
