@@ -52,33 +52,17 @@ describe('customFilter', () => {
     expect(result).toBe('07월 03일 - 07월 31일');
   });
 
-  it('getTitle를 실행했을 때 제목은 첫날 - 마지막날 포멧이어야 한다.', () => {
-    const calendarDate: DateState = {
-      baseDate: dayjs('2023.07.01'),
-      startDate: dayjs('2023.07.03'),
-      endDate: dayjs('2023.08.31'),
-      mode: 'custom',
-    };
-
-    const result = dateFilter.updateDateByButtonMode(calendarDate, 'custom');
-
-    expect(result.mode).toBe('custom');
-    expect(result.baseDate.month() + 1).toBe(7);
-    expect(result.baseDate.date()).toBe(3);
-  });
-
   it('updateDateByButtonMode를 실행했을 때 해당 기간이 필터링 되어야 한다.', () => {
     const calendarDate = {
       baseDate: dayjs('2023.07.01'),
-      startDate: dayjs('2023.07.03'),
+      startDate: dayjs('2023.06.25'),
       endDate: dayjs('2023.07.31'),
       mode: 'custom' as FilterModeTest,
     };
-
     const result = dateFilter.updateDateByButtonMode(calendarDate, 'custom');
 
-    expect(result.baseDate.date()).toBe(3);
-    expect(result.startDate.date()).toBe(3);
+    expect(result.baseDate.date()).toBe(1);
+    expect(result.startDate.date()).toBe(25);
     expect(result.endDate.date()).toBe(31);
     expect(result.mode).toBe('custom');
   });
@@ -132,5 +116,79 @@ describe('dayFilter', () => {
     expect(result.startDate.date()).toBe(2);
     expect(result.endDate.date()).toBe(2);
     expect(result.mode).toBe('day');
+  });
+});
+
+describe('weekFilter', () => {
+  let dateFilter: IDateFilter;
+  const calendarDate: DateState = {
+    baseDate: dayjs('2023.07.01'),
+    startDate: dayjs('2023.06.25'),
+    endDate: dayjs('2023.07.01'),
+    mode: 'week',
+  };
+  beforeEach(() => {
+    dateFilter = new DateFilter('week');
+  });
+
+  it('increaseDateByMode를 실행했을 때 다음 주가 담겨야 한다.', () => {
+    const result = dateFilter.increaseDateByMode(calendarDate);
+
+    expect(result.baseDate.date()).toBe(2);
+    expect(result.startDate.date()).toBe(2);
+    expect(result.endDate.date()).toBe(8);
+    expect(result.mode).toBe('week');
+  });
+
+  it('decreaseDateByMode를 실행했을 때 이전 주가 담겨야 한다.', () => {
+    const result = dateFilter.decreaseDateByMode(calendarDate);
+
+    expect(result.baseDate.date()).toBe(18);
+    expect(result.startDate.date()).toBe(18);
+    expect(result.endDate.date()).toBe(24);
+    expect(result.mode).toBe('week');
+  });
+
+  it('getTitle를 실행했을 때 제목은 00월 00일 포멧이어야 한다.', () => {
+    const result = dateFilter.getTitle(calendarDate);
+
+    expect(result).toBe('06월 25일 - 07월 01일');
+  });
+});
+
+describe('monthFilter', () => {
+  let dateFilter: IDateFilter;
+  const calendarDate: DateState = {
+    baseDate: dayjs('2023.07.01'),
+    startDate: dayjs('2023.07.01'),
+    endDate: dayjs('2023.07.31'),
+    mode: 'month',
+  };
+  beforeEach(() => {
+    dateFilter = new DateFilter('month');
+  });
+
+  it('increaseDateByMode를 실행했을 때 다음 달이 담겨야 한다.', () => {
+    const result = dateFilter.increaseDateByMode(calendarDate);
+
+    expect(result.baseDate.month() + 1).toBe(8);
+    expect(result.startDate.date()).toBe(1);
+    expect(result.endDate.date()).toBe(31);
+    expect(result.mode).toBe('month');
+  });
+
+  it('decreaseDateByMode를 실행했을 때 이전 주가 담겨야 한다.', () => {
+    const result = dateFilter.decreaseDateByMode(calendarDate);
+
+    expect(result.baseDate.month() + 1).toBe(6);
+    expect(result.startDate.date()).toBe(1);
+    expect(result.endDate.date()).toBe(30);
+    expect(result.mode).toBe('month');
+  });
+
+  it('getTitle를 실행했을 때 제목은 00월 00일 포멧이어야 한다.', () => {
+    const result = dateFilter.getTitle(calendarDate);
+
+    expect(result).toBe('07월');
   });
 });
