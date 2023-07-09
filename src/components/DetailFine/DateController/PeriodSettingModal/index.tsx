@@ -1,7 +1,7 @@
 import { Button } from '@/components/@common';
 import { dateState } from '@/store/dateState';
 import dayjs from 'dayjs';
-import { useEffect, useState } from 'react';
+import { ForwardedRef, forwardRef, useEffect, useState } from 'react';
 import { useRecoilState } from 'recoil';
 import { FilterModeTest } from '../hook/useDateFilter';
 import PeriodInput from './PeriodInput';
@@ -13,7 +13,11 @@ export type CustomPeriodType = {
   mode: FilterModeTest;
 };
 
-const PeriodSettingModal = () => {
+type Props = {
+  modalHandler: () => void;
+};
+
+const PeriodSettingModal = forwardRef(({ modalHandler }: Props, ref: ForwardedRef<HTMLDivElement>) => {
   const [calendarDate, setCalendarDate] = useRecoilState(dateState);
   /**
    * 상세 기간 필터링에 사용되는 startDate, endDate, mode
@@ -32,6 +36,7 @@ const PeriodSettingModal = () => {
       endDate: dayjs(customPeriod.endDate),
       mode: 'custom',
     }));
+    modalHandler();
   };
 
   useEffect(() => {
@@ -43,7 +48,7 @@ const PeriodSettingModal = () => {
   }, [calendarDate]);
 
   return (
-    <Style.Frame>
+    <Style.Frame ref={ref}>
       <Style.Title>상세 기간 선택</Style.Title>
       <Style.PeriodInputRow>
         <PeriodInput label="시작일" date={customPeriod.startDate} setCustomPeriod={setCustomPeriod} />
@@ -56,6 +61,6 @@ const PeriodSettingModal = () => {
       </Style.ButtonRow>
     </Style.Frame>
   );
-};
+});
 
 export default PeriodSettingModal;
