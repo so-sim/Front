@@ -1,8 +1,6 @@
 import { DateState } from '@/store/dateState';
 import { padStart } from '@/utils/padStart';
 import dayjs from 'dayjs';
-import { getBaseDateByChangedMode } from './DateFilter';
-import { FilterModeTest } from './useDateFilter';
 
 export class DayFilter {
   private mode: 'day' = 'day';
@@ -33,17 +31,6 @@ export class DayFilter {
       startDate: changedDate,
       endDate: changedDate,
       mode: this.mode,
-    };
-  };
-
-  updateDateByButtonMode = (calendarDate: DateState, buttonMode: FilterModeTest) => {
-    const startDate = getBaseDateByChangedMode(calendarDate.baseDate, buttonMode);
-
-    return {
-      baseDate: startDate,
-      startDate: startDate,
-      endDate: startDate,
-      mode: buttonMode,
     };
   };
 }
