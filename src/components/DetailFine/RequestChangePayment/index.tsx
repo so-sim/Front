@@ -9,7 +9,6 @@ import { useParticipantList } from '@/queries/Group';
 
 type Props = {
   checkDetailFine: CheckDetailFine;
-  paymentControl: { type: string; isOpen: boolean };
 };
 
 const RequestChangePayment = ({ checkDetailFine }: Props) => {
@@ -19,10 +18,14 @@ const RequestChangePayment = ({ checkDetailFine }: Props) => {
 
   const [searchParams, setSearchParams] = useSearchParams();
 
-  const ParticipantList = useParticipantList(Number(groupId));
+  const { data: participantData } = useParticipantList(Number(groupId));
+  const participantList = participantData?.content.nicknameList;
 
-  console.log(ParticipantList);
-  console.log(checkDetailFine);
+  const participantPaymentList = (nickName: string) =>
+    Object.values(checkDetailFine)
+      .filter((item) => item.nickname === nickName)
+      .sort((a, b) => +a.date.replace(/\./g, '') - +b.date.replace(/\./g, ''));
+  // 해당 로직을 ItemList에서 toggle이 실행되었을 때 해주어도 좋을 것 같다.
 
   if (!searchParams.has('type')) return null;
 
@@ -50,7 +53,9 @@ const RequestChangePayment = ({ checkDetailFine }: Props) => {
         <Style.DatePeriodContainer>2023.05.24 - 2023.08.24</Style.DatePeriodContainer>
 
         <Style.ListContainer>
-          <ItemList />
+          {participantList?.map((nickName) => (
+            <ItemList key={nickName} list={participantPaymentList(nickName)} />
+          ))}
         </Style.ListContainer>
       </Style.Main>
       <Style.Footer>
