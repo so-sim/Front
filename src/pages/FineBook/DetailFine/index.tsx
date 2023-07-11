@@ -11,6 +11,7 @@ import { dateState } from '@/store/dateState';
 import { DetailFilter } from '@/store/detailFilter';
 import SelectedFineContextProvider from '@/contexts/SelectedFineContext';
 import useCheckDetailFine from '@/hooks/useCheckDetailFine';
+import RequestChangePayment from '@/components/DetailFine/RequestChangePayment';
 
 export type FilterMode = 'month' | 'week' | 'day';
 
@@ -33,6 +34,23 @@ const DetailFine = () => {
   const { data } = useGetDetailList(detailFilter, calendarDate);
 
   const { checkDetailFine, setCheckDetailFine } = useCheckDetailFine();
+  // 현재 걍 context쓸지 고민 중 (checkDetailFine과 paymentControl - type 관련 )
+
+  // 선택 시 Button을 어느 컴포넌트에서 띄어줄까 고민.. DetailList 위에로? TableHead 안쪽??
+
+  // openConfirmModal의 목적 ??
+
+  // 해당 페이지에서 더 디테일하게 폴더단위가 아니라 파일로 쪼개도 되려나??..
+
+  // 기존 UserDetail을 그냥 포탈처럼 작동을 하도록 고민중. (또한 )
+
+  // setState 테스팅 가능한지??
+
+  // userDetail 사이즈 고민
+
+  // 스토리북
+
+  // searchParam을 사용하자
 
   return (
     <SelectedFineContextProvider>
@@ -43,8 +61,10 @@ const DetailFine = () => {
           <TableHead setDetailFilter={setDetailFilter} details={data?.content.eventList} checkDetailFine={checkDetailFine} setCheckDetailFine={setCheckDetailFine} />
           <DetailList detailFilter={detailFilter} details={data?.content.eventList} checkDetailFine={checkDetailFine} setCheckDetailFine={setCheckDetailFine} />
         </Style.DetailContent>
+
         <Pagination totalCount={data?.content.totalCount} detailFilter={detailFilter} setDetailFilter={setDetailFilter} />
         <UserDetails />
+        <RequestChangePayment checkDetailFine={checkDetailFine} />
       </Style.DetailFineFrame>
     </SelectedFineContextProvider>
   );
