@@ -35,7 +35,7 @@ const TableHead = ({ details, setDetailFilter, checkDetailFine, setCheckDetailFi
   const [paymentType, setPaymentType] = useState<PaymentDropdown>('전체');
   const [openMemberDropdown, setOpenMemberDropdown] = useState(false);
   const [openPaymentTypeDropdown, setOpenPaymentTypeDropdown] = useState(false);
-  const { setAddCheckDetailFine, setSubtractCheckDetailFine } = setCheckDetailFine;
+  const { setAddCheckDetailFine, setSubtractCheckDetailFine, setInitCheckDetailFine } = setCheckDetailFine;
 
   const memberDropDownRef = useRef<HTMLDivElement>(null);
   const paymentTypeDropDownRef = useRef<HTMLDivElement>(null);
@@ -84,6 +84,11 @@ const TableHead = ({ details, setDetailFilter, checkDetailFine, setCheckDetailFi
     });
   };
 
+  const initCheckDetailFine = (event: React.MouseEvent<HTMLInputElement>) => {
+    event.stopPropagation();
+    setInitCheckDetailFine();
+  };
+
   return (
     <Style.TableHead>
       <CheckboxContainer id={'checkedAll'} isChecked={!!isCheckedAll} onChange={checkedAllProperty}>
@@ -127,7 +132,13 @@ const TableHead = ({ details, setDetailFilter, checkDetailFine, setCheckDetailFi
       <Style.Element>사유</Style.Element>
       {!(Object.keys(checkDetailFine).length === 0) && (
         <Style.PaymentControlWrapper>
-          <input type="checkbox" />
+          <CheckboxContainer
+            id={'checkDetailFineLength'}
+            isChecked={!(Object.keys(checkDetailFine).length === 0)}
+            onChange={(event: React.MouseEvent<HTMLInputElement>) => initCheckDetailFine(event)}
+          >
+            <CheckboxContainer.Checkbox />
+          </CheckboxContainer>
           {/* 여기 onChange는 임시 cache역할을 만들어서 비우고 다시 채우는 역할??  근데 비우면 없어짐  그래서 그냥 cache 필요없이 지우는 역할을 해야할 것 같다.  */}
           {/* fixed는 논의 후 추가 */}
           <Style.Label>{Object.keys(checkDetailFine).length}개 선택</Style.Label>
