@@ -56,6 +56,20 @@ const RequestChangePayment = ({ checkDetailFine, setCheckDetailFine }: Props) =>
 
   const { setInitCheckDetailFine } = setCheckDetailFine;
 
+  const max_Date = Object.values(checkDetailFine)?.reduce(
+    (max, curr) => (stringToNumber_Date(max.date) < stringToNumber_Date(curr.date) ? curr : max),
+    checkDetailFine[Object.keys(checkDetailFine)[0]],
+  );
+
+  const min_Date = Object.values(checkDetailFine)?.reduce(
+    (min, curr) => (stringToNumber_Date(min.date) > stringToNumber_Date(curr.date) ? curr : min),
+    checkDetailFine[Object.keys(checkDetailFine)[0]],
+  );
+
+  const { data: participantData } = useParticipantList(Number(groupId));
+
+  const participantList = participantData?.content.nicknameList;
+
   useEffect(() => {
     closePage();
   }, []);
@@ -70,9 +84,6 @@ const RequestChangePayment = ({ checkDetailFine, setCheckDetailFine }: Props) =>
     closePage();
     setInitCheckDetailFine();
   };
-
-  const { data: participantData } = useParticipantList(Number(groupId));
-  const participantList = participantData?.content.nicknameList;
 
   const { mutate: mutateDetailStatus } = useUpdateDetailStatus(onSuccess);
 
@@ -94,16 +105,6 @@ const RequestChangePayment = ({ checkDetailFine, setCheckDetailFine }: Props) =>
       .filter((item) => item.nickname === nickName)
       .sort((a, b) => stringToNumber_Date(a.date) - stringToNumber_Date(b.date));
   // 해당 로직을 ItemList에서 toggle이 실행되었을 때 해주어도 좋을 것 같다.
-
-  const max_Date = Object.values(checkDetailFine)?.reduce(
-    (max, curr) => (stringToNumber_Date(max.date) < stringToNumber_Date(curr.date) ? curr : max),
-    checkDetailFine[Object.keys(checkDetailFine)[0]],
-  );
-
-  const min_Date = Object.values(checkDetailFine)?.reduce(
-    (min, curr) => (stringToNumber_Date(min.date) > stringToNumber_Date(curr.date) ? curr : min),
-    checkDetailFine[Object.keys(checkDetailFine)[0]],
-  );
 
   if (!searchParams.has('type')) return null;
 
