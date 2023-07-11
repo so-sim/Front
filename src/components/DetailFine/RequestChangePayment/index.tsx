@@ -42,8 +42,13 @@ const Status: StatusType = {
 
 // 해당 Status onSubmit도 추가해서 함께 다루고 싶지만.. 컴포넌트 안에 이 부분을 추가하기 애매해서 일다 ㄴ빼놓았음
 
+// 해당 컴포넌트 네이밍 고민 중..
+// PackageMutate 페이지
+// DetailPackage
 // PaymentStatement
 // alert // change // upDate
+
+// 지금 총무 checkBox 클릭을 어떻게 할건지 얘기를 나눠봐야함
 
 const RequestChangePayment = ({ checkDetailFine, setCheckDetailFine }: Props) => {
   const { groupId } = useParams();
@@ -56,15 +61,7 @@ const RequestChangePayment = ({ checkDetailFine, setCheckDetailFine }: Props) =>
 
   const { setInitCheckDetailFine } = setCheckDetailFine;
 
-  const max_Date = Object.values(checkDetailFine)?.reduce(
-    (max, curr) => (stringToNumber_Date(max.date) < stringToNumber_Date(curr.date) ? curr : max),
-    checkDetailFine[Object.keys(checkDetailFine)[0]],
-  );
-
-  const min_Date = Object.values(checkDetailFine)?.reduce(
-    (min, curr) => (stringToNumber_Date(min.date) > stringToNumber_Date(curr.date) ? curr : min),
-    checkDetailFine[Object.keys(checkDetailFine)[0]],
-  );
+  console.log(checkDetailFine);
 
   const { data: participantData } = useParticipantList(Number(groupId));
 
@@ -98,13 +95,22 @@ const RequestChangePayment = ({ checkDetailFine, setCheckDetailFine }: Props) =>
   const requestAlarm = () => {};
   // 백엔드 API명세에 아직 추가되어있지않음
 
-  const stringToNumber_Date = (date: string) => +date.replace(/\./g, '');
+  const stringToNumber_Date = (date: string) => +date?.replace(/\./g, '');
 
   const participantPayment_List = (nickName: string) =>
     Object.values(checkDetailFine)
-      .filter((item) => item.nickname === nickName)
-      .sort((a, b) => stringToNumber_Date(a.date) - stringToNumber_Date(b.date));
+      ?.filter((item) => item.nickname === nickName)
+      ?.sort((a, b) => stringToNumber_Date(a.date) - stringToNumber_Date(b.date));
   // 해당 로직을 ItemList에서 toggle이 실행되었을 때 해주어도 좋을 것 같다.
+  const max_Date = Object.values(checkDetailFine)?.reduce(
+    (max, curr) => (stringToNumber_Date(max.date) < stringToNumber_Date(curr.date) ? curr : max),
+    checkDetailFine[Object.keys(checkDetailFine)[0]],
+  );
+
+  const min_Date = Object.values(checkDetailFine)?.reduce(
+    (min, curr) => (stringToNumber_Date(min.date) > stringToNumber_Date(curr.date) ? curr : min),
+    checkDetailFine[Object.keys(checkDetailFine)[0]],
+  );
 
   if (!searchParams.has('type')) return null;
 
