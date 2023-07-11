@@ -10,8 +10,8 @@ import dayjs from 'dayjs';
 import { dateState } from '@/store/dateState';
 import { DetailFilter } from '@/store/detailFilter';
 import SelectedFineContextProvider from '@/contexts/SelectedFineContext';
-import useCheckDetailFine from '@/components/DetailFine/RequestChangePayment/hooks/useCheckDetailFine';
-import RequestChangePayment from '@/components/DetailFine/RequestChangePayment';
+import useCheckDetailFine from '@/components/DetailFine/AlarmRequest_PaymentUpdate/hooks/useCheckDetailFine';
+import RequestChangePayment from '@/components/DetailFine/AlarmRequest_PaymentUpdate';
 
 export type FilterMode = 'month' | 'week' | 'day';
 

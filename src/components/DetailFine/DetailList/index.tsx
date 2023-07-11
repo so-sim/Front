@@ -8,7 +8,7 @@ import { dateState } from '@/store/dateState';
 import { SelectedEventInfo } from '@/types/event';
 import { useSelectedContext } from '@/contexts/SelectedFineContext';
 import CheckboxContainer from '../UserDetails/checkBox';
-import { CheckDetailFine, SetCheckDetailFine } from '@/components/DetailFine/RequestChangePayment/hooks/useCheckDetailFine';
+import { CheckDetailFine, SetCheckDetailFine } from '@/components/DetailFine/AlarmRequest_PaymentUpdate/hooks/useCheckDetailFine';
 
 type Props = {
   details?: SelectedEventInfo[];

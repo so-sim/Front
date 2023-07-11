@@ -1,7 +1,7 @@
 import * as Style from './styles';
 import { SYSTEM } from '@/assets/icons/System';
 import theme from '@/styles/Theme';
-import { CheckDetailFine, SetCheckDetailFine } from '@/components/DetailFine/RequestChangePayment/hooks/useCheckDetailFine';
+import { CheckDetailFine, SetCheckDetailFine } from '@/components/DetailFine/AlarmRequest_PaymentUpdate/hooks/useCheckDetailFine';
 import { useUpdateDetailStatus } from '@/queries/Detail';
 import { useParams, useSearchParams } from 'react-router-dom';
 import ItemList from './ItemList';

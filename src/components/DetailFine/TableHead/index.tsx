@@ -8,7 +8,7 @@ import { GA } from '@/constants/GA';
 import { DetailFilter } from '@/store/detailFilter';
 import CheckboxContainer from '../UserDetails/checkBox';
 import { SelectedEventInfo } from '@/types/event';
-import { CheckDetailFine, SetCheckDetailFine } from '@/components/DetailFine/RequestChangePayment/hooks/useCheckDetailFine';
+import { CheckDetailFine, SetCheckDetailFine } from '@/components/DetailFine/AlarmRequest_PaymentUpdate/hooks/useCheckDetailFine';
 
 type Props = {
   setDetailFilter: Dispatch<SetStateAction<DetailFilter>>;
