@@ -49,7 +49,8 @@ const DetailList = ({ detailFilter, details, checkDetailFine, setCheckDetailFine
     };
   }, []);
 
-  const toggleChecked = (detail: SelectedEventInfo) => {
+  const toggleChecked = (event: React.MouseEvent<HTMLInputElement>, detail: SelectedEventInfo) => {
+    event.stopPropagation();
     if (isChecked(detail.eventId)) {
       setSubtractCheckDetailFine(detail);
       return;
@@ -70,7 +71,7 @@ const DetailList = ({ detailFilter, details, checkDetailFine, setCheckDetailFine
         const { date, nickname, amount, memo, eventId, ground } = detail;
         return (
           <Style.TableRow key={i} isSelected={selectedFine.eventId === eventId} onClick={() => handleUserDetailModal(detail)}>
-            <CheckboxContainer id={String(eventId)} isChecked={isChecked(eventId)} onChange={(event: React.MouseEvent<HTMLInputElement>) => toggleChecked(detail)}>
+            <CheckboxContainer id={String(eventId)} isChecked={isChecked(eventId)} onChange={(event: React.MouseEvent<HTMLInputElement>) => toggleChecked(event, detail)}>
               <CheckboxContainer.Checkbox />
             </CheckboxContainer>
             <Style.Element hasEllipsis={false}>{date.slice(2)}</Style.Element>
