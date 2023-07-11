@@ -7,7 +7,7 @@ export const useSearchParticipantList = (groupId: number | undefined, keyword: s
   useEffect(() => {
     let debounce = setTimeout(() => {
       setDebouncedKeyword(keyword);
-    }, 150);
+    }, 250);
 
     return () => clearTimeout(debounce);
   }, [keyword]);

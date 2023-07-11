@@ -12,14 +12,27 @@ type Props = {
 
 export const AutoComplete = ({ updateDetailFilterNickname, initialNickname }: Props) => {
   const { groupId } = useParams();
+
   const [nickname, setNickname] = useState(initialNickname);
   const [openDrop, setOpenDrop] = useState(true);
+  const [focusInput, setFocusInput] = useState(false);
   const dropDownRef = useRef(null);
+  const autoCompleteInputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    initialNickname !== '' && autoCompleteInputRef.current?.focus();
+  }, []);
+
   const searchMemberList = (e: ChangeEvent<HTMLInputElement>) => {
     setNickname(e.target.value);
   };
+
+  const toggleFocusInput = () => {
+    setFocusInput((prev) => !prev);
+  };
+
   const { data: searchedParticipantList } = useSearchParticipantList(Number(groupId), nickname);
-  const nicknameList = searchedParticipantList?.content.nicknameList;
+  const nicknameList = focusInput ? searchedParticipantList?.content.nicknameList : [];
 
   return (
     <Style.AutoCompleteContainer>
@@ -28,6 +41,9 @@ export const AutoComplete = ({ updateDetailFilterNickname, initialNickname }: Pr
         placeholder="팀원을 검색해주세요."
         value={nickname}
         onChange={searchMemberList}
+        onFocus={toggleFocusInput}
+        onBlur={() => setTimeout(toggleFocusInput, 200)}
+        ref={autoCompleteInputRef}
       />
       <Style.DropDownContainer>
         {openDrop && (
