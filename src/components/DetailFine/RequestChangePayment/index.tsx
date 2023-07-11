@@ -47,6 +47,8 @@ const RequestChangePayment = ({ checkDetailFine, setCheckDetailFine }: Props) =>
 
   const [searchParams, setSearchParams] = useSearchParams();
 
+  const type = searchParams.get('type');
+
   const [situationToChange, setSituationToChange] = useState<Situation>('완납');
 
   const { setInitCheckDetailFine } = setCheckDetailFine;
@@ -61,6 +63,9 @@ const RequestChangePayment = ({ checkDetailFine, setCheckDetailFine }: Props) =>
     setInitCheckDetailFine();
   };
 
+  const { data: participantData } = useParticipantList(Number(groupId));
+  const participantList = participantData?.content.nicknameList;
+
   const { mutate: mutateDetailStatus } = useUpdateDetailStatus(onSuccess);
 
   const updateCheckList = Object.keys(checkDetailFine)
@@ -74,17 +79,11 @@ const RequestChangePayment = ({ checkDetailFine, setCheckDetailFine }: Props) =>
   const requestAlarm = () => {};
   // 백엔드 API명세에 아직 추가되어있지않음
 
-  const { data: participantData } = useParticipantList(Number(groupId));
-  const participantList = participantData?.content.nicknameList;
-
   const participantPaymentList = (nickName: string) =>
     Object.values(checkDetailFine)
       .filter((item) => item.nickname === nickName)
       .sort((a, b) => +a.date.replace(/\./g, '') - +b.date.replace(/\./g, ''));
   // 해당 로직을 ItemList에서 toggle이 실행되었을 때 해주어도 좋을 것 같다.
-
-  const type = searchParams.get('type');
-  console.log(type);
 
   if (!searchParams.has('type')) return null;
 
