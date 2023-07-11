@@ -11,6 +11,7 @@ export type SetCheckDetailFine = {
   setAddCheckDetailFine: (detail: SelectedEventInfo) => void;
   setSubtractCheckDetailFine: (detail: SelectedEventInfo) => void;
   setToggleCheckDetailFineByNickName: (nickName: string) => void;
+  setInitCheckDetailFine: () => void;
 };
 
 const useCheckDetailFine = () => {
@@ -44,7 +45,11 @@ const useCheckDetailFine = () => {
     );
   };
 
-  return { checkDetailFine, setCheckDetailFine: { setSubtractCheckDetailFine, setAddCheckDetailFine, setToggleCheckDetailFineByNickName } };
+  const setInitCheckDetailFine = () => {
+    setCheckDetailFine({});
+  };
+
+  return { checkDetailFine, setCheckDetailFine: { setSubtractCheckDetailFine, setAddCheckDetailFine, setToggleCheckDetailFineByNickName, setInitCheckDetailFine } };
 };
 
 export default useCheckDetailFine;
