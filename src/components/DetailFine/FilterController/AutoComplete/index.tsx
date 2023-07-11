@@ -1,6 +1,8 @@
 import { SYSTEM } from '@/assets/icons/System';
 import { DropDown } from '@/components/@common';
+import { useSearchParticipantList } from '@/queries/Group/useSearchParticipantList';
 import { ChangeEvent, useEffect, useRef, useState } from 'react';
+import { useParams } from 'react-router-dom';
 import * as Style from './styles';
 
 type Props = {
@@ -8,27 +10,16 @@ type Props = {
   initialNickname: string;
 };
 
-const TEMP_MEMBER_LIST = ['윤하나', '윤둘', '윤셋'];
-
 export const AutoComplete = ({ updateDetailFilterNickname, initialNickname }: Props) => {
+  const { groupId } = useParams();
   const [nickname, setNickname] = useState(initialNickname);
   const [openDrop, setOpenDrop] = useState(true);
   const dropDownRef = useRef(null);
   const searchMemberList = (e: ChangeEvent<HTMLInputElement>) => {
     setNickname(e.target.value);
   };
-
-  //Todo: 이건 useQuery 훅 안에서 사용하는 것이 좋을듯
-  useEffect(() => {
-    let debounce = setTimeout(() => {
-      // 디바운싱 로직
-      // invalidate 하는 곳
-    }, 1000);
-
-    return () => {
-      clearTimeout(debounce);
-    };
-  }, [nickname]);
+  const { data: searchedParticipantList } = useSearchParticipantList(Number(groupId), nickname);
+  const nicknameList = searchedParticipantList?.content.nicknameList;
 
   return (
     <Style.AutoCompleteContainer>
@@ -44,7 +35,7 @@ export const AutoComplete = ({ updateDetailFilterNickname, initialNickname }: Pr
             dropDownRef={dropDownRef}
             top="16px"
             onClose={() => setOpenDrop(false)}
-            list={TEMP_MEMBER_LIST.map((v) => ({ title: v, svg: SYSTEM.SEARCH_GRAY }))}
+            list={nicknameList?.map(({ nickname }) => ({ title: nickname, svg: SYSTEM.SEARCH_GRAY })) ?? []}
             setState={updateDetailFilterNickname}
           />
         )}
