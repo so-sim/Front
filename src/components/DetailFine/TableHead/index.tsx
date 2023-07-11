@@ -57,6 +57,7 @@ const TableHead = ({ details, setDetailFilter, checkDetailFine, setCheckDetailFi
   const handlePaymentDropDown = () => {
     setOpenPaymentTypeDropdown((prev) => !prev);
   };
+
   const handleMemeberDropDown = () => {
     setOpenMemberDropdown((prev) => !prev);
   };
@@ -88,14 +89,7 @@ const TableHead = ({ details, setDetailFilter, checkDetailFine, setCheckDetailFi
       <CheckboxContainer id={'checkedAll'} isChecked={!!isCheckedAll} onChange={checkedAllProperty}>
         <CheckboxContainer.Checkbox />
       </CheckboxContainer>
-      <button
-        onClick={() => {
-          searchParams.set('type', 'change');
-          setSearchParams(searchParams, { replace: true });
-        }}
-      >
-        클릭미
-      </button>
+
       <Style.Element>날짜</Style.Element>
       <Style.PointerElement onClick={handlePaymentDropDown} ref={paymentTypeDropDownRef}>
         <span>납부여부</span>
@@ -131,6 +125,31 @@ const TableHead = ({ details, setDetailFilter, checkDetailFine, setCheckDetailFi
       </Style.PointerElement>
       <Style.Element>금액</Style.Element>
       <Style.Element>사유</Style.Element>
+      {!(Object.keys(checkDetailFine).length === 0) && (
+        <Style.PaymentControlWrapper>
+          <input type="checkbox" />
+          {/* 여기 onChange는 임시 cache역할을 만들어서 비우고 다시 채우는 역할??  근데 비우면 없어짐  그래서 그냥 cache 필요없이 지우는 역할을 해야할 것 같다.  */}
+          <Style.Label>{Object.keys(checkDetailFine).length}개 선택</Style.Label>
+          <Style.DividingLine />
+          <Style.PaymentControlButton
+            onClick={() => {
+              searchParams.set('type', 'situation_change');
+              setSearchParams(searchParams, { replace: true });
+            }}
+          >
+            납부여부 변경
+          </Style.PaymentControlButton>
+          <Style.DividingLine />
+          <Style.PaymentControlButton
+            onClick={() => {
+              searchParams.set('type', 'alarm_request');
+              setSearchParams(searchParams, { replace: true });
+            }}
+          >
+            납부요청
+          </Style.PaymentControlButton>
+        </Style.PaymentControlWrapper>
+      )}
     </Style.TableHead>
   );
 };
