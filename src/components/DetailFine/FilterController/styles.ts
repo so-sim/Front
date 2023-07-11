@@ -66,6 +66,18 @@ export const SelectedMember = styled.div`
   ${({ theme }) => theme.font.caption};
 `;
 
+export const SelectedNickname = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 4px;
+`;
+
+export const CancelButton = styled.div`
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+`;
+
 export const Icon_SM = styled.div`
   height: 16px;
 `;
