@@ -6,6 +6,6 @@ export default {
   component: PeriodSettingModal,
 } as ComponentMeta<typeof PeriodSettingModal>;
 
-const Template: ComponentStory<typeof PeriodSettingModal> = (args) => <PeriodSettingModal />;
+const Template: ComponentStory<typeof PeriodSettingModal> = (args) => <PeriodSettingModal {...args} />;
 
 export const Default = Template.bind({});
