@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction } from 'react';
+import { Dispatch, SetStateAction, useState } from 'react';
 import { DetailFilter } from '@/store/detailFilter';
 import { SYSTEM } from '@/assets/icons/System';
 import { Situation } from '@/types/event';
@@ -13,13 +13,30 @@ type Props = {
   totalAmount: number;
 };
 
+export type SearchMode = 'search' | 'select';
+
 const SITUATION_FILTER: Situation[] = ['미납', '완납', '확인중'];
 
 const FilterController = ({ detailFilter, setDetailFilter, totalAmount }: Props) => {
+  const [searchMode, setSearchMode] = useState<SearchMode>('search');
+
   const updateSituationFilter = (situation: Situation) => {
     const isSameSituationFilter = detailFilter.situation === situation;
-
     setDetailFilter((prev) => ({ ...prev, situation: isSameSituationFilter ? '' : situation }));
+  };
+
+  const toggleSearchMode = () => {
+    setSearchMode((prev) => (prev === 'search' ? 'select' : 'search'));
+  };
+
+  const updateDetailFilterNickname = (nickname: string) => {
+    setDetailFilter((prev) => ({ ...prev, nickname }));
+    toggleSearchMode();
+  };
+
+  const cancelSearchNickname = () => {
+    setDetailFilter((prev) => ({ ...prev, nickname: '' }));
+    toggleSearchMode();
   };
 
   return (
@@ -41,14 +58,16 @@ const FilterController = ({ detailFilter, setDetailFilter, totalAmount }: Props)
         </Style.ButtonContainer>
         <Style.SearchContainer>
           <Style.Icon_LG>{SYSTEM.SEARCH_BLACK}</Style.Icon_LG>
-          {Boolean(detailFilter.nickname) ? (
+          {searchMode === 'select' ? (
             <Style.SelectedMember>
-              <Style.Icon_SM>{USER.PERSON_SM}</Style.Icon_SM>
-              <span>{detailFilter.nickname}</span>
-              <Style.Icon_SM>{SYSTEM.CLOSE_SM}</Style.Icon_SM>
+              <Style.SelectedNickname onClick={toggleSearchMode}>
+                {USER.PERSON_SM}
+                {detailFilter.nickname}
+              </Style.SelectedNickname>
+              <Style.CancelButton onClick={cancelSearchNickname}>{SYSTEM.CLOSE_SM}</Style.CancelButton>
             </Style.SelectedMember>
           ) : (
-            <AutoComplete setDetailFilter={setDetailFilter} />
+            <AutoComplete updateDetailFilterNickname={updateDetailFilterNickname} initialNickname={detailFilter.nickname} />
           )}
         </Style.SearchContainer>
       </Style.LeftContainer>
