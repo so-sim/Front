@@ -1,14 +1,17 @@
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 
-export const Item = styled.li`
+export const ItemlistContainer = styled.li`
+  padding-right: 34px;
+  border-top: 1px solid ${({ theme }) => theme.colors.neutral_200_b};
+`;
+
+export const ItemWrapper = styled.div`
   display: flex;
   align-items: center;
 
-  position: relative;
-
-  padding: 12px 34px 12px 0;
-  border-top: 1px solid ${({ theme }) => theme.colors.neutral_200_b};
+  padding-top: 12px;
+  padding-bottom: 12px;
 `;
 
 export const ItemTitle = styled.p``;
@@ -29,11 +32,28 @@ export const AmountConatiner = styled.p<{ isOpen?: boolean }>`
     border-width: 0 2px 2px 0;
     padding: 0.25rem;
 
-    transform: translate(0, -30%) rotate(-135deg);
+    transform: translate(0, -70%) rotate(45deg);
+
     ${({ isOpen }) =>
       isOpen &&
       css`
-        transform: translate(0, -70%) rotate(45deg);
+        transform: translate(0, -30%) rotate(-135deg);
       `}
   }
+`;
+
+export const DetailList = styled.div`
+  display: flex;
+
+  padding-left: 66px;
+`;
+
+export const DateText = styled.p`
+  ${({ theme }) => theme.font.body_01}
+  color:${({ theme }) => theme.colors.secondary_600};
+`;
+
+export const AmountText = styled.p`
+  ${({ theme }) => theme.font.subhead_01}
+  margin: 0 0 0 auto;
 `;
