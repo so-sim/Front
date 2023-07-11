@@ -1,25 +1,21 @@
 import { SYSTEM } from '@/assets/icons/System';
 import { DropDown } from '@/components/@common';
-import { DetailFilter } from '@/store/detailFilter';
-import React, { ChangeEvent, Dispatch, SetStateAction, useEffect, useRef, useState } from 'react';
+import { ChangeEvent, useEffect, useRef, useState } from 'react';
 import * as Style from './styles';
 
 type Props = {
-  setDetailFilter: Dispatch<SetStateAction<DetailFilter>>;
+  updateDetailFilterNickname: (nickname: string) => void;
+  initialNickname: string;
 };
 
 const TEMP_MEMBER_LIST = ['윤하나', '윤둘', '윤셋'];
 
-export const AutoComplete = ({ setDetailFilter }: Props) => {
-  const [nickname, setNickname] = useState('');
+export const AutoComplete = ({ updateDetailFilterNickname, initialNickname }: Props) => {
+  const [nickname, setNickname] = useState(initialNickname);
   const [openDrop, setOpenDrop] = useState(true);
   const dropDownRef = useRef(null);
   const searchMemberList = (e: ChangeEvent<HTMLInputElement>) => {
     setNickname(e.target.value);
-  };
-
-  const updateDetailFilterNickname = (nickname: string) => {
-    setDetailFilter((prev) => ({ ...prev, nickname }));
   };
 
   //Todo: 이건 useQuery 훅 안에서 사용하는 것이 좋을듯
