@@ -6,7 +6,7 @@ import { useUpdateDetailStatus } from '@/queries/Detail';
 import { useParams, useSearchParams } from 'react-router-dom';
 import ItemList from './ItemList';
 import { useParticipantList } from '@/queries/Group';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Situation } from '@/types/event';
 
 type Props = {
@@ -53,6 +53,11 @@ const RequestChangePayment = ({ checkDetailFine, setCheckDetailFine }: Props) =>
 
   const { setInitCheckDetailFine } = setCheckDetailFine;
 
+  useEffect(() => {
+    closePage();
+  }, []);
+  // 새로고침 시 url이 유지되어있어서 빈 창이 나와있음(새로고침 시 searchParam 지우는 방법이 있는지 찾아볼 예정..)
+
   const closePage = () => {
     searchParams.delete('type');
     setSearchParams();
@@ -79,14 +84,27 @@ const RequestChangePayment = ({ checkDetailFine, setCheckDetailFine }: Props) =>
   const requestAlarm = () => {};
   // 백엔드 API명세에 아직 추가되어있지않음
 
+  const stringToNumber_Date = (date: string) => +date.replace(/\./g, '');
+
   const participantPaymentList = (nickName: string) =>
     Object.values(checkDetailFine)
       .filter((item) => item.nickname === nickName)
-      .sort((a, b) => +a.date.replace(/\./g, '') - +b.date.replace(/\./g, ''));
+      .sort((a, b) => stringToNumber_Date(a.date) - stringToNumber_Date(b.date));
   // 해당 로직을 ItemList에서 toggle이 실행되었을 때 해주어도 좋을 것 같다.
+
+  const max_Date = Object.values(checkDetailFine)?.reduce(
+    (max, curr) => (stringToNumber_Date(max.date) < stringToNumber_Date(curr.date) ? curr : max),
+    checkDetailFine[Object.keys(checkDetailFine)[0]],
+  );
+
+  const min_Date = Object.values(checkDetailFine)?.reduce(
+    (min, curr) => (stringToNumber_Date(min.date) > stringToNumber_Date(curr.date) ? curr : min),
+    checkDetailFine[Object.keys(checkDetailFine)[0]],
+  );
 
   if (!searchParams.has('type')) return null;
 
+  // 조건부 렌더링에 어드민일 때도 추가가 되어야함
   return (
     <Style.UserDetailsFrame>
       <Style.Header>
@@ -111,7 +129,9 @@ const RequestChangePayment = ({ checkDetailFine, setCheckDetailFine }: Props) =>
           </Style.SituationContainer>
         )}
 
-        <Style.DatePeriodContainer>2023.05.24 - 2023.08.24</Style.DatePeriodContainer>
+        <Style.DatePeriodContainer>
+          {min_Date?.date} - {max_Date?.date}
+        </Style.DatePeriodContainer>
 
         <Style.ListContainer>
           {participantList?.map((nickName) => (
