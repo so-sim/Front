@@ -3,13 +3,29 @@ import { SYSTEM } from '@/assets/icons/System';
 import theme from '@/styles/Theme';
 import { CheckDetailFine, SetCheckDetailFine } from '@/hooks/useCheckDetailFine';
 import { useUpdateDetailStatus } from '@/queries/Detail';
+import { useParams, useSearchParams } from 'react-router-dom';
+import ItemList from './ItemList';
+import { useParticipantList } from '@/queries/Group';
 
 type Props = {
   checkDetailFine: CheckDetailFine;
   paymentControl: { type: string; isOpen: boolean };
 };
+
 const RequestChangePayment = ({ checkDetailFine }: Props) => {
+  const { groupId } = useParams();
+
   const { mutate: mutateDetailStatus } = useUpdateDetailStatus();
+
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  const ParticipantList = useParticipantList(Number(groupId));
+
+  console.log(ParticipantList);
+  console.log(checkDetailFine);
+
+  if (!searchParams.has('type')) return null;
+
   return (
     <Style.UserDetailsFrame>
       <Style.Header>
@@ -34,16 +50,7 @@ const RequestChangePayment = ({ checkDetailFine }: Props) => {
         <Style.DatePeriodContainer>2023.05.24 - 2023.08.24</Style.DatePeriodContainer>
 
         <Style.ListContainer>
-          <Style.Item>
-            <input type="checkbox" />
-            <Style.ItemTitle>안녕하세요안녕하세요</Style.ItemTitle>
-            <Style.AmountConatiner>100000000원</Style.AmountConatiner>
-          </Style.Item>
-          <Style.Item>
-            <input type="checkbox" />
-            <Style.ItemTitle>안녕하세요안녕하세요안녕</Style.ItemTitle>
-            <Style.AmountConatiner>100000000원</Style.AmountConatiner>
-          </Style.Item>
+          <ItemList />
         </Style.ListContainer>
       </Style.Main>
       <Style.Footer>
