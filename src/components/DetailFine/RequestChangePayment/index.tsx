@@ -98,21 +98,23 @@ const RequestChangePayment = ({ checkDetailFine, setCheckDetailFine }: Props) =>
 
   const stringToNumber_Date = (date: string) => +date?.replace(/\./g, '');
 
-  const participantSituation_List = (nickName: string) =>
+  const participantSituation_List = (nickName: string, checkDetailFine: CheckDetailFine) =>
     Object.values(checkDetailFine)
       ?.filter((item) => item.nickname === nickName)
       ?.sort((a, b) => stringToNumber_Date(a.date) - stringToNumber_Date(b.date));
   // 해당 로직을 ItemList에서 toggle이 실행되었을 때 해주어도 좋을 것 같다.
 
-  const max_Date = Object.values(checkDetailFine)?.reduce(
-    (max, curr) => (stringToNumber_Date(max.date) < stringToNumber_Date(curr.date) ? curr : max),
-    checkDetailFine[Object.keys(checkDetailFine)[0]],
-  );
+  const max_Date = (checkDetailFine: CheckDetailFine, stringToNumber_Date: (date: string) => number) =>
+    Object.values(checkDetailFine)?.reduce(
+      (max, curr) => (stringToNumber_Date(max.date) < stringToNumber_Date(curr.date) ? curr : max),
+      checkDetailFine[Object.keys(checkDetailFine)[0]],
+    );
 
-  const min_Date = Object.values(checkDetailFine)?.reduce(
-    (min, curr) => (stringToNumber_Date(min.date) > stringToNumber_Date(curr.date) ? curr : min),
-    checkDetailFine[Object.keys(checkDetailFine)[0]],
-  );
+  const min_Date = (checkDetailFine: CheckDetailFine, stringToNumber_Date: (date: string) => number) =>
+    Object.values(checkDetailFine)?.reduce(
+      (min, curr) => (stringToNumber_Date(min.date) > stringToNumber_Date(curr.date) ? curr : min),
+      checkDetailFine[Object.keys(checkDetailFine)[0]],
+    );
 
   if (!searchParams.has('type') && !isAdmin) return null;
 
@@ -142,12 +144,12 @@ const RequestChangePayment = ({ checkDetailFine, setCheckDetailFine }: Props) =>
         )}
 
         <Style.DatePeriodContainer>
-          {min_Date?.date} - {max_Date?.date}
+          {min_Date(checkDetailFine, stringToNumber_Date)?.date} - {max_Date(checkDetailFine, stringToNumber_Date)?.date}
         </Style.DatePeriodContainer>
 
         <Style.ListContainer>
           {participantList?.map((nickName) => (
-            <ItemList key={nickName} myName={nickName} list={participantSituation_List(nickName)} setCheckDetailFine={setCheckDetailFine} />
+            <ItemList key={nickName} myName={nickName} list={participantSituation_List(nickName, checkDetailFine)} setCheckDetailFine={setCheckDetailFine} />
           ))}
         </Style.ListContainer>
       </Style.Main>
