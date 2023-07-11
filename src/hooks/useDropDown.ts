@@ -10,9 +10,9 @@ const useDropDown = () => {
         setOpenDrop(false);
       }
     };
-    document.addEventListener('click', onClickOutSide);
+    document.addEventListener('mousedown', onClickOutSide);
     return () => {
-      document.removeEventListener('click', onClickOutSide);
+      document.removeEventListener('mousedown', onClickOutSide);
     };
   }, []);
 
