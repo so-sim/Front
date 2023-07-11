@@ -8,6 +8,7 @@ import ItemList from './ItemList';
 import { useParticipantList } from '@/queries/Group';
 import { useEffect, useState } from 'react';
 import { Situation } from '@/types/event';
+import { useGroupDetail } from '@/queries/Group';
 
 type Props = {
   checkDetailFine: CheckDetailFine;
@@ -62,8 +63,10 @@ const RequestChangePayment = ({ checkDetailFine, setCheckDetailFine }: Props) =>
   const { setInitCheckDetailFine } = setCheckDetailFine;
 
   const { data: participantData } = useParticipantList(Number(groupId));
-
   const participantList = participantData?.content.nicknameList;
+
+  const { data: group } = useGroupDetail(Number(groupId));
+  const isAdmin = group?.content.isAdmin;
 
   useEffect(() => {
     closePage();
@@ -100,6 +103,7 @@ const RequestChangePayment = ({ checkDetailFine, setCheckDetailFine }: Props) =>
       ?.filter((item) => item.nickname === nickName)
       ?.sort((a, b) => stringToNumber_Date(a.date) - stringToNumber_Date(b.date));
   // 해당 로직을 ItemList에서 toggle이 실행되었을 때 해주어도 좋을 것 같다.
+
   const max_Date = Object.values(checkDetailFine)?.reduce(
     (max, curr) => (stringToNumber_Date(max.date) < stringToNumber_Date(curr.date) ? curr : max),
     checkDetailFine[Object.keys(checkDetailFine)[0]],
@@ -110,9 +114,9 @@ const RequestChangePayment = ({ checkDetailFine, setCheckDetailFine }: Props) =>
     checkDetailFine[Object.keys(checkDetailFine)[0]],
   );
 
-  if (!searchParams.has('type')) return null;
+  if (!searchParams.has('type') && !isAdmin) return null;
 
-  // 조건부 렌더링에 어드민일 때도 추가가 되어야함
+  // 조건부 렌더링에 checkDetailFine 이 0일 때도 null을 출력할지 고민 중
   return (
     <Style.UserDetailsFrame>
       <Style.Header>
