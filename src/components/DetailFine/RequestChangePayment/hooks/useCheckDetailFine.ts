@@ -18,20 +18,15 @@ const useCheckDetailFine = () => {
   const [checkDetailFine, setCheckDetailFine] = useState<CheckDetailFine>({});
 
   const setSubtractCheckDetailFine = (detail: SelectedEventInfo) => {
-    setCheckDetailFine((prev) => {
-      const { [String(detail.eventId)]: removeId, ...rest } = prev;
-
-      return rest;
+    setCheckDetailFine(
+      (prev) => subtractCheckDetailFine(detail, prev),
       // 테스팅하기 위해서, prev와 detail를 인자로 받는 함수를 생성
       // state 테스팅
-    });
+    );
   };
 
   const setAddCheckDetailFine = (detail: SelectedEventInfo) => {
-    setCheckDetailFine((prev) => ({
-      ...prev,
-      [detail.eventId]: { ...detail, checked: true },
-    }));
+    setCheckDetailFine((prev) => addCheckDetailFine(detail, prev));
   };
 
   const setToggleCheckDetailFineByNickName = (nickName: string) => {
@@ -53,3 +48,16 @@ const useCheckDetailFine = () => {
 };
 
 export default useCheckDetailFine;
+
+export function subtractCheckDetailFine(detail: SelectedEventInfo, prev: CheckDetailFine) {
+  const { [String(detail.eventId)]: removeId, ...rest } = prev;
+
+  return rest;
+}
+
+export function addCheckDetailFine(detail: SelectedEventInfo, prev: CheckDetailFine) {
+  return {
+    ...prev,
+    [detail.eventId]: { ...detail, checked: true },
+  };
+}
