@@ -9,9 +9,10 @@ import { useParticipantList } from '@/queries/Group';
 
 type Props = {
   checkDetailFine: CheckDetailFine;
+  setCheckDetailFine: SetCheckDetailFine;
 };
 
-const RequestChangePayment = ({ checkDetailFine }: Props) => {
+const RequestChangePayment = ({ checkDetailFine, setCheckDetailFine }: Props) => {
   const { groupId } = useParams();
 
   const { mutate: mutateDetailStatus } = useUpdateDetailStatus();
@@ -54,7 +55,7 @@ const RequestChangePayment = ({ checkDetailFine }: Props) => {
 
         <Style.ListContainer>
           {participantList?.map((nickName) => (
-            <ItemList key={nickName} list={participantPaymentList(nickName)} />
+            <ItemList key={nickName} myName={nickName} list={participantPaymentList(nickName)} setCheckDetailFine={setCheckDetailFine} />
           ))}
         </Style.ListContainer>
       </Style.Main>

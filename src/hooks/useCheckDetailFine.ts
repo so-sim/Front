@@ -7,7 +7,11 @@ export type CheckDetailFine = {
   [key: string]: SelectedEventInfo_Checked;
 };
 
-export type SetCheckDetailFine = { setAddCheckDetailFine: (detail: SelectedEventInfo) => void; setSubtractCheckDetailFine: (detail: SelectedEventInfo) => void };
+export type SetCheckDetailFine = {
+  setAddCheckDetailFine: (detail: SelectedEventInfo) => void;
+  setSubtractCheckDetailFine: (detail: SelectedEventInfo) => void;
+  setToggleCheckDetailFineByNickName: (nickName: string) => void;
+};
 
 const useCheckDetailFine = () => {
   const [checkDetailFine, setCheckDetailFine] = useState<CheckDetailFine>({});
@@ -17,6 +21,8 @@ const useCheckDetailFine = () => {
       const { [String(detail.eventId)]: removeId, ...rest } = prev;
 
       return rest;
+      // 테스팅하기 위해서, prev와 detail를 인자로 받는 함수를 생성
+      // state 테스팅
     });
   };
 
@@ -27,7 +33,18 @@ const useCheckDetailFine = () => {
     }));
   };
 
-  return { checkDetailFine, setCheckDetailFine: { setSubtractCheckDetailFine, setAddCheckDetailFine } };
+  const setToggleCheckDetailFineByNickName = (nickName: string) => {
+    const targetEventId = Object.keys(checkDetailFine).filter((eventId) => checkDetailFine[eventId].nickname === nickName);
+
+    targetEventId.forEach((eventId) =>
+      setCheckDetailFine((prev) => ({
+        ...prev,
+        [eventId]: { ...checkDetailFine[eventId], checked: !checkDetailFine[eventId].checked },
+      })),
+    );
+  };
+
+  return { checkDetailFine, setCheckDetailFine: { setSubtractCheckDetailFine, setAddCheckDetailFine, setToggleCheckDetailFineByNickName } };
 };
 
 export default useCheckDetailFine;

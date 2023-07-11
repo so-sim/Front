@@ -64,7 +64,7 @@ const DetailFine = () => {
 
         <Pagination totalCount={data?.content.totalCount} detailFilter={detailFilter} setDetailFilter={setDetailFilter} />
         <UserDetails />
-        <RequestChangePayment checkDetailFine={checkDetailFine} />
+        <RequestChangePayment checkDetailFine={checkDetailFine} setCheckDetailFine={setCheckDetailFine} />
       </Style.DetailFineFrame>
     </SelectedFineContextProvider>
   );
