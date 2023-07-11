@@ -36,7 +36,7 @@ export const Arrow = styled.span`
   margin-left: 8px;
 `;
 
-export const PaymentControlWrapper = styled.div`
+export const SituationControlWrapper = styled.div`
   display: flex;
   gap: 4px;
   align-items: center;
@@ -59,7 +59,7 @@ export const Label = styled.label`
   padding: 2px 4px;
 `;
 
-export const PaymentControlButton = styled.button`
+export const SituationControlButton = styled.button`
   border-radius: 2px;
   padding: 2px 4px;
 

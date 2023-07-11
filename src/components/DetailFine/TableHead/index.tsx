@@ -131,7 +131,7 @@ const TableHead = ({ details, setDetailFilter, checkDetailFine, setCheckDetailFi
       <Style.Element>금액</Style.Element>
       <Style.Element>사유</Style.Element>
       {!(Object.keys(checkDetailFine).length === 0) && (
-        <Style.PaymentControlWrapper>
+        <Style.SituationControlWrapper>
           <CheckboxContainer
             id={'checkDetailFineLength'}
             isChecked={!(Object.keys(checkDetailFine).length === 0)}
@@ -143,24 +143,24 @@ const TableHead = ({ details, setDetailFilter, checkDetailFine, setCheckDetailFi
           {/* fixed는 논의 후 추가 */}
           <Style.Label>{Object.keys(checkDetailFine).length}개 선택</Style.Label>
           <Style.DividingLine />
-          <Style.PaymentControlButton
+          <Style.SituationControlButton
             onClick={() => {
               searchParams.set('type', 'situation_change');
               setSearchParams(searchParams, { replace: true });
             }}
           >
             납부여부 변경
-          </Style.PaymentControlButton>
+          </Style.SituationControlButton>
           <Style.DividingLine />
-          <Style.PaymentControlButton
+          <Style.SituationControlButton
             onClick={() => {
               searchParams.set('type', 'alarm_request');
               setSearchParams(searchParams, { replace: true });
             }}
           >
             납부요청
-          </Style.PaymentControlButton>
-        </Style.PaymentControlWrapper>
+          </Style.SituationControlButton>
+        </Style.SituationControlWrapper>
       )}
     </Style.TableHead>
   );
