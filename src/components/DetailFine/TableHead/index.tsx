@@ -129,6 +129,7 @@ const TableHead = ({ details, setDetailFilter, checkDetailFine, setCheckDetailFi
         <Style.PaymentControlWrapper>
           <input type="checkbox" />
           {/* 여기 onChange는 임시 cache역할을 만들어서 비우고 다시 채우는 역할??  근데 비우면 없어짐  그래서 그냥 cache 필요없이 지우는 역할을 해야할 것 같다.  */}
+          {/* fixed는 논의 후 추가 */}
           <Style.Label>{Object.keys(checkDetailFine).length}개 선택</Style.Label>
           <Style.DividingLine />
           <Style.PaymentControlButton
