@@ -52,6 +52,10 @@ export const SubTitle = styled.p`
   ${({ theme }) => theme.font.body_03};
 `;
 
+// export const SubTitleUnderLine = styled.span`
+//   text-decoration: underline;
+// `;
+
 export const SituationContainer = styled.div`
   display: flex;
   align-items: center;
@@ -60,7 +64,7 @@ export const SituationContainer = styled.div`
   margin-bottom: 24px;
 `;
 
-export const SituationButton = styled.button<{ situationType?: string }>`
+export const SituationButton = styled.button<{ situationType?: string; isClick?: boolean }>`
   width: 68px;
 
   padding: 4px;
@@ -76,14 +80,24 @@ export const SituationButton = styled.button<{ situationType?: string }>`
     `};
 
   ${({ situationType, theme }) =>
-    situationType === 'non' &&
+    situationType &&
     css`
       color: ${theme.colors.secondary_500};
       background-color: ${theme.colors.secondary_100};
       box-shadow: inset 0 0 0 2px ${theme.colors.secondary_500};
     `}
-  ${({ situationType, theme }) =>
-    situationType === 'full' &&
+
+  ${({ situationType, isClick, theme }) =>
+    situationType === '미납' &&
+    isClick &&
+    css`
+      color: ${theme.colors.red_400};
+      background-color: ${theme.colors.red_200};
+      box-shadow: inset 0 0 0 2px ${theme.colors.red_400};
+    `}
+  ${({ situationType, isClick, theme }) =>
+    situationType === '완납' &&
+    isClick &&
     css`
       color: ${theme.colors.primary_400};
       background-color: ${theme.colors.blue_200};
