@@ -1,7 +1,7 @@
 import * as Style from './styles';
 import { SYSTEM } from '@/assets/icons/System';
 import theme from '@/styles/Theme';
-import { CheckDetailFine, SetCheckDetailFine } from '@/hooks/useCheckDetailFine';
+import { CheckDetailFine, SetCheckDetailFine } from '@/components/DetailFine/RequestChangePayment/hooks/useCheckDetailFine';
 import { useUpdateDetailStatus } from '@/queries/Detail';
 import { useParams, useSearchParams } from 'react-router-dom';
 import ItemList from './ItemList';
@@ -61,8 +61,6 @@ const RequestChangePayment = ({ checkDetailFine, setCheckDetailFine }: Props) =>
 
   const { setInitCheckDetailFine } = setCheckDetailFine;
 
-  console.log(checkDetailFine);
-
   const { data: participantData } = useParticipantList(Number(groupId));
 
   const participantList = participantData?.content.nicknameList;
@@ -97,7 +95,7 @@ const RequestChangePayment = ({ checkDetailFine, setCheckDetailFine }: Props) =>
 
   const stringToNumber_Date = (date: string) => +date?.replace(/\./g, '');
 
-  const participantPayment_List = (nickName: string) =>
+  const participantSituation_List = (nickName: string) =>
     Object.values(checkDetailFine)
       ?.filter((item) => item.nickname === nickName)
       ?.sort((a, b) => stringToNumber_Date(a.date) - stringToNumber_Date(b.date));
@@ -145,7 +143,7 @@ const RequestChangePayment = ({ checkDetailFine, setCheckDetailFine }: Props) =>
 
         <Style.ListContainer>
           {participantList?.map((nickName) => (
-            <ItemList key={nickName} myName={nickName} list={participantPayment_List(nickName)} setCheckDetailFine={setCheckDetailFine} />
+            <ItemList key={nickName} myName={nickName} list={participantSituation_List(nickName)} setCheckDetailFine={setCheckDetailFine} />
           ))}
         </Style.ListContainer>
       </Style.Main>

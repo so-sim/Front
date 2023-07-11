@@ -10,7 +10,7 @@ import dayjs from 'dayjs';
 import { dateState } from '@/store/dateState';
 import { DetailFilter } from '@/store/detailFilter';
 import SelectedFineContextProvider from '@/contexts/SelectedFineContext';
-import useCheckDetailFine from '@/hooks/useCheckDetailFine';
+import useCheckDetailFine from '@/components/DetailFine/RequestChangePayment/hooks/useCheckDetailFine';
 import RequestChangePayment from '@/components/DetailFine/RequestChangePayment';
 
 export type FilterMode = 'month' | 'week' | 'day';
@@ -47,10 +47,6 @@ const DetailFine = () => {
   // setState 테스팅 가능한지??
 
   // userDetail 사이즈 고민
-
-  // 스토리북
-
-  // searchParam을 사용하자
 
   return (
     <SelectedFineContextProvider>

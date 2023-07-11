@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import * as Style from './styles';
-import { SetCheckDetailFine, SelectedEventInfo_Checked } from '@/hooks/useCheckDetailFine';
+import { SetCheckDetailFine, SelectedEventInfo_Checked } from '@/components/DetailFine/RequestChangePayment/hooks/useCheckDetailFine';
 
 type Props = {
   myName: string;
