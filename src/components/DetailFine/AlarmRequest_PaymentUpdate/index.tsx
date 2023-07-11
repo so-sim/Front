@@ -51,7 +51,7 @@ const Status: StatusType = {
 
 // 지금 총무 checkBox 클릭을 어떻게 할건지 얘기를 나눠봐야함
 
-const RequestChangePayment = ({ checkDetailFine, setCheckDetailFine }: Props) => {
+const AlarmRequest_PaymentUpdate = ({ checkDetailFine, setCheckDetailFine }: Props) => {
   const { groupId } = useParams();
 
   const [searchParams, setSearchParams] = useSearchParams();
@@ -164,4 +164,4 @@ const RequestChangePayment = ({ checkDetailFine, setCheckDetailFine }: Props) =>
   );
 };
 
-export default RequestChangePayment;
+export default AlarmRequest_PaymentUpdate;

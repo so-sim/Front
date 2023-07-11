@@ -11,7 +11,7 @@ import { dateState } from '@/store/dateState';
 import { DetailFilter } from '@/store/detailFilter';
 import SelectedFineContextProvider from '@/contexts/SelectedFineContext';
 import useCheckDetailFine from '@/components/DetailFine/AlarmRequest_PaymentUpdate/hooks/useCheckDetailFine';
-import RequestChangePayment from '@/components/DetailFine/AlarmRequest_PaymentUpdate';
+import AlarmRequest_PaymentUpdate from '@/components/DetailFine/AlarmRequest_PaymentUpdate';
 
 export type FilterMode = 'month' | 'week' | 'day';
 
@@ -60,7 +60,7 @@ const DetailFine = () => {
 
         <Pagination totalCount={data?.content.totalCount} detailFilter={detailFilter} setDetailFilter={setDetailFilter} />
         <UserDetails />
-        <RequestChangePayment checkDetailFine={checkDetailFine} setCheckDetailFine={setCheckDetailFine} />
+        <AlarmRequest_PaymentUpdate checkDetailFine={checkDetailFine} setCheckDetailFine={setCheckDetailFine} />
       </Style.DetailFineFrame>
     </SelectedFineContextProvider>
   );
