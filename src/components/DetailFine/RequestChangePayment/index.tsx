@@ -42,6 +42,9 @@ const Status: StatusType = {
 
 // 해당 Status onSubmit도 추가해서 함께 다루고 싶지만.. 컴포넌트 안에 이 부분을 추가하기 애매해서 일다 ㄴ빼놓았음
 
+// PaymentStatement
+// alert // change // upDate
+
 const RequestChangePayment = ({ checkDetailFine, setCheckDetailFine }: Props) => {
   const { groupId } = useParams();
 
@@ -73,12 +76,12 @@ const RequestChangePayment = ({ checkDetailFine, setCheckDetailFine }: Props) =>
 
   const { mutate: mutateDetailStatus } = useUpdateDetailStatus(onSuccess);
 
-  const updateCheckList = Object.keys(checkDetailFine)
+  const currentCheckList = Object.keys(checkDetailFine)
     .filter((item) => checkDetailFine[item].checked === true)
     .map((element) => Number(element));
 
   const updateSituation = async () => {
-    mutateDetailStatus({ situation: situationToChange, eventIdList: updateCheckList });
+    mutateDetailStatus({ situation: situationToChange, eventIdList: currentCheckList });
   };
 
   const requestAlarm = () => {};
@@ -86,7 +89,7 @@ const RequestChangePayment = ({ checkDetailFine, setCheckDetailFine }: Props) =>
 
   const stringToNumber_Date = (date: string) => +date.replace(/\./g, '');
 
-  const participantPaymentList = (nickName: string) =>
+  const participantPayment_List = (nickName: string) =>
     Object.values(checkDetailFine)
       .filter((item) => item.nickname === nickName)
       .sort((a, b) => stringToNumber_Date(a.date) - stringToNumber_Date(b.date));
@@ -135,7 +138,7 @@ const RequestChangePayment = ({ checkDetailFine, setCheckDetailFine }: Props) =>
 
         <Style.ListContainer>
           {participantList?.map((nickName) => (
-            <ItemList key={nickName} myName={nickName} list={participantPaymentList(nickName)} setCheckDetailFine={setCheckDetailFine} />
+            <ItemList key={nickName} myName={nickName} list={participantPayment_List(nickName)} setCheckDetailFine={setCheckDetailFine} />
           ))}
         </Style.ListContainer>
       </Style.Main>
