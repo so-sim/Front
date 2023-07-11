@@ -2,7 +2,7 @@ import { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react';
 import { ARROW } from '@/assets/icons/Arrow';
 import * as Style from './styles';
 import { useParticipantList } from '@/queries/Group';
-import { useParams } from 'react-router-dom';
+import { useParams, useSearchParams } from 'react-router-dom';
 import DropDown from '@/components/@common/DropDown';
 import { GA } from '@/constants/GA';
 import { DetailFilter } from '@/store/detailFilter';
@@ -30,6 +30,7 @@ const paymentTypeList: { title: PaymentDropdown; id?: string }[] = [
 const TableHead = ({ details, setDetailFilter, checkDetailFine, setCheckDetailFine }: Props) => {
   const param = useParams();
 
+  const [searchParams, setSearchParams] = useSearchParams();
   const [member, setMember] = useState('전체');
   const [paymentType, setPaymentType] = useState<PaymentDropdown>('전체');
   const [openMemberDropdown, setOpenMemberDropdown] = useState(false);
@@ -87,6 +88,14 @@ const TableHead = ({ details, setDetailFilter, checkDetailFine, setCheckDetailFi
       <CheckboxContainer id={'checkedAll'} isChecked={!!isCheckedAll} onChange={checkedAllProperty}>
         <CheckboxContainer.Checkbox />
       </CheckboxContainer>
+      <button
+        onClick={() => {
+          searchParams.set('type', 'change');
+          setSearchParams(searchParams, { replace: true });
+        }}
+      >
+        클릭미
+      </button>
       <Style.Element>날짜</Style.Element>
       <Style.PointerElement onClick={handlePaymentDropDown} ref={paymentTypeDropDownRef}>
         <span>납부여부</span>
