@@ -32,6 +32,10 @@ export interface ParticipantList {
   nicknameList: string[];
 }
 
+export interface SearchedParticipantList {
+  nicknameList: { nickname: string }[];
+}
+
 export interface CoverGroupInfo {
   title: string;
   coverColor: GroupColor;

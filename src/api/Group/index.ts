@@ -1,5 +1,5 @@
 import { ServerResponse } from '@/types/serverResponse';
-import { GroupDetail, GroupId, GroupInfo, GroupListWithIndex, GroupNickname, ParticipantList } from '@/types/group';
+import { GroupDetail, GroupId, GroupInfo, GroupListWithIndex, GroupNickname, ParticipantList, SearchedParticipantList } from '@/types/group';
 import api from '..';
 
 export const createGroup = async (newGroupInfo: GroupInfo): Promise<ServerResponse<GroupId>> => {
@@ -19,6 +19,11 @@ export const getGroupList = async (pageParam: number): Promise<ServerResponse<Gr
 
 export const getParticipantList = async (groupId: number | undefined): Promise<ServerResponse<ParticipantList>> => {
   const { data } = await api.get(`/api/group/${groupId}/participants`);
+  return data;
+};
+
+export const searchParticipantList = async (groupId: number | undefined, keyword: string): Promise<ServerResponse<SearchedParticipantList>> => {
+  const { data } = await api.get(`/api/group/${groupId}/participants-nickname?keyword=${keyword}`);
   return data;
 };
 
