@@ -6,7 +6,7 @@ export const TableRow = styled.div<{ isSelected: boolean }>`
   display: grid;
   align-items: center;
   height: 46px;
-  grid-template-columns: 100px 120px 116px 108px 1fr;
+  grid-template-columns: 30px 100px 120px 116px 108px 1fr;
   border-top: 2px solid ${({ theme }) => theme.colors.neutral_200_b};
   border-radius: 4px;
   cursor: pointer;
