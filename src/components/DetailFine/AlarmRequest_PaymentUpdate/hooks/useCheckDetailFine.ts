@@ -30,14 +30,17 @@ const useCheckDetailFine = () => {
   };
 
   const setToggleCheckDetailFineByNickName = (nickName: string) => {
-    const targetEventId = Object.keys(checkDetailFine).filter((eventId) => checkDetailFine[eventId].nickname === nickName);
+    setCheckDetailFine((prev) => {
+      const targetEventId = Object.keys(checkDetailFine).filter((eventId) => checkDetailFine[eventId].nickname === nickName);
 
-    targetEventId.forEach((eventId) =>
-      setCheckDetailFine((prev) => ({
+      const targetDetailFine: CheckDetailFine = {};
+      targetEventId.forEach((eventId) => (targetDetailFine[eventId] = { ...checkDetailFine[eventId], checked: !checkDetailFine[eventId].checked }));
+
+      return {
         ...prev,
-        [eventId]: { ...checkDetailFine[eventId], checked: !checkDetailFine[eventId].checked },
-      })),
-    );
+        ...targetDetailFine,
+      };
+    });
   };
 
   const setInitCheckDetailFine = () => {
