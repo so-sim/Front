@@ -59,11 +59,13 @@ const DateController = ({ setDetailFilter }: Props) => {
 
   const handleDateFilterMode = (e: MouseEvent<HTMLButtonElement>, buttonMode: FilterModeTest) => {
     if (buttonMode === 'custom') {
+      setOpenWeeklyFilterDrop(false);
       handleCustomFilterDrop();
       e.stopPropagation();
       return;
     }
     handleWeeklyFilterDrop();
+    setOpenPeriodSettingDrop(false);
     if (calendarDate.mode === buttonMode) return;
 
     changeDateByButtonMode(buttonMode);
@@ -96,32 +98,34 @@ const DateController = ({ setDetailFilter }: Props) => {
               오늘
             </Style.TodayButton>
             <Style.FilterWrapper ref={dropDownRef}>
-              {FILTER_BUTTON_LIST.map((btn) => {
-                return (
-                  <>
-                    <Style.FilterButton id={btn.id} key={btn.id} isActive={calendarDate.mode === btn.mode} onClick={(e) => handleDateFilterMode(e, btn.mode)}>
-                      <Style.FlexCenter>
-                        <span>{btn.text}</span>
-                        {(btn.mode === 'week' || btn.mode === 'custom') && <Style.ArrowIcon>{ARROW.DOWN_SM}</Style.ArrowIcon>}
-                      </Style.FlexCenter>
-                      {btn.mode === 'week' && calendarDate.mode === 'week' && openWeeklyFilterDrop && (
-                        <div style={{ position: 'relative', left: '1px' }}>
-                          <DropDown
-                            width={60}
-                            align="center"
-                            setState={goToWeek}
-                            list={customedWeek(calendarDate.baseDate)}
-                            top="7px"
-                            onClose={handleWeeklyFilterDrop}
-                            dropDownRef={dropDownRef}
-                          />
-                        </div>
-                      )}
-                    </Style.FilterButton>
-                    {btn.mode === 'custom' && openPeriodSettingDrop && <PeriodSettingModal ref={periodSettingRef} modalHandler={handleCustomFilterDrop} />}
-                  </>
-                );
-              })}
+              <div ref={periodSettingRef}>
+                {FILTER_BUTTON_LIST.map((btn) => {
+                  return (
+                    <>
+                      <Style.FilterButton id={btn.id} key={btn.id} isActive={calendarDate.mode === btn.mode} onClick={(e) => handleDateFilterMode(e, btn.mode)}>
+                        <Style.FlexCenter>
+                          <span>{btn.text}</span>
+                          {(btn.mode === 'week' || btn.mode === 'custom') && <Style.ArrowIcon>{ARROW.DOWN_SM}</Style.ArrowIcon>}
+                        </Style.FlexCenter>
+                        {btn.mode === 'week' && calendarDate.mode === 'week' && openWeeklyFilterDrop && (
+                          <div style={{ position: 'relative', left: '1px' }}>
+                            <DropDown
+                              width={60}
+                              align="center"
+                              setState={goToWeek}
+                              list={customedWeek(calendarDate.baseDate)}
+                              top="7px"
+                              onClose={handleWeeklyFilterDrop}
+                              dropDownRef={dropDownRef}
+                            />
+                          </div>
+                        )}
+                      </Style.FilterButton>
+                      {btn.mode === 'custom' && openPeriodSettingDrop && <PeriodSettingModal modalHandler={handleCustomFilterDrop} />}
+                    </>
+                  );
+                })}
+              </div>
             </Style.FilterWrapper>
           </Style.Block>
           <Style.Block>
