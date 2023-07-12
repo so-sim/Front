@@ -13,6 +13,8 @@ const ItemList = ({ myName, list, setCheckDetailFine }: Props) => {
 
   const TotalAmount = list?.reduce((prev, current) => prev + current.amount, 0);
 
+  const isChecked = list?.every((item) => item.checked === true);
+
   const { setToggleCheckDetailFineByNickName } = setCheckDetailFine;
 
   if (list?.length === 0) return null;
@@ -20,7 +22,7 @@ const ItemList = ({ myName, list, setCheckDetailFine }: Props) => {
     <>
       <Style.ItemContainer onClick={() => setToggle((prev) => !prev)}>
         <Style.ItemWrapper>
-          <input type="checkbox" onChange={() => setToggleCheckDetailFineByNickName(myName)} />
+          <input type="checkbox" checked={isChecked} onChange={() => setToggleCheckDetailFineByNickName(myName)} />
           <Style.ItemTitle>안녕하세요안녕하세요안녕</Style.ItemTitle>
           <Style.ItemAmount isOpen={toggle}>{TotalAmount}</Style.ItemAmount>
         </Style.ItemWrapper>
