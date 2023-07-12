@@ -17,12 +17,17 @@ const ItemList = ({ myName, list, setCheckDetailFine }: Props) => {
 
   const { setToggleCheckDetailFineByNickName } = setCheckDetailFine;
 
+  const toggleCheckDetailFine = (event: React.MouseEvent<HTMLInputElement>, myName: string) => {
+    event.stopPropagation();
+    setToggleCheckDetailFineByNickName(myName);
+  };
+
   if (list?.length === 0) return null;
   return (
     <>
       <Style.ItemContainer onClick={() => setToggle((prev) => !prev)}>
         <Style.ItemWrapper>
-          <input type="checkbox" checked={isChecked} onChange={() => setToggleCheckDetailFineByNickName(myName)} />
+          <input type="checkbox" checked={isChecked} onClick={(event: React.MouseEvent<HTMLInputElement>) => toggleCheckDetailFine(event, myName)} readOnly />
           <Style.ItemTitle>안녕하세요안녕하세요안녕</Style.ItemTitle>
           <Style.ItemAmount isOpen={toggle}>{TotalAmount}</Style.ItemAmount>
         </Style.ItemWrapper>
