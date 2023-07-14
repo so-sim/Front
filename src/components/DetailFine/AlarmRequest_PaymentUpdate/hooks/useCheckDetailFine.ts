@@ -30,17 +30,7 @@ const useCheckDetailFine = () => {
   };
 
   const setToggleCheckDetailFineByNickName = (nickName: string) => {
-    setCheckDetailFine((prev) => {
-      const targetEventId = Object.keys(checkDetailFine).filter((eventId) => checkDetailFine[eventId].nickname === nickName);
-
-      const targetDetailFine: CheckDetailFine = {};
-      targetEventId.forEach((eventId) => (targetDetailFine[eventId] = { ...checkDetailFine[eventId], checked: !checkDetailFine[eventId].checked }));
-
-      return {
-        ...prev,
-        ...targetDetailFine,
-      };
-    });
+    setCheckDetailFine((prev) => toggleCheckDetailFine(nickName, prev));
   };
 
   const setInitCheckDetailFine = () => {
@@ -62,5 +52,18 @@ export function addCheckDetailFine(detail: SelectedEventInfo, prev: CheckDetailF
   return {
     ...prev,
     [detail.eventId]: { ...detail, checked: true },
+  };
+}
+
+export function toggleCheckDetailFine(nickName: string, prev: CheckDetailFine) {
+  const targetEventId = Object.keys(prev).filter((eventId) => prev[eventId].nickname === nickName);
+
+  const targetDetailFine: CheckDetailFine = {};
+
+  targetEventId.forEach((eventId) => (targetDetailFine[eventId] = { ...prev[eventId], checked: !prev[eventId].checked }));
+
+  return {
+    ...prev,
+    ...targetDetailFine,
   };
 }
