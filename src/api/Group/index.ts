@@ -29,11 +29,6 @@ export const searchParticipantList = async (groupId: number | undefined, keyword
 
 export const updateGroup = async (updateGroupInfo: GroupInfo & GroupId): Promise<ServerResponse<GroupId>> => {
   const { groupId, ...groupInfo } = updateGroupInfo;
-  if (groupInfo.nickname === null) {
-    const { nickname, ...rest } = groupInfo;
-    const { data } = await api.patch(`/api/group/${groupId}`, rest);
-    return data;
-  }
   const { data } = await api.patch(`/api/group/${groupId}`, groupInfo);
   return data;
 };

@@ -43,7 +43,7 @@ const App = () => {
           <GlobalConfirmModal />
           <Global styles={globalStyle} />
         </ThemeProvider>
-        <ReactQueryDevtools initialIsOpen={true} position={'bottom-right'} />
+        <ReactQueryDevtools initialIsOpen={false} position={'bottom-right'} />
       </QueryClientProvider>
     </RecoilRoot>
   );
