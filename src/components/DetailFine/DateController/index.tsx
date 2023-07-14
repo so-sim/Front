@@ -1,12 +1,10 @@
-import { Dispatch, MouseEvent, SetStateAction, useEffect, useRef, useState } from 'react';
+import { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react';
 import { ARROW } from '@/assets/icons/Arrow';
 import Button from '@/components/@common/Button';
 import * as Style from './styles';
 import { useRecoilState } from 'recoil';
 
 import dayjs from 'dayjs';
-import { customedWeek } from '@/utils/customedWeek';
-import DropDown from '@/components/@common/DropDown';
 import { useGroupDetail } from '@/queries/Group';
 import { useParams } from 'react-router-dom';
 import useCheckLocationState from '@/hooks/useCheckLocationState';
@@ -15,10 +13,12 @@ import FineBookCreateModal from '@/components/@common/Modal/FineBookModal/FineBo
 import { dateState } from '@/store/dateState';
 import { DetailFilter } from '@/store/detailFilter';
 import { FilterModeTest, useDateFilter } from './hook/useDateFilter';
-import PeriodSettingModal from './PeriodSettingModal';
 import useDropDown from '@/hooks/useDropDown';
+import FilterButton from './FilterButton';
 
-export const FILTER_BUTTON_LIST: { mode: FilterModeTest; text: string; id?: string }[] = [
+export type FilterButtonType = { mode: FilterModeTest; text: string; id?: string };
+
+export const FILTER_BUTTON_LIST: FilterButtonType[] = [
   { mode: 'month', text: '월간', id: GA.FILTER.MONTH },
   { mode: 'week', text: '주간', id: GA.FILTER.WEEK_DROP },
   { mode: 'day', text: '일간', id: GA.FILTER.DAY },
@@ -39,36 +39,12 @@ const DateController = ({ setDetailFilter }: Props) => {
   const [calendarDate, setCalendarDate] = useRecoilState(dateState);
 
   const [openAddModal, setOpenAddModal] = useState<boolean>(initialAddModalState);
-  const [openWeeklyFilterDrop, setOpenWeeklyFilterDrop] = useState(false);
-  // const [openCustomFilterDrop, setOpenCustomFilterDrop] = useState(false);
 
-  const { getTitle, goToWeek, changeDateByButtonMode, increaseDate, decreaseDate } = useDateFilter();
+  const { getTitle, increaseDate, decreaseDate } = useDateFilter();
   const { dropDownRef: periodSettingRef, setOpenDrop: setOpenPeriodSettingDrop, openDrop: openPeriodSettingDrop } = useDropDown();
-
-  const handleWeeklyFilterDrop = () => {
-    setOpenWeeklyFilterDrop((prev) => !prev);
-  };
 
   const handleAddModal = () => {
     setOpenAddModal((prev) => !prev);
-  };
-
-  const handleCustomFilterDrop = () => {
-    setOpenPeriodSettingDrop((prev) => !prev);
-  };
-
-  const handleDateFilterMode = (e: MouseEvent<HTMLButtonElement>, buttonMode: FilterModeTest) => {
-    if (buttonMode === 'custom') {
-      setOpenWeeklyFilterDrop(false);
-      handleCustomFilterDrop();
-      e.stopPropagation();
-      return;
-    }
-    handleWeeklyFilterDrop();
-    setOpenPeriodSettingDrop(false);
-    if (calendarDate.mode === buttonMode) return;
-
-    changeDateByButtonMode(buttonMode);
   };
 
   const updateToToday = () => {
@@ -99,32 +75,16 @@ const DateController = ({ setDetailFilter }: Props) => {
             </Style.TodayButton>
             <Style.FilterWrapper ref={dropDownRef}>
               <div ref={periodSettingRef}>
-                {FILTER_BUTTON_LIST.map((btn) => {
-                  return (
-                    <>
-                      <Style.FilterButton id={btn.id} key={btn.id} isActive={calendarDate.mode === btn.mode} onClick={(e) => handleDateFilterMode(e, btn.mode)}>
-                        <Style.FlexCenter>
-                          <span>{btn.text}</span>
-                          {(btn.mode === 'week' || btn.mode === 'custom') && <Style.ArrowIcon>{ARROW.DOWN_SM}</Style.ArrowIcon>}
-                        </Style.FlexCenter>
-                        {btn.mode === 'week' && calendarDate.mode === 'week' && openWeeklyFilterDrop && (
-                          <div style={{ position: 'relative', left: '1px' }}>
-                            <DropDown
-                              width={60}
-                              align="center"
-                              setState={goToWeek}
-                              list={customedWeek(calendarDate.baseDate)}
-                              top="7px"
-                              onClose={handleWeeklyFilterDrop}
-                              dropDownRef={dropDownRef}
-                            />
-                          </div>
-                        )}
-                      </Style.FilterButton>
-                      {btn.mode === 'custom' && openPeriodSettingDrop && <PeriodSettingModal modalHandler={handleCustomFilterDrop} />}
-                    </>
-                  );
-                })}
+                {FILTER_BUTTON_LIST.map((filterButton) => (
+                  <FilterButton
+                    key={filterButton.mode}
+                    btn={filterButton}
+                    // 여기를 외부에서 넣어주는 이유는 위에 있는 div ref={periodSettingRef} 이게 없으면
+                    // periodSettingModal이 켜져있는 상태에서 상세 필터 버튼을 누르면 꺼졌다가 다시 켜집니다 (버블링)
+                    openPeriodSettingDrop={openPeriodSettingDrop}
+                    setOpenPeriodSettingDrop={setOpenPeriodSettingDrop}
+                  />
+                ))}
               </div>
             </Style.FilterWrapper>
           </Style.Block>
