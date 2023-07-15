@@ -1,7 +1,7 @@
-import { useEffect, useRef, useState } from 'react';
 import { ARROW } from '@/assets/icons/Arrow';
 import * as Style from '../styles';
 import MiniCalendar from '../../MiniCalendar';
+import useDropDown from '@/hooks/useDropDown';
 
 export type DropBoxColor = 'white' | 'disabled';
 
@@ -14,26 +14,13 @@ interface CalendarDropBoxProps {
 }
 
 export const CalendarDropBox = ({ setType, type, boxWidth = '138px', color = 'white' }: CalendarDropBoxProps) => {
-  const dropDownRef = useRef<HTMLDivElement>(null);
-  const [openDrop, setOpenDrop] = useState(false);
+  const { dropDownRef, openDrop, setOpenDrop } = useDropDown();
 
   const hadleCalendarDropDown = () => {
     setOpenDrop((prev) => !prev);
   };
 
   const isDisabled = color === 'disabled';
-
-  useEffect(() => {
-    const onClickOutSide = (event: MouseEvent) => {
-      if (dropDownRef.current && !dropDownRef.current.contains(event.target as Node)) {
-        setOpenDrop(false);
-      }
-    };
-    document.addEventListener('mousedown', onClickOutSide);
-    return () => {
-      document.removeEventListener('mousedown', onClickOutSide);
-    };
-  }, []);
 
   return (
     <Style.DropDownBox ref={dropDownRef} boxWidth={boxWidth} color={color} focus={openDrop}>

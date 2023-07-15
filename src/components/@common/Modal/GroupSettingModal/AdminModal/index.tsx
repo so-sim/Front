@@ -81,7 +81,7 @@ export const AdminModal: FC<ModalHandlerProps> = ({ modalHandler }) => {
 
   const updateGroupInfo = () => {
     const id = Number(groupId);
-    updateGroupMutate({ title, type, coverColor, groupId: id, nickname: myNickname?.content.nickname === nickname ? null : nickname });
+    updateGroupMutate({ title, type, coverColor, groupId: id, nickname });
   };
 
   const isValidForm = () => {
@@ -121,19 +121,18 @@ export const AdminModal: FC<ModalHandlerProps> = ({ modalHandler }) => {
                 <Input value={nickname} errorText={isError.nickname} onChange={setNickname} maxLength={15} setError={setError} title="nickname" />
               </Label>
               <Label title="모임 유형" flexDirection="column">
-                <DropBox dropDownList={DROPDOWN_LIST} type={type} setType={setType} boxWidth="170px" />
+                <DropBox dropDownList={DROPDOWN_LIST} type={type} setType={setType} boxWidth="170px" width={170} />
               </Label>
               <Label title="커버 색상" flexDirection="column" margin="0px">
                 <GroupColorList selectedColor={coverColor} onChange={setCoverColor} />
               </Label>
             </div>
             <div>
-              <Label title="모임 탈퇴" flexDirection="column">
-                <Style.WithDrwal>
-                  <Style.GroupName>{groupData?.content.title}</Style.GroupName>
-                  <Style.QuitButton onClick={handleGroupWithdrawalModal}>탈퇴</Style.QuitButton>
-                </Style.WithDrwal>
-              </Label>
+              <Label title="모임 탈퇴" flexDirection="column" />
+              <Style.WithDrwal>
+                <Style.GroupName>{groupData?.content.title}</Style.GroupName>
+                <Style.QuitButton onClick={handleGroupWithdrawalModal}>탈퇴</Style.QuitButton>
+              </Style.WithDrwal>
               <Style.Flex>
                 <Style.DeleteButton onClick={handleGroupDeleteModal}>모임 삭제</Style.DeleteButton>
               </Style.Flex>

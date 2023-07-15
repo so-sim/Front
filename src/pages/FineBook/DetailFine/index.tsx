@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useGetDetailList } from '@/queries/Detail/useGetDetailList';
-import { EventInfoTest, SelectedEventInfo } from '@/types/event';
-import { DateController, DetailList, DetailsHeader, Pagination, TableHead, UserDetails } from '@/components/DetailFine';
+import { SelectedEventInfo } from '@/types/event';
+import { DateController, DetailList, DetailsHeader, FilterController, Pagination, TableHead, UserDetails } from '@/components/DetailFine';
 import * as Style from './styles';
 import { useRecoilValue } from 'recoil';
 import { useParams } from 'react-router-dom';
@@ -37,6 +37,7 @@ const DetailFine = () => {
         <DetailsHeader />
         <Style.DetailContent>
           <DateController setDetailFilter={setDetailFilter} />
+          <FilterController detailFilter={detailFilter} setDetailFilter={setDetailFilter} totalAmount={1_000_000} />
           <TableHead setDetailFilter={setDetailFilter} />
           <DetailList detailFilter={detailFilter} details={data?.content.eventList} />
         </Style.DetailContent>

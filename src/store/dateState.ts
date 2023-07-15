@@ -1,7 +1,7 @@
 import dayjs, { Dayjs } from 'dayjs';
 import { atom } from 'recoil';
 import { recoilPersist } from 'recoil-persist';
-import { FilterMode } from '@/pages/FineBook/DetailFine';
+import { FilterModeTest } from '@/components/DetailFine/DateController/hook/useDateFilter';
 
 const { persistAtom } = recoilPersist({
   storage: sessionStorage,
@@ -11,7 +11,7 @@ export interface DateState {
   baseDate: Dayjs;
   startDate: Dayjs;
   endDate: Dayjs;
-  mode: FilterMode;
+  mode: FilterModeTest;
 }
 
 export const dateState = atom<DateState>({
