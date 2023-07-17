@@ -2,14 +2,13 @@ import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 
 export const UserDetailsFrame = styled.div`
-  width: 460px;
   /* userDetail 에서 값은 왜 더높음? */
-  height: calc(100% - 68px);
-
+  width: 460px;
   position: absolute;
-  top: 68px;
+  top: 0;
+  bottom: 0;
   right: 0;
-  z-index: 4;
+  z-index: 9999;
 
   box-shadow: 2px 0px 25px 7px rgba(156, 156, 156, 0.15);
   border-left: 2px solid ${({ theme }) => theme.colors.neutral_400_b};
@@ -171,4 +170,17 @@ export const Button = styled.button<{ isSubmit?: boolean }>`
       background-color: ${theme.colors.secondary_800};
       color: ${theme.colors.secondary_100};
     `}
+`;
+
+export const BackDrop = styled.div`
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+
+  background-color: #2d2d2d;
+  opacity: 30%;
+
+  z-index: 9998;
 `;

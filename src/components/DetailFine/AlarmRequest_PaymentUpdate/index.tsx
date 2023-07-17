@@ -1,7 +1,7 @@
 import * as Style from './styles';
 import { SYSTEM } from '@/assets/icons/System';
 import theme from '@/styles/Theme';
-import { CheckDetailFine, SetCheckDetailFine } from '@/components/DetailFine/AlarmRequest_PaymentUpdate/hooks/useCheckDetailFine';
+import { CheckDetailFine, SelectedEventInfo_Checked, SetCheckDetailFine } from '@/components/DetailFine/AlarmRequest_PaymentUpdate/hooks/useCheckDetailFine';
 import { useUpdateDetailStatus } from '@/queries/Detail';
 import { useParams, useSearchParams } from 'react-router-dom';
 import ItemList from './ItemList';
@@ -9,6 +9,7 @@ import { useParticipantList } from '@/queries/Group';
 import { useEffect, useState } from 'react';
 import { Situation } from '@/types/event';
 import { useGroupDetail } from '@/queries/Group';
+import { useSelectedContext, initialSelectData } from '@/contexts/SelectedFineContext';
 
 type Props = {
   checkDetailFine: CheckDetailFine;
@@ -60,6 +61,8 @@ const AlarmRequest_PaymentUpdate = ({ checkDetailFine, setCheckDetailFine }: Pro
 
   const [situationToChange, setSituationToChange] = useState<Situation>('완납');
 
+  const { selectedFine, setSelectedFine } = useSelectedContext('userDetails');
+
   const { setInitCheckDetailFine } = setCheckDetailFine;
 
   const { data: participantData } = useParticipantList(Number(groupId));
@@ -71,6 +74,12 @@ const AlarmRequest_PaymentUpdate = ({ checkDetailFine, setCheckDetailFine }: Pro
   useEffect(() => {
     closePage();
   }, []);
+
+  // recoil로 관리하기 searchParams
+
+  useEffect(() => {
+    setSelectedFine(initialSelectData);
+  }, [searchParams]);
   // 새로고침 시 url이 유지되어있어서 빈 창이 나와있음(새로고침 시 searchParam 지우는 방법이 있는지 찾아볼 예정..)
 
   const closePage = () => {
@@ -98,69 +107,64 @@ const AlarmRequest_PaymentUpdate = ({ checkDetailFine, setCheckDetailFine }: Pro
 
   const stringToNumber_Date = (date: string) => +date?.replace(/\./g, '');
 
-  const participantSituation_List = (nickName: string, checkDetailFine: CheckDetailFine) =>
-    Object.values(checkDetailFine)
-      ?.filter((item) => item.nickname === nickName)
-      ?.sort((a, b) => stringToNumber_Date(a.date) - stringToNumber_Date(b.date));
+  const sortedtList = Object.values(checkDetailFine).sort((a, b) => stringToNumber_Date(a.date) - stringToNumber_Date(b.date));
+
+  const participantSituation_List = (nickName: string, sortedtList: SelectedEventInfo_Checked[]) => sortedtList?.filter((item) => item.nickname === nickName);
+
   // 해당 로직을 ItemList에서 toggle이 실행되었을 때 해주어도 좋을 것 같다.
 
-  const max_Date = (checkDetailFine: CheckDetailFine, stringToNumber_Date: (date: string) => number) =>
-    Object.values(checkDetailFine)?.reduce(
-      (max, curr) => (stringToNumber_Date(max.date) < stringToNumber_Date(curr.date) ? curr : max),
-      checkDetailFine[Object.keys(checkDetailFine)[0]],
-    );
+  const max_Date = (sortedtList: SelectedEventInfo_Checked[]) => sortedtList.at(-1)?.date;
 
-  const min_Date = (checkDetailFine: CheckDetailFine, stringToNumber_Date: (date: string) => number) =>
-    Object.values(checkDetailFine)?.reduce(
-      (min, curr) => (stringToNumber_Date(min.date) > stringToNumber_Date(curr.date) ? curr : min),
-      checkDetailFine[Object.keys(checkDetailFine)[0]],
-    );
+  const min_Date = (sortedtList: SelectedEventInfo_Checked[]) => sortedtList[0].date;
 
-  if (!searchParams.has('type') && !isAdmin) return null;
+  if (!searchParams.has('type') || !isAdmin) return null;
 
   // 조건부 렌더링에 checkDetailFine 이 0일 때도 null을 출력할지 고민 중
   return (
-    <Style.UserDetailsFrame>
-      <Style.Header>
-        <Style.CloseIcon onClick={closePage}>{SYSTEM.CLOSE}</Style.CloseIcon>
-        <span>닫기</span>
-      </Style.Header>
+    <>
+      <Style.UserDetailsFrame>
+        <Style.Header>
+          <Style.CloseIcon onClick={closePage}>{SYSTEM.CLOSE}</Style.CloseIcon>
+          <span>닫기</span>
+        </Style.Header>
 
-      <Style.Main>
-        {type && Status[type].title}
-        {type && Status[type].subTitle(situationToChange)}
+        <Style.Main>
+          {type && Status[type].title}
+          {type && Status[type].subTitle(situationToChange)}
 
-        {type === 'situation_change' && (
-          <Style.SituationContainer>
-            <Style.SituationButton>확인요청</Style.SituationButton>
-            <Style.Arrow />
-            <Style.SituationButton situationType={situationToChange} isClick={situationToChange === '완납'} onClick={() => setSituationToChange('완납')}>
-              납부완료
-            </Style.SituationButton>
-            <Style.SituationButton situationType={situationToChange} isClick={situationToChange === '미납'} onClick={() => setSituationToChange('미납')}>
-              미납
-            </Style.SituationButton>
-          </Style.SituationContainer>
-        )}
+          {type === 'situation_change' && (
+            <Style.SituationContainer>
+              <Style.SituationButton>확인요청</Style.SituationButton>
+              <Style.Arrow />
+              <Style.SituationButton situationType={situationToChange} isClick={situationToChange === '완납'} onClick={() => setSituationToChange('완납')}>
+                납부완료
+              </Style.SituationButton>
+              <Style.SituationButton situationType={situationToChange} isClick={situationToChange === '미납'} onClick={() => setSituationToChange('미납')}>
+                미납
+              </Style.SituationButton>
+            </Style.SituationContainer>
+          )}
 
-        <Style.DatePeriodContainer>
-          {min_Date(checkDetailFine, stringToNumber_Date)?.date} - {max_Date(checkDetailFine, stringToNumber_Date)?.date}
-        </Style.DatePeriodContainer>
+          <Style.DatePeriodContainer>
+            {min_Date(sortedtList)} -{max_Date(sortedtList)}
+          </Style.DatePeriodContainer>
 
-        <Style.ListContainer>
-          {participantList?.map((nickName) => (
-            <ItemList key={nickName} myName={nickName} list={participantSituation_List(nickName, checkDetailFine)} setCheckDetailFine={setCheckDetailFine} />
-          ))}
-        </Style.ListContainer>
-      </Style.Main>
-      <Style.Footer>
-        <Style.Button>취소</Style.Button>
+          <Style.ListContainer>
+            {participantList?.map((nickName) => (
+              <ItemList key={nickName} myName={nickName} list={participantSituation_List(nickName, sortedtList)} setCheckDetailFine={setCheckDetailFine} />
+            ))}
+          </Style.ListContainer>
+        </Style.Main>
+        <Style.Footer>
+          <Style.Button>취소</Style.Button>
 
-        <Style.Button isSubmit={true} onClick={type === 'situation_change' ? updateSituation : requestAlarm}>
-          변경하기
-        </Style.Button>
-      </Style.Footer>
-    </Style.UserDetailsFrame>
+          <Style.Button isSubmit={true} onClick={type === 'situation_change' ? updateSituation : requestAlarm}>
+            변경하기
+          </Style.Button>
+        </Style.Footer>
+      </Style.UserDetailsFrame>
+      <Style.BackDrop />
+    </>
   );
 };
 
