@@ -122,7 +122,7 @@ const AlarmRequest_PaymentUpdate = ({ checkDetailFine, setCheckDetailFine }: Pro
   // 조건부 렌더링에 checkDetailFine 이 0일 때도 null을 출력할지 고민 중
   return (
     <>
-      <Style.UserDetailsFrame>
+      <Style.UserDetailsFrame onClick={(e) => e.stopPropagation()}>
         <Style.Header>
           <Style.CloseIcon onClick={closePage}>{SYSTEM.CLOSE}</Style.CloseIcon>
           <span>닫기</span>
@@ -163,7 +163,7 @@ const AlarmRequest_PaymentUpdate = ({ checkDetailFine, setCheckDetailFine }: Pro
           </Style.Button>
         </Style.Footer>
       </Style.UserDetailsFrame>
-      <Style.BackDrop />
+      <Style.BackDrop onClick={(e) => e.stopPropagation()} />
     </>
   );
 };
