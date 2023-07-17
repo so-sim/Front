@@ -52,7 +52,7 @@ export const SituationControlWrapper = styled.div`
 
   ${({ theme }) => theme.font.subhead_01};
   color: ${({ theme }) => theme.colors.secondary_800};
-  z-index: 999;
+  z-index: 400;
 `;
 
 export const Label = styled.label`
@@ -77,3 +77,5 @@ export const DividingLine = styled.div`
   height: 17px;
   background-color: ${({ theme }) => theme.colors.neutral_300_b};
 `;
+
+// searchParam에 따라  button display 해야함
