@@ -12,6 +12,7 @@ import { DetailFilter } from '@/store/detailFilter';
 import SelectedFineContextProvider from '@/contexts/SelectedFineContext';
 import useCheckDetailFine from '@/components/DetailFine/AlarmRequest_PaymentUpdate/hooks/useCheckDetailFine';
 import AlarmRequest_PaymentUpdate from '@/components/DetailFine/AlarmRequest_PaymentUpdate';
+import useMultiRefs from '@/hooks/useMultiRefs';
 
 export type FilterMode = 'month' | 'week' | 'day';
 
@@ -48,14 +49,24 @@ const DetailFine = () => {
 
   // userDetail 사이즈 고민
 
+  const { setInitCheckDetailFine } = setCheckDetailFine;
+
+  const { addRef } = useMultiRefs(setInitCheckDetailFine);
+
   return (
     <SelectedFineContextProvider>
       <Style.DetailFineFrame>
         <DetailsHeader />
         <Style.DetailContent>
           <DateController setDetailFilter={setDetailFilter} />
-          <TableHead setDetailFilter={setDetailFilter} details={data?.content.eventList} checkDetailFine={checkDetailFine} setCheckDetailFine={setCheckDetailFine} />
-          <DetailList detailFilter={detailFilter} details={data?.content.eventList} checkDetailFine={checkDetailFine} setCheckDetailFine={setCheckDetailFine} />
+          <TableHead
+            setDetailFilter={setDetailFilter}
+            details={data?.content.eventList}
+            checkDetailFine={checkDetailFine}
+            setCheckDetailFine={setCheckDetailFine}
+            addref={addRef}
+          />
+          <DetailList detailFilter={detailFilter} details={data?.content.eventList} checkDetailFine={checkDetailFine} setCheckDetailFine={setCheckDetailFine} addref={addRef} />
         </Style.DetailContent>
 
         <Pagination totalCount={data?.content.totalCount} detailFilter={detailFilter} setDetailFilter={setDetailFilter} />

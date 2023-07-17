@@ -9,11 +9,12 @@ import { DetailFilter } from '@/store/detailFilter';
 import CheckboxContainer from '../UserDetails/checkBox';
 import { SelectedEventInfo } from '@/types/event';
 import { CheckDetailFine, SetCheckDetailFine } from '@/components/DetailFine/AlarmRequest_PaymentUpdate/hooks/useCheckDetailFine';
+import useMultiRefs from '@/hooks/useMultiRefs';
 
 type Props = {
   setDetailFilter: Dispatch<SetStateAction<DetailFilter>>;
   details?: SelectedEventInfo[];
-
+  addref: <T extends HTMLInputElement>(ref: T) => void;
   checkDetailFine: CheckDetailFine;
   setCheckDetailFine: SetCheckDetailFine;
 };
@@ -27,7 +28,7 @@ const paymentTypeList: { title: PaymentDropdown; id?: string }[] = [
   { title: '확인중', id: GA.FILTER.CON },
 ];
 
-const TableHead = ({ details, setDetailFilter, checkDetailFine, setCheckDetailFine }: Props) => {
+const TableHead = ({ details, setDetailFilter, checkDetailFine, setCheckDetailFine, addref }: Props) => {
   const param = useParams();
 
   const [searchParams, setSearchParams] = useSearchParams();
@@ -92,7 +93,7 @@ const TableHead = ({ details, setDetailFilter, checkDetailFine, setCheckDetailFi
   return (
     <Style.TableHead>
       <CheckboxContainer id={'checkedAll'} isChecked={!!isCheckedAll} onChange={checkedAllProperty}>
-        <CheckboxContainer.Checkbox />
+        <CheckboxContainer.Checkbox ref={Object.keys(checkDetailFine).length !== 0 ? addref : null} />
       </CheckboxContainer>
 
       <Style.Element>날짜</Style.Element>

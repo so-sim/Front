@@ -13,19 +13,19 @@ import { CheckDetailFine, SetCheckDetailFine } from '@/components/DetailFine/Ala
 type Props = {
   details?: SelectedEventInfo[];
   detailFilter: DetailFilter;
-
+  addref: <T extends HTMLInputElement>(ref: T) => void;
   checkDetailFine: CheckDetailFine;
   setCheckDetailFine: SetCheckDetailFine;
 };
 
-const DetailList = ({ detailFilter, details, checkDetailFine, setCheckDetailFine }: Props) => {
+const DetailList = ({ detailFilter, details, checkDetailFine, setCheckDetailFine, addref }: Props) => {
   const [calendarState, setCalendarState] = useRecoilState(dateState);
 
   const [openButtonListId, setOpenButtonListId] = useState(0);
 
   const { selectedFine, setSelectedFine } = useSelectedContext('userDetails');
 
-  const { setAddCheckDetailFine, setSubtractCheckDetailFine } = setCheckDetailFine;
+  const { setAddCheckDetailFine, setSubtractCheckDetailFine, setInitCheckDetailFine } = setCheckDetailFine;
 
   const isChecked = (eventId: number) => Object.keys(checkDetailFine).includes(String(eventId));
 
@@ -72,7 +72,7 @@ const DetailList = ({ detailFilter, details, checkDetailFine, setCheckDetailFine
         return (
           <Style.TableRow key={i} isSelected={selectedFine.eventId === eventId} onClick={() => handleUserDetailModal(detail)}>
             <CheckboxContainer id={String(eventId)} isChecked={isChecked(eventId)} onChange={(event: React.MouseEvent<HTMLInputElement>) => toggleChecked(event, detail)}>
-              <CheckboxContainer.Checkbox />
+              <CheckboxContainer.Checkbox ref={Object.keys(checkDetailFine).length !== 0 ? addref : null} />
             </CheckboxContainer>
             <Style.Element hasEllipsis={false}>{date.slice(2)}</Style.Element>
             <DropDownWrapper openButtonListId={openButtonListId} detail={detail} setOpenButtonListId={setOpenButtonListId} />

@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { createContext, useContext, PropsWithChildren } from 'react';
+import React, { createContext, useContext, PropsWithChildren } from 'react';
 
 type CheckboxContextProps = {
   id: string;
@@ -32,15 +32,15 @@ const useCheckboxContext = () => {
 };
 // useContext hook
 
-const Checkbox = ({ ...props }) => {
+const Checkbox = React.forwardRef<HTMLInputElement>(({ ...props }, ref) => {
   const { id, isChecked, onChange } = useCheckboxContext();
 
   return (
     <>
-      <input type="checkbox" id={id} checked={isChecked} onClick={onChange} readOnly {...props} />
+      <input type="checkbox" id={id} checked={isChecked} onClick={onChange} readOnly ref={ref} {...props} />
     </>
   );
-};
+});
 
 const Label = ({ children, ...props }: PropsWithChildren<{}>) => {
   const { id } = useCheckboxContext();
