@@ -14,7 +14,7 @@ import useMultiRefs from '@/hooks/useMultiRefs';
 type Props = {
   setDetailFilter: Dispatch<SetStateAction<DetailFilter>>;
   details?: SelectedEventInfo[];
-  addref: <T extends HTMLInputElement>(ref: T) => void;
+  addref: <T extends HTMLInputElement & HTMLButtonElement>(ref: T) => void;
   checkDetailFine: CheckDetailFine;
   setCheckDetailFine: SetCheckDetailFine;
 };
@@ -149,6 +149,7 @@ const TableHead = ({ details, setDetailFilter, checkDetailFine, setCheckDetailFi
               searchParams.set('type', 'situation_change');
               setSearchParams(searchParams, { replace: true });
             }}
+            ref={addref}
           >
             납부여부 변경
           </Style.SituationControlButton>
@@ -158,6 +159,7 @@ const TableHead = ({ details, setDetailFilter, checkDetailFine, setCheckDetailFi
               searchParams.set('type', 'alarm_request');
               setSearchParams(searchParams, { replace: true });
             }}
+            ref={addref}
           >
             납부요청
           </Style.SituationControlButton>

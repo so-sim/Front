@@ -14,6 +14,7 @@ const useMultiRefs = (callback: () => void) => {
       return;
     }
     callback();
+    console.log('hihihi');
   };
 
   useEffect(() => {

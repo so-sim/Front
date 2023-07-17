@@ -69,7 +69,7 @@ const DetailFine = () => {
           <DetailList detailFilter={detailFilter} details={data?.content.eventList} checkDetailFine={checkDetailFine} setCheckDetailFine={setCheckDetailFine} addref={addRef} />
         </Style.DetailContent>
 
-        <Pagination totalCount={data?.content.totalCount} detailFilter={detailFilter} setDetailFilter={setDetailFilter} />
+        <Pagination totalCount={data?.content.totalCount} detailFilter={detailFilter} setDetailFilter={setDetailFilter} addref={addRef} />
         <UserDetails />
         <AlarmRequest_PaymentUpdate checkDetailFine={checkDetailFine} setCheckDetailFine={setCheckDetailFine} />
       </Style.DetailFineFrame>
