@@ -1,5 +1,5 @@
 import { changeNumberToMoney } from '@/utils/changeNumberToMoney';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import * as Style from './styles';
 import { DropDownWrapper } from '@/components/DetailFine';
 import { DetailFilter } from '@/store/detailFilter';
@@ -7,7 +7,7 @@ import { useRecoilState } from 'recoil';
 import { dateState } from '@/store/dateState';
 import { SelectedEventInfo } from '@/types/event';
 import { useSelectedContext } from '@/contexts/SelectedFineContext';
-import CheckboxContainer from '../UserDetails/checkBox';
+import CheckboxContainer from '../../@common/Checkbox';
 import { CheckDetailFine, SetCheckDetailFine } from '@/components/DetailFine/AlarmRequest_PaymentUpdate/hooks/useCheckDetailFine';
 
 type Props = {
@@ -72,7 +72,11 @@ const DetailList = ({ detailFilter, details, checkDetailFine, setCheckDetailFine
         return (
           <Style.TableRow key={i} isSelected={selectedFine.eventId === eventId} onClick={() => handleUserDetailModal(detail)}>
             <CheckboxContainer id={String(eventId)} isChecked={isChecked(eventId)} onChange={(event: React.MouseEvent<HTMLInputElement>) => toggleChecked(event, detail)}>
-              <CheckboxContainer.Checkbox ref={Object.keys(checkDetailFine).length !== 0 ? addref : null} />
+              <CheckboxContainer.Checkbox
+                as={({ id, isChecked, onChange, ...props }) => {
+                  return <input type="checkbox" readOnly onClick={onChange} checked={isChecked} id={id} ref={addref} />;
+                }}
+              />
             </CheckboxContainer>
             <Style.Element hasEllipsis={false}>{date.slice(2)}</Style.Element>
             <DropDownWrapper openButtonListId={openButtonListId} detail={detail} setOpenButtonListId={setOpenButtonListId} />

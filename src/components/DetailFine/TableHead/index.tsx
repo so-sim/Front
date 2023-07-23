@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react';
+import React, { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react';
 import { ARROW } from '@/assets/icons/Arrow';
 import * as Style from './styles';
 import { useParticipantList } from '@/queries/Group';
@@ -6,10 +6,9 @@ import { useParams, useSearchParams } from 'react-router-dom';
 import DropDown from '@/components/@common/DropDown';
 import { GA } from '@/constants/GA';
 import { DetailFilter } from '@/store/detailFilter';
-import CheckboxContainer from '../UserDetails/checkBox';
+import CheckboxContainer from '../../@common/Checkbox';
 import { SelectedEventInfo } from '@/types/event';
 import { CheckDetailFine, SetCheckDetailFine } from '@/components/DetailFine/AlarmRequest_PaymentUpdate/hooks/useCheckDetailFine';
-import useMultiRefs from '@/hooks/useMultiRefs';
 
 type Props = {
   setDetailFilter: Dispatch<SetStateAction<DetailFilter>>;
@@ -72,7 +71,7 @@ const TableHead = ({ details, setDetailFilter, checkDetailFine, setCheckDetailFi
 
   const isCheckedAll = details?.every((item) => Object.keys(checkDetailFine).includes(String(item.eventId)));
 
-  const checkedAllProperty = () => {
+  const checkedAllProperty = (event: React.MouseEvent<HTMLInputElement>) => {
     if (isCheckedAll) {
       details?.forEach((item) => {
         setSubtractCheckDetailFine(item);
@@ -92,8 +91,15 @@ const TableHead = ({ details, setDetailFilter, checkDetailFine, setCheckDetailFi
 
   return (
     <Style.TableHead>
-      <CheckboxContainer id={'checkedAll'} isChecked={!!isCheckedAll} onChange={checkedAllProperty}>
-        <CheckboxContainer.Checkbox ref={Object.keys(checkDetailFine).length !== 0 ? addref : null} />
+      <CheckboxContainer id={'checkedAll'} isChecked={!!isCheckedAll} onChange={(event: React.MouseEvent<HTMLInputElement>) => checkedAllProperty(event)}>
+        <CheckboxContainer.Checkbox
+          as={React.forwardRef<HTMLInputElement, { id: string; isChecked: boolean; onChange: (event: React.MouseEvent<HTMLInputElement>) => void }>(
+            ({ id, isChecked, onChange, ...props }, ref) => {
+              return <input type="checkbox" readOnly onClick={onChange} checked={isChecked} id={id} ref={ref} />;
+            },
+          )}
+          ref={addref}
+        />
       </CheckboxContainer>
 
       <Style.Element>날짜</Style.Element>
@@ -138,7 +144,14 @@ const TableHead = ({ details, setDetailFilter, checkDetailFine, setCheckDetailFi
             isChecked={!(Object.keys(checkDetailFine).length === 0)}
             onChange={(event: React.MouseEvent<HTMLInputElement>) => initCheckDetailFine(event)}
           >
-            <CheckboxContainer.Checkbox />
+            <CheckboxContainer.Checkbox
+              as={React.forwardRef<HTMLInputElement, { id: string; isChecked: boolean; onChange: (event: React.MouseEvent<HTMLInputElement>) => void }>(
+                ({ id, isChecked, onChange, ...props }, ref) => {
+                  return <input type="checkbox" readOnly onClick={onChange} checked={isChecked} id={id} ref={ref} />;
+                },
+              )}
+              ref={addref}
+            />
           </CheckboxContainer>
           {/* 여기 onChange는 임시 cache역할을 만들어서 비우고 다시 채우는 역할??  근데 비우면 없어짐  그래서 그냥 cache 필요없이 지우는 역할을 해야할 것 같다.  */}
           {/* fixed는 논의 후 추가 */}
