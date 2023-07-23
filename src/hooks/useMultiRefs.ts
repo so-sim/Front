@@ -10,19 +10,22 @@ const useMultiRefs = (callback: () => void) => {
   };
 
   const handleClick = (e: MouseEvent) => {
+    console.log(refs);
+
+    console.log(e.target);
+    console.log(refs.has(e.target));
     if (refs.has(e.target)) {
       return;
     }
     callback();
-    console.log('hihihi');
   };
 
   useEffect(() => {
     if (refs.size !== 0) {
-      document.addEventListener('click', handleClick);
+      document.addEventListener('click', handleClick, { capture: true });
     }
     return () => {
-      document.removeEventListener('click', handleClick);
+      document.removeEventListener('click', handleClick, { capture: true });
     };
   });
   return { addRef, refs };
