@@ -9,6 +9,7 @@ import { SelectedEventInfo } from '@/types/event';
 import { useSelectedContext } from '@/contexts/SelectedFineContext';
 import CheckboxContainer from '../../@common/Checkbox';
 import { CheckDetailFine, SetCheckDetailFine } from '@/components/DetailFine/AlarmRequest_PaymentUpdate/hooks/useCheckDetailFine';
+import DetailListCheckBox from '../checkbox';
 
 type Props = {
   details?: SelectedEventInfo[];
@@ -72,11 +73,8 @@ const DetailList = ({ detailFilter, details, checkDetailFine, setCheckDetailFine
         return (
           <Style.TableRow key={i} isSelected={selectedFine.eventId === eventId} onClick={() => handleUserDetailModal(detail)}>
             <CheckboxContainer id={String(eventId)} isChecked={isChecked(eventId)} onChange={(event: React.MouseEvent<HTMLInputElement>) => toggleChecked(event, detail)}>
-              <CheckboxContainer.Checkbox
-                as={({ id, isChecked, onChange, ...props }) => {
-                  return <input type="checkbox" readOnly onClick={onChange} checked={isChecked} id={id} ref={addref} />;
-                }}
-              />
+              <CheckboxContainer.Checkbox as={DetailListCheckBox} />
+              {/*    이 부분 props를 자연스럽게 넘겨주려면 이 방법 밖에?? function으로 넘겨주는 방법도 있긴한데,  이거는 rest props 안넘어옴 */}
             </CheckboxContainer>
             <Style.Element hasEllipsis={false}>{date.slice(2)}</Style.Element>
             <DropDownWrapper openButtonListId={openButtonListId} detail={detail} setOpenButtonListId={setOpenButtonListId} />

@@ -9,6 +9,7 @@ import { DetailFilter } from '@/store/detailFilter';
 import CheckboxContainer from '../../@common/Checkbox';
 import { SelectedEventInfo } from '@/types/event';
 import { CheckDetailFine, SetCheckDetailFine } from '@/components/DetailFine/AlarmRequest_PaymentUpdate/hooks/useCheckDetailFine';
+import DetailListCheckBox from '../checkbox';
 
 type Props = {
   setDetailFilter: Dispatch<SetStateAction<DetailFilter>>;
@@ -91,15 +92,8 @@ const TableHead = ({ details, setDetailFilter, checkDetailFine, setCheckDetailFi
 
   return (
     <Style.TableHead>
-      <CheckboxContainer id={'checkedAll'} isChecked={!!isCheckedAll} onChange={(event: React.MouseEvent<HTMLInputElement>) => checkedAllProperty(event)}>
-        <CheckboxContainer.Checkbox
-          as={React.forwardRef<HTMLInputElement, { id: string; isChecked: boolean; onChange: (event: React.MouseEvent<HTMLInputElement>) => void }>(
-            ({ id, isChecked, onChange, ...props }, ref) => {
-              return <input type="checkbox" readOnly onClick={onChange} checked={isChecked} id={id} ref={ref} />;
-            },
-          )}
-          ref={addref}
-        />
+      <CheckboxContainer id={'checkedAll'} isChecked={!!isCheckedAll && details?.length! > 0} onChange={(event: React.MouseEvent<HTMLInputElement>) => checkedAllProperty(event)}>
+        <CheckboxContainer.Checkbox as={DetailListCheckBox} ref={addref} />
       </CheckboxContainer>
 
       <Style.Element>날짜</Style.Element>
