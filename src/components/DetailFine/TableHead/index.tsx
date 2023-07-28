@@ -72,7 +72,7 @@ const TableHead = ({ details, setDetailFilter, checkDetailFine, setCheckDetailFi
 
   const isCheckedAll = details?.every((item) => Object.keys(checkDetailFine).includes(String(item.eventId)));
 
-  const checkedAllProperty = (event: React.MouseEvent<HTMLInputElement>) => {
+  const checkedAllProperty = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (isCheckedAll) {
       details?.forEach((item) => {
         setSubtractCheckDetailFine(item);
@@ -92,7 +92,7 @@ const TableHead = ({ details, setDetailFilter, checkDetailFine, setCheckDetailFi
 
   return (
     <Style.TableHead>
-      <CheckboxContainer id={'checkedAll'} isChecked={!!isCheckedAll && details?.length! > 0} onChange={(event: React.MouseEvent<HTMLInputElement>) => checkedAllProperty(event)}>
+      <CheckboxContainer id={'checkedAll'} isChecked={!isCheckedAll} onChange={(event: React.ChangeEvent<HTMLInputElement>) => checkedAllProperty(event)}>
         <CheckboxContainer.Checkbox as={DetailListCheckBox} />
       </CheckboxContainer>
 
@@ -131,46 +131,47 @@ const TableHead = ({ details, setDetailFilter, checkDetailFine, setCheckDetailFi
       </Style.PointerElement>
       <Style.Element>금액</Style.Element>
       <Style.Element>사유</Style.Element>
-      {!(Object.keys(checkDetailFine).length === 0) && (
-        <Style.SituationControlWrapper>
-          <CheckboxContainer
-            id={'checkDetailFineLength'}
-            isChecked={!(Object.keys(checkDetailFine).length === 0)}
-            onChange={(event: React.MouseEvent<HTMLInputElement>) => initCheckDetailFine(event)}
-          >
-            <CheckboxContainer.Checkbox
-              as={React.forwardRef<HTMLInputElement, { id: string; isChecked: boolean; onChange: (event: React.MouseEvent<HTMLInputElement>) => void }>(
-                ({ id, isChecked, onChange, ...props }, ref) => {
-                  return <input type="checkbox" readOnly onClick={onChange} checked={isChecked} id={id} ref={ref} />;
-                },
-              )}
-            />
-          </CheckboxContainer>
-          {/* 여기 onChange는 임시 cache역할을 만들어서 비우고 다시 채우는 역할??  근데 비우면 없어짐  그래서 그냥 cache 필요없이 지우는 역할을 해야할 것 같다.  */}
-          {/* fixed는 논의 후 추가 */}
-          <Style.Label>{Object.keys(checkDetailFine).length}개 선택</Style.Label>
-          <Style.DividingLine />
-          <Style.SituationControlButton
-            onClick={() => {
-              searchParams.set('type', 'situation_change');
-              setSearchParams(searchParams, { replace: true });
-            }}
-          >
-            납부여부 변경
-          </Style.SituationControlButton>
-          <Style.DividingLine />
-          <Style.SituationControlButton
-            onClick={() => {
-              searchParams.set('type', 'alarm_request');
-              setSearchParams(searchParams, { replace: true });
-            }}
-          >
-            납부요청
-          </Style.SituationControlButton>
-        </Style.SituationControlWrapper>
-      )}
     </Style.TableHead>
   );
 };
 
 export default TableHead;
+
+// {!(Object.keys(checkDetailFine).length === 0) && (
+//   <Style.SituationControlWrapper>
+//     <CheckboxContainer
+//       id={'checkDetailFineLength'}
+//       isChecked={!(Object.keys(checkDetailFine).length === 0)}
+//       onChange={(event: React.MouseEvent<HTMLInputElement>) => initCheckDetailFine(event)}
+//     >
+//       <CheckboxContainer.Checkbox
+//         as={React.forwardRef<HTMLInputElement, { id: string; isChecked: boolean; onChange: (event: React.MouseEvent<HTMLInputElement>) => void }>(
+//           ({ id, isChecked, onChange, ...props }, ref) => {
+//             return <input type="checkbox" readOnly onClick={onChange} checked={isChecked} id={id} ref={ref} />;
+//           },
+//         )}
+//       />
+//     </CheckboxContainer>
+//     {/* 여기 onChange는 임시 cache역할을 만들어서 비우고 다시 채우는 역할??  근데 비우면 없어짐  그래서 그냥 cache 필요없이 지우는 역할을 해야할 것 같다.  */}
+//     {/* fixed는 논의 후 추가 */}
+//     <Style.Label>{Object.keys(checkDetailFine).length}개 선택</Style.Label>
+//     <Style.DividingLine />
+//     <Style.SituationControlButton
+//       onClick={() => {
+//         searchParams.set('type', 'situation_change');
+//         setSearchParams(searchParams, { replace: true });
+//       }}
+//     >
+//       납부여부 변경
+//     </Style.SituationControlButton>
+//     <Style.DividingLine />
+//     <Style.SituationControlButton
+//       onClick={() => {
+//         searchParams.set('type', 'alarm_request');
+//         setSearchParams(searchParams, { replace: true });
+//       }}
+//     >
+//       납부요청
+//     </Style.SituationControlButton>
+//   </Style.SituationControlWrapper>
+// )}

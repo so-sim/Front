@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 import React from 'react';
 
 const DetailListCheckBox = React.forwardRef<HTMLInputElement>(({ ...props }, ref) => {
-  return <CheckBox type="checkbox" readOnly {...props} ref={ref} />;
+  return <CheckBox type="checkbox" {...props} ref={ref} />;
 });
 
 export default DetailListCheckBox;

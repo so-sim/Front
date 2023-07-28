@@ -50,6 +50,8 @@ const DetailFine = () => {
 
   const { setInitCheckDetailFine } = setCheckDetailFine;
 
+  console.log(checkDetailFine);
+
   return (
     <SelectedFineContextProvider>
       <Style.DetailFineFrame>
