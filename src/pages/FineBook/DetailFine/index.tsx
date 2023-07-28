@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useGetDetailList } from '@/queries/Detail/useGetDetailList';
 import { SelectedEventInfo } from '@/types/event';
 import { DateController, DetailList, DetailsHeader, Pagination, TableHead, UserDetails } from '@/components/DetailFine';
@@ -51,6 +51,10 @@ const DetailFine = () => {
   const { setInitCheckDetailFine } = setCheckDetailFine;
 
   console.log(checkDetailFine);
+
+  useEffect(() => {
+    setInitCheckDetailFine();
+  }, [calendarDate]);
 
   return (
     <SelectedFineContextProvider>
