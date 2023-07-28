@@ -92,7 +92,7 @@ const TableHead = ({ details, setDetailFilter, checkDetailFine, setCheckDetailFi
 
   return (
     <Style.TableHead>
-      <CheckboxContainer id={'checkedAll'} isChecked={!isCheckedAll} onChange={(event: React.ChangeEvent<HTMLInputElement>) => checkedAllProperty(event)}>
+      <CheckboxContainer id={'checkedAll'} isChecked={!!isCheckedAll && details?.length! > 0} onChange={(event: React.ChangeEvent<HTMLInputElement>) => checkedAllProperty(event)}>
         <CheckboxContainer.Checkbox as={DetailListCheckBox} />
       </CheckboxContainer>
 
