@@ -66,8 +66,10 @@ const AlarmRequest_PaymentUpdate = ({ checkDetailFine, setCheckDetailFine }: Pro
   const { setInitCheckDetailFine } = setCheckDetailFine;
 
   const { data: participantData } = useParticipantList(Number(groupId));
-  const participantList = participantData?.content.nicknameList;
 
+  const participantList = [participantData?.content.adminNickname, ...(participantData?.content.nicknameList || [])];
+
+  console.log(participantData);
   const { data: group } = useGroupDetail(Number(groupId));
   const isAdmin = group?.content.isAdmin;
 
@@ -151,7 +153,7 @@ const AlarmRequest_PaymentUpdate = ({ checkDetailFine, setCheckDetailFine }: Pro
 
           <Style.ListContainer>
             {participantList?.map((nickName) => (
-              <ItemList key={nickName} myName={nickName} list={participantSituation_List(nickName, sortedtList)} setCheckDetailFine={setCheckDetailFine} />
+              <ItemList key={nickName} myName={nickName as string} list={participantSituation_List(nickName as string, sortedtList)} setCheckDetailFine={setCheckDetailFine} />
             ))}
           </Style.ListContainer>
         </Style.Main>
