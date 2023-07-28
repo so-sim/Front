@@ -28,7 +28,7 @@ const ItemList = ({ myName, list, setCheckDetailFine }: Props) => {
       <Style.ItemContainer onClick={() => setToggle((prev) => !prev)}>
         <Style.ItemWrapper>
           <input type="checkbox" checked={isChecked} onClick={(event: React.MouseEvent<HTMLInputElement>) => toggleCheckDetailFine(event, myName)} readOnly />
-          <Style.ItemTitle>안녕하세요안녕하세요안녕</Style.ItemTitle>
+          <Style.ItemTitle>{myName}</Style.ItemTitle>
           <Style.ItemAmount isOpen={toggle}>{TotalAmount}</Style.ItemAmount>
         </Style.ItemWrapper>
         {toggle &&
