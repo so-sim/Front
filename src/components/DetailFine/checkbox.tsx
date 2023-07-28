@@ -10,31 +10,42 @@ export default DetailListCheckBox;
 export const CheckBox = styled.input`
   appearance: none;
 
-  width: 12px;
-  height: 12px;
+  width: 16px;
+  height: 16px;
 
-  border: 2px solid ${({ theme }) => theme.colors.neutral_400_b};
-
-  border-radius: 0.25rem;
+  border: 1px solid ${({ theme }) => theme.colors.secondary_400};
 
   background-color: ${({ theme }) => theme.colors.white};
 
   &:focus {
-    /* border-color: ${({ theme }) => theme.colors.orange_600}; */
+    background-color: ${({ theme }) => theme.colors.neutral_200_b};
   }
 
   &:checked {
-    border-color: ${({ theme }) => theme.colors.orange_600};
-
-    background: center;
-    background-color: ${({ theme }) => theme.colors.orange_200};
+    /* background: center; */
     /* background-image: url('/check.svg'); */
-    background-repeat: no-repeat;
+    /* background-repeat: no-repeat; */
+    background-color: ${({ theme }) => theme.colors.primary_500};
+
+    position: relative;
+    &::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 10px;
+      height: 4px;
+
+      border-bottom: 2px solid white;
+      border-left: 2px solid white;
+
+      transform: translate(-50%, -70%) rotate(-45deg);
+    }
   }
 
   &:disabled {
-    border: 2px solid ${({ theme }) => theme.colors.neutral_400_b};
+    border: 2px solid ${({ theme }) => theme.colors.secondary_400};
 
-    background-color: ${({ theme }) => theme.colors.neutral_200_b};
+    background-color: ${({ theme }) => theme.colors.secondary_200};
   }
 `;
