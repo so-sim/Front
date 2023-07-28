@@ -63,7 +63,7 @@ const CircleButtonList = ({ setOpenButtonListId, situation, eventId, isAdmin = f
 
         return (
           <Style.CircleButtonBox key={buttonSituation} onClick={() => handleCircleButtonList(convertedSituation)}>
-            <CircleDropButton situation={convertedSituation} text={buttonSituation} />
+            <CircleDropButton situation={convertedSituation} origin={situation} />
           </Style.CircleButtonBox>
         );
       })}

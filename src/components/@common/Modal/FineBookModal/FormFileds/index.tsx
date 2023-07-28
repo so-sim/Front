@@ -39,7 +39,7 @@ const FormFileds = ({ selectData, dispatch }: Props) => {
   };
 
   const onChaneSituation = (situation: SituationText) => {
-    dispatch({ type: 'SITUATION', situation });
+    dispatch({ type: 'SITUATION', situation: convertTextToSituation(situation) });
   };
 
   const onChangeAmount = (e: React.ChangeEvent<HTMLInputElement>) => {

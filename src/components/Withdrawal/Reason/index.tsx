@@ -38,7 +38,7 @@ const WithdrawalReason = () => {
 
   const onClickWithdrawal = () => {
     if (user.userId) {
-      withdrawaMutate({ userId: user.userId, withdrawalGroundsType: selectedReason.wording });
+      withdrawaMutate({ withdrawReason: selectedReason.wording });
     }
   };
 

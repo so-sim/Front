@@ -9,7 +9,7 @@ export const getUserInfo = async (userId: number): Promise<ServerResponse<UserIn
 };
 
 export const userWithDrawal = async (withdrawal: WithDrawl): Promise<ServerResponse> => {
-  const { data } = await api.put(`/api/user/withdraw`, withdrawal);
+  const { data } = await api.delete(`/api/user/withdraw`, { data: { withdrawReason: withdrawal } });
   return data;
 };
 
