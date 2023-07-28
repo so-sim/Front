@@ -50,7 +50,7 @@ const DetailList = ({ detailFilter, details, checkDetailFine, setCheckDetailFine
     };
   }, []);
 
-  const toggleChecked = (event: React.ChangeEvent<HTMLInputElement>, detail: SelectedEventInfo) => {
+  const toggleChecked = (event: React.MouseEvent<HTMLInputElement>, detail: SelectedEventInfo) => {
     event.stopPropagation();
     if (isChecked(detail.eventId)) {
       setSubtractCheckDetailFine(detail);
@@ -72,7 +72,7 @@ const DetailList = ({ detailFilter, details, checkDetailFine, setCheckDetailFine
         const { date, nickname, amount, memo, eventId, ground } = detail;
         return (
           <Style.TableRow key={i} isSelected={selectedFine.eventId === eventId} onClick={() => handleUserDetailModal(detail)}>
-            <CheckboxContainer id={String(eventId)} isChecked={isChecked(eventId)} onChange={(event: React.ChangeEvent<HTMLInputElement>) => toggleChecked(event, detail)}>
+            <CheckboxContainer id={String(eventId)} isChecked={isChecked(eventId)} onChange={(event: React.MouseEvent<HTMLInputElement>) => toggleChecked(event, detail)}>
               <CheckboxContainer.Checkbox as={DetailListCheckBox} />
               {/*    이 부분 props를 자연스럽게 넘겨주려면 이 방법 밖에?? function으로 넘겨주는 방법도 있긴한데,  이거는 rest props 안넘어옴 */}
             </CheckboxContainer>

@@ -72,7 +72,7 @@ const TableHead = ({ details, setDetailFilter, checkDetailFine, setCheckDetailFi
 
   const isCheckedAll = details?.every((item) => Object.keys(checkDetailFine).includes(String(item.eventId)));
 
-  const checkedAllProperty = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const checkedAllProperty = (event: React.MouseEvent<HTMLInputElement>) => {
     if (isCheckedAll) {
       details?.forEach((item) => {
         setSubtractCheckDetailFine(item);
@@ -92,7 +92,7 @@ const TableHead = ({ details, setDetailFilter, checkDetailFine, setCheckDetailFi
 
   return (
     <Style.TableHead>
-      <CheckboxContainer id={'checkedAll'} isChecked={!!isCheckedAll && details?.length! > 0} onChange={(event: React.ChangeEvent<HTMLInputElement>) => checkedAllProperty(event)}>
+      <CheckboxContainer id={'checkedAll'} isChecked={!!isCheckedAll && details?.length! > 0} onChange={(event: React.MouseEvent<HTMLInputElement>) => checkedAllProperty(event)}>
         <CheckboxContainer.Checkbox as={DetailListCheckBox} />
       </CheckboxContainer>
 

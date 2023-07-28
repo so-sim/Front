@@ -4,7 +4,7 @@ import React, { createContext, useContext, PropsWithChildren, ReactElement, forw
 type CheckboxContextProps = {
   id: string;
   isChecked: boolean;
-  onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  onChange: (event: React.MouseEvent<HTMLInputElement>) => void;
 };
 
 type CheckboxProps = CheckboxContextProps & React.PropsWithChildren<{}>;
@@ -36,11 +36,11 @@ const Checkbox = forwardRef(({ as, ...props }: { as: React.ElementType }, ref) =
   const { id, isChecked, onChange } = useCheckboxContext();
 
   const Trigger =
-    as || React.forwardRef<HTMLInputElement>(({ ...props }, ref) => <input type="checkbox" id={id} checked={isChecked} onChange={onChange} readOnly {...props} ref={ref} />);
+    as || React.forwardRef<HTMLInputElement>(({ ...props }, ref) => <input type="checkbox" id={id} checked={isChecked} onClick={onChange} readOnly {...props} ref={ref} />);
 
   return (
     <>
-      <Trigger checked={isChecked} onChange={onChange} id={id} ref={ref} />
+      <Trigger checked={isChecked} onClick={onChange} id={id} ref={ref} />
     </>
   );
 });
