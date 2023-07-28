@@ -7,3 +7,4 @@ export { default as DropDownWrapper } from './DropDownWrapper';
 export { default as Pagination } from './Pagination';
 export { default as TableHead } from './TableHead';
 export { default as UserDetails } from './UserDetails';
+export { default as FilterController } from './FilterController';

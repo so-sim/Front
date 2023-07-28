@@ -113,7 +113,7 @@ const UserDetails = () => {
     <>
       <Style.UserDetailsFrame>
         <Style.Header>
-          <Style.CloseIcon onClick={closeUserDetails}>{SYSTEM.CLOSE}</Style.CloseIcon>
+          <Style.CloseIcon onClick={closeUserDetails}>{SYSTEM.CLOSE_LG}</Style.CloseIcon>
           <span>닫기</span>
         </Style.Header>
         <Style.UserDetailsContent>
