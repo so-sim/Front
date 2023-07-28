@@ -12,7 +12,6 @@ import { DetailFilter } from '@/store/detailFilter';
 import SelectedFineContextProvider from '@/contexts/SelectedFineContext';
 import useCheckDetailFine from '@/components/DetailFine/AlarmRequest_PaymentUpdate/hooks/useCheckDetailFine';
 import AlarmRequest_PaymentUpdate from '@/components/DetailFine/AlarmRequest_PaymentUpdate';
-import useMultiRefs from '@/hooks/useMultiRefs';
 
 export type FilterMode = 'month' | 'week' | 'day';
 
@@ -51,25 +50,17 @@ const DetailFine = () => {
 
   const { setInitCheckDetailFine } = setCheckDetailFine;
 
-  const { addRef } = useMultiRefs(setInitCheckDetailFine);
-
   return (
     <SelectedFineContextProvider>
       <Style.DetailFineFrame>
         <DetailsHeader />
         <Style.DetailContent>
           <DateController setDetailFilter={setDetailFilter} />
-          <TableHead
-            setDetailFilter={setDetailFilter}
-            details={data?.content.eventList}
-            checkDetailFine={checkDetailFine}
-            setCheckDetailFine={setCheckDetailFine}
-            addref={addRef}
-          />
-          <DetailList detailFilter={detailFilter} details={data?.content.eventList} checkDetailFine={checkDetailFine} setCheckDetailFine={setCheckDetailFine} addref={addRef} />
+          <TableHead setDetailFilter={setDetailFilter} details={data?.content.eventList} checkDetailFine={checkDetailFine} setCheckDetailFine={setCheckDetailFine} />
+          <DetailList detailFilter={detailFilter} details={data?.content.eventList} checkDetailFine={checkDetailFine} setCheckDetailFine={setCheckDetailFine} />
         </Style.DetailContent>
 
-        <Pagination totalCount={data?.content.totalCount} detailFilter={detailFilter} setDetailFilter={setDetailFilter} addref={addRef} />
+        <Pagination totalCount={data?.content.totalCount} detailFilter={detailFilter} setDetailFilter={setDetailFilter} />
         <UserDetails />
         <AlarmRequest_PaymentUpdate checkDetailFine={checkDetailFine} setCheckDetailFine={setCheckDetailFine} />
       </Style.DetailFineFrame>

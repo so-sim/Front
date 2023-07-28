@@ -14,12 +14,12 @@ import DetailListCheckBox from '../checkbox';
 type Props = {
   details?: SelectedEventInfo[];
   detailFilter: DetailFilter;
-  addref: <T extends HTMLInputElement>(ref: T) => void;
+
   checkDetailFine: CheckDetailFine;
   setCheckDetailFine: SetCheckDetailFine;
 };
 
-const DetailList = ({ detailFilter, details, checkDetailFine, setCheckDetailFine, addref }: Props) => {
+const DetailList = ({ detailFilter, details, checkDetailFine, setCheckDetailFine }: Props) => {
   const [calendarState, setCalendarState] = useRecoilState(dateState);
 
   const [openButtonListId, setOpenButtonListId] = useState(0);

@@ -14,7 +14,7 @@ import DetailListCheckBox from '../checkbox';
 type Props = {
   setDetailFilter: Dispatch<SetStateAction<DetailFilter>>;
   details?: SelectedEventInfo[];
-  addref: <T extends HTMLInputElement & HTMLButtonElement>(ref: T) => void;
+
   checkDetailFine: CheckDetailFine;
   setCheckDetailFine: SetCheckDetailFine;
 };
@@ -28,7 +28,7 @@ const paymentTypeList: { title: PaymentDropdown; id?: string }[] = [
   { title: '확인중', id: GA.FILTER.CON },
 ];
 
-const TableHead = ({ details, setDetailFilter, checkDetailFine, setCheckDetailFine, addref }: Props) => {
+const TableHead = ({ details, setDetailFilter, checkDetailFine, setCheckDetailFine }: Props) => {
   const param = useParams();
 
   const [searchParams, setSearchParams] = useSearchParams();
@@ -93,7 +93,7 @@ const TableHead = ({ details, setDetailFilter, checkDetailFine, setCheckDetailFi
   return (
     <Style.TableHead>
       <CheckboxContainer id={'checkedAll'} isChecked={!!isCheckedAll && details?.length! > 0} onChange={(event: React.MouseEvent<HTMLInputElement>) => checkedAllProperty(event)}>
-        <CheckboxContainer.Checkbox as={DetailListCheckBox} ref={addref} />
+        <CheckboxContainer.Checkbox as={DetailListCheckBox} />
       </CheckboxContainer>
 
       <Style.Element>날짜</Style.Element>
@@ -144,7 +144,6 @@ const TableHead = ({ details, setDetailFilter, checkDetailFine, setCheckDetailFi
                   return <input type="checkbox" readOnly onClick={onChange} checked={isChecked} id={id} ref={ref} />;
                 },
               )}
-              ref={addref}
             />
           </CheckboxContainer>
           {/* 여기 onChange는 임시 cache역할을 만들어서 비우고 다시 채우는 역할??  근데 비우면 없어짐  그래서 그냥 cache 필요없이 지우는 역할을 해야할 것 같다.  */}
@@ -156,7 +155,6 @@ const TableHead = ({ details, setDetailFilter, checkDetailFine, setCheckDetailFi
               searchParams.set('type', 'situation_change');
               setSearchParams(searchParams, { replace: true });
             }}
-            ref={addref}
           >
             납부여부 변경
           </Style.SituationControlButton>
@@ -166,7 +164,6 @@ const TableHead = ({ details, setDetailFilter, checkDetailFine, setCheckDetailFi
               searchParams.set('type', 'alarm_request');
               setSearchParams(searchParams, { replace: true });
             }}
-            ref={addref}
           >
             납부요청
           </Style.SituationControlButton>
