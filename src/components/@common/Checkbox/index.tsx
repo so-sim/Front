@@ -40,8 +40,6 @@ const Checkbox = forwardRef(({ as, ...props }: { as: React.ElementType }, ref) =
 
   return (
     <>
-      {/* <input type="checkbox" id={id} checked={isChecked} onClick={onChange} readOnly {...props} ref={ref} /> */}
-
       <Trigger isChecked={isChecked} onChange={onChange} id={id} ref={ref} />
     </>
   );
