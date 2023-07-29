@@ -24,6 +24,23 @@ const CheckboxHandlerButton = ({ checkDetailFine, setCheckDetailFine }: Props) =
     setInitCheckDetailFine();
   };
 
+  const isSameSituation = () => {
+    const situationOfCheckDetailFine = Object.values(checkDetailFine).map(({ situation }) => situation);
+
+    const isAllSameSituation = new Set(situationOfCheckDetailFine);
+
+    return isAllSameSituation.size === 1;
+  };
+
+  const moveSituationControlPage = () => {
+    if (isSameSituation()) {
+      searchParams.set('type', 'situation_change');
+      setSearchParams(searchParams, { replace: true });
+    } else {
+      console.log('situation 동일해야함.');
+    }
+  };
+
   return (
     <>
       {!(Object.keys(checkDetailFine).length === 0) && (
@@ -43,14 +60,7 @@ const CheckboxHandlerButton = ({ checkDetailFine, setCheckDetailFine }: Props) =
           <Style.DividingLine />
           {isAdmin ? (
             <>
-              <Style.SituationControlButton
-                onClick={() => {
-                  searchParams.set('type', 'situation_change');
-                  setSearchParams(searchParams, { replace: true });
-                }}
-              >
-                납부여부 변경
-              </Style.SituationControlButton>
+              <Style.SituationControlButton onClick={moveSituationControlPage}>납부여부 변경</Style.SituationControlButton>
               <Style.DividingLine />
               <Style.SituationControlButton
                 onClick={() => {
