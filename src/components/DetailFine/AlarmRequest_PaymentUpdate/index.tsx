@@ -52,6 +52,30 @@ const Status: StatusType = {
 
 // 지금 총무 checkBox 클릭을 어떻게 할건지 얘기를 나눠봐야함
 
+const SituationBtnComp: Record<Situation, React.ElementType<any>> = {
+  미납: ({ situationToChange, setSituationToChange, ...props }) => (
+    <Style.SituationButton situationType={situationToChange} isClick={situationToChange === '완납'} onClick={() => setSituationToChange('완납')} {...props}>
+      입금완료
+    </Style.SituationButton>
+  ),
+  완납: ({ situationToChange, setSituationToChange, ...props }) => (
+    <Style.SituationButton situationType={situationToChange} isClick={situationToChange === '미납'} onClick={() => setSituationToChange('미납')} {...props}>
+      미납
+    </Style.SituationButton>
+  ),
+  확인중: ({ situationToChange, setSituationToChange, ...props }) => (
+    <>
+      <Style.SituationButton situationType={situationToChange} isClick={situationToChange === '완납'} onClick={() => setSituationToChange('완납')} {...props}>
+        입금완료
+      </Style.SituationButton>
+
+      <Style.SituationButton situationType={situationToChange} isClick={situationToChange === '미납'} onClick={() => setSituationToChange('미납')} {...props}>
+        미납
+      </Style.SituationButton>
+    </>
+  ),
+};
+
 const AlarmRequest_PaymentUpdate = ({ checkDetailFine, setCheckDetailFine }: Props) => {
   const { groupId } = useParams();
 
@@ -59,7 +83,7 @@ const AlarmRequest_PaymentUpdate = ({ checkDetailFine, setCheckDetailFine }: Pro
 
   const type = searchParams.get('type');
 
-  const [situationToChange, setSituationToChange] = useState<Situation>('완납');
+  const [situationToChange, setSituationToChange] = useState<Situation>('미납');
 
   const { selectedFine, setSelectedFine } = useSelectedContext('userDetails');
 
@@ -83,6 +107,14 @@ const AlarmRequest_PaymentUpdate = ({ checkDetailFine, setCheckDetailFine }: Pro
     setSelectedFine(initialSelectData);
   }, [searchParams]);
   // 새로고침 시 url이 유지되어있어서 빈 창이 나와있음(새로고침 시 searchParam 지우는 방법이 있는지 찾아볼 예정..)
+
+  useEffect(() => {
+    if (Object.values(checkDetailFine)[0]?.situation === '완납') {
+      setSituationToChange('미납');
+    } else {
+      setSituationToChange('완납');
+    }
+  }, [checkDetailFine]);
 
   const closePage = () => {
     searchParams.delete('type');
@@ -122,6 +154,8 @@ const AlarmRequest_PaymentUpdate = ({ checkDetailFine, setCheckDetailFine }: Pro
   if (!searchParams.has('type') || !isAdmin) return null;
 
   // 조건부 렌더링에 checkDetailFine 이 0일 때도 null을 출력할지 고민 중
+
+  const Tag = SituationBtnComp[Object.values(checkDetailFine)[0].situation];
   return (
     <>
       <Style.UserDetailsFrame onClick={(e) => e.stopPropagation()}>
@@ -136,14 +170,9 @@ const AlarmRequest_PaymentUpdate = ({ checkDetailFine, setCheckDetailFine }: Pro
 
           {type === 'situation_change' && (
             <Style.SituationContainer>
-              <Style.SituationButton>확인요청</Style.SituationButton>
+              <Style.SituationButton>{Object.values(checkDetailFine)[0].situation}</Style.SituationButton>
               <Style.Arrow />
-              <Style.SituationButton situationType={situationToChange} isClick={situationToChange === '완납'} onClick={() => setSituationToChange('완납')}>
-                납부완료
-              </Style.SituationButton>
-              <Style.SituationButton situationType={situationToChange} isClick={situationToChange === '미납'} onClick={() => setSituationToChange('미납')}>
-                미납
-              </Style.SituationButton>
+              <Tag situationToChange={situationToChange} setSituationToChange={setSituationToChange} />
             </Style.SituationContainer>
           )}
 
