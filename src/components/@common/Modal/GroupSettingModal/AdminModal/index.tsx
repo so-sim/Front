@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from 'react';
+import { FC, MouseEvent, useEffect, useRef, useState } from 'react';
 import { Input, Label } from '@/components/@common';
 import Button from '@/components/@common/Button';
 import Modal from '@/components/@common/Modal';
@@ -14,13 +14,42 @@ import { GroupColor } from '@/types/group';
 import { useGetMyNikname } from '@/queries/Group/useGetMyNickname';
 import { GA } from '@/constants/GA';
 import useConfirmModal from '@/hooks/useConfirmModal';
+import { Tab } from '@/components/@common/Tab';
+import { Toggle } from '@/components/@common/Toggle';
+import GroupForm from './GroupForm';
+
+type TabValue = 'ALARM' | 'GROUP';
+
+const TAB_LIST = [
+  { label: '사용자 설정', value: 'GROUP' },
+  { label: '알람 설정', value: 'ALARM' },
+];
+
+const PERIOD_TYPE_LIST = [
+  { label: '매달', value: 'M' },
+  { label: '매주', value: 'W' },
+  { label: '매일', value: 'D' },
+];
+
+export type GroupFormData = {
+  title: string;
+  nickname: string;
+  type: string;
+  coverColor: GroupColor;
+};
 
 export const AdminModal: FC<ModalHandlerProps> = ({ modalHandler }) => {
-  const [title, setTitle] = useState('');
-  const [nickname, setNickname] = useState('');
-  const [type, setType] = useState('');
-  const [coverColor, setCoverColor] = useState<GroupColor>('#f89a65');
-  const { openConfirmModal, closeConfirmModal } = useConfirmModal();
+  const [tapValue, setTapValue] = useState('ALARM');
+  const [periodType, setPeriodType] = useState('M');
+
+  const [groupForm, setGroupForm] = useState<GroupFormData>({
+    title: '',
+    nickname: '',
+    type: '',
+    coverColor: '#f89a65',
+  });
+
+  const [onAlarm, setOnAlarm] = useState(false);
 
   const [isError, setError] = useError({
     nickname: '',
@@ -30,61 +59,26 @@ export const AdminModal: FC<ModalHandlerProps> = ({ modalHandler }) => {
   const { groupId } = useParams();
 
   const { mutate: updateGroupMutate, isLoading } = useUpdateGroup({ setError, modalHandler });
-  const { mutate: withdrawalGroupMutate } = useWithdrawalGroup();
-  const { mutate: deleteGroup } = useDeleteGroup();
 
   const { data: groupData } = useGroupDetail(Number(groupId));
   const { data: myNickname } = useGetMyNikname(Number(groupId));
 
-  const handleGroupDeleteModal = () => {
-    if (hasMoreUser) {
-      openConfirmModal({
-        type: 'GROUP_DELETE_HAS_USER',
-        confirm: closeConfirmModal,
-      });
+  const handleSubmitForm = () => {
+    if (tapValue === 'GROUP') {
+      return updateGroupInfo();
     }
-
-    if (hasNoUser) {
-      openConfirmModal({
-        type: 'GROUP_DELETE_NO_USER',
-        confirm: onDeleteGroup,
-        cancel: closeConfirmModal,
-      });
+    if (tapValue === 'ALARM') {
+      console.log('hi');
     }
-  };
-
-  const handleGroupWithdrawalModal = () => {
-    if (hasMoreUser) {
-      openConfirmModal({
-        type: 'GROUP_WITHDRAWAL_ADMIN_HAS_USER',
-        confirm: closeConfirmModal,
-      });
-    }
-
-    if (hasNoUser) {
-      openConfirmModal({
-        type: 'GROUP_WITHDRAWAL_ADMIN_NO_USER',
-        confirm: withdrwalGroup,
-        cancel: closeConfirmModal,
-      });
-    }
-  };
-
-  const onDeleteGroup = () => {
-    deleteGroup({ groupId: Number(groupId) });
-  };
-
-  const withdrwalGroup = () => {
-    const id = Number(groupId);
-    withdrawalGroupMutate({ groupId: id });
   };
 
   const updateGroupInfo = () => {
     const id = Number(groupId);
-    updateGroupMutate({ title, type, coverColor, groupId: id, nickname });
+    updateGroupMutate({ groupId: id, ...groupForm });
   };
 
   const isValidForm = () => {
+    const { title, nickname, type, coverColor } = groupForm;
     if (checkCountChar(title)) return false;
     if (checkCountChar(nickname)) return false;
     if (type === '') return false;
@@ -92,52 +86,62 @@ export const AdminModal: FC<ModalHandlerProps> = ({ modalHandler }) => {
     return true;
   };
 
-  const hasMoreUser = groupData?.content.size && groupData?.content.size > 1;
-  const hasNoUser = groupData?.content.size && groupData?.content.size <= 1;
-
   useEffect(() => {
     if (!groupData) return;
     if (!myNickname) return;
-    setTitle(groupData?.content.title);
-    setCoverColor(groupData.content.coverColor);
-    setType(groupData?.content.type);
-    setNickname(myNickname.content.nickname);
-  }, [groupData?.content.title, myNickname?.content.nickname]);
+
+    const { title, coverColor, type, adminNickname } = groupData.content;
+    setGroupForm({ title, coverColor, type, nickname: adminNickname });
+  }, [groupData?.content.title]);
 
   return (
-    <Modal.Frame onClick={modalHandler} width="492px" height="708px">
+    <Modal.Frame onClick={modalHandler} width="492px">
       <Modal.Header align="start" onClick={modalHandler} margin="16px">
         <Style.Title>모임 설정</Style.Title>
       </Modal.Header>
       <Modal.Body>
         <Style.Layout>
-          <Style.SubTitle>사용자 설정</Style.SubTitle>
-          <Style.Container>
-            <div>
-              <Label title="모임 이름" flexDirection="column">
-                <Input value={title} errorText={isError.groupName} onChange={setTitle} maxLength={15} setError={setError} title="groupName" />
-              </Label>
-              <Label title="내 이름" flexDirection="column">
-                <Input value={nickname} errorText={isError.nickname} onChange={setNickname} maxLength={15} setError={setError} title="nickname" />
-              </Label>
-              <Label title="모임 유형" flexDirection="column">
-                <DropBox dropDownList={DROPDOWN_LIST} type={type} setType={setType} boxWidth="170px" width={170} />
-              </Label>
-              <Label title="커버 색상" flexDirection="column" margin="0px">
-                <GroupColorList selectedColor={coverColor} onChange={setCoverColor} />
-              </Label>
-            </div>
-            <div>
-              <Label title="모임 탈퇴" flexDirection="column" />
-              <Style.WithDrwal>
-                <Style.GroupName>{groupData?.content.title}</Style.GroupName>
-                <Style.QuitButton onClick={handleGroupWithdrawalModal}>탈퇴</Style.QuitButton>
-              </Style.WithDrwal>
-              <Style.Flex>
-                <Style.DeleteButton onClick={handleGroupDeleteModal}>모임 삭제</Style.DeleteButton>
-              </Style.Flex>
-            </div>
-          </Style.Container>
+          <Tab.Container onChange={setTapValue}>
+            <Style.Nav>
+              {TAB_LIST.map((tab) => {
+                return (
+                  <Style.SubTitle key={tab.value} isSelected={tab.value === tapValue}>
+                    <Tab.Element {...tab} />
+                  </Style.SubTitle>
+                );
+              })}
+            </Style.Nav>
+          </Tab.Container>
+          {/* 여기 컨텐츠가 바뀌어야 됨 */}
+          {tapValue === 'GROUP' ? (
+            <GroupForm groupForm={groupForm} setGroupForm={setGroupForm} isError={isError} setError={setError} />
+          ) : (
+            <Style.Container>
+              <div>
+                <Style.TabTitle>벌금 납부 알림</Style.TabTitle>
+                <Toggle onToggle={onAlarm} setOnToggle={setOnAlarm} />
+              </div>
+              <Style.StartDateOfNotificationBox>
+                <div>이번 달부터</div>
+                <div>알림을 설정해주세요.</div>
+              </Style.StartDateOfNotificationBox>
+              <Style.TabContainer>
+                <Style.TabTitle>납부일 설정</Style.TabTitle>
+                <Style.TabButtonBox>
+                  {PERIOD_TYPE_LIST.map((type) => {
+                    return (
+                      <Style.PeriodTypeButton //
+                        isSelected={type.value === periodType}
+                        onClick={() => setPeriodType(type.value)}
+                      >
+                        {type.label}
+                      </Style.PeriodTypeButton>
+                    );
+                  })}
+                </Style.TabButtonBox>
+              </Style.TabContainer>
+            </Style.Container>
+          )}
         </Style.Layout>
       </Modal.Body>
       <Modal.Footer>
@@ -145,7 +149,12 @@ export const AdminModal: FC<ModalHandlerProps> = ({ modalHandler }) => {
           <Button color="white" onClick={modalHandler}>
             취소
           </Button>
-          <Button color={isValidForm() ? 'black' : 'disabled'} onClick={updateGroupInfo} id={GA.GROUP.MODIFY} loading={isLoading}>
+          <Button
+            color={isValidForm() ? 'black' : 'disabled'}
+            onClick={handleSubmitForm}
+            id={GA.GROUP.MODIFY}
+            loading={isLoading} //
+          >
             저장
           </Button>
         </Style.ButtonFrame>

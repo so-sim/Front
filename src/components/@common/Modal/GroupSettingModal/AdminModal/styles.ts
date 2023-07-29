@@ -11,16 +11,18 @@ export const Flex = styled.div`
   display: flex;
 `;
 
-export const SubTitle = styled.div`
-  ${({ theme }) => theme.font.subhead_03};
+export const SubTitle = styled.div<{ isSelected: boolean }>`
   margin: 4px 20px 0 4px;
   white-space: nowrap;
+  background: ${({ theme, isSelected }) => isSelected && theme.colors.neutral_300_b};
+  ${({ theme }) => theme.font.subhead_03};
 `;
 
 export const Container = styled.div`
-  width: 100%;
   display: flex;
   flex-direction: column;
+  align-items: flex-start;
+  width: 100%;
   border-left: 2px solid ${({ theme }) => theme.colors.neutral_400_b};
   padding-left: 16px;
   gap: 24px;
@@ -69,4 +71,59 @@ export const QuitButton = styled.button`
   border: 2px solid ${({ theme }) => theme.colors.neutral_400_b};
   border-radius: 2px;
   background-color: ${({ theme }) => theme.colors.neutral_200_b};
+`;
+
+export const Nav = styled.ul`
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+`;
+
+export const StartDateOfNotificationBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+  padding: 8px;
+  width: 100%;
+  background-color: ${({ theme }) => theme.colors.neutral_200_b};
+`;
+
+export const TabBlock = styled.li`
+  background-color: ${({ theme }) => theme.colors.neutral_200_b};
+`;
+
+export const TabContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 100%;
+  /* background-color: ${({ theme }) => theme.colors.neutral_200_b}; */
+  color: ${({ theme }) => theme.colors.secondary_900};
+  ${({ theme }) => theme.font.subhead_01}
+`;
+
+export const TabButtonBox = styled.ul`
+  display: flex;
+  flex: 1;
+  width: 100%;
+  gap: 8px;
+  padding: 4px;
+  border-radius: 4px;
+  background-color: ${({ theme }) => theme.colors.neutral_200_b};
+`;
+
+export const PeriodTypeButton = styled.button<{ isSelected: boolean }>`
+  display: flex;
+  flex: 1;
+  width: 50px;
+  padding: 8px 0;
+  justify-content: center;
+  border-radius: 4px;
+  background-color: ${({ theme, isSelected }) => (isSelected ? theme.colors.secondary_100 : '')};
+`;
+
+export const TabTitle = styled.span`
+  color: ${({ theme }) => theme.colors.secondary_900};
+  ${({ theme }) => theme.font.subhead_03}
 `;
