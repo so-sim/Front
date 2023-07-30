@@ -76,7 +76,7 @@ const SituationBtnObj: Record<Situation, React.ElementType<any>> = {
     </>
   ),
 };
-// 이 부분 situationType 붙여서 컴포넌트 화 진행하자 (아니면 HOC패턴으로 리팩토링?)
+// 이 부분 situationType 붙여서 컴포넌트 화 예정입니다 (아니면 HOC패턴으로 리팩토링?)
 
 const AlarmRequest_PaymentUpdate = ({ checkDetailFine, setCheckDetailFine }: Props) => {
   const { groupId } = useParams();
@@ -140,7 +140,7 @@ const AlarmRequest_PaymentUpdate = ({ checkDetailFine, setCheckDetailFine }: Pro
   };
 
   const requestAlarm = () => {
-    mutateRequestNotification({ test: '임시데이터' });
+    mutateRequestNotification();
   };
   // 백엔드 API명세에 아직 추가되어있지않음
 
