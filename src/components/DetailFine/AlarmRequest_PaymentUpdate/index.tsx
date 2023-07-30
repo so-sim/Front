@@ -53,18 +53,33 @@ const Status: StatusType = {
 
 // 지금 총무 checkBox 클릭을 어떻게 할건지 얘기를 나눠봐야함
 
-const SituationBtnObj: Record<Situation, React.ElementType<any>> = {
-  미납: ({ situationToChange, setSituationToChange, ...props }) => (
+type Member = '총무' | '팀원';
+
+type SituationByAdmin = `${Situation}${Member}`;
+
+type ExcludeSituationByAdmin<T extends SituationByAdmin> = T extends '완납팀원' | '확인중팀원' ? never : T;
+
+type Excluded = ExcludeSituationByAdmin<SituationByAdmin>;
+
+// 리터럴을 omit이 안되나
+const SituationBtnObj: Record<Excluded, React.ElementType<any>> = {
+  미납총무: ({ situationToChange, setSituationToChange, ...props }) => (
     <Style.SituationButton situationType={situationToChange} isClick={situationToChange === '완납'} onClick={() => setSituationToChange('완납')} {...props}>
       입금완료
     </Style.SituationButton>
   ),
-  완납: ({ situationToChange, setSituationToChange, ...props }) => (
+  미납팀원: ({ situationToChange, setSituationToChange, ...props }) => (
+    <Style.SituationButton onClick={() => setSituationToChange('확인중')} {...props}>
+      확인요청
+    </Style.SituationButton>
+  ),
+  완납총무: ({ situationToChange, setSituationToChange, ...props }) => (
     <Style.SituationButton situationType={situationToChange} isClick={situationToChange === '미납'} onClick={() => setSituationToChange('미납')} {...props}>
       미납
     </Style.SituationButton>
   ),
-  확인중: ({ situationToChange, setSituationToChange, ...props }) => (
+
+  확인중총무: ({ situationToChange, setSituationToChange, ...props }) => (
     <>
       <Style.SituationButton situationType={situationToChange} isClick={situationToChange === '완납'} onClick={() => setSituationToChange('완납')} {...props}>
         입금완료
@@ -95,7 +110,6 @@ const AlarmRequest_PaymentUpdate = ({ checkDetailFine, setCheckDetailFine }: Pro
 
   const participantList = [participantData?.content.adminNickname, ...(participantData?.content.nicknameList || [])];
 
-  console.log(participantData);
   const { data: group } = useGroupDetail(Number(groupId));
   const isAdmin = group?.content.isAdmin;
 
@@ -113,6 +127,8 @@ const AlarmRequest_PaymentUpdate = ({ checkDetailFine, setCheckDetailFine }: Pro
   useEffect(() => {
     if (Object.values(checkDetailFine)[0]?.situation === '완납') {
       setSituationToChange('미납');
+    } else if (!isAdmin) {
+      setSituationToChange('확인중');
     } else {
       setSituationToChange('완납');
     }
@@ -156,11 +172,13 @@ const AlarmRequest_PaymentUpdate = ({ checkDetailFine, setCheckDetailFine }: Pro
 
   const min_Date = (sortedtList: SelectedEventInfo_Checked[]) => sortedtList[0].date;
 
-  if (!searchParams.has('type') || !isAdmin) return null;
+  if (!searchParams.has('type')) return null;
 
   // 조건부 렌더링에 checkDetailFine 이 0일 때도 null을 출력할지 고민 중
 
-  const SituationBtnComponent = SituationBtnObj[Object.values(checkDetailFine)[0].situation];
+  const prefix = isAdmin ? '총무' : '팀원';
+  console.log(Object.values(checkDetailFine)[0].situation + prefix);
+  const SituationBtnComponent = SituationBtnObj[(Object.values(checkDetailFine)[0].situation + prefix) as Excluded];
   return (
     <>
       <Style.UserDetailsFrame onClick={(e) => e.stopPropagation()}>
@@ -179,6 +197,7 @@ const AlarmRequest_PaymentUpdate = ({ checkDetailFine, setCheckDetailFine }: Pro
               <Style.Arrow />
               <SituationBtnComponent situationToChange={situationToChange} setSituationToChange={setSituationToChange} />
             </Style.SituationContainer>
+            // 스타일 재정의 필요
           )}
 
           <Style.DatePeriodContainer>
