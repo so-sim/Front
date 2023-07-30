@@ -1,34 +1,24 @@
-import { FC, MouseEvent, useEffect, useRef, useState } from 'react';
-import { Input, Label } from '@/components/@common';
+import { FC, useEffect, useState } from 'react';
 import Button from '@/components/@common/Button';
 import Modal from '@/components/@common/Modal';
-import { checkCountChar, useError } from '@/utils/validation';
-import { GroupColorList } from '../../../GroupColorList';
-import { DropBox } from '@/components/@common';
+import { useError } from '@/utils/validation';
 import * as Style from './styles';
-import { COLORS, DROPDOWN_LIST } from '@/constants/Group';
 import { ModalHandlerProps } from '../../CreateGroupModal';
-import { useDeleteGroup, useGroupDetail, useUpdateGroup, useWithdrawalGroup } from '@/queries/Group';
+import { useGroupDetail, useUpdateGroup } from '@/queries/Group';
 import { useParams } from 'react-router-dom';
-import { GroupColor } from '@/types/group';
+import { GroupColor, NotificationInfo } from '@/types/group';
 import { useGetMyNikname } from '@/queries/Group/useGetMyNickname';
 import { GA } from '@/constants/GA';
-import useConfirmModal from '@/hooks/useConfirmModal';
 import { Tab } from '@/components/@common/Tab';
-import { Toggle } from '@/components/@common/Toggle';
 import GroupForm from './GroupForm';
-
-type TabValue = 'ALARM' | 'GROUP';
+import { useNotificationInfo, useUpdateNotificationInfo } from '@/queries/Group';
+import NotificationForm from './NotifiactionForm';
+import dayjs from 'dayjs';
+import { isValidGroupForm, isValidNotificationForm } from './utils/validation';
 
 const TAB_LIST = [
   { label: '사용자 설정', value: 'GROUP' },
   { label: '알람 설정', value: 'ALARM' },
-];
-
-const PERIOD_TYPE_LIST = [
-  { label: '매달', value: 'M' },
-  { label: '매주', value: 'W' },
-  { label: '매일', value: 'D' },
 ];
 
 export type GroupFormData = {
@@ -39,8 +29,8 @@ export type GroupFormData = {
 };
 
 export const AdminModal: FC<ModalHandlerProps> = ({ modalHandler }) => {
-  const [tapValue, setTapValue] = useState('ALARM');
-  const [periodType, setPeriodType] = useState('M');
+  const { groupId } = useParams();
+  const [tapValue, setTapValue] = useState('GROUP');
 
   const [groupForm, setGroupForm] = useState<GroupFormData>({
     title: '',
@@ -49,42 +39,41 @@ export const AdminModal: FC<ModalHandlerProps> = ({ modalHandler }) => {
     coverColor: '#f89a65',
   });
 
-  const [onAlarm, setOnAlarm] = useState(false);
+  const [notificationForm, setNotificationForm] = useState<NotificationInfo>({
+    enableNotification: true,
+    settingType: 'M',
+    repeatCycle: 1,
+    startDate: dayjs().format('YYYY.MM.DD'),
+    sendTime: '19:00',
+    monthSettingType: 'SIMPLE_DATE',
+    sendDay: dayjs().date(),
+    ordinalNumbers: [],
+    daysOfWeek: [],
+  });
 
   const [isError, setError] = useError({
     nickname: '',
     groupName: '',
   });
 
-  const { groupId } = useParams();
-
-  const { mutate: updateGroupMutate, isLoading } = useUpdateGroup({ setError, modalHandler });
+  const { mutate: updateGroupMutate, isLoading: groupInfoLoading } = useUpdateGroup({ setError, modalHandler });
+  const { mutate: updateNotificationInfo, isLoading: notificationInfoLoading } = useUpdateNotificationInfo(Number(groupId));
+  const { data: notificationInfo } = useNotificationInfo(Number(groupId));
 
   const { data: groupData } = useGroupDetail(Number(groupId));
   const { data: myNickname } = useGetMyNikname(Number(groupId));
 
   const handleSubmitForm = () => {
-    if (tapValue === 'GROUP') {
-      return updateGroupInfo();
-    }
-    if (tapValue === 'ALARM') {
-      console.log('hi');
-    }
-  };
-
-  const updateGroupInfo = () => {
-    const id = Number(groupId);
-    updateGroupMutate({ groupId: id, ...groupForm });
+    if (tapValue === 'GROUP') return updateGroupMutate({ groupId: Number(groupId), ...groupForm });
+    if (tapValue === 'ALARM') return updateNotificationInfo({ notificationInfo: notificationForm });
   };
 
   const isValidForm = () => {
-    const { title, nickname, type, coverColor } = groupForm;
-    if (checkCountChar(title)) return false;
-    if (checkCountChar(nickname)) return false;
-    if (type === '') return false;
-    if (!COLORS.includes(coverColor)) return false;
-    return true;
+    if (tapValue === 'GROUP') return isValidGroupForm(groupForm);
+    if (tapValue === 'ALARM') return isValidNotificationForm(notificationForm);
   };
+
+  const isLoading = tapValue === 'GROUP' ? groupInfoLoading : notificationInfoLoading;
 
   useEffect(() => {
     if (!groupData) return;
@@ -93,6 +82,12 @@ export const AdminModal: FC<ModalHandlerProps> = ({ modalHandler }) => {
     const { title, coverColor, type, adminNickname } = groupData.content;
     setGroupForm({ title, coverColor, type, nickname: adminNickname });
   }, [groupData?.content.title]);
+
+  useEffect(() => {
+    if (notificationInfo?.content !== null) {
+      setNotificationForm((prev) => ({ ...prev, ...notificationInfo?.content }));
+    }
+  }, [notificationInfo]);
 
   return (
     <Modal.Frame onClick={modalHandler} width="492px">
@@ -105,7 +100,10 @@ export const AdminModal: FC<ModalHandlerProps> = ({ modalHandler }) => {
             <Style.Nav>
               {TAB_LIST.map((tab) => {
                 return (
-                  <Style.SubTitle key={tab.value} isSelected={tab.value === tapValue}>
+                  <Style.SubTitle //
+                    key={tab.value}
+                    isSelected={tab.value === tapValue}
+                  >
                     <Tab.Element {...tab} />
                   </Style.SubTitle>
                 );
@@ -114,33 +112,17 @@ export const AdminModal: FC<ModalHandlerProps> = ({ modalHandler }) => {
           </Tab.Container>
           {/* 여기 컨텐츠가 바뀌어야 됨 */}
           {tapValue === 'GROUP' ? (
-            <GroupForm groupForm={groupForm} setGroupForm={setGroupForm} isError={isError} setError={setError} />
+            <GroupForm //
+              groupForm={groupForm}
+              setGroupForm={setGroupForm}
+              isError={isError}
+              setError={setError}
+            />
           ) : (
-            <Style.Container>
-              <div>
-                <Style.TabTitle>벌금 납부 알림</Style.TabTitle>
-                <Toggle onToggle={onAlarm} setOnToggle={setOnAlarm} />
-              </div>
-              <Style.StartDateOfNotificationBox>
-                <div>이번 달부터</div>
-                <div>알림을 설정해주세요.</div>
-              </Style.StartDateOfNotificationBox>
-              <Style.TabContainer>
-                <Style.TabTitle>납부일 설정</Style.TabTitle>
-                <Style.TabButtonBox>
-                  {PERIOD_TYPE_LIST.map((type) => {
-                    return (
-                      <Style.PeriodTypeButton //
-                        isSelected={type.value === periodType}
-                        onClick={() => setPeriodType(type.value)}
-                      >
-                        {type.label}
-                      </Style.PeriodTypeButton>
-                    );
-                  })}
-                </Style.TabButtonBox>
-              </Style.TabContainer>
-            </Style.Container>
+            <NotificationForm //
+              notificationForm={notificationForm}
+              setNotificationForm={setNotificationForm}
+            />
           )}
         </Style.Layout>
       </Modal.Body>
