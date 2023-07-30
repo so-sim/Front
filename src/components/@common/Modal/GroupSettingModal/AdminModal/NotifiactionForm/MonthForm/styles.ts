@@ -13,7 +13,7 @@ export const SelectDayButton = styled.button<{ isSelected?: boolean }>`
     background-color: ${({ theme, isSelected }) => !isSelected && theme.colors.neutral_200_b};
   }
 `;
-export const MonthlySelectTitle = styled.div`
+export const MonthlySelectTitle = styled.div<{ isSelected: boolean }>`
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -21,7 +21,8 @@ export const MonthlySelectTitle = styled.div`
   padding: 8px;
   margin-bottom: 4px;
   border-bottom: 1px solid ${({ theme }) => theme.colors.neutral_200_b};
-  color: ${({ theme }) => theme.colors.secondary_900};
+  color: ${({ theme, isSelected }) => (isSelected ? theme.colors.secondary_900 : theme.colors.secondary_600)};
+  cursor: pointer;
   ${({ theme }) => theme.font.subhead_02}
 `;
 export const Notice = styled.div`
@@ -70,4 +71,12 @@ export const OrdinalNumberConatiner = styled.div`
   display: flex;
   flex-wrap: wrap;
   gap: 4px;
+`;
+
+export const ArrowIcon = styled.span<{ isSelected: boolean }>`
+  display: flex;
+  align-items: center;
+  height: 16px;
+  transform: ${({ isSelected }) => (isSelected ? `rotate(180deg)` : '')};
+  /* transition: 0.15s ease-in-out; */
 `;

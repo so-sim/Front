@@ -12,10 +12,18 @@ export const Flex = styled.div`
 `;
 
 export const SubTitle = styled.div<{ isSelected: boolean }>`
+  width: 96px;
+  padding: 4px;
+  text-align: right;
   margin: 4px 20px 0 4px;
   white-space: nowrap;
   background: ${({ theme, isSelected }) => isSelected && theme.colors.neutral_300_b};
+  cursor: pointer;
   ${({ theme }) => theme.font.subhead_03};
+
+  &:hover {
+    background: ${({ theme, isSelected }) => !isSelected && theme.colors.neutral_200_b};
+  }
 `;
 
 export const Container = styled.div`

@@ -54,8 +54,8 @@ const NotificationForm = ({ notificationForm, setNotificationForm }: Props) => {
       </Style.ToggleBox>
       <Style.EnabledBox enabled={notificationForm.enableNotification}>
         <Style.StartDateOfNotificationBox>
-          <div>이번 달부터</div>
-          <div>알림을 설정해주세요.</div>
+          <Style.BodySubTitle>이번 달부터</Style.BodySubTitle>
+          <Style.Body2SubTitle>알림을 설정해주세요.</Style.Body2SubTitle>
         </Style.StartDateOfNotificationBox>
         <Style.TabContainer>
           <Style.TabTitle>납부일 설정</Style.TabTitle>

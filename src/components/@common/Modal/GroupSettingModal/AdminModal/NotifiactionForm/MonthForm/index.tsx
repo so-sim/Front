@@ -25,17 +25,21 @@ const MonthForm = <T extends NotificationInfo, V extends T[DuplicateValues]>({ n
     for (let i = 0; i < 35; i++) {
       result[Math.floor(i / 7)].push(i < 31 ? i + 1 : null);
     }
-
     return result;
   };
+
+  const isSimpleDateType = notificationForm.monthSettingType === 'SIMPLE_DATE';
+  const isSelectDayType = notificationForm.monthSettingType === 'WEEK';
+
   return (
     <>
       <Style.MonthlySelectTitle //
+        isSelected={isSimpleDateType}
         onClick={() => handleNotificationForm('monthSettingType', 'SIMPLE_DATE')}
       >
-        날짜로 선택하기 {ARROW.DOWN_LG}
+        날짜로 선택하기 <Style.ArrowIcon isSelected={isSimpleDateType}>{isSimpleDateType ? ARROW.DOWN_LG : ARROW.DOWN_LG_NON_FOCUS}</Style.ArrowIcon>
       </Style.MonthlySelectTitle>
-      {notificationForm.monthSettingType === 'SIMPLE_DATE' && (
+      {isSimpleDateType && (
         <div>
           <Style.Notice>31일로 설정 (말일로 설정됩니다)</Style.Notice>
           <Style.CalendarBlock>
@@ -64,11 +68,12 @@ const MonthForm = <T extends NotificationInfo, V extends T[DuplicateValues]>({ n
 
       {/* 매달>요일로 선택하기 */}
       <Style.MonthlySelectTitle //
+        isSelected={isSelectDayType}
         onClick={() => handleNotificationForm('monthSettingType', 'WEEK')}
       >
-        요일로 선택하기 {ARROW.DOWN_LG}
+        요일로 선택하기 <Style.ArrowIcon isSelected={isSelectDayType}>{isSelectDayType ? ARROW.DOWN_LG : ARROW.DOWN_LG_NON_FOCUS}</Style.ArrowIcon>
       </Style.MonthlySelectTitle>
-      {notificationForm.monthSettingType === 'WEEK' && (
+      {isSelectDayType && (
         <div>
           <Style.Notice>몇 번째 요일인가요?</Style.Notice>
           <Style.BodyTitle>몇 번째</Style.BodyTitle>

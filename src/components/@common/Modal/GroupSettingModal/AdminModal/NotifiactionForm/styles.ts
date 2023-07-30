@@ -85,3 +85,14 @@ export const StartDateOfNotificationBox = styled.div`
 export const TabBlock = styled.li`
   background-color: ${({ theme }) => theme.colors.neutral_200_b};
 `;
+
+export const BodySubTitle = styled.div`
+  margin-bottom: 4px;
+  color: ${({ theme }) => theme.colors.secondary_700};
+  ${({ theme }) => theme.font.body_01};
+`;
+
+export const Body2SubTitle = styled.div`
+  color: ${({ theme }) => theme.colors.secondary_900};
+  ${({ theme }) => theme.font.body_02};
+`;

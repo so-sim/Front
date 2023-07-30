@@ -18,7 +18,7 @@ import { isValidGroupForm, isValidNotificationForm } from './utils/validation';
 
 const TAB_LIST = [
   { label: '사용자 설정', value: 'GROUP' },
-  { label: '알람 설정', value: 'ALARM' },
+  { label: '알림 설정', value: 'ALARM' },
 ];
 
 export type GroupFormData = {
