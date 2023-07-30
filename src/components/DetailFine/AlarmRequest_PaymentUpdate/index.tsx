@@ -52,7 +52,7 @@ const Status: StatusType = {
 
 // 지금 총무 checkBox 클릭을 어떻게 할건지 얘기를 나눠봐야함
 
-const SituationBtnComp: Record<Situation, React.ElementType<any>> = {
+const SituationBtnObj: Record<Situation, React.ElementType<any>> = {
   미납: ({ situationToChange, setSituationToChange, ...props }) => (
     <Style.SituationButton situationType={situationToChange} isClick={situationToChange === '완납'} onClick={() => setSituationToChange('완납')} {...props}>
       입금완료
@@ -75,6 +75,7 @@ const SituationBtnComp: Record<Situation, React.ElementType<any>> = {
     </>
   ),
 };
+// 이 부분 situationType 붙여서 컴포넌트 화 진행하자 (아니면 HOC패턴으로 리팩토링?)
 
 const AlarmRequest_PaymentUpdate = ({ checkDetailFine, setCheckDetailFine }: Props) => {
   const { groupId } = useParams();
@@ -155,7 +156,7 @@ const AlarmRequest_PaymentUpdate = ({ checkDetailFine, setCheckDetailFine }: Pro
 
   // 조건부 렌더링에 checkDetailFine 이 0일 때도 null을 출력할지 고민 중
 
-  const Tag = SituationBtnComp[Object.values(checkDetailFine)[0].situation];
+  const SituationBtnComponent = SituationBtnObj[Object.values(checkDetailFine)[0].situation];
   return (
     <>
       <Style.UserDetailsFrame onClick={(e) => e.stopPropagation()}>
@@ -172,7 +173,7 @@ const AlarmRequest_PaymentUpdate = ({ checkDetailFine, setCheckDetailFine }: Pro
             <Style.SituationContainer>
               <Style.SituationButton>{Object.values(checkDetailFine)[0].situation}</Style.SituationButton>
               <Style.Arrow />
-              <Tag situationToChange={situationToChange} setSituationToChange={setSituationToChange} />
+              <SituationBtnComponent situationToChange={situationToChange} setSituationToChange={setSituationToChange} />
             </Style.SituationContainer>
           )}
 
