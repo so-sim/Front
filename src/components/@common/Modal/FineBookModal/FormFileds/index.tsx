@@ -5,7 +5,7 @@ import { GA } from '@/constants/GA';
 import { Ground, SelectedEventInfo } from '@/types/event';
 import { useParticipantList } from '@/queries/Group';
 import { Situation } from '@/types/event';
-import { convertToPriceFormat } from '@/utils/convertPriceFormat';
+import { convertToPriceFormat } from '@/utils/convertFormat';
 import React from 'react';
 import { useParams } from 'react-router-dom';
 import * as Style from '../styles';
