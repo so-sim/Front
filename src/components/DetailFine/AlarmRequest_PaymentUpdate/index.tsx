@@ -10,6 +10,7 @@ import { useEffect, useState } from 'react';
 import { Situation } from '@/types/event';
 import { useGroupDetail } from '@/queries/Group';
 import { useSelectedContext, initialSelectData } from '@/contexts/SelectedFineContext';
+import { useRequestNotification } from '@/queries/Notification/useRequestNotifaction';
 
 type Props = {
   checkDetailFine: CheckDetailFine;
@@ -128,16 +129,19 @@ const AlarmRequest_PaymentUpdate = ({ checkDetailFine, setCheckDetailFine }: Pro
   };
 
   const { mutate: mutateDetailStatus } = useUpdateDetailStatus(onSuccess);
+  const { mutate: mutateRequestNotification } = useRequestNotification(onSuccess);
 
   const currentCheckList = Object.keys(checkDetailFine)
     .filter((item) => checkDetailFine[item].checked === true)
     .map((element) => Number(element));
 
-  const updateSituation = async () => {
+  const updateSituation = () => {
     mutateDetailStatus({ situation: situationToChange, eventIdList: currentCheckList });
   };
 
-  const requestAlarm = () => {};
+  const requestAlarm = () => {
+    mutateRequestNotification({ test: '임시데이터' });
+  };
   // 백엔드 API명세에 아직 추가되어있지않음
 
   const stringToNumber_Date = (date: string) => +date?.replace(/\./g, '');
