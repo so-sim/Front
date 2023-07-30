@@ -92,6 +92,7 @@ const SituationBtnObj: Record<Excluded, React.ElementType<any>> = {
   ),
 };
 // 이 부분 situationType 붙여서 컴포넌트 화 예정입니다 (아니면 HOC패턴으로 리팩토링?)
+// 완납 확인중 (팀원)을 안넣은 이유는 필터링을 해주려고 한다.
 
 const AlarmRequest_PaymentUpdate = ({ checkDetailFine, setCheckDetailFine }: Props) => {
   const { groupId } = useParams();
