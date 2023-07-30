@@ -4,7 +4,7 @@ import { DuplicateValues } from '..';
 import * as Style from './styles';
 import DaySelector from '../DaySelector';
 
-type MonthFormProps<T, V> = {
+type Props<T, V> = {
   notificationForm: NotificationInfo;
   handleNotificationForm: <T extends keyof NotificationInfo>(type: T, value: NotificationInfo[T]) => void;
   handleDuplicateValues: <T extends DuplicateValues, V>(type: T, value: V) => void;
@@ -19,7 +19,7 @@ const ORDINARY_LIST = [
   { label: '마지막', value: 6 },
 ];
 
-const MonthForm = <T extends NotificationInfo, V extends T[DuplicateValues]>({ notificationForm, handleNotificationForm, handleDuplicateValues }: MonthFormProps<T, V>) => {
+const MonthForm = <T extends NotificationInfo, V extends T[DuplicateValues]>({ notificationForm, handleNotificationForm, handleDuplicateValues }: Props<T, V>) => {
   const createFixedCalendar = () => {
     const result = Array.from({ length: 5 }, () => [] as (number | null)[]);
     for (let i = 0; i < 35; i++) {
