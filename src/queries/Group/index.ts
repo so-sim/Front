@@ -8,3 +8,5 @@ export { useChangeNickname } from './useChangeNickname';
 export { useChangeAdmin } from './useChangeAdmin';
 export { useDeleteGroup } from './useDeleteGroup';
 export { useWithdrawalGroup } from './useWithdrawalGroup';
+export { useNotificationInfo } from './useNotificationInfo';
+export { useUpdateNotificationInfo } from './useUpdateNotificationInfo';
