@@ -4,6 +4,7 @@ import { CheckDetailFine, SetCheckDetailFine } from '@/components/DetailFine/Ala
 import CheckboxContainer from '@/components/@common/Checkbox';
 import DetailListCheckBox from '../checkbox';
 import { useGroupDetail } from '@/queries/Group';
+import { useGetMyNikname } from '@/queries/Group/useGetMyNickname';
 type Props = {
   checkDetailFine: CheckDetailFine;
   setCheckDetailFine: SetCheckDetailFine;
@@ -17,14 +18,16 @@ const CheckboxHandlerButton = ({ checkDetailFine, setCheckDetailFine }: Props) =
   const [searchParams, setSearchParams] = useSearchParams();
 
   const { data: group } = useGroupDetail(Number(groupId));
+  const { data: myNick } = useGetMyNikname(Number(groupId));
   const isAdmin = group?.content.isAdmin;
+  const myNickname = myNick?.content.nickname;
 
   const initCheckDetailFine = (event: React.MouseEvent<HTMLInputElement>) => {
     event.stopPropagation();
     setInitCheckDetailFine();
   };
 
-  const isSameSituation = () => {
+  const isSameSituation = (checkDetailFine: CheckDetailFine) => {
     const situationOfCheckDetailFine = Object.values(checkDetailFine).map(({ situation }) => situation);
 
     const isAllSameSituation = new Set(situationOfCheckDetailFine);
@@ -32,12 +35,23 @@ const CheckboxHandlerButton = ({ checkDetailFine, setCheckDetailFine }: Props) =
     return isAllSameSituation.size === 1;
   };
 
+  const isMyCheckDetailFine = (checkDetailFine: CheckDetailFine, myNickname: string) => Object.values(checkDetailFine).every(({ nickname }) => nickname === myNickname);
+
   const moveSituationControlPage = () => {
-    if (isSameSituation()) {
+    if (isSameSituation(checkDetailFine)) {
       searchParams.set('type', 'situation_change');
       setSearchParams(searchParams, { replace: true });
     } else {
       console.log('situation 동일해야함.');
+    }
+  };
+
+  const moveSituationControlPageByMember = () => {
+    if (isSameSituation(checkDetailFine) && myNickname && isMyCheckDetailFine(checkDetailFine, myNickname)) {
+      searchParams.set('type', 'situation_change');
+      setSearchParams(searchParams, { replace: true });
+    } else {
+      console.log('팀원아 제대로해라');
     }
   };
 
@@ -72,14 +86,7 @@ const CheckboxHandlerButton = ({ checkDetailFine, setCheckDetailFine }: Props) =
               </Style.SituationControlButton>
             </>
           ) : (
-            <Style.SituationControlButton
-              onClick={() => {
-                searchParams.set('type', 'situation_change');
-                setSearchParams(searchParams, { replace: true });
-              }}
-            >
-              확인요청
-            </Style.SituationControlButton>
+            <Style.SituationControlButton onClick={moveSituationControlPageByMember}>확인요청</Style.SituationControlButton>
           )}
         </Style.SituationControlWrapper>
       )}
