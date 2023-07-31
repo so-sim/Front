@@ -6,9 +6,12 @@ type Props = {
   myName: string;
   list?: SelectedEventInfo_Checked[];
   setCheckDetailFine: SetCheckDetailFine;
+  pageFromAlarm?: boolean;
 };
 
-const ItemList = ({ myName, list, setCheckDetailFine }: Props) => {
+// 팀원 수가 한명일 때로 style을 나누려고 했는데, Alarm에서 들어오는 페이지가 다르다고 첨언을 주셨다.
+
+const ItemList = ({ myName, list, setCheckDetailFine, pageFromAlarm = false }: Props) => {
   const [toggle, setToggle] = useState(false);
 
   const TotalAmount = list?.reduce((prev, current) => prev + current.amount, 0);
@@ -22,12 +25,17 @@ const ItemList = ({ myName, list, setCheckDetailFine }: Props) => {
     setToggleCheckDetailFineByNickName(myName);
   };
 
+  const changeableSituation = !list?.some((item) => item.situation === '완납');
+  // 완납일 떄는 checkbox를 넣으면 안된다
+
   if (list?.length === 0) return null;
   return (
     <>
       <Style.ItemContainer onClick={() => setToggle((prev) => !prev)}>
         <Style.ItemWrapper>
-          <input type="checkbox" checked={isChecked} onClick={(event: React.MouseEvent<HTMLInputElement>) => toggleCheckDetailFine(event, myName)} readOnly />
+          {changeableSituation && (
+            <input type="checkbox" checked={isChecked} onClick={(event: React.MouseEvent<HTMLInputElement>) => toggleCheckDetailFine(event, myName)} readOnly />
+          )}
           <Style.ItemTitle>{myName}</Style.ItemTitle>
           <Style.ItemAmount isOpen={toggle}>{TotalAmount}</Style.ItemAmount>
         </Style.ItemWrapper>
