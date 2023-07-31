@@ -4,7 +4,7 @@ import theme from '@/styles/Theme';
 import { CheckDetailFine, SelectedEventInfo_Checked, SetCheckDetailFine } from '@/components/DetailFine/AlarmRequest_PaymentUpdate/hooks/useCheckDetailFine';
 import { useUpdateDetailStatus } from '@/queries/Detail';
 import { useParams, useSearchParams } from 'react-router-dom';
-import ItemList from './ItemList';
+import CheckedFineList from './CheckedFineList';
 import { useParticipantList } from '@/queries/Group';
 import { useEffect, useState } from 'react';
 import { Situation } from '@/types/event';
@@ -46,19 +46,9 @@ const Status: StatusType = {
   },
 };
 
-// 해당 Status onSubmit도 추가해서 함께 다루고 싶지만.. 컴포넌트 안에 이 부분을 추가하기 애매해서 일다 ㄴ빼놓았음
-
-// 해당 컴포넌트 네이밍 고민 중..
-// PackageMutate 페이지
-// DetailPackage
-// PaymentStatement
-// alert // change // upDate
-
 // 지금 총무 checkBox 클릭을 어떻게 할건지 얘기를 나눠봐야함
 
 // 이 부분 situationType 붙여서 컴포넌트 화 예정입니다 (아니면 HOC패턴으로 리팩토링?)
-// 완납 확인중 (팀원)을 안넣은 이유는 필터링을 해주려고 한다.
-// 음 .. 근데 굳이 할필요가 있나?? style만 변경되고 확인중 상태가 넘어올 때만 저렇게 두개 전환하면 되는거 같은데?
 
 const AlarmRequest_PaymentUpdate = ({ checkDetailFine, setCheckDetailFine }: Props) => {
   const { groupId } = useParams();
@@ -140,24 +130,34 @@ const AlarmRequest_PaymentUpdate = ({ checkDetailFine, setCheckDetailFine }: Pro
         </Style.Header>
 
         <Style.Main>
+          {/* Title 영역 */}
           {type && Status[type].title}
           {type && Status[type].subTitle(situationToChange)}
 
+          {/* Situation 변경 확인 Buttons */}
           {type === 'situation_change' && (
             <SituationButton situationToChange={situationToChange} setSituationToChange={setSituationToChange} currentSituation={currentSituation} />
             // 스타일 재정의 필요
           )}
 
+          {/* List의 기간 */}
           <Style.DatePeriodContainer>
             {min_Date(sortedtList)} -{max_Date(sortedtList)}
           </Style.DatePeriodContainer>
 
+          {/* List 영역 */}
           <Style.ListContainer>
             {participantList?.map((nickName) => (
-              <ItemList key={nickName} myName={nickName as string} list={participantSituation_List(nickName as string, sortedtList)} setCheckDetailFine={setCheckDetailFine} />
+              <CheckedFineList
+                key={nickName}
+                myName={nickName as string}
+                list={participantSituation_List(nickName as string, sortedtList)}
+                setCheckDetailFine={setCheckDetailFine}
+              />
             ))}
           </Style.ListContainer>
         </Style.Main>
+        {/* 하위 Button 컴포넌트 */}
         <Style.Footer>
           <Style.Button>취소</Style.Button>
 

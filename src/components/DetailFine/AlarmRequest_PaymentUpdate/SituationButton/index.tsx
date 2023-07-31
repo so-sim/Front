@@ -13,6 +13,7 @@ const SituationButton = ({ situationToChange, setSituationToChange, currentSitua
     <Style.SituationContainer>
       <Style.SituationButton situationType={currentSituation}>{currentSituation}</Style.SituationButton>
       <Style.Arrow />
+      {/* 총무가 확인 중 상태를 Check했을 때 완납 or 미납 선택해서 변경이 가능 */}
       {currentSituation === '확인중' ? (
         <>
           <Style.SituationButton situationType={situationToChange} isClick={situationToChange === '완납'} onClick={() => setSituationToChange('완납')}>
