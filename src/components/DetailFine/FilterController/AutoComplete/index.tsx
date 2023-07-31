@@ -1,7 +1,6 @@
 import { SYSTEM } from '@/assets/icons/System';
-import { DropDown } from '@/components/@common';
-import { useSearchParticipantList } from '@/queries/Group/useSearchParticipantList';
-import { ChangeEvent, useEffect, useRef, useState } from 'react';
+import { useParticipantList } from '@/queries/Group';
+import { ChangeEvent, KeyboardEvent, useEffect, useRef, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import * as Style from './styles';
 
@@ -14,15 +13,16 @@ export const AutoComplete = ({ updateDetailFilterNickname, initialNickname }: Pr
   const { groupId } = useParams();
 
   const [nickname, setNickname] = useState(initialNickname);
-  const [openDrop, setOpenDrop] = useState(true);
+  const [nicknameIndex, setNicknameIndex] = useState<null | number>(null);
   const [focusInput, setFocusInput] = useState(false);
-  const dropDownRef = useRef(null);
   const autoCompleteInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     initialNickname !== '' && autoCompleteInputRef.current?.focus();
   }, []);
 
+  const { data } = useParticipantList(Number(groupId));
+  // const { data: searchedParticipantList } = useSearchParticipantList(Number(groupId), nickname);
   const searchMemberList = (e: ChangeEvent<HTMLInputElement>) => {
     setNickname(e.target.value);
   };
@@ -31,8 +31,39 @@ export const AutoComplete = ({ updateDetailFilterNickname, initialNickname }: Pr
     setFocusInput((prev) => !prev);
   };
 
-  const { data: searchedParticipantList } = useSearchParticipantList(Number(groupId), nickname);
-  const nicknameList = focusInput ? searchedParticipantList?.content.nicknameList : [];
+  const removeSpace = (string: string) => {
+    return string.replaceAll(' ', '');
+  };
+
+  const searchMemberByNickname = (nicknameList: string[], keyword: string): string[] => {
+    return nicknameList.filter((nickname) => removeSpace(nickname).includes(removeSpace(keyword)));
+  };
+
+  const nicknameList = [...(data?.content.nicknameList ?? []), data?.content.adminNickname ?? ''] ?? [];
+  const filteredMemberList = searchMemberByNickname(nicknameList, nickname);
+
+  const handleSearchNicknameByKeyboard = (e: KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Escape') {
+      return setNickname('');
+    }
+    if (e.key === 'ArrowDown') {
+      return setNicknameIndex((prev) => (prev === null ? 0 : Math.min(prev + 1, filteredMemberList.length - 1)));
+    }
+    if (e.key === 'ArrowUp') {
+      setNicknameIndex((prev) => {
+        if (prev === null) return prev;
+        return prev === 0 ? null : prev - 1;
+      });
+    }
+    if (e.key === 'Enter' && nicknameIndex !== null && typeof filteredMemberList[nicknameIndex] === 'string') {
+      updateDetailFilterNickname(filteredMemberList[nicknameIndex]);
+      setNicknameIndex(null);
+    }
+  };
+
+  useEffect(() => {
+    setNicknameIndex(null);
+  }, [nickname]);
 
   return (
     <Style.AutoCompleteContainer>
@@ -42,20 +73,34 @@ export const AutoComplete = ({ updateDetailFilterNickname, initialNickname }: Pr
         value={nickname}
         onChange={searchMemberList}
         onFocus={toggleFocusInput}
+        onKeyDown={handleSearchNicknameByKeyboard}
         onBlur={() => setTimeout(toggleFocusInput, 200)}
         ref={autoCompleteInputRef}
       />
-      <Style.DropDownContainer>
-        {openDrop && (
-          <DropDown
-            dropDownRef={dropDownRef}
-            top="16px"
-            onClose={() => setOpenDrop(false)}
-            list={nicknameList?.map(({ nickname }) => ({ title: nickname, svg: SYSTEM.SEARCH_GRAY })) ?? []}
-            setState={updateDetailFilterNickname}
-          />
-        )}
-      </Style.DropDownContainer>
+      {focusInput && (
+        <Style.DropDownContainer>
+          {filteredMemberList.length > 0 ? (
+            filteredMemberList.map((name, idx) => {
+              return (
+                <Style.MemberListItem //
+                  key={name}
+                  isSelectedIdx={idx === nicknameIndex}
+                  onClick={() => updateDetailFilterNickname(name)}
+                >
+                  {SYSTEM.SEARCH_GRAY}
+                  <span>{name}</span>
+                  <Style.WithdrawButton>탈퇴</Style.WithdrawButton>
+                </Style.MemberListItem>
+              );
+            })
+          ) : (
+            <Style.NotFoundResult>
+              {SYSTEM.SEARCH_GRAY_LG}
+              <div>검색 결과가 없습니다.</div>
+            </Style.NotFoundResult>
+          )}
+        </Style.DropDownContainer>
+      )}
     </Style.AutoCompleteContainer>
   );
 };
