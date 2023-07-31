@@ -117,8 +117,6 @@ const AlarmRequest_PaymentUpdate = ({ checkDetailFine, setCheckDetailFine }: Pro
 
   const min_Date = (sortedtList: SelectedEventInfo_Checked[]) => sortedtList[0]?.date;
 
-  // const currentSituation =
-
   if (!isModal) return null;
 
   return (
