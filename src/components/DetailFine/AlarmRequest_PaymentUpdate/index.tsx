@@ -11,9 +11,12 @@ import { Situation } from '@/types/event';
 import { useGroupDetail } from '@/queries/Group';
 import { useSelectedContext, initialSelectData } from '@/contexts/SelectedFineContext';
 import { useRequestNotification } from '@/queries/Notification/useRequestNotifaction';
+import { useRecoilState } from 'recoil';
+import { initialSideModalState, sideModalState } from '@/store/sideModalState';
+import SituationButton from './SituationButton';
 
 type Props = {
-  checkDetailFine: CheckDetailFine;
+  checkDetailFine: SelectedEventInfo_Checked[];
   setCheckDetailFine: SetCheckDetailFine;
 };
 
@@ -53,53 +56,16 @@ const Status: StatusType = {
 
 // 지금 총무 checkBox 클릭을 어떻게 할건지 얘기를 나눠봐야함
 
-type Member = '총무' | '팀원';
-
-type SituationByAdmin = `${Situation}${Member}`;
-
-type ExcludeSituationByAdmin<T extends SituationByAdmin> = T extends '완납팀원' | '확인중팀원' ? never : T;
-
-type Excluded = ExcludeSituationByAdmin<SituationByAdmin>;
-
-// 리터럴을 omit이 안되나
-const SituationBtnObj: Record<Excluded, React.ElementType<any>> = {
-  미납총무: ({ situationToChange, setSituationToChange, ...props }) => (
-    <Style.SituationButton situationType={situationToChange} isClick={situationToChange === '완납'} onClick={() => setSituationToChange('완납')} {...props}>
-      입금완료
-    </Style.SituationButton>
-  ),
-  미납팀원: ({ situationToChange, setSituationToChange, ...props }) => (
-    <Style.SituationButton onClick={() => setSituationToChange('확인중')} {...props}>
-      확인요청
-    </Style.SituationButton>
-  ),
-  완납총무: ({ situationToChange, setSituationToChange, ...props }) => (
-    <Style.SituationButton situationType={situationToChange} isClick={situationToChange === '미납'} onClick={() => setSituationToChange('미납')} {...props}>
-      미납
-    </Style.SituationButton>
-  ),
-
-  확인중총무: ({ situationToChange, setSituationToChange, ...props }) => (
-    <>
-      <Style.SituationButton situationType={situationToChange} isClick={situationToChange === '완납'} onClick={() => setSituationToChange('완납')} {...props}>
-        입금완료
-      </Style.SituationButton>
-
-      <Style.SituationButton situationType={situationToChange} isClick={situationToChange === '미납'} onClick={() => setSituationToChange('미납')} {...props}>
-        미납
-      </Style.SituationButton>
-    </>
-  ),
-};
 // 이 부분 situationType 붙여서 컴포넌트 화 예정입니다 (아니면 HOC패턴으로 리팩토링?)
 // 완납 확인중 (팀원)을 안넣은 이유는 필터링을 해주려고 한다.
+// 음 .. 근데 굳이 할필요가 있나?? style만 변경되고 확인중 상태가 넘어올 때만 저렇게 두개 전환하면 되는거 같은데?
 
 const AlarmRequest_PaymentUpdate = ({ checkDetailFine, setCheckDetailFine }: Props) => {
   const { groupId } = useParams();
 
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [sideModal, setSideModal] = useRecoilState(sideModalState);
 
-  const type = searchParams.get('type');
+  const { type, isModal } = sideModal;
 
   const [situationToChange, setSituationToChange] = useState<Situation>('미납');
 
@@ -114,19 +80,10 @@ const AlarmRequest_PaymentUpdate = ({ checkDetailFine, setCheckDetailFine }: Pro
   const { data: group } = useGroupDetail(Number(groupId));
   const isAdmin = group?.content.isAdmin;
 
-  useEffect(() => {
-    closePage();
-  }, []);
-
-  // recoil로 관리하기 searchParams
+  const currentSituation = checkDetailFine[0]?.situation;
 
   useEffect(() => {
-    setSelectedFine(initialSelectData);
-  }, [searchParams]);
-  // 새로고침 시 url이 유지되어있어서 빈 창이 나와있음(새로고침 시 searchParam 지우는 방법이 있는지 찾아볼 예정..)
-
-  useEffect(() => {
-    if (Object.values(checkDetailFine)[0]?.situation === '완납') {
+    if (currentSituation === '완납') {
       setSituationToChange('미납');
     } else if (!isAdmin) {
       setSituationToChange('확인중');
@@ -136,8 +93,7 @@ const AlarmRequest_PaymentUpdate = ({ checkDetailFine, setCheckDetailFine }: Pro
   }, [checkDetailFine]);
 
   const closePage = () => {
-    searchParams.delete('type');
-    setSearchParams();
+    setSideModal(initialSideModalState);
   };
 
   const onSuccess = () => {
@@ -148,9 +104,7 @@ const AlarmRequest_PaymentUpdate = ({ checkDetailFine, setCheckDetailFine }: Pro
   const { mutate: mutateDetailStatus } = useUpdateDetailStatus(onSuccess);
   const { mutate: mutateRequestNotification } = useRequestNotification(onSuccess);
 
-  const currentCheckList = Object.keys(checkDetailFine)
-    .filter((item) => checkDetailFine[item].checked === true)
-    .map((element) => Number(element));
+  const currentCheckList = checkDetailFine.filter(({ checked }) => checked === true).map(({ eventId }) => eventId);
 
   const updateSituation = () => {
     mutateDetailStatus({ situation: situationToChange, eventIdList: currentCheckList });
@@ -163,7 +117,7 @@ const AlarmRequest_PaymentUpdate = ({ checkDetailFine, setCheckDetailFine }: Pro
 
   const stringToNumber_Date = (date: string) => +date?.replace(/\./g, '');
 
-  const sortedtList = Object.values(checkDetailFine).sort((a, b) => stringToNumber_Date(a.date) - stringToNumber_Date(b.date));
+  const sortedtList = checkDetailFine.sort((a, b) => stringToNumber_Date(a.date) - stringToNumber_Date(b.date));
 
   const participantSituation_List = (nickName: string, sortedtList: SelectedEventInfo_Checked[]) => sortedtList?.filter((item) => item.nickname === nickName);
 
@@ -171,15 +125,12 @@ const AlarmRequest_PaymentUpdate = ({ checkDetailFine, setCheckDetailFine }: Pro
 
   const max_Date = (sortedtList: SelectedEventInfo_Checked[]) => sortedtList.at(-1)?.date;
 
-  const min_Date = (sortedtList: SelectedEventInfo_Checked[]) => sortedtList[0].date;
+  const min_Date = (sortedtList: SelectedEventInfo_Checked[]) => sortedtList[0]?.date;
 
-  if (!searchParams.has('type')) return null;
+  // const currentSituation =
 
-  // 조건부 렌더링에 checkDetailFine 이 0일 때도 null을 출력할지 고민 중
+  if (!isModal) return null;
 
-  const prefix = isAdmin ? '총무' : '팀원';
-  console.log(Object.values(checkDetailFine)[0].situation + prefix);
-  const SituationBtnComponent = SituationBtnObj[(Object.values(checkDetailFine)[0].situation + prefix) as Excluded];
   return (
     <>
       <Style.UserDetailsFrame onClick={(e) => e.stopPropagation()}>
@@ -193,11 +144,7 @@ const AlarmRequest_PaymentUpdate = ({ checkDetailFine, setCheckDetailFine }: Pro
           {type && Status[type].subTitle(situationToChange)}
 
           {type === 'situation_change' && (
-            <Style.SituationContainer>
-              <Style.SituationButton>{Object.values(checkDetailFine)[0].situation}</Style.SituationButton>
-              <Style.Arrow />
-              <SituationBtnComponent situationToChange={situationToChange} setSituationToChange={setSituationToChange} />
-            </Style.SituationContainer>
+            <SituationButton situationToChange={situationToChange} setSituationToChange={setSituationToChange} currentSituation={currentSituation} />
             // 스타일 재정의 필요
           )}
 
