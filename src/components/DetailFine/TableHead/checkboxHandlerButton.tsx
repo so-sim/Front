@@ -50,7 +50,7 @@ const CheckboxHandlerButton = ({ checkDetailFine, setCheckDetailFine }: Props) =
   };
 
   const moveSituationControlPageByMember = () => {
-    if (isSameSituation(checkDetailFine) && myNickname && isMyCheckDetailFine(checkDetailFine, myNickname)) {
+    if (isSameSituation(checkDetailFine) && isMyCheckDetailFine(checkDetailFine, myNickname!) && Object.values(checkDetailFine)[0].situation === '미납') {
       setSideModal({ type: 'situation_change', isModal: true });
     } else {
       console.log('팀원아 제대로해라');
