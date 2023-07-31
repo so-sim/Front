@@ -38,8 +38,6 @@ const DetailFine = () => {
 
   const { setInitCheckDetailFine } = setCheckDetailFine;
 
-  console.log(checkDetailFine);
-
   useEffect(() => {
     setInitCheckDetailFine();
   }, [calendarDate]);
