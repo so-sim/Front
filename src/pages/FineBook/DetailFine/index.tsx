@@ -36,18 +36,6 @@ const DetailFine = () => {
   const { checkDetailFine, setCheckDetailFine } = useCheckDetailFine();
   // 현재 걍 context쓸지 고민 중 (checkDetailFine과 paymentControl - type 관련 )
 
-  // 선택 시 Button을 어느 컴포넌트에서 띄어줄까 고민.. DetailList 위에로? TableHead 안쪽??
-
-  // openConfirmModal의 목적 ??
-
-  // 해당 페이지에서 더 디테일하게 폴더단위가 아니라 파일로 쪼개도 되려나??..
-
-  // 기존 UserDetail을 그냥 포탈처럼 작동을 하도록 고민중. (또한 )
-
-  // setState 테스팅 가능한지??
-
-  // userDetail 사이즈 고민
-
   const { setInitCheckDetailFine } = setCheckDetailFine;
 
   console.log(checkDetailFine);
@@ -68,7 +56,7 @@ const DetailFine = () => {
 
         <Pagination totalCount={data?.content.totalCount} detailFilter={detailFilter} setDetailFilter={setDetailFilter} />
         <UserDetails />
-        <AlarmRequest_PaymentUpdate checkDetailFine={checkDetailFine} setCheckDetailFine={setCheckDetailFine} />
+        <AlarmRequest_PaymentUpdate checkDetailFine={Object.values(checkDetailFine)} setCheckDetailFine={setCheckDetailFine} />
       </Style.DetailFineFrame>
     </SelectedFineContextProvider>
   );
