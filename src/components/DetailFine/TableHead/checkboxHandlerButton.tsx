@@ -5,6 +5,8 @@ import CheckboxContainer from '@/components/@common/Checkbox';
 import DetailListCheckBox from '../checkbox';
 import { useGroupDetail } from '@/queries/Group';
 import { useGetMyNikname } from '@/queries/Group/useGetMyNickname';
+import { useRecoilState } from 'recoil';
+import { initialSideModalState, sideModalState } from '@/store/sideModalState';
 type Props = {
   checkDetailFine: CheckDetailFine;
   setCheckDetailFine: SetCheckDetailFine;
@@ -15,7 +17,9 @@ const CheckboxHandlerButton = ({ checkDetailFine, setCheckDetailFine }: Props) =
 
   const { setInitCheckDetailFine } = setCheckDetailFine;
 
-  const [searchParams, setSearchParams] = useSearchParams();
+  // const [searchParams, setSearchParams] = useSearchParams();
+
+  const [sideModal, setSideModal] = useRecoilState(sideModalState);
 
   const { data: group } = useGroupDetail(Number(groupId));
   const { data: myNick } = useGetMyNikname(Number(groupId));
@@ -39,8 +43,7 @@ const CheckboxHandlerButton = ({ checkDetailFine, setCheckDetailFine }: Props) =
 
   const moveSituationControlPage = () => {
     if (isSameSituation(checkDetailFine)) {
-      searchParams.set('type', 'situation_change');
-      setSearchParams(searchParams, { replace: true });
+      setSideModal({ type: 'situation_change', isModal: true });
     } else {
       console.log('situation 동일해야함.');
     }
@@ -48,8 +51,7 @@ const CheckboxHandlerButton = ({ checkDetailFine, setCheckDetailFine }: Props) =
 
   const moveSituationControlPageByMember = () => {
     if (isSameSituation(checkDetailFine) && myNickname && isMyCheckDetailFine(checkDetailFine, myNickname)) {
-      searchParams.set('type', 'situation_change');
-      setSearchParams(searchParams, { replace: true });
+      setSideModal({ type: 'situation_change', isModal: true });
     } else {
       console.log('팀원아 제대로해라');
     }
@@ -78,8 +80,7 @@ const CheckboxHandlerButton = ({ checkDetailFine, setCheckDetailFine }: Props) =
               <Style.DividingLine />
               <Style.SituationControlButton
                 onClick={() => {
-                  searchParams.set('type', 'alarm_request');
-                  setSearchParams(searchParams, { replace: true });
+                  setSideModal({ type: 'alarm_request', isModal: true });
                 }}
               >
                 납부요청
