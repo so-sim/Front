@@ -1,3 +1,5 @@
+export type DefaultTheme = typeof theme;
+
 const theme = {
   colors: {
     neutral_200_b: '#f1f2f3',
