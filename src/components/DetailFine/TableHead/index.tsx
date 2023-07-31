@@ -10,7 +10,7 @@ import CheckboxContainer from '../../@common/Checkbox';
 import { SelectedEventInfo } from '@/types/event';
 import { CheckDetailFine, SetCheckDetailFine } from '@/components/DetailFine/AlarmRequest_PaymentUpdate/hooks/useCheckDetailFine';
 import DetailListCheckBox from '../checkbox';
-import CheckboxHandlerButton from './checkboxHandlerButton';
+import CheckedHandleModal from './CheckedHandleModal';
 
 type Props = {
   setDetailFilter: Dispatch<SetStateAction<DetailFilter>>;
@@ -126,7 +126,7 @@ const TableHead = ({ details, setDetailFilter, checkDetailFine, setCheckDetailFi
       </Style.PointerElement>
       <Style.Element>금액</Style.Element>
       <Style.Element>사유</Style.Element>
-      <CheckboxHandlerButton checkDetailFine={checkDetailFine} setCheckDetailFine={setCheckDetailFine} />
+      <CheckedHandleModal checkDetailFine={checkDetailFine} setCheckDetailFine={setCheckDetailFine} />
     </Style.TableHead>
   );
 };

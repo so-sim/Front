@@ -12,12 +12,10 @@ type Props = {
   setCheckDetailFine: SetCheckDetailFine;
 };
 
-const CheckboxHandlerButton = ({ checkDetailFine, setCheckDetailFine }: Props) => {
+const CheckedHandleModal = ({ checkDetailFine, setCheckDetailFine }: Props) => {
   const { groupId } = useParams();
 
   const { setInitCheckDetailFine } = setCheckDetailFine;
-
-  // const [searchParams, setSearchParams] = useSearchParams();
 
   const [sideModal, setSideModal] = useRecoilState(sideModalState);
 
@@ -95,4 +93,4 @@ const CheckboxHandlerButton = ({ checkDetailFine, setCheckDetailFine }: Props) =
   );
 };
 
-export default CheckboxHandlerButton;
+export default CheckedHandleModal;
