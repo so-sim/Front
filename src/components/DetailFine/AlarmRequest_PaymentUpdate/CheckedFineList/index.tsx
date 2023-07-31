@@ -26,13 +26,13 @@ const ItemList = ({ myName, list, setCheckDetailFine, pageFromAlarm = false }: P
   };
 
   const changeableSituation = !list?.some((item) => item.situation === '완납');
-  // 완납일 떄는 checkbox를 넣으면 안된다
 
   if (list?.length === 0) return null;
   return (
     <>
       <Style.ItemContainer onClick={() => setToggle((prev) => !prev)}>
         <Style.ItemWrapper>
+          {/* 완납일 때는 CheckBox 가 보이면 안된다. (근데 완납을 다시 미납으로 변경하는 경우?..) */}
           {changeableSituation && (
             <input type="checkbox" checked={isChecked} onClick={(event: React.MouseEvent<HTMLInputElement>) => toggleCheckDetailFine(event, myName)} readOnly />
           )}
