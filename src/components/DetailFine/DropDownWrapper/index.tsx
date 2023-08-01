@@ -6,7 +6,7 @@ import { CircleButtonList, CircleDropButton } from '@/components/DetailFine';
 import * as Style from './styles';
 import { SelectedEventInfo } from '@/types/event';
 import { useGetMyNikname } from '@/queries/Group/useGetMyNickname';
-import useSituationList from '@/hooks/useSituationList';
+import useSituationList, { getClientSituationTextFromServer } from '@/hooks/useSituationList';
 import { useGroupDetail } from '@/queries/Group';
 
 interface Props {
@@ -42,7 +42,7 @@ const DropDownWrapper = ({ detail, openButtonListId, setOpenButtonListId }: Prop
       {hasPermissionOfChangePaymentType ? (
         <CircleButtonList setOpenButtonListId={setOpenButtonListId} isAdmin={isAdmin} situation={situation} eventId={eventId} />
       ) : (
-        <CircleDropButton situation={situation} text={convertSituationToText(situation)} />
+        <CircleDropButton situation={situation} origin={situation} />
       )}
     </Style.DropDownWrapper>
   );

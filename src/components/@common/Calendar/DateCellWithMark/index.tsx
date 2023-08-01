@@ -1,16 +1,16 @@
-import { FilterMode } from '@/pages/FineBook/DetailFine';
 import { PayMentTpyeCountMap } from '@/types/event';
 import { handleDate } from '@/utils/handleDate';
 import { Dayjs } from 'dayjs';
 import { FC } from 'react';
 import { MARK } from '@/assets/icons/Mark';
 import * as Style from './styles';
+import { FilterModeTest } from '@/components/DetailFine/DateController/hook/useDateFilter';
 
 interface DateCellWithMarkProps {
   date: Dayjs;
   startDate: Dayjs;
   endDate: Dayjs;
-  mode: FilterMode;
+  mode: FilterModeTest;
   isCurrentMonth: (date: Dayjs) => boolean;
   isToday: (date: Dayjs) => boolean;
   isSelectedDate: (date: Dayjs) => boolean;

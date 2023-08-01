@@ -2,7 +2,7 @@ import { GA } from '@/constants/GA';
 import useConfirmModal from '@/hooks/useConfirmModal';
 import { useUpdateDetailStatus } from '@/queries/Detail/useUpdateDetailStatus';
 import { Situation } from '@/types/event';
-import { pushDataLayerByStatus } from '@/utils/pushDataLayer';
+import { pushDataLayer, pushDataLayerByStatus } from '@/utils/pushDataLayer';
 import { Dispatch, SetStateAction } from 'react';
 import CircleDropButton from '../CircleDropButton';
 import useSituationList from '@/hooks/useSituationList';
@@ -29,6 +29,7 @@ const CircleButtonList = ({ setOpenButtonListId, situation, eventId, isAdmin = f
   const onSuccessUpdateStatus = (buttonSituation: Situation) => {
     cancelUpdateStatus();
     pushDataLayerByStatus(isAdmin, buttonSituation);
+    buttonSituation === '미납' && pushDataLayer('nonpayment', { route: 'list' });
   };
 
   const { mutate: mutateDetailStatus } = useUpdateDetailStatus(onSuccessUpdateStatus);
@@ -62,7 +63,7 @@ const CircleButtonList = ({ setOpenButtonListId, situation, eventId, isAdmin = f
 
         return (
           <Style.CircleButtonBox key={buttonSituation} onClick={() => handleCircleButtonList(convertedSituation)}>
-            <CircleDropButton situation={convertedSituation} text={buttonSituation} />
+            <CircleDropButton situation={convertedSituation} origin={situation} />
           </Style.CircleButtonBox>
         );
       })}

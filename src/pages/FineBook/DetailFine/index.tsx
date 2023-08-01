@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useGetDetailList } from '@/queries/Detail/useGetDetailList';
 import { SelectedEventInfo } from '@/types/event';
-import { DateController, DetailList, DetailsHeader, Pagination, TableHead, UserDetails } from '@/components/DetailFine';
+import { DateController, DetailList, DetailsHeader, FilterController, Pagination, TableHead, UserDetails } from '@/components/DetailFine';
 import * as Style from './styles';
 import { useRecoilValue } from 'recoil';
 import { useParams } from 'react-router-dom';
@@ -48,10 +48,10 @@ const DetailFine = () => {
         <DetailsHeader />
         <Style.DetailContent>
           <DateController setDetailFilter={setDetailFilter} />
+          <FilterController detailFilter={detailFilter} setDetailFilter={setDetailFilter} totalAmount={1_000_000} />
           <TableHead setDetailFilter={setDetailFilter} details={data?.content.eventList} checkDetailFine={checkDetailFine} setCheckDetailFine={setCheckDetailFine} />
           <DetailList detailFilter={detailFilter} details={data?.content.eventList} checkDetailFine={checkDetailFine} setCheckDetailFine={setCheckDetailFine} />
         </Style.DetailContent>
-
         <Pagination totalCount={data?.content.totalCount} detailFilter={detailFilter} setDetailFilter={setDetailFilter} />
         <UserDetails />
         <AlarmRequest_PaymentUpdate checkDetailFine={Object.values(checkDetailFine)} setCheckDetailFine={setCheckDetailFine} />

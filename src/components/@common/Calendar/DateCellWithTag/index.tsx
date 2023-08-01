@@ -24,21 +24,21 @@ const DateCellWithTag: FC<DateCellWitTagProps> = ({ date, isCurrentMonth, isToda
         {status && status['미납'] && currentMonth ? (
           <Style.Tag color="red">
             <div>{MARK.RED}</div>
-            <span>미납자 있음</span>
+            <span>납부 전</span>
             <span>({status['미납']})</span>
           </Style.Tag>
         ) : null}
         {status && status['확인중'] && currentMonth ? (
           <Style.Tag color="orange">
             <div>{MARK.YELLOW}</div>
-            <span>관리자 승인 중</span>
+            <span>총무 승인대기</span>
             <span>({status['확인중']})</span>
           </Style.Tag>
         ) : null}
         {status && status['완납'] && currentMonth && !(status && status['확인중']) && !(status && status['미납']) ? (
           <Style.Tag color="blue">
             <div>{MARK.BLUE}</div>
-            <span>모두 완납</span>
+            <span>모두 납부</span>
           </Style.Tag>
         ) : null}
       </Style.DateCell>

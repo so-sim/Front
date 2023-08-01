@@ -10,6 +10,5 @@ export interface UserInfo {
 }
 
 export interface WithDrawl {
-  userId: number;
-  withdrawalGroundsType: string;
+  withdrawReason: string;
 }

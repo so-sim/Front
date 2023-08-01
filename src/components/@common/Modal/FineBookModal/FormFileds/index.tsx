@@ -5,7 +5,7 @@ import { GA } from '@/constants/GA';
 import { Ground, SelectedEventInfo } from '@/types/event';
 import { useParticipantList } from '@/queries/Group';
 import { Situation } from '@/types/event';
-import { convertToPriceFormat } from '@/utils/convertPriceFormat';
+import { convertToPriceFormat } from '@/utils/convertFormat';
 import React from 'react';
 import { useParams } from 'react-router-dom';
 import * as Style from '../styles';
@@ -39,7 +39,7 @@ const FormFileds = ({ selectData, dispatch }: Props) => {
   };
 
   const onChaneSituation = (situation: SituationText) => {
-    dispatch({ type: 'SITUATION', situation });
+    dispatch({ type: 'SITUATION', situation: convertTextToSituation(situation) });
   };
 
   const onChangeAmount = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -94,7 +94,7 @@ const FormFileds = ({ selectData, dispatch }: Props) => {
         </Label>
       </Style.Row>
       <Label title="메모" width="32px" margin="0px">
-        <Style.TextArea maxLength={65} onChange={onChangeMemo} value={selectData.memo} placeholder="내용을 입력해주세요." />
+        <Style.TextArea maxLength={65} onChange={onChangeMemo} value={selectData.memo} placeholder="(선택) 내용을 입력해주세요." />
         <Style.Length>{selectData.memo.length}/65</Style.Length>
       </Label>
     </>

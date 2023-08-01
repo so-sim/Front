@@ -5,22 +5,24 @@ import * as Style from './styles';
 import { useRecoilState } from 'recoil';
 
 import dayjs from 'dayjs';
-import { customedWeek } from '@/utils/customedWeek';
-import DropDown from '@/components/@common/DropDown';
 import { useGroupDetail } from '@/queries/Group';
 import { useParams } from 'react-router-dom';
-import { FilterMode } from '@/pages/FineBook/DetailFine';
 import useCheckLocationState from '@/hooks/useCheckLocationState';
 import { GA } from '@/constants/GA';
 import FineBookCreateModal from '@/components/@common/Modal/FineBookModal/FineBookCreateModal';
 import { dateState } from '@/store/dateState';
-import useDateController from './hook/useDateController';
 import { DetailFilter } from '@/store/detailFilter';
+import { FilterModeTest, useDateFilter } from './hook/useDateFilter';
+import useDropDown from '@/hooks/useDropDown';
+import FilterButton from './FilterButton';
 
-export const FILTER_BUTTON_LIST: { mode: FilterMode; text: string; id: string }[] = [
+export type FilterButtonType = { mode: FilterModeTest; text: string; id?: string };
+
+export const FILTER_BUTTON_LIST: FilterButtonType[] = [
   { mode: 'month', text: '월간', id: GA.FILTER.MONTH },
   { mode: 'week', text: '주간', id: GA.FILTER.WEEK_DROP },
   { mode: 'day', text: '일간', id: GA.FILTER.DAY },
+  { mode: 'custom', text: '상세' },
 ];
 
 type Props = {
@@ -37,28 +39,17 @@ const DateController = ({ setDetailFilter }: Props) => {
   const [calendarDate, setCalendarDate] = useRecoilState(dateState);
 
   const [openAddModal, setOpenAddModal] = useState<boolean>(initialAddModalState);
-  const [openWeeklyFilterDrop, setOpenWeeklyFilterDrop] = useState(false);
 
-  const { getTitle, goToWeek, changeDateByButtonMode, increase, decrease } = useDateController(calendarDate.mode);
-
-  const handleWeeklyFilterDrop = () => {
-    setOpenWeeklyFilterDrop((prev) => !prev);
-  };
+  const { getTitle, increaseDate, decreaseDate } = useDateFilter();
+  const { dropDownRef: periodSettingRef, setOpenDrop: setOpenPeriodSettingDrop, openDrop: openPeriodSettingDrop } = useDropDown();
 
   const handleAddModal = () => {
     setOpenAddModal((prev) => !prev);
   };
 
-  const handleDateFilterMode = (buttonMode: FilterMode) => {
-    handleWeeklyFilterDrop();
-    if (calendarDate.mode === buttonMode) return;
-
-    changeDateByButtonMode(buttonMode);
-  };
-
   const updateToToday = () => {
     // 여기 Type을 정해줬는데도 baseDate로 들어가있었다.. 왜 Type 체크를 안해줬을까?
-    setCalendarDate((prev) => ({ ...prev, baseDate: dayjs(), startDate: dayjs(), endDate: dayjs(), mode: 'day' as FilterMode }));
+    setCalendarDate((prev) => ({ ...prev, baseDate: dayjs(), startDate: dayjs(), endDate: dayjs(), mode: 'day' }));
   };
 
   useEffect(() => {
@@ -72,40 +63,32 @@ const DateController = ({ setDetailFilter }: Props) => {
           <Style.Block>
             <Style.Date mode={calendarDate.mode}>{getTitle()}</Style.Date>
             <Style.ArrowBlock id={GA.LIST_SKIP.ALL}>
-              <Style.ArrowWrapper onClick={decrease} id={GA.LIST_SKIP.LEFT} data-testid={GA.LIST_SKIP.LEFT}>
+              <Style.ArrowWrapper onClick={decreaseDate} id={GA.LIST_SKIP.LEFT} data-testid={GA.LIST_SKIP.LEFT}>
                 {ARROW.LEFT}
               </Style.ArrowWrapper>
-              <Style.ArrowWrapper onClick={increase} id={GA.LIST_SKIP.RIGHT} data-testid={GA.LIST_SKIP.RIGHT}>
+              <Style.ArrowWrapper onClick={increaseDate} id={GA.LIST_SKIP.RIGHT} data-testid={GA.LIST_SKIP.RIGHT}>
                 {ARROW.RIGHT}
               </Style.ArrowWrapper>
             </Style.ArrowBlock>
             <Style.TodayButton onClick={updateToToday} id={GA.TODAY_LIST}>
               오늘
             </Style.TodayButton>
+            <Style.FilterWrapper ref={dropDownRef}>
+              <div ref={periodSettingRef}>
+                {FILTER_BUTTON_LIST.map((filterButton) => (
+                  <FilterButton
+                    key={filterButton.mode}
+                    btn={filterButton}
+                    // 여기를 외부에서 넣어주는 이유는 위에 있는 div ref={periodSettingRef} 이게 없으면
+                    // periodSettingModal이 켜져있는 상태에서 상세 필터 버튼을 누르면 꺼졌다가 다시 켜집니다 (버블링)
+                    openPeriodSettingDrop={openPeriodSettingDrop}
+                    setOpenPeriodSettingDrop={setOpenPeriodSettingDrop}
+                  />
+                ))}
+              </div>
+            </Style.FilterWrapper>
           </Style.Block>
           <Style.Block>
-            <Style.FilterWrapper ref={dropDownRef}>
-              {FILTER_BUTTON_LIST.map((btn) => {
-                return (
-                  <Style.FilterButton id={btn.id} key={btn.id} isActive={calendarDate.mode === btn.mode} onClick={() => handleDateFilterMode(btn.mode)}>
-                    <span>{btn.text}</span>
-                    {btn.mode === 'week' && calendarDate.mode === 'week' && openWeeklyFilterDrop && (
-                      <div style={{ position: 'relative', left: '1px' }}>
-                        <DropDown
-                          width={60}
-                          align="center"
-                          setState={goToWeek}
-                          list={customedWeek(calendarDate.baseDate)}
-                          top="7px"
-                          onClose={handleWeeklyFilterDrop}
-                          dropDownRef={dropDownRef}
-                        />
-                      </div>
-                    )}
-                  </Style.FilterButton>
-                );
-              })}
-            </Style.FilterWrapper>
             {group?.content.isAdmin && (
               <Button color="black" width="124px" height="40px" onClick={handleAddModal} id="add_list">
                 내역 추가하기

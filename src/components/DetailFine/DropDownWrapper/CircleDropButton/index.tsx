@@ -1,11 +1,12 @@
 import { GA } from '@/constants/GA';
+import { getClientSituationTextFromServer } from '@/hooks/useSituationList';
 import { Situation } from '@/types/event';
 import { getStatusIcon } from '@/utils/status';
 import * as Style from './styles';
 
 interface Props {
   situation: Situation;
-  text: string;
+  origin: Situation;
 }
 
 const SITUATION_CODE: { [key in Situation]: 'NON' | 'CON' | 'FULL' } = {
@@ -14,12 +15,12 @@ const SITUATION_CODE: { [key in Situation]: 'NON' | 'CON' | 'FULL' } = {
   완납: 'FULL',
 };
 
-const CircleDropButton = ({ situation, text }: Props) => {
+const CircleDropButton = ({ situation, origin }: Props) => {
   const PAYMENT_TYPE = SITUATION_CODE[situation];
 
   return (
     <Style.StatusButton situation={situation} id={GA[PAYMENT_TYPE].LIST_BUTTON}>
-      <Style.Text>{text}</Style.Text>
+      <Style.Text>{getClientSituationTextFromServer(situation, origin)}</Style.Text>
       <Style.Icon>{getStatusIcon(situation)}</Style.Icon>
     </Style.StatusButton>
   );

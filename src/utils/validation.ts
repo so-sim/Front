@@ -32,3 +32,12 @@ export const checkFormIsValid = (selectData: Omit<EventInfoTest, 'groupId'>): bo
 
   return true;
 };
+
+/**
+ * 이모지 포함 여부만 체크하는 함수
+ * text가 빈 문자열일 경우에는 걸러주면 안 되기에 text !== ''옵션 추가
+ */
+export const checkEmoji = (text: string) => {
+  const regExp = /^[a-zA-Z0-9ㄱ-ㅎㅏ-ㅣ가-힣!"#$%&'()*+,-./:;<=>?@[\]^_`{|}~\s]+$/;
+  return !regExp.test(text) && text !== '';
+};

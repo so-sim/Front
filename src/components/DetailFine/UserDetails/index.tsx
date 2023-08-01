@@ -24,9 +24,9 @@ type Props = {
 };
 
 const REQUEST_BUTTON: { [key in Situation]: string } = {
-  미납: '확인 요청',
-  확인중: '요청 완료',
-  완납: '확인 완료',
+  미납: '납부 완료',
+  확인중: '승인 대기',
+  완납: '납부 완료',
 };
 
 const UserDetails = () => {
@@ -69,13 +69,14 @@ const UserDetails = () => {
       type: 'CHANGE_STATUS',
       confirm: () => updateStatus(convertedSituation),
       cancel: closeConfirmModal,
-      id: situation === '완납' ? GA.FULL.SIDE_MODAL : '',
+      // id: situation === '완납' ? GA.FULL.SIDE_MODAL : '',
     });
   };
 
   const onSuccessUpdateStatus = (situation: Situation) => {
     closeConfirmModal();
     setSelectedFine((prev) => ({ ...prev, situation }));
+    if (situation === '미납') pushDataLayer('nonpayment', { route: 'detail' });
     if (isAdmin === true && situation === '완납') return pushDataLayer('fullpayment', { route: 'detail' });
     if (isAdmin === false) pushDataLayer('confirming', { route: 'detail' });
   };
@@ -112,7 +113,7 @@ const UserDetails = () => {
     <>
       <Style.UserDetailsFrame>
         <Style.Header>
-          <Style.CloseIcon onClick={closeUserDetails}>{SYSTEM.CLOSE}</Style.CloseIcon>
+          <Style.CloseIcon onClick={closeUserDetails}>{SYSTEM.CLOSE_LG}</Style.CloseIcon>
           <span>닫기</span>
         </Style.Header>
         <Style.UserDetailsContent>
@@ -149,12 +150,12 @@ const UserDetails = () => {
                   dropDownList={filteredSituationList}
                 />
               ) : (
-                <Style.StatusButton situation={situation}>{situation}</Style.StatusButton>
+                <Style.StatusButton situation={situation}>{convertSituationToText(situation)}</Style.StatusButton>
               )}
             </Label>
           </Style.Row>
-          <Label title="사유" width="30px">
-            <Style.TextArea disabled placeholder="내용을 입력해주세요." value={memo} />
+          <Label title="메모" width="30px">
+            <Style.TextArea disabled placeholder="(선택) 내용을 입력해주세요." value={memo} />
           </Label>
         </Style.UserDetailsContent>
         <Style.Footer>

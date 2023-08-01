@@ -3,13 +3,14 @@ import { DateState, dateState } from '@/store/dateState';
 import { padStart } from '@/utils/padStart';
 import dayjs, { Dayjs } from 'dayjs';
 import { useRecoilState } from 'recoil';
+import { weekList } from '@/utils/customedWeek';
 
 const useDateController = (mode: FilterMode) => {
   const [calendarDate, setCalendarDate] = useRecoilState(dateState);
 
-  const goToWeek = (week: string) => {
-    const numberWeek = Number(week[0]);
-    const baseDate = moveDateToWeek(calendarDate.baseDate, numberWeek);
+  const goToWeek = (weekText: string) => {
+    const week = weekList.indexOf(weekText) + 1;
+    const baseDate = moveDateToWeek(calendarDate.baseDate, week);
     setCalendarDate(baseDate);
   };
 
@@ -45,10 +46,8 @@ export function moveDateToWeek(baseDate: Dayjs, week: number) {
   // day가 요일 date가 날짜.
   const startOfWeekDate = (week - 1) * 7 + 1 - startOfMonthDay;
   // 선택된 week에 시작하는 날짜를 알아낼 수 있음.  (은근 날짜에 이쁜 패턴이 많다)
-
   if (week === 1) {
     const startDateOfMonth = dayjs(baseDate).startOf('month');
-
     return {
       baseDate: startDateOfMonth, //
       startDate: startDateOfMonth.startOf('week'),
