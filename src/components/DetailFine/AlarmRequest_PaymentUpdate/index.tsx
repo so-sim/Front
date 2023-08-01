@@ -32,8 +32,13 @@ const Status: StatusType = {
     title: <Style.Title>납부 여부 변경하기</Style.Title>,
     subTitle: (situationToChange?: Situation) => (
       <Style.SubTitle>
-        선택된 모든 내역을{' '}
-        <span style={{ textDecoration: 'underline', textUnderlineOffset: '2px', color: situationToChange === '완납' ? theme.colors.primary_600 : theme.colors.red_600 }}>
+        선택된 모든 내역을{" "}
+        <span
+          style={{
+            textDecoration: "underline",
+            textUnderlineOffset: "2px",
+            color: situationToChange === "완납" ? theme.colors.primary_600 : theme.colors.red_600,
+          }}>
           {situationToChange}
         </span>
         으로 변경하시겠습니까?
@@ -57,7 +62,7 @@ const AlarmRequest_PaymentUpdate = ({ checkDetailFine, setCheckDetailFine }: Pro
 
   const { type, isModal } = sideModal;
 
-  const [situationToChange, setSituationToChange] = useState<Situation>('미납');
+  const [situationToChange, setSituationToChange] = useState<Situation>("완납");
 
   const { selectedFine, setSelectedFine } = useSelectedContext('userDetails');
 
@@ -105,7 +110,8 @@ const AlarmRequest_PaymentUpdate = ({ checkDetailFine, setCheckDetailFine }: Pro
   };
   // 백엔드 API명세에 아직 추가되어있지않음
 
-  const stringToNumber_Date = (date: string) => +date?.replace(/\./g, '');
+  const stringToNumber_Date = (date: string) => +date?.replace(/\./g, "");
+
 
   const sortedtList = checkDetailFine.sort((a, b) => stringToNumber_Date(a.date) - stringToNumber_Date(b.date));
 
