@@ -2,7 +2,7 @@ import { Dispatch, SetStateAction, useState } from 'react';
 import { DetailFilter } from '@/store/detailFilter';
 import { SYSTEM } from '@/assets/icons/System';
 import { Situation } from '@/types/event';
-import { convertToPriceFormat } from '@/utils/convertPriceFormat';
+import { convertToPriceFormat } from '@/utils/convertFormat';
 import { USER } from '@/assets/icons/User';
 import { AutoComplete } from './AutoComplete';
 import * as Style from './styles';
