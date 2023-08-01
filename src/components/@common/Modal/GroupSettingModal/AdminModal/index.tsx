@@ -61,7 +61,6 @@ export const AdminModal: FC<ModalHandlerProps> = ({ modalHandler }) => {
   const { data: notificationInfo } = useNotificationInfo(Number(groupId));
 
   const { data: groupData } = useGroupDetail(Number(groupId));
-  const { data: myNickname } = useGetMyNikname(Number(groupId));
 
   const handleSubmitForm = () => {
     if (tapValue === 'GROUP') return updateGroupMutate({ groupId: Number(groupId), ...groupForm });
@@ -77,11 +76,10 @@ export const AdminModal: FC<ModalHandlerProps> = ({ modalHandler }) => {
 
   useEffect(() => {
     if (!groupData) return;
-    if (!myNickname) return;
 
     const { title, coverColor, type, adminNickname } = groupData.content;
     setGroupForm({ title, coverColor, type, nickname: adminNickname });
-  }, [groupData?.content.title]);
+  }, [groupData]);
 
   useEffect(() => {
     if (notificationInfo?.content !== null) {
@@ -89,6 +87,7 @@ export const AdminModal: FC<ModalHandlerProps> = ({ modalHandler }) => {
     }
   }, [notificationInfo]);
 
+  console.log(groupData);
   return (
     <Modal.Frame onClick={modalHandler} width="492px">
       <Modal.Header align="start" onClick={modalHandler} margin="16px">
