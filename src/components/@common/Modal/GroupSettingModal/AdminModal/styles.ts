@@ -11,16 +11,26 @@ export const Flex = styled.div`
   display: flex;
 `;
 
-export const SubTitle = styled.div`
-  ${({ theme }) => theme.font.subhead_03};
+export const SubTitle = styled.div<{ isSelected: boolean }>`
+  width: 96px;
+  padding: 4px;
+  text-align: right;
   margin: 4px 20px 0 4px;
   white-space: nowrap;
+  background: ${({ theme, isSelected }) => isSelected && theme.colors.neutral_300_b};
+  cursor: pointer;
+  ${({ theme }) => theme.font.subhead_03};
+
+  &:hover {
+    background: ${({ theme, isSelected }) => !isSelected && theme.colors.neutral_200_b};
+  }
 `;
 
 export const Container = styled.div`
-  width: 100%;
   display: flex;
   flex-direction: column;
+  align-items: flex-start;
+  width: 100%;
   border-left: 2px solid ${({ theme }) => theme.colors.neutral_400_b};
   padding-left: 16px;
   gap: 24px;
@@ -69,4 +79,10 @@ export const QuitButton = styled.button`
   border: 2px solid ${({ theme }) => theme.colors.neutral_400_b};
   border-radius: 2px;
   background-color: ${({ theme }) => theme.colors.neutral_200_b};
+`;
+
+export const Nav = styled.ul`
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
 `;

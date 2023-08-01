@@ -58,6 +58,11 @@ const globalStyle = css`
   ol {
     margin: 0;
   }
+  input::-webkit-inner-spin-button {
+    appearance: none;
+    -moz-appearance: none;
+    -webkit-appearance: none;
+  }
   input {
     background: none;
     border: none;

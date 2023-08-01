@@ -16,4 +16,6 @@ export const ARROW = {
   LEFT_MD: <Left width={8} height={12} />,
   RIGHT_MD: <Right width={8} height={12} />,
   SOLID: <Solid />,
+  DOUBLE_RIGHT_PROPS: ({ ...props }) => <DoubleRight {...props} />,
+  DOUBLE_LEFT_PROPS: ({ ...props }) => <DoubleLeft {...props} />,
 };

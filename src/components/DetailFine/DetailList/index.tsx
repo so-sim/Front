@@ -1,5 +1,5 @@
 import { changeNumberToMoney } from '@/utils/changeNumberToMoney';
-import { Dispatch, SetStateAction, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import * as Style from './styles';
 import { DropDownWrapper } from '@/components/DetailFine';
 import { DetailFilter } from '@/store/detailFilter';
@@ -7,18 +7,33 @@ import { useRecoilState } from 'recoil';
 import { dateState } from '@/store/dateState';
 import { SelectedEventInfo } from '@/types/event';
 import { useSelectedContext } from '@/contexts/SelectedFineContext';
+import CheckboxContainer from '../../@common/Checkbox';
+import { CheckDetailFine, SetCheckDetailFine } from '@/components/DetailFine/AlarmRequest_PaymentUpdate/hooks/useCheckDetailFine';
+import DetailListCheckBox from '../checkbox';
 
 type Props = {
   details?: SelectedEventInfo[];
   detailFilter: DetailFilter;
+
+  checkDetailFine: CheckDetailFine;
+  setCheckDetailFine: SetCheckDetailFine;
 };
 
-const DetailList = ({ detailFilter, details }: Props) => {
+const DetailList = ({ detailFilter, details, checkDetailFine, setCheckDetailFine }: Props) => {
   const [calendarState, setCalendarState] = useRecoilState(dateState);
 
   const [openButtonListId, setOpenButtonListId] = useState(0);
 
   const { selectedFine, setSelectedFine } = useSelectedContext('userDetails');
+
+  const { setAddCheckDetailFine, setSubtractCheckDetailFine, setInitCheckDetailFine } = setCheckDetailFine;
+
+  const isChecked = (eventId: number) => Object.keys(checkDetailFine).includes(String(eventId));
+
+  //  여기 왜 checkState 타입이 안먹냐
+
+  // 이거 그냥 details에 check 프로퍼티를 추가하는 방법이 더 좋겠는걸?
+  // 이부분 하면서 서버상태를 분리하는게 맞나 생각이 들었음
 
   const handleUserDetailModal = (detail: SelectedEventInfo) => {
     setSelectedFine(detail);
@@ -35,6 +50,15 @@ const DetailList = ({ detailFilter, details }: Props) => {
     };
   }, []);
 
+  const toggleChecked = (event: React.MouseEvent<HTMLInputElement>, detail: SelectedEventInfo) => {
+    event.stopPropagation();
+    if (isChecked(detail.eventId)) {
+      setSubtractCheckDetailFine(detail);
+      return;
+    }
+    setAddCheckDetailFine(detail);
+  };
+
   const filteredDataNotFound = details?.length === 0 && calendarState.mode === 'day' && detailFilter.nickname === '' && detailFilter.situation === '';
 
   // hooks rules 참고 (무조건 조건 렌더링은 hooks 다음)!
@@ -48,6 +72,10 @@ const DetailList = ({ detailFilter, details }: Props) => {
         const { date, nickname, amount, memo, eventId, ground } = detail;
         return (
           <Style.TableRow key={i} isSelected={selectedFine.eventId === eventId} onClick={() => handleUserDetailModal(detail)}>
+            <CheckboxContainer id={String(eventId)} isChecked={isChecked(eventId)} onChange={(event: React.MouseEvent<HTMLInputElement>) => toggleChecked(event, detail)}>
+              <CheckboxContainer.Checkbox as={DetailListCheckBox} />
+              {/*    이 부분 props를 자연스럽게 넘겨주려면 이 방법 밖에?? function으로 넘겨주는 방법도 있긴한데,  이거는 rest props 안넘어옴 */}
+            </CheckboxContainer>
             <Style.Element hasEllipsis={false}>{date.slice(2)}</Style.Element>
             <DropDownWrapper openButtonListId={openButtonListId} detail={detail} setOpenButtonListId={setOpenButtonListId} />
             <Style.Element hasEllipsis>{nickname}</Style.Element>

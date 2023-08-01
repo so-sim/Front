@@ -1,14 +1,23 @@
-import { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react';
+import React, { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react';
 import { ARROW } from '@/assets/icons/Arrow';
 import * as Style from './styles';
 import { useParticipantList } from '@/queries/Group';
-import { useParams } from 'react-router-dom';
+import { useParams, useSearchParams } from 'react-router-dom';
 import DropDown from '@/components/@common/DropDown';
 import { GA } from '@/constants/GA';
 import { DetailFilter } from '@/store/detailFilter';
+import CheckboxContainer from '../../@common/Checkbox';
+import { SelectedEventInfo } from '@/types/event';
+import { CheckDetailFine, SetCheckDetailFine } from '@/components/DetailFine/AlarmRequest_PaymentUpdate/hooks/useCheckDetailFine';
+import DetailListCheckBox from '../checkbox';
+import CheckedHandleModal from './CheckedHandleModal';
 
 type Props = {
   setDetailFilter: Dispatch<SetStateAction<DetailFilter>>;
+  details?: SelectedEventInfo[];
+
+  checkDetailFine: CheckDetailFine;
+  setCheckDetailFine: SetCheckDetailFine;
 };
 
 type PaymentDropdown = '전체' | '미납' | '완납' | '확인중';
@@ -20,13 +29,14 @@ const paymentTypeList: { title: PaymentDropdown; id?: string }[] = [
   { title: '확인중', id: GA.FILTER.CON },
 ];
 
-const TableHead = ({ setDetailFilter }: Props) => {
+const TableHead = ({ details, setDetailFilter, checkDetailFine, setCheckDetailFine }: Props) => {
   const param = useParams();
 
   const [member, setMember] = useState('전체');
   const [paymentType, setPaymentType] = useState<PaymentDropdown>('전체');
   const [openMemberDropdown, setOpenMemberDropdown] = useState(false);
   const [openPaymentTypeDropdown, setOpenPaymentTypeDropdown] = useState(false);
+  const { setAddCheckDetailFine, setSubtractCheckDetailFine, setInitCheckDetailFine } = setCheckDetailFine;
 
   const memberDropDownRef = useRef<HTMLDivElement>(null);
   const paymentTypeDropDownRef = useRef<HTMLDivElement>(null);
@@ -48,6 +58,7 @@ const TableHead = ({ setDetailFilter }: Props) => {
   const handlePaymentDropDown = () => {
     setOpenPaymentTypeDropdown((prev) => !prev);
   };
+
   const handleMemeberDropDown = () => {
     setOpenMemberDropdown((prev) => !prev);
   };
@@ -59,8 +70,27 @@ const TableHead = ({ setDetailFilter }: Props) => {
     return [{ title: '전체' }, ...joinParticipants];
   };
 
+  const isCheckedAll = details?.every((item) => Object.keys(checkDetailFine).includes(String(item.eventId)));
+
+  const checkedAllProperty = (event: React.MouseEvent<HTMLInputElement>) => {
+    if (isCheckedAll) {
+      details?.forEach((item) => {
+        setSubtractCheckDetailFine(item);
+      });
+      return;
+    }
+
+    details?.forEach((item) => {
+      setAddCheckDetailFine(item);
+    });
+  };
+
   return (
     <Style.TableHead>
+      <CheckboxContainer id={'checkedAll'} isChecked={!!isCheckedAll && details?.length! > 0} onChange={(event: React.MouseEvent<HTMLInputElement>) => checkedAllProperty(event)}>
+        <CheckboxContainer.Checkbox as={DetailListCheckBox} />
+      </CheckboxContainer>
+
       <Style.Element>날짜</Style.Element>
       <Style.PointerElement onClick={handlePaymentDropDown} ref={paymentTypeDropDownRef}>
         <span>납부여부</span>
@@ -96,7 +126,9 @@ const TableHead = ({ setDetailFilter }: Props) => {
       </Style.PointerElement>
       <Style.Element>금액</Style.Element>
       <Style.Element>사유</Style.Element>
+      <CheckedHandleModal checkDetailFine={checkDetailFine} setCheckDetailFine={setCheckDetailFine} />
     </Style.TableHead>
   );
 };
+
 export default TableHead;

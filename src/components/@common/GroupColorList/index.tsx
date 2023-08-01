@@ -1,11 +1,10 @@
 import * as Style from './styles';
-import { Dispatch, SetStateAction } from 'react';
 import { COLORS } from '@/constants/Group';
 import { GroupColor } from '@/types/group';
 
 interface Props {
   selectedColor: GroupColor;
-  onChange: Dispatch<SetStateAction<GroupColor>>;
+  onChange: (value: GroupColor) => void;
 }
 
 export const GroupColorList = ({ selectedColor, onChange }: Props) => {

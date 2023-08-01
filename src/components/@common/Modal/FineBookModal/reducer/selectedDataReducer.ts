@@ -1,6 +1,6 @@
 import { SelectedEventInfo, Ground } from '@/types/event';
 import { Situation } from '@/types/event';
-import { convertFromPriceFormat } from '@/utils/convertPriceFormat';
+import { convertFromPriceFormat } from '@/utils/convertFormat';
 
 type Action =
   | { type: 'INIT'; initialData: Partial<SelectedEventInfo> }
