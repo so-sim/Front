@@ -15,6 +15,7 @@ const Home = () => {
         Authorization: `Bearer ${getAccessToken()}`,
       },
       withCredentials: true,
+      heartbeatTimeout: 30 * 60 * 1000,
     });
 
     SSE.addEventListener('subscribe', (e) => {
