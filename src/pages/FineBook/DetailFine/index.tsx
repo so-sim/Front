@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useGetDetailList } from '@/queries/Detail/useGetDetailList';
 import { SelectedEventInfo } from '@/types/event';
 import { DateController, DetailList, DetailsHeader, FilterController, Pagination, TableHead, UserDetails } from '@/components/DetailFine';
@@ -10,6 +10,8 @@ import dayjs from 'dayjs';
 import { dateState } from '@/store/dateState';
 import { DetailFilter } from '@/store/detailFilter';
 import SelectedFineContextProvider from '@/contexts/SelectedFineContext';
+import useCheckDetailFine from '@/components/DetailFine/AlarmRequest_PaymentUpdate/hooks/useCheckDetailFine';
+import AlarmRequest_PaymentUpdate from '@/components/DetailFine/AlarmRequest_PaymentUpdate';
 
 export type FilterMode = 'month' | 'week' | 'day';
 
@@ -31,6 +33,15 @@ const DetailFine = () => {
   const calendarDate = useRecoilValue(dateState);
   const { data } = useGetDetailList(detailFilter, calendarDate);
 
+  const { checkDetailFine, setCheckDetailFine } = useCheckDetailFine();
+  // 현재 걍 context쓸지 고민 중 (checkDetailFine과 paymentControl - type 관련 )
+
+  const { setInitCheckDetailFine } = setCheckDetailFine;
+
+  useEffect(() => {
+    setInitCheckDetailFine();
+  }, [calendarDate]);
+
   return (
     <SelectedFineContextProvider>
       <Style.DetailFineFrame>
@@ -38,11 +49,12 @@ const DetailFine = () => {
         <Style.DetailContent>
           <DateController setDetailFilter={setDetailFilter} />
           <FilterController detailFilter={detailFilter} setDetailFilter={setDetailFilter} totalAmount={1_000_000} />
-          <TableHead setDetailFilter={setDetailFilter} />
-          <DetailList detailFilter={detailFilter} details={data?.content.eventList} />
+          <TableHead setDetailFilter={setDetailFilter} details={data?.content.eventList} checkDetailFine={checkDetailFine} setCheckDetailFine={setCheckDetailFine} />
+          <DetailList detailFilter={detailFilter} details={data?.content.eventList} checkDetailFine={checkDetailFine} setCheckDetailFine={setCheckDetailFine} />
         </Style.DetailContent>
         <Pagination totalCount={data?.content.totalCount} detailFilter={detailFilter} setDetailFilter={setDetailFilter} />
         <UserDetails />
+        <AlarmRequest_PaymentUpdate checkDetailFine={Object.values(checkDetailFine)} setCheckDetailFine={setCheckDetailFine} />
       </Style.DetailFineFrame>
     </SelectedFineContextProvider>
   );
