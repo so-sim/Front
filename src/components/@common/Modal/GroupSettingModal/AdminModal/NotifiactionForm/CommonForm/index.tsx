@@ -20,10 +20,11 @@ const DATE_UNIT = {
 
 type Props = {
   notificationForm: NotificationInfo;
+  isErrorField: (field: keyof NotificationInfo) => boolean;
   handleNotificationForm: <T extends keyof NotificationInfo>(type: T, value: NotificationInfo[T]) => void;
 };
 
-const CommonForm = ({ notificationForm, handleNotificationForm }: Props) => {
+const CommonForm = ({ notificationForm, handleNotificationForm, isErrorField }: Props) => {
   const { dropDownRef, openDrop, setOpenDrop } = useDropDown();
 
   const handleOpenDrop = () => {
@@ -55,6 +56,7 @@ const CommonForm = ({ notificationForm, handleNotificationForm }: Props) => {
         <Style.CommonBlock>
           <Style.CommonInput //
             type="text"
+            isError={isErrorField('repeatCycle')}
             value={Number(notificationForm.repeatCycle)}
             onChange={handleNotificationRepeatCycle}
           />
@@ -66,6 +68,7 @@ const CommonForm = ({ notificationForm, handleNotificationForm }: Props) => {
         <Style.CommonBlock>
           <Style.CommonDateInput //
             type="text"
+            isError={isErrorField('startDate')}
             value={notificationForm.startDate}
             onChange={handleNotificationStartDate}
           />

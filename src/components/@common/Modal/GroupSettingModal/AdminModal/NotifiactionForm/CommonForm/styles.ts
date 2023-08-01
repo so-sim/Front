@@ -17,18 +17,18 @@ export const CommonBlock = styled.div`
   gap: 4px;
 `;
 
-export const CommonInput = styled.input`
+export const CommonInput = styled.input<{ isError: boolean }>`
   padding: 4px 8px;
   text-align: center;
   width: 42px;
-  border: 1px solid ${({ theme }) => theme.colors.neutral_400_b};
+  border: 1px solid ${({ theme, isError }) => (isError ? theme.colors.red_400 : theme.colors.neutral_400_b)};
 `;
 
-export const CommonDateInput = styled.input`
+export const CommonDateInput = styled.input<{ isError: boolean }>`
   padding: 4px 8px;
   text-align: center;
   width: 100px;
-  border: 1px solid ${({ theme }) => theme.colors.neutral_400_b};
+  border: 1px solid ${({ theme, isError }) => (isError ? theme.colors.red_400 : theme.colors.neutral_400_b)};
 `;
 
 export const Body = styled.span`

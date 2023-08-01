@@ -39,8 +39,7 @@ export const AdminModal: FC<ModalHandlerProps> = ({ modalHandler }) => {
 
   const {
     notificationForm,
-    isValidNotificationForm, //
-    notificationInfoLoading,
+    notificationInfoLoading, //
     getNotificationFormAction,
   } = useNotificationForm();
 
@@ -68,7 +67,8 @@ export const AdminModal: FC<ModalHandlerProps> = ({ modalHandler }) => {
 
   const isValidForm = () => {
     if (tapValue === 'GROUP') return isValidGroupForm(groupForm);
-    if (tapValue === 'ALARM') return isValidNotificationForm;
+    return true;
+    // if (tapValue === 'ALARM') return isValidNotificationForm;
   };
 
   const isLoading = tapValue === 'GROUP' ? groupInfoLoading : notificationInfoLoading;

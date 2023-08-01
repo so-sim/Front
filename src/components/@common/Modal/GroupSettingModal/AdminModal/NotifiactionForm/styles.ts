@@ -11,10 +11,13 @@ export const NotificationContainer = styled.div`
 `;
 
 export const Notice = styled.div`
+  display: flex;
+  gap: 4px;
+  align-content: flex-end;
   padding: 8px 0;
   margin: 0 0 0 8px;
   text-align: start;
-  color: ${({ theme }) => theme.colors.secondary_600};
+  color: ${({ theme }) => theme.colors.secondary_900};
   ${({ theme }) => theme.font.body_01}
 `;
 
@@ -95,4 +98,10 @@ export const BodySubTitle = styled.div`
 export const Body2SubTitle = styled.div`
   color: ${({ theme }) => theme.colors.secondary_900};
   ${({ theme }) => theme.font.body_02};
+`;
+
+export const ErrorText = styled.div`
+  margin-top: 2px;
+  color: ${({ theme }) => theme.colors.system_red_200};
+  ${({ theme }) => theme.font.caption}
 `;

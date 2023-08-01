@@ -4,7 +4,7 @@ import * as Style from './styles';
 import DaySelector from './DaySelector';
 import MonthForm from './MonthForm';
 import CommonForm from './CommonForm';
-import { NotificationFormAction } from '@/hooks/admin/useNotificationForm';
+import { NotificationHook } from '@/hooks/admin/useNotificationForm';
 
 const PERIOD_TYPE_LIST: { label: string; value: NotificationSettingType }[] = [
   { label: '매달', value: 'M' },
@@ -14,16 +14,14 @@ const PERIOD_TYPE_LIST: { label: string; value: NotificationSettingType }[] = [
 
 export type DuplicateValues = 'daysOfWeek' | 'ordinalNumbers';
 
-type Props = {
-  notificationForm: NotificationInfo;
-  getNotificationFormAction: () => NotificationFormAction;
-};
+type Props = Pick<NotificationHook, 'notificationForm' | 'getNotificationFormAction'>;
 
 const NotificationForm = ({ notificationForm, getNotificationFormAction }: Props) => {
   const {
     isSamePeriodType, //
     handleNotificationForm,
     handleDuplicateNotificationForm,
+    isErrorField,
   } = getNotificationFormAction();
 
   return (
@@ -62,6 +60,7 @@ const NotificationForm = ({ notificationForm, getNotificationFormAction }: Props
         {notificationForm.settingType === 'M' && (
           <MonthForm
             notificationForm={notificationForm} //
+            isErrorField={isErrorField}
             handleNotificationForm={handleNotificationForm}
             handleDuplicateValues={handleDuplicateNotificationForm}
           />
@@ -69,7 +68,10 @@ const NotificationForm = ({ notificationForm, getNotificationFormAction }: Props
         {/* 매주 */}
         {notificationForm.settingType === 'W' && (
           <>
-            <Style.Notice>요일을 선택해주세요.</Style.Notice>
+            <Style.Notice>
+              <div>요일선택</div>
+              {isErrorField('daysOfWeek') && <Style.ErrorText>내용을 선택해주세요.</Style.ErrorText>}
+            </Style.Notice>
             <DaySelector
               notificationForm={notificationForm} //
               handleDuplicateValues={handleDuplicateNotificationForm}
@@ -78,6 +80,7 @@ const NotificationForm = ({ notificationForm, getNotificationFormAction }: Props
         )}
         {/* 여기는 공통부분 */}
         <CommonForm
+          isErrorField={isErrorField}
           notificationForm={notificationForm} //
           handleNotificationForm={handleNotificationForm}
         />

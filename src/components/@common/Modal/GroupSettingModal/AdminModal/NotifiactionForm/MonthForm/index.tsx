@@ -6,8 +6,9 @@ import DaySelector from '../DaySelector';
 
 type Props<T, V> = {
   notificationForm: NotificationInfo;
-  handleNotificationForm: <T extends keyof NotificationInfo>(type: T, value: NotificationInfo[T]) => void;
+  isErrorField: (field: keyof NotificationInfo) => boolean;
   handleDuplicateValues: <T extends DuplicateValues, V>(type: T, value: V) => void;
+  handleNotificationForm: <T extends keyof NotificationInfo>(type: T, value: NotificationInfo[T]) => void;
 };
 
 const ORDINARY_LIST = [
@@ -19,7 +20,7 @@ const ORDINARY_LIST = [
   { label: '마지막', value: 6 },
 ];
 
-const MonthForm = <T extends NotificationInfo, V extends T[DuplicateValues]>({ notificationForm, handleNotificationForm, handleDuplicateValues }: Props<T, V>) => {
+const MonthForm = <T extends NotificationInfo, V extends T[DuplicateValues]>({ notificationForm, handleNotificationForm, handleDuplicateValues, isErrorField }: Props<T, V>) => {
   const createFixedCalendar = () => {
     const result = Array.from({ length: 5 }, () => [] as (number | null)[]);
     for (let i = 0; i < 35; i++) {
@@ -76,7 +77,10 @@ const MonthForm = <T extends NotificationInfo, V extends T[DuplicateValues]>({ n
       {isSelectDayType && (
         <div>
           <Style.Notice>몇 번째 요일인가요?</Style.Notice>
-          <Style.BodyTitle>몇 번째</Style.BodyTitle>
+          <Style.Notice>
+            <div>몇 번째</div>
+            {isErrorField('ordinalNumbers') && <Style.ErrorText>내용을 선택해주세요.</Style.ErrorText>}
+          </Style.Notice>
           <Style.OrdinalNumberConatiner>
             {ORDINARY_LIST.map(({ label, value }) => {
               return (
@@ -90,7 +94,10 @@ const MonthForm = <T extends NotificationInfo, V extends T[DuplicateValues]>({ n
               );
             })}
           </Style.OrdinalNumberConatiner>
-          <Style.BodyTitle>무슨 요일</Style.BodyTitle>
+          <Style.Notice>
+            <div>요일선택</div>
+            {isErrorField('daysOfWeek') && <Style.ErrorText>내용을 선택해주세요.</Style.ErrorText>}
+          </Style.Notice>
           <DaySelector
             notificationForm={notificationForm} //
             handleDuplicateValues={handleDuplicateValues}
