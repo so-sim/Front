@@ -6,15 +6,13 @@ import * as Style from './styles';
 import { ModalHandlerProps } from '../../CreateGroupModal';
 import { useGroupDetail, useUpdateGroup } from '@/queries/Group';
 import { useParams } from 'react-router-dom';
-import { GroupColor, NotificationInfo } from '@/types/group';
-import { useGetMyNikname } from '@/queries/Group/useGetMyNickname';
+import { GroupColor } from '@/types/group';
 import { GA } from '@/constants/GA';
 import { Tab } from '@/components/@common/Tab';
 import GroupForm from './GroupForm';
-import { useNotificationInfo, useUpdateNotificationInfo } from '@/queries/Group';
 import NotificationForm from './NotifiactionForm';
-import dayjs from 'dayjs';
-import { isValidGroupForm, isValidNotificationForm } from './utils/validation';
+import { isValidGroupForm } from './utils/validation';
+import useNotificationForm from '@/hooks/admin/useNotificationForm';
 
 const TAB_LIST = [
   { label: '사용자 설정', value: 'GROUP' },
@@ -39,17 +37,20 @@ export const AdminModal: FC<ModalHandlerProps> = ({ modalHandler }) => {
     coverColor: '#f89a65',
   });
 
-  const [notificationForm, setNotificationForm] = useState<NotificationInfo>({
-    enableNotification: true,
-    settingType: 'M',
-    repeatCycle: 1,
-    startDate: dayjs().format('YYYY.MM.DD'),
-    sendTime: '19:00',
-    monthSettingType: 'SIMPLE_DATE',
-    sendDay: dayjs().date(),
-    ordinalNumbers: [],
-    daysOfWeek: [],
-  });
+  const {
+    notificationForm,
+    isValidNotificationForm, //
+    notificationInfoLoading,
+    getNotificationFormAction,
+  } = useNotificationForm();
+
+  const { initNotificationForm, submitNotificationForm } = getNotificationFormAction();
+
+  useEffect(() => {
+    if (tapValue === 'GROUP') {
+      initNotificationForm();
+    }
+  }, [tapValue]);
 
   const [isError, setError] = useError({
     nickname: '',
@@ -57,19 +58,17 @@ export const AdminModal: FC<ModalHandlerProps> = ({ modalHandler }) => {
   });
 
   const { mutate: updateGroupMutate, isLoading: groupInfoLoading } = useUpdateGroup({ setError, modalHandler });
-  const { mutate: updateNotificationInfo, isLoading: notificationInfoLoading } = useUpdateNotificationInfo(Number(groupId));
-  const { data: notificationInfo } = useNotificationInfo(Number(groupId));
 
   const { data: groupData } = useGroupDetail(Number(groupId));
 
   const handleSubmitForm = () => {
     if (tapValue === 'GROUP') return updateGroupMutate({ groupId: Number(groupId), ...groupForm });
-    if (tapValue === 'ALARM') return updateNotificationInfo({ notificationInfo: notificationForm });
+    if (tapValue === 'ALARM') return submitNotificationForm();
   };
 
   const isValidForm = () => {
     if (tapValue === 'GROUP') return isValidGroupForm(groupForm);
-    if (tapValue === 'ALARM') return isValidNotificationForm(notificationForm);
+    if (tapValue === 'ALARM') return isValidNotificationForm;
   };
 
   const isLoading = tapValue === 'GROUP' ? groupInfoLoading : notificationInfoLoading;
@@ -81,13 +80,6 @@ export const AdminModal: FC<ModalHandlerProps> = ({ modalHandler }) => {
     setGroupForm({ title, coverColor, type, nickname: adminNickname });
   }, [groupData]);
 
-  useEffect(() => {
-    if (notificationInfo?.content !== null) {
-      setNotificationForm((prev) => ({ ...prev, ...notificationInfo?.content }));
-    }
-  }, [notificationInfo]);
-
-  console.log(groupData);
   return (
     <Modal.Frame onClick={modalHandler} width="492px">
       <Modal.Header align="start" onClick={modalHandler} margin="16px">
@@ -120,7 +112,7 @@ export const AdminModal: FC<ModalHandlerProps> = ({ modalHandler }) => {
           ) : (
             <NotificationForm //
               notificationForm={notificationForm}
-              setNotificationForm={setNotificationForm}
+              getNotificationFormAction={getNotificationFormAction}
             />
           )}
         </Style.Layout>
