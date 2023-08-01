@@ -62,6 +62,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@testing-library/react", "virtual:2012bb92bd3c02c31c208dd19c7a30b32c4e004bc22c4ac67376a0b485daeffa61f9ac1dd14f7ec2e6d9f117f17b40d67db4154a3f2abfb8e2cf15cea16c14d6#npm:14.0.0"],\
             ["@testing-library/user-event", "virtual:2012bb92bd3c02c31c208dd19c7a30b32c4e004bc22c4ac67376a0b485daeffa61f9ac1dd14f7ec2e6d9f117f17b40d67db4154a3f2abfb8e2cf15cea16c14d6#npm:14.4.3"],\
             ["@types/dotenv-webpack", "npm:7.0.3"],\
+            ["@types/event-source-polyfill", "npm:1.0.1"],\
             ["@types/fork-ts-checker-webpack-plugin", "npm:0.4.5"],\
             ["@types/jest", "npm:29.4.0"],\
             ["@types/node", "npm:18.11.18"],\
@@ -89,6 +90,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["eslint-plugin-prettier", "virtual:2012bb92bd3c02c31c208dd19c7a30b32c4e004bc22c4ac67376a0b485daeffa61f9ac1dd14f7ec2e6d9f117f17b40d67db4154a3f2abfb8e2cf15cea16c14d6#npm:4.2.1"],\
             ["eslint-plugin-react", "virtual:2012bb92bd3c02c31c208dd19c7a30b32c4e004bc22c4ac67376a0b485daeffa61f9ac1dd14f7ec2e6d9f117f17b40d67db4154a3f2abfb8e2cf15cea16c14d6#npm:7.32.2"],\
             ["eslint-plugin-react-hooks", "virtual:2012bb92bd3c02c31c208dd19c7a30b32c4e004bc22c4ac67376a0b485daeffa61f9ac1dd14f7ec2e6d9f117f17b40d67db4154a3f2abfb8e2cf15cea16c14d6#npm:4.6.0"],\
+            ["event-source-polyfill", "npm:1.0.31"],\
             ["file-loader", "virtual:2012bb92bd3c02c31c208dd19c7a30b32c4e004bc22c4ac67376a0b485daeffa61f9ac1dd14f7ec2e6d9f117f17b40d67db4154a3f2abfb8e2cf15cea16c14d6#npm:6.2.0"],\
             ["fork-ts-checker-webpack-plugin", "virtual:2012bb92bd3c02c31c208dd19c7a30b32c4e004bc22c4ac67376a0b485daeffa61f9ac1dd14f7ec2e6d9f117f17b40d67db4154a3f2abfb8e2cf15cea16c14d6#npm:7.3.0"],\
             ["global", "npm:4.4.0"],\
@@ -9201,6 +9203,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD"\
         }]\
       ]],\
+      ["@types/event-source-polyfill", [\
+        ["npm:1.0.1", {\
+          "packageLocation": "./.yarn/cache/@types-event-source-polyfill-npm-1.0.1-3f38d3704d-37f3ccc40e.zip/node_modules/@types/event-source-polyfill/",\
+          "packageDependencies": [\
+            ["@types/event-source-polyfill", "npm:1.0.1"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
       ["@types/express", [\
         ["npm:4.17.16", {\
           "packageLocation": "./.yarn/cache/@types-express-npm-4.17.16-8fb62e745c-43f3ed2cea.zip/node_modules/@types/express/",\
@@ -15431,6 +15442,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageDependencies": [\
             ["event-loop-spinner", "npm:2.2.0"],\
             ["tslib", "npm:2.5.0"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["event-source-polyfill", [\
+        ["npm:1.0.31", {\
+          "packageLocation": "./.yarn/cache/event-source-polyfill-npm-1.0.31-25a5668f35-973f226404.zip/node_modules/event-source-polyfill/",\
+          "packageDependencies": [\
+            ["event-source-polyfill", "npm:1.0.31"]\
           ],\
           "linkType": "HARD"\
         }]\
@@ -24876,6 +24896,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@testing-library/react", "virtual:2012bb92bd3c02c31c208dd19c7a30b32c4e004bc22c4ac67376a0b485daeffa61f9ac1dd14f7ec2e6d9f117f17b40d67db4154a3f2abfb8e2cf15cea16c14d6#npm:14.0.0"],\
             ["@testing-library/user-event", "virtual:2012bb92bd3c02c31c208dd19c7a30b32c4e004bc22c4ac67376a0b485daeffa61f9ac1dd14f7ec2e6d9f117f17b40d67db4154a3f2abfb8e2cf15cea16c14d6#npm:14.4.3"],\
             ["@types/dotenv-webpack", "npm:7.0.3"],\
+            ["@types/event-source-polyfill", "npm:1.0.1"],\
             ["@types/fork-ts-checker-webpack-plugin", "npm:0.4.5"],\
             ["@types/jest", "npm:29.4.0"],\
             ["@types/node", "npm:18.11.18"],\
@@ -24903,6 +24924,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["eslint-plugin-prettier", "virtual:2012bb92bd3c02c31c208dd19c7a30b32c4e004bc22c4ac67376a0b485daeffa61f9ac1dd14f7ec2e6d9f117f17b40d67db4154a3f2abfb8e2cf15cea16c14d6#npm:4.2.1"],\
             ["eslint-plugin-react", "virtual:2012bb92bd3c02c31c208dd19c7a30b32c4e004bc22c4ac67376a0b485daeffa61f9ac1dd14f7ec2e6d9f117f17b40d67db4154a3f2abfb8e2cf15cea16c14d6#npm:7.32.2"],\
             ["eslint-plugin-react-hooks", "virtual:2012bb92bd3c02c31c208dd19c7a30b32c4e004bc22c4ac67376a0b485daeffa61f9ac1dd14f7ec2e6d9f117f17b40d67db4154a3f2abfb8e2cf15cea16c14d6#npm:4.6.0"],\
+            ["event-source-polyfill", "npm:1.0.31"],\
             ["file-loader", "virtual:2012bb92bd3c02c31c208dd19c7a30b32c4e004bc22c4ac67376a0b485daeffa61f9ac1dd14f7ec2e6d9f117f17b40d67db4154a3f2abfb8e2cf15cea16c14d6#npm:6.2.0"],\
             ["fork-ts-checker-webpack-plugin", "virtual:2012bb92bd3c02c31c208dd19c7a30b32c4e004bc22c4ac67376a0b485daeffa61f9ac1dd14f7ec2e6d9f117f17b40d67db4154a3f2abfb8e2cf15cea16c14d6#npm:7.3.0"],\
             ["global", "npm:4.4.0"],\

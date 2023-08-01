@@ -2,9 +2,29 @@ import { useEffect } from 'react';
 import { Header, Banner, GroupSection, Footer } from '@/components/Home';
 import * as Style from './styles';
 import useRecentlyVisitedGroup from '@/hooks/useRecentlyVisitedGroup';
+import { EventSourcePolyfill, NativeEventSource } from 'event-source-polyfill';
+import { getAccessToken } from '@/utils/acceessToken';
 
 const Home = () => {
   const { isExist, navigateToSavedGroup } = useRecentlyVisitedGroup();
+
+  useEffect(() => {
+    const EventSource = EventSourcePolyfill || NativeEventSource;
+    const SSE = new EventSource(`${process.env.REACT_APP_SERVER_URL}/api/subscribe`, {
+      headers: {
+        Authorization: `Bearer ${getAccessToken()}`,
+      },
+      withCredentials: true,
+    });
+
+    SSE.addEventListener('subscribe', (e) => {
+      console.log('subscribe: ', e);
+    });
+
+    SSE.addEventListener('notification', (e) => {
+      console.log('notification: ', e);
+    });
+  }, []);
 
   useEffect(() => {
     if (isExist) navigateToSavedGroup();
