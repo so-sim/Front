@@ -1,7 +1,7 @@
 import { useNotificationInfo, useUpdateNotificationInfo } from '@/queries/Group';
 import { NotificationInfo, NotificationSettingType } from '@/types/group';
 import dayjs from 'dayjs';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import useForm from '../shared/useForm';
 
@@ -25,12 +25,14 @@ export type NotificationFormAction<T = NotificationInfo> = {
   handleNotificationForm: (type: keyof T, value: T[keyof T]) => void;
   handleDuplicateNotificationForm: <D extends DuplicateValues, V>(type: D, value: V) => void;
   isSamePeriodType: (type: NotificationSettingType) => boolean;
+  isErrorField: (field: keyof T) => boolean;
 };
 
-type NotificationHook = {
+export type NotificationHook = {
   notificationForm: NotificationInfo;
   isValidNotificationForm: boolean;
   notificationInfoLoading: boolean;
+  notificationErrorList: Array<keyof NotificationInfo>;
   getNotificationFormAction: () => NotificationFormAction;
 };
 
@@ -41,10 +43,11 @@ const useNotificationForm = (): NotificationHook => {
   const { mutate: updateNotificationInfo, isLoading } = useUpdateNotificationInfo(Number(groupId));
 
   const { form, isValid, setForm } = useForm(initialValue, isValidNotificationForm);
+  const [errorList, setErrorList] = useState<Array<keyof NotificationInfo>>([]);
 
   const submitForm = () => {
     if (isLoading) return;
-    updateNotificationInfo({ notificationInfo: form });
+    if (errorList.length === 0) updateNotificationInfo({ notificationInfo: form });
   };
 
   const initForm = () => {
@@ -87,7 +90,12 @@ const useNotificationForm = (): NotificationHook => {
       handleNotificationForm: handleForm,
       handleDuplicateNotificationForm: handleDuplicateForm,
       isSamePeriodType: isSameType,
+      isErrorField,
     };
+  };
+
+  const isErrorField = (field: keyof NotificationInfo) => {
+    return errorList.includes(field);
   };
 
   useEffect(() => {
@@ -97,6 +105,10 @@ const useNotificationForm = (): NotificationHook => {
   }, [notificationInfo]);
 
   useEffect(() => {
+    setErrorList(getErrorFieldList(form));
+  }, [form]);
+
+  useEffect(() => {
     initFormWithoutSettingType();
   }, [form.settingType]);
 
@@ -104,11 +116,44 @@ const useNotificationForm = (): NotificationHook => {
     notificationForm: form,
     isValidNotificationForm: isValid,
     notificationInfoLoading: isLoading,
+    notificationErrorList: errorList,
     getNotificationFormAction: getFormAction,
   };
 };
 
 export default useNotificationForm;
+
+export const getErrorFieldList = (notificationForm: NotificationInfo): Array<keyof NotificationInfo> => {
+  const {
+    repeatCycle,
+    startDate,
+    settingType,
+    monthSettingType,
+    ordinalNumbers, //
+    daysOfWeek,
+  } = notificationForm;
+  const result: Array<keyof NotificationInfo> = [];
+
+  if (repeatCycle < 1 || repeatCycle > 100) result.push('repeatCycle');
+  if (!dayjs(startDate).isValid() || startDate.length < 10) result.push('startDate');
+
+  if (settingType === 'M' && monthSettingType === 'WEEK') {
+    if (!ordinalNumbers || !ordinalNumbers?.length) {
+      result.push('ordinalNumbers');
+    }
+    if (!daysOfWeek || !daysOfWeek?.length) {
+      result.push('daysOfWeek');
+    }
+  }
+
+  if (settingType === 'W') {
+    if (!daysOfWeek || !daysOfWeek?.length) {
+      result.push('daysOfWeek');
+    }
+  }
+
+  return result;
+};
 
 export const isValidNotificationForm = (notificationForm: NotificationInfo) => {
   const {
