@@ -21,7 +21,7 @@ export type DuplicateValues = 'daysOfWeek' | 'ordinalNumbers';
 
 export type NotificationFormAction<T = NotificationInfo> = {
   initNotificationForm: VoidFunction;
-  submitNotificationForm: VoidFunction;
+  submitNotificationForm: (onSuccess?: VoidFunction) => void;
   handleNotificationForm: (type: keyof T, value: T[keyof T]) => void;
   handleDuplicateNotificationForm: <D extends DuplicateValues, V>(type: D, value: V) => void;
   isSamePeriodType: (type: NotificationSettingType) => boolean;
@@ -45,9 +45,9 @@ const useNotificationForm = (): NotificationHook => {
   const { form, isValid, setForm } = useForm(initialValue, isValidNotificationForm);
   const [errorList, setErrorList] = useState<Array<keyof NotificationInfo>>([]);
 
-  const submitForm = () => {
+  const submitForm = (onSuccess?: VoidFunction) => {
     if (isLoading) return;
-    if (errorList.length === 0) updateNotificationInfo({ notificationInfo: form });
+    if (errorList.length === 0) updateNotificationInfo({ notificationInfo: form }, { onSuccess });
   };
 
   const initForm = () => {

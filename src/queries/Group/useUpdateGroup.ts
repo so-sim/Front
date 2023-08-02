@@ -7,11 +7,10 @@ import { AxiosError } from 'axios';
 import { GroupDetail, GroupListWithIndex, GroupNickname, ParticipantList } from '@/types/group';
 
 interface UseUpdateGroup {
-  modalHandler: () => void;
   setError: <P extends 'nickname'>(target: P, message: string) => string;
 }
 
-export const useUpdateGroup = ({ modalHandler, setError }: UseUpdateGroup) => {
+export const useUpdateGroup = ({ setError }: UseUpdateGroup) => {
   const queryClient = useQueryClient();
   return useMutation(updateGroup, {
     onMutate: async ({ groupId, title, nickname }) => {
@@ -69,7 +68,6 @@ export const useUpdateGroup = ({ modalHandler, setError }: UseUpdateGroup) => {
     },
 
     onSuccess: () => {
-      modalHandler();
       ToastPopUp({ type: 'success', message: TOAST_SUCCESS.UPDATE_GROUP });
     },
     onError: (error, value, context) => {
