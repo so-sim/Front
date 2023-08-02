@@ -1,71 +1,53 @@
 import { DropBox, Input, Label } from '@/components/@common';
 import { GroupColorList } from '@/components/@common/GroupColorList';
 import { DROPDOWN_LIST } from '@/constants/Group';
+import { GroupFormAction } from '@/hooks/admin/useGroupForm';
 import useConfirmModal from '@/hooks/useConfirmModal';
-import { useDeleteGroup, useGroupDetail, useWithdrawalGroup } from '@/queries/Group';
-import React, { Dispatch, SetStateAction } from 'react';
+import { useGroupDetail } from '@/queries/Group';
+import { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { GroupFormData } from '..';
 import * as Style from '../styles';
 
 type Props = {
   groupForm: GroupFormData;
-  setGroupForm: Dispatch<SetStateAction<GroupFormData>>;
   isError: { nickname: string; groupName: string };
   setError: (target: 'nickname' | 'groupName', message: string) => string;
+  getGroupFormAction: () => GroupFormAction;
 };
 
-const GroupForm = ({ groupForm, setGroupForm, isError, setError }: Props) => {
-  const { openConfirmModal, closeConfirmModal } = useConfirmModal();
+const GroupForm = ({ groupForm, isError, setError, getGroupFormAction }: Props) => {
   const { groupId } = useParams();
-
+  const { openConfirmModal, closeConfirmModal } = useConfirmModal();
+  const { handleGroupFormData, hasUser, deleteGroup, withdrwalGroup } = getGroupFormAction();
   const { data: groupData } = useGroupDetail(Number(groupId));
 
-  const handleGroupFormData = <K extends keyof GroupFormData>(type: K, value: GroupFormData[K]) => {
-    setGroupForm((prev) => ({ ...prev, [type]: value }));
-  };
-
-  const { mutate: withdrawalGroupMutate } = useWithdrawalGroup();
-  const { mutate: deleteGroup } = useDeleteGroup();
-
-  const hasMoreUser = groupData?.content.size && groupData?.content.size > 1;
-  const hasNoUser = groupData?.content.size && groupData?.content.size <= 1;
-
-  const onDeleteGroup = () => {
-    deleteGroup({ groupId: Number(groupId) });
-  };
-
-  const withdrwalGroup = () => {
-    const id = Number(groupId);
-    withdrawalGroupMutate({ groupId: id });
-  };
-
   const handleGroupDeleteModal = () => {
-    if (hasMoreUser) {
+    if (hasUser()) {
       openConfirmModal({
         type: 'GROUP_DELETE_HAS_USER',
         confirm: closeConfirmModal,
       });
     }
 
-    if (hasNoUser) {
+    if (!hasUser()) {
       openConfirmModal({
         type: 'GROUP_DELETE_NO_USER',
-        confirm: onDeleteGroup,
+        confirm: deleteGroup,
         cancel: closeConfirmModal,
       });
     }
   };
 
   const handleGroupWithdrawalModal = () => {
-    if (hasMoreUser) {
+    if (hasUser()) {
       openConfirmModal({
         type: 'GROUP_WITHDRAWAL_ADMIN_HAS_USER',
         confirm: closeConfirmModal,
       });
     }
 
-    if (hasNoUser) {
+    if (!hasUser()) {
       openConfirmModal({
         type: 'GROUP_WITHDRAWAL_ADMIN_NO_USER',
         confirm: withdrwalGroup,
@@ -107,7 +89,10 @@ const GroupForm = ({ groupForm, setGroupForm, isError, setError }: Props) => {
           />
         </Label>
         <Label title="커버 색상" flexDirection="column" margin="0px">
-          <GroupColorList selectedColor={groupForm.coverColor} onChange={(value) => handleGroupFormData('coverColor', value)} />
+          <GroupColorList //
+            selectedColor={groupForm.coverColor}
+            onChange={(value) => handleGroupFormData('coverColor', value)}
+          />
         </Label>
       </div>
       <div style={{ width: '100%' }}>

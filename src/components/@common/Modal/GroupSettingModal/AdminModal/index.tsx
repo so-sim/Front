@@ -1,18 +1,15 @@
 import { FC, useEffect, useState } from 'react';
 import Button from '@/components/@common/Button';
 import Modal from '@/components/@common/Modal';
-import { useError } from '@/utils/validation';
 import * as Style from './styles';
 import { ModalHandlerProps } from '../../CreateGroupModal';
-import { useGroupDetail, useUpdateGroup } from '@/queries/Group';
-import { useParams } from 'react-router-dom';
 import { GroupColor } from '@/types/group';
 import { GA } from '@/constants/GA';
 import { Tab } from '@/components/@common/Tab';
 import GroupForm from './GroupForm';
 import NotificationForm from './NotifiactionForm';
-import { isValidGroupForm } from './utils/validation';
 import useNotificationForm from '@/hooks/admin/useNotificationForm';
+import useGroupForm from '@/hooks/admin/useGroupForm';
 
 const TAB_LIST = [
   { label: '사용자 설정', value: 'GROUP' },
@@ -27,15 +24,18 @@ export type GroupFormData = {
 };
 
 export const AdminModal: FC<ModalHandlerProps> = ({ modalHandler }) => {
-  const { groupId } = useParams();
   const [tapValue, setTapValue] = useState('GROUP');
 
-  const [groupForm, setGroupForm] = useState<GroupFormData>({
-    title: '',
-    nickname: '',
-    type: '',
-    coverColor: '#f89a65',
-  });
+  const {
+    groupForm, //
+    groupInfoLoading,
+    isError,
+    isValidGroupForm,
+    setError,
+    getGroupFormAction,
+  } = useGroupForm();
+
+  const { updateGroupForm } = getGroupFormAction();
 
   const {
     notificationForm,
@@ -51,34 +51,21 @@ export const AdminModal: FC<ModalHandlerProps> = ({ modalHandler }) => {
     }
   }, [tapValue]);
 
-  const [isError, setError] = useError({
-    nickname: '',
-    groupName: '',
-  });
-
-  const { mutate: updateGroupMutate, isLoading: groupInfoLoading } = useUpdateGroup({ setError, modalHandler });
-
-  const { data: groupData } = useGroupDetail(Number(groupId));
-
   const handleSubmitForm = () => {
-    if (tapValue === 'GROUP') return updateGroupMutate({ groupId: Number(groupId), ...groupForm });
-    if (tapValue === 'ALARM') return submitNotificationForm();
+    if (tapValue === 'GROUP') {
+      updateGroupForm(modalHandler);
+    }
+    if (tapValue === 'ALARM') {
+      submitNotificationForm(modalHandler);
+    }
   };
 
   const isValidForm = () => {
-    if (tapValue === 'GROUP') return isValidGroupForm(groupForm);
+    if (tapValue === 'GROUP') return isValidGroupForm;
     return true;
-    // if (tapValue === 'ALARM') return isValidNotificationForm;
   };
 
   const isLoading = tapValue === 'GROUP' ? groupInfoLoading : notificationInfoLoading;
-
-  useEffect(() => {
-    if (!groupData) return;
-
-    const { title, coverColor, type, adminNickname } = groupData.content;
-    setGroupForm({ title, coverColor, type, nickname: adminNickname });
-  }, [groupData]);
 
   return (
     <Modal.Frame onClick={modalHandler} width="492px">
@@ -105,7 +92,7 @@ export const AdminModal: FC<ModalHandlerProps> = ({ modalHandler }) => {
           {tapValue === 'GROUP' ? (
             <GroupForm //
               groupForm={groupForm}
-              setGroupForm={setGroupForm}
+              getGroupFormAction={getGroupFormAction}
               isError={isError}
               setError={setError}
             />
