@@ -21,7 +21,7 @@ export type DuplicateValues = 'daysOfWeek' | 'ordinalNumbers';
 
 export type NotificationFormAction<T = NotificationInfo> = {
   initNotificationForm: VoidFunction;
-  submitNotificationForm: (onSuccess?: VoidFunction) => void;
+  submitNotificationForm: () => Promise<any>;
   handleNotificationForm: (type: keyof T, value: T[keyof T]) => void;
   handleDuplicateNotificationForm: <D extends DuplicateValues, V>(type: D, value: V) => void;
   isSamePeriodType: (type: NotificationSettingType) => boolean;
@@ -40,14 +40,17 @@ const useNotificationForm = (): NotificationHook => {
   const { groupId } = useParams();
 
   const { data: notificationInfo } = useNotificationInfo(Number(groupId));
-  const { mutate: updateNotificationInfo, isLoading } = useUpdateNotificationInfo(Number(groupId));
+  const { mutateAsync: updateNotificationInfo, isLoading } = useUpdateNotificationInfo(Number(groupId));
 
   const { form, isValid, setForm } = useForm(initialValue, isValidNotificationForm);
   const [errorList, setErrorList] = useState<Array<keyof NotificationInfo>>([]);
 
-  const submitForm = (onSuccess?: VoidFunction) => {
-    if (isLoading) return;
-    if (errorList.length === 0) updateNotificationInfo({ notificationInfo: form }, { onSuccess });
+  const submitForm = () => {
+    if (isLoading) throw new Error('로딩중...');
+    if (errorList.length === 0) {
+      return updateNotificationInfo({ notificationInfo: form });
+    }
+    throw new Error('알림 설정 목록을 채워주세요');
   };
 
   const initForm = () => {

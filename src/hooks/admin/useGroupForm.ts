@@ -5,6 +5,8 @@ import { GroupFormData } from '@/components/@common/Modal/GroupSettingModal/Admi
 import { useDeleteGroup, useGroupDetail, useUpdateGroup, useWithdrawalGroup } from '@/queries/Group';
 import { useParams } from 'react-router-dom';
 import { useEffect } from 'react';
+import { ServerResponse } from '@/types/serverResponse';
+import { GroupId } from '@/types/group';
 
 const initialValue: GroupFormData = {
   title: '',
@@ -14,9 +16,9 @@ const initialValue: GroupFormData = {
 };
 
 export type GroupFormAction = {
-  updateGroupForm: (onSuccess?: VoidFunction) => void;
-  deleteGroup: (onSuccess?: VoidFunction) => void;
-  withdrwalGroup: (onSuccess?: VoidFunction) => void;
+  updateGroupForm: () => Promise<ServerResponse<GroupId>>;
+  deleteGroup: () => void;
+  withdrwalGroup: () => void;
   handleGroupFormData: (type: keyof GroupFormData, value: GroupFormData[keyof GroupFormData]) => void;
   hasUser: () => boolean;
 };
@@ -40,7 +42,7 @@ const useGroupForm = (): GroupFormHook => {
   });
 
   const { data: groupData } = useGroupDetail(Number(groupId));
-  const { mutate: updateGroupMutate, isLoading: groupInfoLoading } = useUpdateGroup({ setError });
+  const { mutateAsync: updateGroupMutate, isLoading: groupInfoLoading } = useUpdateGroup({ setError });
   const { mutate: withdrawalGroupMutate } = useWithdrawalGroup();
   const { mutate: deleteGroupMutate } = useDeleteGroup();
 
@@ -55,8 +57,8 @@ const useGroupForm = (): GroupFormHook => {
     return false;
   };
 
-  const updateGroupForm = (onSuccess?: () => void) => {
-    updateGroupMutate({ groupId: Number(groupId), ...form }, { onSuccess });
+  const updateGroupForm = () => {
+    return updateGroupMutate({ groupId: Number(groupId), ...form });
   };
 
   const deleteGroup = () => {

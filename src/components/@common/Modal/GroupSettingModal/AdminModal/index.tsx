@@ -51,12 +51,22 @@ export const AdminModal: FC<ModalHandlerProps> = ({ modalHandler }) => {
     }
   }, [tapValue]);
 
-  const handleSubmitForm = () => {
+  const handleSubmitForm = async () => {
     if (tapValue === 'GROUP') {
-      updateGroupForm(modalHandler);
+      try {
+        await updateGroupForm();
+        modalHandler();
+      } catch (error) {
+        console.error(error);
+      }
     }
     if (tapValue === 'ALARM') {
-      submitNotificationForm(modalHandler);
+      try {
+        await submitNotificationForm();
+        modalHandler();
+      } catch (error) {
+        console.error(error);
+      }
     }
   };
 
