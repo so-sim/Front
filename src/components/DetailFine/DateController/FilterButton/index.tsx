@@ -47,7 +47,13 @@ const FilterButton = ({ btn }: Props) => {
   return (
     <div ref={periodSettingRef}>
       <div ref={dropDownRef}>
-        <Style.FilterButton id={btn.id} isActive={calendarDate.mode === btn.mode} onClick={(e) => handleDateFilterMode(e, btn.mode)}>
+        <Style.FilterButton
+          isFirst={btn.mode === 'month'}
+          isLast={btn.mode === 'custom'}
+          id={btn.id}
+          isActive={calendarDate.mode === btn.mode}
+          onClick={(e) => handleDateFilterMode(e, btn.mode)}
+        >
           <Style.FlexCenter>
             <span>{btn.text}</span>
             {(btn.mode === 'week' || btn.mode === 'custom') && <Style.ArrowIcon>{ARROW.DOWN_SM}</Style.ArrowIcon>}
