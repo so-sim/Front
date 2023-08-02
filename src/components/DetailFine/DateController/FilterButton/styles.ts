@@ -1,7 +1,6 @@
 import styled from '@emotion/styled';
-import { FilterModeTest } from '../hook/useDateFilter';
 
-export const FilterButton = styled.button<{ isActive: boolean }>`
+export const FilterButton = styled.button<{ isActive: boolean; isFirst: boolean; isLast: boolean }>`
   width: 56px;
   height: 32px;
   ${({ theme }) => theme.font.subhead_01}
@@ -11,13 +10,9 @@ export const FilterButton = styled.button<{ isActive: boolean }>`
   &:hover {
     background-color: ${({ theme }) => theme.colors.neutral_200_b};
   }
-  &:first-of-type {
-    border-radius: 10px 0 0 10px;
-  }
-  &:last-of-type {
-    border: none;
-    border-radius: 0 10px 10px 0;
-  }
+
+  ${({ isFirst }) => isFirst && 'border-radius: 10px 0 0 10px'}
+  ${({ isLast }) => isLast && 'border-radius: 0 10px 10px 0'}
 `;
 
 export const FlexCenter = styled.div`
@@ -33,4 +28,11 @@ export const ArrowIcon = styled.span`
 export const DropDownWrapper = styled.div`
   position: relative;
   left: 1px;
+`;
+
+export const FilterWrapper = styled.div`
+  border: 1px solid ${({ theme }) => theme.colors.neutral_400_b};
+  border-radius: 12px;
+  position: relative;
+  white-space: nowrap;
 `;

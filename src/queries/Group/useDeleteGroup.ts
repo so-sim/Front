@@ -17,7 +17,7 @@ export const useDeleteGroup = () => {
       if (previousData) {
         const newData = previousData.pages[0].content.groupList.filter((list) => list.groupId !== groupId);
 
-        queryClient.setQueryData(['groupList'], (data) => ({
+        queryClient.setQueryData(['groupList'], () => ({
           ...previousData,
           pages: newData,
           pageParams: [undefined],

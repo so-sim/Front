@@ -33,7 +33,6 @@ const DateController = ({ setDetailFilter }: Props) => {
   const { groupId } = useParams();
   const { data: group } = useGroupDetail(Number(groupId));
 
-  const dropDownRef = useRef<HTMLDivElement>(null);
   const initialAddModalState = useCheckLocationState();
 
   const [calendarDate, setCalendarDate] = useRecoilState(dateState);
@@ -41,7 +40,6 @@ const DateController = ({ setDetailFilter }: Props) => {
   const [openAddModal, setOpenAddModal] = useState<boolean>(initialAddModalState);
 
   const { getTitle, increaseDate, decreaseDate } = useDateFilter();
-  const { dropDownRef: periodSettingRef, setOpenDrop: setOpenPeriodSettingDrop, openDrop: openPeriodSettingDrop } = useDropDown();
 
   const handleAddModal = () => {
     setOpenAddModal((prev) => !prev);
@@ -73,19 +71,15 @@ const DateController = ({ setDetailFilter }: Props) => {
             <Style.TodayButton onClick={updateToToday} id={GA.TODAY_LIST}>
               오늘
             </Style.TodayButton>
-            <Style.FilterWrapper ref={dropDownRef}>
-              <div ref={periodSettingRef}>
-                {FILTER_BUTTON_LIST.map((filterButton) => (
-                  <FilterButton
-                    key={filterButton.mode}
-                    btn={filterButton}
-                    // 여기를 외부에서 넣어주는 이유는 위에 있는 div ref={periodSettingRef} 이게 없으면
-                    // periodSettingModal이 켜져있는 상태에서 상세 필터 버튼을 누르면 꺼졌다가 다시 켜집니다 (버블링)
-                    openPeriodSettingDrop={openPeriodSettingDrop}
-                    setOpenPeriodSettingDrop={setOpenPeriodSettingDrop}
-                  />
-                ))}
-              </div>
+            <Style.FilterWrapper>
+              {FILTER_BUTTON_LIST.map((filterButton) => (
+                <FilterButton
+                  key={filterButton.mode}
+                  btn={filterButton}
+                  // 여기를 외부에서 넣어주는 이유는 위에 있는 div ref={periodSettingRef} 이게 없으면
+                  // periodSettingModal이 켜져있는 상태에서 상세 필터 버튼을 누르면 꺼졌다가 다시 켜집니다 (버블링)
+                />
+              ))}
             </Style.FilterWrapper>
           </Style.Block>
           <Style.Block>
