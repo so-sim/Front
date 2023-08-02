@@ -12,11 +12,11 @@ export const FilterButton = styled.button<{ isActive: boolean }>`
     background-color: ${({ theme }) => theme.colors.neutral_200_b};
   }
   &:first-of-type {
-    border-radius: 10px 0 0 10px;
+    border-radius: 0;
   }
   &:last-of-type {
     border: none;
-    border-radius: 0 10px 10px 0;
+    border-radius: 0;
   }
 `;
 
@@ -33,4 +33,11 @@ export const ArrowIcon = styled.span`
 export const DropDownWrapper = styled.div`
   position: relative;
   left: 1px;
+`;
+
+export const FilterWrapper = styled.div`
+  border: 1px solid ${({ theme }) => theme.colors.neutral_400_b};
+  border-radius: 12px;
+  position: relative;
+  white-space: nowrap;
 `;
