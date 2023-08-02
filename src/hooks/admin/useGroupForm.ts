@@ -2,7 +2,7 @@ import useForm from '../shared/useForm';
 import { COLORS } from '@/constants/Group';
 import { checkCountChar, useError } from '@/utils/validation';
 import { GroupFormData } from '@/components/@common/Modal/GroupSettingModal/AdminModal';
-import { useDeleteGroup, useGroupDetail, useUpdateGroup, useWithdrawalGroup } from '@/queries/Group';
+import { useCreateGroup, useDeleteGroup, useGroupDetail, useUpdateGroup, useWithdrawalGroup } from '@/queries/Group';
 import { useParams } from 'react-router-dom';
 import { useEffect } from 'react';
 import { ServerResponse } from '@/types/serverResponse';
@@ -16,20 +16,22 @@ const initialValue: GroupFormData = {
 };
 
 export type GroupFormAction = {
+  createGroup: () => Promise<ServerResponse<GroupId>>;
   updateGroupForm: () => Promise<ServerResponse<GroupId>>;
   deleteGroup: () => void;
   withdrwalGroup: () => void;
-  handleGroupFormData: (type: keyof GroupFormData, value: GroupFormData[keyof GroupFormData]) => void;
   hasUser: () => boolean;
+  handleGroupFormData: (type: keyof GroupFormData, value: GroupFormData[keyof GroupFormData]) => void;
 };
 
 export type GroupFormHook = {
   groupForm: GroupFormData;
-  isError: { nickname: string; groupName: string };
-  setError: (target: 'nickname' | 'groupName', message: string) => string;
   groupInfoLoading: boolean;
+  createGroupLoading: boolean;
   isValidGroupForm: boolean;
+  isError: { nickname: string; groupName: string };
   getGroupFormAction: () => GroupFormAction;
+  setError: (target: 'nickname' | 'groupName', message: string) => string;
 };
 
 const useGroupForm = (): GroupFormHook => {
@@ -43,6 +45,8 @@ const useGroupForm = (): GroupFormHook => {
 
   const { data: groupData } = useGroupDetail(Number(groupId));
   const { mutateAsync: updateGroupMutate, isLoading: groupInfoLoading } = useUpdateGroup({ setError });
+  const { mutateAsync: createGroupMutate, isLoading: createGroupLoading } = useCreateGroup();
+
   const { mutate: withdrawalGroupMutate } = useWithdrawalGroup();
   const { mutate: deleteGroupMutate } = useDeleteGroup();
 
@@ -57,6 +61,13 @@ const useGroupForm = (): GroupFormHook => {
     return false;
   };
 
+  const createGroup = () => {
+    if (isValidGroupForm(form)) {
+      return createGroupMutate(form);
+    }
+    throw new Error('올바른 형식이 아닙니다.');
+  };
+
   const updateGroupForm = () => {
     return updateGroupMutate({ groupId: Number(groupId), ...form });
   };
@@ -66,12 +77,12 @@ const useGroupForm = (): GroupFormHook => {
   };
 
   const withdrwalGroup = () => {
-    const id = Number(groupId);
-    withdrawalGroupMutate({ groupId: id });
+    withdrawalGroupMutate({ groupId: Number(groupId) });
   };
 
   const getGroupFormAction = (): GroupFormAction => {
     return {
+      createGroup,
       updateGroupForm,
       deleteGroup,
       withdrwalGroup,
@@ -88,6 +99,7 @@ const useGroupForm = (): GroupFormHook => {
 
   return {
     groupInfoLoading,
+    createGroupLoading,
     groupForm: form,
     isError,
     isValidGroupForm: isValid,
