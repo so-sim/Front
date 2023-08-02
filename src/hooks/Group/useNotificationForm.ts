@@ -3,7 +3,7 @@ import { NotificationInfo, NotificationSettingType } from '@/types/group';
 import dayjs from 'dayjs';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import useForm from '../shared/useForm';
+import useFormState from '../Shared/useFormState';
 
 const initialValue: NotificationInfo = {
   enableNotification: true,
@@ -42,39 +42,39 @@ const useNotificationForm = (): NotificationHook => {
   const { data: notificationInfo } = useNotificationInfo(Number(groupId));
   const { mutateAsync: updateNotificationInfo, isLoading } = useUpdateNotificationInfo(Number(groupId));
 
-  const { form, isValid, setForm } = useForm(initialValue, isValidNotificationForm);
+  const { formState, isValid, setFormState } = useFormState(initialValue, getIsValidNotificationForm);
   const [errorList, setErrorList] = useState<Array<keyof NotificationInfo>>([]);
 
   const submitForm = () => {
     if (isLoading) throw new Error('로딩중...');
     if (errorList.length === 0) {
-      return updateNotificationInfo({ notificationInfo: form });
+      return updateNotificationInfo({ notificationInfo: formState });
     }
     throw new Error('알림 설정 목록을 채워주세요');
   };
 
   const initForm = () => {
     if (notificationInfo?.content !== null) {
-      setForm((prev) => ({ ...prev, ...notificationInfo?.content }));
+      setFormState((prev) => ({ ...prev, ...notificationInfo?.content }));
     } else {
-      setForm(initialValue);
+      setFormState(initialValue);
     }
   };
 
   const initFormWithoutSettingType = () => {
     const { settingType, ...rest } = initialValue;
-    setForm((prev) => ({ ...prev, ...rest }));
+    setFormState((prev) => ({ ...prev, ...rest }));
   };
 
   const handleForm = <T>(type: keyof T, value: T[keyof T]) => {
-    setForm((prev) => ({ ...prev, [type]: value }));
+    setFormState((prev) => ({ ...prev, [type]: value }));
   };
 
   /**
    * 같은 값이 배열에 들어있을 때에는 값을 제거하고, 없다면 추가하는 함수
    */
   const handleDuplicateForm = <T>(type: DuplicateValues, value: T) => {
-    setForm((prev) => {
+    setFormState((prev) => {
       if (!prev[type]) return prev;
       const values = controlDuplicateValues(prev[type] as T[], value);
 
@@ -83,7 +83,7 @@ const useNotificationForm = (): NotificationHook => {
   };
 
   const isSameType = (type: NotificationSettingType) => {
-    return form.settingType === type;
+    return formState.settingType === type;
   };
 
   const getFormAction = () => {
@@ -103,20 +103,20 @@ const useNotificationForm = (): NotificationHook => {
 
   useEffect(() => {
     if (notificationInfo?.content !== null) {
-      setForm((prev) => ({ ...prev, ...notificationInfo?.content }));
+      setFormState((prev) => ({ ...prev, ...notificationInfo?.content }));
     }
   }, [notificationInfo]);
 
   useEffect(() => {
-    setErrorList(getErrorFieldList(form));
-  }, [form]);
+    setErrorList(getErrorFieldList(formState));
+  }, [formState]);
 
   useEffect(() => {
     initFormWithoutSettingType();
-  }, [form.settingType]);
+  }, [formState.settingType]);
 
   return {
-    notificationForm: form,
+    notificationForm: formState,
     isValidNotificationForm: isValid,
     notificationInfoLoading: isLoading,
     notificationErrorList: errorList,
@@ -158,7 +158,7 @@ export const getErrorFieldList = (notificationForm: NotificationInfo): Array<key
   return result;
 };
 
-export const isValidNotificationForm = (notificationForm: NotificationInfo) => {
+export const getIsValidNotificationForm = (notificationForm: NotificationInfo) => {
   const {
     enableNotification,
     settingType,

@@ -8,8 +8,8 @@ import { GA } from '@/constants/GA';
 import { Tab } from '@/components/@common/Tab';
 import GroupForm from './GroupForm';
 import NotificationForm from './NotifiactionForm';
-import useNotificationForm from '@/hooks/admin/useNotificationForm';
-import useGroupForm from '@/hooks/admin/useGroupForm';
+import useNotificationForm from '@/hooks/Group/useNotificationForm';
+import useGroupForm from '@/hooks/Group/useGroupForm';
 
 const TAB_LIST = [
   { label: '사용자 설정', value: 'GROUP' },

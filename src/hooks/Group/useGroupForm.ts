@@ -1,4 +1,4 @@
-import useForm from '../shared/useForm';
+import useFormState from '../Shared/useFormState';
 import { COLORS } from '@/constants/Group';
 import { checkCountChar, useError } from '@/utils/validation';
 import { GroupFormData } from '@/components/@common/Modal/GroupSettingModal/AdminModal';
@@ -37,7 +37,7 @@ export type GroupFormHook = {
 const useGroupForm = (): GroupFormHook => {
   const { groupId } = useParams();
 
-  const { form, isValid, setForm } = useForm<GroupFormData>(initialValue, isValidGroupForm);
+  const { formState, isValid, setFormState } = useFormState<GroupFormData>(initialValue, isValidGroupForm);
   const [isError, setError] = useError({
     nickname: '',
     groupName: '',
@@ -51,7 +51,7 @@ const useGroupForm = (): GroupFormHook => {
   const { mutate: deleteGroupMutate } = useDeleteGroup();
 
   const handleGroupFormData = <K extends keyof GroupFormData>(type: K, value: GroupFormData[K]) => {
-    setForm((prev) => ({ ...prev, [type]: value }));
+    setFormState((prev) => ({ ...prev, [type]: value }));
   };
 
   const hasUser = (): boolean => {
@@ -62,14 +62,14 @@ const useGroupForm = (): GroupFormHook => {
   };
 
   const createGroup = () => {
-    if (isValidGroupForm(form)) {
-      return createGroupMutate(form);
+    if (isValidGroupForm(formState)) {
+      return createGroupMutate(formState);
     }
     throw new Error('올바른 형식이 아닙니다.');
   };
 
   const updateGroupForm = () => {
-    return updateGroupMutate({ groupId: Number(groupId), ...form });
+    return updateGroupMutate({ groupId: Number(groupId), ...formState });
   };
 
   const deleteGroup = () => {
@@ -94,13 +94,13 @@ const useGroupForm = (): GroupFormHook => {
   useEffect(() => {
     if (!groupData) return;
     const { title, coverColor, type, adminNickname } = groupData.content;
-    setForm({ title, coverColor, type, nickname: adminNickname });
+    setFormState({ title, coverColor, type, nickname: adminNickname });
   }, [groupData]);
 
   return {
     groupInfoLoading,
     createGroupLoading,
-    groupForm: form,
+    groupForm: formState,
     isError,
     isValidGroupForm: isValid,
     setError,

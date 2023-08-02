@@ -1,7 +1,7 @@
 import { DropBox, Input, Label } from '@/components/@common';
 import { GroupColorList } from '@/components/@common/GroupColorList';
 import { DROPDOWN_LIST } from '@/constants/Group';
-import { GroupFormAction } from '@/hooks/admin/useGroupForm';
+import { GroupFormAction } from '@/hooks/Group/useGroupForm';
 import useConfirmModal from '@/hooks/useConfirmModal';
 import { useGroupDetail } from '@/queries/Group';
 import { useState } from 'react';

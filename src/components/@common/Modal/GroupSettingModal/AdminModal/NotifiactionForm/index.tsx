@@ -4,7 +4,7 @@ import * as Style from './styles';
 import DaySelector from './DaySelector';
 import MonthForm from './MonthForm';
 import CommonForm from './CommonForm';
-import { NotificationHook } from '@/hooks/admin/useNotificationForm';
+import { NotificationHook } from '@/hooks/Group/useNotificationForm';
 
 const PERIOD_TYPE_LIST: { label: string; value: NotificationSettingType }[] = [
   { label: '매달', value: 'M' },

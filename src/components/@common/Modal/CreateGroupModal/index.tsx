@@ -5,7 +5,7 @@ import Modal from '@/components/@common/Modal';
 import { GroupColorList } from '../../GroupColorList';
 import { Input, Label, DropBox } from '@/components/@common';
 import { DROPDOWN_LIST, PLACEHOLDER } from '@/constants/Group';
-import useGroupForm from '@/hooks/admin/useGroupForm';
+import useGroupForm from '@/hooks/Group/useGroupForm';
 
 export interface ModalHandlerProps {
   modalHandler: () => void;
