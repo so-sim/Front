@@ -7,7 +7,6 @@ export const FilterButton = styled.button<{ isActive: boolean; isFirst: boolean;
   border-right: 1px solid ${({ theme }) => theme.colors.neutral_400_b};
   background-color: ${({ theme, isActive }) => (isActive ? theme.colors.neutral_300_b : '')};
   color: ${({ theme }) => theme.colors.secondary_900};
-  overflow: hidden;
   &:hover {
     background-color: ${({ theme }) => theme.colors.neutral_200_b};
   }
