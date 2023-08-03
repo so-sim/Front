@@ -1,9 +1,9 @@
 import styled from '@emotion/styled';
 import { HEADER_HEIGHT } from '@/constants/Menu';
 
-export const AlarmDetailFrame = styled.div`
+export const AlarmDetailFrame = styled.div<{ $headerHeight: number }>`
   position: absolute;
-  top: ${HEADER_HEIGHT};
+  top: ${({ $headerHeight }) => `${$headerHeight}rem`};
   right: 0;
   bottom: 0;
 
@@ -33,5 +33,7 @@ export const CloseIconWrapper = styled.div`
 `;
 
 export const Main = styled.div`
+  text-align: left;
+
   padding: 1.5rem 1.5rem 0 1.5rem;
 `;

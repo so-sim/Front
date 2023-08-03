@@ -4,9 +4,12 @@ import AlarmList from './AlarmList';
 import * as Style from './styles';
 import AlarmInfo from './AlarmInfo';
 
-const AlarmDetail = () => {
+type Props = {
+  headerHeight: number;
+};
+const AlarmDetail = ({ headerHeight }: Props) => {
   return (
-    <Style.AlarmDetailFrame>
+    <Style.AlarmDetailFrame $headerHeight={headerHeight}>
       <Style.Header>
         <Style.CloseIconWrapper>
           {SYSTEM.CLOSE_LG}
