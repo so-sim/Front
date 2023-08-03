@@ -10,6 +10,11 @@ export const AlarmCardContainer = styled.div`
   border-radius: 0.25rem;
 
   box-shadow: 0px 3px 9px 0px rgba(45, 45, 45, 0.08);
+
+  &:hover {
+    background-color: ${({ theme }) => theme.colors.neutral_200_b};
+    /* opacity: 0.4; */
+  }
 `;
 
 export const Header = styled.div`
