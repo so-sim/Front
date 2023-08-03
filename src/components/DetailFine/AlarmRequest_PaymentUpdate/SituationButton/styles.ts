@@ -11,7 +11,7 @@ export const SituationContainer = styled.div`
   margin-bottom: 24px;
 `;
 
-const SituationButtonStyles = {
+export const SituationButtonStyles = {
   미납: (theme: DefaultTheme) => css`
     color: ${theme.colors.red_400};
     background-color: ${theme.colors.red_200};
