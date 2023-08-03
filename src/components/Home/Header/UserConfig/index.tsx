@@ -4,6 +4,7 @@ import { SYSTEM } from '@/assets/icons/System';
 import { USER } from '@/assets/icons/User';
 import DropDown from '@/components/@common/DropDown';
 import UserConfigModal from '@/components/@common/Modal/UserConfigModal';
+import AlarmComponent from '@/components/Alarm';
 import useConfirmModal from '@/hooks/useConfirmModal';
 import { useEffect, useRef, useState } from 'react';
 import * as Style from './style';
@@ -48,13 +49,16 @@ const UserConfig = () => {
 
   return (
     <>
-      <Style.UserConfig>
-        <Style.UserConfigButton onClick={handleDropDown} ref={dropDownRef} style={{ display: 'flex', alignItems: 'center' }}>
-          {USER.PERSON_MD}
-          {ARROW.SOLID}
-          {showDropDown && <DropDown list={DorpDownList} width={90} setState={setDropDownState} onClose={handleDropDown} top={'32px'} dropDownRef={dropDownRef} />}
-        </Style.UserConfigButton>
-      </Style.UserConfig>
+      <Style.Container>
+        <AlarmComponent />
+        <Style.UserConfig>
+          <Style.UserConfigButton onClick={handleDropDown} ref={dropDownRef} style={{ display: 'flex', alignItems: 'center' }}>
+            {USER.PERSON_MD}
+            {ARROW.SOLID}
+            {showDropDown && <DropDown list={DorpDownList} width={90} setState={setDropDownState} onClose={handleDropDown} top={'32px'} dropDownRef={dropDownRef} />}
+          </Style.UserConfigButton>
+        </Style.UserConfig>
+      </Style.Container>
       {showConfigModal && <UserConfigModal handleModal={handelShowConfigModal} />}
     </>
   );

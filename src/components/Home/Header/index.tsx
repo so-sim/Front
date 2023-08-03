@@ -7,8 +7,6 @@ import { useRecoilValue } from 'recoil';
 import { userState } from '@/store/userState';
 import UserConfig from './UserConfig';
 import { GA } from '@/constants/GA';
-import { ALARM } from '@/assets/icons/Alarm';
-import AlarmComponent from '@/components/Alarm';
 
 const GNBLinkList = [
   { title: '서비스 소개', href: GNB_LINK.SERVICE, id: GA.INTRODUCTION },
@@ -40,9 +38,7 @@ export const Header = () => {
               ))}
             </Style.NavSection>
           </Style.HeaderLeft>
-          <Style.HeaderRight>
-            <AlarmComponent />
-          </Style.HeaderRight>
+          <Style.HeaderRight></Style.HeaderRight>
           <Style.HeaderRight>{user.userId === null ? <Style.Login onClick={loginModalHandler}>로그인/회원가입</Style.Login> : <UserConfig />}</Style.HeaderRight>
         </Style.Wrapper>
       </Style.Header>
