@@ -9,6 +9,7 @@ import Settings from './Settings.svg';
 import Dots from './Dots.svg';
 import PreParing from './PreParing.svg';
 import Search from './Search.svg';
+import Menu from './Menu.svg';
 
 export const SYSTEM = {
   ARTICLE: <Article />,
@@ -26,6 +27,7 @@ export const SYSTEM = {
   SETTING_MD: <Settings width={17} height={17} />,
   SETTING_LG: <Settings width={21} height={21} />,
   DOTS: <Dots />,
+  MENU: <Menu />,
   PREPARING: <PreParing />,
   SEARCH_BLACK: <Search fill="#3C3C3C" width={24} height={24} />,
   SEARCH_GRAY: <Search fill="#9C9C9C" width={24} height={24} />,
