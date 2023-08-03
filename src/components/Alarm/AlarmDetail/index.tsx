@@ -1,5 +1,3 @@
-import styled from '@emotion/styled';
-
 import { SYSTEM } from '@/assets/icons/System';
 import AlarmList from './AlarmList';
 
