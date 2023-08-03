@@ -14,7 +14,7 @@ const AlarmComponent = ({ headerHeight }: Props) => {
   return (
     <>
       <Style.AlarmIconWrapper onClick={() => setShowAlarmDetail((prev) => !prev)}>{ALARM.ALARM}</Style.AlarmIconWrapper>
-      {showAlarmDetail && <AlarmDetail headerHeight={headerHeight} />}
+      {showAlarmDetail && <AlarmDetail headerHeight={headerHeight} setShowAlarmDetail={setShowAlarmDetail} />}
     </>
   );
 };

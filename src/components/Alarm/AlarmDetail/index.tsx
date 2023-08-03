@@ -6,14 +6,15 @@ import AlarmInfo from './AlarmInfo';
 
 type Props = {
   headerHeight: number;
+  setShowAlarmDetail: React.Dispatch<React.SetStateAction<boolean>>;
 };
-const AlarmDetail = ({ headerHeight }: Props) => {
+const AlarmDetail = ({ headerHeight, setShowAlarmDetail }: Props) => {
   return (
     <Style.AlarmDetailFrame $headerHeight={headerHeight}>
       <Style.Header>
-        <Style.CloseIconWrapper>
+        <Style.CloseIconWrapper onClick={() => setShowAlarmDetail((prev) => !prev)}>
           {SYSTEM.CLOSE_LG}
-          <span>닫기</span>
+          <Style.CloseText>닫기</Style.CloseText>
         </Style.CloseIconWrapper>
       </Style.Header>
 

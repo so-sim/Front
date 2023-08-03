@@ -37,3 +37,9 @@ export const Main = styled.div`
 
   padding: 1.5rem 1.5rem 0 1.5rem;
 `;
+
+export const CloseText = styled.span`
+  ${({ theme }) => theme.font.subhead_02}
+
+  color:${({ theme }) => theme.colors.secondary_900}
+`;
