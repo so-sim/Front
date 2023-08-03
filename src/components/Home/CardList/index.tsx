@@ -9,11 +9,13 @@ import { AuthModal } from '@/components/@common/Modal/LoginModal';
 import React from 'react';
 import { GA } from '@/constants/GA';
 import useInfinityGroupList from '@/hooks/Group/useInfinityGroupList';
+import { useNavigate } from 'react-router-dom';
 
 export const CardList = () => {
   const { userId } = useRecoilValue(userState);
   const [showCreateGroupModal, setShowCreateGroupModal] = useState(false);
   const [showLoginModal, setShowLoginModal] = useState(false);
+  const navigate = useNavigate();
 
   const { ref, groups } = useInfinityGroupList();
 
@@ -26,6 +28,10 @@ export const CardList = () => {
     }
   };
 
+  const moveToGroup = (groupId: number) => {
+    navigate(`/group/${groupId}/book`);
+  };
+
   return (
     <>
       <Style.CardList>
@@ -33,7 +39,7 @@ export const CardList = () => {
         {groups?.pages?.map((page, index) => (
           <React.Fragment key={index}>
             {page?.content?.groupList.map((group) => (
-              <GroupCard {...group} key={group.groupId} />
+              <GroupCard {...group} key={group.groupId} onClick={() => moveToGroup(group.groupId)} />
             ))}
           </React.Fragment>
         ))}
