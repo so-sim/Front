@@ -12,3 +12,13 @@ export const getNotificationList = async (page: number, size: number): Promise<S
 
   return data;
 };
+
+export const readAllNotification = async (): Promise<ServerResponse> => {
+  const { data } = await api.patch('/api/notification');
+  return data;
+};
+
+export const readNotification = async (notificationId: number): Promise<ServerResponse> => {
+  const { data } = await api.patch(`/api/notification/${notificationId}`);
+  return data;
+};
