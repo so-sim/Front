@@ -14,7 +14,7 @@ const MobileGroupSection = () => {
   };
 
   const moveToCreateGroup = () => {
-    navigate('/group/create');
+    navigate('/m-home/create-group');
   };
 
   return (
@@ -26,7 +26,12 @@ const MobileGroupSection = () => {
           {groups?.pages?.map((page, index) => (
             <React.Fragment key={index}>
               {page?.content?.groupList.map((group) => (
-                <GroupCard {...group} key={group.groupId} onClick={() => moveToGroup(group.groupId)} size="sm" />
+                <GroupCard //
+                  {...group}
+                  key={group.groupId}
+                  onClick={() => moveToGroup(group.groupId)}
+                  size="sm"
+                />
               ))}
             </React.Fragment>
           ))}

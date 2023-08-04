@@ -5,7 +5,7 @@ export const Card = styled.li<{ size: 'sm' | 'md' }>`
   background-color: ${({ theme }) => theme.colors.secondary_100};
   overflow: hidden;
   cursor: pointer;
-  max-width: 220px;
+  max-width: ${({ size }) => (size === 'sm' ? '196px' : '220px')};
   width: 100%;
   height: ${({ size }) => (size === 'sm' ? '176px' : '200px')};
 `;

@@ -1,5 +1,4 @@
 import React from 'react';
-import MobileHeader from './components/MobileHeader';
 import * as Style from './styles';
 
 type Props = {
@@ -7,12 +6,7 @@ type Props = {
 };
 
 const MobileLayout = ({ children }: Props) => {
-  return (
-    <Style.Layout>
-      <MobileHeader />
-      {children}
-    </Style.Layout>
-  );
+  return <Style.Layout>{children}</Style.Layout>;
 };
 
 export default MobileLayout;
