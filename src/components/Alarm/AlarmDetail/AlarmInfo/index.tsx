@@ -1,4 +1,4 @@
-import CheckedFineList from '@/components/DetailFine/AlarmRequest_PaymentUpdate/CheckedFineList';
+import SingleCheckedFineList from '@/components/DetailFine/AlarmRequest_PaymentUpdate/SingleCheckedFineList';
 import SituationButton from '@/components/DetailFine/AlarmRequest_PaymentUpdate/SituationButton';
 import { alarmInfoState } from '@/store/alarmInfoState';
 import { Situation } from '@/types/event';
@@ -24,7 +24,8 @@ const AlarmInfo = ({}) => {
       <Style.SubTitle>선택된 모든 내역을 ~~ 으로 변경하시겠습니까?</Style.SubTitle>
       <SituationButton situationToChange={situationToChange} setSituationToChange={setSituationToChange} currentSituation={'미납'} />
 
-      {/* <CheckedFineList /> 
+      {/* 
+      <SingleCheckedFineList />
         백엔드 api 형식이 확실히 나오면 컴포넌트를 재사용할 수 있을 거 같다(재사용 가능하도록 변경해야함)
       */}
     </>
