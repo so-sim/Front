@@ -1,9 +1,9 @@
 import styled from '@emotion/styled';
 import { GroupColor as Color } from '@/types/group';
 
-export const GroupColor = styled.div<{ color: Color }>`
+export const GroupColor = styled.div<{ color: Color; size: 'sm' | 'md' }>`
   width: 100%;
-  height: 120px;
+  height: ${({ size }) => (size === 'sm' ? '96px' : '120px')};
   background-color: ${({ color }) => color};
 `;
 

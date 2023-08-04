@@ -9,6 +9,7 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { AxiosError } from 'axios';
 import { TOAST_ERROR } from './constants/Toast';
 import { GlobalConfirmModal } from './components/@common/Modal/ConfirmModal';
+import MobileRouter from './routes/MobileRouter';
 
 const App = () => {
   const queryClient = new QueryClient({
@@ -39,6 +40,7 @@ const App = () => {
       <QueryClientProvider client={queryClient}>
         <ThemeProvider theme={theme}>
           <Router />
+          <MobileRouter />
           <Toast />
           <GlobalConfirmModal />
           <Global styles={globalStyle} />

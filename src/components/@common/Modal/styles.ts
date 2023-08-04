@@ -57,7 +57,6 @@ export const HeaderTitle = styled.span``;
 export const ModalBody = styled.div`
   ${({ theme }) => theme.font.body_02};
   width: 100%;
-  height: 100%;
   text-align: center;
 `;
 

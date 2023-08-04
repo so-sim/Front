@@ -42,7 +42,7 @@ export interface CoverGroupInfo {
   admin: string;
 }
 
-export interface GropuList {
+export interface GroupList {
   groupId: number;
   title: string;
   coverColor: GroupColor;
@@ -52,7 +52,7 @@ export interface GropuList {
 
 export interface GroupListWithIndex {
   hasNext: boolean;
-  groupList: GropuList[];
+  groupList: GroupList[];
 }
 
 export type NotificationSettingType = 'M' | 'W' | 'D';
