@@ -68,7 +68,7 @@ const AlarmRequest_PaymentUpdate = ({ checkDetailFine, setCheckDetailFine }: Pro
 
   const { selectedFine, setSelectedFine } = useSelectedContext('userDetails');
 
-  const { setInitCheckDetailFine } = setCheckDetailFine;
+  const { setInitCheckDetailFine, setToggleCheckDetailFine } = setCheckDetailFine;
 
   const { data: participantData } = useParticipantList(Number(groupId));
 
@@ -166,7 +166,7 @@ const AlarmRequest_PaymentUpdate = ({ checkDetailFine, setCheckDetailFine }: Pro
           {/* List 영역 */}
           <Style.ListContainer>
             {isSingleList(checkDetailFine) ? (
-              <SingleCheckedFineList checkDetailFine={checkDetailFine} setCheckDetailFine={setCheckDetailFine} />
+              <SingleCheckedFineList checkDetailFine={checkDetailFine} setCheckDetailFine={setToggleCheckDetailFine} />
             ) : (
               participantList?.map((nickName) => (
                 <CheckedFineList

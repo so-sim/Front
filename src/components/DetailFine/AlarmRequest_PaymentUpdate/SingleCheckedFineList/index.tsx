@@ -6,12 +6,10 @@ import * as Style from './styles';
 
 type Props = {
   checkDetailFine: SelectedEventInfo_Checked[];
-  setCheckDetailFine: SetCheckDetailFine;
+  setCheckDetailFine: (eventId: string) => void;
 };
 
 const SingleCheckedFineList = ({ checkDetailFine, setCheckDetailFine }: Props) => {
-  const { setToggleCheckDetailFine } = setCheckDetailFine;
-
   return (
     <>
       {checkDetailFine.map((item) => (
@@ -20,7 +18,7 @@ const SingleCheckedFineList = ({ checkDetailFine, setCheckDetailFine }: Props) =
             <CheckboxContainer
               id={String(item.eventId)}
               isChecked={item.checked}
-              onChange={(event: React.MouseEvent<HTMLInputElement>) => setToggleCheckDetailFine(String(item.eventId))}
+              onChange={(event: React.MouseEvent<HTMLInputElement>) => setCheckDetailFine(String(item.eventId))}
             >
               <CheckboxContainer.Checkbox as={DetailListCheckBox} />
             </CheckboxContainer>
