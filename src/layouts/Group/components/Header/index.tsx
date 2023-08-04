@@ -9,6 +9,8 @@ import useConfirmModal from '@/hooks/useConfirmModal';
 import { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import * as Style from './styles';
+import { ALARM } from '@/assets/icons/Alarm';
+import AlarmComponent from '@/components/Alarm';
 
 const DorpDownList = [
   { title: '환경설정', svg: SYSTEM.SETTING_SM },
@@ -55,11 +57,15 @@ const GroupLayoutHeader = () => {
     <>
       <Style.Header>
         <span onClick={() => navigate('/')}>{LOGO.SM}</span>
-        <Style.UserConfigButton onClick={handleDropDown} ref={dropDownRef}>
-          {USER.PERSON_MD}
-          {ARROW.SOLID}
-          {showDropDown && <DropDown list={DorpDownList} width={90} setState={setDropDownState} onClose={handleDropDown} top={'32px'} dropDownRef={dropDownRef} />}
-        </Style.UserConfigButton>
+
+        <Style.UserConfigContainer>
+          <AlarmComponent headerHeight={4.25} />
+          <Style.UserConfigButton onClick={handleDropDown} ref={dropDownRef}>
+            {USER.PERSON_MD}
+            {ARROW.SOLID}
+            {showDropDown && <DropDown list={DorpDownList} width={90} setState={setDropDownState} onClose={handleDropDown} top={'32px'} dropDownRef={dropDownRef} />}
+          </Style.UserConfigButton>
+        </Style.UserConfigContainer>
       </Style.Header>
       {showConfigModal && <UserConfigModal handleModal={handelShowConfigModal} />}
     </>

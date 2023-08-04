@@ -25,3 +25,10 @@ export const UserConfigButton = styled.button`
   align-items: center;
   position: relative;
 `;
+
+export const UserConfigContainer = styled.div`
+  display: flex;
+  align-items: center;
+
+  gap: 2rem;
+`;

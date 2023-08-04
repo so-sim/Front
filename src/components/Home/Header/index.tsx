@@ -38,6 +38,7 @@ export const Header = () => {
               ))}
             </Style.NavSection>
           </Style.HeaderLeft>
+          <Style.HeaderRight></Style.HeaderRight>
           <Style.HeaderRight>{user.userId === null ? <Style.Login onClick={loginModalHandler}>로그인/회원가입</Style.Login> : <UserConfig />}</Style.HeaderRight>
         </Style.Wrapper>
       </Style.Header>

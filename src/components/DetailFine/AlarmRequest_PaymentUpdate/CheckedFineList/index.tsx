@@ -11,7 +11,7 @@ type Props = {
 
 // 팀원 수가 한명일 때로 style을 나누려고 했는데, Alarm에서 들어오는 페이지가 다르다고 첨언을 주셨다.
 
-const ItemList = ({ myName, list, setCheckDetailFine, pageFromAlarm = false }: Props) => {
+const CheckedFineList = ({ myName, list, setCheckDetailFine, pageFromAlarm = false }: Props) => {
   const [toggle, setToggle] = useState(false);
 
   const TotalAmount = list?.reduce((prev, current) => prev + current.amount, 0);
@@ -51,4 +51,4 @@ const ItemList = ({ myName, list, setCheckDetailFine, pageFromAlarm = false }: P
   );
 };
 
-export default ItemList;
+export default CheckedFineList;
