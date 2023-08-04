@@ -14,6 +14,7 @@ import { useRequestNotification } from '@/queries/Notification/useRequestNotifac
 import { useRecoilState } from 'recoil';
 import { initialSideModalState, sideModalState } from '@/store/sideModalState';
 import SituationButton from './SituationButton';
+import SingleCheckedFineList from './SingleCheckedFineList';
 
 type Props = {
   checkDetailFine: SelectedEventInfo_Checked[];
@@ -117,6 +118,16 @@ const AlarmRequest_PaymentUpdate = ({ checkDetailFine, setCheckDetailFine }: Pro
 
   const participantSituation_List = (nickName: string, sortedtList: SelectedEventInfo_Checked[]) => sortedtList?.filter((item) => item.nickname === nickName);
 
+  const TotalAmount = checkDetailFine?.reduce((prev, current) => prev + current.amount, 0);
+
+  const isSingleList = (sortedList: SelectedEventInfo_Checked[]) => {
+    const situationOfCheckDetailFine = sortedList.map(({ nickname }) => nickname);
+
+    const isAllSameSituation = new Set(situationOfCheckDetailFine);
+
+    return isAllSameSituation.size === 1;
+  };
+
   // 해당 로직을 ItemList에서 toggle이 실행되었을 때 해주어도 좋을 것 같다.
 
   const max_Date = (sortedtList: SelectedEventInfo_Checked[]) => sortedtList.at(-1)?.date;
@@ -146,19 +157,26 @@ const AlarmRequest_PaymentUpdate = ({ checkDetailFine, setCheckDetailFine }: Pro
 
           {/* List의 기간 */}
           <Style.DatePeriodContainer>
-            {min_Date(sortedtList)} -{max_Date(sortedtList)}
+            <Style.DatePeriodText>
+              {min_Date(sortedtList)} - {max_Date(sortedtList)}
+            </Style.DatePeriodText>
+            {isSingleList(sortedtList) && <Style.TotalAmount>{TotalAmount} 원</Style.TotalAmount>}
           </Style.DatePeriodContainer>
 
           {/* List 영역 */}
           <Style.ListContainer>
-            {participantList?.map((nickName) => (
-              <CheckedFineList
-                key={nickName}
-                myName={nickName as string}
-                list={participantSituation_List(nickName as string, sortedtList)}
-                setCheckDetailFine={setCheckDetailFine}
-              />
-            ))}
+            {isSingleList(checkDetailFine) ? (
+              <SingleCheckedFineList checkDetailFine={checkDetailFine} setCheckDetailFine={setCheckDetailFine} />
+            ) : (
+              participantList?.map((nickName) => (
+                <CheckedFineList
+                  key={nickName}
+                  myName={nickName as string}
+                  list={participantSituation_List(nickName as string, sortedtList)}
+                  setCheckDetailFine={setCheckDetailFine}
+                />
+              ))
+            )}
           </Style.ListContainer>
         </Style.Main>
         {/* 하위 Button 컴포넌트 */}
