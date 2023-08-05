@@ -7,7 +7,7 @@ import { userState } from '@/store/userState';
 import { setAccesToken } from '@/utils/acceessToken';
 import { AxiosError } from 'axios';
 import { ToastPopUp } from '@/components/@common/Toast';
-import { pushDataLayer } from '@/utils/pushDataLayer';
+import { isMobile } from 'react-device-detect';
 
 export const useSignInQuery = (code: string | null) => {
   const navigate = useNavigate();
@@ -23,8 +23,14 @@ export const useSignInQuery = (code: string | null) => {
         email,
         userId,
       }));
-      // pushDataLayer('login', { user_id: userId });
       ToastPopUp({ type: 'success', message: TOAST_SUCCESS.SIGNIN });
+      if (isMobile) {
+        console.log('hi');
+        navigate('/m-home');
+        // window.location.href = (process.env.REACT_APP_SERVICE_URL as string) + '/m-home';
+        return;
+      }
+
       navigate('/');
     },
     onError: (error) => {

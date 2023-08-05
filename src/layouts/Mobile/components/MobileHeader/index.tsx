@@ -26,7 +26,6 @@ const MobileHeader = ({ left, title, hasAuth }: Props) => {
         {<Style.Title>{title}</Style.Title>}
         {hasAuth ? (
           <>
-            <Style.Login onClick={loginModalHandler}>로그인</Style.Login>
             {user.userId === null ? (
               <Style.Login onClick={loginModalHandler}>로그인</Style.Login> //
             ) : (
