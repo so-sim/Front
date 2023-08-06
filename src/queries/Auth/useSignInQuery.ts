@@ -35,6 +35,10 @@ export const useSignInQuery = (code: string | null) => {
     },
     onError: (error) => {
       if ((error as AxiosError).response?.status === 404) {
+        if (isMobile) {
+          navigate('/m-tos');
+          return;
+        }
         navigate('/tos');
       }
     },
