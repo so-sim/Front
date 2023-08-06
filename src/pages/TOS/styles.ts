@@ -25,6 +25,7 @@ export const TOSContainer = styled.div`
 export const TOSTitle = styled.h1`
   margin-bottom: 12px;
   gap: 8px;
+  ${({ theme }) => theme.font.headline};
 `;
 
 export const TOSList = styled.div`
