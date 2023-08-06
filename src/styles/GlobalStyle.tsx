@@ -43,6 +43,7 @@ const globalStyle = css`
     padding: 0;
   }
   button {
+    color: 2d2d2d;
     border: none;
     background-color: transparent;
     padding: 0;
@@ -70,6 +71,7 @@ const globalStyle = css`
     outline: none;
   }
   a {
+    color: #2d2d2d;
     text-decoration: none;
     color: inherit;
   }
@@ -77,6 +79,7 @@ const globalStyle = css`
     font-style: normal;
   }
   * {
+    color: #2d2d2d;
     box-sizing: border-box;
   }
   iframe {
