@@ -1,6 +1,9 @@
 import MobileCreateGroup from '@/m-pages/MobileCreateGroup';
 import MobileGroupHome from '@/m-pages/MobileGroupHome';
 import MobileHome from '@/m-pages/MobileHome';
+import MobileMemberManagement from '@/m-pages/MobileMemberManagement';
+import MobilePreParing from '@/m-pages/MobilePreParing';
+import PreParing from '@/pages/PreParing';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
 const MobileRouter = () => {
@@ -10,6 +13,8 @@ const MobileRouter = () => {
         <Route path="/m-home" element={<MobileHome />} />
         <Route path="/m-home/create-group" element={<MobileCreateGroup />} />
         <Route path="/m-group/:groupId/home" element={<MobileGroupHome />} />
+        <Route path="/m-group/:groupId/preparing" element={<MobilePreParing />} />
+        <Route path="/m-group/:groupId/member" element={<MobileMemberManagement />} />
       </Routes>
     </BrowserRouter>
   );
