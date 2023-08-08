@@ -79,7 +79,6 @@ const globalStyle = css`
     font-style: normal;
   }
   * {
-    color: #2d2d2d;
     box-sizing: border-box;
   }
   iframe {
