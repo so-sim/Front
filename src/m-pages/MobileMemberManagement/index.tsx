@@ -4,25 +4,19 @@ import { USER } from '@/assets/icons/User';
 import MemberListItem from '@/components/MemberManagement/MemberListItem';
 import { GA } from '@/constants/GA';
 import useMemberManageMent from '@/hooks/Member/useMemberManageMent';
-import MobileLayout from '@/layouts/Mobile';
+
 import MobileHeader from '@/layouts/Mobile/components/MobileHeader';
 import MobileSideBar from '@/layouts/Mobile/components/MobileSideBar';
 import { copyInvitationLink } from '@/utils/copyInvitationLink';
 import { useState } from 'react';
 import * as Style from './styles';
+import MobileLayout from '@/layouts/Mobile/MobileLayout';
 
 const MobileMemberManagement = () => {
-  const [openSideBar, setOpenSideBar] = useState(false);
-
-  const sideBarHandler = () => {
-    setOpenSideBar((prev) => !prev);
-  };
-
   const { groupId, participantList, myNickname, group } = useMemberManageMent();
 
   return (
-    <MobileLayout>
-      <MobileHeader left={{ onClick: sideBarHandler, icon: SYSTEM.MENU }} title={LOGO.XS} hasAuth />
+    <MobileLayout location="GROUP">
       <Style.Container>
         <Style.Title>
           <h2>멤버 관리</h2>
@@ -50,7 +44,6 @@ const MobileMemberManagement = () => {
           }
         })}
       </Style.Container>
-      {openSideBar && <MobileSideBar openSideBar={openSideBar} sideBarHandler={sideBarHandler} />}
     </MobileLayout>
   );
 };
