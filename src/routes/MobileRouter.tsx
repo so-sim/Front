@@ -1,3 +1,4 @@
+import MobileCalendar from '@/m-pages/MobileCalendar';
 import MobileCreateGroup from '@/m-pages/MobileCreateGroup';
 import MobileGroupHome from '@/m-pages/MobileGroupHome';
 import MobileHome from '@/m-pages/MobileHome';
@@ -15,6 +16,7 @@ const MobileRouter = () => {
         <Route path="/m-group/:groupId/home" element={<MobileGroupHome />} />
         <Route path="/m-group/:groupId/preparing" element={<MobilePreParing />} />
         <Route path="/m-group/:groupId/member" element={<MobileMemberManagement />} />
+        <Route path="/m-group/:groupId/calendar" element={<MobileCalendar />} />
       </Routes>
     </BrowserRouter>
   );
