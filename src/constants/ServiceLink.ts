@@ -21,3 +21,15 @@ export const FOOTER_LINK = {
   TERMS: 'https://www.notion.so/10e0ec59f6564133a9efbcf37e0c2c5a?pvs=4',
   PRIVACY: 'https://www.notion.so/e41fced998d24fdda770ea8f7274fb7b?pvs=4',
 };
+
+export type TOS = {
+  id: number;
+  title: string;
+  href: string;
+  required: boolean;
+};
+
+export const TOSList: TOS[] = [
+  { id: 1, title: '개인정보수집 동의', href: TOS_LINK.PRIVACY, required: true },
+  { id: 2, title: '이용약관 동의', href: TOS_LINK.TERMS, required: true },
+];

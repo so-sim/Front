@@ -5,19 +5,19 @@ import { ARROW } from '../../assets/icons/Arrow';
 import { LOGO } from '../../assets/icons/Logo';
 import * as Style from './styles';
 
-const TOS = () => {
+const MobileTOS = () => {
   const {
     checkHandler, //
     allCheckHandler,
-    isCheckedId,
     onSubmit,
+    isCheckedId,
     isAllChecked,
   } = useSignUp();
 
   return (
-    <>
-      <Style.Layout>
-        {LOGO.LG}
+    <Style.Layout>
+      <div style={{ display: 'flex', alignItems: 'center', flexDirection: 'column', marginTop: '62px' }}>
+        {LOGO.SM}
         <Style.TOSContainer>
           <div>
             <Style.TOSTitle>약관 동의</Style.TOSTitle>
@@ -45,20 +45,15 @@ const TOS = () => {
               ))}
             </Style.TOSList>
           </div>
-          <Style.TOSFooter>
-            <Button //
-              height="36px"
-              width="60px"
-              color={isAllChecked ? 'primary' : 'disabled'}
-              onClick={onSubmit}
-            >
-              가입
-            </Button>
-          </Style.TOSFooter>
         </Style.TOSContainer>
-      </Style.Layout>
-    </>
+      </div>
+      <Style.TOSFooter>
+        <Button height="42px" width="100%" color={isAllChecked ? 'primary' : 'disabled'} onClick={onSubmit}>
+          가입
+        </Button>
+      </Style.TOSFooter>
+    </Style.Layout>
   );
 };
 
-export default TOS;
+export default MobileTOS;

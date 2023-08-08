@@ -20,7 +20,7 @@ const MobileHome = () => {
         <div style={{ height: '200px', width: '100%', backgroundColor: '#000000' }} />
         <MobileGroupSection />
       </MobileLayout>
-      {openSideBar && <MobileSideBar openSideBar={openSideBar} sideBarHandler={sideBarHandler} />}
+      {openSideBar && <MobileSideBar openSideBar={openSideBar} sideBarHandler={sideBarHandler} location="HOME" />}
     </>
   );
 };

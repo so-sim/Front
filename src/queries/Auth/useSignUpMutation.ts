@@ -6,6 +6,7 @@ import { userState } from '@/store/userState';
 import { kakaoSignUp } from '@/api/Auth';
 import { TOAST_SUCCESS } from '@/constants/Toast';
 import { ToastPopUp } from '@/components/@common/Toast';
+import { isMobile } from 'react-device-detect';
 
 const useSignUpMutation = () => {
   const navigate = useNavigate();
@@ -20,6 +21,10 @@ const useSignUpMutation = () => {
         userId,
       }));
       ToastPopUp({ type: 'success', message: TOAST_SUCCESS.SIGNIN });
+      if (isMobile) {
+        navigate('/m-home');
+        return;
+      }
       navigate('/');
     },
   });

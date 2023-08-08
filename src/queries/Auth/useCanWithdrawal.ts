@@ -1,5 +1,6 @@
 import { canWithDrawal } from '@/api/User';
 import { useQuery } from '@tanstack/react-query';
+import { isMobile } from 'react-device-detect';
 import { useNavigate } from 'react-router-dom';
 
 interface UseCanWithDrawalProps {
@@ -13,6 +14,10 @@ export const useCanWithdrawl = ({ modalHandler, trigger }: UseCanWithDrawalProps
     enabled: !!trigger,
     retry: 0,
     onSuccess: () => {
+      if (isMobile) {
+        navigate('/m-withdrawal');
+        return;
+      }
       navigate('/withdrawal');
     },
     onError: () => {

@@ -1,8 +1,10 @@
+import { isMobile } from 'react-device-detect';
 import { NavLink } from 'react-router-dom';
 import styled from '@emotion/styled';
 
-export const Layout = styled.div`
-  width: 100px;
+export const Layout = styled.div<{ isMobile: boolean }>`
+  width: ${({ isMobile }) => (isMobile ? '76px' : '100px')};
+  height: ${({ isMobile }) => (isMobile ? 'calc(100vh - 52px)' : 'auto')};
   display: flex;
   flex-direction: column;
   background-color: ${({ theme }) => theme.colors.neutral_200_b};
