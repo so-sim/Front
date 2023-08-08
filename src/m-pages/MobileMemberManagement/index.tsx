@@ -1,19 +1,28 @@
+import { LOGO } from '@/assets/icons/Logo';
 import { SYSTEM } from '@/assets/icons/System';
 import { USER } from '@/assets/icons/User';
 import MemberListItem from '@/components/MemberManagement/MemberListItem';
 import { GA } from '@/constants/GA';
 import useMemberManageMent from '@/hooks/Member/useMemberManageMent';
-import { useGroupDetail, useParticipantList } from '@/queries/Group';
-import { useGetMyNikname } from '@/queries/Group/useGetMyNickname';
+import MobileLayout from '@/layouts/Mobile';
+import MobileHeader from '@/layouts/Mobile/components/MobileHeader';
+import MobileSideBar from '@/layouts/Mobile/components/MobileSideBar';
 import { copyInvitationLink } from '@/utils/copyInvitationLink';
-import { useParams } from 'react-router-dom';
+import { useState } from 'react';
 import * as Style from './styles';
 
-const MemberManagement = () => {
+const MobileMemberManagement = () => {
+  const [openSideBar, setOpenSideBar] = useState(false);
+
+  const sideBarHandler = () => {
+    setOpenSideBar((prev) => !prev);
+  };
+
   const { groupId, participantList, myNickname, group } = useMemberManageMent();
 
   return (
-    <>
+    <MobileLayout>
+      <MobileHeader left={{ onClick: sideBarHandler, icon: SYSTEM.MENU }} title={LOGO.XS} hasAuth />
       <Style.Container>
         <Style.Title>
           <h2>멤버 관리</h2>
@@ -41,8 +50,9 @@ const MemberManagement = () => {
           }
         })}
       </Style.Container>
-    </>
+      {openSideBar && <MobileSideBar openSideBar={openSideBar} sideBarHandler={sideBarHandler} />}
+    </MobileLayout>
   );
 };
 
-export default MemberManagement;
+export default MobileMemberManagement;
