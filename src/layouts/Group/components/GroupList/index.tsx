@@ -1,11 +1,12 @@
 import { CreateGroupModal } from '@/components/@common/Modal/CreateGroupModal';
 import { useGroupList } from '@/queries/Group';
 import React, { useEffect, useState } from 'react';
-import { NavLink, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { SYSTEM } from '../../../../assets/icons/System';
 import * as Stlye from './styles';
 import { useInView } from 'react-intersection-observer';
 import { GA } from '@/constants/GA';
+import { isMobile } from 'react-device-detect';
 
 const GroupList = () => {
   const param = useParams();
@@ -30,7 +31,7 @@ const GroupList = () => {
 
   return (
     <>
-      <Stlye.Layout>
+      <Stlye.Layout isMobile={isMobile}>
         {groups?.pages.map((page, index) => (
           <React.Fragment key={index}>
             {page.content?.groupList.map((group) => (

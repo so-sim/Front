@@ -7,8 +7,8 @@ export const SideBar = styled.div<{ isActive: boolean }>`
   left: ${({ isActive }) => (isActive ? '0' : '-100%')};
   z-index: 100;
   width: 100%;
-  max-width: 300px;
-  background-color: ${({ theme }) => theme.colors.secondary_200};
+  max-width: 336px;
+  background-color: ${({ theme }) => theme.colors.secondary_100};
   @supports (-webkit-touch-callout: none) {
     min-height: -webkit-fill-available;
   }

@@ -1,35 +1,38 @@
 import styled from '@emotion/styled';
 
+type MobileDetect = { isMobile: boolean };
+
 export const Layout = styled.div`
-  padding-top: 124px;
+  padding: 0 24px;
   width: 100%;
-  height: 100%;
+  min-height: 100vh;
   display: flex;
   align-items: center;
   flex-direction: column;
-  margin: auto;
+  justify-content: space-between;
+  @supports (-webkit-touch-callout: none) {
+    min-height: -webkit-fill-available;
+  }
 `;
 
 export const TOSContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  padding: 32px;
+  padding: 24px;
   gap: 4px;
-  width: 476px;
-  height: 414px;
-  margin: auto;
-  margin-top: 50px;
+  width: 312px;
+  margin-top: 32px;
 `;
 
 export const TOSTitle = styled.h1`
-  margin-bottom: 12px;
+  margin-bottom: 0;
   gap: 8px;
-  ${({ theme }) => theme.font.headline};
+  ${({ theme }) => theme.font.subhead_04};
 `;
 
 export const TOSList = styled.div`
-  margin-top: 28px;
+  margin-top: 12px;
   display: flex;
   flex-direction: column;
   width: 100%;
@@ -65,4 +68,5 @@ export const TOSFooter = styled.div`
   width: 100%;
   display: flex;
   justify-content: end;
+  margin-bottom: 24px;
 `;
