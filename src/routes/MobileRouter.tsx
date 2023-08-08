@@ -3,6 +3,7 @@ import MobileGroupHome from '@/m-pages/MobileGroupHome';
 import MobileHome from '@/m-pages/MobileHome';
 import MobileTOS from '@/m-pages/MobileTOS';
 import MobileUserSetting from '@/m-pages/MobileUserSetting';
+import MobileWithdrawal from '@/m-pages/MobileWithdrawal';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
 const MobileRouter = () => {
@@ -14,7 +15,7 @@ const MobileRouter = () => {
         <Route path="/m-group/:groupId/home" element={<MobileGroupHome />} />
         <Route path="/m-tos" element={<MobileTOS />} />
         <Route path="/m-setting" element={<MobileUserSetting />} />
-        <Route path="/m-withdrawal" element={<MobileUserSetting />} />
+        <Route path="/m-withdrawal" element={<MobileWithdrawal />} />
       </Routes>
     </>
   );

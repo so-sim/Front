@@ -7,12 +7,16 @@ import UserConfigModal from '@/components/@common/Modal/UserConfigModal';
 import AlarmComponent from '@/components/Alarm';
 import useConfirmModal from '@/hooks/useConfirmModal';
 import { useEffect, useRef, useState } from 'react';
+import { isMobile } from 'react-device-detect';
+import { useNavigate } from 'react-router-dom';
 import * as Style from './style';
 
 const UserConfig = () => {
   const [dropDownState, setDropDownState] = useState('');
   const [showConfigModal, setShowConfigModal] = useState(false);
   const [showDropDown, setShowDropDown] = useState(false);
+  const navigate = useNavigate();
+
   const { openConfirmModal, closeConfirmModal } = useConfirmModal();
 
   const dropDownRef = useRef<HTMLButtonElement>(null);
@@ -37,7 +41,12 @@ const UserConfig = () => {
   };
 
   useEffect(() => {
-    if (dropDownState === '환경설정') handelShowConfigModal();
+    if (dropDownState === '환경설정') {
+      if (isMobile) {
+        return navigate('/m-setting');
+      }
+      handelShowConfigModal();
+    }
     if (dropDownState === '로그아웃') handleShowLogOutmodal();
     setDropDownState('');
   }, [dropDownState]);
