@@ -46,8 +46,9 @@ const MobileCalendar = () => {
           <Style.WeekWrapper key={index}>
             {week.map((date) => {
               const status = filterCorrectDateStatus(date);
+              // 컴포넌트 분리 및 라우팅 연결 필요
               return (
-                <Style.DateWrapper>
+                <Style.DateWrapper key={index + date.date()}>
                   <Style.DateTitle>{date.date()}</Style.DateTitle>
                   <div>
                     {status && isCurrentMonth(date) && (
@@ -65,6 +66,7 @@ const MobileCalendar = () => {
         ))}
       </Style.CalendarWrapper>
       <Style.AddIconWrapper>{SYSTEM.PLUS_WHITE}</Style.AddIconWrapper>
+      {/* 내역 추가 페이지로 라우팅 */}
     </Style.Container>
   );
 };
