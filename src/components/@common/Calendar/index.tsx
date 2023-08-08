@@ -1,4 +1,6 @@
 import { GA } from '@/constants/GA';
+import useCalendarStatus from '@/hooks/Calendar/useCalendarStatus';
+import useCalendarState from '@/hooks/Calendar/useCalendarState';
 import { useGetMonthStatus } from '@/queries/Detail/useGetMonthStatus';
 import { useGroupDetail } from '@/queries/Group';
 import { dateState } from '@/store/dateState';
@@ -23,56 +25,25 @@ interface CalnedrProps {
 }
 
 const Calendar: FC<CalnedrProps> = ({ cellType }) => {
-  const today = dayjs();
-
-  const [{ baseDate, startDate, endDate, mode }, setDateTestObj] = useRecoilState(dateState);
-  const [showCreateDetailModal, setShowCreateDetailModal] = useState(false);
-  const [calendarDate, setCalendarDate] = useState(baseDate);
-
-  const monthList = createCalendar(dayjs(calendarDate));
   const navigate = useNavigate();
   const { groupId } = useParams();
-
-  const { addMonth, subMonth, dateToFormatting, getMonth, getDate, dateToUnixTime } = handleDate;
-
-  const startDateOfMonth = dateToFormatting(dayjs(calendarDate).startOf('month'));
-  const endDateOfMonth = dateToFormatting(dayjs(calendarDate).endOf('month'));
-
-  const { data: status } = useGetMonthStatus(groupId, startDateOfMonth, endDateOfMonth);
   const { data: group } = useGroupDetail(Number(groupId));
+  const isAdmin = group?.content.isAdmin;
 
-  const filterCorrectDateStatus = (date: Dayjs) => {
-    const hasStatusOfDay = (status?.content.statusOfDay ?? {}).hasOwnProperty(getDate(date));
+  const [showCreateDetailModal, setShowCreateDetailModal] = useState(false);
+  const [{ baseDate, startDate, endDate, mode }, setDateTestObj] = useRecoilState(dateState);
 
-    if (hasStatusOfDay) return status?.content.statusOfDay[getDate(date)];
-  };
+  const { calendarDate, setCalendarDate, increaseMonth, decreaseMonth } = useCalendarState();
+  const { monthList, filterCorrectDateStatus, isCurrentMonth, isToday, isSelectedDate } = useCalendarStatus(calendarDate, groupId);
+
+  const { dateToFormatting, dateToUnixTime } = handleDate;
 
   const handleShowCreateDetailModal = () => {
     setShowCreateDetailModal((prev) => !prev);
   };
 
-  const increaseMonth = () => {
-    setCalendarDate(addMonth(calendarDate));
-  };
-  const decreaseMonth = () => {
-    setCalendarDate(subMonth(calendarDate));
-  };
-
-  const isCurrentMonth = (date: Dayjs) => {
-    return date.month() === getMonth(calendarDate);
-  };
-
-  const isToday = (date: Dayjs) => {
-    return dateToFormatting(date) === dateToFormatting(today);
-  };
-
   const isSelectedPeriod = (date: Dayjs) => {
     return dateToUnixTime(startDate) <= dateToUnixTime(date) && dateToUnixTime(endDate) >= dateToUnixTime(date);
-  };
-
-  const isSelectedDate = (date: Dayjs) => {
-    if (mode !== 'day') return false;
-    return dateToFormatting(startDate) === dateToFormatting(date);
   };
 
   const goDetail = (date: Dayjs) => {
@@ -105,7 +76,7 @@ const Calendar: FC<CalnedrProps> = ({ cellType }) => {
               </Style.ArrowWrapper>
             </Style.ArrowBlock>
           </div>
-          {cellType === 'Tag' && group?.content.isAdmin && (
+          {cellType === 'Tag' && isAdmin && (
             <Button width="124px" color="black" onClick={handleShowCreateDetailModal} id={GA.ADD_LIST.BUTTON}>
               내역 추가하기
             </Button>
