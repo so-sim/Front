@@ -1,6 +1,7 @@
 import { LOGO } from '@/assets/icons/Logo';
 import { SYSTEM } from '@/assets/icons/System';
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import MobileHeader from './components/MobileHeader';
 import MobileSideBar from './components/MobileSideBar';
 import * as Style from './styles';
@@ -20,7 +21,7 @@ const MobileLayout = ({ location, children }: Props) => {
   return (
     <>
       <Style.Layout>
-        <MobileHeader left={{ onClick: sideBarHandler, icon: SYSTEM.MENU }} title={LOGO.XS} hasAuth />
+        <MobileHeader left={{ onClick: sideBarHandler, icon: SYSTEM.MENU }} title={<MobileLogo />} hasAuth />
         {children}
       </Style.Layout>
       {openSideBar && <MobileSideBar location={location} openSideBar={openSideBar} sideBarHandler={sideBarHandler} />}
@@ -29,3 +30,8 @@ const MobileLayout = ({ location, children }: Props) => {
 };
 
 export default MobileLayout;
+
+const MobileLogo = () => {
+  const navigate = useNavigate();
+  return <div onClick={() => navigate('/m-home')}>{LOGO.XS}</div>;
+};
