@@ -10,7 +10,7 @@ const MobileGroupSection = () => {
   const navigate = useNavigate();
 
   const moveToGroup = (groupId: number) => {
-    navigate(`/group/${groupId}/book`);
+    navigate(`/m-group/${groupId}/book`);
   };
 
   const moveToCreateGroup = () => {

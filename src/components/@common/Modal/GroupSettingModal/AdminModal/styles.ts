@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+import { isMobile } from 'react-device-detect';
 
 export const Title = styled.div``;
 
@@ -31,8 +32,8 @@ export const Container = styled.div`
   flex-direction: column;
   align-items: flex-start;
   width: 100%;
-  border-left: 2px solid ${({ theme }) => theme.colors.neutral_400_b};
-  padding-left: 16px;
+  border-left: ${({ theme }) => !isMobile && `2px solid ${theme.colors.neutral_400_b}`};
+  padding-left: ${!isMobile && '16px'};
   gap: 24px;
 `;
 
