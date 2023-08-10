@@ -1,9 +1,10 @@
 import { useRecoilState } from 'recoil';
 import { EventInfoTest, SelectedEventInfo } from '@/types/event';
 import { checkedListState } from '@/store/checkedListState';
+import { useState } from 'react';
 
-const useCheckedListState = () => {
-  const [checkedDetailFine, setCheckedDetailFine] = useRecoilState(checkedListState);
+const useCheckSet = (initArray: number[]) => {
+  const [checkedDetailFine, setCheckedDetailFine] = useState(new Set([...initArray]));
 
   const setInitCheckedList = () => {
     setCheckedDetailFine(new Set());
@@ -59,4 +60,4 @@ const useCheckedListState = () => {
   };
 };
 
-export default useCheckedListState;
+export default useCheckSet;
