@@ -6,10 +6,8 @@ import { useParams, useSearchParams } from 'react-router-dom';
 import DropDown from '@/components/@common/DropDown';
 import { GA } from '@/constants/GA';
 import { DetailFilter } from '@/store/detailFilter';
-
 import { SelectedEventInfo } from '@/types/event';
-import CheckedHandleModal from './CheckedHandleModal';
-import useCheckedListState from '@/hooks/useCheckedListState';
+
 import SelectAllCheckbox from '@/components/@common/Checkbox/SelectAllCheckbox';
 
 type Props = {
@@ -33,11 +31,6 @@ const TableHead = ({ details, setDetailFilter }: Props) => {
   const [paymentType, setPaymentType] = useState<PaymentDropdown>('전체');
   const [openMemberDropdown, setOpenMemberDropdown] = useState(false);
   const [openPaymentTypeDropdown, setOpenPaymentTypeDropdown] = useState(false);
-
-  const {
-    setCheckedDetailFine: { setMultipleTogleCheckedList },
-    isAllChecked,
-  } = useCheckedListState();
 
   const memberDropDownRef = useRef<HTMLDivElement>(null);
   const paymentTypeDropDownRef = useRef<HTMLDivElement>(null);
@@ -109,7 +102,6 @@ const TableHead = ({ details, setDetailFilter }: Props) => {
       </Style.PointerElement>
       <Style.Element>금액</Style.Element>
       <Style.Element>사유</Style.Element>
-      <CheckedHandleModal />
     </Style.TableHead>
   );
 };
