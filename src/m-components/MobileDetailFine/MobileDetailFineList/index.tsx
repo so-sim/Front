@@ -1,7 +1,7 @@
 import { SYSTEM } from '@/assets/icons/System';
 import CheckboxContainer from '@/components/@common/Checkbox';
 import DetailListCheckBox from '@/components/DetailFine/checkbox';
-import useCheckedListState from '@/hooks/useCheckedListState';
+
 import useCheckListState from '@/hooks/useCheckListState';
 import { useGetDetailListById } from '@/queries/Detail/useGetDetailListById';
 import { EventInfoListTest, SelectedEventInfo } from '@/types/event';

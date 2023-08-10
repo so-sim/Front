@@ -7,7 +7,7 @@ import { useGroupDetail } from '@/queries/Group';
 import { useGetMyNikname } from '@/queries/Group/useGetMyNickname';
 import { useRecoilState } from 'recoil';
 import { initialSideModalState, sideModalState } from '@/store/sideModalState';
-import useCheckedListState from '@/hooks/useCheckedListState';
+
 import useCheckListState from '@/hooks/useCheckListState';
 import { SelectedEventInfo } from '@/types/event';
 

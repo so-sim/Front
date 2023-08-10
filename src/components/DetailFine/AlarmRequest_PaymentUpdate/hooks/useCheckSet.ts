@@ -3,6 +3,10 @@ import { EventInfoTest, SelectedEventInfo } from '@/types/event';
 import { checkedListState } from '@/store/checkedListState';
 import { useState } from 'react';
 
+/**
+ * 해당 CheckList를 eventId배열로만 관리할 수 있을 경우 사용하면 좋을 것 같아 남겨두었습니다.
+ */
+
 const useCheckSet = (initArray: number[]) => {
   const [checkedDetailFine, setCheckedDetailFine] = useState(new Set([...initArray]));
 
