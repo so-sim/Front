@@ -17,7 +17,7 @@ type GroupedData = {
 const MobileDetailFine = () => {
   const { groupId } = useParams();
 
-  const [detailFilter, setDetailFilter] = useState<DetailFilter>({ nickname: '', situation: '', page: 0, size: 3, groupId: Number(groupId) });
+  const [detailFilter, setDetailFilter] = useState<DetailFilter>({ nickname: '', situation: '', page: 0, size: 16, groupId: Number(groupId) });
 
   const [calendarDate, setCalendarDate] = useRecoilState(dateState);
 
