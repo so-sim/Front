@@ -5,6 +5,12 @@ import { checkedListState } from '@/store/checkedListState';
 const useCheckedListState = () => {
   const [checkedDetailFine, setCheckedDetailFine] = useRecoilState(checkedListState);
 
+  const setInitCheckedList = () => {
+    setCheckedDetailFine(new Set());
+  };
+
+  const isChecked = (eventId: number) => checkedDetailFine.has(eventId);
+
   const setAddCheckedList = (eventId: number) => {
     setCheckedDetailFine((prev) => new Set(prev.add(eventId)));
   };
@@ -15,15 +21,7 @@ const useCheckedListState = () => {
     //   prev.delete(eventId);
     //   return new Set(prev);
     // });
-    // 어떤게 더 빠를까
-  };
-
-  const setMultipleSubtractCheckedList = (eventIds: number[]) => {
-    setCheckedDetailFine((prev) => new Set([...prev].filter((id) => !eventIds.includes(id))));
-  };
-
-  const setMultipleAddCheckedList = (eventIds: number[]) => {
-    setCheckedDetailFine((prev) => new Set([...prev, ...eventIds]));
+    // 이게 더 빠를 것 같은데,,
   };
 
   const setToggleCheckedList = (eventId: number) => {
@@ -34,15 +32,27 @@ const useCheckedListState = () => {
     setSubtractCheckedList(eventId);
   };
 
-  const setInitCheckedList = () => {
-    setCheckedDetailFine(new Set());
+  const isAllChecked = (eventIdList: number[]) => eventIdList.every((eventId) => isChecked(eventId));
+
+  const setMultipleAddCheckedList = (eventIdList: number[]) => {
+    setCheckedDetailFine((prev) => new Set([...prev, ...eventIdList]));
   };
 
-  const isChecked = (eventId: number) => checkedDetailFine.has(eventId);
+  const setMultipleSubtractCheckedList = (eventIdList: number[]) => {
+    setCheckedDetailFine((prev) => new Set([...prev].filter((id) => !eventIdList.includes(id))));
+  };
+
+  const setMultipleTogleCheckedList = (eventIdList: number[]) => {
+    if (!isAllChecked(eventIdList)) {
+      setMultipleAddCheckedList(eventIdList);
+      return;
+    }
+    setMultipleSubtractCheckedList(eventIdList);
+  };
 
   return {
     checkedDetailFine,
-    setCheckedDetailFine: { setAddCheckedList, setSubtractCheckedList, setMultipleAddCheckedList, setMultipleSubtractCheckedList, setToggleCheckedList, setInitCheckedList },
+    setCheckedDetailFine: { setToggleCheckedList, setMultipleTogleCheckedList, setInitCheckedList },
     isChecked,
   };
 };
