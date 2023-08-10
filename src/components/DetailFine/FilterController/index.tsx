@@ -6,6 +6,7 @@ import { convertToPriceFormat } from '@/utils/convertFormat';
 import { USER } from '@/assets/icons/User';
 import { AutoComplete } from './AutoComplete';
 import * as Style from './styles';
+import Toolbar from '../Toolbar';
 
 type Props = {
   detailFilter: DetailFilter;
@@ -75,6 +76,7 @@ const FilterController = ({ detailFilter, setDetailFilter, totalAmount }: Props)
         <div>합계</div>
         <Style.Amount>{convertToPriceFormat(totalAmount)}</Style.Amount>
       </Style.AmountContainer>
+      <Toolbar />
     </Style.FilterContainer>
   );
 };
