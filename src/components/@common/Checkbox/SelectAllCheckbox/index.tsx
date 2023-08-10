@@ -1,7 +1,7 @@
-import useCheckedListState from '@/hooks/useCheckedListState';
 import CheckboxContainer from '..';
 import { SelectedEventInfo } from '@/types/event';
 import DetailListCheckBox from '@/components/DetailFine/checkbox';
+import useCheckListState from '@/hooks/useCheckListState';
 
 type Props = {
   details?: SelectedEventInfo[];
@@ -9,17 +9,17 @@ type Props = {
 
 const SelectAllCheckbox = ({ details }: Props) => {
   const {
-    setCheckedDetailFine: { setMultipleTogleCheckedList },
+    setCheckDetailFine: { setMultipleTogglCheckList },
     isAllChecked,
-  } = useCheckedListState();
+  } = useCheckListState();
 
   const detailEventIdList = details?.map(({ eventId }) => eventId);
 
   return (
     <CheckboxContainer
       id={'checkedAll'}
-      isChecked={isAllChecked(detailEventIdList!) && details?.length! > 0}
-      onChange={(event: React.MouseEvent<HTMLInputElement>) => setMultipleTogleCheckedList(detailEventIdList!)}
+      isChecked={isAllChecked(detailEventIdList) && details?.length! > 0}
+      onChange={(event: React.MouseEvent<HTMLInputElement>) => setMultipleTogglCheckList(details, detailEventIdList)}
     >
       <CheckboxContainer.Checkbox as={DetailListCheckBox} />
     </CheckboxContainer>
