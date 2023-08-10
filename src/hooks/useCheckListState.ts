@@ -8,6 +8,10 @@ export type SetCheckListState = {
   setInitCheckDetailFine: () => void;
 };
 
+/**
+ * @type { [eventId:string] :SelectedEventInfo } RecoilState에 해당 형태로 저장되어 있습니다
+ * @description Recoil 설정된 CheckListState를 관련한 Data 및 setter를 모아둔 Hooks입니다
+ */
 const useCheckListState = () => {
   const [checkDetailFine, setCheckDetailFine] = useRecoilState(checkListState);
 
@@ -43,8 +47,14 @@ const useCheckListState = () => {
     setSubtractCheckDetailFine(detail);
   };
 
+  /**
+   * @description 파라미터로 받은 EventIdList가 모두 checkDetailFine의 들어있는지 확인하는 함수입니다.
+   */
   const isAllChecked = (eventIdList?: number[]) => eventIdList?.every((eventId) => isChecked(eventId)) || false;
 
+  /**
+   * @description isAllChecked 여부에 따라 파라미터로 받은 detailsList를 순회돌아서 해당 detailsList의 정보를  ChecklistState의 저장하거나 삭제하는 함수입니다.
+   */
   const setMultipleTogglCheckList = (details?: SelectedEventInfo[], eventIdList?: number[]) => {
     if (!isAllChecked(eventIdList)) {
       details?.forEach((item) => {
