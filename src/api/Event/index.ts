@@ -38,13 +38,7 @@ export const getMobileDetailList = async (query: Partial<MobileType>): Promise<S
 export const getDetailListById = async (eventIds: { groupId?: number; eventIdsList: number[] }) => {
   const { groupId, eventIdsList } = eventIds;
 
-  const params = new URLSearchParams();
-  if (groupId !== undefined) {
-    params.append('groupId', groupId.toString());
-  }
-  eventIdsList.forEach((id) => params.append('eventIdList', id.toString()));
-
-  const { data } = await api.get(`api/events?groupId=3&eventIdList=${eventIdsList}`);
+  const { data } = await api.get(`api/events?groupId=${groupId}&eventIdList=${eventIdsList}`);
   return data;
 };
 
