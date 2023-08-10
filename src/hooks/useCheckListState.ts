@@ -15,11 +15,11 @@ export type SetCheckListState = {
 const useCheckListState = () => {
   const [checkDetailFine, setCheckDetailFine] = useRecoilState(checkListState);
 
-  const checkDetailFineList = Object.values(checkDetailFine);
+  const checkDetailFineValues = Object.values(checkDetailFine);
 
   const checkedSize = Object.keys(checkDetailFine).length;
 
-  const checkedEventIdList = Object.keys(checkDetailFine);
+  const checkDetailFineKeys = Object.keys(checkDetailFine);
 
   const setInitCheckDetailFine = () => {
     setCheckDetailFine({});
@@ -68,9 +68,10 @@ const useCheckListState = () => {
   };
 
   return {
-    checkDetailFineList,
+    checkDetailFine,
+    checkDetailFineValues,
+    checkDetailFineKeys,
     checkedSize,
-    checkedEventIdList,
     setCheckDetailFine: { setInitCheckDetailFine, setToggleCheckList, setMultipleTogglCheckList },
     isChecked,
     isAllChecked,

@@ -26,8 +26,8 @@ const SituationStatusIcon = {
 const MobileDetailFineList = ({ details }: Props) => {
   const { groupId } = useParams();
   const {
-    checkDetailFineList,
-    checkedEventIdList,
+    checkDetailFineValues,
+    checkDetailFineKeys,
     setCheckDetailFine: { setToggleCheckList },
     isChecked,
   } = useCheckListState();

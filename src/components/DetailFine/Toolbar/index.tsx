@@ -20,7 +20,7 @@ const Toolbar = () => {
   // } = useCheckedListState();
 
   const {
-    checkDetailFineList,
+    checkDetailFineValues,
     checkedSize,
     setCheckDetailFine: { setInitCheckDetailFine },
   } = useCheckListState();
@@ -48,7 +48,7 @@ const Toolbar = () => {
   const isMyCheckDetailFine = (checkDetailFineList: SelectedEventInfo[], myNickname: string) => checkDetailFineList.every(({ nickname }) => nickname === myNickname);
 
   const moveSituationControlPage = () => {
-    if (isSameSituation(checkDetailFineList)) {
+    if (isSameSituation(checkDetailFineValues)) {
       setSideModal({ type: 'situation_change', isModal: true });
     } else {
       console.log('situation 동일해야함.');
@@ -56,7 +56,7 @@ const Toolbar = () => {
   };
 
   const moveSituationControlPageByMember = () => {
-    if (isSameSituation(checkDetailFineList) && isMyCheckDetailFine(checkDetailFineList, myNickname!) && checkDetailFineList[0].situation === '미납') {
+    if (isSameSituation(checkDetailFineValues) && isMyCheckDetailFine(checkDetailFineValues, myNickname!) && checkDetailFineValues[0].situation === '미납') {
       setSideModal({ type: 'situation_change', isModal: true });
     } else {
       console.log('팀원아 제대로해라');

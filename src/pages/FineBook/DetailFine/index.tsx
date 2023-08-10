@@ -36,8 +36,7 @@ const DetailFine = () => {
   const { data } = useGetDetailList(detailFilter, calendarDate);
 
   const {
-    checkDetailFineList,
-    checkedEventIdList,
+    checkDetailFine,
     setCheckDetailFine: { setInitCheckDetailFine },
   } = useCheckListState();
 
@@ -57,7 +56,7 @@ const DetailFine = () => {
         </Style.DetailContent>
         <Pagination totalCount={data?.content.totalCount} detailFilter={detailFilter} setDetailFilter={setDetailFilter} />
         <UserDetails />
-        <AlarmRequest_PaymentUpdate checkDetailFineList={[...checkDetailFineList]} checkedEventIdList={[...checkedEventIdList]} />
+        <AlarmRequest_PaymentUpdate checkDetailFine={{ ...checkDetailFine }} />
       </Style.DetailFineFrame>
     </SelectedFineContextProvider>
   );
