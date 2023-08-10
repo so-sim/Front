@@ -52,8 +52,10 @@ const useCheckedListState = () => {
 
   return {
     checkedDetailFine,
+
     setCheckedDetailFine: { setToggleCheckedList, setMultipleTogleCheckedList, setInitCheckedList },
     isChecked,
+    isAllChecked,
   };
 };
 
