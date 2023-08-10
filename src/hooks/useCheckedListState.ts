@@ -26,6 +26,14 @@ const useCheckedListState = () => {
     setCheckedDetailFine((prev) => new Set([...prev, ...eventIds]));
   };
 
+  const setToggleCheckedList = (eventId: number) => {
+    if (!isChecked(eventId)) {
+      setAddCheckedList(eventId);
+      return;
+    }
+    setSubtractCheckedList(eventId);
+  };
+
   const setInitCheckedList = () => {
     setCheckedDetailFine(new Set());
   };
@@ -34,7 +42,7 @@ const useCheckedListState = () => {
 
   return {
     checkedDetailFine,
-    setCheckedDetailFine: { setAddCheckedList, setSubtractCheckedList, setMultipleAddCheckedList, setMultipleSubtractCheckedList, setInitCheckedList },
+    setCheckedDetailFine: { setAddCheckedList, setSubtractCheckedList, setMultipleAddCheckedList, setMultipleSubtractCheckedList, setToggleCheckedList, setInitCheckedList },
     isChecked,
   };
 };
