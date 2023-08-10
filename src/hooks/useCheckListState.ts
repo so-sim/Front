@@ -11,6 +11,16 @@ export type SetCheckListState = {
 const useCheckListState = () => {
   const [checkDetailFine, setCheckDetailFine] = useRecoilState(checkListState);
 
+  const checkDetailFineList = Object.values(checkDetailFine);
+
+  const checkedSize = Object.keys(checkDetailFine).length;
+
+  const checkedEventIdList = Object.keys(checkDetailFine);
+
+  const setInitCheckDetailFine = () => {
+    setCheckDetailFine({});
+  };
+
   const setSubtractCheckDetailFine = (detail: SelectedEventInfo) => {
     setCheckDetailFine(
       (prev) => subtractCheckDetailFine(detail, prev),
@@ -23,16 +33,37 @@ const useCheckListState = () => {
     setCheckDetailFine((prev) => addCheckDetailFine(detail, prev));
   };
 
-  const setInitCheckDetailFine = () => {
-    setCheckDetailFine({});
-  };
-
   const isChecked = (eventId: number) => Object.keys(checkDetailFine).includes(String(eventId));
 
+  const setToggleCheckList = (detail: SelectedEventInfo) => {
+    if (!isChecked(detail.eventId)) {
+      setAddCheckDetailFine(detail);
+      return;
+    }
+    setSubtractCheckDetailFine(detail);
+  };
+
+  const isAllChecked = (eventIdList?: number[]) => eventIdList?.every((eventId) => isChecked(eventId)) || false;
+
+  const setMultipleTogglCheckList = (details?: SelectedEventInfo[], eventIdList?: number[]) => {
+    if (!isAllChecked(eventIdList)) {
+      details?.forEach((item) => {
+        setAddCheckDetailFine(item);
+      });
+      return;
+    }
+    details?.forEach((item) => {
+      setSubtractCheckDetailFine(item);
+    });
+  };
+
   return {
-    checkDetailFine,
-    setCheckDetailFine: { setInitCheckDetailFine, setSubtractCheckDetailFine, setAddCheckDetailFine },
+    checkDetailFineList,
+    checkedSize,
+    checkedEventIdList,
+    setCheckDetailFine: { setInitCheckDetailFine, setToggleCheckList, setMultipleTogglCheckList },
     isChecked,
+    isAllChecked,
   };
 };
 
