@@ -3,6 +3,8 @@ import styled from '@emotion/styled';
 export const FilterContainer = styled.div`
   display: flex;
   justify-content: space-between;
+
+  position: relative;
   padding: 8px 0;
   border-top: 1px solid ${({ theme }) => theme.colors.neutral_300_b};
   border-bottom: 1px solid ${({ theme }) => theme.colors.neutral_300_b};

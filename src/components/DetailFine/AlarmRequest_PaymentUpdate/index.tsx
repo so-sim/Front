@@ -7,7 +7,7 @@ import { useParams, useSearchParams } from 'react-router-dom';
 import CheckedFineList from './CheckedFineList';
 import { useParticipantList } from '@/queries/Group';
 import { useEffect, useState } from 'react';
-import { Situation } from '@/types/event';
+import { SelectedEventInfo, Situation } from '@/types/event';
 import { useGroupDetail } from '@/queries/Group';
 import { useSelectedContext, initialSelectData } from '@/contexts/SelectedFineContext';
 import { useRequestNotification } from '@/queries/Notification/useRequestNotifaction';
@@ -15,10 +15,12 @@ import { useRecoilState } from 'recoil';
 import { initialSideModalState, sideModalState } from '@/store/sideModalState';
 import SituationButton from './SituationButton';
 import SingleCheckedFineList from './SingleCheckedFineList';
+import useCheckListState, { addCheckDetailFine, subtractCheckDetailFine } from '@/hooks/useCheckListState';
+import { CheckListState } from '@/store/checkListState';
+import useCheckSet from './hooks/useCheckSet';
 
 type Props = {
-  checkDetailFine: SelectedEventInfo_Checked[];
-  setCheckDetailFine: SetCheckDetailFine;
+  checkDetailFine: CheckListState;
 };
 
 type StatusType = {
@@ -53,22 +55,66 @@ const Status: StatusType = {
   },
 };
 
-// 지금 총무 checkBox 클릭을 어떻게 할건지 얘기를 나눠봐야함
+/**
+ * @description CheckedFineList에서 멤버 별로 check가 되기때문에, 멤버에 해당하는 CheckList 내역을 toggle 해주는 함수이다..
+ * 여기서부터 조금 정신이 나가서 제대로 안적은 곳이 있을 수 있는데,, 따금한 지적부탁드립니다 ㅎㅎ...
+ */
+const filterByNickName = (prev: CheckListState, name: string, list: SelectedEventInfo[]) => {
+  if (Object.values(prev).some((key) => name === key.nickname)) {
+    return Object.fromEntries(Object.entries(prev).filter(([key, value]) => value.nickname !== name));
+  }
 
-// 이 부분 situationType 붙여서 컴포넌트 화 예정입니다 (아니면 HOC패턴으로 리팩토링?)
+  return { ...prev, ...Object.fromEntries(Object.values(list!)?.map((list) => [list.eventId, list])) };
+};
 
-const AlarmRequest_PaymentUpdate = ({ checkDetailFine, setCheckDetailFine }: Props) => {
+const AlarmRequest_PaymentUpdate = ({ checkDetailFine }: Props) => {
   const { groupId } = useParams();
 
   const [sideModal, setSideModal] = useRecoilState(sideModalState);
 
+  const originalCheckListValue = Object.values(checkDetailFine);
+
+  const [checkList, setCheckList] = useState(checkDetailFine);
+  // 음 이렇게 넣는건 복사가 안되는구나?? 생성과 동시에 삽입하려했는데, 기대했던 것과는 다르게 checkList undefined 이네요..
+
+  useEffect(() => {
+    setCheckList(checkDetailFine);
+  }, [checkDetailFine]);
+
+  const eventIdList = Object.keys(checkList);
+  const detailFineList = Object.values(checkList);
+
+  const setSubtractCheckDetailFine = (detail: SelectedEventInfo) => {
+    setCheckList((prev) => subtractCheckDetailFine(detail, prev));
+  };
+
+  const setAddCheckDetailFine = (detail: SelectedEventInfo) => {
+    setCheckList((prev) => addCheckDetailFine(detail, prev));
+  };
+
+  const isChecked = (eventId: number) => eventIdList.includes(String(eventId));
+
+  const setToggleCheckList = (detail: SelectedEventInfo) => {
+    if (!isChecked(detail.eventId)) {
+      setAddCheckDetailFine(detail);
+      return;
+    }
+    setSubtractCheckDetailFine(detail);
+  };
+
+  const setToggleCheckListByName = (name: string, list: SelectedEventInfo[]) => {
+    setCheckList((prev) => filterByNickName(prev, name, list));
+  };
+
+  // checkList에 관한 setter및 함수를 모아뒀는데,  hook으로 빼야되나 고민이 된다. (setToggleCheckListByName 제외하고는 형태가 useCheckListState와 동일하다)
+
+  const {
+    setCheckDetailFine: { setInitCheckDetailFine },
+  } = useCheckListState();
+
   const { type, isModal } = sideModal;
 
   const [situationToChange, setSituationToChange] = useState<Situation>('완납');
-
-  const { selectedFine, setSelectedFine } = useSelectedContext('userDetails');
-
-  const { setInitCheckDetailFine, setToggleCheckDetailFine } = setCheckDetailFine;
 
   const { data: participantData } = useParticipantList(Number(groupId));
 
@@ -77,7 +123,7 @@ const AlarmRequest_PaymentUpdate = ({ checkDetailFine, setCheckDetailFine }: Pro
   const { data: group } = useGroupDetail(Number(groupId));
   const isAdmin = group?.content.isAdmin;
 
-  const currentSituation = checkDetailFine[0]?.situation;
+  const currentSituation = detailFineList[0]?.situation;
 
   useEffect(() => {
     if (currentSituation === '완납') {
@@ -101,7 +147,7 @@ const AlarmRequest_PaymentUpdate = ({ checkDetailFine, setCheckDetailFine }: Pro
   const { mutate: mutateDetailStatus } = useUpdateDetailStatus(onSuccess);
   const { mutate: mutateRequestNotification } = useRequestNotification(onSuccess);
 
-  const currentCheckList = checkDetailFine.filter(({ checked }) => checked === true).map(({ eventId }) => eventId);
+  const currentCheckList = eventIdList.map((eventId) => Number(eventId));
 
   const updateSituation = () => {
     mutateDetailStatus({ situation: situationToChange, eventIdList: currentCheckList });
@@ -114,13 +160,13 @@ const AlarmRequest_PaymentUpdate = ({ checkDetailFine, setCheckDetailFine }: Pro
 
   const stringToNumber_Date = (date: string) => +date?.replace(/\./g, '');
 
-  const sortedtList = checkDetailFine.sort((a, b) => stringToNumber_Date(a.date) - stringToNumber_Date(b.date));
+  const sortedtList = originalCheckListValue.sort((a, b) => stringToNumber_Date(a.date) - stringToNumber_Date(b.date));
 
-  const participantSituation_List = (nickName: string, sortedtList: SelectedEventInfo_Checked[]) => sortedtList?.filter((item) => item.nickname === nickName);
+  const participantSituation_List = (nickName: string, sortedtList: SelectedEventInfo[]) => sortedtList?.filter((item) => item.nickname === nickName);
 
-  const TotalAmount = checkDetailFine?.reduce((prev, current) => prev + current.amount, 0);
+  const TotalAmount = detailFineList?.reduce((prev, current) => prev + current.amount, 0);
 
-  const isSingleList = (sortedList: SelectedEventInfo_Checked[]) => {
+  const isSingleList = (sortedList: SelectedEventInfo[]) => {
     const situationOfCheckDetailFine = sortedList.map(({ nickname }) => nickname);
 
     const isAllSameSituation = new Set(situationOfCheckDetailFine);
@@ -130,9 +176,9 @@ const AlarmRequest_PaymentUpdate = ({ checkDetailFine, setCheckDetailFine }: Pro
 
   // 해당 로직을 ItemList에서 toggle이 실행되었을 때 해주어도 좋을 것 같다.
 
-  const max_Date = (sortedtList: SelectedEventInfo_Checked[]) => sortedtList.at(-1)?.date;
+  const max_Date = (sortedtList: SelectedEventInfo[]) => sortedtList.at(-1)?.date;
 
-  const min_Date = (sortedtList: SelectedEventInfo_Checked[]) => sortedtList[0]?.date;
+  const min_Date = (sortedtList: SelectedEventInfo[]) => sortedtList[0]?.date;
 
   if (!isModal) return null;
 
@@ -150,30 +196,31 @@ const AlarmRequest_PaymentUpdate = ({ checkDetailFine, setCheckDetailFine }: Pro
           {type && Status[type].subTitle(situationToChange)}
 
           {/* Situation 변경 확인 Buttons */}
-          {type === 'situation_change' && (
-            <SituationButton situationToChange={situationToChange} setSituationToChange={setSituationToChange} currentSituation={currentSituation} />
+          {
+            type === 'situation_change' && <SituationButton situationToChange={situationToChange} setSituationToChange={setSituationToChange} currentSituation={currentSituation} />
             // 스타일 재정의 필요
-          )}
+          }
 
           {/* List의 기간 */}
           <Style.DatePeriodContainer>
             <Style.DatePeriodText>
               {min_Date(sortedtList)} - {max_Date(sortedtList)}
             </Style.DatePeriodText>
-            {isSingleList(sortedtList) && <Style.TotalAmount>{TotalAmount} 원</Style.TotalAmount>}
+            {isSingleList(originalCheckListValue) && <Style.TotalAmount>{TotalAmount} 원</Style.TotalAmount>}
           </Style.DatePeriodContainer>
 
           {/* List 영역 */}
           <Style.ListContainer>
-            {isSingleList(checkDetailFine) ? (
-              <SingleCheckedFineList checkDetailFine={checkDetailFine} setCheckDetailFine={setToggleCheckDetailFine} />
+            {isSingleList(originalCheckListValue) ? (
+              <SingleCheckedFineList checkDetailFine={originalCheckListValue} setCheckDetailFine={setToggleCheckList} isChecked={isChecked} />
             ) : (
               participantList?.map((nickName) => (
                 <CheckedFineList
                   key={nickName}
                   myName={nickName as string}
                   list={participantSituation_List(nickName as string, sortedtList)}
-                  setCheckDetailFine={setCheckDetailFine}
+                  isChecked={isChecked}
+                  setCheckDetailFine={setToggleCheckListByName}
                 />
               ))
             )}

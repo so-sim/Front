@@ -41,7 +41,7 @@ export const SituationButton = styled.button<{ situationType: Situation; isClick
       ${theme.font.subhead_02};
     `};
 
-  ${({ theme, situationType }) => SituationButtonStyles[situationType](theme)}
+  ${({ theme, situationType }) => situationType && SituationButtonStyles[situationType](theme)}
 
   ${({ situationType, isClick, theme }) =>
     situationType &&

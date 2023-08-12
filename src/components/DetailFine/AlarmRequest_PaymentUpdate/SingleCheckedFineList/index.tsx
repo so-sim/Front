@@ -1,25 +1,23 @@
 import CheckboxContainer from '@/components/@common/Checkbox';
 import { SetCheckDetailFine, SelectedEventInfo_Checked } from '@/components/DetailFine/AlarmRequest_PaymentUpdate/hooks/useCheckDetailFine';
+import { SelectedEventInfo } from '@/types/event';
 
 import DetailListCheckBox from '../../checkbox';
 import * as Style from './styles';
 
 type Props = {
-  checkDetailFine: SelectedEventInfo_Checked[];
-  setCheckDetailFine: (eventId: string) => void;
+  checkDetailFine: SelectedEventInfo[];
+  setCheckDetailFine: (details: SelectedEventInfo) => void;
+  isChecked: (eventId: number) => boolean;
 };
 
-const SingleCheckedFineList = ({ checkDetailFine, setCheckDetailFine }: Props) => {
+const SingleCheckedFineList = ({ checkDetailFine, setCheckDetailFine, isChecked }: Props) => {
   return (
     <>
       {checkDetailFine.map((item) => (
         <Style.ItemContainer key={item.eventId}>
           <Style.CheckBoxWrapper>
-            <CheckboxContainer
-              id={String(item.eventId)}
-              isChecked={item.checked}
-              onChange={(event: React.MouseEvent<HTMLInputElement>) => setCheckDetailFine(String(item.eventId))}
-            >
+            <CheckboxContainer id={String(item.eventId)} isChecked={isChecked(item.eventId)} onChange={(event: React.MouseEvent<HTMLInputElement>) => setCheckDetailFine(item)}>
               <CheckboxContainer.Checkbox as={DetailListCheckBox} />
             </CheckboxContainer>
           </Style.CheckBoxWrapper>

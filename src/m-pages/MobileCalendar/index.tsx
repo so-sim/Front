@@ -9,8 +9,10 @@ import { dateState } from '@/store/dateState';
 import dayjs from 'dayjs';
 import { useParams } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
+import MobileCalendarComponent from '@/m-components/MobileCalendar/index';
 
 import * as Style from './styles';
+import MobileDetailFine from '@/m-components/MobileDetailFine';
 
 const WEEKDATE = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 

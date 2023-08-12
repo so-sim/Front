@@ -12,6 +12,9 @@ import Search from './Search.svg';
 import Menu from './Menu.svg';
 import ToolTip from './ToolTip.svg';
 import Initialization from './Initialization.svg';
+import MobileCon from './MobileCon.svg';
+import MobileNon from './MobileNon.svg';
+import MobileFull from './MobileFull.svg';
 
 export const SYSTEM = {
   ARTICLE: <Article />,
@@ -37,4 +40,7 @@ export const SYSTEM = {
   TOOLTIP: <ToolTip width={24} height={24} />,
   PLUS_WHITE: <Plus width={24} height={24} />,
   INITIALIZATION: <Initialization />,
+  MOBILENON: <MobileNon />,
+  MOBILECON: <MobileCon />,
+  MOBILEFULL: <MobileFull />,
 };
