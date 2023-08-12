@@ -3,20 +3,21 @@ import React from 'react';
 import * as Style from './styles';
 
 type Props = {
-  left?: JSX.Element;
+  left?: { icon: JSX.Element; onClick: () => void };
   title: string;
   children: React.ReactNode;
+  onClose: () => void;
 };
 
-const BottomSheet = ({ left, title, children }: Props) => {
+const BottomSheet = ({ left, title, children, onClose }: Props) => {
   return (
     <>
-      <Style.Frame />
+      <Style.Frame onClick={onClose} />
       <Style.BottomSheet>
         <Style.Header>
-          {left ? left : <div />}
+          {left ? <div onClick={left.onClick}>{left.icon}</div> : <div />}
           <div>{title}</div>
-          {SYSTEM.CLOSE_LG}
+          <div onClick={onClose}>{SYSTEM.CLOSE_LG}</div>
         </Style.Header>
         <Style.Body>{children}</Style.Body>
       </Style.BottomSheet>

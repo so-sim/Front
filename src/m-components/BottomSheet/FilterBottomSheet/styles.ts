@@ -17,6 +17,7 @@ export const WeekButton = styled.button<{ isSelected: boolean }>`
   width: 100%;
   height: 32px;
   padding: 8px 0;
+  background-color: ${({ theme, isSelected }) => (isSelected ? theme.colors.neutral_300_b : theme.colors.secondary_100)};
   border: 1px solid ${({ theme }) => theme.colors.neutral_400_b};
   color: ${({ theme }) => theme.colors.secondary_900};
   ${({ theme }) => theme.font.caption}

@@ -9,6 +9,7 @@ import { useGetMobileDetailList } from '@/queries/Detail/useGetMobileDetailList'
 import dayjs from 'dayjs';
 import { useInView } from 'react-intersection-observer';
 import { EventInfoListTest, SelectedEventInfo } from '@/types/event';
+import FilterBottomSheet from '../BottomSheet/FilterBottomSheet';
 
 type GroupedData = {
   [key: string]: SelectedEventInfo[];
@@ -18,6 +19,11 @@ const MobileDetailFine = () => {
   const { groupId } = useParams();
 
   const [detailFilter, setDetailFilter] = useState<DetailFilter>({ nickname: '', situation: '', page: 0, size: 16, groupId: Number(groupId) });
+  const [openFilterSheet, setOpenFilterSheet] = useState(false);
+
+  const handleOpenFilterSheet = () => {
+    setOpenFilterSheet((prev) => !prev);
+  };
 
   const [calendarDate, setCalendarDate] = useRecoilState(dateState);
 
@@ -54,13 +60,22 @@ const MobileDetailFine = () => {
 
   return (
     <>
-      <div>데이트컨트롤러</div>
-      <div>필터링 위치</div>
+      <div>
+        <div>데이트컨트롤러</div>
+        <button onClick={handleOpenFilterSheet}>필터 켜지는 버튼</button>
 
-      <div>전체 체크박스</div>
-      <MobileDetailFineList details={GroupedListByDate} />
+        <div>전체 체크박스</div>
+        <MobileDetailFineList details={GroupedListByDate} />
 
-      <div ref={ref} />
+        <div ref={ref} />
+      </div>
+      {openFilterSheet && (
+        <FilterBottomSheet //
+          detailFilter={detailFilter}
+          setDetailFilter={setDetailFilter}
+          onClose={handleOpenFilterSheet}
+        />
+      )}
     </>
   );
 };
