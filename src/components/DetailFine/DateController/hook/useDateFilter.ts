@@ -38,7 +38,22 @@ export const useDateFilter = () => {
     setCalendarDate(changedDateState);
   };
 
-  return { increaseDate, decreaseDate, getTitle, changeDateByButtonMode, goToWeek };
+  /**
+   * PC에서는 필요 없었는데, 모바일에서는 동작이 달라서 필요하더라구요..
+   * 동작방식 궁금하시면 여쭤봐주세요..!!
+   */
+  const changeDateByCustomMode = ({ endDate }: { endDate: Dayjs }) => {
+    const changedStartDate = endDate.subtract(1, 'week');
+    const changedDateState = {
+      baseDate: changedStartDate,
+      startDate: changedStartDate,
+      endDate,
+      mode: 'custom' as FilterMode,
+    };
+    setCalendarDate(changedDateState);
+  };
+
+  return { increaseDate, decreaseDate, getTitle, changeDateByButtonMode, goToWeek, changeDateByCustomMode };
 };
 
 export function moveDateToWeek(baseDate: Dayjs, week: number): DateState {
