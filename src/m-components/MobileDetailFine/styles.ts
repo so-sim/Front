@@ -9,13 +9,13 @@ export const FilterButton = styled.button`
   ${({ theme }) => theme.font.body_01};
 `;
 
-export const SearchMemberInput = styled.div<{ hasSearchedNickname: boolean }>`
+export const SearchMemberInput = styled.div`
   display: flex;
   align-items: center;
   gap: 4px;
 
   & > * {
-    color: ${({ theme, hasSearchedNickname }) => (hasSearchedNickname ? theme.colors.secondary_900 : theme.colors.secondary_600)};
+    color: ${({ theme }) => theme.colors.secondary_600};
     ${({ theme }) => theme.font.body_02};
   }
 `;
@@ -25,6 +25,8 @@ export const FilterRow = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
+  padding-bottom: 8px;
+  border-bottom: 1px solid ${({ theme }) => theme.colors.neutral_200_b};
 `;
 
 export const SelectedMember = styled.div`

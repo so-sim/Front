@@ -102,3 +102,20 @@ export const AddIconWrapper = styled.div`
   background-color: ${({ theme }) => theme.colors.primary_500};
   color: white;
 `;
+
+export const Notification = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  background-color: ${({ theme }) => theme.colors.neutral_200_b};
+`;
+
+export const NotificationTitle = styled.span`
+  color: ${({ theme }) => theme.colors.secondary_600};
+  ${({ theme }) => theme.font.subhead_01};
+`;
+export const NotificationContent = styled.span`
+  color: ${({ theme }) => theme.colors.secondary_800};
+  ${({ theme }) => theme.font.caption};
+`;

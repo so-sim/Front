@@ -26,6 +26,10 @@ const MobileCalendar = () => {
 
   return (
     <MobileLayout location="GROUP">
+      <Style.Notification>
+        <Style.NotificationTitle>벌금일정</Style.NotificationTitle>
+        <Style.NotificationContent>모임 설정에서 알림을 등록해보세요!</Style.NotificationContent>
+      </Style.Notification>
       <Style.Container>
         <Style.DateControllerWrapper>
           <Style.DateText>{dayjs(calendarDate).format('YYYY년 MM월')}</Style.DateText>
