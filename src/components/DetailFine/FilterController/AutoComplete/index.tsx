@@ -1,7 +1,7 @@
 import { SYSTEM } from '@/assets/icons/System';
-import { useParticipantList } from '@/queries/Group';
-import { ChangeEvent, KeyboardEvent, useEffect, useRef, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import useSearchParticipant from '@/hooks/Member/useSearchParticipant';
+import { KeyboardEvent, useEffect, useRef, useState } from 'react';
+
 import * as Style from './styles';
 
 type Props = {
@@ -10,41 +10,18 @@ type Props = {
 };
 
 export const AutoComplete = ({ updateDetailFilterNickname, initialNickname }: Props) => {
-  const { groupId } = useParams();
-
-  const [nickname, setNickname] = useState(initialNickname);
   const [nicknameIndex, setNicknameIndex] = useState<null | number>(null);
   const [focusInput, setFocusInput] = useState(false);
-  const autoCompleteInputRef = useRef<HTMLInputElement>(null);
-
-  useEffect(() => {
-    initialNickname !== '' && autoCompleteInputRef.current?.focus();
-  }, []);
-
-  const { data } = useParticipantList(Number(groupId));
-  // const { data: searchedParticipantList } = useSearchParticipantList(Number(groupId), nickname);
-  const searchMemberList = (e: ChangeEvent<HTMLInputElement>) => {
-    setNickname(e.target.value);
-  };
 
   const toggleFocusInput = () => {
     setFocusInput((prev) => !prev);
   };
 
-  const removeSpace = (string: string) => {
-    return string.replaceAll(' ', '');
-  };
-
-  const searchMemberByNickname = (nicknameList: string[], keyword: string): string[] => {
-    return nicknameList.filter((nickname) => removeSpace(nickname).includes(removeSpace(keyword)));
-  };
-
-  const nicknameList = [...(data?.content.nicknameList ?? []), data?.content.adminNickname ?? ''] ?? [];
-  const filteredMemberList = searchMemberByNickname(nicknameList, nickname);
+  const { nickname, searchNickname, filteredMemberList, initNickname, inputRef } = useSearchParticipant(initialNickname);
 
   const handleSearchNicknameByKeyboard = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Escape') {
-      return setNickname('');
+      return initNickname();
     }
     if (e.key === 'ArrowDown') {
       return setNicknameIndex((prev) => (prev === null ? 0 : Math.min(prev + 1, filteredMemberList.length - 1)));
@@ -56,7 +33,7 @@ export const AutoComplete = ({ updateDetailFilterNickname, initialNickname }: Pr
       });
     }
     if (e.key === 'Enter' && nicknameIndex !== null && typeof filteredMemberList[nicknameIndex] === 'string') {
-      updateDetailFilterNickname(filteredMemberList[nicknameIndex]);
+      updateDetailFilterNickname(filteredMemberList[nicknameIndex].nickname);
       setNicknameIndex(null);
     }
   };
@@ -71,24 +48,24 @@ export const AutoComplete = ({ updateDetailFilterNickname, initialNickname }: Pr
         type="text" //
         placeholder="팀원을 검색해주세요."
         value={nickname}
-        onChange={searchMemberList}
+        onChange={searchNickname}
         onFocus={toggleFocusInput}
         onKeyDown={handleSearchNicknameByKeyboard}
         onBlur={() => setTimeout(toggleFocusInput, 200)}
-        ref={autoCompleteInputRef}
+        ref={inputRef}
       />
       {focusInput && (
         <Style.DropDownContainer>
           {filteredMemberList.length > 0 ? (
-            filteredMemberList.map((name, idx) => {
+            filteredMemberList.map(({ nickname, withdraw }, idx) => {
               return (
                 <Style.MemberListItem //
-                  key={name}
+                  key={nickname}
                   isSelectedIdx={idx === nicknameIndex}
-                  onClick={() => updateDetailFilterNickname(name)}
+                  onClick={() => updateDetailFilterNickname(nickname)}
                 >
                   {SYSTEM.SEARCH_GRAY}
-                  <span>{name}</span>
+                  <span>{nickname}</span>
                   <Style.WithdrawButton>탈퇴</Style.WithdrawButton>
                 </Style.MemberListItem>
               );

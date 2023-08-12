@@ -12,7 +12,7 @@ const ModalPageLayout = ({ left, title, children }: Props) => {
   return (
     <Style.Layout>
       <MobileHeader left={{ onClick: left.onClick, icon: left.icon }} title={title} />
-      {children}
+      <div style={{ padding: '0 16px' }}>{children}</div>
     </Style.Layout>
   );
 };

@@ -11,6 +11,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import MobileGroupSetting from '@/m-pages/MobileSetting/MobileGroupSetting';
 import MobileAlarmSetting from '@/m-pages/MobileSetting/MobileAlarmSetting';
 import MobileDetailFine from '@/m-components/MobileDetailFine';
+import MobileMemberSearch from '@/m-pages/MobileMemberSearch';
 
 const MobileRouter = () => {
   return (
@@ -22,6 +23,7 @@ const MobileRouter = () => {
         <Route path="/m-group/:groupId/notice" element={<MobilePreParing />} />
         <Route path="/m-group/:groupId/member" element={<MobileMemberManagement />} />
         <Route path="/m-group/:groupId/book" element={<MobileCalendar />} />
+        <Route path="/m-group/:groupId/book/member-search" element={<MobileMemberSearch />} />
         <Route path="/m-group/:groupId/book/detail" element={<MobileDetailFine />} />
         <Route path="/m-group/:groupId/group-setting" element={<MobileSetting />} />
         <Route path="/m-group/:groupId/group-setting/group" element={<MobileGroupSetting />} />
