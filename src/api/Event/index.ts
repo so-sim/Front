@@ -18,6 +18,29 @@ export const getDetailList = async (query: string): Promise<ServerResponse<Event
   const { data } = await api.get(`/api/event/penalties?${query}`);
   return data;
 };
+interface MobileType {
+  startDate: string;
+  endDate: string;
+  groupId: number;
+  nickname: string;
+  situation: '' | Situation;
+  page: number;
+  size: number;
+}
+
+export const getMobileDetailList = async (query: Partial<MobileType>): Promise<ServerResponse<EventInfoListTest>> => {
+  const { data } = await api.get(`/api/event/penalties`, {
+    params: query,
+  });
+  return data;
+};
+
+export const getDetailListById = async (eventIds: { groupId?: number; eventIdsList: number[] }) => {
+  const { groupId, eventIdsList } = eventIds;
+
+  const { data } = await api.get(`api/events?groupId=${groupId}&eventIdList=${eventIdsList}`);
+  return data;
+};
 
 export const updateEvent = async (info: SelectedEventInfo): Promise<ServerResponse<EventInfoTest>> => {
   const { eventId, ...detailInfo } = info;
