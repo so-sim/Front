@@ -27,11 +27,13 @@ const situationFilterList = [
 type Props = {
   detailFilter: DetailFilter;
   setDetailFilter: Dispatch<SetStateAction<DetailFilter>>;
+  onClose: () => void;
 };
 
-const FilterBottomSheet = ({ detailFilter, setDetailFilter }: Props) => {
+const FilterBottomSheet = ({ detailFilter, setDetailFilter, onClose }: Props) => {
   const [calendarDate, setCalendarDate] = useRecoilState(dateState);
-  const { goToWeek, changeDateByButtonMode, changeDateByCustomMode } = useDateFilter();
+  const { goToWeek, changeDateByButtonMode, changeDateByCustomMode, currentWeek, initializeFilter } = useDateFilter();
+
   const [openCalendar, setOpenCalendar] = useState(false);
   const [dateType, setDateType] = useState<'START_DATE' | 'END_DATE' | ''>('');
 
@@ -63,7 +65,7 @@ const FilterBottomSheet = ({ detailFilter, setDetailFilter }: Props) => {
 
   return (
     <>
-      <BottomSheet title="필터" left={SYSTEM.INITIALIZATION}>
+      <BottomSheet onClose={onClose} title="필터" left={{ icon: SYSTEM.INITIALIZATION, onClick: initializeFilter }}>
         <div>
           <Style.Title>기간</Style.Title>
           <Style.Row>
@@ -85,7 +87,11 @@ const FilterBottomSheet = ({ detailFilter, setDetailFilter }: Props) => {
             {isWeekMode &&
               weekList.map((value, week) => {
                 return (
-                  <Style.WeekButton key={week} isSelected={week === 0} onClick={() => goToWeek(value)}>
+                  <Style.WeekButton //
+                    key={value}
+                    isSelected={week + 1 === currentWeek}
+                    onClick={() => goToWeek(value)}
+                  >
                     {value}
                   </Style.WeekButton>
                 );

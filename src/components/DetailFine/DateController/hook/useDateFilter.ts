@@ -1,7 +1,8 @@
 import { FilterMode } from '@/pages/FineBook/DetailFine';
-import { dateState, DateState } from '@/store/dateState';
+import { dateState, DateState, initialDateState } from '@/store/dateState';
 import { weekList } from '@/utils/customedWeek';
 import dayjs, { Dayjs } from 'dayjs';
+import { useState } from 'react';
 import { useRecoilState } from 'recoil';
 import { DateFilter } from './DateFilter';
 
@@ -9,11 +10,13 @@ export type FilterModeTest = FilterMode | 'custom';
 
 export const useDateFilter = () => {
   const [calendarDate, setCalendarDate] = useRecoilState(dateState);
+  const [currentWeek, setCurrentWeek] = useState(0);
 
   const dateFilter = new DateFilter(calendarDate.mode);
 
   const goToWeek = (weekText: string) => {
     const week = weekList.indexOf(weekText) + 1;
+    setCurrentWeek(week);
     const baseDate = moveDateToWeek(calendarDate.baseDate, week);
     setCalendarDate(baseDate);
   };
@@ -33,9 +36,19 @@ export const useDateFilter = () => {
     return dateTitle;
   };
 
+  const initializeFilter = () => {
+    setCalendarDate(initialDateState);
+  };
+
   const changeDateByButtonMode = (buttonMode: FilterModeTest) => {
     const changedDateState = dateFilter.updateDateByButtonMode(calendarDate, buttonMode);
     setCalendarDate(changedDateState);
+
+    // week를 구하는 로직
+    const startDay = dayjs(changedDateState.baseDate).startOf('month').day();
+    const baseDate = dayjs(changedDateState.baseDate).date();
+    const week = Math.floor((startDay - 1 + baseDate) / 7) + 1;
+    setCurrentWeek(week);
   };
 
   /**
@@ -53,7 +66,7 @@ export const useDateFilter = () => {
     setCalendarDate(changedDateState);
   };
 
-  return { increaseDate, decreaseDate, getTitle, changeDateByButtonMode, goToWeek, changeDateByCustomMode };
+  return { increaseDate, decreaseDate, getTitle, changeDateByButtonMode, goToWeek, changeDateByCustomMode, currentWeek, initializeFilter };
 };
 
 export function moveDateToWeek(baseDate: Dayjs, week: number): DateState {
