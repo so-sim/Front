@@ -15,6 +15,7 @@ import Initialization from './Initialization.svg';
 import MobileCon from './MobileCon.svg';
 import MobileNon from './MobileNon.svg';
 import MobileFull from './MobileFull.svg';
+import Filter from './Filter.svg';
 
 export const SYSTEM = {
   ARTICLE: <Article />,
@@ -43,4 +44,5 @@ export const SYSTEM = {
   MOBILENON: <MobileNon />,
   MOBILECON: <MobileCon />,
   MOBILEFULL: <MobileFull />,
+  FILTER: <Filter />,
 };
