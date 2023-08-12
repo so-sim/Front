@@ -11,6 +11,7 @@ import PreParing from './PreParing.svg';
 import Search from './Search.svg';
 import Menu from './Menu.svg';
 import ToolTip from './ToolTip.svg';
+import Initialization from './Initialization.svg';
 
 export const SYSTEM = {
   ARTICLE: <Article />,
@@ -35,4 +36,5 @@ export const SYSTEM = {
   SEARCH_GRAY_LG: <Search fill="#E3E4E5" width={48} height={48} />,
   TOOLTIP: <ToolTip width={24} height={24} />,
   PLUS_WHITE: <Plus width={24} height={24} />,
+  INITIALIZATION: <Initialization />,
 };
