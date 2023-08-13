@@ -14,6 +14,8 @@ import * as Style from './styles';
 import MobileLayout from '@/layouts/Mobile/MobileLayout';
 import MobileFilterController from './MobileFilterController';
 import MobileDateController from './MobileDateController';
+import MobileAllCheckbox from './MobileAllCheckbox';
+import { ARROW } from '@/assets/icons/Arrow';
 
 type GroupedData = {
   [key: string]: SelectedEventInfo[];
@@ -62,15 +64,25 @@ const MobileDetailFine = () => {
     setGroupedListByDate((prev) => ({ ...prev, ...groupedData }));
   }, [data]);
 
+  const details = (Object.values(GroupedListByDate).flat() as SelectedEventInfo[]) ?? [];
+
   return (
-    <MobileLayout location="GROUP">
-      <div>
-        <MobileDateController />
-        <MobileFilterController openFilterSheet={handleOpenFilterSheet} />
-        <div>전체 체크박스</div>
-        <MobileDetailFineList details={GroupedListByDate} />
-        <div ref={ref} />
-      </div>
+    <>
+      <MobileLayout location="GROUP">
+        <div>
+          <Style.MobileDetailFineHeader>
+            <Style.ArrowButton>{ARROW.DOWN_LG_GRAY}</Style.ArrowButton>
+            <MobileDateController />
+            <MobileFilterController openFilterSheet={handleOpenFilterSheet} />
+            <MobileAllCheckbox //
+              details={details}
+              totalAmount={1000000}
+            />
+          </Style.MobileDetailFineHeader>
+          <MobileDetailFineList details={GroupedListByDate} />
+          <div ref={ref} />
+        </div>
+      </MobileLayout>
       {openFilterSheet && (
         <FilterBottomSheet //
           detailFilter={detailFilter}
@@ -78,7 +90,7 @@ const MobileDetailFine = () => {
           onClose={handleOpenFilterSheet}
         />
       )}
-    </MobileLayout>
+    </>
   );
 };
 

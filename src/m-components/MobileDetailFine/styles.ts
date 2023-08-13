@@ -51,3 +51,16 @@ export const CancelButton = styled.div`
   align-items: center;
   cursor: pointer;
 `;
+
+export const MobileDetailFineHeader = styled.div`
+  padding: 0 16px;
+  border-bottom: 1px solid ${({ theme }) => theme.colors.neutral_300_b};
+`;
+
+export const ArrowButton = styled.button`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 8px 0 12px 0;
+`;

@@ -6,7 +6,7 @@ export const Row = styled.div`
   align-items: center;
   justify-content: center;
   gap: 12px;
-  padding-top: 12px;
+  padding-bottom: 24px;
   ${({ theme }) => theme.font.subhead_03};
 `;
 
