@@ -28,6 +28,7 @@ export const SYSTEM = {
   NOTICE: <Notice />,
   PLUS: <Plus fill="#3C3C3C" width={32} height={32} />,
   PLUS_GRAY_SM: <Plus fill="#9C9C9C" width={16} height={16} />,
+  PLUS_BLACK_SM: <Plus fill="#6E6E6E" width={16} height={16} />,
   PLUS_GRAY: <Plus fill="#9C9C9C" width={32} height={32} />,
   SETTING_SM: <Settings width={14} height={14} />,
   SETTING_MD: <Settings width={17} height={17} />,
