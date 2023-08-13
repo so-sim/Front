@@ -2,7 +2,7 @@ import { SelectedEventInfo, Ground } from '@/types/event';
 import { Situation } from '@/types/event';
 import { convertFromPriceFormat } from '@/utils/convertFormat';
 
-type Action =
+export type Action =
   | { type: 'INIT'; initialData: Partial<SelectedEventInfo> }
   | { type: 'NICKNAME'; nickname: string }
   | { type: 'SITUATION'; situation: Situation }
