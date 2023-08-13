@@ -67,7 +67,7 @@ const useFinebook = (initialSelectData: SelectedEventInfo) => {
   const { mutateAsync: update, isLoading: updateLoading } = useUpdateDetail();
 
   const createDetail = async () => {
-    return create({ ...selectData, groupId: Number(groupId) });
+    return create({ ...selectData, groupId: Number(groupId), date: selectData.date.replaceAll('-', '.') });
   };
 
   const updateDetail = async () => {
