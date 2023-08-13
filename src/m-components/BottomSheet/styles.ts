@@ -19,7 +19,7 @@ export const BottomSheet = styled.div`
   bottom: 0;
   left: 0;
   width: 100%;
-  height: content-fit;
+  height: 340px;
   z-index: 1001;
   background-color: ${({ theme }) => theme.colors.secondary_100};
   border-radius: 8px 8px 0 0;
@@ -38,4 +38,5 @@ export const Header = styled.div`
 
 export const Body = styled.div`
   padding: 4px 24px 0 24px;
+  overflow-y: scroll;
 `;

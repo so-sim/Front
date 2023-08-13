@@ -64,12 +64,11 @@ const useFinebook = (initialSelectData: SelectedEventInfo) => {
   };
 
   const { mutateAsync: create, isLoading: createLoading } = useCreateDetail();
+  const { mutateAsync: update, isLoading: updateLoading } = useUpdateDetail();
 
   const createDetail = async () => {
     return create({ ...selectData, groupId: Number(groupId) });
   };
-
-  const { mutateAsync: update, isLoading: updateLoading } = useUpdateDetail();
 
   const updateDetail = async () => {
     return update(selectData);

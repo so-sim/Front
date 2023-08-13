@@ -5,7 +5,7 @@ import { useParams } from 'react-router-dom';
 type ConfirmButtonText = '확인요청' | '확인필요' | '확인중';
 export type SituationText = '납부 전' | '납부완료' | '승인대기' | '나타나면 이상한 거임';
 
-const SITUATION_LIST: SituationText[] = ['납부 전', '승인대기', '납부완료'];
+export const SITUATION_LIST: SituationText[] = ['납부 전', '승인대기', '납부완료'];
 
 type ServerSituation = '미납' | '확인중' | '완납';
 //  { [key in ServerSituation]: SituationText | { [str in ServerSituation]: SituationText } }
