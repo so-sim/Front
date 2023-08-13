@@ -16,6 +16,7 @@ export type FormFieldActions = {
   onChangeDate: (date: string) => void;
   onChangeGround: (ground: Ground) => void;
   onChangeMemo: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
+  onInitFormByServerData: (initialData: SelectedEventInfo) => void;
   createDetail: () => Promise<ServerResponse<EvnetId>>;
   updateDetail: () => Promise<ServerResponse<EvnetId>>;
 };
@@ -63,6 +64,10 @@ const useFinebook = (initialSelectData: SelectedEventInfo) => {
     dispatch({ type: 'INIT', initialData: doNotInitProperty('nickname', 'memo') });
   };
 
+  const onInitFormByServerData = (initialData: SelectedEventInfo) => {
+    dispatch({ type: 'INIT', initialData: { ...initialData, date: initialData.date.replaceAll('-', '.') } });
+  };
+
   const { mutateAsync: create, isLoading: createLoading } = useCreateDetail();
   const { mutateAsync: update, isLoading: updateLoading } = useUpdateDetail();
 
@@ -71,7 +76,7 @@ const useFinebook = (initialSelectData: SelectedEventInfo) => {
   };
 
   const updateDetail = async () => {
-    return update(selectData);
+    return update({ ...selectData, date: selectData.date.replaceAll('-', '.') });
   };
 
   const getFormFiledActions = (): FormFieldActions => {
@@ -85,6 +90,7 @@ const useFinebook = (initialSelectData: SelectedEventInfo) => {
       onChangeMemo,
       createDetail,
       updateDetail,
+      onInitFormByServerData,
     };
   };
 

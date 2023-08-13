@@ -13,6 +13,7 @@ import MobileAlarmSetting from '@/m-pages/MobileSetting/MobileAlarmSetting';
 import MobileDetailFine from '@/m-components/MobileDetailFine';
 import MobileMemberSearch from '@/m-pages/MobileMemberSearch';
 import MobileCreateFineBook from '@/m-pages/MobileCreateFineBook';
+import MobileUpdateFineBook from '@/m-pages/MobileUpdateFineBook';
 
 const MobileRouter = () => {
   return (
@@ -30,6 +31,7 @@ const MobileRouter = () => {
         <Route path="/m-group/:groupId/group-setting/group" element={<MobileGroupSetting />} />
         <Route path="/m-group/:groupId/group-setting/alarm" element={<MobileAlarmSetting />} />
         <Route path="/m-group/:groupId/create-finebook" element={<MobileCreateFineBook />} />
+        <Route path="/m-group/:groupId/update-finebook" element={<MobileUpdateFineBook />} />
         <Route path="/m-tos" element={<MobileTOS />} />
         <Route path="/m-setting" element={<MobileUserSetting />} />
         <Route path="/m-withdrawal" element={<MobileWithdrawal />} />
