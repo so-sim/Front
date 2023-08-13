@@ -2,6 +2,7 @@ import { ARROW } from '@/assets/icons/Arrow';
 import createCalendar from '@/utils/createCalendar';
 import dayjs, { Dayjs } from 'dayjs';
 import { Dispatch, FC, SetStateAction, useState } from 'react';
+import { isSafari } from 'react-device-detect';
 import * as Style from './styles';
 
 interface MiniCalendarProps {
@@ -11,13 +12,20 @@ interface MiniCalendarProps {
 }
 
 const MiniCalendar: FC<MiniCalendarProps> = ({ type, setType, setOpenDrop }) => {
-  const [baseDate, setBaseDate] = useState(dayjs(type));
+  /**
+   * Safari에서는 date에 '.'이 들어가면 오류가 발생한다.
+   * ex) 2021.09.01 : x
+   * ex) 2021-09-01 : o
+   *  */
+  const convertedType = isSafari ? type.replaceAll(/\./g, '-') : type;
+
+  const [baseDate, setBaseDate] = useState(dayjs(convertedType));
   const calendarArray = createCalendar(baseDate);
 
   const DAY_LIST = ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'];
 
   const handleDate = (date: Dayjs) => {
-    setType(date.format('YYYY.MM.DD'));
+    setType(date.format('YYYY-MM-DD'));
     setOpenDrop(false);
   };
 
@@ -47,15 +55,15 @@ const MiniCalendar: FC<MiniCalendarProps> = ({ type, setType, setOpenDrop }) => 
       </Style.DayTitle>
       {calendarArray.map((week) => {
         return (
-          <Style.Week key={week[0].format('YYYY.MM.DD')}>
+          <Style.Week key={week[0].format('YYYY-MM-DD')}>
             {week.map((date, i) => {
               return (
                 <Style.Day
                   isOtherMonth={date.month() !== baseDate.month()}
-                  isSelected={type === date.format('YYYY.MM.DD')}
+                  isSelected={type === date.format('YYYY-MM-DD')}
                   isSunday={i === 0}
                   onClick={() => handleDate(date)}
-                  key={date.format('YYYY.MM.DD')}
+                  key={date.format('YYYY-MM-DD')}
                 >
                   {date.date()}
                 </Style.Day>

@@ -14,14 +14,16 @@ export interface DateState {
   mode: FilterModeTest;
 }
 
+export const initialDateState: DateState = {
+  //  겹치는 week ui 구성 요소
+  baseDate: dayjs(),
+  startDate: dayjs(),
+  endDate: dayjs(),
+  mode: 'day',
+};
+
 export const dateState = atom<DateState>({
   key: 'dateState',
-  default: {
-    //  겹치는 week ui 구성 요소
-    baseDate: dayjs(),
-    startDate: dayjs(),
-    endDate: dayjs(),
-    mode: 'day',
-  },
+  default: initialDateState,
   effects_UNSTABLE: [persistAtom],
 });

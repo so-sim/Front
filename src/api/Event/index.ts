@@ -9,7 +9,7 @@ export const createEvent = async (detailInfo: Omit<EventInfoTest, 'eventId'>): P
   return data;
 };
 
-export const getOneOfEvent = async (eventId?: number): Promise<ServerResponse<Omit<EventInfoTest, 'groupId'>>> => {
+export const getOneOfEvent = async (eventId?: number): Promise<ServerResponse<SelectedEventInfo>> => {
   const { data } = await api.get(`/api/event/penalty/${eventId}`);
   return data;
 };

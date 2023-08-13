@@ -6,21 +6,21 @@ import { Ground, SelectedEventInfo } from '@/types/event';
 import { useParticipantList } from '@/queries/Group';
 import { Situation } from '@/types/event';
 import { convertToPriceFormat } from '@/utils/convertFormat';
-import React from 'react';
 import { useParams } from 'react-router-dom';
 import * as Style from '../styles';
 import CirCleCheckBox from './CircleCheckBox';
 import useSituationList, { SituationText } from '@/hooks/useSituationList';
+import { FormFieldActions } from '@/hooks/Group/useFinebook';
 
 const GA_SITUATION = { 미납: GA.NON.LIST_MODAL, 완납: GA.FULL.LIST_MODAL, 확인중: '' };
 
 const GroundArr: Ground[] = ['지각', '결석', '과제 안 함', '기타'];
 type Props = {
-  dispatch: any;
+  action: () => FormFieldActions;
   selectData: SelectedEventInfo;
 };
 
-const FormFileds = ({ selectData, dispatch }: Props) => {
+const FormFileds = ({ selectData, action }: Props) => {
   const { groupId } = useParams();
   const { data: participants } = useParticipantList(Number(groupId));
 
@@ -34,30 +34,14 @@ const FormFileds = ({ selectData, dispatch }: Props) => {
   const participantList = participants?.content.nicknameList.map((nickname) => ({ title: nickname })) || [];
   const memberList = [admin, ...participantList];
 
-  const onChangeNickName = (nickname: string) => {
-    dispatch({ type: 'NICKNAME', nickname });
-  };
-
-  const onChaneSituation = (situation: SituationText) => {
-    dispatch({ type: 'SITUATION', situation: convertTextToSituation(situation) });
-  };
-
-  const onChangeAmount = (e: React.ChangeEvent<HTMLInputElement>) => {
-    dispatch({ type: 'AMOUNT', amount: e.target.value });
-    // console.log(e.target.value);
-  };
-
-  const onChangeDate = (date: string) => {
-    dispatch({ type: 'DATE', date });
-  };
-
-  const onChangeGround = (ground: Ground) => {
-    dispatch({ type: 'GROUND', ground });
-  };
-
-  const onChangeMemo = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    dispatch({ type: 'MEMO', memo: e.target.value });
-  };
+  const {
+    onChaneSituation, //
+    onChangeAmount,
+    onChangeDate,
+    onChangeGround,
+    onChangeMemo,
+    onChangeNickName,
+  } = action();
 
   return (
     <>

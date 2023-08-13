@@ -3,8 +3,7 @@ import { Button, DropBox, Input, Label } from '@/components/@common';
 import { GroupColorList } from '@/components/@common/GroupColorList';
 import { DROPDOWN_LIST } from '@/constants/Group';
 import useGroupForm from '@/hooks/Group/useGroupForm';
-import MobileLayout from '@/layouts/Mobile';
-import MobileHeader from '@/layouts/Mobile/components/MobileHeader';
+import ModalPageLayout from '@/layouts/Mobile/ModalPageLayout';
 import { useNavigate } from 'react-router-dom';
 
 const MobileCreateGroup = () => {
@@ -25,8 +24,7 @@ const MobileCreateGroup = () => {
   };
 
   return (
-    <MobileLayout>
-      <MobileHeader title="모임만들기" left={{ icon: ARROW.LEFT_MD, onClick: goBack }} />
+    <ModalPageLayout title="모임만들기" left={{ icon: ARROW.LEFT_MD, onClick: goBack }}>
       <div style={{ padding: '0 16px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
         <div>
           <Label title="모임 이름" flexDirection="column">
@@ -75,7 +73,7 @@ const MobileCreateGroup = () => {
           만들기
         </Button>
       </div>
-    </MobileLayout>
+    </ModalPageLayout>
   );
 };
 

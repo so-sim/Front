@@ -33,7 +33,7 @@ export interface ParticipantList {
 }
 
 export interface SearchedParticipantList {
-  nicknameList: { nickname: string }[];
+  nicknameList: { nickname: string; withdraw: boolean }[];
 }
 
 export interface CoverGroupInfo {

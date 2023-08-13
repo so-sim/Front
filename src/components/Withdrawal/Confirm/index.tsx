@@ -1,6 +1,7 @@
 import Button from '@/components/@common/Button';
 import { WITHDRWWAL_LIST } from '@/constants/Withdrawal';
 import React, { Dispatch, FC, SetStateAction, useState } from 'react';
+import { isMobile } from 'react-device-detect';
 import * as Style from './styles';
 
 interface WithdrawalConfirmProps {
