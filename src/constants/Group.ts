@@ -6,7 +6,7 @@ export const PLACEHOLDER = {
 };
 
 export const DROPDOWN_LIST: { title: GroupType }[] = [
-  { title: '스터디' },
+  // { title: '스터디' },
   { title: '학교, 교내/외 모임' },
   { title: '회사, 사내 모임' },
   { title: '취미, 동호회 모임' },
