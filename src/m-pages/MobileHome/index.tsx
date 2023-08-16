@@ -1,10 +1,10 @@
 import MobileLayout from '@/layouts/Mobile/MobileLayout';
 import MobileGroupSection from '@/m-components/MobileHome/GroupSection';
 
+// 이렇게 안 하니까 height가 이상하게 잡혀요 왜일까요...
 const MobileHome = () => {
   return (
     <MobileLayout location="HOME">
-      <div style={{ height: '200px', width: '100%', backgroundColor: '#000000' }} />
       <MobileGroupSection />
     </MobileLayout>
   );
