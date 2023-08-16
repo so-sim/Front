@@ -5,6 +5,8 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import * as Style from './styles';
 
+import { Footer } from '../Footer';
+
 const MobileGroupSection = () => {
   const { groups, ref, hasNextPage } = useInfinityGroupList();
   const navigate = useNavigate();
@@ -18,8 +20,9 @@ const MobileGroupSection = () => {
   };
 
   return (
-    <>
-      <Style.GroupSection>
+    <Style.GroupSection>
+      <div>
+        <div style={{ height: '200px', width: '100%', backgroundColor: '#000000' }} />
         <Style.Title>참여 모임</Style.Title>
         <Style.CardList>
           <AddCard onClick={moveToCreateGroup} size="sm" />
@@ -37,8 +40,9 @@ const MobileGroupSection = () => {
           ))}
         </Style.CardList>
         <div ref={ref} />
-      </Style.GroupSection>
-    </>
+      </div>
+      <Footer />
+    </Style.GroupSection>
   );
 };
 
