@@ -38,5 +38,6 @@ export const Header = styled.div`
 
 export const Body = styled.div`
   padding: 4px 24px 0 24px;
+  height: calc(100% - 54px);
   overflow-y: scroll;
 `;
