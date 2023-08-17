@@ -3,10 +3,9 @@ import styled from '@emotion/styled';
 // 전체에 100vh를 가진 flex를 주고  마지막 calendar에만 flex1 주면 해결되긴함 (기기별 높이 반응형을 고려할 때 )
 
 export const Container = styled.div`
-  position: relative;
+  /* position: relative; */
 
-  height: 100vh;
-  padding-top: 1.375rem;
+  padding: 1.375rem 1rem;
 `;
 
 export const DateControllerWrapper = styled.div`
