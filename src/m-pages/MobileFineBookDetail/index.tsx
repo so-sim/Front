@@ -56,9 +56,6 @@ const MobileFineBookDetail = () => {
   const { dropdownList, convertTextToSituation, convertSituationToText } = useSituationList(situation);
 
   const isOwn = nickname === myNickname?.content.nickname;
-  const filteredSituationList = dropdownList //
-    .filter((title) => convertTextToSituation(title) !== situation)
-    .map((title) => ({ title }));
 
   const goBack = () => {
     navigate(-1);
