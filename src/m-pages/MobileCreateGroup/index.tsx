@@ -19,7 +19,7 @@ const MobileCreateGroup = () => {
     createGroupLoading,
     setError,
     getGroupFormAction,
-  } = useGroupForm();
+  } = useGroupForm('create');
 
   const { handleGroupFormData, createGroup } = getGroupFormAction();
   const navigate = useNavigate();

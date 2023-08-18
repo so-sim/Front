@@ -34,7 +34,7 @@ export type GroupFormHook = {
   setError: (target: 'nickname' | 'groupName', message: string) => string;
 };
 
-const useGroupForm = (): GroupFormHook => {
+const useGroupForm = (formType?: 'create' | 'update'): GroupFormHook => {
   const { groupId } = useParams();
 
   const { formState, isValid, setFormState } = useFormState<GroupFormData>(initialValue, isValidGroupForm);
@@ -93,6 +93,8 @@ const useGroupForm = (): GroupFormHook => {
 
   useEffect(() => {
     if (!groupData) return;
+    if (formType === 'create' || !Boolean(formType)) return;
+
     const { title, coverColor, type, adminNickname } = groupData.content;
     setFormState({ title, coverColor, type, nickname: adminNickname });
   }, [groupData]);

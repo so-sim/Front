@@ -19,7 +19,7 @@ const MobileGroupSetting = () => {
     isError,
     setError,
     getGroupFormAction,
-  } = useGroupForm();
+  } = useGroupForm('update');
 
   const { updateGroupForm } = getGroupFormAction();
 
