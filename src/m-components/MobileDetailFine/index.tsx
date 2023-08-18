@@ -16,6 +16,8 @@ import MobileFilterController from './MobileFilterController';
 import MobileDateController from './MobileDateController';
 import MobileAllCheckbox from './MobileAllCheckbox';
 import { ARROW } from '@/assets/icons/Arrow';
+import MobileToolbar from './MobileToolbar';
+import useCheckListState from '@/hooks/useCheckListState';
 
 type GroupedData = {
   [key: string]: SelectedEventInfo[];
@@ -66,6 +68,11 @@ const MobileDetailFine = () => {
 
   const details = (Object.values(GroupedListByDate).flat() as SelectedEventInfo[]) ?? [];
 
+  const {
+    checkedSize,
+    setCheckDetailFine: { setInitCheckDetailFine },
+  } = useCheckListState();
+
   return (
     <>
       <MobileLayout location="GROUP">
@@ -90,6 +97,7 @@ const MobileDetailFine = () => {
           onClose={handleOpenFilterSheet}
         />
       )}
+      {checkedSize > 0 && <MobileToolbar />}
     </>
   );
 };
