@@ -1,6 +1,7 @@
 import { ARROW } from '@/assets/icons/Arrow';
 import ModalPageLayout from '@/layouts/Mobile/ModalPageLayout';
 import { useNavigate, useParams } from 'react-router-dom';
+import * as Style from './styles';
 
 type SettingType = 'group' | 'alarm';
 
@@ -23,13 +24,13 @@ const MobileSetting = () => {
 
   return (
     <ModalPageLayout left={{ icon: ARROW.LEFT, onClick: goBack }} title="모임 설정">
-      <div style={{ margin: '20px 16px 0 16px' }}>
+      <ul style={{ marginTop: '20px' }}>
         {SETTING_LIST.map(({ type, value }) => (
-          <div key={value} onClick={() => moveToSettingPage(type)}>
+          <Style.ListItem key={value} onClick={() => moveToSettingPage(type)}>
             {value}
-          </div>
+          </Style.ListItem>
         ))}
-      </div>
+      </ul>
     </ModalPageLayout>
   );
 };
