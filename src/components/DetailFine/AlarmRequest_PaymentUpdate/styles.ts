@@ -35,8 +35,8 @@ export const CloseIcon = styled.span`
   cursor: pointer;
 `;
 
-export const Main = styled.div`
-  padding: 24px;
+export const Main = styled.div<{ $isMobile: boolean }>`
+  padding: ${({ $isMobile }) => ($isMobile ? '24px 0' : '24px')};
 `;
 
 export const Title = styled.h3`
@@ -83,6 +83,7 @@ export const ListContainer = styled.ul`
 export const Footer = styled.div`
   display: flex;
   justify-content: space-between;
+  gap: 12px;
 
   position: absolute;
   bottom: 0;
@@ -94,7 +95,7 @@ export const Footer = styled.div`
 `;
 
 export const Button = styled.button<{ isSubmit?: boolean }>`
-  width: 200px;
+  flex: 1;
   padding: 11px 0;
 
   box-shadow: inset 0 0 0 1px ${({ theme }) => theme.colors.secondary_800};

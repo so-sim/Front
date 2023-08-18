@@ -3,7 +3,7 @@ import { SYSTEM } from '@/assets/icons/System';
 import theme from '@/styles/Theme';
 import { CheckDetailFine, SelectedEventInfo_Checked, SetCheckDetailFine } from '@/components/DetailFine/AlarmRequest_PaymentUpdate/hooks/useCheckDetailFine';
 import { useUpdateDetailStatus } from '@/queries/Detail';
-import { useParams, useSearchParams } from 'react-router-dom';
+import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import CheckedFineList from './CheckedFineList';
 import { useParticipantList } from '@/queries/Group';
 import { useEffect, useState } from 'react';
@@ -18,6 +18,7 @@ import SingleCheckedFineList from './SingleCheckedFineList';
 import useCheckListState, { addCheckDetailFine, subtractCheckDetailFine } from '@/hooks/useCheckListState';
 import { CheckListState } from '@/store/checkListState';
 import useCheckSet from './hooks/useCheckSet';
+import { isMobile } from 'react-device-detect';
 
 type Props = {
   checkDetailFine: CheckListState;
@@ -69,6 +70,7 @@ const filterByNickName = (prev: CheckListState, name: string, list: SelectedEven
 
 const AlarmRequest_PaymentUpdate = ({ checkDetailFine }: Props) => {
   const { groupId } = useParams();
+  const navigate = useNavigate();
 
   const [sideModal, setSideModal] = useRecoilState(sideModalState);
 
@@ -133,7 +135,8 @@ const AlarmRequest_PaymentUpdate = ({ checkDetailFine }: Props) => {
     } else {
       setSituationToChange('완납');
     }
-  }, [checkDetailFine]);
+  }, [checkDetailFine, isAdmin]);
+  // 깜빡임 해결이 필요..
 
   const closePage = () => {
     setSideModal(initialSideModalState);
@@ -184,60 +187,80 @@ const AlarmRequest_PaymentUpdate = ({ checkDetailFine }: Props) => {
 
   return (
     <>
-      <Style.UserDetailsFrame onClick={(e) => e.stopPropagation()}>
-        <Style.Header>
-          <Style.CloseIcon onClick={closePage}>{SYSTEM.CLOSE_LG}</Style.CloseIcon>
-          <span>닫기</span>
-        </Style.Header>
+      <Style.Main $isMobile={isMobile}>
+        {/* Title 영역 */}
+        {type && Status[type].title}
+        {type && Status[type].subTitle(situationToChange)}
 
-        <Style.Main>
-          {/* Title 영역 */}
-          {type && Status[type].title}
-          {type && Status[type].subTitle(situationToChange)}
+        {/* Situation 변경 확인 Buttons */}
+        {
+          type === 'situation_change' && <SituationButton situationToChange={situationToChange} setSituationToChange={setSituationToChange} currentSituation={currentSituation} />
+          // 스타일 재정의 필요
+        }
 
-          {/* Situation 변경 확인 Buttons */}
-          {
-            type === 'situation_change' && <SituationButton situationToChange={situationToChange} setSituationToChange={setSituationToChange} currentSituation={currentSituation} />
-            // 스타일 재정의 필요
-          }
+        {/* List의 기간 */}
+        <Style.DatePeriodContainer>
+          <Style.DatePeriodText>
+            {min_Date(sortedtList)} - {max_Date(sortedtList)}
+          </Style.DatePeriodText>
+          {isSingleList(originalCheckListValue) && <Style.TotalAmount>{TotalAmount} 원</Style.TotalAmount>}
+        </Style.DatePeriodContainer>
 
-          {/* List의 기간 */}
-          <Style.DatePeriodContainer>
-            <Style.DatePeriodText>
-              {min_Date(sortedtList)} - {max_Date(sortedtList)}
-            </Style.DatePeriodText>
-            {isSingleList(originalCheckListValue) && <Style.TotalAmount>{TotalAmount} 원</Style.TotalAmount>}
-          </Style.DatePeriodContainer>
+        {/* List 영역 */}
+        <Style.ListContainer>
+          {isSingleList(originalCheckListValue) ? (
+            <SingleCheckedFineList checkDetailFine={originalCheckListValue} setCheckDetailFine={setToggleCheckList} isChecked={isChecked} />
+          ) : (
+            participantList?.map((nickName) => (
+              <CheckedFineList
+                key={nickName}
+                myName={nickName as string}
+                list={participantSituation_List(nickName as string, sortedtList)}
+                isChecked={isChecked}
+                setCheckDetailFine={setToggleCheckListByName}
+              />
+            ))
+          )}
+        </Style.ListContainer>
+      </Style.Main>
+      {/* 하위 Button 컴포넌트 */}
+      <Style.Footer>
+        <Style.Button onClick={isMobile ? () => navigate(-1) : closePage}>취소</Style.Button>
 
-          {/* List 영역 */}
-          <Style.ListContainer>
-            {isSingleList(originalCheckListValue) ? (
-              <SingleCheckedFineList checkDetailFine={originalCheckListValue} setCheckDetailFine={setToggleCheckList} isChecked={isChecked} />
-            ) : (
-              participantList?.map((nickName) => (
-                <CheckedFineList
-                  key={nickName}
-                  myName={nickName as string}
-                  list={participantSituation_List(nickName as string, sortedtList)}
-                  isChecked={isChecked}
-                  setCheckDetailFine={setToggleCheckListByName}
-                />
-              ))
-            )}
-          </Style.ListContainer>
-        </Style.Main>
-        {/* 하위 Button 컴포넌트 */}
-        <Style.Footer>
-          <Style.Button>취소</Style.Button>
+        <Style.Button isSubmit={true} onClick={type === 'situation_change' ? updateSituation : requestAlarm}>
+          변경하기
+        </Style.Button>
+      </Style.Footer>
 
-          <Style.Button isSubmit={true} onClick={type === 'situation_change' ? updateSituation : requestAlarm}>
-            변경하기
-          </Style.Button>
-        </Style.Footer>
-      </Style.UserDetailsFrame>
-      <Style.BackDrop onClick={(e) => e.stopPropagation()} />
+      {/* <Style.BackDrop onClick={(e) => e.stopPropagation()} /> */}
     </>
   );
 };
+
+const DesktopFrame = ({ children }: React.PropsWithChildren) => {
+  return (
+    <>
+      <Style.UserDetailsFrame>{children}</Style.UserDetailsFrame>
+      <Style.BackDrop />
+    </>
+  );
+};
+
+const DesktopHeader = () => {
+  const [sideModal, setSideModal] = useRecoilState(sideModalState);
+
+  const closePage = () => {
+    setSideModal(initialSideModalState);
+  };
+  return (
+    <Style.Header>
+      <Style.CloseIcon onClick={closePage}>{SYSTEM.CLOSE_LG}</Style.CloseIcon>
+      <span>닫기</span>
+    </Style.Header>
+  );
+};
+
+AlarmRequest_PaymentUpdate.DesktopFrame = DesktopFrame;
+AlarmRequest_PaymentUpdate.DesktopHeader = DesktopHeader;
 
 export default AlarmRequest_PaymentUpdate;
