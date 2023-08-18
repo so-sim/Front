@@ -105,7 +105,7 @@ const FilterBottomSheet = ({ detailFilter, setDetailFilter, onClose }: Props) =>
                   }}
                 >
                   <Style.CustomTitle>시작일</Style.CustomTitle>
-                  <Style.DateBox>{dayjs(calendarDate.startDate).format('YYYY.MM.DD')}</Style.DateBox>
+                  <Style.DateBox>{dayjs(calendarDate.startDate).format('YYYY-MM-DD')}</Style.DateBox>
                 </Style.CustomDateBox>
                 <div>-</div>
                 <Style.CustomDateBox
@@ -115,7 +115,7 @@ const FilterBottomSheet = ({ detailFilter, setDetailFilter, onClose }: Props) =>
                   }}
                 >
                   <Style.CustomTitle>종료일</Style.CustomTitle>
-                  <Style.DateBox>{dayjs(calendarDate.endDate).format('YYYY.MM.DD')}</Style.DateBox>
+                  <Style.DateBox>{dayjs(calendarDate.endDate).format('YYYY-MM-DD')}</Style.DateBox>
                 </Style.CustomDateBox>
               </>
             )}
@@ -141,7 +141,7 @@ const FilterBottomSheet = ({ detailFilter, setDetailFilter, onClose }: Props) =>
       {Boolean(dateType) && openCalendar && (
         <div style={{ position: 'fixed', top: 0, zIndex: '150' }}>
           <MiniCalendar //
-            type={dayjs(calendarDate.startDate).format('YYYY.MM.DD')}
+            type={dayjs(calendarDate.startDate).format('YYYY-MM-DD')}
             setType={handleDate}
             setOpenDrop={setOpenCalendar}
           />

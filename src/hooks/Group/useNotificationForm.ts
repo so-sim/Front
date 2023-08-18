@@ -9,7 +9,7 @@ const initialValue: NotificationInfo = {
   enableNotification: true,
   settingType: 'M',
   repeatCycle: 1,
-  startDate: dayjs().format('YYYY.MM.DD'),
+  startDate: dayjs().format('YYYY-MM-DD'),
   sendTime: '19:00',
   monthSettingType: 'SIMPLE_DATE',
   sendDay: dayjs().date(),

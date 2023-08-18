@@ -12,7 +12,7 @@ const SelectedFineContext = createContext<SelectedFineState | null>(null);
 export const initialSelectData: SelectedEventInfo = {
   eventId: 0,
   memo: '',
-  date: dayjs().format('YYYY.MM.DD'),
+  date: dayjs().format('YYYY-MM-DD'),
   situation: '미납',
   nickname: '',
   amount: 0,

@@ -9,7 +9,7 @@ import { pushDataLayer } from '@/utils/pushDataLayer';
 import { Situation } from '@/types/event';
 
 export const useGetDetailList = (detailFilter: DetailFilter, calendarDate: DateState) => {
-  const detailFilterProperty = { ...detailFilter, startDate: dayjs(calendarDate.startDate).format('YYYY.MM.DD'), endDate: dayjs(calendarDate.endDate).format('YYYY.MM.DD') };
+  const detailFilterProperty = { ...detailFilter, startDate: dayjs(calendarDate.startDate).format('YYYY-MM-DD'), endDate: dayjs(calendarDate.endDate).format('YYYY-MM-DD') };
 
   const query = detailFilterToQuery(detailFilterProperty);
   const prevQuery = useRef({ ...detailFilter, mode: calendarDate.mode });
