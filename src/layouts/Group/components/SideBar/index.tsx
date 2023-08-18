@@ -51,10 +51,10 @@ const GroupSideBar = () => {
 
   useEffect(() => {
     if (groupData && !groupData.content.isInto) {
-      // navigate('/');
+      navigate('/');
     }
     if (!groupData && isError) {
-      // navigate('/');
+      navigate('/');
     }
   }, [groupId, isError, groupData?.content.isInto]);
 
