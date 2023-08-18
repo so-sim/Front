@@ -1,7 +1,7 @@
 import { ConfirmModalType } from '@/constants/Confirm';
 import { atom } from 'recoil';
 
-type ModalType = 'situation_change' | 'alarm_request';
+export type ModalType = 'situation_change' | 'alarm_request';
 
 export interface SideModalState {
   type: ModalType | null;

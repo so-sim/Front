@@ -15,6 +15,8 @@ import MobileMemberSearch from '@/m-pages/MobileMemberSearch';
 import MobileCreateFineBook from '@/m-pages/MobileCreateFineBook';
 import MobileUpdateFineBook from '@/m-pages/MobileUpdateFineBook';
 import MobileUserGroupSetting from '@/m-pages/MobileSetting/MobileUserGroupSetting';
+import MobileFineBookDetail from '@/m-pages/MobileFineBookDetail';
+import MobileAlarmRequest_Payment from '@/m-pages/MobileAlarmRequest_Payment';
 
 const MobileRouter = () => {
   return (
@@ -28,12 +30,14 @@ const MobileRouter = () => {
         <Route path="/m-group/:groupId/book" element={<MobileCalendar />} />
         <Route path="/m-group/:groupId/book/member-search" element={<MobileMemberSearch />} />
         <Route path="/m-group/:groupId/book/detail" element={<MobileDetailFine />} />
+        <Route path="/m-group/:groupId/book/detail/:fineBookDetailId" element={<MobileFineBookDetail />} />
         <Route path="/m-group/:groupId/group-setting" element={<MobileSetting />} />
         <Route path="/m-group/:groupId/group-setting/user-group" element={<MobileUserGroupSetting />} />
         <Route path="/m-group/:groupId/group-setting/group" element={<MobileGroupSetting />} />
         <Route path="/m-group/:groupId/group-setting/alarm" element={<MobileAlarmSetting />} />
         <Route path="/m-group/:groupId/create-finebook" element={<MobileCreateFineBook />} />
         <Route path="/m-group/:groupId/update-finebook" element={<MobileUpdateFineBook />} />
+        <Route path="/m-group/:groupId/book/alarm" element={<MobileAlarmRequest_Payment />} />
         <Route path="/m-tos" element={<MobileTOS />} />
         <Route path="/m-setting" element={<MobileUserSetting />} />
         <Route path="/m-withdrawal" element={<MobileWithdrawal />} />
