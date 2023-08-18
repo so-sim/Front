@@ -35,7 +35,7 @@ export const getMobileDetailList = async (query: Partial<MobileType>): Promise<S
   return data;
 };
 
-export const getDetailListById = async (eventIds: { groupId?: number; eventIdsList: number[] }) => {
+export const getDetailListById = async (eventIds: { groupId?: number; eventIdsList: number[] }): Promise<ServerResponse<EventInfoListTest>> => {
   const { groupId, eventIdsList } = eventIds;
 
   const { data } = await api.get(`api/events?groupId=${groupId}&eventIdList=${eventIdsList}`);

@@ -4,11 +4,13 @@ import DetailListCheckBox from '@/components/DetailFine/checkbox';
 
 import useCheckListState from '@/hooks/useCheckListState';
 import { useGetDetailListById } from '@/queries/Detail/useGetDetailListById';
+import { sideModalState } from '@/store/sideModalState';
 import { EventInfoListTest, SelectedEventInfo } from '@/types/event';
 import { ServerResponse } from '@/types/serverResponse';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
+import { useRecoilState } from 'recoil';
 
 type GroupedData = {
   [key: string]: SelectedEventInfo[];
@@ -25,6 +27,7 @@ const SituationStatusIcon = {
 
 const MobileDetailFineList = ({ details }: Props) => {
   const { groupId } = useParams();
+  const navigate = useNavigate();
   const {
     checkDetailFineValues,
     checkDetailFineKeys,
@@ -36,6 +39,17 @@ const MobileDetailFineList = ({ details }: Props) => {
   // const { data } = useGetDetailListById(Number(groupId), [...stringTonumber]);
   // 해당 부분은 알림클릭 시 이동되는 페이지 사용   ((테스트용으로 생성해보았습니다. 지우셔도 상관없습니다.))
 
+  const goToFineBookDetail = (eventId: number) => {
+    navigate(`/m-group/${groupId}/book/detail/${eventId}`);
+  };
+
+  const handleToggleCheckList = (event: React.MouseEvent<HTMLInputElement>, detail: SelectedEventInfo) => {
+    event.stopPropagation();
+    setToggleCheckList(detail);
+  };
+
+  console.log(checkDetailFineValues);
+
   return (
     <>
       <DetailFineListContainer>
@@ -44,12 +58,12 @@ const MobileDetailFineList = ({ details }: Props) => {
             <DateText>{Object.keys(details)[index]}</DateText>
 
             {item.map((item) => (
-              <DetailFineItem>
+              <DetailFineItem onClick={() => goToFineBookDetail(item.eventId)}>
                 <CheckboxContainer
                   id={String(item.eventId)}
                   isChecked={isChecked(item.eventId)}
                   // 이거는 전체 눌렀을 때 체크가 되야겠죠?
-                  onChange={() => setToggleCheckList(item)}
+                  onChange={(event: React.MouseEvent<HTMLInputElement>) => handleToggleCheckList(event, item)}
                 >
                   <CheckboxContainer.Checkbox as={DetailListCheckBox} />
                   {/*    이 부분 props를 자연스럽게 넘겨주려면 이 방법 밖에?? function으로 넘겨주는 방법도 있긴한데,  이거는 rest props 안넘어옴 */}

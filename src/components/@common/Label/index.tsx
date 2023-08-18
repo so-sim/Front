@@ -1,4 +1,5 @@
 import React, { FC, PropsWithChildren, CSSProperties } from 'react';
+import { isMobile } from 'react-device-detect';
 import * as Style from './styles';
 
 interface LabelProps extends PropsWithChildren {
