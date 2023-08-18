@@ -7,6 +7,7 @@ import { useParams } from 'react-router-dom';
 import { useEffect } from 'react';
 import { ServerResponse } from '@/types/serverResponse';
 import { GroupId } from '@/types/group';
+import useConfirmModal from '../useConfirmModal';
 
 const initialValue: GroupFormData = {
   title: '',
@@ -38,6 +39,8 @@ const useGroupForm = (formType?: 'create' | 'update'): GroupFormHook => {
   const { groupId } = useParams();
 
   const { formState, isValid, setFormState } = useFormState<GroupFormData>(initialValue, isValidGroupForm);
+  const { openConfirmModal, closeConfirmModal } = useConfirmModal();
+
   const [isError, setError] = useError({
     nickname: '',
     groupName: '',
@@ -80,12 +83,46 @@ const useGroupForm = (formType?: 'create' | 'update'): GroupFormHook => {
     withdrawalGroupMutate({ groupId: Number(groupId) });
   };
 
+  const handleGroupDeleteModal = () => {
+    if (hasUser()) {
+      openConfirmModal({
+        type: 'GROUP_DELETE_HAS_USER',
+        confirm: closeConfirmModal,
+      });
+    }
+
+    if (!hasUser()) {
+      openConfirmModal({
+        type: 'GROUP_DELETE_NO_USER',
+        confirm: deleteGroup,
+        cancel: closeConfirmModal,
+      });
+    }
+  };
+
+  const handleGroupWithdrawalModal = () => {
+    if (hasUser()) {
+      openConfirmModal({
+        type: 'GROUP_WITHDRAWAL_ADMIN_HAS_USER',
+        confirm: closeConfirmModal,
+      });
+    }
+
+    if (!hasUser()) {
+      openConfirmModal({
+        type: 'GROUP_WITHDRAWAL_ADMIN_NO_USER',
+        confirm: withdrwalGroup,
+        cancel: closeConfirmModal,
+      });
+    }
+  };
+
   const getGroupFormAction = (): GroupFormAction => {
     return {
       createGroup,
       updateGroupForm,
-      deleteGroup,
-      withdrwalGroup,
+      deleteGroup: handleGroupDeleteModal,
+      withdrwalGroup: handleGroupWithdrawalModal,
       hasUser,
       handleGroupFormData,
     };

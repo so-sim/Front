@@ -18,43 +18,8 @@ type Props = {
 
 const GroupForm = ({ groupForm, isError, setError, getGroupFormAction }: Props) => {
   const { groupId } = useParams();
-  const { openConfirmModal, closeConfirmModal } = useConfirmModal();
-  const { handleGroupFormData, hasUser, deleteGroup, withdrwalGroup } = getGroupFormAction();
+  const { handleGroupFormData, deleteGroup, withdrwalGroup } = getGroupFormAction();
   const { data: groupData } = useGroupDetail(Number(groupId));
-
-  const handleGroupDeleteModal = () => {
-    if (hasUser()) {
-      openConfirmModal({
-        type: 'GROUP_DELETE_HAS_USER',
-        confirm: closeConfirmModal,
-      });
-    }
-
-    if (!hasUser()) {
-      openConfirmModal({
-        type: 'GROUP_DELETE_NO_USER',
-        confirm: deleteGroup,
-        cancel: closeConfirmModal,
-      });
-    }
-  };
-
-  const handleGroupWithdrawalModal = () => {
-    if (hasUser()) {
-      openConfirmModal({
-        type: 'GROUP_WITHDRAWAL_ADMIN_HAS_USER',
-        confirm: closeConfirmModal,
-      });
-    }
-
-    if (!hasUser()) {
-      openConfirmModal({
-        type: 'GROUP_WITHDRAWAL_ADMIN_NO_USER',
-        confirm: withdrwalGroup,
-        cancel: closeConfirmModal,
-      });
-    }
-  };
 
   return (
     <Style.Container>
@@ -99,10 +64,10 @@ const GroupForm = ({ groupForm, isError, setError, getGroupFormAction }: Props) 
         <Label title="모임 탈퇴" flexDirection="column" />
         <Style.WithDrwal>
           <Style.GroupName>{groupData?.content.title}</Style.GroupName>
-          <Style.QuitButton onClick={handleGroupWithdrawalModal}>탈퇴</Style.QuitButton>
+          <Style.QuitButton onClick={withdrwalGroup}>탈퇴</Style.QuitButton>
         </Style.WithDrwal>
         <Style.Flex>
-          <Style.DeleteButton onClick={handleGroupDeleteModal}>모임 삭제</Style.DeleteButton>
+          <Style.DeleteButton onClick={deleteGroup}>모임 삭제</Style.DeleteButton>
         </Style.Flex>
       </div>
     </Style.Container>
