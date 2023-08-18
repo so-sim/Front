@@ -15,13 +15,19 @@ export const CONFIRM_MODAL = {
   },
   CHANGE_STATUS: {
     title: '납부여부 변경',
-    description: '납부여부를 변경하시겠습니까?',
+    description: `납부여부를 변경하시겠습니까? \n변경 후, 총무에게 확인 요청을 보내야 변경이 완료됩니다.`,
     cancel: '취소',
     confirm: '변경하기',
   },
   REQUEST_CHANGE_STATUS: {
     title: '납부여부 변경',
-    description: `총무에게 확인 요청을 보내시겠습니까? \n 요청 후 변경이 불가능합니다.`,
+    description: `총무에게 확인 요청을 보내시겠습니까? \n 변경 시, 총무에게 알림이 가며\n 총무의 승인이 필요합니다.`,
+    cancel: '취소',
+    confirm: '요청하기',
+  },
+  REQUEST_PAYMENT: {
+    title: '납부요청',
+    description: `벌금 납부를 요청하시겠습니까? \n 요청 시, 해당 팀원에게 알림이 갑니다.`,
     cancel: '취소',
     confirm: '요청하기',
   },
@@ -69,5 +75,15 @@ export const CONFIRM_MODAL = {
     description: `벌금 내역을 삭제하시겠습니까? \n 삭제된 내역은 복구가 불가능합니다.`,
     cancel: '취소',
     confirm: '삭제하기',
+  },
+  NOTICE_ONLY_ONE: {
+    title: '알림',
+    description: `"납부 전" 상태인 팀원에게만\n납부요청을 보낼 수 있습니다.`,
+    confirm: '확인',
+  },
+  NOTICE_ALREADY_SEND: {
+    title: '알림',
+    description: `이미 납부 요청을 보낸 내역의 경우,\n24시간 후에 재요청 할 수 있습니다.`,
+    confirm: '확인',
   },
 };
