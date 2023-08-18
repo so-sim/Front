@@ -1,5 +1,6 @@
 import { ModalProps, ModalFooterProps, ModalHeaderProps } from './index';
 import styled from '@emotion/styled';
+import { isMobile } from 'react-device-detect';
 
 export const Overlay = styled.div`
   position: fixed;
@@ -29,7 +30,7 @@ export const ModalFrame = styled.div<ModalProps>`
   margin: auto;
   z-index: 10;
   background-color: white;
-  padding: 24px 32px;
+  padding: ${isMobile ? '24px' : '24px 32px'};
 
   box-shadow: 2px 0px 25px 7px rgba(156, 156, 156, 0.15);
 `;
@@ -64,5 +65,5 @@ export const ModalFooter = styled.div<Pick<ModalFooterProps, 'flexDirection'>>`
   display: flex;
   flex-direction: ${(props) => props.flexDirection};
   gap: 12px;
-  margin-top: 32px;
+  margin-top: ${isMobile ? '24px' : '32px'};
 `;

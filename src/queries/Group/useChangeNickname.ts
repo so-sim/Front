@@ -6,14 +6,14 @@ import { AxiosError } from 'axios';
 import { ServerResponse } from '@/types/serverResponse';
 
 interface UseChangeNicknameProps {
-  modalHandler: () => void;
+  modalHandler?: () => void;
   setError: <P extends 'nickname'>(target: P, message: string) => string;
 }
 
 export const useChangeNickname = ({ modalHandler, setError }: UseChangeNicknameProps) => {
   return useMutation(changeNickname, {
     onSuccess: () => {
-      modalHandler();
+      modalHandler && modalHandler();
       ToastPopUp({ type: 'success', message: TOAST_SUCCESS.UPDATE_GROUP });
     },
     onError: (error) => {

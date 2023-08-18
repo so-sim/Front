@@ -6,6 +6,7 @@ import { CONFIRM_MODAL } from '@/constants/Confirm';
 import { useRecoilState } from 'recoil';
 import { confirmModalState, initialConfirmModalState } from '@/store/confirmModalState';
 import useConfirmModal from '@/hooks/useConfirmModal';
+import { isMobile } from 'react-device-detect';
 
 interface Props {
   modalHandler: () => void;
@@ -20,6 +21,7 @@ interface Props {
 export const ConfirmModal = ({ modalHandler, cancel, confirm, flexDirection = 'row', width = '448px', id, type }: Props) => {
   const hasCancelProperty = cancel && CONFIRM_MODAL[type].hasOwnProperty('cancel');
   const { closeConfirmModal } = useConfirmModal();
+  const deviceWidth = isMobile ? '328px' : width;
 
   const closeModalAfterSuccessConfirm = async () => {
     await confirm();
@@ -27,7 +29,7 @@ export const ConfirmModal = ({ modalHandler, cancel, confirm, flexDirection = 'r
   };
 
   return (
-    <Modal.Frame width={width} onClick={modalHandler}>
+    <Modal.Frame width={deviceWidth} onClick={modalHandler}>
       <Modal.Header>
         <Style.Title>{CONFIRM_MODAL[type].title}</Style.Title>
       </Modal.Header>

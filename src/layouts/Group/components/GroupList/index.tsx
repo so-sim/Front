@@ -1,7 +1,7 @@
 import { CreateGroupModal } from '@/components/@common/Modal/CreateGroupModal';
 import { useGroupList } from '@/queries/Group';
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { SYSTEM } from '../../../../assets/icons/System';
 import * as Stlye from './styles';
 import { useInView } from 'react-intersection-observer';
@@ -12,10 +12,17 @@ const GroupList = () => {
   const param = useParams();
   const { groupId } = param;
   const [showCreateModal, setShowCreateModal] = useState(false);
+  const navigate = useNavigate();
+  const devicePath = isMobile ? '/m-group' : '/group';
+
   const { data: groups, fetchNextPage, hasNextPage } = useGroupList();
   const { ref, inView } = useInView();
 
   const handleCreateModal = () => {
+    if (isMobile) {
+      navigate('/m-home/create-group');
+      return;
+    }
     setShowCreateModal((prev) => !prev);
   };
 
@@ -35,7 +42,7 @@ const GroupList = () => {
         {groups?.pages.map((page, index) => (
           <React.Fragment key={index}>
             {page.content?.groupList.map((group) => (
-              <Stlye.Groups key={group.groupId} to={`/group/${group.groupId}/book`}>
+              <Stlye.Groups key={group.groupId} to={`${devicePath}/${group.groupId}/book`}>
                 <Stlye.Cover isSelected={isSelected(group.groupId)} />
                 <Stlye.EachGroup color={group.coverColor}>
                   <span>{group.title.substring(0, 3)}</span>

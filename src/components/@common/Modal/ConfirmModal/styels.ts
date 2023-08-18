@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+import { isMobile } from 'react-device-detect';
 
 export const Title = styled.div`
   display: flex;
@@ -6,6 +7,7 @@ export const Title = styled.div`
   align-items: center;
   justify-content: center;
   height: 32px;
+  ${({ theme }) => (isMobile ? theme.font.subhead_04 : theme.font.headline)}
 `;
 
 export const Desc = styled.div`
@@ -13,6 +15,5 @@ export const Desc = styled.div`
   justify-content: center;
   align-items: center;
   white-space: pre;
-  margin-top: 12px;
-  ${({ theme }) => theme.font.body_03}
+  ${({ theme }) => (isMobile ? theme.font.body_02 : theme.font.body_03)}
 `;

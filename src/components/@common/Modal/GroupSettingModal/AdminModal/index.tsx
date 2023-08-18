@@ -33,7 +33,7 @@ export const AdminModal: FC<ModalHandlerProps> = ({ modalHandler }) => {
     isValidGroupForm,
     setError,
     getGroupFormAction,
-  } = useGroupForm();
+  } = useGroupForm('update');
 
   const { updateGroupForm } = getGroupFormAction();
 

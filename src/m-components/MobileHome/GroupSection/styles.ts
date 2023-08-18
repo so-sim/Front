@@ -6,9 +6,13 @@ export const Title = styled.div`
 `;
 
 export const GroupSection = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   padding: 0 16px;
   margin: auto;
   background: ${({ theme }) => theme.colors.neutral_200_b};
+  height: 100%;
 `;
 
 export const CardList = styled.ul`

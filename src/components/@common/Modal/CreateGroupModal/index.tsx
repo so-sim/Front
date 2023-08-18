@@ -20,7 +20,7 @@ export const CreateGroupModal: FC<ModalHandlerProps> = ({ modalHandler, id }) =>
     createGroupLoading,
     setError,
     getGroupFormAction,
-  } = useGroupForm();
+  } = useGroupForm('create');
 
   const { handleGroupFormData, createGroup } = getGroupFormAction();
 
