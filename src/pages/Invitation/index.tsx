@@ -12,6 +12,7 @@ import { useQueryString } from '@/hooks/useQueryString';
 import Loading from '@/components/Auth/Loading';
 import { NotFoundGroup } from '@/components/Invitation/NotFoundGroup';
 import useRecentlyVisitedGroup from '@/hooks/useRecentlyVisitedGroup';
+import { isMobile } from 'react-device-detect';
 
 const Invitation = () => {
   const navigate = useNavigate();
@@ -40,6 +41,9 @@ const Invitation = () => {
 
   const checkUserLoginStatus = () => {
     if (isSuccess && data?.content.isInto === true) {
+      if (isMobile) {
+        return navigate(`/m-group/${groupId}/book`);
+      }
       return navigate(`/group/${groupId}/book`);
     }
 
