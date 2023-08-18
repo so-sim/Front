@@ -4,17 +4,39 @@ import { PLACEHOLDER } from '@/constants/Group';
 import useGroupForm from '@/hooks/Group/useGroupForm';
 import ModalPageLayout from '@/layouts/Mobile/ModalPageLayout';
 import MobileLabel from '@/m-components/@common/Label';
-import { useGroupDetail } from '@/queries/Group';
+import { useGroupDetail, useWithdrawalGroup } from '@/queries/Group';
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import * as Style from './styles';
 import { useChangeNickname } from '@/queries/Group';
 import { useGetMyNikname } from '@/queries/Group/useGetMyNickname';
+import useConfirmModal from '@/hooks/useConfirmModal';
 
 const MobileUserGroupSetting = () => {
   const navigate = useNavigate();
   const { groupId } = useParams();
   const [nickname, setNickname] = useState('');
+
+  const { isError, setError } = useGroupForm('update');
+  const { openConfirmModal, closeConfirmModal } = useConfirmModal();
+
+  const { data: myNickname } = useGetMyNikname(Number(groupId));
+  const { data: groupData } = useGroupDetail(Number(groupId));
+  const { mutate: updateNickname, isLoading } = useChangeNickname({ setError });
+  const { mutate: withdrawalGroupMutate } = useWithdrawalGroup();
+
+  const withdrwalGroup = () => {
+    const id = Number(groupId);
+    withdrawalGroupMutate({ groupId: id });
+  };
+
+  const handleGroupWithdrawalModal = () => {
+    openConfirmModal({
+      type: 'GROUP_WITHDRAWAL_USER',
+      confirm: withdrwalGroup,
+      cancel: closeConfirmModal,
+    });
+  };
 
   const handleNickname = (nickname: string) => {
     setNickname(nickname);
@@ -23,13 +45,6 @@ const MobileUserGroupSetting = () => {
   const goBack = () => {
     navigate(-1);
   };
-
-  const { isError, setError, getGroupFormAction } = useGroupForm('update');
-  const { withdrwalGroup } = getGroupFormAction();
-
-  const { data: myNickname } = useGetMyNikname(Number(groupId));
-  const { data: groupData } = useGroupDetail(Number(groupId));
-  const { mutate: updateNickname, isLoading } = useChangeNickname({ setError });
 
   const updateMyNickname = () => {
     const id = Number(groupId);
@@ -59,7 +74,7 @@ const MobileUserGroupSetting = () => {
           <MobileLabel title="모임 탈퇴">
             <Style.WithDrwal>
               <Style.GroupTitle>{groupData?.content.title}</Style.GroupTitle>
-              <Style.QuitButton onClick={withdrwalGroup}>탈퇴</Style.QuitButton>
+              <Style.QuitButton onClick={handleGroupWithdrawalModal}>탈퇴</Style.QuitButton>
             </Style.WithDrwal>
           </MobileLabel>
         </div>
