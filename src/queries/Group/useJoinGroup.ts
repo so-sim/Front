@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { AxiosError } from 'axios';
 import { ServerResponse } from '@/types/serverResponse';
 import { GroupDetail } from '@/types/group';
+import { isMobile } from 'react-device-detect';
 
 interface UseJoinGroupProps {
   setError: <P extends 'nickname'>(target: P, message: string) => string;
@@ -33,6 +34,9 @@ export const useJoinGroup = ({ setError, groupId }: UseJoinGroupProps) => {
       return { prevData };
     },
     onSuccess: (data) => {
+      if (isMobile) {
+        return navigate(`/m-group/${groupId}/book`);
+      }
       navigate(`/group/${groupId}/book`);
     },
 
