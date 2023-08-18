@@ -14,6 +14,7 @@ import SelectedFineContextProvider from '@/contexts/SelectedFineContext';
 import AlarmRequest_PaymentUpdate from '@/components/DetailFine/AlarmRequest_PaymentUpdate';
 
 import useCheckListState from '@/hooks/useCheckListState';
+import { sideModalState } from '@/store/sideModalState';
 
 export type FilterMode = 'month' | 'week' | 'day';
 
@@ -34,6 +35,10 @@ const DetailFine = () => {
 
   const calendarDate = useRecoilValue(dateState);
   const { data } = useGetDetailList(detailFilter, calendarDate);
+
+  const [sideModal, setSideModal] = useRecoilState(sideModalState);
+
+  const { isModal } = sideModal;
 
   const {
     checkDetailFine,
@@ -56,7 +61,12 @@ const DetailFine = () => {
         </Style.DetailContent>
         <Pagination totalCount={data?.content.totalCount} detailFilter={detailFilter} setDetailFilter={setDetailFilter} />
         <UserDetails />
-        <AlarmRequest_PaymentUpdate checkDetailFine={{ ...checkDetailFine }} />
+        {isModal && (
+          <AlarmRequest_PaymentUpdate.DesktopFrame>
+            <AlarmRequest_PaymentUpdate.DesktopHeader />
+            <AlarmRequest_PaymentUpdate checkDetailFine={{ ...checkDetailFine }} />
+          </AlarmRequest_PaymentUpdate.DesktopFrame>
+        )}
       </Style.DetailFineFrame>
     </SelectedFineContextProvider>
   );
