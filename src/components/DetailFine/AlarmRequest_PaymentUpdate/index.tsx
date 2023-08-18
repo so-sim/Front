@@ -231,8 +231,6 @@ const AlarmRequest_PaymentUpdate = ({ checkDetailFine }: Props) => {
           변경하기
         </Style.Button>
       </Style.Footer>
-
-      {/* <Style.BackDrop onClick={(e) => e.stopPropagation()} /> */}
     </>
   );
 };
