@@ -30,7 +30,7 @@ const FineBookCreateModal = ({ modalHandler }: Props) => {
 
   useEffect(() => {
     if (calendarState.mode === 'day') {
-      const date = dayjs(calendarState.baseDate).format('YYYY.MM.DD');
+      const date = dayjs(calendarState.baseDate).format('YYYY-MM-DD');
       onChangeDate(date);
     }
   }, []);

@@ -10,7 +10,7 @@ import { Situation } from '@/types/event';
 import { all } from 'axios';
 
 export const useGetMobileDetailList = (detailFilter: DetailFilter, calendarDate: DateState) => {
-  const detailFilterProperty = { ...detailFilter, startDate: dayjs(calendarDate.startDate).format('YYYY.MM.DD'), endDate: dayjs(calendarDate.endDate).format('YYYY.MM.DD') };
+  const detailFilterProperty = { ...detailFilter, startDate: dayjs(calendarDate.startDate).format('YYYY-MM-DD'), endDate: dayjs(calendarDate.endDate).format('YYYY-MM-DD') };
 
   const query = Object.fromEntries(Object.entries(detailFilterProperty).filter(([_, v]) => v != ''));
 
