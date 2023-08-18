@@ -8,8 +8,8 @@ export const Label = styled.label<{ flexDirection: CSSProperties['flexDirection'
   margin-bottom: ${(props) => props.margin};
 `;
 
-export const LabelText = styled.div<{ flexDirection: CSSProperties['flexDirection']; width: string }>`
-  ${({ theme }) => theme.font.subhead_03}
+export const LabelText = styled.div<{ flexDirection: CSSProperties['flexDirection']; width: string; $isMobile?: boolean }>`
+  ${({ $isMobile, theme }) => ($isMobile ? theme.font.subhead_01 : theme.font.subhead_03)}
   margin: 8px 8px ${({ flexDirection }) => (flexDirection === 'row' ? '0 0' : '4px 4px')};
   width: ${({ width }) => width};
   display: flex;
