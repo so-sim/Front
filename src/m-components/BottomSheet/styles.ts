@@ -23,9 +23,16 @@ export const BottomSheet = styled.div`
   z-index: 110;
   background-color: ${({ theme }) => theme.colors.secondary_100};
   border-radius: 8px 8px 0 0;
-  /* @supports (-webkit-touch-callout: none) {
-    height: -webkit-fill-available;
-  } */
+  animation: slidein 0.3s ease-in-out;
+
+  @keyframes slidein {
+    from {
+      bottom: -340px;
+    }
+    to {
+      bottom: 0;
+    }
+  }
 `;
 
 export const Header = styled.div`
