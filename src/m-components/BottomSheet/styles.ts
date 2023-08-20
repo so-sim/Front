@@ -20,7 +20,7 @@ export const BottomSheet = styled.div`
   left: 0;
   width: 100%;
   height: 340px;
-  z-index: 1001;
+  z-index: 110;
   background-color: ${({ theme }) => theme.colors.secondary_100};
   border-radius: 8px 8px 0 0;
   /* @supports (-webkit-touch-callout: none) {

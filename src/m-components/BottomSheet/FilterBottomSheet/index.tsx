@@ -9,7 +9,7 @@ import { Situation } from '@/types/event';
 import { DetailFilter } from '@/store/detailFilter';
 import dayjs from 'dayjs';
 import { SYSTEM } from '@/assets/icons/System';
-import MiniCalendar from '@/components/@common/MiniCalendar';
+import MobileMiniCalendar from '@/m-components/MobileMiniCalendar';
 
 const dateFilterModeList = [
   { mode: 'month', text: '월간' },
@@ -44,6 +44,10 @@ const FilterBottomSheet = ({ detailFilter, setDetailFilter, onClose }: Props) =>
       return changeDateByCustomMode({ endDate: today });
     }
     changeDateByButtonMode(buttonMode);
+  };
+
+  const handleCalednar = () => {
+    setOpenCalendar((prev) => !prev);
   };
 
   const updateSituationFilter = (situation: Situation) => {
@@ -139,13 +143,11 @@ const FilterBottomSheet = ({ detailFilter, setDetailFilter, onClose }: Props) =>
         <div style={{ height: '106px' }} />
       </BottomSheet>
       {Boolean(dateType) && openCalendar && (
-        <div style={{ position: 'fixed', top: 0, zIndex: '150' }}>
-          <MiniCalendar //
-            type={dayjs(calendarDate.startDate).format('YYYY-MM-DD')}
-            setType={handleDate}
-            setOpenDrop={setOpenCalendar}
-          />
-        </div>
+        <MobileMiniCalendar //
+          date={dayjs(calendarDate.startDate).format('YYYY-MM-DD')}
+          onChangeDate={handleDate}
+          onClose={handleCalednar}
+        />
       )}
     </>
   );

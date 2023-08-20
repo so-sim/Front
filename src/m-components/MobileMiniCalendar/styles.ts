@@ -7,6 +7,7 @@ export const Overlay = styled.div`
   background: rgba(45, 45, 45, 0.3);
   width: 100%;
   height: 100%;
+  z-index: 130;
 `;
 
 export const Frame = styled.div`
@@ -19,4 +20,5 @@ export const Frame = styled.div`
   left: 0;
   top: 0;
   bottom: 0;
+  z-index: 140;
 `;
