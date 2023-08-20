@@ -9,7 +9,7 @@ import { SituationText, SITUATION_LIST } from '@/hooks/useSituationList';
 import { convertToPriceFormat } from '@/utils/convertFormat';
 import { useState } from 'react';
 import MemberBottomSheet from '../BottomSheet/MemberBottomSheet';
-import MiniCalendar from '@/components/@common/MiniCalendar';
+import MobileMiniCalendar from '../MobileMiniCalendar';
 
 type Props = {
   selectData: SelectedEventInfo;
@@ -128,16 +128,13 @@ const MobileFineBookForm = ({ selectData, action, convertSituationToText }: Prop
         </Style.Row>
       </Style.Container>
       {openMemberList && <MemberBottomSheet onClose={handleOpenMemberList} onChange={onChangeNickName} />}
-      <div style={{ position: 'fixed', top: '0' }}>
-        {/* <div style={{ width: '100vw' }} /> */}
-        {openDateCalendar && (
-          <MiniCalendar //
-            type={selectData.date}
-            setType={onChangeDate}
-            setOpenDrop={handleOpenDateCalendar}
-          />
-        )}
-      </div>
+      {openDateCalendar && (
+        <MobileMiniCalendar //
+          date={selectData.date}
+          onChangeDate={onChangeDate}
+          onClose={handleOpenDateCalendar}
+        />
+      )}
     </>
   );
 };

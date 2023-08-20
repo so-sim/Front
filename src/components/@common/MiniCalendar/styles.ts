@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+import { isMobile } from 'react-device-detect';
 
 export const Calendar = styled.div`
   display: flex;
@@ -8,11 +9,11 @@ export const Calendar = styled.div`
   border-radius: 8px;
   background-color: white;
   box-shadow: 2px 0px 25px 7px rgba(156, 156, 156, 0.15);
-  max-width: 268px;
+  max-width: ${isMobile ? '302px' : '268px'};
 `;
 
 export const Date = styled.span`
-  ${({ theme }) => theme.font.subhead_02}
+  ${({ theme }) => theme.font.subhead_02};
 `;
 
 export const ArrowIcon = styled.span`
@@ -35,9 +36,9 @@ export const Week = styled(FlexGap)``;
 export const DayTitle = styled(FlexGap)``;
 
 export const Day = styled.div<{ isSunday: boolean; isSelected?: boolean; isOtherMonth?: boolean }>`
-  width: 28px;
-  height: 28px;
-  border-radius: 14px;
+  width: ${isMobile ? '34px' : '28px'};
+  height: ${isMobile ? '34px' : '28px'};
+  border-radius: 999px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -59,4 +60,12 @@ export const DateTitle = styled.div`
 export const DayType = styled(Day)`
   ${({ theme }) => theme.font.caption}
   color: ${({ theme, isSunday }) => (isSunday ? theme.colors.system_red_200 : theme.colors.secondary_600)}
+`;
+
+export const Trigger = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  cursor: pointer;
+  margin-top: 8px;
 `;

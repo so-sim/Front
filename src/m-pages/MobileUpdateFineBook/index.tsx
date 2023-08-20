@@ -42,20 +42,22 @@ const MobileUpdateFineBook = () => {
 
   return (
     <ModalPageLayout title="내역 수정하기" left={{ icon: ARROW.LEFT, onClick: goBack }}>
-      <MobileFineBookForm //
-        selectData={selectData}
-        action={getFormFiledActions}
-        convertSituationToText={convertSituationToText}
-      />
-      <Button //
-        width="100%"
-        height="42px"
-        loading={updateLoading}
-        color={checkFormIsValid(selectData) ? 'black' : 'disabled'}
-        onClick={updateDetail}
-      >
-        저장하기
-      </Button>
+      <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', height: '100%' }}>
+        <MobileFineBookForm //
+          selectData={selectData}
+          action={getFormFiledActions}
+          convertSituationToText={convertSituationToText}
+        />
+        <Button //
+          width="100%"
+          height="42px"
+          loading={updateLoading}
+          color={checkFormIsValid(selectData) ? 'black' : 'disabled'}
+          onClick={updateDetail}
+        >
+          저장하기
+        </Button>
+      </div>
     </ModalPageLayout>
   );
 };

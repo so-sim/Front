@@ -19,30 +19,32 @@ const MobileCreateFineBook = () => {
   const { createDetail } = getFormFiledActions();
   return (
     <ModalPageLayout title="내역 추가하기" left={{ icon: ARROW.LEFT, onClick: goBack }}>
-      <MobileFineBookForm //
-        selectData={selectData}
-        action={getFormFiledActions}
-        convertSituationToText={convertSituationToText}
-      />
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-        <Button //
-          width="100%"
-          height="42px"
-          loading={createLoading}
-          color={checkFormIsValid(selectData) ? 'black' : 'disabled'}
-          onClick={createDetail}
-        >
-          추가하기
-        </Button>
-        <Button //
-          width="100%"
-          height="42px"
-          leftIcon={SYSTEM.PLUS_BLACK_SM}
-          color={checkFormIsValid(selectData) ? 'white' : 'white-disabled'}
-          onClick={createDetail}
-        >
-          계속해서 추가하기
-        </Button>
+      <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', height: '100%' }}>
+        <MobileFineBookForm //
+          selectData={selectData}
+          action={getFormFiledActions}
+          convertSituationToText={convertSituationToText}
+        />
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', marginTop: '32px' }}>
+          <Button //
+            width="100%"
+            height="42px"
+            loading={createLoading}
+            color={checkFormIsValid(selectData) ? 'black' : 'disabled'}
+            onClick={createDetail}
+          >
+            추가하기
+          </Button>
+          <Button //
+            width="100%"
+            height="42px"
+            leftIcon={SYSTEM.PLUS_BLACK_SM}
+            color={checkFormIsValid(selectData) ? 'white' : 'white-disabled'}
+            onClick={createDetail}
+          >
+            계속해서 추가하기
+          </Button>
+        </div>
       </div>
     </ModalPageLayout>
   );
