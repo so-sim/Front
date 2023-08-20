@@ -35,9 +35,10 @@ const MobileDetailFine = () => {
 
   const [calendarDate, setCalendarDate] = useRecoilState(dateState);
 
-  useEffect(() => {
-    setCalendarDate((prev) => ({ ...prev, startDate: dayjs('2023.08.09'), endDate: dayjs('2023.08.10') }));
-  }, []);
+  // TODO: 여쭤보고 삭제예정
+  // useEffect(() => {
+  //   setCalendarDate((prev) => ({ ...prev, startDate: dayjs('2023.08.09'), endDate: dayjs('2023.08.10') }));
+  // }, []);
 
   const { data, hasNextPage, fetchNextPage } = useGetMobileDetailList(detailFilter, calendarDate);
 

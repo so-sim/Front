@@ -1,7 +1,7 @@
 import { LOGO } from '@/assets/icons/Logo';
 import { SYSTEM } from '@/assets/icons/System';
 import useWindowHeight from '@/hooks/@common/useWindowHeight';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import MobileHeader from './components/MobileHeader';
 import MobileSideBar from './components/MobileSideBar';
@@ -24,7 +24,9 @@ const MobileLayout = ({ location, children }: Props) => {
     <>
       <Style.Layout>
         <MobileHeader left={{ onClick: sideBarHandler, icon: SYSTEM.MENU }} title={<MobileLogo />} hasAuth />
-        <Style.Body ref={windowRef}>{children}</Style.Body>
+        <Style.Body ref={windowRef} isHome={location === 'HOME'}>
+          {children}
+        </Style.Body>
       </Style.Layout>
       {openSideBar && <MobileSideBar location={location} openSideBar={openSideBar} sideBarHandler={sideBarHandler} />}
     </>
