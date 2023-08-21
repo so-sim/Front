@@ -17,6 +17,7 @@ import MobileUpdateFineBook from '@/m-pages/MobileUpdateFineBook';
 import MobileUserGroupSetting from '@/m-pages/MobileSetting/MobileUserGroupSetting';
 import MobileFineBookDetail from '@/m-pages/MobileFineBookDetail';
 import MobileAlarmRequest_Payment from '@/m-pages/MobileAlarmRequest_Payment';
+import Page404 from '@/components/error/404';
 
 const MobileRouter = () => {
   return (
@@ -41,6 +42,7 @@ const MobileRouter = () => {
         <Route path="/m-tos" element={<MobileTOS />} />
         <Route path="/m-setting" element={<MobileUserSetting />} />
         <Route path="/m-withdrawal" element={<MobileWithdrawal />} />
+        <Route path="*" element={<Page404 />} />
       </Routes>
     </>
   );
