@@ -9,7 +9,6 @@ const MobileAlarmRequest_Payment = () => {
   const { checkDetailFine } = useCheckListState();
 
   const navigate = useNavigate();
-  console.log(checkDetailFine);
 
   const goBack = () => {
     navigate(-1);

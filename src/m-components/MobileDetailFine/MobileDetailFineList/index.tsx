@@ -50,8 +50,6 @@ const MobileDetailFineList = ({ details }: Props) => {
     setToggleCheckList(detail);
   };
 
-  console.log(checkDetailFineValues);
-
   return (
     <>
       <Style.DetailFineListContainer>
