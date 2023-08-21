@@ -11,7 +11,7 @@ import PreParing from './PreParing.svg';
 import Search from './Search.svg';
 import Menu from './Menu.svg';
 import ToolTip from './ToolTip.svg';
-import ToolTipInfo from './ToolTipInfo.svg';
+import TooltipInfo from './TooltipInfo.svg';
 import Initialization from './Initialization.svg';
 import MobileCon from './MobileCon.svg';
 import MobileNon from './MobileNon.svg';
@@ -42,7 +42,7 @@ export const SYSTEM = {
   SEARCH_GRAY: <Search fill="#9C9C9C" width={24} height={24} />,
   SEARCH_GRAY_LG: <Search fill="#E3E4E5" width={48} height={48} />,
   TOOLTIP: <ToolTip width={24} height={24} />,
-  TOOLTIP_INFO: <ToolTipInfo width={24} height={24} />,
+  TOOLTIP_INFO: <TooltipInfo width={24} height={24} />,
   PLUS_WHITE: <Plus width={24} height={24} />,
   INITIALIZATION: <Initialization />,
   MOBILENON: <MobileNon />,
