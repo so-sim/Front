@@ -40,12 +40,13 @@ const MobileCalendar = () => {
 
   const goToDetailFine = (date: dayjs.Dayjs) => {
     setCalendarDateState((prev) => ({ ...prev, startDate: date, endDate: date, baseDate: date, mode: 'day' }));
-    // navigate(`/m-group/${groupId}/book/detail`);
+
     setIsOpen((prev) => !prev);
   };
 
   useEffect(() => {
-    setCalendarDateState(initialDateState);
+    // setCalendarDateState(initialDateState);
+    // 해당 코드때문에 내역추가 시 추가한 날짜로 이동을 안하고 있었습니다.
 
     return () => {
       setIsOpen(false);
