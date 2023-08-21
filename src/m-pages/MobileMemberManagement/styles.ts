@@ -3,7 +3,7 @@ import styled from '@emotion/styled';
 export const Container = styled.div`
   width: 100%;
   margin: 0 auto;
-  padding-top: 48px;
+  padding-top: 1.25rem;
   border-width: 2px;
   border-style: solid;
   border-color: ${({ theme }) => theme.colors.neutral_300_b};
@@ -19,7 +19,7 @@ export const Title = styled.div`
   h2 {
     font-size: 28px;
     color: ${({ theme }) => theme.colors.secondary_900};
-    ${({ theme }) => theme.font.headline};
+    ${({ theme }) => theme.font.subhead_04};
   }
 `;
 
@@ -45,13 +45,13 @@ export const ButtonFlex = styled.button`
 `;
 
 export const UserContainer = styled.div`
-  padding: 14px 32px;
+  padding: 14px 16px;
   display: flex;
   align-items: center;
   gap: 12px;
   font-weight: 600;
   border-bottom: 1px solid ${({ theme }) => theme.colors.neutral_300_b};
-  ${({ theme }) => theme.font.subhead_03};
+  ${({ theme }) => theme.font.subhead_01};
 `;
 
 export const UserIcon = styled.div`
@@ -66,5 +66,5 @@ export const Tag = styled.div`
   height: 26px;
   background-color: ${({ theme }) => theme.colors.secondary_800};
   border-radius: 32px;
-  ${({ theme }) => theme.font.subhead_01};
+  ${({ theme }) => theme.font.caption};
 `;
