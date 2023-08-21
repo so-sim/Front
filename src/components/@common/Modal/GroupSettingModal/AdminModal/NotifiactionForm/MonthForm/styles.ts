@@ -37,7 +37,9 @@ export const Notice = styled.div`
 `;
 export const WeekBlock = styled.div`
   display: flex;
+  justify-content: space-between;
   gap: 12px;
+  width: 100%;
 `;
 
 export const DateButton = styled.button<{ isSelected: boolean }>`
@@ -49,6 +51,7 @@ export const DateButton = styled.button<{ isSelected: boolean }>`
   padding: 4px;
   background-color: ${({ theme, isSelected }) => isSelected && theme.colors.neutral_400_b};
   border-radius: 16px;
+  color: ${({ theme }) => theme.colors.secondary_900};
   ${({ theme }) => theme.font.subhead_02};
   &:hover {
     background-color: ${({ theme, isSelected }) => !isSelected && theme.colors.neutral_200_b};
@@ -56,6 +59,7 @@ export const DateButton = styled.button<{ isSelected: boolean }>`
 `;
 
 export const CalendarBlock = styled.div`
+  width: 100%;
   display: flex;
   flex-direction: column;
   gap: 4px;

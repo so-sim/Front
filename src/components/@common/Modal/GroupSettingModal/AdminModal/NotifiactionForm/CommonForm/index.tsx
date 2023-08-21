@@ -1,12 +1,15 @@
 import { ARROW } from '@/assets/icons/Arrow';
 import useDropDown from '@/hooks/useDropDown';
+import TimeBottomSheet from '@/m-components/BottomSheet/TimeBottomeSheet';
 import { NotificationInfo } from '@/types/group';
-import { convertDateFormat, convertTimeFormat } from '@/utils/convertFormat';
+import { convertDateFormat, convertTimeFormat, covertDateForView } from '@/utils/convertFormat';
 import { padStart } from '@/utils/padStart';
-import { ChangeEvent } from 'react';
+import { ChangeEvent, useState } from 'react';
+import { isMobile } from 'react-device-detect';
 import * as Style from './styles';
+import MobileMiniCalendar from '@/m-components/MobileMiniCalendar';
 
-const TIME_LIST = Array.from({ length: 48 }, (v, i) => {
+export const TIME_LIST = Array.from({ length: 48 }, (v, i) => {
   const hour = padStart(Math.floor(i / 2));
   const minute = padStart((i % 2) * 30);
   return `${hour}:${minute}`;
@@ -26,13 +29,14 @@ type Props = {
 
 const CommonForm = ({ notificationForm, handleNotificationForm, isErrorField }: Props) => {
   const { dropDownRef, openDrop, setOpenDrop } = useDropDown();
+  const [openCalendar, setOpenCalendar] = useState(false);
 
   const handleOpenDrop = () => {
     setOpenDrop((prev) => !prev);
   };
 
   const handleNotificationStartDate = (e: ChangeEvent<HTMLInputElement>) => {
-    const date = e.target.value.replaceAll('.', '');
+    const date = e.target.value.replaceAll(/\.\-/g, '');
     if (!Number.isNaN(Number(date)) && date.length < 9) {
       handleNotificationForm('startDate', convertDateFormat(date));
     }
@@ -48,6 +52,11 @@ const CommonForm = ({ notificationForm, handleNotificationForm, isErrorField }: 
     handleNotificationForm('sendTime', time);
     setOpenDrop(false);
   };
+
+  const handleOpenCalendar = () => {
+    setOpenCalendar((prev) => !prev);
+  };
+  console.log(notificationForm.startDate);
 
   return (
     <>
@@ -66,12 +75,22 @@ const CommonForm = ({ notificationForm, handleNotificationForm, isErrorField }: 
       <Style.CommonContainer>
         <Style.CommonTitle>시작일</Style.CommonTitle>
         <Style.CommonBlock>
-          <Style.CommonDateInput //
-            type="text"
-            isError={isErrorField('startDate')}
-            value={notificationForm.startDate}
-            onChange={handleNotificationStartDate}
-          />
+          {isMobile ? (
+            <Style.CommonDateBox //
+              // isError={isErrorField('startDate')}
+              onClick={handleOpenCalendar}
+            >
+              {covertDateForView(notificationForm.startDate)}
+            </Style.CommonDateBox>
+          ) : (
+            <Style.CommonDateInput //
+              type="text"
+              isError={isErrorField('startDate')}
+              value={covertDateForView(notificationForm.startDate)}
+              onChange={handleNotificationStartDate}
+            />
+          )}
+
           <Style.Body>이후부터</Style.Body>
         </Style.CommonBlock>
       </Style.CommonContainer>
@@ -84,7 +103,7 @@ const CommonForm = ({ notificationForm, handleNotificationForm, isErrorField }: 
             {convertTimeFormat(notificationForm.sendTime)}
             {ARROW.DOWN_LG_NON_FOCUS}
           </Style.CommonDropBox>
-          {openDrop && (
+          {openDrop && !isMobile && (
             <Style.CommonDropDown style={{ position: 'absolute' }}>
               {TIME_LIST.map((time) => {
                 return (
@@ -98,8 +117,23 @@ const CommonForm = ({ notificationForm, handleNotificationForm, isErrorField }: 
               })}
             </Style.CommonDropDown>
           )}
+          {openDrop && isMobile && (
+            <TimeBottomSheet //
+              onClose={() => setOpenDrop(false)}
+              onChange={handleNotificationSendTime}
+            />
+          )}
         </div>
       </Style.CommonContainer>
+      {openCalendar && (
+        <MobileMiniCalendar
+          onClose={handleOpenCalendar}
+          date={notificationForm.startDate}
+          onChangeDate={(date) => {
+            handleNotificationForm('startDate', date);
+          }}
+        />
+      )}
     </>
   );
 };

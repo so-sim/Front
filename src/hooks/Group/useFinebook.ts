@@ -65,18 +65,18 @@ const useFinebook = (initialSelectData: SelectedEventInfo) => {
   };
 
   const onInitFormByServerData = (initialData: SelectedEventInfo) => {
-    dispatch({ type: 'INIT', initialData: { ...initialData, date: initialData.date.replaceAll('-', '.') } });
+    dispatch({ type: 'INIT', initialData: { ...initialData } });
   };
 
   const { mutateAsync: create, isLoading: createLoading } = useCreateDetail();
   const { mutateAsync: update, isLoading: updateLoading } = useUpdateDetail();
 
   const createDetail = async () => {
-    return create({ ...selectData, groupId: Number(groupId), date: selectData.date.replaceAll('-', '.') });
+    return create({ ...selectData, groupId: Number(groupId) });
   };
 
   const updateDetail = async () => {
-    return update({ ...selectData, date: selectData.date.replaceAll('-', '.') });
+    return update({ ...selectData });
   };
 
   const getFormFiledActions = (): FormFieldActions => {

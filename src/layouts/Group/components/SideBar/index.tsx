@@ -68,11 +68,13 @@ const GroupSideBar = () => {
           <Style.Category>벌금 관리</Style.Category>
           {GROUP_TAPS.map((tap) => (
             <NavLink to={`/${devicePath}/${groupId}/${tap.link}`} key={tap.title}>
-              <Style.Selected isSelected={isSelected(tap.link)} />
-              <Style.Tap disabled={tap.disabled}>
-                <div style={{ height: '24px' }}>{tap.svg}</div>
-                <span>{tap.title}</span>
-              </Style.Tap>
+              <div style={{ position: 'relative' }}>
+                <Style.Selected isSelected={isSelected(tap.link)} />
+                <Style.Tap disabled={tap.disabled}>
+                  <div style={{ height: '24px' }}>{tap.svg}</div>
+                  <span>{tap.title}</span>
+                </Style.Tap>
+              </div>
             </NavLink>
           ))}
         </Style.TapContainer>
@@ -81,11 +83,13 @@ const GroupSideBar = () => {
           {ETC.map((etc) =>
             etc.link ? (
               <NavLink to={`/${devicePath}/${groupId}/${etc.link}`} key={etc.title} id={etc.id}>
-                <Style.Selected isSelected={isSelected(etc.link)} />
-                <Style.Tap key={etc.title}>
-                  <div style={{ height: '24px' }}>{etc.svg}</div>
-                  <span>{etc.title}</span>
-                </Style.Tap>
+                <div style={{ position: 'relative' }}>
+                  <Style.Selected isSelected={isSelected(etc.link)} />
+                  <Style.Tap key={etc.title}>
+                    <div style={{ height: '24px' }}>{etc.svg}</div>
+                    <span>{etc.title}</span>
+                  </Style.Tap>
+                </div>
               </NavLink>
             ) : (
               <Style.GroupSettingContainer onClick={() => (isMobile ? moveToSettingPage() : handleGroupSettingModal())}>

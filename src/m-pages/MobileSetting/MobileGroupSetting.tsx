@@ -14,7 +14,7 @@ const MobileGroupSetting = () => {
   const { groupId } = useParams();
 
   const goBack = () => {
-    navigate(-1);
+    navigate(`/m-group/${groupId}/group-setting`);
   };
 
   const {

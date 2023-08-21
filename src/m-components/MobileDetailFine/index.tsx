@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { dateState } from '@/store/dateState';
 import { DetailFilter } from '@/store/detailFilter';
 import { useRecoilState } from 'recoil';
@@ -18,6 +18,7 @@ import MobileAllCheckbox from './MobileAllCheckbox';
 import { ARROW } from '@/assets/icons/Arrow';
 import MobileToolbar from './MobileToolbar';
 import useCheckListState from '@/hooks/useCheckListState';
+import { SYSTEM } from '@/assets/icons/System';
 
 type GroupedData = {
   [key: string]: SelectedEventInfo[];
@@ -30,6 +31,7 @@ type Props = {
 
 const MobileDetailFine = ({ $isOpen, setIsOpen }: Props) => {
   const { groupId } = useParams();
+  const navigate = useNavigate();
 
   const { ref, inView } = useInView();
 
@@ -53,6 +55,16 @@ const MobileDetailFine = ({ $isOpen, setIsOpen }: Props) => {
   const { data, hasNextPage, fetchNextPage } = useGetMobileDetailList(detailFilter, calendarDate);
 
   const details = (Object.values(GroupedListByDate).flat() as SelectedEventInfo[]) ?? [];
+
+  const moveToCalendar = () => {
+    setCalendarDate({
+      startDate: dayjs(), //
+      endDate: dayjs(),
+      baseDate: dayjs(),
+      mode: 'day',
+    });
+    navigate(`/m-group/${groupId}/book`);
+  };
 
   useEffect(() => {
     if (inView && hasNextPage) {
@@ -83,6 +95,11 @@ const MobileDetailFine = ({ $isOpen, setIsOpen }: Props) => {
     setInitCheckDetailFine();
   }, [$isOpen]);
 
+  const goToCreateFineBook = () => {
+    navigate(`/m-group/${groupId}/create-finebook`);
+    // 내역 추가 페이지로 라우팅
+  };
+
   return (
     <Style.MobileDetailFineFrame $isOpen={$isOpen}>
       <Style.MobileDetailFineHeader>
@@ -96,7 +113,6 @@ const MobileDetailFine = ({ $isOpen, setIsOpen }: Props) => {
       </Style.MobileDetailFineHeader>
       <MobileDetailFineList details={GroupedListByDate} />
       <div ref={ref} />
-
       {openFilterSheet && (
         <FilterBottomSheet //
           detailFilter={detailFilter}

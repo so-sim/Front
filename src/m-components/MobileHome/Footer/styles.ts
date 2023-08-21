@@ -1,6 +1,7 @@
 import styled from '@emotion/styled';
 
 export const Footer = styled.footer`
+  margin-top: 32px;
   padding: 12px 4px;
   width: 100%;
   background-color: ${({ theme }) => theme.colors.neutral_200_b};

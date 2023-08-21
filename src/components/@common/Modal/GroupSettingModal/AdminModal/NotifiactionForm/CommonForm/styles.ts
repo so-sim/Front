@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+import { isMobile } from 'react-device-detect';
 
 export const CommonContainer = styled.div`
   display: flex;
@@ -21,6 +22,7 @@ export const CommonInput = styled.input<{ isError: boolean }>`
   padding: 4px 8px;
   text-align: center;
   width: 42px;
+  ${({ theme }) => (isMobile ? theme.font.body_02 : theme.font.body_01)};
   border: 1px solid ${({ theme, isError }) => (isError ? theme.colors.red_400 : theme.colors.neutral_400_b)};
 `;
 
@@ -28,7 +30,16 @@ export const CommonDateInput = styled.input<{ isError: boolean }>`
   padding: 4px 8px;
   text-align: center;
   width: 100px;
+  ${({ theme }) => theme.font.body_01};
   border: 1px solid ${({ theme, isError }) => (isError ? theme.colors.red_400 : theme.colors.neutral_400_b)};
+`;
+
+export const CommonDateBox = styled.div`
+  padding: 4px 12px;
+  text-align: center;
+  width: 108px;
+  ${({ theme }) => theme.font.body_02};
+  border: 1px solid ${({ theme }) => theme.colors.neutral_400_b};
 `;
 
 export const Body = styled.span`

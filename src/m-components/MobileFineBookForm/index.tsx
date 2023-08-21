@@ -6,7 +6,7 @@ import CirCleCheckBox from '@/components/@common/Modal/FineBookModal/FormFileds/
 import * as Style from './styles';
 import { FormFieldActions } from '@/hooks/Group/useFinebook';
 import { SituationText, SITUATION_LIST } from '@/hooks/useSituationList';
-import { convertToPriceFormat } from '@/utils/convertFormat';
+import { convertToPriceFormat, covertDateForView } from '@/utils/convertFormat';
 import { useState } from 'react';
 import MemberBottomSheet from '../BottomSheet/MemberBottomSheet';
 import MobileMiniCalendar from '../MobileMiniCalendar';
@@ -75,7 +75,7 @@ const MobileFineBookForm = ({ selectData, action, convertSituationToText }: Prop
           <Style.Label onClick={handleOpenDateCalendar}>
             <span>날짜</span>
             <Style.Dropbox active={Boolean(selectData.date)}>
-              <span>{selectData.date}</span>
+              <span>{covertDateForView(selectData.date)}</span>
               {ARROW.DOWN_LG_NON_FOCUS}
             </Style.Dropbox>
           </Style.Label>

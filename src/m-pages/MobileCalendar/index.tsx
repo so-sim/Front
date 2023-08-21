@@ -9,13 +9,12 @@ import { dateState, initialDateState } from '@/store/dateState';
 import dayjs from 'dayjs';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
-import MobileCalendarComponent from '@/m-components/MobileCalendar/index';
 
 import * as Style from './styles';
+
 import MobileDetailFine from '@/m-components/MobileDetailFine';
-import { useEffect, useState } from 'react';
-import styled from '@emotion/styled';
-import MobileDetailFineList from '@/m-components/MobileDetailFine/MobileDetailFineList';
+import { useEffect } from 'react';
+import { detailFineState } from '@/store/detailFineState';
 
 const WEEKDATE = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
@@ -28,7 +27,7 @@ const MobileCalendar = () => {
   const { calendarDate, setCalendarDate, increaseMonth, decreaseMonth } = useCalendarState();
   const { monthList, filterCorrectDateStatus, isCurrentMonth, isToday, isSelectedDate } = useCalendarStatus(calendarDate, groupId);
 
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useRecoilState(detailFineState);
 
   const goToCreateFineBook = () => {
     navigate(`/m-group/${groupId}/create-finebook`);
@@ -43,6 +42,10 @@ const MobileCalendar = () => {
 
   useEffect(() => {
     setCalendarDateState(initialDateState);
+
+    return () => {
+      setIsOpen(false);
+    };
   }, []);
 
   return (
@@ -65,7 +68,6 @@ const MobileCalendar = () => {
             </Style.ArrowBlock>
             <Style.ToolTipIconWrapper>{SYSTEM.TOOLTIP}</Style.ToolTipIconWrapper>
           </Style.DateControllerWrapper>
-
           <Style.DayOfTheWeekWrapper>
             {WEEKDATE.map((date) => (
               <Style.DayOfTheWeekText key={date}>{date}</Style.DayOfTheWeekText>
@@ -79,7 +81,7 @@ const MobileCalendar = () => {
                   // 컴포넌트 분리 및 라우팅 연결 필요
                   return (
                     <Style.DateWrapper key={index + date.date()} onClick={() => goToDetailFine(date)}>
-                      <Style.DateTitle>{date.date()}</Style.DateTitle>
+                      <Style.DateTitle isSameMonth={isCurrentMonth(date)}>{date.date()}</Style.DateTitle>
                       <div>
                         {status && isCurrentMonth(date) && (
                           <>
@@ -98,7 +100,6 @@ const MobileCalendar = () => {
           <Style.AddIconWrapper onClick={goToCreateFineBook}>{SYSTEM.PLUS_WHITE}</Style.AddIconWrapper>
           {/* 내역 추가 페이지로 라우팅 */}
         </Style.Container>
-
         <MobileDetailFine $isOpen={isOpen} setIsOpen={setIsOpen} />
       </Style.CalendarBody>
     </MobileLayout>

@@ -8,9 +8,10 @@ import { useNavigate, useParams } from 'react-router-dom';
 
 const MobileAlarmSetting = () => {
   const navigate = useNavigate();
+  const { groupId } = useParams();
 
   const goBack = () => {
-    navigate(-1);
+    navigate(`/m-group/${groupId}/group-setting`);
   };
 
   const {
@@ -23,12 +24,12 @@ const MobileAlarmSetting = () => {
 
   return (
     <ModalPageLayout left={{ icon: ARROW.LEFT, onClick: goBack }} title="모임 설정">
-      <div style={{ marginTop: '20px', height: 'calc(100vh - 150px)', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', padding: '0 24px' }}>
+      <div style={{ marginTop: '20px', height: 'calc(100vh - 150px)', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', padding: '0 8px' }}>
         <NotificationForm //
           notificationForm={notificationForm}
           getNotificationFormAction={getNotificationFormAction}
         />
-        <div style={{ display: 'flex', gap: '12px', width: '100%' }}>
+        <div style={{ display: 'flex', gap: '12px', width: '100%', padding: '50px 0 32px 0' }}>
           <Button color="white" width="100%" height="42px">
             취소
           </Button>

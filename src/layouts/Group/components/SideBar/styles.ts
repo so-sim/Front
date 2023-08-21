@@ -58,7 +58,7 @@ export const Selected = styled.div<SelectedProps>`
   display: ${(props) => (props.isSelected ? 'block' : 'none')};
   position: absolute;
   width: 6px;
-  left: 100px;
+  left: -24px;
   height: 32px;
   background-color: ${({ theme }) => theme.colors.secondary_900};
   border-radius: 0px 4px 4px 0px;
