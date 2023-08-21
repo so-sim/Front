@@ -3,15 +3,15 @@ import React from 'react';
 
 const DetailListCheckBox = React.forwardRef<HTMLInputElement>(({ ...props }, ref) => {
   return (
-    <Wrap>
+    <CheckBoxWrapper>
       <CheckBox type="checkbox" {...props} ref={ref} />
-    </Wrap>
+    </CheckBoxWrapper>
   );
 });
 
 export default DetailListCheckBox;
 
-export const Wrap = styled.div`
+export const CheckBoxWrapper = styled.div`
   padding-left: 0.5rem;
   padding-right: 0.5rem;
 `;
