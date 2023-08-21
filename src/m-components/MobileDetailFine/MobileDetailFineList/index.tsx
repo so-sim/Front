@@ -3,10 +3,7 @@ import CheckboxContainer from '@/components/@common/Checkbox';
 import DetailListCheckBox from '@/components/DetailFine/checkbox';
 
 import useCheckListState from '@/hooks/useCheckListState';
-import { useGetDetailListById } from '@/queries/Detail/useGetDetailListById';
-import { sideModalState } from '@/store/sideModalState';
 import { EventInfoListTest, SelectedEventInfo } from '@/types/event';
-import { ServerResponse } from '@/types/serverResponse';
 import { useNavigate, useParams } from 'react-router-dom';
 
 import * as Style from './styles';
