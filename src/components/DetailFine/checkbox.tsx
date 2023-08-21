@@ -12,6 +12,9 @@ const DetailListCheckBox = React.forwardRef<HTMLInputElement>(({ ...props }, ref
 export default DetailListCheckBox;
 
 export const CheckBoxWrapper = styled.div`
+  display: flex;
+  align-items: center;
+
   padding-left: 0.5rem;
   padding-right: 0.5rem;
 `;
