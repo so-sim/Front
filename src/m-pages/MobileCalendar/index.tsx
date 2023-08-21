@@ -16,6 +16,8 @@ import MobileDetailFine from '@/m-components/MobileDetailFine';
 import { useEffect } from 'react';
 import { detailFineState } from '@/store/detailFineState';
 import { useGroupDetail } from '@/queries/Group';
+import { firstVisitState } from '@/store/firstVisitState';
+import InviteModal from '@/components/@common/Modal/InviteModal';
 
 const WEEKDATE = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
@@ -23,6 +25,8 @@ const WEEKDATE = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 const MobileCalendar = () => {
   const { groupId } = useParams();
   const navigate = useNavigate();
+
+  const [{ isFirstVisit }, setIsFirstVisit] = useRecoilState(firstVisitState);
 
   const { data: group } = useGroupDetail(Number(groupId));
   const isAdmin = group?.content.isAdmin;
@@ -32,6 +36,10 @@ const MobileCalendar = () => {
   const { monthList, filterCorrectDateStatus, isCurrentMonth, isToday, isSelectedDate } = useCalendarStatus(calendarDate, groupId);
 
   const [isOpen, setIsOpen] = useRecoilState(detailFineState);
+
+  const handleGroupInviteModal = () => {
+    setIsFirstVisit((prev) => ({ ...prev, isFirstVisit: false }));
+  };
 
   const goToCreateFineBook = () => {
     navigate(`/m-group/${groupId}/create-finebook`);
@@ -107,6 +115,7 @@ const MobileCalendar = () => {
         </Style.Container>
         <MobileDetailFine $isOpen={isOpen} setIsOpen={setIsOpen} />
       </Style.CalendarBody>
+      {group?.content.isAdmin && isFirstVisit && <InviteModal onClick={handleGroupInviteModal} />}
     </MobileLayout>
   );
 };
