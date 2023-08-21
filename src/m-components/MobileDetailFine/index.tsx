@@ -70,6 +70,8 @@ const MobileDetailFine = ({ $isOpen, setIsOpen }: Props) => {
     navigate(`/m-group/${groupId}/book`);
   };
 
+  const getSumOfDetails = (details: SelectedEventInfo[]) => details.reduce((result, { amount }) => (result += amount), 0);
+
   useEffect(() => {
     if (inView && hasNextPage) {
       fetchNextPage();
@@ -112,7 +114,7 @@ const MobileDetailFine = ({ $isOpen, setIsOpen }: Props) => {
         <MobileFilterController openFilterSheet={handleOpenFilterSheet} />
         <MobileAllCheckbox //
           details={details}
-          totalAmount={1000000}
+          totalAmount={getSumOfDetails(details)}
         />
       </Style.MobileDetailFineHeader>
       <MobileDetailFineList details={GroupedListByDate} />

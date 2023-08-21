@@ -4,6 +4,7 @@ import DetailListCheckBox from '@/components/DetailFine/checkbox';
 
 import useCheckListState from '@/hooks/useCheckListState';
 import { EventInfoListTest, SelectedEventInfo } from '@/types/event';
+import { convertToPriceFormat } from '@/utils/convertFormat';
 import { useNavigate, useParams } from 'react-router-dom';
 
 import * as Style from './styles';
@@ -71,7 +72,7 @@ const MobileDetailFineList = ({ details }: Props) => {
                     <Style.UserInfoText>
                       <p>{item.nickname}</p>
                     </Style.UserInfoText>
-                    <Style.AmountText>{item.amount}원</Style.AmountText>
+                    <Style.AmountText>{convertToPriceFormat(item.amount)}원</Style.AmountText>
                   </Style.TopWrapper>
                   <Style.DetailContextWrapper>
                     <Style.SituationBox situationType={item.situation}>
