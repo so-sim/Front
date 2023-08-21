@@ -17,8 +17,14 @@ type Props = {
 
 const SituationStatusIcon = {
   미납: SYSTEM.MOBILENON,
-  완납: SYSTEM.MOBILEFULL,
   확인중: SYSTEM.MOBILECON,
+  완납: SYSTEM.MOBILEFULL,
+};
+
+const SITUATIONSTATUSTEXT = {
+  미납: '납부 전',
+  확인중: '승인 대기',
+  완납: '납부 완료',
 };
 
 const MobileDetailFineList = ({ details }: Props) => {
@@ -53,16 +59,14 @@ const MobileDetailFineList = ({ details }: Props) => {
           <>
             <Style.DateText key={index}>{Object.keys(details)[index]}</Style.DateText>
 
-            {item.map((item) => (
-              <Style.DetailFineItem onClick={() => goToFineBookDetail(item.eventId)}>
+            {item.map((item, index) => (
+              <Style.DetailFineItem onClick={() => goToFineBookDetail(item.eventId)} key={item.eventId + index}>
                 <CheckboxContainer
                   id={String(item.eventId)}
                   isChecked={isChecked(item.eventId)}
-                  // 이거는 전체 눌렀을 때 체크가 되야겠죠?
                   onChange={(event: React.MouseEvent<HTMLInputElement>) => handleToggleCheckList(event, item)}
                 >
                   <CheckboxContainer.Checkbox as={DetailListCheckBox} />
-                  {/*    이 부분 props를 자연스럽게 넘겨주려면 이 방법 밖에?? function으로 넘겨주는 방법도 있긴한데,  이거는 rest props 안넘어옴 */}
                 </CheckboxContainer>
                 <Style.ContentWrapper>
                   <Style.TopWrapper>
@@ -72,9 +76,9 @@ const MobileDetailFineList = ({ details }: Props) => {
                     <Style.AmountText>{item.amount}원</Style.AmountText>
                   </Style.TopWrapper>
                   <Style.DetailContextWrapper>
-                    <Style.SituationBox>
+                    <Style.SituationBox situationType={item.situation}>
                       <Style.IconWrapper>{SituationStatusIcon[item.situation]}</Style.IconWrapper>
-                      {item.situation}
+                      {SITUATIONSTATUSTEXT[item.situation]}
                     </Style.SituationBox>
                     <Style.DescriptionContainer>
                       <Style.DescriptionGround>{item.ground}</Style.DescriptionGround>

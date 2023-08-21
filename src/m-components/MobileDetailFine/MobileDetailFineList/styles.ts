@@ -1,5 +1,22 @@
+import { DefaultTheme } from '@/styles/Theme';
+import { Situation } from '@/types/event';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
+
+export const MOBILESITUATIONSTATUSSTYLES = {
+  미납: (theme: DefaultTheme) => css`
+    color: ${theme.colors.red_400};
+    background-color: ${theme.colors.red_200};
+  `,
+  확인중: (theme: DefaultTheme) => css`
+    color: ${theme.colors.orange_600};
+    background-color: ${theme.colors.orange_200};
+  `,
+  완납: (theme: DefaultTheme) => css`
+    color: ${theme.colors.primary_400};
+    background-color: ${theme.colors.blue_200};
+  `,
+};
 
 export const DetailFineListContainer = styled.ul`
   position: relative;
@@ -15,7 +32,8 @@ export const DateText = styled.p`
 export const DetailFineItem = styled.li`
   display: flex;
   align-items: center;
-  padding-top: 0.675rem;
+  margin-bottom: 0.675rem;
+  padding: 0.625rem 0;
 `;
 
 export const ContentWrapper = styled.div`
@@ -28,14 +46,18 @@ export const UserInfoText = styled.p`
   color: ${({ theme }) => theme.colors.secondary_900};
 `;
 
-export const SituationBox = styled.div`
+export const SituationBox = styled.div<{ situationType: Situation }>`
   display: flex;
   align-items: center;
+  padding-right: 0.125rem;
   ${({ theme }) => css`
     border-radius: 0.25rem;
     background-color: ${theme.colors.blue_200};
     color: ${theme.colors.primary_600};
   `}
+  ${({ theme }) => theme.font.caption};
+
+  ${({ theme, situationType }) => situationType && MOBILESITUATIONSTATUSSTYLES[situationType](theme)}
 `;
 
 export const DetailContextWrapper = styled.div`
@@ -69,9 +91,9 @@ export const DescriptionContainer = styled.div`
 `;
 
 export const DescriptionGround = styled.span`
-  ${({ theme }) => theme.font.subhead_02};
+  ${({ theme }) => theme.font.caption};
 
-  color: ${({ theme }) => theme.colors.secondary_900};
+  color: ${({ theme }) => theme.colors.secondary_600};
 `;
 export const Division = styled.div`
   width: 1px;
@@ -80,7 +102,13 @@ export const Division = styled.div`
   background-color: ${({ theme }) => theme.colors.neutral_400_b};
 `;
 export const DescriptionMemo = styled.span`
-  ${({ theme }) => theme.font.subhead_02};
+  ${({ theme }) => theme.font.caption};
 
-  color: ${({ theme }) => theme.colors.secondary_600};
+  color: ${({ theme }) => theme.colors.secondary_500};
+  white-space: nowrap;
+`;
+
+export const CheckboxWrapper = styled.div`
+  padding-left: 0.5rem;
+  padding-right: 0.75rem;
 `;
