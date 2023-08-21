@@ -2,6 +2,7 @@ import { ARROW } from '@/assets/icons/Arrow';
 import { SYSTEM } from '@/assets/icons/System';
 import useSearchParticipant from '@/hooks/Member/useSearchParticipant';
 import ModalPageLayout from '@/layouts/Mobile/ModalPageLayout';
+import { detailFineState } from '@/store/detailFineState';
 import { searchMemberState } from '@/store/searchMemberState';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
@@ -12,6 +13,7 @@ const MobileMemberSearch = () => {
   const { groupId } = useParams();
 
   const [searchMember, setSearchMember] = useRecoilState(searchMemberState);
+  const [isOpen, setIsOpen] = useRecoilState(detailFineState);
 
   const goBack = () => {
     navigate(-1);
@@ -19,7 +21,8 @@ const MobileMemberSearch = () => {
 
   const searchTargetMemberList = (nickname: string) => {
     setSearchMember({ ...searchMember, nickname });
-    navigate(`/m-group/${groupId}/book/detail`);
+    setIsOpen(true);
+    navigate(`/m-group/${groupId}/book`);
   };
 
   const { nickname, filteredMemberList, initNickname, searchNickname, inputRef } = useSearchParticipant(searchMember.nickname);
