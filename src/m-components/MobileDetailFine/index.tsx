@@ -23,25 +23,36 @@ type GroupedData = {
   [key: string]: SelectedEventInfo[];
 };
 
-const MobileDetailFine = () => {
+type Props = {
+  $isOpen: boolean;
+  setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
+};
+
+const MobileDetailFine = ({ $isOpen, setIsOpen }: Props) => {
   const { groupId } = useParams();
 
+  const { ref, inView } = useInView();
+
   const [detailFilter, setDetailFilter] = useState<DetailFilter>({ nickname: '', situation: '', page: 0, size: 16, groupId: Number(groupId) });
+
   const [openFilterSheet, setOpenFilterSheet] = useState(false);
+
+  const [GroupedListByDate, setGroupedListByDate] = useState({});
+
+  const [calendarDate, setCalendarDate] = useRecoilState(dateState);
+
+  const {
+    checkedSize,
+    setCheckDetailFine: { setInitCheckDetailFine },
+  } = useCheckListState();
 
   const handleOpenFilterSheet = () => {
     setOpenFilterSheet((prev) => !prev);
   };
 
-  const [calendarDate, setCalendarDate] = useRecoilState(dateState);
-
-  useEffect(() => {
-    setCalendarDate((prev) => ({ ...prev, startDate: dayjs('2023.08.09'), endDate: dayjs('2023.08.10') }));
-  }, []);
-
   const { data, hasNextPage, fetchNextPage } = useGetMobileDetailList(detailFilter, calendarDate);
 
-  const { ref, inView } = useInView();
+  const details = (Object.values(GroupedListByDate).flat() as SelectedEventInfo[]) ?? [];
 
   useEffect(() => {
     if (inView && hasNextPage) {
@@ -49,7 +60,9 @@ const MobileDetailFine = () => {
     }
   }, [inView]);
 
-  const [GroupedListByDate, setGroupedListByDate] = useState({});
+  useEffect(() => {
+    setGroupedListByDate({});
+  }, [calendarDate]);
 
   useEffect(() => {
     const groupedData: GroupedData = data?.pages.reduce((groups: any, page) => {
@@ -66,30 +79,24 @@ const MobileDetailFine = () => {
     setGroupedListByDate((prev) => ({ ...prev, ...groupedData }));
   }, [data]);
 
-  const details = (Object.values(GroupedListByDate).flat() as SelectedEventInfo[]) ?? [];
-
-  const {
-    checkedSize,
-    setCheckDetailFine: { setInitCheckDetailFine },
-  } = useCheckListState();
+  useEffect(() => {
+    setInitCheckDetailFine();
+  }, [$isOpen]);
 
   return (
-    <>
-      <MobileLayout location="GROUP">
-        <div>
-          <Style.MobileDetailFineHeader>
-            <Style.ArrowButton>{ARROW.DOWN_LG_GRAY}</Style.ArrowButton>
-            <MobileDateController />
-            <MobileFilterController openFilterSheet={handleOpenFilterSheet} />
-            <MobileAllCheckbox //
-              details={details}
-              totalAmount={1000000}
-            />
-          </Style.MobileDetailFineHeader>
-          <MobileDetailFineList details={GroupedListByDate} />
-          <div ref={ref} />
-        </div>
-      </MobileLayout>
+    <Style.MobileDetailFineFrame $isOpen={$isOpen}>
+      <Style.MobileDetailFineHeader>
+        <Style.ArrowButton onClick={() => setIsOpen(false)}>{ARROW.DOWN_LG_GRAY}</Style.ArrowButton>
+        <MobileDateController />
+        <MobileFilterController openFilterSheet={handleOpenFilterSheet} />
+        <MobileAllCheckbox //
+          details={details}
+          totalAmount={1000000}
+        />
+      </Style.MobileDetailFineHeader>
+      <MobileDetailFineList details={GroupedListByDate} />
+      <div ref={ref} />
+
       {openFilterSheet && (
         <FilterBottomSheet //
           detailFilter={detailFilter}
@@ -98,7 +105,7 @@ const MobileDetailFine = () => {
         />
       )}
       {checkedSize > 0 && <MobileToolbar />}
-    </>
+    </Style.MobileDetailFineFrame>
   );
 };
 

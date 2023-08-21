@@ -1,5 +1,18 @@
 import styled from '@emotion/styled';
 
+export const MobileDetailFineFrame = styled.div<{ $isOpen: boolean }>`
+  width: 100%;
+  height: calc(var(--vh, 80px) * 100);
+
+  position: fixed;
+  top: ${({ $isOpen }) => ($isOpen ? '80px' : '100%')};
+  left: 0;
+
+  text-align: left;
+  background: #fff;
+  transition: all 600ms cubic-bezier(0.86, 0, 0.07, 1);
+`;
+
 export const FilterButton = styled.button`
   display: flex;
   align-items: center;

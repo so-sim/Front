@@ -29,7 +29,7 @@ const MobileRouter = () => {
         <Route path="/m-group/:groupId/member" element={<MobileMemberManagement />} />
         <Route path="/m-group/:groupId/book" element={<MobileCalendar />} />
         <Route path="/m-group/:groupId/book/member-search" element={<MobileMemberSearch />} />
-        <Route path="/m-group/:groupId/book/detail" element={<MobileDetailFine />} />
+        {/* <Route path="/m-group/:groupId/book/detail" element={<MobileDetailFine />} /> */}
         <Route path="/m-group/:groupId/book/detail/:fineBookDetailId" element={<MobileFineBookDetail />} />
         <Route path="/m-group/:groupId/group-setting" element={<MobileSetting />} />
         <Route path="/m-group/:groupId/group-setting/user-group" element={<MobileUserGroupSetting />} />

@@ -55,7 +55,7 @@ const MobileDetailFineList = ({ details }: Props) => {
       <DetailFineListContainer>
         {Object.values(details).map((item, index) => (
           <>
-            <DateText>{Object.keys(details)[index]}</DateText>
+            <DateText key={index}>{Object.keys(details)[index]}</DateText>
 
             {item.map((item) => (
               <DetailFineItem onClick={() => goToFineBookDetail(item.eventId)}>
@@ -99,10 +99,12 @@ const MobileDetailFineList = ({ details }: Props) => {
 export default MobileDetailFineList;
 
 const DetailFineListContainer = styled.ul`
-  padding-top: 0.75rem;
+  position: relative;
+  padding: 0.75rem 1rem 0;
 `;
 
 const DateText = styled.p`
+  padding-top: 1rem;
   ${({ theme }) => theme.font.body_01};
   color: ${({ theme }) => theme.colors.secondary_500};
 `;
