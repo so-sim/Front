@@ -2,6 +2,10 @@ import styled from '@emotion/styled';
 
 // 전체에 100vh를 가진 flex를 주고  마지막 calendar에만 flex1 주면 해결되긴함 (기기별 높이 반응형을 고려할 때 )
 
+export const CalendarBody = styled.div`
+  position: relative;
+`;
+
 export const Container = styled.div`
   /* position: relative; */
 
