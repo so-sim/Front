@@ -1,6 +1,7 @@
 import MobileLayout from '@/layouts/Mobile/MobileLayout';
 import styled from '@emotion/styled';
 import { isMobile } from 'react-device-detect';
+import { useNavigate } from 'react-router-dom';
 import { Header } from '../Home';
 
 const NotAuth = () => {
@@ -21,10 +22,16 @@ const NotAuth = () => {
 export default NotAuth;
 
 const Main = () => {
+  const navigate = useNavigate();
+
+  const redirectHome = () => {
+    isMobile ? navigate('/m-home') : navigate('/');
+  };
+
   return (
     <Container>
       <Title>접근권한이 없는 페이지 입니다.</Title>
-      <Button>메인으로 가기</Button>
+      <Button onClick={redirectHome}>메인으로 가기</Button>
     </Container>
   );
 };

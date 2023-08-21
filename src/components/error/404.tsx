@@ -1,6 +1,7 @@
 import MobileLayout from '@/layouts/Mobile/MobileLayout';
 import styled from '@emotion/styled';
 import { isMobile } from 'react-device-detect';
+import { useNavigate } from 'react-router-dom';
 import { Header } from '../Home';
 
 const Page404 = () => {
@@ -22,12 +23,18 @@ const Page404 = () => {
 export default Page404;
 
 const Main = () => {
+  const navigate = useNavigate();
+
+  const redirectHome = () => {
+    isMobile ? navigate('/m-home') : navigate('/');
+  };
+
   return (
     <Container>
       <Title>
         요청하신 페이지를 <br /> 찾을 수 없습니다.
       </Title>
-      <Button>메인으로 가기</Button>
+      <Button onClick={redirectHome}>메인으로 가기</Button>
     </Container>
   );
 };
