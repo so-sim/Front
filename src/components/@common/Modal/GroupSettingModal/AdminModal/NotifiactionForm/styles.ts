@@ -72,6 +72,7 @@ export const PeriodTypeButton = styled.button<{ isSelected: boolean }>`
   padding: 8px 0;
   justify-content: center;
   border-radius: 4px;
+  color: ${({ theme }) => theme.colors.secondary_900};
   background-color: ${({ theme, isSelected }) => (isSelected ? theme.colors.secondary_100 : '')};
 `;
 

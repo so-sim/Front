@@ -41,7 +41,7 @@ const MonthForm = <T extends NotificationInfo, V extends T[DuplicateValues]>({ n
         날짜로 선택하기 <Style.ArrowIcon isSelected={isSimpleDateType}>{isSimpleDateType ? ARROW.DOWN_LG : ARROW.DOWN_LG_NON_FOCUS}</Style.ArrowIcon>
       </Style.MonthlySelectTitle>
       {isSimpleDateType && (
-        <div>
+        <div style={{ width: '100%' }}>
           <Style.Notice>31일로 설정 (말일로 설정됩니다)</Style.Notice>
           <Style.CalendarBlock>
             {createFixedCalendar().map((week, i) => {

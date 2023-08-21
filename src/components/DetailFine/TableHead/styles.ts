@@ -27,13 +27,21 @@ export const Element = styled.div`
   }
 `;
 
-export const PointerElement = styled(Element)`
+export const PointerElement = styled.div`
   cursor: pointer;
+  padding: 8px 16px;
+  display: flex;
+  gap: 4px;
+  align-items: center;
+  &,
+  & > * {
+    ${({ theme }) => theme.font.subhead_02}
+    color: ${({ theme }) => theme.colors.secondary_900}
+  }
 `;
 
 export const Arrow = styled.span`
   height: 16px;
-  margin-left: 8px;
 `;
 
 // searchParam에 따라  button display 해야함

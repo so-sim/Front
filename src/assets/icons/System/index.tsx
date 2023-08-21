@@ -11,6 +11,7 @@ import PreParing from './PreParing.svg';
 import Search from './Search.svg';
 import Menu from './Menu.svg';
 import ToolTip from './ToolTip.svg';
+import ToolTipInfo from './ToolTipInfo.svg';
 import Initialization from './Initialization.svg';
 import MobileCon from './MobileCon.svg';
 import MobileNon from './MobileNon.svg';
@@ -19,8 +20,9 @@ import Filter from './Filter.svg';
 
 export const SYSTEM = {
   ARTICLE: <Article />,
-  CLOSE_SM: <Close width={16} height={16} />,
-  CLOSE_LG: <Close width={24} height={24} />,
+  CLOSE_SM: <Close width={16} height={16} fill="#3C3C3C" />,
+  CLOSE_LG: <Close width={24} height={24} fill="#3C3C3C" />,
+  CLOSE_SM_WHITE: <Close width={16} height={16} fill="#FFFFFF" />,
   HOME: <Home />,
   LINK: <Link fill="#ffffff" />,
   LINK_BLACK: <Link fill="#3C3C3C" />,
@@ -40,6 +42,7 @@ export const SYSTEM = {
   SEARCH_GRAY: <Search fill="#9C9C9C" width={24} height={24} />,
   SEARCH_GRAY_LG: <Search fill="#E3E4E5" width={48} height={48} />,
   TOOLTIP: <ToolTip width={24} height={24} />,
+  TOOLTIP_INFO: <ToolTipInfo width={24} height={24} />,
   PLUS_WHITE: <Plus width={24} height={24} />,
   INITIALIZATION: <Initialization />,
   MOBILENON: <MobileNon />,

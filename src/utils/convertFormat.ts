@@ -19,7 +19,7 @@ export const convertDateFormat = (date: string) => {
   let result = '';
 
   for (let i = 0; i < date.length; i++) {
-    if (i === 4 || i === 6) result += '.';
+    if (i === 4 || i === 6) result += '-';
     result += date[i];
   }
   return result;
@@ -32,4 +32,8 @@ export const convertTimeFormat = (time: string) => {
   result += hour >= 13 ? `${padStart(hour - 12)}:${padStart(minute)}` : `${padStart(hour)}:${padStart(minute)}`;
 
   return result;
+};
+
+export const covertDateForView = (date: string) => {
+  return date.replaceAll('-', '.');
 };

@@ -22,7 +22,7 @@ const MobileSetting = () => {
   const filteredSettingList = SETTING_LIST.filter((item) => (isAdmin ? item.role === 'admin' : item.role === 'member'));
 
   const goBack = () => {
-    navigate(-1);
+    navigate(`/m-group/${groupId}/book`);
   };
 
   const moveToSettingPage = (type: SettingType) => {

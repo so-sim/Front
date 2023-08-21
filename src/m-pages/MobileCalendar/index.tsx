@@ -6,13 +6,11 @@ import useCalendarState from '@/hooks/Calendar/useCalendarState';
 import useCalendarStatus from '@/hooks/Calendar/useCalendarStatus';
 import MobileLayout from '@/layouts/Mobile/MobileLayout';
 import { dateState } from '@/store/dateState';
-import dayjs from 'dayjs';
+import dayjs, { Dayjs } from 'dayjs';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
-import MobileCalendarComponent from '@/m-components/MobileCalendar/index';
 
 import * as Style from './styles';
-import MobileDetailFine from '@/m-components/MobileDetailFine';
 
 const WEEKDATE = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
@@ -29,6 +27,17 @@ const MobileCalendar = () => {
   const goToCreateFineBook = () => {
     navigate(`/m-group/${groupId}/create-finebook`);
     // 내역 추가 페이지로 라우팅
+  };
+
+  const goToDetailFine = (date: Dayjs) => {
+    setDateTestObj({
+      startDate: date, //
+      endDate: date,
+      baseDate: date,
+      mode: 'day',
+    });
+    navigate(`/m-group/${groupId}/book/detail`);
+    // 내역 상세 페이지로 라우팅
   };
 
   return (
@@ -63,8 +72,8 @@ const MobileCalendar = () => {
                 const status = filterCorrectDateStatus(date);
                 // 컴포넌트 분리 및 라우팅 연결 필요
                 return (
-                  <Style.DateWrapper key={index + date.date()}>
-                    <Style.DateTitle>{date.date()}</Style.DateTitle>
+                  <Style.DateWrapper key={index + date.date()} onClick={() => goToDetailFine(date)}>
+                    <Style.DateTitle isSameMonth={isCurrentMonth(date)}>{date.date()}</Style.DateTitle>
                     <div>
                       {status && isCurrentMonth(date) && (
                         <>

@@ -11,7 +11,7 @@ export const Overlay = styled.div`
 `;
 
 export const Frame = styled.div`
-  position: absolute;
+  position: fixed;
   height: fit-content;
   width: 302px;
   margin: auto;

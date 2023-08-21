@@ -78,9 +78,9 @@ export const DateWrapper = styled.div`
   text-align: center;
 `;
 
-export const DateTitle = styled.p`
+export const DateTitle = styled.p<{ isSameMonth: boolean }>`
   ${({ theme }) => theme.font.subhead_02};
-  color: ${({ theme }) => theme.colors.secondary_900};
+  color: ${({ theme, isSameMonth }) => (isSameMonth ? theme.colors.secondary_900 : theme.colors.secondary_400)};
 `;
 
 export const AddIconWrapper = styled.div`
@@ -88,7 +88,7 @@ export const AddIconWrapper = styled.div`
   justify-content: center;
   align-items: center;
 
-  position: absolute;
+  position: fixed;
   bottom: 2rem;
   right: 1rem;
 

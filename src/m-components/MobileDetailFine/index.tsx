@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { dateState } from '@/store/dateState';
 import { DetailFilter } from '@/store/detailFilter';
 import { useRecoilState } from 'recoil';
@@ -18,6 +18,7 @@ import MobileAllCheckbox from './MobileAllCheckbox';
 import { ARROW } from '@/assets/icons/Arrow';
 import MobileToolbar from './MobileToolbar';
 import useCheckListState from '@/hooks/useCheckListState';
+import { SYSTEM } from '@/assets/icons/System';
 
 type GroupedData = {
   [key: string]: SelectedEventInfo[];
@@ -25,6 +26,7 @@ type GroupedData = {
 
 const MobileDetailFine = () => {
   const { groupId } = useParams();
+  const navigate = useNavigate();
 
   const [detailFilter, setDetailFilter] = useState<DetailFilter>({ nickname: '', situation: '', page: 0, size: 16, groupId: Number(groupId) });
   const [openFilterSheet, setOpenFilterSheet] = useState(false);
@@ -35,14 +37,19 @@ const MobileDetailFine = () => {
 
   const [calendarDate, setCalendarDate] = useRecoilState(dateState);
 
-  // TODO: 여쭤보고 삭제예정
-  // useEffect(() => {
-  //   setCalendarDate((prev) => ({ ...prev, startDate: dayjs('2023.08.09'), endDate: dayjs('2023.08.10') }));
-  // }, []);
-
   const { data, hasNextPage, fetchNextPage } = useGetMobileDetailList(detailFilter, calendarDate);
 
   const { ref, inView } = useInView();
+
+  const moveToCalendar = () => {
+    setCalendarDate({
+      startDate: dayjs(), //
+      endDate: dayjs(),
+      baseDate: dayjs(),
+      mode: 'day',
+    });
+    navigate(`/m-group/${groupId}/book`);
+  };
 
   useEffect(() => {
     if (inView && hasNextPage) {
@@ -74,12 +81,21 @@ const MobileDetailFine = () => {
     setCheckDetailFine: { setInitCheckDetailFine },
   } = useCheckListState();
 
+  const goToCreateFineBook = () => {
+    navigate(`/m-group/${groupId}/create-finebook`);
+    // 내역 추가 페이지로 라우팅
+  };
+
   return (
     <>
       <MobileLayout location="GROUP">
+        <Style.Notification>
+          <Style.NotificationTitle>벌금일정</Style.NotificationTitle>
+          <Style.NotificationContent>모임 설정에서 알림을 등록해보세요!</Style.NotificationContent>
+        </Style.Notification>
         <div>
           <Style.MobileDetailFineHeader>
-            <Style.ArrowButton>{ARROW.DOWN_LG_GRAY}</Style.ArrowButton>
+            <Style.ArrowButton onClick={moveToCalendar}>{ARROW.DOWN_LG_GRAY}</Style.ArrowButton>
             <MobileDateController />
             <MobileFilterController openFilterSheet={handleOpenFilterSheet} />
             <MobileAllCheckbox //
@@ -90,6 +106,7 @@ const MobileDetailFine = () => {
           <MobileDetailFineList details={GroupedListByDate} />
           <div ref={ref} />
         </div>
+        <Style.AddIconWrapper onClick={goToCreateFineBook}>{SYSTEM.PLUS_WHITE}</Style.AddIconWrapper>
       </MobileLayout>
       {openFilterSheet && (
         <FilterBottomSheet //

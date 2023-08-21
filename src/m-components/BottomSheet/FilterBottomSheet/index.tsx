@@ -109,7 +109,7 @@ const FilterBottomSheet = ({ detailFilter, setDetailFilter, onClose }: Props) =>
                   }}
                 >
                   <Style.CustomTitle>시작일</Style.CustomTitle>
-                  <Style.DateBox>{dayjs(calendarDate.startDate).format('YYYY-MM-DD')}</Style.DateBox>
+                  <Style.DateBox>{dayjs(calendarDate.startDate).format('YYYY.MM.DD')}</Style.DateBox>
                 </Style.CustomDateBox>
                 <div>-</div>
                 <Style.CustomDateBox
@@ -119,7 +119,7 @@ const FilterBottomSheet = ({ detailFilter, setDetailFilter, onClose }: Props) =>
                   }}
                 >
                   <Style.CustomTitle>종료일</Style.CustomTitle>
-                  <Style.DateBox>{dayjs(calendarDate.endDate).format('YYYY-MM-DD')}</Style.DateBox>
+                  <Style.DateBox>{dayjs(calendarDate.endDate).format('YYYY.MM.DD')}</Style.DateBox>
                 </Style.CustomDateBox>
               </>
             )}
