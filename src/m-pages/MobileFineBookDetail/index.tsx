@@ -90,6 +90,15 @@ const MobileFineBookDetail = () => {
     mutateDetailStatus({ situation, eventIdList: [eventId] });
   };
 
+  const updateConfirmStatus = (situation: Situation) => {
+    openConfirmModal({
+      type: 'CHANGE_STATUS_ADMIN',
+      confirm: () => changeConfirmStatus(situation),
+      cancel: closeConfirmModal,
+      id: GA.CON.SIDE_MODAL,
+    });
+  };
+
   // 밑에 모달 작업 및 납부완료(유저) 보내기 mutate (공유 hook예정) // 알람 요청하기 API 랑 같이
 
   const { openConfirmModal, closeConfirmModal } = useConfirmModal();
@@ -192,7 +201,7 @@ const MobileFineBookDetail = () => {
             </Button>
           )}
         </Style.Footer>
-        {openSituationSheet && <SituationBottomSheet onClose={handleOpenSituationSheet} onChange={changeConfirmStatus} />}
+        {openSituationSheet && <SituationBottomSheet onClose={handleOpenSituationSheet} onChange={changeConfirmStatus} onConfirm={updateConfirmStatus} />}
       </ModalPageLayout>
     </>
   );

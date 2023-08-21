@@ -10,6 +10,7 @@ import * as Style from './styles';
 type Props = {
   onClose: () => void;
   onChange: (value: Situation) => void;
+  onConfirm: (value: Situation) => void;
 };
 
 const REQUEST_BUTTON: { [key in Situation]: string } = {
@@ -18,12 +19,12 @@ const REQUEST_BUTTON: { [key in Situation]: string } = {
   완납: '납부 완료',
 };
 
-const SituationBottomSheet = ({ onClose, onChange }: Props) => {
+const SituationBottomSheet = ({ onClose, onChange, onConfirm }: Props) => {
   const situationList: Situation[] = ['미납', '완납'];
 
   const handleSelectMember = (situation: Situation) => {
-    onChange(situation);
     onClose();
+    onConfirm(situation);
   };
 
   return (
