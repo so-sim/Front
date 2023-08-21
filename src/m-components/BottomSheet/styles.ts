@@ -7,7 +7,7 @@ export const Frame = styled.div`
   opacity: 0.3;
   height: 100vh;
   width: 100vw;
-  z-index: 100;
+  z-index: 110;
   background-color: ${({ theme }) => theme.colors.secondary_900};
   @supports (-webkit-touch-callout: none) {
     height: -webkit-fill-available;
@@ -20,7 +20,7 @@ export const BottomSheet = styled.div`
   left: 0;
   width: 100%;
   height: 340px;
-  z-index: 110;
+  z-index: 120;
   background-color: ${({ theme }) => theme.colors.secondary_100};
   border-radius: 8px 8px 0 0;
   animation: slidein 0.3s ease-in-out;
