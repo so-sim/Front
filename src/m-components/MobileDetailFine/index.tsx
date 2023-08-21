@@ -31,26 +31,34 @@ type Props = {
 const MobileDetailFine = ({ $isOpen, setIsOpen }: Props) => {
   const { groupId } = useParams();
 
+  const { ref, inView } = useInView();
+
   const [detailFilter, setDetailFilter] = useState<DetailFilter>({ nickname: '', situation: '', page: 0, size: 16, groupId: Number(groupId) });
+
   const [openFilterSheet, setOpenFilterSheet] = useState(false);
+
+  const [GroupedListByDate, setGroupedListByDate] = useState({});
+
+  const [calendarDate, setCalendarDate] = useRecoilState(dateState);
+
+  const {
+    checkedSize,
+    setCheckDetailFine: { setInitCheckDetailFine },
+  } = useCheckListState();
 
   const handleOpenFilterSheet = () => {
     setOpenFilterSheet((prev) => !prev);
   };
 
-  const [calendarDate, setCalendarDate] = useRecoilState(dateState);
-
   const { data, hasNextPage, fetchNextPage } = useGetMobileDetailList(detailFilter, calendarDate);
 
-  const { ref, inView } = useInView();
+  const details = (Object.values(GroupedListByDate).flat() as SelectedEventInfo[]) ?? [];
 
   useEffect(() => {
     if (inView && hasNextPage) {
       fetchNextPage();
     }
   }, [inView]);
-
-  const [GroupedListByDate, setGroupedListByDate] = useState({});
 
   useEffect(() => {
     setGroupedListByDate({});
@@ -70,13 +78,6 @@ const MobileDetailFine = ({ $isOpen, setIsOpen }: Props) => {
 
     setGroupedListByDate((prev) => ({ ...prev, ...groupedData }));
   }, [data]);
-
-  const details = (Object.values(GroupedListByDate).flat() as SelectedEventInfo[]) ?? [];
-
-  const {
-    checkedSize,
-    setCheckDetailFine: { setInitCheckDetailFine },
-  } = useCheckListState();
 
   useEffect(() => {
     setInitCheckDetailFine();

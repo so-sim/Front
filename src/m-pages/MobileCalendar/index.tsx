@@ -35,15 +35,15 @@ const MobileCalendar = () => {
     // 내역 추가 페이지로 라우팅
   };
 
-  useEffect(() => {
-    setCalendarDateState(initialDateState);
-  }, []);
-
   const goToDetailFine = (date: dayjs.Dayjs) => {
     setCalendarDateState((prev) => ({ ...prev, startDate: date, endDate: date, baseDate: date, mode: 'day' }));
     // navigate(`/m-group/${groupId}/book/detail`);
     setIsOpen((prev) => !prev);
   };
+
+  useEffect(() => {
+    setCalendarDateState(initialDateState);
+  }, []);
 
   return (
     <MobileLayout location="GROUP">
