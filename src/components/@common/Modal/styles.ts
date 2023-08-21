@@ -36,7 +36,7 @@ export const ModalFrame = styled.div<ModalProps>`
 `;
 
 export const ModalHeader = styled.div<ModalHeaderProps>`
-  ${({ theme }) => theme.font.headline};
+  ${({ theme }) => (isMobile ? theme.font.subhead_04 : theme.font.headline)};
   width: 100%;
   text-align: ${({ align }) => align === 'center' && 'center'};
   margin-bottom: ${(props) => props.margin};
