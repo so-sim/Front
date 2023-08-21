@@ -7,7 +7,7 @@ import useConfirmModal from '@/hooks/useConfirmModal';
 import useSituationList from '@/hooks/useSituationList';
 import ModalPageLayout from '@/layouts/Mobile/ModalPageLayout';
 import SituationBottomSheet from '@/m-components/BottomSheet/SituationBottomSheet';
-import { useGetOneOfDetail, useUpdateDetailStatus } from '@/queries/Detail';
+import { useDeleteDetail, useGetOneOfDetail, useUpdateDetailStatus } from '@/queries/Detail';
 import { useGetDetailListById } from '@/queries/Detail/useGetDetailListById';
 import { useGroupDetail } from '@/queries/Group';
 import { useGetMyNikname } from '@/queries/Group/useGetMyNickname';
@@ -61,6 +61,24 @@ const MobileFineBookDetail = () => {
     navigate(-1);
   };
 
+  const goToCalendar = () => {
+    navigate(`/m-group/${groupId}/book`);
+  };
+
+  const goToUpdateFineBook = () => {
+    navigate(`/m-group/${groupId}/update-finebook?eventId=${eventId}`);
+  };
+
+  const { mutate: deleteDetail } = useDeleteDetail(goToCalendar);
+
+  const handleDeleteConfirmModal = () => {
+    openConfirmModal({
+      type: 'DETAIL_DELETE',
+      confirm: () => deleteDetail(eventId),
+      cancel: closeConfirmModal,
+    });
+  };
+
   // 바텀시트
   const [openSituationSheet, setOpenSituationSheet] = useState(false);
 
@@ -109,8 +127,8 @@ const MobileFineBookDetail = () => {
             <Style.Date>{date.slice(2)}</Style.Date>
             {isAdmin ? (
               <Style.ButtonBox>
-                <Style.AdminButton onClick={() => {}}>삭제</Style.AdminButton>
-                <Style.AdminButton onClick={() => {}}>수정</Style.AdminButton>
+                <Style.AdminButton onClick={handleDeleteConfirmModal}>삭제</Style.AdminButton>
+                <Style.AdminButton onClick={goToUpdateFineBook}>수정</Style.AdminButton>
               </Style.ButtonBox>
             ) : (
               <div />

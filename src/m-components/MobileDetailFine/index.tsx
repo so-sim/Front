@@ -121,6 +121,7 @@ const MobileDetailFine = ({ $isOpen, setIsOpen }: Props) => {
         />
       )}
       {checkedSize > 0 && <MobileToolbar />}
+      {!openFilterSheet && <Style.AddIconWrapper onClick={goToCreateFineBook}>{SYSTEM.PLUS_WHITE}</Style.AddIconWrapper>}
     </Style.MobileDetailFineFrame>
   );
 };
