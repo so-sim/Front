@@ -2,23 +2,35 @@ import styled from '@emotion/styled';
 import React from 'react';
 
 const DetailListCheckBox = React.forwardRef<HTMLInputElement>(({ ...props }, ref) => {
-  return <CheckBox type="checkbox" {...props} ref={ref} />;
+  return (
+    <CheckBoxWrapper>
+      <CheckBox type="checkbox" {...props} ref={ref} />
+    </CheckBoxWrapper>
+  );
 });
 
 export default DetailListCheckBox;
+
+export const CheckBoxWrapper = styled.div`
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+`;
 
 export const CheckBox = styled.input`
   appearance: none;
 
   width: 16px;
   height: 16px;
+  box-sizing: border-box;
 
   border: 1px solid ${({ theme }) => theme.colors.secondary_400};
 
   background-color: ${({ theme }) => theme.colors.white};
 
+  margin: 0;
+
   &:focus {
-    background-color: ${({ theme }) => theme.colors.neutral_200_b};
+    /* background-color: ${({ theme }) => theme.colors.neutral_200_b}; */
   }
 
   &:checked {
