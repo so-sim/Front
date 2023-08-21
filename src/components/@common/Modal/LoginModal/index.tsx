@@ -37,7 +37,13 @@ export const AuthModal: FC<ModalHandlerProps> = ({ modalHandler }) => {
       <Modal.Header onClick={modalHandler}>{AUTH_TEXT[authType].title}</Modal.Header>
       <Modal.Body>
         {authType === 'SignIn' ? <Style.GuidePhrase>{AUTH_TEXT[authType].desc}</Style.GuidePhrase> : <>{AUTH_TEXT[authType].desc}</>}
-        <Style.LoginBlock>{authType === 'SignIn' ? <KaKaoLogin>{USER.KAKAO_SIGNIN}</KaKaoLogin> : <KaKaoLogin>{USER.KAKAO_SIGNUP}</KaKaoLogin>}</Style.LoginBlock>
+        <Style.LoginBlock>
+          {authType === 'SignIn' ? (
+            <KaKaoLogin>{isMobile ? USER.MOBILE_KAKAO_SIGNIN : USER.KAKAO_SIGNIN}</KaKaoLogin>
+          ) : (
+            <KaKaoLogin>{isMobile ? USER.MOBILE_KAKAO_SIGNUP : USER.KAKAO_SIGNUP}</KaKaoLogin>
+          )}
+        </Style.LoginBlock>
         <Style.Footer>
           <Style.Text>{AUTH_TEXT[authType].linkText}</Style.Text>
           <Style.LinkText onClick={onChangeAuthType}>{AUTH_TEXT[authType].link}</Style.LinkText>
