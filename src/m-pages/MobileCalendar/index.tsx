@@ -13,9 +13,8 @@ import { useRecoilState } from 'recoil';
 import * as Style from './styles';
 
 import MobileDetailFine from '@/m-components/MobileDetailFine';
-import { useEffect, useState } from 'react';
-import styled from '@emotion/styled';
-import MobileDetailFineList from '@/m-components/MobileDetailFine/MobileDetailFineList';
+import { useEffect } from 'react';
+import { detailFineState } from '@/store/detailFineState';
 
 const WEEKDATE = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
@@ -28,7 +27,7 @@ const MobileCalendar = () => {
   const { calendarDate, setCalendarDate, increaseMonth, decreaseMonth } = useCalendarState();
   const { monthList, filterCorrectDateStatus, isCurrentMonth, isToday, isSelectedDate } = useCalendarStatus(calendarDate, groupId);
 
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useRecoilState(detailFineState);
 
   const goToCreateFineBook = () => {
     navigate(`/m-group/${groupId}/create-finebook`);
@@ -43,6 +42,10 @@ const MobileCalendar = () => {
 
   useEffect(() => {
     setCalendarDateState(initialDateState);
+
+    return () => {
+      setIsOpen(false);
+    };
   }, []);
 
   return (

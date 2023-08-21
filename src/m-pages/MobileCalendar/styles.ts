@@ -104,6 +104,8 @@ export const AddIconWrapper = styled.div`
 
   background-color: ${({ theme }) => theme.colors.primary_500};
   color: white;
+
+  z-index: 100;
 `;
 
 export const Notification = styled.div`

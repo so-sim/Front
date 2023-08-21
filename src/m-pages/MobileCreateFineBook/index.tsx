@@ -6,6 +6,7 @@ import useFinebook from '@/hooks/Group/useFinebook';
 import ModalPageLayout from '@/layouts/Mobile/ModalPageLayout';
 import MobileFineBookForm from '@/m-components/MobileFineBookForm';
 import { dateState } from '@/store/dateState';
+import { detailFineState } from '@/store/detailFineState';
 import { checkFormIsValid } from '@/utils/validation';
 import dayjs from 'dayjs';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -19,19 +20,21 @@ const MobileCreateFineBook = () => {
     navigate(-1);
   };
 
+  const [isOpen, setIsOpen] = useRecoilState(detailFineState);
   const [calendarDate, setCalendarDate] = useRecoilState(dateState);
   const { selectData, getFormFiledActions, convertSituationToText, createLoading } = useFinebook(initialSelectData);
   const { createDetail } = getFormFiledActions();
 
   const onSubmitCreateDetail = () => {
     createDetail().then(() => {
+      setIsOpen(true);
       setCalendarDate({
         startDate: dayjs(selectData.date),
         endDate: dayjs(selectData.date),
         baseDate: dayjs(selectData.date),
         mode: 'day',
       });
-      navigate(`/m-group/${groupId}/book/detail`);
+      navigate(`/m-group/${groupId}/book`);
     });
   };
 
