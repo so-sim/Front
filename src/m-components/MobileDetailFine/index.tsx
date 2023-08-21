@@ -19,6 +19,7 @@ import { ARROW } from '@/assets/icons/Arrow';
 import MobileToolbar from './MobileToolbar';
 import useCheckListState from '@/hooks/useCheckListState';
 import { SYSTEM } from '@/assets/icons/System';
+import { useGroupDetail } from '@/queries/Group';
 
 type GroupedData = {
   [key: string]: SelectedEventInfo[];
@@ -32,6 +33,9 @@ type Props = {
 const MobileDetailFine = ({ $isOpen, setIsOpen }: Props) => {
   const { groupId } = useParams();
   const navigate = useNavigate();
+
+  const { data: group } = useGroupDetail(Number(groupId));
+  const isAdmin = group?.content.isAdmin;
 
   const { ref, inView } = useInView();
 
@@ -121,7 +125,7 @@ const MobileDetailFine = ({ $isOpen, setIsOpen }: Props) => {
         />
       )}
       {checkedSize > 0 && <MobileToolbar />}
-      {!openFilterSheet && <Style.AddIconWrapper onClick={goToCreateFineBook}>{SYSTEM.PLUS_WHITE}</Style.AddIconWrapper>}
+      {!openFilterSheet && isAdmin && <Style.AddIconWrapper onClick={goToCreateFineBook}>{SYSTEM.PLUS_WHITE}</Style.AddIconWrapper>}
     </Style.MobileDetailFineFrame>
   );
 };

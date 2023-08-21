@@ -15,6 +15,7 @@ import * as Style from './styles';
 import MobileDetailFine from '@/m-components/MobileDetailFine';
 import { useEffect } from 'react';
 import { detailFineState } from '@/store/detailFineState';
+import { useGroupDetail } from '@/queries/Group';
 
 const WEEKDATE = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
@@ -22,6 +23,9 @@ const WEEKDATE = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 const MobileCalendar = () => {
   const { groupId } = useParams();
   const navigate = useNavigate();
+
+  const { data: group } = useGroupDetail(Number(groupId));
+  const isAdmin = group?.content.isAdmin;
 
   const [calendarDateState, setCalendarDateState] = useRecoilState(dateState);
   const { calendarDate, setCalendarDate, increaseMonth, decreaseMonth } = useCalendarState();
@@ -97,7 +101,7 @@ const MobileCalendar = () => {
               </Style.WeekWrapper>
             ))}
           </Style.CalendarWrapper>
-          <Style.AddIconWrapper onClick={goToCreateFineBook}>{SYSTEM.PLUS_WHITE}</Style.AddIconWrapper>
+          {isAdmin && <Style.AddIconWrapper onClick={goToCreateFineBook}>{SYSTEM.PLUS_WHITE}</Style.AddIconWrapper>}
           {/* 내역 추가 페이지로 라우팅 */}
         </Style.Container>
         <MobileDetailFine $isOpen={isOpen} setIsOpen={setIsOpen} />
