@@ -1,3 +1,4 @@
+import Page404 from '@/components/error/404';
 import useRedirectURL from '@/hooks/@common/useRedirectURL';
 import usePushUserId from '@/hooks/usePushUserId';
 import KaKaoSignUp from '@/pages/Auth/KakaoSignUp';

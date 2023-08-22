@@ -51,6 +51,7 @@ const MobileRouter = () => {
         <Route path="/m-withdrawal" element={<MobileWithdrawal />} />
         <Route path="/not-found" element={<Page404 />} />
         <Route path="/not-auth" element={<NotAuth />} />
+        <Route path="/m-group/*" element={<Page404 />} />
       </Routes>
     </>
   );
