@@ -14,6 +14,7 @@ type GroupedData = {
 };
 type Props = {
   details: GroupedData;
+  inViewElement: (node?: Element | null | undefined) => void;
 };
 
 const SituationStatusIcon = {
@@ -28,7 +29,7 @@ const SITUATIONSTATUSTEXT = {
   완납: '납부 완료',
 };
 
-const MobileDetailFineList = ({ details }: Props) => {
+const MobileDetailFineList = ({ details, inViewElement }: Props) => {
   const { groupId } = useParams();
   const navigate = useNavigate();
   const {
@@ -88,6 +89,7 @@ const MobileDetailFineList = ({ details }: Props) => {
                 </Style.ContentWrapper>
               </Style.DetailFineItem>
             ))}
+            <div style={{ height: '5px' }} ref={inViewElement}></div>
           </>
         ))}
       </Style.DetailFineListContainer>

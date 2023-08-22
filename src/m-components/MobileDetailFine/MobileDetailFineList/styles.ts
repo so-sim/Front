@@ -2,6 +2,7 @@ import { DefaultTheme } from '@/styles/Theme';
 import { Situation } from '@/types/event';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
+import { isMobile } from 'react-device-detect';
 
 export const MOBILESITUATIONSTATUSSTYLES = {
   미납: (theme: DefaultTheme) => css`
@@ -20,7 +21,12 @@ export const MOBILESITUATIONSTATUSSTYLES = {
 
 export const DetailFineListContainer = styled.ul`
   position: relative;
+
   padding: 0.75rem 1rem 0;
+
+  height: calc(100vh - 243px);
+
+  overflow-y: auto;
 `;
 
 export const DateText = styled.p`
