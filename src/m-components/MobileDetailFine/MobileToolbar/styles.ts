@@ -14,7 +14,7 @@ export const ToolbarContainer = styled.div`
 
   padding: 2rem 2.25rem;
 
-  z-index: 400;
+  z-index: 100;
 
   background-color: white;
 
