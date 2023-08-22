@@ -56,9 +56,10 @@ const FilterButton = ({ btn }: Props) => {
         >
           <Style.FlexCenter>
             <span>{btn.text}</span>
-            {(btn.mode === 'week' || btn.mode === 'custom') && <Style.ArrowIcon>{ARROW.DOWN_SM}</Style.ArrowIcon>}
+            {btn.mode === 'custom' && <Style.ArrowIcon>{ARROW.DOWN_SM}</Style.ArrowIcon>}
+            {/* {(btn.mode === 'week' || btn.mode === 'custom') && <Style.ArrowIcon>{ARROW.DOWN_SM}</Style.ArrowIcon>} */}
           </Style.FlexCenter>
-          {btn.mode === 'week' && calendarDate.mode === 'week' && openWeeklyFilterDrop && (
+          {/* {btn.mode === 'week' && calendarDate.mode === 'week' && openWeeklyFilterDrop && (
             <Style.DropDownWrapper>
               <DropDown
                 width={60}
@@ -70,7 +71,7 @@ const FilterButton = ({ btn }: Props) => {
                 dropDownRef={dropDownRef}
               />
             </Style.DropDownWrapper>
-          )}
+          )} */}
         </Style.FilterButton>
       </div>
       {btn.mode === 'custom' && openPeriodSettingDrop && <PeriodSettingModal modalHandler={handleCustomFilterDrop} />}

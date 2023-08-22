@@ -1,3 +1,4 @@
+import Page404 from '@/components/error/404';
 import MemberManagement from '@/pages/MemberManagement';
 import PreParing from '@/pages/PreParing';
 import React, { useState } from 'react';
@@ -22,6 +23,7 @@ const GroupLayout = () => {
           <Route path={`/book`} element={<Calendar />} />
           <Route path={`/book/detail`} element={<FineBook />} />
           <Route path={'/member'} element={<MemberManagement />} />
+          <Route path="/group/*" element={<Page404 />} />
         </Routes>
       </Style.GridLayout>
     </>

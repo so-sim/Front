@@ -17,12 +17,10 @@ const MobileAlarmRequest_Payment = () => {
   // 새로고침에 대응필요   새로고침 시 스토리지 사용해서 보존할지, detail로 다시 옮길지
 
   return (
-    <div style={{ position: 'relative', height: '100vh' }}>
-      <ModalPageLayout left={{ icon: ARROW.LEFT, onClick: goBack }} title="">
-        {/* 모달 Layout 사용 시 padding문제 */}
-        <AlarmRequest_PaymentUpdate checkDetailFine={{ ...checkDetailFine }} />
-      </ModalPageLayout>
-    </div>
+    <ModalPageLayout left={{ icon: ARROW.LEFT, onClick: goBack }} title="">
+      {/* 모달 Layout 사용 시 padding문제 */}
+      <AlarmRequest_PaymentUpdate checkDetailFine={{ ...checkDetailFine }} />
+    </ModalPageLayout>
   );
 };
 

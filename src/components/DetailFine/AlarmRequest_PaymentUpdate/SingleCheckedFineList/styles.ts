@@ -8,7 +8,7 @@ export const ItemContainer = styled.div`
 
   border-radius: 0.25rem;
   &:hover {
-    background-color: ${({ theme }) => theme.colors.primary_300};
+    background-color: ${({ theme }) => 'rgba(116, 166, 241, 0.1)'};
   }
 `;
 

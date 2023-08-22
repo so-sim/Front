@@ -60,7 +60,7 @@ const MobileDetailFineList = ({ details, inViewElement }: Props) => {
             <Style.DateText key={index}>{Object.keys(details)[index]}</Style.DateText>
 
             {item.map((item, index) => (
-              <Style.DetailFineItem onClick={() => goToFineBookDetail(item.eventId)} key={item.eventId + index}>
+              <Style.DetailFineItem isChecked={isChecked(item.eventId)} onClick={() => goToFineBookDetail(item.eventId)} key={item.eventId + index}>
                 <CheckboxContainer
                   id={String(item.eventId)}
                   isChecked={isChecked(item.eventId)}

@@ -14,6 +14,7 @@ import { useGroupDetail } from '@/queries/Group';
 import { useGetMyNikname } from '@/queries/Group/useGetMyNickname';
 import { Situation } from '@/types/event';
 import { changeNumberToMoney } from '@/utils/changeNumberToMoney';
+import { covertDateForView } from '@/utils/convertFormat';
 import { pushDataLayer } from '@/utils/pushDataLayer';
 import { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -135,7 +136,7 @@ const MobileFineBookDetail = () => {
       <ModalPageLayout left={{ icon: ARROW.LEFT, onClick: goBack }} title="상세내역">
         <div style={{ padding: '1.5rem 1rem' }}>
           <Style.BetweenBlock>
-            <Style.Date>{date.slice(2)}</Style.Date>
+            <Style.Date>{covertDateForView(date.slice(2))}</Style.Date>
             {isAdmin ? (
               <Style.ButtonBox>
                 <Style.AdminButton onClick={handleDeleteConfirmModal}>삭제</Style.AdminButton>

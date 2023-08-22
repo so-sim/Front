@@ -39,7 +39,7 @@ const MobileHeader = ({ left, title, hasAuth }: Props) => {
             )}
           </>
         ) : (
-          <div />
+          <div style={{ width: '8px' }} />
         )}
       </Style.Header>
       {openModal && <AuthModal modalHandler={loginModalHandler} />}
