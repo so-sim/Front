@@ -1,6 +1,7 @@
 import { LOGO } from '@/assets/icons/Logo';
 import { SYSTEM } from '@/assets/icons/System';
 import useWindowHeight from '@/hooks/@common/useWindowHeight';
+import useLockScroll from '@/hooks/useLockScroll';
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import MobileHeader from './components/MobileHeader';
@@ -15,6 +16,8 @@ type Props = {
 const MobileLayout = ({ location, children }: Props) => {
   const [openSideBar, setOpenSideBar] = useState(false);
   const { windowRef } = useWindowHeight();
+
+  useLockScroll(openSideBar);
 
   const sideBarHandler = () => {
     setOpenSideBar((prev) => !prev);
