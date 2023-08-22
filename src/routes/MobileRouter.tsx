@@ -20,6 +20,7 @@ import MobileAlarmRequest_Payment from '@/m-pages/MobileAlarmRequest_Payment';
 import Page404 from '@/components/error/404';
 import usePushUserId from '@/hooks/usePushUserId';
 import useRedirectURL from '@/hooks/@common/useRedirectURL';
+import NotAuth from '@/components/error/notAuth';
 
 const MobileRouter = () => {
   usePushUserId();
@@ -48,7 +49,8 @@ const MobileRouter = () => {
         <Route path="/m-tos" element={<MobileTOS />} />
         <Route path="/m-setting" element={<MobileUserSetting />} />
         <Route path="/m-withdrawal" element={<MobileWithdrawal />} />
-        {/* <Route path="/*" element={<Page404 />} /> */}
+        <Route path="/not-found" element={<Page404 />} />
+        <Route path="/not-auth" element={<NotAuth />} />
       </Routes>
     </>
   );
