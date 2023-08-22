@@ -117,8 +117,8 @@ const MobileDetailFine = ({ $isOpen, setIsOpen }: Props) => {
           totalAmount={getSumOfDetails(details)}
         />
       </Style.MobileDetailFineHeader>
-      <MobileDetailFineList details={GroupedListByDate} />
-      <div ref={ref} />
+      <MobileDetailFineList details={GroupedListByDate} inViewElement={ref} />
+
       {openFilterSheet && (
         <FilterBottomSheet //
           detailFilter={detailFilter}
