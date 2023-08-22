@@ -27,6 +27,9 @@ export const DetailFineListContainer = styled.ul`
   height: calc(100vh - 243px);
 
   overflow-y: auto;
+  &::-webkit-scrollbar {
+    display: none;
+  }
 `;
 
 export const DateText = styled.p`
