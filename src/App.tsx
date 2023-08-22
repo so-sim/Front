@@ -11,6 +11,7 @@ import { TOAST_ERROR } from './constants/Toast';
 import { GlobalConfirmModal } from './components/@common/Modal/ConfirmModal';
 import MobileRouter from './routes/MobileRouter';
 import { BrowserRouter } from 'react-router-dom';
+import { isMobile } from 'react-device-detect';
 
 const App = () => {
   const queryClient = new QueryClient({
@@ -40,10 +41,7 @@ const App = () => {
     <RecoilRoot>
       <QueryClientProvider client={queryClient}>
         <ThemeProvider theme={theme}>
-          <BrowserRouter>
-            <MobileRouter />
-            <Router />
-          </BrowserRouter>
+          <BrowserRouter>{isMobile ? <MobileRouter /> : <Router />}</BrowserRouter>
           <Toast />
           <GlobalConfirmModal />
           <Global styles={globalStyle} />

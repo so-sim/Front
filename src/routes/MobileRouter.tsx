@@ -17,8 +17,15 @@ import MobileUpdateFineBook from '@/m-pages/MobileUpdateFineBook';
 import MobileUserGroupSetting from '@/m-pages/MobileSetting/MobileUserGroupSetting';
 import MobileFineBookDetail from '@/m-pages/MobileFineBookDetail';
 import MobileAlarmRequest_Payment from '@/m-pages/MobileAlarmRequest_Payment';
+import Page404 from '@/components/error/404';
+import usePushUserId from '@/hooks/usePushUserId';
+import useRedirectURL from '@/hooks/@common/useRedirectURL';
 
 const MobileRouter = () => {
+  usePushUserId();
+  useRedirectURL();
+  // 뭔가 BrowserRouter 안에 provider느낌으로 한번만 사용해도 되지않을까 싶은데.. 방법을 모르겠네요
+
   return (
     <>
       <Routes>
@@ -41,6 +48,7 @@ const MobileRouter = () => {
         <Route path="/m-tos" element={<MobileTOS />} />
         <Route path="/m-setting" element={<MobileUserSetting />} />
         <Route path="/m-withdrawal" element={<MobileWithdrawal />} />
+        <Route path="*" element={<Page404 />} />
       </Routes>
     </>
   );

@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 
 export const GuidePhrase = styled.p`
   padding-bottom: 20px;
+  white-space: pre-wrap;
 `;
 
 export const Footer = styled.div`

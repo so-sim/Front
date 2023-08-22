@@ -10,6 +10,7 @@ export const useUpdateDetailStatus = (onSuccessUpdate?: (data: Situation) => voi
     onSuccess: (data) => {
       queryClient.invalidateQueries(['detailList']);
       queryClient.invalidateQueries(['monthStatus']);
+      queryClient.invalidateQueries(['oneOfDetail']);
       ToastPopUp({ type: 'success', message: TOAST_SUCCESS.UPDATE_FINE });
       onSuccessUpdate && onSuccessUpdate(data.content.situation);
     },

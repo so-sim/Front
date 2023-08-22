@@ -8,6 +8,7 @@ import { ChangeEvent, useState } from 'react';
 import { isMobile } from 'react-device-detect';
 import * as Style from './styles';
 import MobileMiniCalendar from '@/m-components/MobileMiniCalendar';
+import useLockScroll from '@/hooks/useLockScroll';
 
 export const TIME_LIST = Array.from({ length: 48 }, (v, i) => {
   const hour = padStart(Math.floor(i / 2));
@@ -29,6 +30,8 @@ type Props = {
 
 const CommonForm = ({ notificationForm, handleNotificationForm, isErrorField }: Props) => {
   const { dropDownRef, openDrop, setOpenDrop } = useDropDown();
+
+  useLockScroll(openDrop && isMobile);
   const [openCalendar, setOpenCalendar] = useState(false);
 
   const handleOpenDrop = () => {

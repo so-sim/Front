@@ -10,6 +10,7 @@ import { convertToPriceFormat, covertDateForView } from '@/utils/convertFormat';
 import { useState } from 'react';
 import MemberBottomSheet from '../BottomSheet/MemberBottomSheet';
 import MobileMiniCalendar from '../MobileMiniCalendar';
+import useLockScroll from '@/hooks/useLockScroll';
 
 type Props = {
   selectData: SelectedEventInfo;
@@ -27,6 +28,8 @@ const MobileFineBookForm = ({ selectData, action, convertSituationToText }: Prop
   const MEMO_MAX_LENGTH = 65;
 
   const [openMemberList, setOpenMemberList] = useState(false);
+  useLockScroll(openMemberList);
+
   const [openDateCalendar, setOpenDateCalendar] = useState(false);
 
   const handleOpenMemberList = () => {

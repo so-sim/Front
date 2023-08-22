@@ -21,6 +21,12 @@ export const CONFIRM_MODAL = {
     cancel: '취소',
     confirm: '변경하기',
   },
+  CHANGE_STATUS_ADMIN: {
+    title: '납부여부 변경',
+    description: `납부여부를 변경하시겠습니까? \n변경 시, 해당 팀원에게 알림이 갑니다.`,
+    cancel: '취소',
+    confirm: '변경하기',
+  },
   REQUEST_CHANGE_STATUS: {
     title: '납부여부 변경',
     description: `총무에게 확인 요청을 보내시겠습니까? \n 변경 시, 총무에게 알림이 가며\n 총무의 승인이 필요합니다.`,

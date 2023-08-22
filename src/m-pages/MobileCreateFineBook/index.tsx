@@ -7,6 +7,7 @@ import ModalPageLayout from '@/layouts/Mobile/ModalPageLayout';
 import MobileFineBookForm from '@/m-components/MobileFineBookForm';
 import { dateState } from '@/store/dateState';
 import { detailFineState } from '@/store/detailFineState';
+import { pushDataLayer } from '@/utils/pushDataLayer';
 import { checkFormIsValid } from '@/utils/validation';
 import dayjs from 'dayjs';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -23,18 +24,26 @@ const MobileCreateFineBook = () => {
   const [isOpen, setIsOpen] = useRecoilState(detailFineState);
   const [calendarDate, setCalendarDate] = useRecoilState(dateState);
   const { selectData, getFormFiledActions, convertSituationToText, createLoading } = useFinebook(initialSelectData);
-  const { createDetail } = getFormFiledActions();
+  const { createDetail, onInitForm } = getFormFiledActions();
 
-  const onSubmitCreateDetail = () => {
+  const onSubmitCreateDetail = (type: 'continue' | 'save') => {
+    pushDataLayer('add_list', { button: type === 'continue' ? 'keep' : 'add' });
+
     createDetail().then(() => {
-      setIsOpen(true);
-      setCalendarDate({
-        startDate: dayjs(selectData.date),
-        endDate: dayjs(selectData.date),
-        baseDate: dayjs(selectData.date),
-        mode: 'day',
-      });
-      navigate(`/m-group/${groupId}/book`);
+      if (type === 'save') {
+        setIsOpen(true);
+
+        setCalendarDate({
+          startDate: dayjs(selectData.date),
+          endDate: dayjs(selectData.date),
+          baseDate: dayjs(selectData.date),
+          mode: 'day',
+        });
+
+        navigate(`/m-group/${groupId}/book`);
+      } else {
+        onInitForm();
+      }
     });
   };
 
@@ -52,7 +61,7 @@ const MobileCreateFineBook = () => {
             height="42px"
             loading={createLoading}
             color={checkFormIsValid(selectData) ? 'black' : 'disabled'}
-            onClick={onSubmitCreateDetail}
+            onClick={() => onSubmitCreateDetail('save')}
           >
             추가하기
           </Button>
@@ -61,7 +70,7 @@ const MobileCreateFineBook = () => {
             height="42px"
             leftIcon={SYSTEM.PLUS_BLACK_SM}
             color={checkFormIsValid(selectData) ? 'white' : 'white-disabled'}
-            onClick={createDetail}
+            onClick={() => onSubmitCreateDetail('continue')}
           >
             계속해서 추가하기
           </Button>

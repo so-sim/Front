@@ -4,6 +4,7 @@ import DetailListCheckBox from '@/components/DetailFine/checkbox';
 
 import useCheckListState from '@/hooks/useCheckListState';
 import { EventInfoListTest, SelectedEventInfo } from '@/types/event';
+import { convertToPriceFormat } from '@/utils/convertFormat';
 import { useNavigate, useParams } from 'react-router-dom';
 
 import * as Style from './styles';
@@ -13,6 +14,7 @@ type GroupedData = {
 };
 type Props = {
   details: GroupedData;
+  inViewElement: (node?: Element | null | undefined) => void;
 };
 
 const SituationStatusIcon = {
@@ -27,7 +29,7 @@ const SITUATIONSTATUSTEXT = {
   완납: '납부 완료',
 };
 
-const MobileDetailFineList = ({ details }: Props) => {
+const MobileDetailFineList = ({ details, inViewElement }: Props) => {
   const { groupId } = useParams();
   const navigate = useNavigate();
   const {
@@ -50,8 +52,6 @@ const MobileDetailFineList = ({ details }: Props) => {
     setToggleCheckList(detail);
   };
 
-  console.log(checkDetailFineValues);
-
   return (
     <>
       <Style.DetailFineListContainer>
@@ -73,7 +73,7 @@ const MobileDetailFineList = ({ details }: Props) => {
                     <Style.UserInfoText>
                       <p>{item.nickname}</p>
                     </Style.UserInfoText>
-                    <Style.AmountText>{item.amount}원</Style.AmountText>
+                    <Style.AmountText>{convertToPriceFormat(item.amount)}원</Style.AmountText>
                   </Style.TopWrapper>
                   <Style.DetailContextWrapper>
                     <Style.SituationBox situationType={item.situation}>
@@ -89,6 +89,7 @@ const MobileDetailFineList = ({ details }: Props) => {
                 </Style.ContentWrapper>
               </Style.DetailFineItem>
             ))}
+            <div style={{ height: '5px' }} ref={inViewElement}></div>
           </>
         ))}
       </Style.DetailFineListContainer>

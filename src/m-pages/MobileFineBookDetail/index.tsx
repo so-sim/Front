@@ -4,6 +4,7 @@ import { USER } from '@/assets/icons/User';
 import { Button, DropBox, Label } from '@/components/@common';
 import { GA } from '@/constants/GA';
 import useConfirmModal from '@/hooks/useConfirmModal';
+import useLockScroll from '@/hooks/useLockScroll';
 import useSituationList from '@/hooks/useSituationList';
 import ModalPageLayout from '@/layouts/Mobile/ModalPageLayout';
 import SituationBottomSheet from '@/m-components/BottomSheet/SituationBottomSheet';
@@ -81,6 +82,7 @@ const MobileFineBookDetail = () => {
 
   // 바텀시트
   const [openSituationSheet, setOpenSituationSheet] = useState(false);
+  useLockScroll(openSituationSheet);
 
   const handleOpenSituationSheet = () => {
     setOpenSituationSheet((prev) => !prev);
@@ -88,6 +90,15 @@ const MobileFineBookDetail = () => {
 
   const changeConfirmStatus = (situation: Situation) => {
     mutateDetailStatus({ situation, eventIdList: [eventId] });
+  };
+
+  const updateConfirmStatus = (situation: Situation) => {
+    openConfirmModal({
+      type: 'CHANGE_STATUS_ADMIN',
+      confirm: () => changeConfirmStatus(situation),
+      cancel: closeConfirmModal,
+      id: GA.CON.SIDE_MODAL,
+    });
   };
 
   // 밑에 모달 작업 및 납부완료(유저) 보내기 mutate (공유 hook예정) // 알람 요청하기 API 랑 같이
@@ -192,7 +203,7 @@ const MobileFineBookDetail = () => {
             </Button>
           )}
         </Style.Footer>
-        {openSituationSheet && <SituationBottomSheet onClose={handleOpenSituationSheet} onChange={changeConfirmStatus} />}
+        {openSituationSheet && <SituationBottomSheet onClose={handleOpenSituationSheet} onChange={changeConfirmStatus} onConfirm={updateConfirmStatus} />}
       </ModalPageLayout>
     </>
   );

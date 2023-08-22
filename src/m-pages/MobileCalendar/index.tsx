@@ -15,6 +15,10 @@ import * as Style from './styles';
 import MobileDetailFine from '@/m-components/MobileDetailFine';
 import { useEffect } from 'react';
 import { detailFineState } from '@/store/detailFineState';
+import { useGroupDetail } from '@/queries/Group';
+import { firstVisitState } from '@/store/firstVisitState';
+import InviteModal from '@/components/@common/Modal/InviteModal';
+import useLockScroll from '@/hooks/useLockScroll';
 
 const WEEKDATE = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
@@ -23,11 +27,20 @@ const MobileCalendar = () => {
   const { groupId } = useParams();
   const navigate = useNavigate();
 
+  const [{ isFirstVisit }, setIsFirstVisit] = useRecoilState(firstVisitState);
+
+  const { data: group } = useGroupDetail(Number(groupId));
+  const isAdmin = group?.content.isAdmin;
+
   const [calendarDateState, setCalendarDateState] = useRecoilState(dateState);
   const { calendarDate, setCalendarDate, increaseMonth, decreaseMonth } = useCalendarState();
   const { monthList, filterCorrectDateStatus, isCurrentMonth, isToday, isSelectedDate } = useCalendarStatus(calendarDate, groupId);
 
   const [isOpen, setIsOpen] = useRecoilState(detailFineState);
+
+  const handleGroupInviteModal = () => {
+    setIsFirstVisit((prev) => ({ ...prev, isFirstVisit: false }));
+  };
 
   const goToCreateFineBook = () => {
     navigate(`/m-group/${groupId}/create-finebook`);
@@ -36,12 +49,13 @@ const MobileCalendar = () => {
 
   const goToDetailFine = (date: dayjs.Dayjs) => {
     setCalendarDateState((prev) => ({ ...prev, startDate: date, endDate: date, baseDate: date, mode: 'day' }));
-    // navigate(`/m-group/${groupId}/book/detail`);
+
     setIsOpen((prev) => !prev);
   };
 
   useEffect(() => {
-    setCalendarDateState(initialDateState);
+    // setCalendarDateState(initialDateState);
+    // 해당 코드때문에 내역추가 시 추가한 날짜로 이동을 안하고 있었습니다. (큰 문제는 제가 저 코드를 왜 넣었는지.. 기억이ㅠ)
 
     return () => {
       setIsOpen(false);
@@ -97,11 +111,12 @@ const MobileCalendar = () => {
               </Style.WeekWrapper>
             ))}
           </Style.CalendarWrapper>
-          <Style.AddIconWrapper onClick={goToCreateFineBook}>{SYSTEM.PLUS_WHITE}</Style.AddIconWrapper>
+          {isAdmin && <Style.AddIconWrapper onClick={goToCreateFineBook}>{SYSTEM.PLUS_WHITE}</Style.AddIconWrapper>}
           {/* 내역 추가 페이지로 라우팅 */}
         </Style.Container>
         <MobileDetailFine $isOpen={isOpen} setIsOpen={setIsOpen} />
       </Style.CalendarBody>
+      {group?.content.isAdmin && isFirstVisit && <InviteModal onClick={handleGroupInviteModal} />}
     </MobileLayout>
   );
 };

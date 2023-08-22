@@ -1,7 +1,6 @@
 import { Dispatch, SetStateAction, useState } from 'react';
 import BottomSheet from '..';
 import * as Style from './styles';
-import { weekList } from '@/utils/customedWeek';
 import { FilterModeTest, useDateFilter } from '@/components/DetailFine/DateController/hook/useDateFilter';
 import { dateState } from '@/store/dateState';
 import { useRecoilState } from 'recoil';
@@ -32,7 +31,7 @@ type Props = {
 
 const FilterBottomSheet = ({ detailFilter, setDetailFilter, onClose }: Props) => {
   const [calendarDate, setCalendarDate] = useRecoilState(dateState);
-  const { goToWeek, changeDateByButtonMode, changeDateByCustomMode, currentWeek, initializeFilter } = useDateFilter();
+  const { changeDateByButtonMode, changeDateByCustomMode, currentWeek, initializeFilter } = useDateFilter();
 
   const [openCalendar, setOpenCalendar] = useState(false);
   const [dateType, setDateType] = useState<'START_DATE' | 'END_DATE' | ''>('');
@@ -64,7 +63,6 @@ const FilterBottomSheet = ({ detailFilter, setDetailFilter, onClose }: Props) =>
     }
   };
 
-  const isWeekMode = calendarDate.mode === 'week';
   const isCustomMode = calendarDate.mode === 'custom';
 
   return (
@@ -88,18 +86,6 @@ const FilterBottomSheet = ({ detailFilter, setDetailFilter, onClose }: Props) =>
             })}
           </Style.Row>
           <Style.SubRow>
-            {isWeekMode &&
-              weekList.map((value, week) => {
-                return (
-                  <Style.WeekButton //
-                    key={value}
-                    isSelected={week + 1 === currentWeek}
-                    onClick={() => goToWeek(value)}
-                  >
-                    {value}
-                  </Style.WeekButton>
-                );
-              })}
             {isCustomMode && (
               <>
                 <Style.CustomDateBox

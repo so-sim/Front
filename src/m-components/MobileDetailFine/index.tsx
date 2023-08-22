@@ -19,6 +19,8 @@ import { ARROW } from '@/assets/icons/Arrow';
 import MobileToolbar from './MobileToolbar';
 import useCheckListState from '@/hooks/useCheckListState';
 import { SYSTEM } from '@/assets/icons/System';
+import { useGroupDetail } from '@/queries/Group';
+import useLockScroll from '@/hooks/useLockScroll';
 
 type GroupedData = {
   [key: string]: SelectedEventInfo[];
@@ -33,11 +35,20 @@ const MobileDetailFine = ({ $isOpen, setIsOpen }: Props) => {
   const { groupId } = useParams();
   const navigate = useNavigate();
 
+  const { data: group } = useGroupDetail(Number(groupId));
+  const isAdmin = group?.content.isAdmin;
+
   const { ref, inView } = useInView();
 
   const [detailFilter, setDetailFilter] = useState<DetailFilter>({ nickname: '', situation: '', page: 0, size: 16, groupId: Number(groupId) });
 
   const [openFilterSheet, setOpenFilterSheet] = useState(false);
+
+  useLockScroll(openFilterSheet);
+
+  // isOpen으로 상세내역을 View 형태로 전환하고 그 뒤 Filter를 걸고 해제해서 document  스타일을 지울 수가 있어서 isOpen이  더 하위에 배치되었다.
+
+  useLockScroll($isOpen);
 
   const [GroupedListByDate, setGroupedListByDate] = useState({});
 
@@ -66,6 +77,8 @@ const MobileDetailFine = ({ $isOpen, setIsOpen }: Props) => {
     navigate(`/m-group/${groupId}/book`);
   };
 
+  const getSumOfDetails = (details: SelectedEventInfo[]) => details.reduce((result, { amount }) => (result += amount), 0);
+
   useEffect(() => {
     if (inView && hasNextPage) {
       fetchNextPage();
@@ -89,7 +102,7 @@ const MobileDetailFine = ({ $isOpen, setIsOpen }: Props) => {
     }, {});
 
     setGroupedListByDate((prev) => ({ ...prev, ...groupedData }));
-  }, [data]);
+  }, [data, calendarDate]);
 
   useEffect(() => {
     setInitCheckDetailFine();
@@ -108,11 +121,11 @@ const MobileDetailFine = ({ $isOpen, setIsOpen }: Props) => {
         <MobileFilterController openFilterSheet={handleOpenFilterSheet} />
         <MobileAllCheckbox //
           details={details}
-          totalAmount={1000000}
+          totalAmount={getSumOfDetails(details)}
         />
       </Style.MobileDetailFineHeader>
-      <MobileDetailFineList details={GroupedListByDate} />
-      <div ref={ref} />
+      <MobileDetailFineList details={GroupedListByDate} inViewElement={ref} />
+
       {openFilterSheet && (
         <FilterBottomSheet //
           detailFilter={detailFilter}
@@ -121,7 +134,7 @@ const MobileDetailFine = ({ $isOpen, setIsOpen }: Props) => {
         />
       )}
       {checkedSize > 0 && <MobileToolbar />}
-      {!openFilterSheet && <Style.AddIconWrapper onClick={goToCreateFineBook}>{SYSTEM.PLUS_WHITE}</Style.AddIconWrapper>}
+      {!openFilterSheet && isAdmin && <Style.AddIconWrapper onClick={goToCreateFineBook}>{SYSTEM.PLUS_WHITE}</Style.AddIconWrapper>}
     </Style.MobileDetailFineFrame>
   );
 };

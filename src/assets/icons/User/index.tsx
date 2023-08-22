@@ -3,6 +3,8 @@ import KakaoSignUp from './KakaoSignUp.svg';
 import Group from './Group.svg';
 import Person from './Person.svg';
 import theme from '../../../styles/Theme';
+import MobileKakaoSignIn from './MobileKakaoSignIn.svg';
+import MobileKakaoSignUp from './MobileKakaoSignUp.svg';
 
 export const USER = {
   GROUP_SM: <Group width={16} height={16} fill={theme.colors.secondary_600} />,
@@ -15,4 +17,6 @@ export const USER = {
   PERSON_XL: <Person width={32} height={32} />,
   KAKAO_SIGNIN: <KakaoSignIn />,
   KAKAO_SIGNUP: <KakaoSignUp />,
+  MOBILE_KAKAO_SIGNIN: <MobileKakaoSignIn />,
+  MOBILE_KAKAO_SIGNUP: <MobileKakaoSignUp />,
 };

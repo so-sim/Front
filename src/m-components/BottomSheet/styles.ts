@@ -4,6 +4,7 @@ export const Frame = styled.div`
   position: fixed;
   top: 0;
   left: 0;
+  bottom: 0;
   opacity: 0.3;
   height: 100vh;
   width: 100vw;
