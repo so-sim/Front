@@ -46,7 +46,13 @@ const MobileDetailFine = ({ $isOpen, setIsOpen }: Props) => {
 
   useLockScroll(openFilterSheet);
 
+  // isOpen으로 상세내역을 View 형태로 전환하고 그 뒤 Filter를 걸고 해제해서 document  스타일을 지울 수가 있어서 isOpen이  더 하위에 배치되었다.
+
+  useLockScroll($isOpen);
+
   const [GroupedListByDate, setGroupedListByDate] = useState({});
+
+  console.log(GroupedListByDate);
 
   const [calendarDate, setCalendarDate] = useRecoilState(dateState);
 

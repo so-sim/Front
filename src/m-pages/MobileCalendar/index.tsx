@@ -62,8 +62,6 @@ const MobileCalendar = () => {
     };
   }, []);
 
-  useLockScroll(isOpen);
-
   return (
     <MobileLayout location="GROUP">
       <Style.Notification>
