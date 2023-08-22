@@ -4,6 +4,7 @@ import { USER } from '@/assets/icons/User';
 import { Button, DropBox, Label } from '@/components/@common';
 import { GA } from '@/constants/GA';
 import useConfirmModal from '@/hooks/useConfirmModal';
+import useLockScroll from '@/hooks/useLockScroll';
 import useSituationList from '@/hooks/useSituationList';
 import ModalPageLayout from '@/layouts/Mobile/ModalPageLayout';
 import SituationBottomSheet from '@/m-components/BottomSheet/SituationBottomSheet';
@@ -81,6 +82,7 @@ const MobileFineBookDetail = () => {
 
   // 바텀시트
   const [openSituationSheet, setOpenSituationSheet] = useState(false);
+  useLockScroll(openSituationSheet);
 
   const handleOpenSituationSheet = () => {
     setOpenSituationSheet((prev) => !prev);

@@ -20,6 +20,7 @@ import MobileToolbar from './MobileToolbar';
 import useCheckListState from '@/hooks/useCheckListState';
 import { SYSTEM } from '@/assets/icons/System';
 import { useGroupDetail } from '@/queries/Group';
+import useLockScroll from '@/hooks/useLockScroll';
 
 type GroupedData = {
   [key: string]: SelectedEventInfo[];
@@ -42,6 +43,8 @@ const MobileDetailFine = ({ $isOpen, setIsOpen }: Props) => {
   const [detailFilter, setDetailFilter] = useState<DetailFilter>({ nickname: '', situation: '', page: 0, size: 16, groupId: Number(groupId) });
 
   const [openFilterSheet, setOpenFilterSheet] = useState(false);
+
+  useLockScroll(openFilterSheet);
 
   const [GroupedListByDate, setGroupedListByDate] = useState({});
 

@@ -18,6 +18,7 @@ import { detailFineState } from '@/store/detailFineState';
 import { useGroupDetail } from '@/queries/Group';
 import { firstVisitState } from '@/store/firstVisitState';
 import InviteModal from '@/components/@common/Modal/InviteModal';
+import useLockScroll from '@/hooks/useLockScroll';
 
 const WEEKDATE = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
@@ -60,6 +61,8 @@ const MobileCalendar = () => {
       setIsOpen(false);
     };
   }, []);
+
+  useLockScroll(isOpen);
 
   return (
     <MobileLayout location="GROUP">
