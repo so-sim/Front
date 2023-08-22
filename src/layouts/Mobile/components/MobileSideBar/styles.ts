@@ -3,7 +3,8 @@ import styled from '@emotion/styled';
 export const SideBar = styled.div<{ isActive: boolean }>`
   position: absolute;
   top: 0;
-  display: ${({ isActive }) => (isActive ? 'block' : 'none')}
+  bottom: 0;
+  display: ${({ isActive }) => (isActive ? 'block' : 'none')};
   left: ${({ isActive }) => (isActive ? '0' : '-100%')};
   z-index: 100;
   width: 100%;

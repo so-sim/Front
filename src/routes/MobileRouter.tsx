@@ -48,7 +48,7 @@ const MobileRouter = () => {
         <Route path="/m-tos" element={<MobileTOS />} />
         <Route path="/m-setting" element={<MobileUserSetting />} />
         <Route path="/m-withdrawal" element={<MobileWithdrawal />} />
-        <Route path="*" element={<Page404 />} />
+        {/* <Route path="/*" element={<Page404 />} /> */}
       </Routes>
     </>
   );

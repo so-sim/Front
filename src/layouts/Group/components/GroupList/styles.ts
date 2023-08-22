@@ -47,4 +47,5 @@ export const CreateButton = styled(EachGroup)`
   background-color: ${({ theme }) => theme.colors.neutral_400_b};
   min-width: 52px;
   min-height: 52px;
+  margin-bottom: 70px;
 `;
