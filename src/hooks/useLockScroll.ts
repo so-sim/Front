@@ -19,8 +19,6 @@ const useLockScroll = (trigger: boolean) => {
   };
 
   const allowScroll = () => {
-    if (typeof document === 'undefined') return;
-
     const html = document.documentElement;
     const { body } = document;
 
