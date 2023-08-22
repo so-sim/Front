@@ -11,6 +11,7 @@ import CheckboxContainer from '../../@common/Checkbox';
 import { CheckDetailFine, SetCheckDetailFine } from '@/components/DetailFine/AlarmRequest_PaymentUpdate/hooks/useCheckDetailFine';
 import DetailListCheckBox from '../checkbox';
 import useCheckListState from '@/hooks/useCheckListState';
+import { covertDateForView } from '@/utils/convertFormat';
 
 type Props = {
   details?: SelectedEventInfo[];
@@ -62,11 +63,18 @@ const DetailList = ({ detailFilter, details }: Props) => {
         const { date, nickname, amount, memo, eventId, ground } = detail;
         return (
           <Style.TableRow key={i} isSelected={selectedFine.eventId === eventId} onClick={() => handleUserDetailModal(detail)}>
-            <CheckboxContainer id={String(eventId)} isChecked={isChecked(eventId)} onChange={(event: React.MouseEvent<HTMLInputElement>) => setToggleCheckList(detail)}>
-              <CheckboxContainer.Checkbox as={DetailListCheckBox} />
-              {/*    이 부분 props를 자연스럽게 넘겨주려면 이 방법 밖에?? function으로 넘겨주는 방법도 있긴한데,  이거는 rest props 안넘어옴 */}
-            </CheckboxContainer>
-            <Style.Element hasEllipsis={false}>{date.slice(2)}</Style.Element>
+            <Style.CheckboxWrapper
+              onClick={(e) => {
+                e.stopPropagation();
+                setToggleCheckList(detail);
+              }}
+            >
+              <CheckboxContainer id={String(eventId)} isChecked={isChecked(eventId)} onChange={(event: React.MouseEvent<HTMLInputElement>) => setToggleCheckList(detail)}>
+                <CheckboxContainer.Checkbox as={DetailListCheckBox} />
+                {/*    이 부분 props를 자연스럽게 넘겨주려면 이 방법 밖에?? function으로 넘겨주는 방법도 있긴한데,  이거는 rest props 안넘어옴 */}
+              </CheckboxContainer>
+            </Style.CheckboxWrapper>
+            <Style.Element hasEllipsis={false}>{covertDateForView(date.slice(2))}</Style.Element>
             <DropDownWrapper openButtonListId={openButtonListId} detail={detail} setOpenButtonListId={setOpenButtonListId} />
             <Style.Element hasEllipsis>{nickname}</Style.Element>
             <Style.Element hasEllipsis>{changeNumberToMoney(amount)}</Style.Element>
