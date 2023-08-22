@@ -35,26 +35,32 @@ const MobileGroupSection = () => {
     <>
       <Style.GroupSection>
         <div>
-          <div style={{ height: '200px', width: '100%', backgroundColor: '#000000' }} />
-          <Style.Title>참여 모임</Style.Title>
-          <Style.CardList>
-            <AddCard onClick={moveToCreateGroup} size="sm" />
-            {groups?.pages?.map((page, index) => (
-              <React.Fragment key={index}>
-                {page?.content?.groupList.map((group) => (
-                  <GroupCard //
-                    {...group}
-                    key={group.groupId}
-                    onClick={() => moveToGroup(group.groupId)}
-                    size="sm"
-                  />
-                ))}
-              </React.Fragment>
-            ))}
-          </Style.CardList>
-          <div ref={ref} />
+          <div style={{ width: '100%', height: 'auto' }}>
+            <img src="/public/banner.png" alt="group" style={{ width: '100%', height: '200px', objectFit: 'cover' }} />
+          </div>
+          <div style={{ padding: '0 16px' }}>
+            <Style.Title>참여 모임</Style.Title>
+            <Style.CardList>
+              <AddCard onClick={moveToCreateGroup} size="sm" />
+              {groups?.pages?.map((page, index) => (
+                <React.Fragment key={index}>
+                  {page?.content?.groupList.map((group) => (
+                    <GroupCard //
+                      {...group}
+                      key={group.groupId}
+                      onClick={() => moveToGroup(group.groupId)}
+                      size="sm"
+                    />
+                  ))}
+                </React.Fragment>
+              ))}
+            </Style.CardList>
+            <div ref={ref} />
+          </div>
         </div>
-        <Footer />
+        <div style={{ padding: '0 16px' }}>
+          <Footer />
+        </div>
       </Style.GroupSection>
       {openLoginModal && <AuthModal modalHandler={handleLoginModal} />}
     </>
