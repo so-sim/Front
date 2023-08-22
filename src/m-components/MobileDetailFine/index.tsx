@@ -52,8 +52,6 @@ const MobileDetailFine = ({ $isOpen, setIsOpen }: Props) => {
 
   const [GroupedListByDate, setGroupedListByDate] = useState({});
 
-  console.log(GroupedListByDate);
-
   const [calendarDate, setCalendarDate] = useRecoilState(dateState);
 
   const {
@@ -104,7 +102,7 @@ const MobileDetailFine = ({ $isOpen, setIsOpen }: Props) => {
     }, {});
 
     setGroupedListByDate((prev) => ({ ...prev, ...groupedData }));
-  }, [data]);
+  }, [data, calendarDate]);
 
   useEffect(() => {
     setInitCheckDetailFine();
