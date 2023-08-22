@@ -89,6 +89,11 @@ const MobileDetailFine = ({ $isOpen, setIsOpen }: Props) => {
     setGroupedListByDate({});
   }, [calendarDate]);
 
+  //Todo: 언마운트 시키는 방향으로 개선하면 좋을듯
+  useEffect(() => {
+    setDetailFilter((prev) => ({ ...prev, groupId: Number(groupId) }));
+  }, [groupId]);
+
   useEffect(() => {
     const groupedData: GroupedData = data?.pages.reduce((groups: any, page) => {
       page.content.eventList.forEach((item) => {
