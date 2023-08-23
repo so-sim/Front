@@ -60,7 +60,7 @@ const MobileCalendar = () => {
     return () => {
       setIsOpen(false);
     };
-  }, []);
+  }, [groupId]);
 
   return (
     <MobileLayout location="GROUP">
