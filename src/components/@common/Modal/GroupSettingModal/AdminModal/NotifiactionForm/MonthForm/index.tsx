@@ -3,6 +3,7 @@ import { NotificationInfo } from '@/types/group';
 import { DuplicateValues } from '..';
 import * as Style from './styles';
 import DaySelector from '../DaySelector';
+import { useState } from 'react';
 
 type Props<T, V> = {
   notificationForm: NotificationInfo;
@@ -27,6 +28,19 @@ const MonthForm = <T extends NotificationInfo, V extends T[DuplicateValues]>({ n
       result[Math.floor(i / 7)].push(i < 31 ? i + 1 : null);
     }
     return result;
+  };
+
+  const [ordinaryError, setOrdinaryError] = useState(false);
+
+  const isOverTwoOrdinaryNumbers = () => {
+    return (notificationForm.ordinalNumbers ?? []).length >= 2;
+  };
+
+  const setErrorMessageDuring = (time: number) => {
+    setOrdinaryError(true);
+    setTimeout(() => {
+      setOrdinaryError(false);
+    }, time);
   };
 
   const isSimpleDateType = notificationForm.monthSettingType === 'SIMPLE_DATE';
@@ -79,7 +93,8 @@ const MonthForm = <T extends NotificationInfo, V extends T[DuplicateValues]>({ n
           <Style.Notice>몇 번째 요일인가요?</Style.Notice>
           <Style.Notice>
             <div>몇 번째</div>
-            {isErrorField('ordinalNumbers') && <Style.ErrorText>내용을 선택해주세요.</Style.ErrorText>}
+            {isErrorField('ordinalNumbers') && <Style.ErrorText>최소 1개 이상 선택해주세요.</Style.ErrorText>}
+            {ordinaryError && <Style.ErrorText>최대 2개까지 선택할 수 있습니다.</Style.ErrorText>}
           </Style.Notice>
           <Style.OrdinalNumberConatiner>
             {ORDINARY_LIST.map(({ label, value }) => {
@@ -87,7 +102,13 @@ const MonthForm = <T extends NotificationInfo, V extends T[DuplicateValues]>({ n
                 <Style.SelectDayButton //
                   key={label}
                   isSelected={notificationForm.ordinalNumbers?.includes(value)}
-                  onClick={() => handleDuplicateValues('ordinalNumbers', value)}
+                  onClick={() => {
+                    if (ordinaryError) return;
+                    if (isOverTwoOrdinaryNumbers()) {
+                      return setErrorMessageDuring(2000);
+                    }
+                    handleDuplicateValues('ordinalNumbers', value);
+                  }}
                 >
                   {label}
                 </Style.SelectDayButton>
@@ -96,7 +117,7 @@ const MonthForm = <T extends NotificationInfo, V extends T[DuplicateValues]>({ n
           </Style.OrdinalNumberConatiner>
           <Style.Notice>
             <div>요일선택</div>
-            {isErrorField('daysOfWeek') && <Style.ErrorText>내용을 선택해주세요.</Style.ErrorText>}
+            {isErrorField('daysOfWeek') && <Style.ErrorText>최소 1개 이상 선택해주세요.</Style.ErrorText>}
           </Style.Notice>
           <DaySelector
             notificationForm={notificationForm} //

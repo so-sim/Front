@@ -143,7 +143,6 @@ const useNotificationForm = (): NotificationHook => {
     };
 
     const dayList = daysOfWeek?.map((day) => dayType[day as DayType]).join(',');
-    console.log(dayList);
     const weekList = ordinalNumbers?.map((ordinalNumber) => weekType[ordinalNumber]).join(',');
 
     const startNotificationDate = `${startMonth}월 ${startDay}일부터`;
@@ -155,13 +154,14 @@ const useNotificationForm = (): NotificationHook => {
 
     const firstLine = `${startNotificationDate} ${!isRegularCycle ? `(${notificationCycle})` : ''}`;
     const secondDayLine = `${regularCycle}${covertedSendTime} 에 알림 발송`;
-    const secondWeekLine = `${regularCycle}${dayList}요일 ${covertedSendTime} 에 알림 발송`;
+    const secondWeekLine = `${regularCycle}${dayList}요일`;
+    const thirdWeekLine = `${covertedSendTime} 에 알림 발송`;
     const secondMonthLineByDate = `${regularCycle}${sendDay}일 ${covertedSendTime} 에 알림 발송`;
     const secondMonthLineByDay = `${regularCycle}${weekList} ${dayList}요일`;
     const thirdMonthLineByDay = `${covertedSendTime} 에 알림 발송`;
 
     if (settingType === 'W') {
-      return { firstLine, secondLine: secondWeekLine };
+      return { firstLine, secondLine: secondWeekLine, thirdLine: thirdWeekLine };
     }
     if (settingType === 'D') {
       return { firstLine, secondLine: secondDayLine };
@@ -270,7 +270,7 @@ export const getIsValidNotificationForm = (notificationForm: NotificationInfo) =
     if (monthSettingType === 'SIMPLE_DATE' && !sendDay) return false;
     if (
       monthSettingType === 'WEEK' &&
-      (!ordinalNumbers || !ordinalNumbers?.length || !daysOfWeek || !daysOfWeek?.length) //
+      (!ordinalNumbers || !ordinalNumbers?.length || !daysOfWeek || !daysOfWeek?.length || ordinalNumbers.length > 2) //
     ) {
       return false;
     }
