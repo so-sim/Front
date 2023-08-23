@@ -57,6 +57,7 @@ export interface GroupListWithIndex {
 
 export type NotificationSettingType = 'M' | 'W' | 'D';
 export type MonthSettingType = 'SIMPLE_DATE' | 'WEEK';
+export type DayType = 'MONDAY' | 'TUESDAY' | 'WEDNESDAY' | 'THURSDAY' | 'FRIDAY' | 'SATURDAY' | 'SUNDAY';
 
 export type NotificationInfo = {
   //필수 데이터

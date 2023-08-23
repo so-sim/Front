@@ -34,6 +34,14 @@ export const convertTimeFormat = (time: string) => {
   return result;
 };
 
+export const covertToTime = (time: string) => {
+  const [hour, minute] = time.split(':').map(Number);
+  let result = '';
+  result += hour >= 12 ? '오후 ' : '오전 ';
+
+  return minute === 0 ? `${result} ${hour}시` : `${result} ${hour}시 ${minute}분`;
+};
+
 export const covertDateForView = (date: string) => {
   return date.replaceAll('-', '.');
 };

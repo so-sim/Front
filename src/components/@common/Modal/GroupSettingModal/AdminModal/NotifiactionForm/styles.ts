@@ -8,7 +8,7 @@ export const NotificationContainer = styled.div`
   width: 100%;
   border-left: ${({ theme }) => !isMobile && `2px solid ${theme.colors.neutral_400_b}`};
   padding-left: ${!isMobile && '16px'};
-  height: 662px;
+  height: 709px;
 `;
 
 export const Notice = styled.div`
@@ -92,7 +92,6 @@ export const TabBlock = styled.li`
 `;
 
 export const BodySubTitle = styled.div`
-  margin-bottom: 4px;
   color: ${({ theme }) => theme.colors.secondary_700};
   ${({ theme }) => theme.font.body_01};
 `;

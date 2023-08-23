@@ -1,5 +1,6 @@
 import { useNotificationInfo, useUpdateNotificationInfo } from '@/queries/Group';
-import { NotificationInfo, NotificationSettingType } from '@/types/group';
+import { DayType, NotificationInfo, NotificationSettingType } from '@/types/group';
+import { convertTimeFormat, covertToTime } from '@/utils/convertFormat';
 import dayjs from 'dayjs';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
@@ -13,8 +14,8 @@ const initialValue: NotificationInfo = {
   sendTime: '19:00',
   monthSettingType: 'SIMPLE_DATE',
   sendDay: dayjs().date(),
-  ordinalNumbers: [],
-  daysOfWeek: [],
+  ordinalNumbers: [1],
+  daysOfWeek: ['MONDAY'],
 };
 
 export type DuplicateValues = 'daysOfWeek' | 'ordinalNumbers';
@@ -26,6 +27,7 @@ export type NotificationFormAction<T = NotificationInfo> = {
   handleDuplicateNotificationForm: <D extends DuplicateValues, V>(type: D, value: V) => void;
   isSamePeriodType: (type: NotificationSettingType) => boolean;
   isErrorField: (field: keyof T) => boolean;
+  getNotificationDescription: () => { firstLine: string; secondLine: string; thirdLine?: string };
 };
 
 export type NotificationHook = {
@@ -48,6 +50,9 @@ const useNotificationForm = (): NotificationHook => {
   const submitForm = () => {
     if (isLoading) throw new Error('로딩중...');
     if (errorList.length === 0) {
+      if (formState.daysOfWeek?.length !== 0) {
+        return updateNotificationInfo({ notificationInfo: { ...formState, daysOfWeek: formState.daysOfWeek?.filter((day) => day !== '') } });
+      }
       return updateNotificationInfo({ notificationInfo: formState });
     }
     throw new Error('알림 설정 목록을 채워주세요');
@@ -62,7 +67,7 @@ const useNotificationForm = (): NotificationHook => {
   };
 
   const initFormWithoutSettingType = () => {
-    const { settingType, ...rest } = initialValue;
+    const { settingType, monthSettingType, ...rest } = initialValue;
     setFormState((prev) => ({ ...prev, ...rest }));
   };
 
@@ -86,6 +91,90 @@ const useNotificationForm = (): NotificationHook => {
     return formState.settingType === type;
   };
 
+  const getNotificationDescription = () => {
+    if (!notificationInfo?.content) {
+      const firstLine = '이번 달부터 ';
+      const secondLine = '알림을 설정해주세요.';
+      return { firstLine, secondLine };
+    }
+
+    const { settingType, repeatCycle, startDate, sendTime, monthSettingType, sendDay, ordinalNumbers, daysOfWeek, enableNotification } = notificationInfo?.content;
+
+    if (!enableNotification) {
+      const firstLine = '이번 달부터 ';
+      const secondLine = '알림을 설정해주세요.';
+      return { firstLine, secondLine };
+    }
+
+    const startMonth = dayjs(startDate).month() + 1;
+    const startDay = dayjs(startDate).date();
+
+    const isRegularCycle = repeatCycle === 1;
+
+    const unitType = {
+      M: '달',
+      W: '주',
+      D: '일',
+    };
+
+    const unitType_2 = {
+      M: '개월',
+      W: '주',
+      D: '일',
+    };
+
+    const dayType = {
+      MONDAY: '월',
+      TUESDAY: '화',
+      WEDNESDAY: '수',
+      THURSDAY: '목',
+      FRIDAY: '금',
+      SATURDAY: '토',
+      SUNDAY: '일',
+    };
+
+    const weekType: Record<number, string> = {
+      1: '첫 번째',
+      2: '두 번째',
+      3: '세 번째',
+      4: '네 번째',
+      5: '다섯 번째',
+      6: '마지막',
+    };
+
+    const dayList = daysOfWeek?.map((day) => dayType[day as DayType]).join(',');
+    console.log(dayList);
+    const weekList = ordinalNumbers?.map((ordinalNumber) => weekType[ordinalNumber]).join(',');
+
+    const startNotificationDate = `${startMonth}월 ${startDay}일부터`;
+    const notificationCycle = isRegularCycle ? `매${unitType[settingType]}` : `${repeatCycle}${unitType_2[settingType]}마다`;
+
+    const regularCycle = `${isRegularCycle ? `${notificationCycle} ` : ''}`;
+
+    const covertedSendTime = covertToTime(sendTime);
+
+    const firstLine = `${startNotificationDate} ${!isRegularCycle ? `(${notificationCycle})` : ''}`;
+    const secondDayLine = `${regularCycle}${covertedSendTime} 에 알림 발송`;
+    const secondWeekLine = `${regularCycle}${dayList}요일 ${covertedSendTime} 에 알림 발송`;
+    const secondMonthLineByDate = `${regularCycle}${sendDay}일 ${covertedSendTime} 에 알림 발송`;
+    const secondMonthLineByDay = `${regularCycle}${weekList} ${dayList}요일`;
+    const thirdMonthLineByDay = `${covertedSendTime} 에 알림 발송`;
+
+    if (settingType === 'W') {
+      return { firstLine, secondLine: secondWeekLine };
+    }
+    if (settingType === 'D') {
+      return { firstLine, secondLine: secondDayLine };
+    }
+    if (settingType === 'M' && monthSettingType === 'SIMPLE_DATE') {
+      return { firstLine, secondLine: secondMonthLineByDate };
+    }
+    if (settingType === 'M' && monthSettingType === 'WEEK') {
+      return { firstLine, secondLine: secondMonthLineByDay, thirdLine: thirdMonthLineByDay };
+    }
+    return { firstLine: '', secondLine: '' };
+  };
+
   const getFormAction = () => {
     return {
       initNotificationForm: initForm,
@@ -94,6 +183,7 @@ const useNotificationForm = (): NotificationHook => {
       handleDuplicateNotificationForm: handleDuplicateForm,
       isSamePeriodType: isSameType,
       isErrorField,
+      getNotificationDescription,
     };
   };
 
@@ -113,7 +203,7 @@ const useNotificationForm = (): NotificationHook => {
 
   useEffect(() => {
     initFormWithoutSettingType();
-  }, [formState.settingType]);
+  }, [formState.settingType, formState.monthSettingType]);
 
   return {
     notificationForm: formState,

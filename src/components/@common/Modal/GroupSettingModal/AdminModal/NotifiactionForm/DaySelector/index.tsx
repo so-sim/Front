@@ -4,8 +4,8 @@ import * as Style from './styles';
 
 const DAY_LIST = [
   { label: '월', value: 'MONDAY' },
-  { label: '화', value: 'THUESDAY' },
-  { label: '수', value: 'WENDESDAY' },
+  { label: '화', value: 'TUESDAY' },
+  { label: '수', value: 'WEDNESDAY' },
   { label: '목', value: 'THURSDAY' },
   { label: '금', value: 'FRIDAY' },
   { label: '토', value: 'SATURDAY' },
