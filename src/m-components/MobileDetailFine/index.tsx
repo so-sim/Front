@@ -56,6 +56,7 @@ const MobileDetailFine = ({ $isOpen, setIsOpen }: Props) => {
 
   const {
     checkedSize,
+    checkDetailFineValues,
     setCheckDetailFine: { setInitCheckDetailFine },
   } = useCheckListState();
 
@@ -77,7 +78,7 @@ const MobileDetailFine = ({ $isOpen, setIsOpen }: Props) => {
     navigate(`/m-group/${groupId}/book`);
   };
 
-  const getSumOfDetails = (details: SelectedEventInfo[]) => details.reduce((result, { amount }) => (result += amount), 0);
+  const getSumOfDetails = checkDetailFineValues.reduce((result, { amount }) => (result += amount), 0);
 
   useEffect(() => {
     if (inView && hasNextPage) {
@@ -126,7 +127,7 @@ const MobileDetailFine = ({ $isOpen, setIsOpen }: Props) => {
         <MobileFilterController openFilterSheet={handleOpenFilterSheet} />
         <MobileAllCheckbox //
           details={details}
-          totalAmount={getSumOfDetails(details)}
+          totalAmount={getSumOfDetails}
         />
       </Style.MobileDetailFineHeader>
       <MobileDetailFineList details={GroupedListByDate} inViewElement={ref} />
