@@ -23,8 +23,12 @@ export type GroupFormData = {
   coverColor: GroupColor;
 };
 
-export const AdminModal: FC<ModalHandlerProps> = ({ modalHandler }) => {
-  const [tapValue, setTapValue] = useState('GROUP');
+type TabType = 'GROUP' | 'ALARM';
+
+type Props = ModalHandlerProps & { defaultValue?: TabType };
+
+export const AdminModal = ({ modalHandler, defaultValue = 'GROUP' }: Props) => {
+  const [tapValue, setTapValue] = useState<TabType>(defaultValue);
 
   const {
     groupForm, //

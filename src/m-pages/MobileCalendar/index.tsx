@@ -19,6 +19,7 @@ import { useGroupDetail } from '@/queries/Group';
 import { firstVisitState } from '@/store/firstVisitState';
 import InviteModal from '@/components/@common/Modal/InviteModal';
 import useLockScroll from '@/hooks/useLockScroll';
+import useNotificationForm from '@/hooks/Group/useNotificationForm';
 
 const WEEKDATE = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
@@ -28,6 +29,8 @@ const MobileCalendar = () => {
   const navigate = useNavigate();
 
   const [{ isFirstVisit }, setIsFirstVisit] = useRecoilState(firstVisitState);
+  const { getNotificationFormAction } = useNotificationForm();
+  const { getOneLineNotificationDescription } = getNotificationFormAction();
 
   const { data: group } = useGroupDetail(Number(groupId));
   const isAdmin = group?.content.isAdmin;
@@ -53,6 +56,12 @@ const MobileCalendar = () => {
     setIsOpen((prev) => !prev);
   };
 
+  const goToGroupAlarmSettingPage = () => {
+    if (isAdmin) {
+      navigate(`/m-group/${groupId}/group-setting/alarm`);
+    }
+  };
+
   useEffect(() => {
     // setCalendarDateState(initialDateState);
     // 해당 코드때문에 내역추가 시 추가한 날짜로 이동을 안하고 있었습니다. (큰 문제는 제가 저 코드를 왜 넣었는지.. 기억이ㅠ)
@@ -64,9 +73,9 @@ const MobileCalendar = () => {
 
   return (
     <MobileLayout location="GROUP">
-      <Style.Notification>
+      <Style.Notification onClick={goToGroupAlarmSettingPage}>
         <Style.NotificationTitle>벌금일정</Style.NotificationTitle>
-        <Style.NotificationContent>모임 설정에서 알림을 등록해보세요!</Style.NotificationContent>
+        <Style.NotificationContent>{getOneLineNotificationDescription()}</Style.NotificationContent>
       </Style.Notification>
       <Style.CalendarBody>
         <Style.Container>

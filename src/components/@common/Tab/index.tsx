@@ -4,14 +4,14 @@ type TabValue = { value: string; label: string };
 
 type TabElementProps = TabValue;
 
-type TabContainerProps = {
+type TabContainerProps<T = string> = {
   children: React.ReactNode;
-  onChange: (value: string) => void;
+  onChange: (value: T) => void;
 };
+//Todo: any 제거
+const TabContext = createContext<{ onChange: (value: any) => void } | null>(null);
 
-const TabContext = createContext<{ onChange: (value: string) => void } | null>(null);
-
-const Container = ({ children, onChange }: TabContainerProps) => {
+const Container = <T,>({ children, onChange }: TabContainerProps<T>) => {
   return (
     <TabContext.Provider value={{ onChange }}>
       <ul>{children}</ul>

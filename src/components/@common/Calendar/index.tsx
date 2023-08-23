@@ -17,6 +17,8 @@ import DateCellWithMark from './DateCellWithMark';
 import DateCellWithTag from './DateCellWithTag';
 
 import * as Style from './styles';
+import useNotificationForm from '@/hooks/Group/useNotificationForm';
+import { AdminModal } from '../Modal/GroupSettingModal/AdminModal';
 
 const WEEKDATE = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
@@ -31,15 +33,25 @@ const Calendar: FC<CalnedrProps> = ({ cellType }) => {
   const isAdmin = group?.content.isAdmin;
 
   const [showCreateDetailModal, setShowCreateDetailModal] = useState(false);
+  const [showAdminModal, setShowAdminModal] = useState(false);
   const [{ baseDate, startDate, endDate, mode }, setDateTestObj] = useRecoilState(dateState);
 
   const { calendarDate, setCalendarDate, increaseMonth, decreaseMonth } = useCalendarState();
   const { monthList, filterCorrectDateStatus, isCurrentMonth, isToday, isSelectedDate } = useCalendarStatus(calendarDate, groupId);
 
+  const { getNotificationFormAction } = useNotificationForm();
+  const { getOneLineNotificationDescription } = getNotificationFormAction();
+
   const { dateToFormatting, dateToUnixTime } = handleDate;
 
   const handleShowCreateDetailModal = () => {
     setShowCreateDetailModal((prev) => !prev);
+  };
+
+  const handleShowAdminModal = () => {
+    if (isAdmin) {
+      setShowAdminModal((prev) => !prev);
+    }
   };
 
   const isSelectedPeriod = (date: Dayjs) => {
@@ -75,6 +87,10 @@ const Calendar: FC<CalnedrProps> = ({ cellType }) => {
                 {ARROW.RIGHT}
               </Style.ArrowWrapper>
             </Style.ArrowBlock>
+            <Style.NotificationDescription onClick={handleShowAdminModal}>
+              <span>벌금일정</span>
+              <div>{getOneLineNotificationDescription()}</div>
+            </Style.NotificationDescription>
           </div>
           {cellType === 'Tag' && isAdmin && (
             <Button width="124px" color="black" onClick={handleShowCreateDetailModal} id={GA.ADD_LIST.BUTTON}>
@@ -119,6 +135,7 @@ const Calendar: FC<CalnedrProps> = ({ cellType }) => {
           ))}
         </Style.CalendarContainer>
       </Style.Layout>
+      {showAdminModal && <AdminModal modalHandler={handleShowAdminModal} defaultValue="ALARM" />}
       {showCreateDetailModal && <FineBookCreateModal modalHandler={handleShowCreateDetailModal} />}
     </>
   );
