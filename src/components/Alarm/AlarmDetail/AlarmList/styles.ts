@@ -25,6 +25,13 @@ export const AlarmListWrapper = styled.div`
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
+
+  height: calc(100vh - 190px);
+
+  overflow-y: auto;
+  &::-webkit-scrollbar {
+    display: none;
+  }
 `;
 
 export const EmptyIconWrapper = styled.div`
