@@ -26,11 +26,11 @@ const AlarmList = () => {
         <Style.ReadAllAlarmsText $hasItem={hasItem}>모든 알림 읽기</Style.ReadAllAlarmsText>
       </Style.TitleWrapper>
 
-      {/* {data?.pages.map((page) => page.content.notificationList.map((list) => <AlarmCard />))} */}
-
       {hasItem ? (
         <Style.AlarmListWrapper>
-          <AlarmCard />
+          {data?.pages.map((page) => page.content.notificationResponseList.map((notificationInfo) => <AlarmCard notificationInfo={notificationInfo} />))}
+
+          <div ref={ref} />
         </Style.AlarmListWrapper>
       ) : (
         <Style.EmptyIconWrapper>
@@ -38,7 +38,6 @@ const AlarmList = () => {
           <Style.EmptyText>최근 알림이 없습니다.</Style.EmptyText>
         </Style.EmptyIconWrapper>
       )}
-      <div ref={ref} />
     </>
   );
 };
