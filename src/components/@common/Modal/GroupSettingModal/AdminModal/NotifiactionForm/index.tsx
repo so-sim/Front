@@ -1,5 +1,5 @@
 import { Toggle } from '@/components/@common/Toggle';
-import { NotificationInfo, NotificationSettingType } from '@/types/group';
+import { NotificationSettingType } from '@/types/group';
 import * as Style from './styles';
 import DaySelector from './DaySelector';
 import MonthForm from './MonthForm';
@@ -22,7 +22,10 @@ const NotificationForm = ({ notificationForm, getNotificationFormAction }: Props
     handleNotificationForm,
     handleDuplicateNotificationForm,
     isErrorField,
+    getNotificationDescription,
   } = getNotificationFormAction();
+
+  const { firstLine, secondLine, thirdLine } = getNotificationDescription();
 
   return (
     <Style.NotificationContainer>
@@ -37,8 +40,9 @@ const NotificationForm = ({ notificationForm, getNotificationFormAction }: Props
       </Style.ToggleBox>
       <Style.EnabledBox enabled={notificationForm.enableNotification}>
         <Style.StartDateOfNotificationBox>
-          <Style.BodySubTitle>이번 달부터</Style.BodySubTitle>
-          <Style.Body2SubTitle>알림을 설정해주세요.</Style.Body2SubTitle>
+          <Style.BodySubTitle>{firstLine}</Style.BodySubTitle>
+          <Style.Body2SubTitle>{secondLine}</Style.Body2SubTitle>
+          {thirdLine ? <Style.Body2SubTitle>{thirdLine}</Style.Body2SubTitle> : <div style={{ height: '24px' }} />}
         </Style.StartDateOfNotificationBox>
         <Style.TabContainer>
           <Style.TabTitle>납부일 설정</Style.TabTitle>

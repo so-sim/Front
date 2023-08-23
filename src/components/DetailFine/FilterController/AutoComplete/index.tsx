@@ -32,7 +32,8 @@ export const AutoComplete = ({ updateDetailFilterNickname, initialNickname }: Pr
         return prev === 0 ? null : prev - 1;
       });
     }
-    if (e.key === 'Enter' && nicknameIndex !== null && typeof filteredMemberList[nicknameIndex] === 'string') {
+
+    if (e.key === 'Enter' && nicknameIndex !== null && filteredMemberList[nicknameIndex] !== undefined) {
       updateDetailFilterNickname(filteredMemberList[nicknameIndex].nickname);
       setNicknameIndex(null);
     }
@@ -66,7 +67,7 @@ export const AutoComplete = ({ updateDetailFilterNickname, initialNickname }: Pr
                 >
                   {SYSTEM.SEARCH_GRAY}
                   <span>{nickname}</span>
-                  <Style.WithdrawButton>탈퇴</Style.WithdrawButton>
+                  {withdraw && <Style.WithdrawButton>탈퇴</Style.WithdrawButton>}
                 </Style.MemberListItem>
               );
             })

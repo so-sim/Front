@@ -7,6 +7,7 @@ import { USER } from '@/assets/icons/User';
 import { AutoComplete } from './AutoComplete';
 import * as Style from './styles';
 import Toolbar from '../Toolbar';
+import { SituationText } from '@/hooks/useSituationList';
 
 type Props = {
   detailFilter: DetailFilter;
@@ -16,7 +17,11 @@ type Props = {
 
 export type SearchMode = 'search' | 'select';
 
-const SITUATION_FILTER: Situation[] = ['미납', '완납', '확인중'];
+const SITUATION_FILTER: { value: Situation; title: SituationText }[] = [
+  { value: '미납', title: '납부 전' },
+  { value: '완납', title: '납부완료' },
+  { value: '확인중', title: '승인대기' },
+];
 
 const FilterController = ({ detailFilter, setDetailFilter, totalAmount }: Props) => {
   const [searchMode, setSearchMode] = useState<SearchMode>('search');
@@ -45,14 +50,14 @@ const FilterController = ({ detailFilter, setDetailFilter, totalAmount }: Props)
       <Style.LeftContainer>
         <Style.FilterText>필터</Style.FilterText>
         <Style.ButtonContainer>
-          {SITUATION_FILTER.map((buttonText) => {
+          {SITUATION_FILTER.map(({ value, title }) => {
             return (
               <Style.SituationButton
-                key={buttonText}
-                onClick={() => updateSituationFilter(buttonText)} //
-                isActive={detailFilter.situation === buttonText}
+                key={value}
+                onClick={() => updateSituationFilter(value)} //
+                isActive={detailFilter.situation === value}
               >
-                {buttonText}
+                {title}
               </Style.SituationButton>
             );
           })}

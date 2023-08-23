@@ -101,6 +101,8 @@ export const Button = styled.button<{ isSubmit?: boolean }>`
   box-shadow: inset 0 0 0 1px ${({ theme }) => theme.colors.secondary_800};
   border-radius: 0.25rem;
 
+  color: ${({ theme }) => theme.colors.secondary_900};
+
   ${({ theme }) => theme.font.subhead_02};
 
   ${({ isSubmit, theme }) =>

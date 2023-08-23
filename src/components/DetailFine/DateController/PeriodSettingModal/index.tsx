@@ -24,8 +24,8 @@ const PeriodSettingModal = forwardRef(({ modalHandler }: Props, ref: ForwardedRe
    * "조회" 버튼을 눌렀을 때 필터링이 적용되어야 함 (누르기 전에는 기존의 필터링 유지)
    */
   const [customPeriod, setCustomPeriod] = useState<CustomPeriodType>({
-    startDate: dayjs(calendarDate.startDate).format('YYYY-MM-DD'),
-    endDate: dayjs(calendarDate.endDate).format('YYYY-MM-DD'),
+    startDate: dayjs().subtract(1, 'week').format('YYYY-MM-DD'),
+    endDate: dayjs().format('YYYY-MM-DD'),
     mode: 'custom',
   });
 

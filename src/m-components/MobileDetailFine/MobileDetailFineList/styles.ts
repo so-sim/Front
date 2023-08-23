@@ -38,11 +38,12 @@ export const DateText = styled.p`
   color: ${({ theme }) => theme.colors.secondary_500};
 `;
 
-export const DetailFineItem = styled.li`
+export const DetailFineItem = styled.li<{ isChecked: boolean }>`
   display: flex;
   align-items: center;
   margin-bottom: 0.675rem;
   padding: 0.625rem 0;
+  background-color: ${({ theme, isChecked }) => (isChecked ? 'rgba(116, 166, 241, 0.1)' : 'transparent')};
 `;
 
 export const ContentWrapper = styled.div`
