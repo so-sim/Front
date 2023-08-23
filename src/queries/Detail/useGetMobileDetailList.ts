@@ -15,7 +15,7 @@ export const useGetMobileDetailList = (detailFilter: DetailFilter, calendarDate:
   const query = Object.fromEntries(Object.entries(detailFilterProperty).filter(([_, v]) => v != ''));
 
   return useInfiniteQuery(['detailList', query, calendarDate], ({ pageParam = 0 }) => getMobileDetailList({ ...query, page: pageParam }), {
-    enabled: !!detailFilterProperty, //
+    enabled: !!query, //
     onSuccess(data) {},
 
     getNextPageParam: (lastPage, allPage) => {

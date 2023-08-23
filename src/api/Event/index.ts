@@ -30,6 +30,7 @@ interface MobileType {
 
 export const getMobileDetailList = async (query: Partial<MobileType>): Promise<ServerResponse<EventInfoListTest>> => {
   const { data } = await api.get(`/api/event/penalties`, {
+    // get요청할 때, 객체를 넣으면 query로 변환해준다.
     params: query,
   });
   return data;

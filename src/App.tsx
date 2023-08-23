@@ -41,7 +41,10 @@ const App = () => {
     <RecoilRoot>
       <QueryClientProvider client={queryClient}>
         <ThemeProvider theme={theme}>
-          <BrowserRouter>{isMobile ? <MobileRouter /> : <Router />}</BrowserRouter>
+          <BrowserRouter>
+            <MobileRouter />
+            <Router />
+          </BrowserRouter>
           <Toast />
           <GlobalConfirmModal />
           <Global styles={globalStyle} />
