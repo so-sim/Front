@@ -1,6 +1,6 @@
 export interface NotificationListWithIndex {
   hasNext: boolean;
-  notificationList: NotificationList[];
+  notificationResponseList: NotificationList[];
 }
 
 export type NotificationList = {

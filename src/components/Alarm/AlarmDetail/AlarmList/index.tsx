@@ -16,7 +16,7 @@ const AlarmList = () => {
     }
   }, [inView]);
 
-  const hasItem = data?.pages[0].content.notificationList.length! > 0;
+  const hasItem = data?.pages[0].content.notificationResponseList.length! > 0;
 
   return (
     <>

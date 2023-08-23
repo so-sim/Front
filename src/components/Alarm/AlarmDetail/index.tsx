@@ -19,7 +19,7 @@ const AlarmDetail = ({ headerHeight, setShowAlarmDetail }: Props) => {
       </Style.Header>
 
       <Style.Main>
-        {/* <AlarmList /> */}
+        <AlarmList />
         <AlarmInfo />
       </Style.Main>
     </Style.AlarmDetailFrame>
