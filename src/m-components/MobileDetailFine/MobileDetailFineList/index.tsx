@@ -5,6 +5,7 @@ import DetailListCheckBox from '@/components/DetailFine/checkbox';
 import useCheckListState from '@/hooks/useCheckListState';
 import { EventInfoListTest, SelectedEventInfo } from '@/types/event';
 import { convertToPriceFormat } from '@/utils/convertFormat';
+import React from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
 import * as Style from './styles';
@@ -56,7 +57,7 @@ const MobileDetailFineList = ({ details, inViewElement }: Props) => {
     <>
       <Style.DetailFineListContainer>
         {Object.values(details).map((item, index) => (
-          <>
+          <React.Fragment key={index}>
             <Style.DateText key={index}>{Object.keys(details)[index]}</Style.DateText>
 
             {item.map((item, index) => (
@@ -90,7 +91,7 @@ const MobileDetailFineList = ({ details, inViewElement }: Props) => {
               </Style.DetailFineItem>
             ))}
             <div style={{ height: '5px' }} ref={inViewElement}></div>
-          </>
+          </React.Fragment>
         ))}
       </Style.DetailFineListContainer>
     </>

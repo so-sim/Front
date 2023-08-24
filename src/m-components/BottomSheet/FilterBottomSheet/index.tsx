@@ -117,6 +117,7 @@ const FilterBottomSheet = ({ detailFilter, setDetailFilter, onClose }: Props) =>
             {situationFilterList.map(({ value, text }) => {
               return (
                 <Style.FilterButton //
+                  key={value}
                   isSelected={value === detailFilter.situation}
                   onClick={() => updateSituationFilter(value as Situation)}
                 >

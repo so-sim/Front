@@ -1,3 +1,4 @@
+import { Desc } from './../../Modal/ConfirmModal/styels';
 import styled from '@emotion/styled';
 
 export const Subhead = styled.div`
@@ -13,4 +14,22 @@ export const Content = styled.div`
 
 export const Body = styled.div`
   ${({ theme }) => theme.font.body_02};
+`;
+
+export const Asterisk = styled.span`
+  color: ${({ theme }) => theme.colors.system_red_200};
+  ${({ theme }) => theme.font.subhead_02}
+`;
+
+export const Asterisk2 = styled(Asterisk)`
+  margin-left: -8px;
+`;
+
+export const DescWrapper = styled.div`
+  width: 100%;
+  white-space: pre-wrap;
+  color: ${({ theme }) => theme.colors.secondary_400};
+  ${({ theme }) => theme.font.body_01};
+  display: flex;
+  align-items: center;
 `;
