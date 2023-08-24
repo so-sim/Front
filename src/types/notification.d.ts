@@ -3,11 +3,26 @@ export interface NotificationListWithIndex {
   notificationResponseList: NotificationList[];
 }
 
+export type SituationStatus = 'FULL' | 'NONE' | 'CHECK';
+
+export type NotificationType = 'PAYMENT_DATE' | 'REQUEST_PAYMENT' | 'CHANGE_ADMIN' | `CHANGE_${SituationStatus}_SITUATION`;
+
+export type MessageData = {
+  amount: number;
+  beforeSituation: null | SituationStatus;
+  afterSituation: null | SituationStatus;
+  nickname: string;
+};
+
 export type NotificationList = {
-  notificationId: number;
-  date: string;
   category: string;
+  date: string;
+  eventIdList: number[];
+  notificationId: number;
+  groupId: number;
   groupTitle: string;
-  message: string;
-  read: boolean;
+  messageData: MessageData;
+  summary: string;
+  type: NotificationType;
+  view: false;
 };
