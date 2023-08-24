@@ -1,5 +1,7 @@
 import { ALARM } from '@/assets/icons/Alarm';
 import { useGetAlarmList } from '@/queries/Notification/useGetAlarmList';
+import { useReadAllNotification } from '@/queries/Notification/useReadAllNotification';
+import { useReadNotification } from '@/queries/Notification/useReadNotification';
 import { useEffect } from 'react';
 import { useInView } from 'react-intersection-observer';
 import AlarmCard from './AlarmCard';
@@ -16,6 +18,8 @@ const AlarmList = () => {
     }
   }, [inView]);
 
+  const { mutate: ReadAllNotificationList } = useReadAllNotification();
+
   const hasItem = data?.pages[0].content.notificationResponseList.length! > 0;
 
   return (
@@ -23,12 +27,14 @@ const AlarmList = () => {
       <Style.TitleWrapper>
         <Style.Title>알람</Style.Title>
 
-        <Style.ReadAllAlarmsText $hasItem={hasItem}>모든 알림 읽기</Style.ReadAllAlarmsText>
+        <Style.ReadAllAlarmsText $hasItem={hasItem} onClick={() => ReadAllNotificationList()}>
+          모든 알림 읽기
+        </Style.ReadAllAlarmsText>
       </Style.TitleWrapper>
 
       {hasItem ? (
         <Style.AlarmListWrapper>
-          {data?.pages.map((page) => page.content.notificationResponseList.map((notificationInfo) => <AlarmCard notificationInfo={notificationInfo} />))}
+          {data?.pages.map((page) => page.content.notificationResponseList.map((notificationInfo, index) => <AlarmCard notificationInfo={notificationInfo} key={index} />))}
 
           <div ref={ref} />
         </Style.AlarmListWrapper>
