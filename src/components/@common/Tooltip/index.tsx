@@ -35,7 +35,7 @@ export const Tooltip = ({ title, contents, width, location, trigger, left = '0px
   return (
     <span>
       {showTooltip && (
-        <div style={{ position: 'absolute', left, top }}>
+        <div style={{ position: 'absolute', left, top, zIndex: '20' }}>
           <Style.Arrow top={messageBox.top || '0'} left={messageBox.left || '0'} location={location}>
             {ARROW.TOOLTIP}
           </Style.Arrow>

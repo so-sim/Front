@@ -87,10 +87,12 @@ const Calendar: FC<CalnedrProps> = ({ cellType }) => {
                 {ARROW.RIGHT}
               </Style.ArrowWrapper>
             </Style.ArrowBlock>
-            <Style.NotificationDescription onClick={handleShowAdminModal}>
-              <span>벌금일정</span>
-              <div>{getOneLineNotificationDescription()}</div>
-            </Style.NotificationDescription>
+            {cellType === 'Tag' && (
+              <Style.NotificationDescription onClick={handleShowAdminModal}>
+                <span>벌금일정</span>
+                <div>{getOneLineNotificationDescription()}</div>
+              </Style.NotificationDescription>
+            )}
           </div>
           {cellType === 'Tag' && isAdmin && (
             <Button width="124px" color="black" onClick={handleShowCreateDetailModal} id={GA.ADD_LIST.BUTTON}>

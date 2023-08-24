@@ -11,6 +11,7 @@ import * as Style from '../styles';
 import CirCleCheckBox from './CircleCheckBox';
 import useSituationList, { SituationText } from '@/hooks/useSituationList';
 import { FormFieldActions } from '@/hooks/Group/useFinebook';
+import { covertDateForView } from '@/utils/convertFormat';
 
 const GA_SITUATION = { 미납: GA.NON.LIST_MODAL, 완납: GA.FULL.LIST_MODAL, 확인중: '' };
 
@@ -58,7 +59,7 @@ const FormFileds = ({ selectData, action }: Props) => {
           <Style.Input type="string" value={convertToPriceFormat(selectData.amount)} onChange={onChangeAmount} style={{ height: '32px' }} />
         </Label>
         <Label title="날짜" width="32px" margin="0px">
-          <CalendarDropBox type={selectData.date} setType={onChangeDate} color="white" />
+          <CalendarDropBox type={covertDateForView(selectData.date)} setType={onChangeDate} color="white" />
         </Label>
       </Style.Row>
       <Style.Row>

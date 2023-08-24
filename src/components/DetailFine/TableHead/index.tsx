@@ -39,7 +39,7 @@ const TableHead = ({ details }: Props) => {
         location="BOTTOM"
         top="40px"
         left="-26px"
-        defaultValue
+        defaultValue={false}
         messageBox={{ left: '232px', top: '-8px' }}
         trigger={
           <Style.PointerElement>
