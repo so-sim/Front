@@ -66,5 +66,8 @@ export const Descripttion = styled.p`
 `;
 
 export const SituaionBtn = styled.button<{ situationType: Situation }>`
-  ${({ theme, situationType }) => SituationButtonStyles[situationType](theme)}
+  padding: 2px 4px;
+  border-radius: 4px;
+  ${({ theme, situationType }) => SituationButtonStyles[situationType!](theme)};
+  ${({ theme }) => theme.font.subhead_01};
 `;
