@@ -1,12 +1,23 @@
 import styled from '@emotion/styled';
+import { isMobile } from 'react-device-detect';
+
+export const Container = styled.div`
+  height: calc(100vh - 310px);
+  overflow-y: scroll;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+`;
 
 export const ItemContainer = styled.div`
   display: flex;
   align-items: center;
 
-  padding: 0.5rem 0.5rem 0.5rem 1rem;
+  padding: 0.5rem 0.5rem 0.5rem 0;
 
   border-radius: 0.25rem;
+
   &:hover {
     background-color: ${({ theme }) => 'rgba(116, 166, 241, 0.1)'};
   }
@@ -15,8 +26,6 @@ export const ItemContainer = styled.div`
 export const CheckBoxWrapper = styled.div`
   display: flex;
   align-items: center;
-
-  padding: 0.5rem;
 `;
 
 export const TextWrapper = styled.div`
@@ -37,7 +46,7 @@ export const DescriptionContainer = styled.div`
 `;
 
 export const DescriptionGround = styled.span`
-  ${({ theme }) => theme.font.subhead_02};
+  ${({ theme }) => (isMobile ? theme.font.subhead_01 : theme.font.subhead_02)};
 
   color: ${({ theme }) => theme.colors.secondary_900};
 `;
@@ -50,7 +59,7 @@ export const Division = styled.div`
 `;
 
 export const DescriptionMemo = styled.span`
-  ${({ theme }) => theme.font.subhead_02};
+  ${({ theme }) => (isMobile ? theme.font.caption : theme.font.subhead_02)};
 
   color: ${({ theme }) => theme.colors.secondary_600};
 `;
@@ -58,7 +67,7 @@ export const DescriptionMemo = styled.span`
 export const AmountText = styled.p`
   margin: 0 0 0 auto;
 
-  ${({ theme }) => theme.font.subhead_02};
+  ${({ theme }) => (isMobile ? theme.font.subhead_01 : theme.font.subhead_02)};
 
   color: ${({ theme }) => theme.colors.secondary_900};
 `;

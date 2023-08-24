@@ -19,12 +19,12 @@ const MobileAllCheckbox = ({ details, totalAmount }: Props) => {
       </Style.AllCheckboxWrapper>
       <Style.AmountWrapper>
         {/* Todo: 체크박스한 전체 금액 삽입 */}
-        {totalAmount && (
+        {
           <>
             <Style.AmountLebel>합계</Style.AmountLebel>
-            <Style.Amount>{convertToPriceFormat(totalAmount)}원</Style.Amount>
+            <Style.Amount>{convertToPriceFormat(totalAmount!) || 0}원</Style.Amount>
           </>
-        )}
+        }
       </Style.AmountWrapper>
     </Style.CheckboxRow>
   );

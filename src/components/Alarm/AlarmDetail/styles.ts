@@ -6,8 +6,8 @@ export const AlarmDetailFrame = styled.div<{ $headerHeight: number }>`
   top: ${({ $headerHeight }) => `${$headerHeight}rem`};
   right: 0;
   bottom: 0;
-
-  z-index: 9999;
+  height: calc(100vh - 72px);
+  z-index: 9;
 
   width: 460px;
 
@@ -39,7 +39,7 @@ export const Main = styled.div`
 `;
 
 export const CloseText = styled.span`
-  ${({ theme }) => theme.font.subhead_02}
+  ${({ theme }) => theme.font.subhead_02};
 
-  color:${({ theme }) => theme.colors.secondary_900}
+  color: ${({ theme }) => theme.colors.secondary_900};
 `;

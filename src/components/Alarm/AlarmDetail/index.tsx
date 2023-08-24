@@ -3,12 +3,16 @@ import AlarmList from './AlarmList';
 
 import * as Style from './styles';
 import AlarmInfo from './AlarmInfo';
+import { useRecoilState } from 'recoil';
+import { alarmInfoState } from '@/store/alarmInfoState';
 
 type Props = {
   headerHeight: number;
   setShowAlarmDetail: React.Dispatch<React.SetStateAction<boolean>>;
 };
 const AlarmDetail = ({ headerHeight, setShowAlarmDetail }: Props) => {
+  const [alarmIdList, setAlarmIdList] = useRecoilState(alarmInfoState);
+
   return (
     <Style.AlarmDetailFrame $headerHeight={headerHeight}>
       <Style.Header>
@@ -19,8 +23,8 @@ const AlarmDetail = ({ headerHeight, setShowAlarmDetail }: Props) => {
       </Style.Header>
 
       <Style.Main>
-        {/* <AlarmList /> */}
-        <AlarmInfo />
+        {!alarmIdList.alarmEventIdList.length && <AlarmList />}
+        {(alarmIdList.alarmEventIdList.length || null) && <AlarmInfo />}
       </Style.Main>
     </Style.AlarmDetailFrame>
   );

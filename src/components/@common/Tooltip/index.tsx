@@ -84,7 +84,7 @@ const Footer = ({ contents, page, setPage, onClose }: FooterProps) => {
     <Style.Footer>
       <Style.Pagination>
         {contents.map((_, index) => (
-          <Style.Page onClick={() => setPage(index)} isActive={page === index} />
+          <Style.Page onClick={() => setPage(index)} isActive={page === index} key={index} />
         ))}
       </Style.Pagination>
       <Style.NextButton onClick={handleNext}>{buttonText(page)}</Style.NextButton>

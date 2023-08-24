@@ -30,12 +30,12 @@ export const Header = styled.div`
 
 export const AlarmTypeText = styled.div``;
 
-export const Circle = styled.div`
+export const Circle = styled.div<{ $isRead: boolean }>`
   width: 0.5rem;
   height: 0.5rem;
 
   margin-right: 0.5rem;
-  background-color: ${({ theme }) => theme.colors.red_400};
+  background-color: ${({ theme, $isRead }) => ($isRead ? theme.colors.neutral_300_b : theme.colors.red_400)};
 
   border-radius: 9999px;
 `;
@@ -66,5 +66,8 @@ export const Descripttion = styled.p`
 `;
 
 export const SituaionBtn = styled.button<{ situationType: Situation }>`
-  ${({ theme, situationType }) => SituationButtonStyles[situationType](theme)}
+  padding: 2px 4px;
+  border-radius: 4px;
+  ${({ theme, situationType }) => SituationButtonStyles[situationType!](theme)};
+  ${({ theme }) => theme.font.subhead_01};
 `;
