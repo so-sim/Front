@@ -1,9 +1,12 @@
 import styled from '@emotion/styled';
+import { isMobile } from 'react-device-detect';
 
 export const TitleWrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
+
+  ${isMobile && 'margin-top: 1.25rem'};
 
   padding-bottom: 1rem;
 `;
@@ -26,7 +29,7 @@ export const AlarmListWrapper = styled.div`
   flex-direction: column;
   gap: 0.75rem;
 
-  height: calc(100vh - 190px);
+  ${!isMobile && 'height: calc(100vh - 190px);'}
 
   overflow-y: auto;
   &::-webkit-scrollbar {

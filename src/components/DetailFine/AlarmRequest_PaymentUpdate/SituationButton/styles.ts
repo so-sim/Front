@@ -2,13 +2,14 @@ import { Situation } from '@/types/event';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { DefaultTheme } from '@/styles/Theme';
+import { isMobile } from 'react-device-detect';
 
 export const SituationContainer = styled.div`
   display: flex;
   align-items: center;
   gap: 8px;
 
-  margin-bottom: 24px;
+  margin-bottom: ${isMobile ? '1rem' : '1.5rem'};
 `;
 
 export const SituationButtonStyles = {
@@ -38,7 +39,7 @@ export const SituationButton = styled.button<{ situationType: Situation; isClick
 
   ${({ theme }) =>
     css`
-      ${theme.font.subhead_02};
+      ${isMobile ? theme.font.subhead_01 : theme.font.subhead_02};
     `};
 
   ${({ theme, situationType }) => situationType && SituationButtonStyles[situationType](theme)}

@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+import { isMobile } from 'react-device-detect';
 
 export const Container = styled.div`
   height: calc(100vh - 310px);
@@ -45,7 +46,7 @@ export const DescriptionContainer = styled.div`
 `;
 
 export const DescriptionGround = styled.span`
-  ${({ theme }) => theme.font.subhead_02};
+  ${({ theme }) => (isMobile ? theme.font.subhead_01 : theme.font.subhead_02)};
 
   color: ${({ theme }) => theme.colors.secondary_900};
 `;
@@ -58,7 +59,7 @@ export const Division = styled.div`
 `;
 
 export const DescriptionMemo = styled.span`
-  ${({ theme }) => theme.font.subhead_02};
+  ${({ theme }) => (isMobile ? theme.font.caption : theme.font.subhead_02)};
 
   color: ${({ theme }) => theme.colors.secondary_600};
 `;
@@ -66,7 +67,7 @@ export const DescriptionMemo = styled.span`
 export const AmountText = styled.p`
   margin: 0 0 0 auto;
 
-  ${({ theme }) => theme.font.subhead_02};
+  ${({ theme }) => (isMobile ? theme.font.subhead_01 : theme.font.subhead_02)};
 
   color: ${({ theme }) => theme.colors.secondary_900};
 `;

@@ -4,6 +4,7 @@ import { alarmInfoState } from '@/store/alarmInfoState';
 import { Situation } from '@/types/event';
 import { MessageData, NotificationList, NotificationType, SituationStatus } from '@/types/notification';
 import { useQueryClient } from '@tanstack/react-query';
+import { isMobile } from 'react-device-detect';
 import { useNavigate, Link } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
 import * as Style from './styles';
@@ -59,11 +60,12 @@ const AlarmCard = ({ notificationInfo }: Props) => {
   const goToAlarmInfo = (eventIdList: number[]) => {
     handleReadNotification();
     setAlarmEventIdList({ alarmEventIdList: [...eventIdList], nickname, beforeSituation, afterSituation, groupId });
+    isMobile && navigate(`/m-notification/info`);
   };
 
   const goToGroupMember = () => {
     handleReadNotification();
-    navigate(`/group/${groupId}/member`);
+    isMobile ? navigate(`/m-group/${groupId}/member`) : navigate(`/group/${groupId}/member`);
   };
 
   const { mutate: ReadNotification } = useReadNotification();
