@@ -21,6 +21,8 @@ import Page404 from '@/components/error/404';
 import usePushUserId from '@/hooks/usePushUserId';
 import useRedirectURL from '@/hooks/@common/useRedirectURL';
 import NotAuth from '@/components/error/notAuth';
+import MobileNotificationList from '@/m-pages/MobileNotificationList';
+import MobileNotificationInfo from '@/m-pages/MobileNotificationInfo';
 
 const MobileRouter = () => {
   usePushUserId();
@@ -49,8 +51,12 @@ const MobileRouter = () => {
         <Route path="/m-tos" element={<MobileTOS />} />
         <Route path="/m-setting" element={<MobileUserSetting />} />
         <Route path="/m-withdrawal" element={<MobileWithdrawal />} />
+        <Route path="/m-notification/info" element={<MobileNotificationInfo />} />
+        <Route path="/m-notification" element={<MobileNotificationList />} />
+
         <Route path="/not-found" element={<Page404 />} />
         <Route path="/not-auth" element={<NotAuth />} />
+
         <Route path="/m-group/*" element={<Page404 />} />
       </Routes>
     </>
