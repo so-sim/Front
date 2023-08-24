@@ -31,7 +31,7 @@ type StatusType = {
   };
 };
 
-const Status: StatusType = {
+export const Status: StatusType = {
   situation_change: {
     title: <Style.Title>납부 여부 변경하기</Style.Title>,
     subTitle: (situationToChange?: Situation) => (
