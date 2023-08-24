@@ -21,13 +21,13 @@ const AlarmComponent = ({ headerHeight }: Props) => {
     };
   }, [location]);
 
-  const { data } = useGetAlarmListCount();
+  const { data, isLoading } = useGetAlarmListCount();
 
   const notificationCount = data?.content.count! > 99 ? '99+' : data?.content.count;
 
   return (
     <>
-      <Style.AlarmIconWrapper $isCount={notificationCount !== 0} data-count={notificationCount} onClick={() => setShowAlarmDetail((prev) => !prev)}>
+      <Style.AlarmIconWrapper $isCount={notificationCount !== 0 && !isLoading} data-count={notificationCount} onClick={() => setShowAlarmDetail((prev) => !prev)}>
         {ALARM.ALARM}
       </Style.AlarmIconWrapper>
       {showAlarmDetail && <AlarmDetail headerHeight={headerHeight} setShowAlarmDetail={setShowAlarmDetail} />}
