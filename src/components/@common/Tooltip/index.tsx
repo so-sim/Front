@@ -25,6 +25,7 @@ export const Tooltip = ({ title, contents, width, location, trigger, left = '0px
   const [showTooltip, setShowTooltip] = useState(defaultValue);
 
   const onClose = () => {
+    setPage(0);
     setShowTooltip((prev) => !prev);
   };
 
@@ -33,16 +34,16 @@ export const Tooltip = ({ title, contents, width, location, trigger, left = '0px
   };
 
   return (
-    <span>
+    <span style={{ position: 'relative' }}>
       {showTooltip && (
-        <div style={{ position: 'absolute', left, top, zIndex: '20' }}>
+        <div style={{ position: 'absolute', left, top, zIndex: '10' }}>
           <Style.Arrow top={messageBox.top || '0'} left={messageBox.left || '0'} location={location}>
             {ARROW.TOOLTIP}
           </Style.Arrow>
-          <Style.Frame width={width}>
-            <Header title={title} onClose={onClose} />
-            <Body contents={contents} page={page} />
-            <Footer contents={contents} page={page} setPage={setPage} onClose={onClose} />
+          <Style.Frame width={width} isOnlyTitle={Boolean(contents.length)}>
+            <Header title={title} onClose={onClose} isOnlyTitle={Boolean(contents.length)} />
+            {contents[page]}
+            {contents.length > 1 && <Footer contents={contents} page={page} setPage={setPage} onClose={onClose} />}
           </Style.Frame>
         </div>
       )}
@@ -52,19 +53,13 @@ export const Tooltip = ({ title, contents, width, location, trigger, left = '0px
   );
 };
 
-const Header = ({ title, onClose }: Pick<TooltipProps, 'title'> & { onClose: VoidFunction }) => {
+const Header = ({ title, onClose, isOnlyTitle }: Pick<TooltipProps, 'title'> & { onClose: VoidFunction; isOnlyTitle: boolean }) => {
   return (
-    <Style.Header>
-      <div>{title}</div>
-      <div onClick={onClose}>{SYSTEM.CLOSE_SM_WHITE}</div>
+    <Style.Header isOnlyTitle={isOnlyTitle}>
+      <span>{title}</span>
+      <span onClick={onClose}>{SYSTEM.CLOSE_SM_WHITE}</span>
     </Style.Header>
   );
-};
-
-type BodyProps = Pick<TooltipProps, 'contents'> & { page: number };
-
-const Body = ({ contents, page }: BodyProps) => {
-  return <div>{contents[page]}</div>;
 };
 
 type FooterProps = Pick<TooltipProps, 'contents'> & { page: number; setPage: React.Dispatch<React.SetStateAction<number>>; onClose: VoidFunction };

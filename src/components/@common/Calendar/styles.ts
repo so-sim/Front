@@ -109,3 +109,8 @@ export const NotificationDescription = styled.div`
     color: ${({ theme }) => theme.colors.secondary_600};
   }
 `;
+
+export const RightItem = styled.div`
+  display: flex;
+  gap: 8px;
+`;

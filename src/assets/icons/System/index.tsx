@@ -42,6 +42,7 @@ export const SYSTEM = {
   SEARCH_GRAY: <Search fill="#9C9C9C" width={24} height={24} />,
   SEARCH_GRAY_LG: <Search fill="#E3E4E5" width={48} height={48} />,
   TOOLTIP: <ToolTip width={24} height={24} />,
+  TOOLTIP_MD: <TooltipInfo width={16} height={16} />,
   TOOLTIP_INFO: <TooltipInfo width={24} height={24} />,
   PLUS_WHITE: <Plus width={24} height={24} />,
   INITIALIZATION: <Initialization />,

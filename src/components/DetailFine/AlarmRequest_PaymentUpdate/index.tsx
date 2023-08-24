@@ -19,6 +19,7 @@ import useCheckListState, { addCheckDetailFine, subtractCheckDetailFine } from '
 import { CheckListState } from '@/store/checkListState';
 import useCheckSet from './hooks/useCheckSet';
 import { isMobile } from 'react-device-detect';
+import { Tooltip } from '@/components/@common/Tooltip';
 
 type Props = {
   checkDetailFine: CheckListState;
@@ -33,7 +34,21 @@ type StatusType = {
 
 export const Status: StatusType = {
   situation_change: {
-    title: <Style.Title>납부 여부 변경하기</Style.Title>,
+    title: (
+      <Tooltip
+        title={`납부여부를 변경해보세요!\n
+변경 시, 팀원에게 알림이 갑니다.`}
+        contents={[]}
+        width={312}
+        location="TOP"
+        top="40px"
+        left="-204px"
+        defaultValue
+        messageBox={{ left: '280px', top: '-8px' }}
+        trigger={<Style.Title>납부여부 변경하기</Style.Title>}
+      />
+    ),
+
     subTitle: (situationToChange?: Situation) => (
       <Style.SubTitle>
         선택된 모든 내역을{' '}

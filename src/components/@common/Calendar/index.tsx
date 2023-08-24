@@ -19,6 +19,9 @@ import DateCellWithTag from './DateCellWithTag';
 import * as Style from './styles';
 import useNotificationForm from '@/hooks/Group/useNotificationForm';
 import { AdminModal } from '../Modal/GroupSettingModal/AdminModal';
+import { SYSTEM } from '@/assets/icons/System';
+import { Tooltip } from '../Tooltip';
+import CalendarTooltip from '../Tooltip/Calendar';
 
 const WEEKDATE = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
@@ -94,11 +97,26 @@ const Calendar: FC<CalnedrProps> = ({ cellType }) => {
               </Style.NotificationDescription>
             )}
           </div>
-          {cellType === 'Tag' && isAdmin && (
-            <Button width="124px" color="black" onClick={handleShowCreateDetailModal} id={GA.ADD_LIST.BUTTON}>
-              내역 추가하기
-            </Button>
-          )}
+          <Style.RightItem>
+            {cellType === 'Tag' && isAdmin && (
+              <Button width="124px" color="black" onClick={handleShowCreateDetailModal} id={GA.ADD_LIST.BUTTON}>
+                내역 추가하기
+              </Button>
+            )}
+            {cellType === 'Tag' && (
+              <Tooltip
+                title="캘린더에서 날짜별 벌금 납부 현황을 확인해보세요!"
+                contents={CalendarTooltip}
+                width={480}
+                location="BOTTOM"
+                top="40px"
+                left="-456px"
+                defaultValue
+                messageBox={{ left: '459px', top: '-8px' }}
+                trigger={<span style={{ cursor: 'pointer' }}>{SYSTEM.TOOLTIP_INFO}</span>}
+              />
+            )}
+          </Style.RightItem>
         </Style.Header>
         <Style.WeekDate>
           {WEEKDATE.map((date) => (

@@ -8,6 +8,7 @@ import { GA } from '@/constants/GA';
 import { DetailFilter } from '@/store/detailFilter';
 import { SelectedEventInfo } from '@/types/event';
 import SituationList from '../../@common/Tooltip/Situation';
+import PaymentRequest from '@/components/@common/Tooltip/PaymentRequest';
 
 import SelectAllCheckbox from '@/components/@common/Checkbox/SelectAllCheckbox';
 import { SYSTEM } from '@/assets/icons/System';
@@ -38,13 +39,12 @@ const TableHead = ({ details }: Props) => {
         width={480}
         location="BOTTOM"
         top="40px"
-        left="-26px"
-        defaultValue={false}
-        messageBox={{ left: '232px', top: '-8px' }}
+        left="-166px"
+        messageBox={{ left: '242px', top: '-8px' }}
         trigger={
           <Style.PointerElement>
             <span>납부여부</span>
-            <Style.Arrow>{SYSTEM.TOOLTIP_INFO}</Style.Arrow>
+            {SYSTEM.TOOLTIP_MD}
           </Style.PointerElement>
         }
       />
@@ -53,6 +53,21 @@ const TableHead = ({ details }: Props) => {
       </Style.Element>
       <Style.Element>금액</Style.Element>
       <Style.Element>사유</Style.Element>
+      <Tooltip
+        title="납부 요청이란?"
+        contents={PaymentRequest}
+        width={312}
+        location="BOTTOM"
+        top="40px"
+        left="-204px"
+        messageBox={{ left: '280px', top: '-8px' }}
+        trigger={
+          <Style.PointerElement>
+            <span>납부요청</span>
+            {SYSTEM.TOOLTIP_MD}
+          </Style.PointerElement>
+        }
+      />
     </Style.TableHead>
   );
 };
