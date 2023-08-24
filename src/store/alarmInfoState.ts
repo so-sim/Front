@@ -1,28 +1,23 @@
+import { SituationStatus } from '@/types/notification';
 import { atom } from 'recoil';
 
-export interface AlarmInfoState {
-  date: string;
-  type: string;
-  groupId: number | null;
-  groupTitle: string;
-  category: string;
-  summary: string;
-  messageData: string[];
-  eventIdList: number[];
-}
-
-export const initialAlarmInfoState = {
-  date: '',
-  type: '',
-  groupId: null,
-  groupTitle: '',
-  category: '',
-  summary: '',
-  messageData: [],
-  eventIdList: [],
+export type AlarmInfoType = {
+  alarmEventIdList: number[];
+  beforeSituation: null | SituationStatus;
+  afterSituation: null | SituationStatus;
+  nickname: string;
+  groupId: null | number;
 };
 
-export const alarmInfoState = atom<AlarmInfoState>({
-  key: 'alarmInfoState',
-  default: initialAlarmInfoState,
+export const initAlarmInfoState = {
+  alarmEventIdList: [],
+  beforeSituation: null,
+  afterSituation: null,
+  nickname: '',
+  groupId: null,
+};
+
+export const alarmInfoState = atom<AlarmInfoType>({
+  key: 'alarmEventIdListState',
+  default: initAlarmInfoState,
 });

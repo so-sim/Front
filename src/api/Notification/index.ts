@@ -22,3 +22,9 @@ export const readNotification = async (notificationId: number): Promise<ServerRe
   const { data } = await api.patch(`/api/notification/${notificationId}`);
   return data;
 };
+
+export const getNotificationListCount = async (): Promise<ServerResponse<{ count: number }>> => {
+  const { data } = await api.get(`/api/notification/count`);
+
+  return data;
+};

@@ -1,12 +1,22 @@
 import styled from '@emotion/styled';
 
+export const Container = styled.div`
+  height: calc(100vh - 310px);
+  overflow-y: scroll;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+`;
+
 export const ItemContainer = styled.div`
   display: flex;
   align-items: center;
 
-  padding: 0.5rem 0.5rem 0.5rem 1rem;
+  padding: 0.5rem 0.5rem 0.5rem 0;
 
   border-radius: 0.25rem;
+
   &:hover {
     background-color: ${({ theme }) => 'rgba(116, 166, 241, 0.1)'};
   }
@@ -15,8 +25,6 @@ export const ItemContainer = styled.div`
 export const CheckBoxWrapper = styled.div`
   display: flex;
   align-items: center;
-
-  padding: 0.5rem;
 `;
 
 export const TextWrapper = styled.div`
