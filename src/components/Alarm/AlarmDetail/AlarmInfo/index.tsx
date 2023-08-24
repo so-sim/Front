@@ -15,6 +15,7 @@ import { useGroupDetail } from '@/queries/Group';
 import { useNavigate } from 'react-router-dom';
 import { isMobile } from 'react-device-detect';
 import { useUpdateDetailStatus } from '@/queries/Detail';
+import { Button } from '@/components/@common';
 
 const SITUATION_FORMAT_STYLE: { [key in SituationStatus]: Situation } = {
   FULL: '완납',
@@ -127,14 +128,17 @@ const AlarmInfo = ({}) => {
 
       <Style.Footer>
         {afterSituation === 'FULL' ? (
-          <Style.Button onClick={isMobile ? () => navigate(-1) : () => setAlarmIdList(initAlarmInfoState)}>취소</Style.Button>
+          <Button width="100%" height="2.675rem" onClick={isMobile ? () => navigate(-1) : () => setAlarmIdList(initAlarmInfoState)} color="white">
+            취소
+          </Button>
         ) : (
           <>
-            <Style.Button onClick={isMobile ? () => navigate(-1) : () => setAlarmIdList(initAlarmInfoState)}>취소</Style.Button>
-
-            <Style.Button isSubmit={true} onClick={updateSituation}>
+            <Button width="100%" height="2.675rem" onClick={isMobile ? () => navigate(-1) : () => setAlarmIdList(initAlarmInfoState)} color="white">
+              취소
+            </Button>
+            <Button width="100%" height="2.675rem" onClick={updateSituation} color={!isAdmin && afterSituation === 'CHECK' ? 'disabled' : 'black'}>
               변경하기
-            </Style.Button>
+            </Button>
           </>
         )}
       </Style.Footer>
