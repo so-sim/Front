@@ -3,10 +3,16 @@ import styled from '@emotion/styled';
 import { Situation } from '@/types/event';
 import { DefaultTheme } from '@/styles/Theme';
 import { css } from '@emotion/react';
+import { isMobile } from 'react-device-detect';
+
+export const TextContainer = styled.div`
+  padding: 0 0.5rem;
+`;
 
 export const Title = styled.h2`
+  ${isMobile && 'margin-top: 1.25rem;'}
   padding-bottom: 0.5rem;
-  ${({ theme }) => theme.font.subhead_04};
+  ${({ theme }) => (isMobile ? theme.font.subhead_03 : theme.font.subhead_04)};
 
   color: ${({ theme }) => theme.colors.secondary_800};
 `;
@@ -20,7 +26,7 @@ export const ProfileWrapper = styled.div`
 `;
 
 export const ProfimeText = styled.p`
-  ${({ theme }) => theme.font.subhead_04};
+  ${({ theme }) => (isMobile ? theme.font.subhead_03 : theme.font.subhead_04)};
 
   color: ${({ theme }) => theme.colors.secondary_800};
 `;
@@ -35,7 +41,7 @@ export const Description = styled.p`
 
 export const SubTitle = styled.p`
   padding-bottom: 0.5rem;
-  ${({ theme }) => theme.font.body_03};
+  ${({ theme }) => (isMobile ? theme.font.body_01 : theme.font.body_03)};
 
   color: ${({ theme }) => theme.colors.secondary_900};
 `;

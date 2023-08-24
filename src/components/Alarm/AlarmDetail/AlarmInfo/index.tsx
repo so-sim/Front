@@ -80,45 +80,48 @@ const AlarmInfo = ({}) => {
 
   return (
     <>
-      <Style.Title>{myname === nickname && `나의`} 내역 확인하기</Style.Title>
-      {/* 해당 Alarm Info가 나의 닉네임과 같다면 */}
-      <Style.ProfileWrapper>
-        <p>아이콘</p>
-        <Style.ProfimeText>{userName}</Style.ProfimeText>
-      </Style.ProfileWrapper>
+      <Style.TextContainer>
+        <Style.Title>{myname === nickname && `나의`} 내역 확인하기</Style.Title>
+        {/* 해당 Alarm Info가 나의 닉네임과 같다면 */}
 
-      <Style.SubTitle>
-        선택된 모든 내역을{' '}
-        <Style.UserLineSpan
-          style={{
-            textUnderlineOffset: '2px',
-          }}
-          $situation={situationToChange}
-        >
-          {situationToChange || '완납'}
-        </Style.UserLineSpan>
-        으로 {afterSituation === 'FULL' ? '변경되었습니다.' : '변경하시겠습니까?'}
-      </Style.SubTitle>
+        <Style.ProfileWrapper>
+          <p>아이콘</p>
+          <Style.ProfimeText>{userName}</Style.ProfimeText>
+        </Style.ProfileWrapper>
 
-      {afterSituation === 'FULL' ? (
-        <SituationButton
-          situationToChange={situationToChange}
-          setSituationToChange={setSituationToChange}
-          currentSituation={SITUATION_FORMAT_STYLE[beforeSituation!]}
-          isAbleChange={false}
-        />
-      ) : // 확인중일 때 두 개 나오는거..   isAdmin 도 props도 바꿔주자
-      afterSituation === 'CHECK' && isAdmin ? (
-        <SituationButton situationToChange={situationToChange} setSituationToChange={setSituationToChange} currentSituation={'확인중'} />
-      ) : isAdmin ? (
-        <SituationButton
-          situationToChange={situationToChange}
-          setSituationToChange={setSituationToChange}
-          currentSituation={beforeSituation === 'CHECK' ? '미납' : SITUATION_FORMAT_STYLE[afterSituation!] || '미납'}
-        />
-      ) : (
-        <SituationButton situationToChange={situationToChange} setSituationToChange={setSituationToChange} currentSituation={SITUATION_FORMAT_STYLE[afterSituation!] || '미납'} />
-      )}
+        <Style.SubTitle>
+          선택된 모든 내역을{' '}
+          <Style.UserLineSpan
+            style={{
+              textUnderlineOffset: '2px',
+            }}
+            $situation={situationToChange}
+          >
+            {situationToChange || '완납'}
+          </Style.UserLineSpan>
+          으로 {afterSituation === 'FULL' ? '변경되었습니다.' : '변경하시겠습니까?'}
+        </Style.SubTitle>
+
+        {afterSituation === 'FULL' ? (
+          <SituationButton
+            situationToChange={situationToChange}
+            setSituationToChange={setSituationToChange}
+            currentSituation={SITUATION_FORMAT_STYLE[beforeSituation!]}
+            isAbleChange={false}
+          />
+        ) : // 확인중일 때 두 개 나오는거..   isAdmin 도 props도 바꿔주자
+        afterSituation === 'CHECK' && isAdmin ? (
+          <SituationButton situationToChange={situationToChange} setSituationToChange={setSituationToChange} currentSituation={'확인중'} />
+        ) : isAdmin ? (
+          <SituationButton
+            situationToChange={situationToChange}
+            setSituationToChange={setSituationToChange}
+            currentSituation={beforeSituation === 'CHECK' ? '미납' : SITUATION_FORMAT_STYLE[afterSituation!] || '미납'}
+          />
+        ) : (
+          <SituationButton situationToChange={situationToChange} setSituationToChange={setSituationToChange} currentSituation={SITUATION_FORMAT_STYLE[afterSituation!] || '미납'} />
+        )}
+      </Style.TextContainer>
 
       {data?.content.eventList && <SingleCheckedFineList checkDetailFine={data?.content.eventList} setCheckDetailFine={toggleCheckedEventId} isChecked={isChecked} />}
 
