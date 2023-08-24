@@ -126,11 +126,17 @@ const AlarmInfo = ({}) => {
       {data?.content.eventList && <SingleCheckedFineList checkDetailFine={data?.content.eventList} setCheckDetailFine={toggleCheckedEventId} isChecked={isChecked} />}
 
       <Style.Footer>
-        <Style.Button onClick={isMobile ? () => navigate(-1) : () => setAlarmIdList(initAlarmInfoState)}>취소</Style.Button>
+        {afterSituation === 'FULL' ? (
+          <Style.Button onClick={isMobile ? () => navigate(-1) : () => setAlarmIdList(initAlarmInfoState)}>취소</Style.Button>
+        ) : (
+          <>
+            <Style.Button onClick={isMobile ? () => navigate(-1) : () => setAlarmIdList(initAlarmInfoState)}>취소</Style.Button>
 
-        <Style.Button isSubmit={true} onClick={updateSituation}>
-          변경하기
-        </Style.Button>
+            <Style.Button isSubmit={true} onClick={updateSituation}>
+              변경하기
+            </Style.Button>
+          </>
+        )}
       </Style.Footer>
     </>
   );
