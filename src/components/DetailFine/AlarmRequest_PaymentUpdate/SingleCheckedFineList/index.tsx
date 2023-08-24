@@ -13,7 +13,7 @@ type Props = {
 
 const SingleCheckedFineList = ({ checkDetailFine, setCheckDetailFine, isChecked }: Props) => {
   return (
-    <>
+    <Style.Container>
       {checkDetailFine.map((item) => (
         <Style.ItemContainer key={item.eventId}>
           <Style.CheckBoxWrapper>
@@ -33,7 +33,7 @@ const SingleCheckedFineList = ({ checkDetailFine, setCheckDetailFine, isChecked 
           </Style.TextWrapper>
         </Style.ItemContainer>
       ))}
-    </>
+    </Style.Container>
   );
 };
 
