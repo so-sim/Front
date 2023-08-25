@@ -17,6 +17,7 @@ export const AlarmIconWrapper = styled.div<{ $isCount?: boolean }>`
         color: white;
         font-size: 0.875rem;
         border-radius: 1.25rem;
+        text-align: center;
         top: -35%;
         left: 35%;
       }
