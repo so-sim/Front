@@ -1,7 +1,7 @@
 import { CreateGroupModal } from '@/components/@common/Modal/CreateGroupModal';
 import { useGroupList } from '@/queries/Group';
 import React, { useEffect, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { SYSTEM } from '../../../../assets/icons/System';
 import * as Stlye from './styles';
 import { useInView } from 'react-intersection-observer';
@@ -11,6 +11,7 @@ import { isMobile } from 'react-device-detect';
 const GroupList = () => {
   const param = useParams();
   const { groupId } = param;
+  const location = useLocation();
   const [showCreateModal, setShowCreateModal] = useState(false);
   const navigate = useNavigate();
   const devicePath = isMobile ? '/m-group' : '/group';
@@ -35,6 +36,10 @@ const GroupList = () => {
       fetchNextPage();
     }
   }, [inView]);
+
+  useEffect(() => {
+    setShowCreateModal(false);
+  }, [location]);
 
   return (
     <>
