@@ -17,7 +17,7 @@ export const CONFIRM_MODAL = {
   },
   CHANGE_STATUS: {
     title: '납부여부 변경',
-    description: `납부여부를 변경하시겠습니까? \n변경 후, 총무에게 확인 요청을 보내야 변경이 완료됩니다.`,
+    description: `납부여부를 변경하시겠습니까? \n변경 후, 총무에게 알림이 가며 \n총무의 승인이 필요합니다.`,
     cancel: '취소',
     confirm: '변경하기',
   },

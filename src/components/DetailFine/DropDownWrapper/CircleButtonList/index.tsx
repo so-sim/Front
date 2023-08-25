@@ -49,7 +49,7 @@ const CircleButtonList = ({ setOpenButtonListId, situation, eventId, isAdmin = f
     if (buttonSituation === situation) return cancelUpdateStatus();
 
     openConfirmModal({
-      type: 'CHANGE_STATUS',
+      type: isAdmin ? 'CHANGE_STATUS_ADMIN' : 'CHANGE_STATUS',
       confirm: () => updateStatus(buttonSituation),
       cancel: cancelUpdateStatus,
       id: getGATrigger(buttonSituation),

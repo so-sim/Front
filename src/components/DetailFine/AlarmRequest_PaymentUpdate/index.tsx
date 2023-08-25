@@ -6,7 +6,7 @@ import { useUpdateDetailStatus } from '@/queries/Detail';
 import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import CheckedFineList from './CheckedFineList';
 import { useParticipantList } from '@/queries/Group';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { SelectedEventInfo, Situation } from '@/types/event';
 import { useGroupDetail } from '@/queries/Group';
 import { useSelectedContext, initialSelectData } from '@/contexts/SelectedFineContext';
@@ -19,6 +19,8 @@ import useCheckListState, { addCheckDetailFine, subtractCheckDetailFine } from '
 import { CheckListState } from '@/store/checkListState';
 import useCheckSet from './hooks/useCheckSet';
 import { isMobile } from 'react-device-detect';
+import { useGetDetailListById } from '@/queries/Detail/useGetDetailListById';
+import useDisabledList from '@/hooks/useDisabledList';
 import { Tooltip } from '@/components/@common/Tooltip';
 
 type Props = {
@@ -30,6 +32,12 @@ type StatusType = {
     title: JSX.Element;
     subTitle: (situationToChange?: Situation) => JSX.Element;
   };
+};
+
+const SITUATION_STATUS_FORMAT = {
+  미납: '납부 전',
+  확인중: '승인대기',
+  완납: '납부완료',
 };
 
 export const Status: StatusType = {
@@ -51,15 +59,14 @@ export const Status: StatusType = {
     subTitle: (situationToChange?: Situation) => (
       <Style.SubTitle>
         선택된 모든 내역을{' '}
-        <span
+        <Style.UserLineSpan
           style={{
-            textDecoration: 'underline',
             textUnderlineOffset: '2px',
-            color: situationToChange === '완납' ? theme.colors.primary_600 : theme.colors.red_600,
           }}
+          $situation={situationToChange!}
         >
-          {situationToChange}
-        </span>
+          {SITUATION_STATUS_FORMAT[situationToChange!]}
+        </Style.UserLineSpan>
         으로 변경하시겠습니까?
       </Style.SubTitle>
     ),
@@ -82,23 +89,36 @@ const filterByNickName = (prev: CheckListState, name: string, list: SelectedEven
   return { ...prev, ...Object.fromEntries(Object.values(list!)?.map((list) => [list.eventId, list])) };
 };
 
+const filteredDisabled = (prev: CheckListState, disabledEventIdList: number[] | undefined) =>
+  Object.fromEntries(Object.entries(prev).filter(([key]) => !disabledEventIdList?.includes(Number(key))));
+
 const AlarmRequest_PaymentUpdate = ({ checkDetailFine }: Props) => {
   const { groupId } = useParams();
   const navigate = useNavigate();
+
+  const [checkList, setCheckList] = useState<CheckListState>({});
 
   const [sideModal, setSideModal] = useRecoilState(sideModalState);
 
   const originalCheckListValue = Object.values(checkDetailFine);
 
-  const [checkList, setCheckList] = useState(checkDetailFine);
-  // 음 이렇게 넣는건 복사가 안되는구나?? 생성과 동시에 삽입하려했는데, 기대했던 것과는 다르게 checkList undefined 이네요..
-
-  useEffect(() => {
-    setCheckList(checkDetailFine);
-  }, [checkDetailFine]);
+  const originalCheckListEventId = Object.keys(checkDetailFine).map((item) => Number(item));
 
   const eventIdList = Object.keys(checkList);
   const detailFineList = Object.values(checkList);
+
+  const currentSituation = React.useMemo(() => Object.values(checkDetailFine)[0]?.situation, []);
+
+  //disabled 되어야하는 List를 가져오는 hook (일단 임시 주석)  추가하려면 '납부완료'상태에만 disabled를 하는 코드를 추가해야함
+  // const { disabledEventIdList, isDisabledItem } = useDisabledList(Number(groupId), originalCheckListEventId, currentSituation);
+  // useEffect(() => {
+  //   setCheckList((prev) => filteredDisabled(prev, disabledEventIdList));
+  // }, [disabledEventIdList]);
+
+  // 음 이렇게 넣는건 복사가 안되는구나?? 생성과 동시에 삽입하려했는데, 기대했던 것과는 다르게 checkList undefined 이네요..
+  useEffect(() => {
+    setCheckList(checkDetailFine);
+  }, [checkDetailFine]);
 
   const setSubtractCheckDetailFine = (detail: SelectedEventInfo) => {
     setCheckList((prev) => subtractCheckDetailFine(detail, prev));
@@ -138,8 +158,6 @@ const AlarmRequest_PaymentUpdate = ({ checkDetailFine }: Props) => {
 
   const { data: group } = useGroupDetail(Number(groupId));
   const isAdmin = group?.content.isAdmin;
-
-  const currentSituation = detailFineList[0]?.situation;
 
   useEffect(() => {
     if (currentSituation === '완납') {

@@ -14,6 +14,8 @@ const theme = {
     secondary_700: '#5c5c5c',
     secondary_800: '#3c3c3c',
     secondary_900: '#2d2d2d',
+    primary_50: '#f1f6fe',
+    primary_100: '#d8e6fb',
     primary_300: '#74a6f1',
     primary_400: '#4588ed',
     primary_500: '#1c6ee9',

@@ -14,13 +14,10 @@ export const ItemContainer = styled.div`
   display: flex;
   align-items: center;
 
+  margin-bottom: 0.5rem;
   padding: 0.5rem 0.5rem 0.5rem 0;
 
   border-radius: 0.25rem;
-
-  &:hover {
-    background-color: ${({ theme }) => 'rgba(116, 166, 241, 0.1)'};
-  }
 `;
 
 export const CheckBoxWrapper = styled.div`
@@ -32,10 +29,10 @@ export const TextWrapper = styled.div`
   width: 100%;
 `;
 
-export const DateText = styled.p`
+export const DateText = styled.p<{ $disabled?: boolean }>`
   ${({ theme }) => theme.font.caption};
 
-  color: ${({ theme }) => theme.colors.secondary_500};
+  color: ${({ $disabled, theme }) => ($disabled ? theme.colors.secondary_600 : theme.colors.secondary_500)};
 `;
 
 export const DescriptionContainer = styled.div`
@@ -45,10 +42,10 @@ export const DescriptionContainer = styled.div`
   gap: 0.125rem;
 `;
 
-export const DescriptionGround = styled.span`
+export const DescriptionGround = styled.span<{ $disabled?: boolean }>`
   ${({ theme }) => (isMobile ? theme.font.subhead_01 : theme.font.subhead_02)};
 
-  color: ${({ theme }) => theme.colors.secondary_900};
+  color: ${({ $disabled, theme }) => ($disabled ? theme.colors.secondary_600 : theme.colors.secondary_900)};
 `;
 
 export const Division = styled.div`
@@ -64,10 +61,10 @@ export const DescriptionMemo = styled.span`
   color: ${({ theme }) => theme.colors.secondary_600};
 `;
 
-export const AmountText = styled.p`
+export const AmountText = styled.p<{ $disabled?: boolean }>`
   margin: 0 0 0 auto;
 
   ${({ theme }) => (isMobile ? theme.font.subhead_01 : theme.font.subhead_02)};
 
-  color: ${({ theme }) => theme.colors.secondary_900};
+  color: ${({ $disabled, theme }) => ($disabled ? theme.colors.secondary_600 : theme.colors.secondary_900)};
 `;

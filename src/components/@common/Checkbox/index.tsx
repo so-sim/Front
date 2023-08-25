@@ -32,15 +32,18 @@ const useCheckboxContext = () => {
 };
 // useContext hook
 
-const Checkbox = forwardRef(({ as, ...props }: { as: React.ElementType }, ref) => {
+const Checkbox = forwardRef(({ as, disabled = false, ...props }: { as: React.ElementType; disabled?: boolean }, ref) => {
   const { id, isChecked, onChange } = useCheckboxContext();
 
   const Trigger =
-    as || React.forwardRef<HTMLInputElement>(({ ...props }, ref) => <input type="checkbox" id={id} checked={isChecked} onClick={onChange} readOnly {...props} ref={ref} />);
+    as ||
+    React.forwardRef<HTMLInputElement>(({ ...props }, ref) => (
+      <input type="checkbox" id={id} checked={isChecked} onClick={onChange} readOnly disabled={disabled} {...props} ref={ref} />
+    ));
 
   return (
     <>
-      <Trigger checked={isChecked} onClick={onChange} id={id} readOnly ref={ref} />
+      <Trigger checked={isChecked} onClick={onChange} id={id} readOnly ref={ref} disabled={disabled} />
     </>
   );
 });

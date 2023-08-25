@@ -49,6 +49,8 @@ const DetailFine = () => {
     setInitCheckDetailFine();
   }, [calendarDate]);
 
+  // check를 다시 풀고 다시 해줘야 User인터랙션이 겹쳤을 때 바뀐 상태를 다시 저장할 수 있다.  (그래서 그냥 다시 요청을 보내기로)
+
   return (
     <SelectedFineContextProvider>
       <Style.DetailFineFrame>

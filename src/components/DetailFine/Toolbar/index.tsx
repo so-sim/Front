@@ -107,7 +107,7 @@ const Toolbar = () => {
               <Style.SituationControlButton onClick={handleRequestPayment}>납부요청</Style.SituationControlButton>
             </>
           ) : (
-            <Style.SituationControlButton onClick={moveSituationControlPageByMember}>확인요청</Style.SituationControlButton>
+            <Style.SituationControlButton onClick={moveSituationControlPageByMember}>납부여부 변경</Style.SituationControlButton>
           )}
         </Style.SituationControlWrapper>
       )}

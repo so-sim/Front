@@ -1,3 +1,5 @@
+import { DefaultTheme } from '@/styles/Theme';
+import { Situation } from '@/types/event';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 
@@ -51,9 +53,22 @@ export const SubTitle = styled.p`
   ${({ theme }) => theme.font.body_03};
 `;
 
-// export const SubTitleUnderLine = styled.span`
-//   text-decoration: underline;
-// `;
+export const SITUATION_USERLINESTYLES = {
+  미납: (theme: DefaultTheme) => css`
+    color: ${theme.colors.red_400};
+  `,
+  확인중: (theme: DefaultTheme) => css`
+    color: ${theme.colors.orange_600};
+  `,
+  완납: (theme: DefaultTheme) => css`
+    color: ${theme.colors.primary_400};
+  `,
+};
+
+export const UserLineSpan = styled.span<{ $situation: Situation }>`
+  text-decoration: underline;
+  ${({ theme, $situation }) => SITUATION_USERLINESTYLES[$situation](theme)};
+`;
 
 export const DatePeriodContainer = styled.div`
   display: flex;
