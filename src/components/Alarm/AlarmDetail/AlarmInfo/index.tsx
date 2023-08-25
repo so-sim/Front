@@ -35,10 +35,14 @@ const AlarmInfo = ({}) => {
 
   const navigate = useNavigate();
 
+  const { data: groupAdmin } = useGroupDetail(Number(groupId));
+
+  const isAdmin = groupAdmin?.content.isAdmin;
+
   useEffect(() => {
     (afterSituation === 'NONE' || afterSituation === null) && setSituationToChange('확인중');
     isAdmin && setSituationToChange('완납');
-  }, []);
+  }, [isAdmin]);
 
   const { data, isLoading, disabledEventIdList, isDisabledItem } = useDisabledList(groupId!, alarmEventIdList, SITUATION_FORMAT_STYLE[afterSituation!]);
 
@@ -51,10 +55,6 @@ const AlarmInfo = ({}) => {
   const myname = group?.content.nickname;
 
   const [checkedEventId, setCheckedEventId] = useState<number[]>([]);
-
-  const { data: groupAdmin } = useGroupDetail(Number(groupId));
-
-  const isAdmin = groupAdmin?.content.isAdmin;
 
   const userName = data?.content.eventList[0]?.nickname;
 
@@ -144,7 +144,7 @@ const AlarmInfo = ({}) => {
       </Style.TextContainer>
 
       {afterSituation === 'FULL' && data?.content.eventList ? (
-        <SingleCheckedFineList checkDetailFine={data?.content.eventList} setCheckDetailFine={toggleCheckedEventId} isChecked={isChecked} noCheckBox={true} />
+        <SingleCheckedFineList checkDetailFine={data?.content.eventList} setCheckDetailFine={toggleCheckedEventId} isChecked={() => false} noCheckBox={true} />
       ) : (
         data?.content.eventList && (
           <SingleCheckedFineList checkDetailFine={data?.content.eventList} setCheckDetailFine={toggleCheckedEventId} isChecked={isChecked} isDisabled={isDisabledItem} />

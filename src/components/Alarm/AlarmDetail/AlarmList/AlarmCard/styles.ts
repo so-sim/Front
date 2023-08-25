@@ -2,6 +2,7 @@ import styled from '@emotion/styled';
 
 import { SituationButtonStyles } from '@/components/DetailFine/AlarmRequest_PaymentUpdate/SituationButton/styles';
 import { Situation } from '@/types/event';
+import { isMobile } from 'react-device-detect';
 
 export const AlarmCardContainer = styled.div`
   padding: 0.75rem;
@@ -24,7 +25,7 @@ export const Header = styled.div`
 
   padding-bottom: 0.25rem;
   border-bottom: 1px solid ${({ theme }) => theme.colors.neutral_200_b};
-  ${({ theme }) => theme.font.body_02};
+  ${({ theme }) => (isMobile ? theme.font.body_01 : theme.font.body_02)};
   color: ${({ theme }) => theme.colors.secondary_700};
 `;
 
@@ -47,21 +48,21 @@ export const DateTitle = styled.div`
 export const Title = styled.p`
   padding-top: 0.25rem;
 
-  ${({ theme }) => theme.font.subhead_03};
+  ${({ theme }) => (isMobile ? theme.font.subhead_02 : theme.font.subhead_03)};
   color: ${({ theme }) => theme.colors.secondary_900};
 `;
 
 export const GroupText = styled.p`
   padding-top: 0.5rem;
 
-  ${({ theme }) => theme.font.subhead_02};
+  ${({ theme }) => (isMobile ? theme.font.subhead_01 : theme.font.subhead_02)};
   color: ${({ theme }) => theme.colors.secondary_700};
 `;
 
 export const Descripttion = styled.p`
   padding-top: 0.25rem;
 
-  ${({ theme }) => theme.font.body_02};
+  ${({ theme }) => (isMobile ? theme.font.body_01 : theme.font.body_02)};
   color: ${({ theme }) => theme.colors.secondary_700};
 `;
 
