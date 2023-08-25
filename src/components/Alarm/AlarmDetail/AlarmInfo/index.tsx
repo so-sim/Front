@@ -16,6 +16,7 @@ import { useNavigate } from 'react-router-dom';
 import { isMobile } from 'react-device-detect';
 import { useUpdateDetailStatus } from '@/queries/Detail';
 import { Button } from '@/components/@common';
+import useDisabledList from '@/hooks/useDisabledList';
 
 const SITUATION_FORMAT_STYLE: { [key in SituationStatus]: Situation } = {
   FULL: '완납',
@@ -35,6 +36,8 @@ const AlarmInfo = ({}) => {
     isAdmin && setSituationToChange('완납');
   }, []);
 
+  const { data, isLoading, isDisabledItem } = useDisabledList(groupId!, alarmEventIdList, SITUATION_FORMAT_STYLE[afterSituation!]);
+
   const { data: group } = useGetMyNikname(groupId!);
 
   const myname = group?.content.nickname;
@@ -44,8 +47,6 @@ const AlarmInfo = ({}) => {
   const { data: groupAdmin } = useGroupDetail(Number(groupId));
 
   const isAdmin = groupAdmin?.content.isAdmin;
-
-  const { data, isLoading } = useGetDetailListById(groupId!, alarmEventIdList);
 
   const userName = data?.content.eventList[0]?.nickname;
 
@@ -124,7 +125,9 @@ const AlarmInfo = ({}) => {
         )}
       </Style.TextContainer>
 
-      {data?.content.eventList && <SingleCheckedFineList checkDetailFine={data?.content.eventList} setCheckDetailFine={toggleCheckedEventId} isChecked={isChecked} />}
+      {data?.content.eventList && (
+        <SingleCheckedFineList checkDetailFine={data?.content.eventList} setCheckDetailFine={toggleCheckedEventId} isChecked={isChecked} isDisabled={isDisabledItem} />
+      )}
 
       <Style.Footer>
         {afterSituation === 'FULL' ? (
