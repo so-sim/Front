@@ -6,7 +6,7 @@ import { useUpdateDetailStatus } from '@/queries/Detail';
 import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import CheckedFineList from './CheckedFineList';
 import { useParticipantList } from '@/queries/Group';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { SelectedEventInfo, Situation } from '@/types/event';
 import { useGroupDetail } from '@/queries/Group';
 import { useSelectedContext, initialSelectData } from '@/contexts/SelectedFineContext';
@@ -19,6 +19,8 @@ import useCheckListState, { addCheckDetailFine, subtractCheckDetailFine } from '
 import { CheckListState } from '@/store/checkListState';
 import useCheckSet from './hooks/useCheckSet';
 import { isMobile } from 'react-device-detect';
+import { useGetDetailListById } from '@/queries/Detail/useGetDetailListById';
+import useDisabledList from '@/hooks/useDisabledList';
 
 type Props = {
   checkDetailFine: CheckListState;
@@ -68,23 +70,37 @@ const filterByNickName = (prev: CheckListState, name: string, list: SelectedEven
   return { ...prev, ...Object.fromEntries(Object.values(list!)?.map((list) => [list.eventId, list])) };
 };
 
+const filteredDisabled = (prev: CheckListState, disabledEventIdList: number[] | undefined) =>
+  Object.fromEntries(Object.entries(prev).filter(([key]) => !disabledEventIdList?.includes(Number(key))));
+
 const AlarmRequest_PaymentUpdate = ({ checkDetailFine }: Props) => {
   const { groupId } = useParams();
   const navigate = useNavigate();
+
+  const [checkList, setCheckList] = useState<CheckListState>({});
 
   const [sideModal, setSideModal] = useRecoilState(sideModalState);
 
   const originalCheckListValue = Object.values(checkDetailFine);
 
-  const [checkList, setCheckList] = useState(checkDetailFine);
-  // 음 이렇게 넣는건 복사가 안되는구나?? 생성과 동시에 삽입하려했는데, 기대했던 것과는 다르게 checkList undefined 이네요..
+  const originalCheckListEventId = Object.keys(checkDetailFine).map((item) => Number(item));
 
+  const eventIdList = Object.keys(checkList);
+  const detailFineList = Object.values(checkList);
+
+  const currentSituation = React.useMemo(() => Object.values(checkDetailFine)[0]?.situation, []);
+
+  //disabled 되어야하는 List를 가져오는 hook
+  const { disabledEventIdList, isDisabledItem } = useDisabledList(Number(groupId), originalCheckListEventId, currentSituation);
+
+  // 음 이렇게 넣는건 복사가 안되는구나?? 생성과 동시에 삽입하려했는데, 기대했던 것과는 다르게 checkList undefined 이네요..
   useEffect(() => {
     setCheckList(checkDetailFine);
   }, [checkDetailFine]);
 
-  const eventIdList = Object.keys(checkList);
-  const detailFineList = Object.values(checkList);
+  useEffect(() => {
+    setCheckList((prev) => filteredDisabled(prev, disabledEventIdList));
+  }, [disabledEventIdList]);
 
   const setSubtractCheckDetailFine = (detail: SelectedEventInfo) => {
     setCheckList((prev) => subtractCheckDetailFine(detail, prev));
@@ -124,8 +140,6 @@ const AlarmRequest_PaymentUpdate = ({ checkDetailFine }: Props) => {
 
   const { data: group } = useGroupDetail(Number(groupId));
   const isAdmin = group?.content.isAdmin;
-
-  const currentSituation = detailFineList[0]?.situation;
 
   useEffect(() => {
     if (currentSituation === '완납') {
@@ -209,7 +223,7 @@ const AlarmRequest_PaymentUpdate = ({ checkDetailFine }: Props) => {
         {/* List 영역 */}
         <Style.ListContainer>
           {isSingleList(originalCheckListValue) ? (
-            <SingleCheckedFineList checkDetailFine={originalCheckListValue} setCheckDetailFine={setToggleCheckList} isChecked={isChecked} />
+            <SingleCheckedFineList checkDetailFine={originalCheckListValue} setCheckDetailFine={setToggleCheckList} isChecked={isChecked} isDisabled={isDisabledItem} />
           ) : (
             participantList?.map((nickName) => (
               <CheckedFineList
