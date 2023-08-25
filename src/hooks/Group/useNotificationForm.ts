@@ -68,8 +68,8 @@ const useNotificationForm = (): NotificationHook => {
   };
 
   const initFormWithoutSettingType = () => {
-    const { settingType, monthSettingType, ...rest } = initialValue;
-    setFormState((prev) => ({ ...prev, ...rest }));
+    const { settingType, monthSettingType, enableNotification, ...rest } = initialValue;
+    setFormState((prev) => ({ ...prev, ...rest, monthSettingType: prev.monthSettingType === null ? monthSettingType : prev.monthSettingType }));
   };
 
   const handleForm = <T>(type: keyof T, value: T[keyof T]) => {

@@ -3,7 +3,7 @@ import styled from '@emotion/styled';
 export const TableHead = styled.div`
   display: grid;
   align-items: center;
-  grid-template-columns: 40px 100px 120px 116px 108px 1fr;
+  grid-template-columns: 40px 100px 120px 116px 108px 1fr 108px;
 
   position: relative;
 
@@ -38,10 +38,6 @@ export const PointerElement = styled.div`
     ${({ theme }) => theme.font.subhead_02}
     color: ${({ theme }) => theme.colors.secondary_900}
   }
-`;
-
-export const Arrow = styled.span`
-  height: 16px;
 `;
 
 // searchParam에 따라  button display 해야함

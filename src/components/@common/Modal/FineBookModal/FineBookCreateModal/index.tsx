@@ -15,6 +15,7 @@ import { GA } from '@/constants/GA';
 import FormFileds from '../FormFileds';
 import * as Style from '../styles';
 import useFinebook from '@/hooks/Group/useFinebook';
+import { continueFormState } from '@/store/continueFormState';
 
 interface Props {
   modalHandler: () => void;
@@ -25,8 +26,17 @@ const FineBookCreateModal = ({ modalHandler }: Props) => {
   const { groupId } = useParams();
   const navigate = useNavigate();
 
-  const { selectData, getFormFiledActions, createLoading } = useFinebook(initialSelectData);
+  const [formState, setFormState] = useRecoilState(continueFormState);
+  const { selectData, getFormFiledActions, createLoading } = useFinebook(formState || initialSelectData);
   const { onChangeDate, onInitForm, createDetail } = getFormFiledActions();
+
+  useEffect(() => {
+    setFormState(null);
+
+    return () => {
+      setFormState(null);
+    };
+  }, []);
 
   useEffect(() => {
     if (calendarState.mode === 'day') {
@@ -43,6 +53,7 @@ const FineBookCreateModal = ({ modalHandler }: Props) => {
 
     if (type === 'continue') {
       navigate(`/group/${groupId}/book/detail`, { state: true });
+      setFormState({ ...selectData, nickname: '', memo: '' });
       onInitForm();
     } else {
       navigate(`/group/${groupId}/book/detail`);

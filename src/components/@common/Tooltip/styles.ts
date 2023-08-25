@@ -7,22 +7,28 @@ export const Arrow = styled.div<{ top: string; left: string; location: Location 
   left: ${({ left }) => left};
 `;
 
-export const Frame = styled.div<{ width: number }>`
+export const Frame = styled.div<{ width: number; isOnlyTitle: boolean }>`
   width: ${({ width }) => `${width}px`};
   display: flex;
   flex-direction: column;
+  align-items: flex-start;
   gap: 12px;
-  padding: 16px 12px;
+  padding: ${({ theme, isOnlyTitle }) => (isOnlyTitle ? '4px 8px' : '16px 12px')};
   border-radius: 2px;
   background-color: ${({ theme }) => theme.colors.secondary_800};
 `;
 
-export const Header = styled.div`
+export const Header = styled.span<{ isOnlyTitle: boolean }>`
   display: flex;
   width: 100%;
+  align-items: center;
   justify-content: space-between;
-  ${({ theme }) => theme.font.subhead_03};
   color: ${({ theme }) => theme.colors.secondary_100};
+
+  span {
+    white-space: initial;
+    ${({ theme, isOnlyTitle }) => (isOnlyTitle ? theme.font.subhead_02 : theme.font.subhead_03)};
+  }
 `;
 
 export const Page = styled.div<{ isActive: boolean }>`

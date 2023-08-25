@@ -39,7 +39,7 @@ const CommonForm = ({ notificationForm, handleNotificationForm, isErrorField }: 
   };
 
   const handleNotificationStartDate = (e: ChangeEvent<HTMLInputElement>) => {
-    const date = e.target.value.replaceAll(/\.\-/g, '');
+    const date = e.target.value.replaceAll(/\./g, '');
     if (!Number.isNaN(Number(date)) && date.length < 9) {
       handleNotificationForm('startDate', convertDateFormat(date));
     }
