@@ -5,6 +5,8 @@ import { SelectedEventInfo } from '@/types/event';
 import { CheckListState } from '@/store/checkListState';
 import CheckboxContainer from '@/components/@common/Checkbox';
 import DetailListCheckBox from '../../checkbox';
+import CheckStatusListWrapper from '@/components/@common/CheckStatusListWrapper';
+import { convertToPriceFormat } from '@/utils/convertFormat';
 
 type Props = {
   myName: string;
@@ -32,22 +34,35 @@ const CheckedFineList = ({ myName, list, setCheckDetailFine, isChecked, pageFrom
   return (
     <>
       <Style.ItemContainer onClick={() => setToggle((prev) => !prev)}>
-        <Style.ItemWrapper>
-          {/* 완납일 때는 CheckBox 가 보이면 안된다. (근데 완납을 다시 미납으로 변경하는 경우?..) */}
+        <CheckStatusListWrapper checked={isAllChecked} disabled={false}>
+          <Style.ItemWrapper>
+            {/* 완납일 때는 CheckBox 가 보이면 안된다. (근데 완납을 다시 미납으로 변경하는 경우?..) */}
 
-          <CheckboxContainer id={myName} isChecked={isAllChecked} onChange={(event: React.MouseEvent<HTMLInputElement>) => toggleCheckDetailFine(event, myName)}>
-            <CheckboxContainer.Checkbox as={DetailListCheckBox} />
-          </CheckboxContainer>
+            <CheckboxContainer id={myName} isChecked={isAllChecked} onChange={(event: React.MouseEvent<HTMLInputElement>) => toggleCheckDetailFine(event, myName)}>
+              <CheckboxContainer.Checkbox as={DetailListCheckBox} />
+            </CheckboxContainer>
 
-          <Style.ItemTitle>{myName}</Style.ItemTitle>
-          <Style.ItemAmount isOpen={toggle}>{TotalAmount}</Style.ItemAmount>
-        </Style.ItemWrapper>
+            <Style.ItemTitle>{myName}</Style.ItemTitle>
+            <Style.ItemAmount isOpen={toggle}>
+              {convertToPriceFormat(TotalAmount!)}
+              <Style.Monetary_Unit>원</Style.Monetary_Unit>
+            </Style.ItemAmount>
+          </Style.ItemWrapper>
+        </CheckStatusListWrapper>
         {toggle &&
           list?.map((item) => (
-            <Style.ItemDetailList key={item.eventId}>
-              <Style.ItemDetailDate>{item.date}</Style.ItemDetailDate>
-              <Style.ItemDetailAmount>{item.amount}</Style.ItemDetailAmount>
-            </Style.ItemDetailList>
+            <Style.TextWrapper>
+              <Style.DateText>{item.date}</Style.DateText>
+              <Style.DescriptionContainer>
+                <Style.DescriptionGround>{item.ground}</Style.DescriptionGround>
+                <Style.Division />
+                <Style.DescriptionMemo>{item.memo}</Style.DescriptionMemo>
+                <Style.AmountText>
+                  {convertToPriceFormat(item.amount)}
+                  <Style.Monetary_Unit>원</Style.Monetary_Unit>
+                </Style.AmountText>
+              </Style.DescriptionContainer>
+            </Style.TextWrapper>
           ))}
       </Style.ItemContainer>
     </>

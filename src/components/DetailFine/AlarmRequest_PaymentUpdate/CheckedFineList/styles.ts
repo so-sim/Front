@@ -1,8 +1,8 @@
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
+import { isMobile } from 'react-device-detect';
 
 export const ItemContainer = styled.li`
-  padding-right: 34px;
   border-top: 1px solid ${({ theme }) => theme.colors.neutral_200_b};
 `;
 
@@ -10,16 +10,22 @@ export const ItemWrapper = styled.div`
   display: flex;
   align-items: center;
 
-  padding-top: 12px;
-  padding-bottom: 12px;
+  margin-top: 12px;
+  margin-bottom: 12px;
+
+  padding-right: 34px;
 `;
 
-export const ItemTitle = styled.p``;
+export const ItemTitle = styled.p`
+  ${({ theme }) => theme.font.body_02}
+`;
 
 export const ItemAmount = styled.p<{ isOpen?: boolean }>`
   position: relative;
 
   margin: 0 0 0 auto;
+
+  ${({ theme }) => theme.font.subhead_02}
 
   &:after {
     content: '';
@@ -42,18 +48,55 @@ export const ItemAmount = styled.p<{ isOpen?: boolean }>`
   }
 `;
 
-export const ItemDetailList = styled.div`
+export const Monetary_Unit = styled.span`
+  margin-left: 0.125rem;
+  ${({ theme }) => theme.font.caption}
+`;
+
+export const TextWrapper = styled.div`
+  width: 100%;
+
+  margin-bottom: 0.25rem;
+  padding-left: 2.25rem;
+  padding-right: 2.125rem;
+`;
+
+export const DateText = styled.p`
+  ${({ theme }) => theme.font.caption};
+
+  color: ${({ theme }) => theme.colors.secondary_500};
+`;
+
+export const DescriptionContainer = styled.div`
   display: flex;
+  align-items: center;
 
-  padding-left: 66px;
+  gap: 0.125rem;
 `;
 
-export const ItemDetailDate = styled.p`
-  ${({ theme }) => theme.font.body_01}
-  color:${({ theme }) => theme.colors.secondary_600};
+export const DescriptionGround = styled.span`
+  ${({ theme }) => (isMobile ? theme.font.subhead_01 : theme.font.subhead_02)};
+
+  color: ${({ theme }) => theme.colors.secondary_900};
 `;
 
-export const ItemDetailAmount = styled.p`
-  ${({ theme }) => theme.font.subhead_01}
+export const Division = styled.div`
+  width: 1px;
+  height: 10px;
+
+  background-color: ${({ theme }) => theme.colors.neutral_400_b};
+`;
+
+export const DescriptionMemo = styled.span`
+  ${({ theme }) => (isMobile ? theme.font.caption : theme.font.subhead_02)};
+
+  color: ${({ theme }) => theme.colors.secondary_600};
+`;
+
+export const AmountText = styled.p`
   margin: 0 0 0 auto;
+
+  ${({ theme }) => (isMobile ? theme.font.subhead_01 : theme.font.subhead_02)};
+
+  color: ${({ theme }) => theme.colors.secondary_900};
 `;
