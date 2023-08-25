@@ -2,14 +2,14 @@ import { getDetailListById } from '@/api/Event';
 import { useGroupDetail } from '@/queries/Group';
 import { useGetMyNikname } from '@/queries/Group/useGetMyNickname';
 import { useWithdrawalParticipantList } from '@/queries/Group/useWithdrawalParticipantList';
-import { CheckListState } from '@/store/checkListState';
 import { useQuery } from '@tanstack/react-query';
 import { useParams } from 'react-router-dom';
+import useCheckListState from '../useCheckListState';
 
-const useValidateSituation = (checkDetailFine: CheckListState) => {
+const useValidateSituation = () => {
   const { groupId } = useParams();
-  const checkDetailFineValues = Object.values(checkDetailFine);
-  const checkDetailFineKeys = Object.keys(checkDetailFine);
+  const { checkDetailFineValues, checkDetailFineKeys } = useCheckListState();
+
   const { refetch: refetchEventListById } = useQuery(['isSameSituationByServerState'], () =>
     getDetailListById({ groupId: Number(groupId), eventIdsList: checkDetailFineKeys.map(Number) }),
   );
@@ -24,7 +24,6 @@ const useValidateSituation = (checkDetailFine: CheckListState) => {
    * 리스트 아이디로 get요청 날려서 전부 다 같은 상태값인지 조회하는 함수 만들어야 함
    */
   const isOnlyNonSituationCheckList = () => {
-    console.log(checkDetailFineValues.every((item) => item.situation === '미납'));
     return checkDetailFineValues.every((item) => item.situation === '미납');
   };
 

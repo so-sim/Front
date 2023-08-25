@@ -16,12 +16,11 @@ const MobileToolbar = () => {
   const { openConfirmModal, closeConfirmModal } = useConfirmModal();
 
   const {
-    checkDetailFine,
     checkedSize,
     setCheckDetailFine: { setInitCheckDetailFine },
   } = useCheckListState();
 
-  const { isSameSituationByServerState, isValidRequestPayment } = useValidateSituation(checkDetailFine);
+  const { isSameSituationByServerState, isValidRequestPayment } = useValidateSituation();
 
   const initCheckDetailFine = (event: React.MouseEvent<HTMLInputElement>) => {
     event.stopPropagation();

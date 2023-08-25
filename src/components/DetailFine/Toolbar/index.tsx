@@ -27,7 +27,7 @@ const Toolbar = () => {
     setCheckDetailFine: { setInitCheckDetailFine },
   } = useCheckListState();
 
-  const { isSameSituationByServerState, isValidRequestPayment } = useValidateSituation(checkDetailFine);
+  const { isSameSituationByServerState, isValidRequestPayment } = useValidateSituation();
 
   const { openConfirmModal, closeConfirmModal } = useConfirmModal();
 
