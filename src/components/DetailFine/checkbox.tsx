@@ -1,10 +1,14 @@
 import styled from '@emotion/styled';
 import React from 'react';
 
-const DetailListCheckBox = React.forwardRef<HTMLInputElement>(({ ...props }, ref) => {
-  return (
+const DetailListCheckBox = React.forwardRef<HTMLInputElement, { disabled: boolean }>(({ disabled, ...props }, ref) => {
+  return disabled ? (
+    <CheckBoxWrapper>
+      <CheckBox type="checkbox" disabled={disabled} {...props} ref={ref} />
+    </CheckBoxWrapper>
+  ) : (
     <CheckBoxWrapper {...props}>
-      <CheckBox type="checkbox" {...props} ref={ref} />
+      <CheckBox type="checkbox" disabled={disabled} {...props} ref={ref} />
     </CheckBoxWrapper>
   );
 });
