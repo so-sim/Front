@@ -1,5 +1,6 @@
 import { ALARM } from '@/assets/icons/Alarm';
 import { useGetAlarmList } from '@/queries/Notification/useGetAlarmList';
+import { useGetAlarmListCount } from '@/queries/Notification/useGetAlarmListCount';
 import { useReadAllNotification } from '@/queries/Notification/useReadAllNotification';
 import { useReadNotification } from '@/queries/Notification/useReadNotification';
 import { useEffect } from 'react';
@@ -20,14 +21,18 @@ const AlarmList = () => {
 
   const { mutate: ReadAllNotificationList } = useReadAllNotification();
 
+  const { data: notificationCount } = useGetAlarmListCount();
+
   const hasItem = data?.pages[0].content.notificationResponseList.length! > 0;
+
+  const hasNotification = notificationCount?.content.count !== 0;
 
   return (
     <>
       <Style.TitleWrapper>
         <Style.Title>알림</Style.Title>
 
-        <Style.ReadAllAlarmsText $hasItem={hasItem} onClick={() => ReadAllNotificationList()}>
+        <Style.ReadAllAlarmsText $hasItem={hasNotification} onClick={() => ReadAllNotificationList()}>
           모든 알림 읽기
         </Style.ReadAllAlarmsText>
       </Style.TitleWrapper>

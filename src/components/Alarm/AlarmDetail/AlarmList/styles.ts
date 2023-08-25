@@ -12,7 +12,7 @@ export const TitleWrapper = styled.div`
 `;
 
 export const Title = styled.h2`
-  ${({ theme }) => theme.font.subhead_04};
+  ${({ theme }) => (isMobile ? theme.font.subhead_03 : theme.font.subhead_04)};
 
   color: ${({ theme }) => theme.colors.secondary_800};
 `;
