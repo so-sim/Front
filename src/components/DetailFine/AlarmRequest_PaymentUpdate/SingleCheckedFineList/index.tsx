@@ -11,19 +11,22 @@ type Props = {
   checkDetailFine: SelectedEventInfo[];
   setCheckDetailFine: (details: SelectedEventInfo) => void;
   isChecked: (eventId: number) => boolean;
-  isDisabled: (eventId: number) => boolean | undefined;
+  isDisabled?: (eventId: number) => boolean | undefined;
+  noCheckBox?: boolean;
 };
 
-const SingleCheckedFineList = ({ checkDetailFine, setCheckDetailFine, isChecked, isDisabled }: Props) => {
+const SingleCheckedFineList = ({ checkDetailFine, setCheckDetailFine, isChecked, isDisabled = () => false, noCheckBox = false }: Props) => {
   return (
     <Style.Container>
       {checkDetailFine.map((item) => (
         <CheckStatusListWrapper checked={isChecked(item.eventId)} disabled={isDisabled(item.eventId)}>
           <Style.ItemContainer key={item.eventId}>
             <Style.CheckBoxWrapper>
-              <CheckboxContainer id={String(item.eventId)} isChecked={isChecked(item.eventId)} onChange={(event: React.MouseEvent<HTMLInputElement>) => setCheckDetailFine(item)}>
-                <CheckboxContainer.Checkbox as={DetailListCheckBox} disabled={isDisabled(item.eventId)} />
-              </CheckboxContainer>
+              {!noCheckBox && (
+                <CheckboxContainer id={String(item.eventId)} isChecked={isChecked(item.eventId)} onChange={(event: React.MouseEvent<HTMLInputElement>) => setCheckDetailFine(item)}>
+                  <CheckboxContainer.Checkbox as={DetailListCheckBox} disabled={isDisabled(item.eventId)} />
+                </CheckboxContainer>
+              )}
             </Style.CheckBoxWrapper>
             {/* 체크박스 disabled */}
             <Style.TextWrapper>
