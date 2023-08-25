@@ -18,13 +18,13 @@ type Props = {
   inViewElement: (node?: Element | null | undefined) => void;
 };
 
-const SituationStatusIcon = {
+const SITUATION_STATUS_ICON = {
   미납: SYSTEM.MOBILENON,
   확인중: SYSTEM.MOBILECON,
   완납: SYSTEM.MOBILEFULL,
 };
 
-const SITUATIONSTATUSTEXT = {
+const SITUATION_STATUS_TEXT = {
   미납: '납부 전',
   확인중: '승인 대기',
   완납: '납부 완료',
@@ -78,8 +78,8 @@ const MobileDetailFineList = ({ details, inViewElement }: Props) => {
                   </Style.TopWrapper>
                   <Style.DetailContextWrapper>
                     <Style.SituationBox situationType={item.situation}>
-                      <Style.IconWrapper>{SituationStatusIcon[item.situation]}</Style.IconWrapper>
-                      {SITUATIONSTATUSTEXT[item.situation]}
+                      <Style.IconWrapper>{SITUATION_STATUS_ICON[item.situation]}</Style.IconWrapper>
+                      {SITUATION_STATUS_TEXT[item.situation]}
                     </Style.SituationBox>
                     <Style.DescriptionContainer>
                       <Style.DescriptionGround>{item.ground}</Style.DescriptionGround>

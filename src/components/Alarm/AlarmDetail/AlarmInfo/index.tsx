@@ -15,6 +15,7 @@ import { useGroupDetail } from '@/queries/Group';
 import { useNavigate } from 'react-router-dom';
 import { isMobile } from 'react-device-detect';
 import { useUpdateDetailStatus } from '@/queries/Detail';
+import { Tooltip } from '@/components/@common/Tooltip';
 
 const SITUATION_FORMAT_STYLE: { [key in SituationStatus]: Situation } = {
   FULL: '완납',
@@ -81,7 +82,17 @@ const AlarmInfo = ({}) => {
   return (
     <>
       <Style.TextContainer>
-        <Style.Title>{myname === nickname && `나의`} 내역 확인하기</Style.Title>
+        <Tooltip
+          title={`납부여부를 변경해보세요!\n변경 시, ${isAdmin ? '팀원' : '총무'}에게 알림이 갑니다.`}
+          contents={[]}
+          width={312}
+          location="TOP"
+          top="-56px"
+          left="0px"
+          defaultValue
+          messageBox={{ left: '0px', top: '37px' }}
+          trigger={<Style.Title>{myname === nickname && `나의`} 내역 확인하기</Style.Title>}
+        />
         {/* 해당 Alarm Info가 나의 닉네임과 같다면 */}
 
         <Style.ProfileWrapper>

@@ -1,5 +1,5 @@
 import { ServerResponse } from '@/types/serverResponse';
-import { getAccessToken } from '@/utils/acceessToken';
+import { getAccessToken, removeAccessToken } from '@/utils/acceessToken';
 import axios, { AxiosError } from 'axios';
 import { reTakeToken } from './Auth';
 import { notFoundGroupDetail } from './Error';

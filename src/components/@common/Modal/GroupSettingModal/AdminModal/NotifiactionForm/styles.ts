@@ -38,7 +38,10 @@ export const EnabledBox = styled.div<{ enabled: boolean }>`
   pointer-events: ${({ enabled }) => !enabled && 'none'};
 `;
 
-export const TabTitle = styled.span`
+export const TabTitle = styled.div`
+  display: flex;
+  gap: 4px;
+  align-items: center;
   color: ${({ theme }) => theme.colors.secondary_900};
   ${({ theme }) => theme.font.subhead_03}
 `;

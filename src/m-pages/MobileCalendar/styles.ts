@@ -15,6 +15,7 @@ export const Container = styled.div`
 export const DateControllerWrapper = styled.div`
   display: flex;
   align-items: center;
+  justify-content: space-between;
 `;
 
 export const DateText = styled.div`

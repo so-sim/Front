@@ -4,7 +4,7 @@ import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { isMobile } from 'react-device-detect';
 
-export const MOBILESITUATIONSTATUSSTYLES = {
+export const MOBILE_SITUATION_STATUS_STYLES = {
   미납: (theme: DefaultTheme) => css`
     color: ${theme.colors.red_400};
     background-color: ${theme.colors.red_200};
@@ -67,7 +67,7 @@ export const SituationBox = styled.div<{ situationType: Situation }>`
   `}
   ${({ theme }) => theme.font.caption};
 
-  ${({ theme, situationType }) => situationType && MOBILESITUATIONSTATUSSTYLES[situationType](theme)}
+  ${({ theme, situationType }) => situationType && MOBILE_SITUATION_STATUS_STYLES[situationType](theme)}
 `;
 
 export const DetailContextWrapper = styled.div`

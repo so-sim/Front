@@ -20,6 +20,8 @@ import { firstVisitState } from '@/store/firstVisitState';
 import InviteModal from '@/components/@common/Modal/InviteModal';
 import useLockScroll from '@/hooks/useLockScroll';
 import useNotificationForm from '@/hooks/Group/useNotificationForm';
+import { Tooltip } from '@/components/@common/Tooltip';
+import MobileCalendarTooltip from '@/components/@common/Tooltip/MobileCalendarTooltip';
 
 const WEEKDATE = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
@@ -80,16 +82,31 @@ const MobileCalendar = () => {
       <Style.CalendarBody>
         <Style.Container>
           <Style.DateControllerWrapper>
-            <Style.DateText>{dayjs(calendarDate).format('YYYY년 MM월')}</Style.DateText>
-            <Style.ArrowBlock id={GA.CALENDAR_SKIP.ALL}>
-              <Style.ArrowWrapper onClick={decreaseMonth} id={GA.CALENDAR_SKIP.LEFT}>
-                {ARROW.LEFT}
-              </Style.ArrowWrapper>
-              <Style.ArrowWrapper onClick={increaseMonth} id={GA.CALENDAR_SKIP.RIGHT}>
-                {ARROW.RIGHT}
-              </Style.ArrowWrapper>
-            </Style.ArrowBlock>
-            <Style.ToolTipIconWrapper>{SYSTEM.TOOLTIP}</Style.ToolTipIconWrapper>
+            <div style={{ display: 'flex' }}>
+              <Style.DateText>{dayjs(calendarDate).format('YYYY년 MM월')}</Style.DateText>
+              <Style.ArrowBlock id={GA.CALENDAR_SKIP.ALL}>
+                <Style.ArrowWrapper onClick={decreaseMonth} id={GA.CALENDAR_SKIP.LEFT}>
+                  {ARROW.LEFT}
+                </Style.ArrowWrapper>
+                <Style.ArrowWrapper onClick={increaseMonth} id={GA.CALENDAR_SKIP.RIGHT}>
+                  {ARROW.RIGHT}
+                </Style.ArrowWrapper>
+              </Style.ArrowBlock>
+            </div>
+            <div>
+              <Tooltip
+                title="캘린더에서 날짜별 벌금 납부 현황을 확인해보세요!"
+                contents={MobileCalendarTooltip}
+                width={312}
+                location="BOTTOM"
+                top="36px"
+                left="-286px"
+                messageBox={{ left: '290px', top: '-8px' }}
+                defaultValue
+                preventClick
+                trigger={<Style.ToolTipIconWrapper>{SYSTEM.TOOLTIP}</Style.ToolTipIconWrapper>}
+              />
+            </div>
           </Style.DateControllerWrapper>
           <Style.DayOfTheWeekWrapper>
             {WEEKDATE.map((date) => (

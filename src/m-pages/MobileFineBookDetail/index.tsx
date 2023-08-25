@@ -2,6 +2,8 @@ import { ARROW } from '@/assets/icons/Arrow';
 import { SYSTEM } from '@/assets/icons/System';
 import { USER } from '@/assets/icons/User';
 import { Button, DropBox, Label } from '@/components/@common';
+import { Tooltip } from '@/components/@common/Tooltip';
+import PaymentRequest from '@/components/@common/Tooltip/PaymentRequest';
 import { GA } from '@/constants/GA';
 import useConfirmModal from '@/hooks/useConfirmModal';
 import useLockScroll from '@/hooks/useLockScroll';
@@ -22,9 +24,9 @@ import { useNavigate, useParams } from 'react-router-dom';
 import * as Style from './styles';
 
 const REQUEST_BUTTON: { [key in Situation]: string } = {
-  미납: '납부 완료',
-  확인중: '승인 대기',
-  완납: '납부 완료',
+  미납: '납부요청',
+  확인중: '승인대기',
+  완납: '납부완료',
 };
 
 const DROPDOWN_BUTTON: { [key in Situation]: string } = {
@@ -191,8 +193,34 @@ const MobileFineBookDetail = () => {
               벌금요청
             </Button>
           )}
+          <div style={{ width: '100%' }}>
+            {!isAdmin && isOwn && situation !== '완납' && (
+              <Tooltip
+                title="납부 요청이란?"
+                contents={PaymentRequest}
+                width={312}
+                location="TOP"
+                top="-200px"
+                left={`calc(${window.innerWidth / 2}px - 156px - 24px)`}
+                messageBox={{ left: '148px', top: '160px' }}
+                defaultValue
+                preventClick
+                trigger={
+                  <Button
+                    width="100%"
+                    height="42px"
+                    color={situation === '미납' ? 'black' : 'disabled'} //
+                    onClick={handleRequestConfirmModal}
+                    id={GA.CON.SIDE_BUTTON}
+                  >
+                    {REQUEST_BUTTON[situation]}
+                  </Button>
+                }
+              />
+            )}
+          </div>
 
-          {!isAdmin && isOwn && situation !== '완납' && (
+          {/* {!isAdmin && isOwn && situation !== '완납' && (
             <Button
               width="100%"
               height="42px"
@@ -202,7 +230,7 @@ const MobileFineBookDetail = () => {
             >
               {REQUEST_BUTTON[situation]}
             </Button>
-          )}
+          )} */}
         </Style.Footer>
         {openSituationSheet && <SituationBottomSheet onClose={handleOpenSituationSheet} onChange={changeConfirmStatus} onConfirm={updateConfirmStatus} />}
       </ModalPageLayout>
