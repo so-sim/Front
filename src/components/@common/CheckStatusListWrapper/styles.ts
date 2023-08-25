@@ -15,7 +15,15 @@ export const Container = styled.div<{ $checked?: boolean; $disabled?: boolean }>
       }
     `}
 
-  background-color: ${({ $checked, theme }) => $checked && `#f2f7fe`};
+  background-color: ${({ $checked, theme }) => $checked && theme.colors.primary_50};
 
-  background-color: ${({ $disabled, theme }) => $disabled && theme.colors.secondary_400};
+  ${({ $checked, theme }) =>
+    $checked &&
+    css`
+      &:hover {
+        background-color: ${theme.colors.primary_100};
+      }
+    `}
+
+  background-color: ${({ $disabled, theme }) => $disabled && theme.colors.neutral_400_b};
 `;
