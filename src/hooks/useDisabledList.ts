@@ -8,10 +8,10 @@ const useDisabledList = (groupId: number, checkEventIdList: number[], currentSit
 
   // Id로 가져오기랑 기존 가져오기를 합치면 무한 스크롤형식의 size가 들어가서 불편할듯
 
-  const getDisabledEventIdList = React.useCallback(
-    (data?: SelectedEventInfo[], currentSituation?: Situation) => data?.filter((item) => item.situation !== currentSituation).map((item) => item.eventId),
-    [],
-  );
+  const getDisabledEventIdList = React.useCallback((data?: SelectedEventInfo[], currentSituation?: Situation) => {
+    if (!currentSituation) return data?.filter((item) => item.situation !== '미납').map((item) => item.eventId);
+    return data?.filter((item) => item.situation !== currentSituation).map((item) => item.eventId);
+  }, []);
 
   const disabledEventIdList = React.useMemo(() => getDisabledEventIdList(data?.content.eventList, currentSituation), [data]);
 
