@@ -90,17 +90,16 @@ const AlarmRequest_PaymentUpdate = ({ checkDetailFine }: Props) => {
 
   const currentSituation = React.useMemo(() => Object.values(checkDetailFine)[0]?.situation, []);
 
-  //disabled 되어야하는 List를 가져오는 hook
-  const { disabledEventIdList, isDisabledItem } = useDisabledList(Number(groupId), originalCheckListEventId, currentSituation);
+  //disabled 되어야하는 List를 가져오는 hook (일단 임시 주석)  추가하려면 '납부완료'상태에만 disabled를 하는 코드를 추가해야함
+  // const { disabledEventIdList, isDisabledItem } = useDisabledList(Number(groupId), originalCheckListEventId, currentSituation);
+  // useEffect(() => {
+  //   setCheckList((prev) => filteredDisabled(prev, disabledEventIdList));
+  // }, [disabledEventIdList]);
 
   // 음 이렇게 넣는건 복사가 안되는구나?? 생성과 동시에 삽입하려했는데, 기대했던 것과는 다르게 checkList undefined 이네요..
   useEffect(() => {
     setCheckList(checkDetailFine);
   }, [checkDetailFine]);
-
-  useEffect(() => {
-    setCheckList((prev) => filteredDisabled(prev, disabledEventIdList));
-  }, [disabledEventIdList]);
 
   const setSubtractCheckDetailFine = (detail: SelectedEventInfo) => {
     setCheckList((prev) => subtractCheckDetailFine(detail, prev));
@@ -223,7 +222,7 @@ const AlarmRequest_PaymentUpdate = ({ checkDetailFine }: Props) => {
         {/* List 영역 */}
         <Style.ListContainer>
           {isSingleList(originalCheckListValue) ? (
-            <SingleCheckedFineList checkDetailFine={originalCheckListValue} setCheckDetailFine={setToggleCheckList} isChecked={isChecked} isDisabled={isDisabledItem} />
+            <SingleCheckedFineList checkDetailFine={originalCheckListValue} setCheckDetailFine={setToggleCheckList} isChecked={isChecked} />
           ) : (
             participantList?.map((nickName) => (
               <CheckedFineList
