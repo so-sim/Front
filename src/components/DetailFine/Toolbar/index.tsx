@@ -1,15 +1,16 @@
-import { useParams, useSearchParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import * as Style from './styles';
-import { CheckDetailFine, SetCheckDetailFine } from '@/components/DetailFine/AlarmRequest_PaymentUpdate/hooks/useCheckDetailFine';
 import CheckboxContainer from '@/components/@common/Checkbox';
 import DetailListCheckBox from '../checkbox';
 import { useGroupDetail } from '@/queries/Group';
 import { useGetMyNikname } from '@/queries/Group/useGetMyNickname';
 import { useRecoilState } from 'recoil';
-import { initialSideModalState, sideModalState } from '@/store/sideModalState';
+import { sideModalState } from '@/store/sideModalState';
 
 import useCheckListState from '@/hooks/useCheckListState';
 import { SelectedEventInfo } from '@/types/event';
+import useConfirmModal from '@/hooks/useConfirmModal';
+import useValidateSituation from '@/hooks/Group/useValidateSituation';
 
 const Toolbar = () => {
   const { groupId } = useParams();
@@ -21,9 +22,14 @@ const Toolbar = () => {
 
   const {
     checkDetailFineValues,
+    checkDetailFine,
     checkedSize,
     setCheckDetailFine: { setInitCheckDetailFine },
   } = useCheckListState();
+
+  const { isSameSituationByServerState, isValidRequestPayment } = useValidateSituation();
+
+  const { openConfirmModal, closeConfirmModal } = useConfirmModal();
 
   const [sideModal, setSideModal] = useRecoilState(sideModalState);
 
@@ -47,11 +53,16 @@ const Toolbar = () => {
 
   const isMyCheckDetailFine = (checkDetailFineList: SelectedEventInfo[], myNickname: string) => checkDetailFineList.every(({ nickname }) => nickname === myNickname);
 
-  const moveSituationControlPage = () => {
-    if (isSameSituation(checkDetailFineValues)) {
+  const moveSituationControlPage = async () => {
+    const isValid = await isSameSituationByServerState();
+
+    if (isValid) {
       setSideModal({ type: 'situation_change', isModal: true });
     } else {
-      console.log('situation 동일해야함.');
+      openConfirmModal({
+        type: 'CHANGE_ONLY_ONE_TYPE',
+        confirm: closeConfirmModal,
+      });
     }
   };
 
@@ -61,6 +72,19 @@ const Toolbar = () => {
     } else {
       console.log('팀원아 제대로해라');
     }
+  };
+
+  const handleRequestPayment = async () => {
+    const isValid = await isValidRequestPayment();
+
+    if (!isValid) {
+      return openConfirmModal({
+        type: 'NOTICE_CANNOT_REQUEST',
+        confirm: closeConfirmModal,
+      });
+    }
+
+    if (isValid) setSideModal({ type: 'alarm_request', isModal: true });
   };
 
   return (
@@ -80,13 +104,7 @@ const Toolbar = () => {
             <>
               <Style.SituationControlButton onClick={moveSituationControlPage}>납부여부 변경</Style.SituationControlButton>
               <Style.DividingLine />
-              <Style.SituationControlButton
-                onClick={() => {
-                  setSideModal({ type: 'alarm_request', isModal: true });
-                }}
-              >
-                납부요청
-              </Style.SituationControlButton>
+              <Style.SituationControlButton onClick={handleRequestPayment}>납부요청</Style.SituationControlButton>
             </>
           ) : (
             <Style.SituationControlButton onClick={moveSituationControlPageByMember}>납부여부 변경</Style.SituationControlButton>

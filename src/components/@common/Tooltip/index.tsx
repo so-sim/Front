@@ -18,9 +18,21 @@ type TooltipProps = {
   left?: string;
   top?: string;
   defaultValue?: boolean;
+  preventClick?: boolean;
 };
 
-export const Tooltip = ({ title, contents, width, location, trigger, left = '0px', top = '0px', defaultValue = false, messageBox }: TooltipProps) => {
+export const Tooltip = ({
+  title,
+  contents, //
+  width,
+  location,
+  trigger,
+  left = '0px',
+  top = '0px',
+  defaultValue = false,
+  messageBox,
+  preventClick = false,
+}: TooltipProps) => {
   const [page, setPage] = useState(0);
   const [showTooltip, setShowTooltip] = useState(defaultValue);
 
@@ -30,6 +42,7 @@ export const Tooltip = ({ title, contents, width, location, trigger, left = '0px
   };
 
   const openTooltip = () => {
+    if (preventClick) return;
     setShowTooltip(true);
   };
 
@@ -40,15 +53,17 @@ export const Tooltip = ({ title, contents, width, location, trigger, left = '0px
           <Style.Arrow top={messageBox.top || '0'} left={messageBox.left || '0'} location={location}>
             {ARROW.TOOLTIP}
           </Style.Arrow>
-          <Style.Frame width={width} isOnlyTitle={Boolean(contents.length)}>
-            <Header title={title} onClose={onClose} isOnlyTitle={Boolean(contents.length)} />
+          <Style.Frame width={width} isOnlyTitle={!Boolean(contents.length)}>
+            <Header title={title} onClose={onClose} isOnlyTitle={!Boolean(contents.length)} />
             {contents[page]}
             {contents.length > 1 && <Footer contents={contents} page={page} setPage={setPage} onClose={onClose} />}
           </Style.Frame>
         </div>
       )}
       {/* 트리거에 의해서 열리는 아이가 존재하는 반면, 그냥 달려있기 위해서 존재하는 아이들이 있음 */}
-      <span onClick={openTooltip}>{trigger}</span>
+      <span style={{ cursor: 'pointer' }} onClick={openTooltip}>
+        {trigger}
+      </span>
     </span>
   );
 };
@@ -57,7 +72,9 @@ const Header = ({ title, onClose, isOnlyTitle }: Pick<TooltipProps, 'title'> & {
   return (
     <Style.Header isOnlyTitle={isOnlyTitle}>
       <span>{title}</span>
-      <span onClick={onClose}>{SYSTEM.CLOSE_SM_WHITE}</span>
+      <span style={{ cursor: 'pointer' }} onClick={onClose}>
+        {SYSTEM.CLOSE_SM_WHITE}
+      </span>
     </Style.Header>
   );
 };

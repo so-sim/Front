@@ -9,6 +9,9 @@ import { isMobile } from 'react-device-detect';
 import * as Style from './styles';
 import MobileMiniCalendar from '@/m-components/MobileMiniCalendar';
 import useLockScroll from '@/hooks/useLockScroll';
+import { Tooltip } from '@/components/@common/Tooltip';
+import { SYSTEM } from '@/assets/icons/System';
+import StartDate from '@/components/@common/Tooltip/StartDate';
 
 export const TIME_LIST = Array.from({ length: 48 }, (v, i) => {
   const hour = padStart(Math.floor(i / 2));
@@ -76,11 +79,22 @@ const CommonForm = ({ notificationForm, handleNotificationForm, isErrorField }: 
         </Style.CommonBlock>
       </Style.CommonContainer>
       <Style.CommonContainer>
-        <Style.CommonTitle>시작일</Style.CommonTitle>
+        <Style.CommonTitle>
+          <div>반복 시작일</div>
+          <Tooltip
+            title="반복 시작일이란?"
+            contents={StartDate}
+            width={312}
+            location="TOP"
+            top="-176px"
+            left={'-77px'}
+            messageBox={{ left: '77px', top: '150px' }}
+            trigger={<div style={{ height: '20px' }}>{SYSTEM.TOOLTIP_MD}</div>}
+          />
+        </Style.CommonTitle>
         <Style.CommonBlock>
           {isMobile ? (
             <Style.CommonDateBox //
-              // isError={isErrorField('startDate')}
               onClick={handleOpenCalendar}
             >
               {covertDateForView(notificationForm.startDate)}
@@ -93,7 +107,6 @@ const CommonForm = ({ notificationForm, handleNotificationForm, isErrorField }: 
               onChange={handleNotificationStartDate}
             />
           )}
-
           <Style.Body>이후부터</Style.Body>
         </Style.CommonBlock>
       </Style.CommonContainer>

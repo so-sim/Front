@@ -17,6 +17,8 @@ import { useGetMyNikname } from '@/queries/Group/useGetMyNickname';
 import { useSelectedContext } from '@/contexts/SelectedFineContext';
 import useSituationList, { SituationText } from '@/hooks/useSituationList';
 import { useGroupDetail } from '@/queries/Group';
+import { Tooltip } from '@/components/@common/Tooltip';
+import PaymentRequest from '@/components/@common/Tooltip/PaymentRequest';
 
 type Props = {
   select: SelectedEventInfo;
@@ -24,9 +26,9 @@ type Props = {
 };
 
 const REQUEST_BUTTON: { [key in Situation]: string } = {
-  미납: '납부 완료',
+  미납: '납부요청',
   확인중: '승인 대기',
-  완납: '납부 완료',
+  완납: '납부완료',
 };
 
 const UserDetails = () => {
@@ -160,15 +162,28 @@ const UserDetails = () => {
         </Style.UserDetailsContent>
         <Style.Footer>
           {!isAdmin && isOwn && (
-            <Button
-              width="150px"
-              height="42px"
-              color={situation === '미납' ? 'black' : 'disabled'} //
-              onClick={handleRequestConfirmModal}
-              id={GA.CON.SIDE_BUTTON}
-            >
-              {REQUEST_BUTTON[situation]}
-            </Button>
+            <Tooltip
+              title="납부 요청이란?"
+              contents={PaymentRequest}
+              width={312}
+              location="BOTTOM"
+              top="60px"
+              left="-163px"
+              messageBox={{ left: '290px', top: '-8px' }}
+              defaultValue
+              preventClick
+              trigger={
+                <Button
+                  width="150px"
+                  height="42px"
+                  color={situation === '미납' ? 'black' : 'disabled'} //
+                  onClick={handleRequestConfirmModal}
+                  id={GA.CON.SIDE_BUTTON}
+                >
+                  {REQUEST_BUTTON[situation]}
+                </Button>
+              }
+            />
           )}
         </Style.Footer>
       </Style.UserDetailsFrame>

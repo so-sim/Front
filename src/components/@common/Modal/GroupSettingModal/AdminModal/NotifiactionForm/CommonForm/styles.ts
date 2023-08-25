@@ -9,6 +9,9 @@ export const CommonContainer = styled.div`
 `;
 
 export const CommonTitle = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 4px;
   ${({ theme }) => theme.font.body_02}
 `;
 

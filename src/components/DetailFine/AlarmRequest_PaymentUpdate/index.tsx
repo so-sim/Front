@@ -44,15 +44,14 @@ export const Status: StatusType = {
   situation_change: {
     title: (
       <Tooltip
-        title={`납부여부를 변경해보세요!\n
-변경 시, 팀원에게 알림이 갑니다.`}
+        title={`납부여부를 변경해보세요!\n변경 시, 팀원에게 알림이 갑니다.`}
         contents={[]}
         width={312}
         location="TOP"
-        top="40px"
-        left="-204px"
+        top="-56px"
+        left="0px"
         defaultValue
-        messageBox={{ left: '280px', top: '-8px' }}
+        messageBox={{ left: '0px', top: '37px' }}
         trigger={<Style.Title>납부여부 변경하기</Style.Title>}
       />
     ),

@@ -39,7 +39,7 @@ export const reTakeToken = async (): Promise<ServerResponse> => {
     if (response?.status === 403) {
       window.location.href = KAKAO_URL.SIGIN;
     }
-    if (response?.status === 406) {
+    if (response?.status === 406 || response?.status === 401) {
       removeAccessToken();
       window.location.href = process.env.REACT_APP_SERVICE_URL as string;
     }

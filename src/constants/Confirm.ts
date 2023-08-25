@@ -105,4 +105,16 @@ export const CONFIRM_MODAL = {
       : `탈퇴한 팀원을 다른 팀원으로 변경하시겠습니까?\n 변경 시, 탈퇴한 팀원의 내역은 복구할 수 없습니다.`,
     confirm: '확인',
   },
+  NOTICE_CANNOT_REQUEST: {
+    title: '알림',
+    description: isMobile
+      ? `"납부 전"인 팀원에게 요청할 수 있으며,\n총무 자신이나 탈퇴한 팀원에게는\n보낼 수 없습니다.`
+      : `"납부 전"인 팀원에게 요청할 수 있으며,\n총무 자신이나 탈퇴한 팀원에게는 보낼 수 없습니다.`,
+    confirm: '확인',
+  },
+  CHANGE_ONLY_ONE_TYPE: {
+    title: '알림',
+    description: `여러 내역의 납부 여부를 변경하기 위해선\n 납부 여부가 동일한 내역들만 선택해주세요.`,
+    confirm: '확인',
+  },
 };

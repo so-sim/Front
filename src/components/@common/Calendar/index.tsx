@@ -111,7 +111,6 @@ const Calendar: FC<CalnedrProps> = ({ cellType }) => {
                 location="BOTTOM"
                 top="40px"
                 left="-456px"
-                defaultValue
                 messageBox={{ left: '459px', top: '-8px' }}
                 trigger={<span style={{ cursor: 'pointer' }}>{SYSTEM.TOOLTIP_INFO}</span>}
               />
