@@ -125,8 +125,12 @@ const AlarmInfo = ({}) => {
         )}
       </Style.TextContainer>
 
-      {data?.content.eventList && (
-        <SingleCheckedFineList checkDetailFine={data?.content.eventList} setCheckDetailFine={toggleCheckedEventId} isChecked={isChecked} isDisabled={isDisabledItem} />
+      {afterSituation === 'FULL' && data?.content.eventList ? (
+        <SingleCheckedFineList checkDetailFine={data?.content.eventList} setCheckDetailFine={toggleCheckedEventId} isChecked={isChecked} noCheckBox={true} />
+      ) : (
+        data?.content.eventList && (
+          <SingleCheckedFineList checkDetailFine={data?.content.eventList} setCheckDetailFine={toggleCheckedEventId} isChecked={isChecked} isDisabled={isDisabledItem} />
+        )
       )}
 
       <Style.Footer>
