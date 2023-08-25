@@ -24,6 +24,9 @@ const SITUATION_FORMAT_STYLE: { [key in SituationStatus]: Situation } = {
   NONE: '미납',
 };
 
+const filterDisabledList = (dataList: SelectedEventInfo[] | undefined, disabledEventIdList?: number[]) =>
+  dataList?.filter((item) => !disabledEventIdList?.includes(item.eventId)).map((item) => item.eventId) || [];
+
 const AlarmInfo = ({}) => {
   const [{ alarmEventIdList, nickname, groupId, afterSituation, beforeSituation }, setAlarmIdList] = useRecoilState(alarmInfoState);
 
@@ -36,7 +39,11 @@ const AlarmInfo = ({}) => {
     isAdmin && setSituationToChange('완납');
   }, []);
 
-  const { data, isLoading, isDisabledItem } = useDisabledList(groupId!, alarmEventIdList, SITUATION_FORMAT_STYLE[afterSituation!]);
+  const { data, isLoading, disabledEventIdList, isDisabledItem } = useDisabledList(groupId!, alarmEventIdList, SITUATION_FORMAT_STYLE[afterSituation!]);
+
+  useEffect(() => {
+    setCheckedEventId([...filterDisabledList(data?.content.eventList, disabledEventIdList)]);
+  }, [disabledEventIdList]);
 
   const { data: group } = useGetMyNikname(groupId!);
 
