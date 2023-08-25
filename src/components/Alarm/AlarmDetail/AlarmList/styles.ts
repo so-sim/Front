@@ -8,7 +8,7 @@ export const TitleWrapper = styled.div`
 
   ${isMobile && 'margin-top: 1.25rem'};
 
-  padding-bottom: 1rem;
+  padding-bottom: ${isMobile ? '0.75rem' : '1rem'};
 `;
 
 export const Title = styled.h2`
@@ -27,7 +27,7 @@ export const ReadAllAlarmsText = styled.p<{ $hasItem: boolean }>`
 export const AlarmListWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 0.75rem;
+  gap: ${isMobile ? '0.5rem' : '0.75rem'};
 
   ${!isMobile && 'height: calc(100vh - 190px);'}
 
