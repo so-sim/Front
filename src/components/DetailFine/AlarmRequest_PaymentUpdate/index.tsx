@@ -23,7 +23,6 @@ import { useGetDetailListById } from '@/queries/Detail/useGetDetailListById';
 import useDisabledList from '@/hooks/useDisabledList';
 import { Tooltip } from '@/components/@common/Tooltip';
 
-
 type Props = {
   checkDetailFine: CheckListState;
 };
@@ -33,6 +32,12 @@ type StatusType = {
     title: JSX.Element;
     subTitle: (situationToChange?: Situation) => JSX.Element;
   };
+};
+
+const SITUATION_STATUS_FORMAT = {
+  미납: '납부 전',
+  확인중: '승인대기',
+  완납: '납부완료',
 };
 
 export const Status: StatusType = {
@@ -55,15 +60,14 @@ export const Status: StatusType = {
     subTitle: (situationToChange?: Situation) => (
       <Style.SubTitle>
         선택된 모든 내역을{' '}
-        <span
+        <Style.UserLineSpan
           style={{
-            textDecoration: 'underline',
             textUnderlineOffset: '2px',
-            color: situationToChange === '완납' ? theme.colors.primary_600 : theme.colors.red_600,
           }}
+          $situation={situationToChange!}
         >
-          {situationToChange}
-        </span>
+          {SITUATION_STATUS_FORMAT[situationToChange!]}
+        </Style.UserLineSpan>
         으로 변경하시겠습니까?
       </Style.SubTitle>
     ),

@@ -16,7 +16,7 @@ export const SituationControlWrapper = styled.div`
 
   ${({ theme }) => theme.font.subhead_01};
   color: ${({ theme }) => theme.colors.secondary_800};
-  z-index: 400;
+  z-index: 1;
 `;
 
 export const Label = styled.label`

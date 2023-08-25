@@ -56,7 +56,7 @@ const UserDetails = () => {
 
   const handleRequestConfirmModal = () => {
     openConfirmModal({
-      type: 'REQUEST_CHANGE_STATUS',
+      type: 'CHANGE_STATUS',
       confirm: requestConfirmStatus,
       cancel: closeConfirmModal,
       id: GA.CON.SIDE_MODAL,
@@ -66,7 +66,7 @@ const UserDetails = () => {
   const handleUpdateStatusConfirmModal = (situation: SituationText) => {
     const convertedSituation = convertTextToSituation(situation);
     openConfirmModal({
-      type: 'CHANGE_STATUS',
+      type: 'CHANGE_STATUS_ADMIN',
       confirm: () => updateStatus(convertedSituation),
       cancel: closeConfirmModal,
       // id: situation === '완납' ? GA.FULL.SIDE_MODAL : '',

@@ -25,7 +25,7 @@ const AlarmList = () => {
   return (
     <>
       <Style.TitleWrapper>
-        <Style.Title>알람</Style.Title>
+        <Style.Title>알림</Style.Title>
 
         <Style.ReadAllAlarmsText $hasItem={hasItem} onClick={() => ReadAllNotificationList()}>
           모든 알림 읽기
