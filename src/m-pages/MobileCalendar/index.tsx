@@ -102,8 +102,6 @@ const MobileCalendar = () => {
                 top="36px"
                 left="-286px"
                 messageBox={{ left: '290px', top: '-8px' }}
-                defaultValue
-                preventClick
                 trigger={<Style.ToolTipIconWrapper>{SYSTEM.TOOLTIP}</Style.ToolTipIconWrapper>}
               />
             </div>
