@@ -18,9 +18,9 @@ const dateFilterModeList = [
 ];
 
 const situationFilterList = [
-  { value: '미납', text: '미납' },
-  { value: '완납', text: '완납' },
-  { value: '확인중', text: '확인필요' },
+  { value: '미납', text: '납부 전' },
+  { value: '완납', text: '납부완료' },
+  { value: '확인중', text: '승인대기' },
 ];
 
 type Props = {
@@ -51,6 +51,7 @@ const FilterBottomSheet = ({ detailFilter, setDetailFilter, onClose }: Props) =>
 
   const updateSituationFilter = (situation: Situation) => {
     const isSameSituationFilter = detailFilter.situation === situation;
+
     setDetailFilter((prev) => ({ ...prev, situation: isSameSituationFilter ? '' : situation }));
   };
 
