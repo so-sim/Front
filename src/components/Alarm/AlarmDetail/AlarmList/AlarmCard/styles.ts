@@ -18,7 +18,7 @@ export const AlarmCardContainer = styled.div`
   }
 `;
 
-export const Header = styled.div`
+export const Header = styled.div<{ $isRead: boolean }>`
   display: flex;
 
   align-items: center;
@@ -26,7 +26,7 @@ export const Header = styled.div`
   padding-bottom: 0.25rem;
   border-bottom: 1px solid ${({ theme }) => theme.colors.neutral_200_b};
   ${({ theme }) => (isMobile ? theme.font.body_01 : theme.font.body_02)};
-  color: ${({ theme }) => theme.colors.secondary_700};
+  color: ${({ theme, $isRead }) => ($isRead ? theme.colors.secondary_500 : theme.colors.secondary_700)};
 `;
 
 export const AlarmTypeText = styled.div``;
@@ -45,25 +45,25 @@ export const DateTitle = styled.div`
   margin-left: auto;
 `;
 
-export const Title = styled.p`
+export const Title = styled.p<{ $isRead: boolean }>`
   padding-top: 0.25rem;
 
   ${({ theme }) => (isMobile ? theme.font.subhead_02 : theme.font.subhead_03)};
-  color: ${({ theme }) => theme.colors.secondary_900};
+  color: ${({ theme, $isRead }) => ($isRead ? theme.colors.secondary_500 : theme.colors.secondary_900)};
 `;
 
-export const GroupText = styled.p`
+export const GroupText = styled.p<{ $isRead: boolean }>`
   padding-top: 0.5rem;
 
   ${({ theme }) => (isMobile ? theme.font.subhead_01 : theme.font.subhead_02)};
-  color: ${({ theme }) => theme.colors.secondary_700};
+  color: ${({ theme, $isRead }) => ($isRead ? theme.colors.secondary_500 : theme.colors.secondary_700)};
 `;
 
-export const Descripttion = styled.p`
+export const Descripttion = styled.p<{ $isRead: boolean }>`
   padding-top: 0.25rem;
 
   ${({ theme }) => (isMobile ? theme.font.body_01 : theme.font.body_02)};
-  color: ${({ theme }) => theme.colors.secondary_700};
+  color: ${({ theme, $isRead }) => ($isRead ? theme.colors.secondary_500 : theme.colors.secondary_700)};
 `;
 
 export const SituaionBtn = styled.button<{ situationType: Situation }>`
