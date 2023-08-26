@@ -22,6 +22,7 @@ import { isMobile } from 'react-device-detect';
 import { useGetDetailListById } from '@/queries/Detail/useGetDetailListById';
 import useDisabledList from '@/hooks/useDisabledList';
 import { Tooltip } from '@/components/@common/Tooltip';
+import { detailFineState } from '@/store/detailFineState';
 
 type Props = {
   checkDetailFine: CheckListState;
@@ -99,6 +100,8 @@ const AlarmRequest_PaymentUpdate = ({ checkDetailFine }: Props) => {
   const [checkList, setCheckList] = useState<CheckListState>({});
 
   const [sideModal, setSideModal] = useRecoilState(sideModalState);
+
+  const [_, setIsOpen] = useRecoilState(detailFineState);
 
   const originalCheckListValue = Object.values(checkDetailFine);
 
@@ -184,12 +187,19 @@ const AlarmRequest_PaymentUpdate = ({ checkDetailFine }: Props) => {
 
   const currentCheckList = eventIdList.map((eventId) => Number(eventId));
 
+  const mobileOnSuccess = () => {
+    setIsOpen(true);
+    navigate(-1);
+  };
+
   const updateSituation = () => {
     mutateDetailStatus({ situation: situationToChange, eventIdList: currentCheckList });
+    isMobile && mobileOnSuccess();
   };
 
   const requestAlarm = () => {
     mutateRequestNotification();
+    isMobile && mobileOnSuccess();
   };
   // 백엔드 API명세에 아직 추가되어있지않음
 
