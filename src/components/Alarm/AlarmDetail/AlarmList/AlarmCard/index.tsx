@@ -1,9 +1,11 @@
 import { useGetAlarmList } from '@/queries/Notification/useGetAlarmList';
 import { useReadNotification } from '@/queries/Notification/useReadNotification';
 import { alarmInfoState } from '@/store/alarmInfoState';
+import { dateState } from '@/store/dateState';
 import { Situation } from '@/types/event';
 import { MessageData, NotificationList, NotificationType, SituationStatus } from '@/types/notification';
 import { useQueryClient } from '@tanstack/react-query';
+import dayjs from 'dayjs';
 import { isMobile } from 'react-device-detect';
 import { useNavigate, Link } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
@@ -57,10 +59,14 @@ const AlarmCard = ({ notificationInfo }: Props) => {
 
   const [_, setAlarmEventIdList] = useRecoilState(alarmInfoState);
 
+  const settingCalendarDate = () => {
+    navigate(`/group/${groupId}/book/detail`);
+  };
+
   const goToAlarmInfo = (eventIdList: number[]) => {
     handleReadNotification();
     setAlarmEventIdList({ alarmEventIdList: [...eventIdList], nickname, beforeSituation, afterSituation, groupId });
-    isMobile && navigate(`/m-notification/info`);
+    isMobile ? navigate(`/m-notification/info`) : settingCalendarDate();
   };
 
   const goToGroupMember = () => {

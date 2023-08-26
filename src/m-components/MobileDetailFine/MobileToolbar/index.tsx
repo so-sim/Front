@@ -3,6 +3,7 @@ import DetailListCheckBox from '@/components/DetailFine/checkbox';
 import useValidateSituation from '@/hooks/Group/useValidateSituation';
 import useCheckListState from '@/hooks/useCheckListState';
 import useConfirmModal from '@/hooks/useConfirmModal';
+import { useGroupDetail } from '@/queries/Group';
 import { sideModalState, ModalType } from '@/store/sideModalState';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
@@ -11,6 +12,9 @@ import * as Style from './styles';
 const MobileToolbar = () => {
   const { groupId } = useParams();
   const navigate = useNavigate();
+
+  const { data: group } = useGroupDetail(Number(groupId));
+  const isAdmin = group?.content.isAdmin;
 
   const [sideModal, setSideModal] = useRecoilState(sideModalState);
   const { openConfirmModal, closeConfirmModal } = useConfirmModal();
@@ -64,9 +68,15 @@ const MobileToolbar = () => {
       </CheckboxContainer>
       <Style.Label>{checkedSize}개 선택</Style.Label>
       <Style.DividingLine />
-      <Style.Button onClick={moveToSituationChangePage}>납부여부 변경</Style.Button>
-      <Style.DividingLine />
-      <Style.Button onClick={moveToAlarmRequestPage}>납부요청</Style.Button>
+      {isAdmin ? (
+        <>
+          <Style.Button onClick={moveToSituationChangePage}>납부여부 변경</Style.Button>
+          <Style.DividingLine />
+          <Style.Button onClick={moveToAlarmRequestPage}>납부요청</Style.Button>
+        </>
+      ) : (
+        <Style.Button onClick={moveToSituationChangePage}>납부여부 변경</Style.Button>
+      )}
     </Style.ToolbarContainer>
   );
 };

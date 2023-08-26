@@ -4,7 +4,8 @@ import AlarmList from './AlarmList';
 import * as Style from './styles';
 import AlarmInfo from './AlarmInfo';
 import { useRecoilState } from 'recoil';
-import { alarmInfoState } from '@/store/alarmInfoState';
+import { alarmInfoState, initAlarmInfoState } from '@/store/alarmInfoState';
+import { useSearchParams } from 'react-router-dom';
 
 type Props = {
   headerHeight: number;
@@ -13,10 +14,17 @@ type Props = {
 const AlarmDetail = ({ headerHeight, setShowAlarmDetail }: Props) => {
   const [alarmIdList, setAlarmIdList] = useRecoilState(alarmInfoState);
 
+  const [searchParam, setSearchParam] = useSearchParams();
+
+  const close = () => {
+    setShowAlarmDetail((prev) => !prev);
+
+    setAlarmIdList(initAlarmInfoState);
+  };
   return (
     <Style.AlarmDetailFrame $headerHeight={headerHeight}>
       <Style.Header>
-        <Style.CloseIconWrapper onClick={() => setShowAlarmDetail((prev) => !prev)}>
+        <Style.CloseIconWrapper onClick={close}>
           {SYSTEM.CLOSE_LG}
           <Style.CloseText>닫기</Style.CloseText>
         </Style.CloseIconWrapper>
