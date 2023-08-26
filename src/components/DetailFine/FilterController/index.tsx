@@ -45,7 +45,7 @@ const FilterController = ({ detailFilter, setDetailFilter, totalAmount }: Props)
     toggleSearchMode();
   };
   useEffect(() => {
-    detailFilter.nickname && setSearchMode('select');
+    detailFilter.nickname !== '' ? setSearchMode('select') : setSearchMode('search');
   }, [detailFilter]);
 
   return (
