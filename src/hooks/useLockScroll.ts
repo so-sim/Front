@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import { isMobile } from 'react-device-detect';
 
 // 아예 트리거를 하는 state 까지 가지고 return 해주면 좋을 것 같아 논의사항
 const useLockScroll = (trigger: boolean) => {
@@ -11,11 +12,10 @@ const useLockScroll = (trigger: boolean) => {
     const scrollBarWidth = window.innerWidth - html.clientWidth;
     const bodyPaddingRight = parseInt(window.getComputedStyle(body).getPropertyValue('padding-right')) || 0;
 
-    html.style.position = 'relative';
-    body.style.position = 'relative';
-    html.style.overflow = 'hidden';
+    // html.style.overflow = 'hidden';
     body.style.overflow = 'hidden';
     body.style.paddingRight = `${bodyPaddingRight + scrollBarWidth}px`;
+    // body.style.scrollbarGutter = 'stable';
   };
 
   const allowScroll = () => {
@@ -24,11 +24,11 @@ const useLockScroll = (trigger: boolean) => {
 
     if (!body || !body.style) return;
 
-    html.style.position = '';
-    html.style.overflow = '';
-    body.style.position = '';
+    // html.style.overflow = '';
+
     body.style.overflow = '';
     body.style.paddingRight = '';
+    // body.style.scrollbarGutter = '';
   };
 
   useEffect(() => {
