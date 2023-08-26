@@ -203,7 +203,7 @@ const AlarmRequest_PaymentUpdate = ({ checkDetailFine }: Props) => {
   };
   // 백엔드 API명세에 아직 추가되어있지않음
 
-  const stringToNumber_Date = (date: string) => +date?.replace(/\./g, '');
+  const stringToNumber_Date = (date: string) => +date?.replace(/\-/g, '');
 
   const sortedtList = originalCheckListValue.sort((a, b) => stringToNumber_Date(a.date) - stringToNumber_Date(b.date));
 
