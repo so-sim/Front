@@ -119,7 +119,7 @@ const AlarmInfo = ({}) => {
 
   useEffect(() => {
     return () => {
-      setAlarmIdList(initAlarmInfoState);
+      setAlarmIdList((prev) => ({ ...prev, alarmEventIdList: [] }));
     };
   }, []);
 
@@ -190,12 +190,12 @@ const AlarmInfo = ({}) => {
 
       <Style.Footer>
         {afterSituation === 'FULL' ? (
-          <Button width="100%" height="2.675rem" onClick={isMobile ? () => navigate(-1) : () => setAlarmIdList(initAlarmInfoState)} color="white">
+          <Button width="100%" height="2.675rem" onClick={isMobile ? () => navigate(-1) : () => setAlarmIdList((prev) => ({ ...prev, alarmEventIdList: [] }))} color="white">
             취소
           </Button>
         ) : (
           <>
-            <Button width="100%" height="2.675rem" onClick={isMobile ? () => navigate(-1) : () => setAlarmIdList(initAlarmInfoState)} color="white">
+            <Button width="100%" height="2.675rem" onClick={isMobile ? () => navigate(-1) : () => setAlarmIdList((prev) => ({ ...prev, alarmEventIdList: [] }))} color="white">
               취소
             </Button>
             <Button width="100%" height="2.675rem" onClick={updateSituation} color={!isAdmin && afterSituation === 'CHECK' ? 'disabled' : 'black'}>
@@ -207,7 +207,6 @@ const AlarmInfo = ({}) => {
     </>
   );
 };
-
 export default AlarmInfo;
 
 // after가 체크일때 Situation Button고민
