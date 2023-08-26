@@ -71,67 +71,6 @@ const DetailFine = () => {
 
   // check를 다시 풀고 다시 해줘야 User인터랙션이 겹쳤을 때 바뀐 상태를 다시 저장할 수 있다.  (그래서 그냥 다시 요청을 보내기로)
 
-  const location = useLocation();
-  const navigate = useNavigate();
-
-  const searchParams = new URLSearchParams(location.search);
-  const [search, setSearch] = useSearchParams();
-
-  const navRef = useRef(false);
-  const [prevSearchParam, setPrevSearchParam] = useState('');
-  // useEffect(() => {
-  //   const searchParams = new URLSearchParams(location.search);
-  //   // F5를 누르거나 페이지를 새로고침할 때 search param 제어
-  //   // 예시: param이 'example'일 때만 제거하는 경우
-
-  //   // console.log(location.state);
-  //   if (location.state && location.state.tag) {
-  //     console.log('che');
-  //     return;
-  //   }
-
-  //   if (searchParams.get('isnotification')) {
-  //     searchParams.delete('isnotification');
-  //     navigate({ search: searchParams.toString() });
-  //   }
-  // }, [location]);
-
-  // useEffect(() => {
-  //   if (location.state && location.state.tag) {
-  //     return;
-  //   }
-  //   console.log('dd');
-
-  //   search.delete('isnotification');
-  //   setSearch(search);
-  // }, [location.state && location.state.tag]);
-
-  // const testt = (e: BeforeUnloadEvent) => {
-  //   e.preventDefault();
-
-  //   const searchParams = new URLSearchParams(location.search);
-  //   search.delete('isnotification');
-  //   setSearch(search);
-  // };
-
-  // useEffect(() => {
-  //   const testt = (e: BeforeUnloadEvent) => {
-  //     const searchParams = new URLSearchParams(location.search);
-
-  //     // 새로고침 시에만 특정 param 제거
-  //     if (searchParams.get('isnotification')) {
-  //       searchParams.delete('isnotification');
-  //       navigate({ search: searchParams.toString() });
-  //     }
-  //   };
-  //   window.addEventListener('beforeunload', testt);
-  //   return () => {
-  //     window.removeEventListener('beforeunload', testt);
-  //   };
-  // }, []);
-
-  // 새로고침 시 searchparam 지우고 싶었는데..
-
   return (
     <SelectedFineContextProvider>
       <Style.DetailFineFrame>
