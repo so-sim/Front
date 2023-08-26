@@ -18,8 +18,8 @@ type Props = {
 const SingleCheckedFineList = ({ checkDetailFine, setCheckDetailFine, isChecked, isDisabled = () => false, noCheckBox = false }: Props) => {
   return (
     <Style.Container>
-      {checkDetailFine.map((item) => (
-        <CheckStatusListWrapper checked={isChecked(item.eventId)} disabled={isDisabled(item.eventId)}>
+      {checkDetailFine.map((item, index) => (
+        <CheckStatusListWrapper checked={isChecked(item.eventId)} disabled={isDisabled(item.eventId)} key={index}>
           <Style.ItemContainer key={item.eventId}>
             <Style.CheckBoxWrapper>
               {!noCheckBox && (

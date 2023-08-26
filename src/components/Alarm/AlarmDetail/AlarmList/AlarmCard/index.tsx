@@ -60,7 +60,7 @@ const AlarmCard = ({ notificationInfo }: Props) => {
   const [_, setAlarmEventIdList] = useRecoilState(alarmInfoState);
 
   const settingCalendarDate = () => {
-    navigate(`/group/${groupId}/book/detail?isnotification=on`);
+    navigate(`/group/${groupId}/book/detail`);
   };
 
   const goToAlarmInfo = (eventIdList: number[]) => {
