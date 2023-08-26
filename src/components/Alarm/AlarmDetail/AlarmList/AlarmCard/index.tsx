@@ -82,14 +82,14 @@ const AlarmCard = ({ notificationInfo }: Props) => {
 
   return (
     <Style.AlarmCardContainer onClick={type === 'CHANGE_ADMIN' ? goToGroupMember : () => goToAlarmInfo(eventIdList)}>
-      <Style.Header>
+      <Style.Header $isRead={view}>
         <Style.Circle $isRead={view} />
         <Style.AlarmTypeText>{category}</Style.AlarmTypeText>
         <Style.DateTitle>{date}</Style.DateTitle>
       </Style.Header>
-      <Style.Title>{ALARM_TEXT[type]}</Style.Title>
-      <Style.GroupText>{nickname ? `${groupTitle}에서 ${nickname}의` : groupTitle}</Style.GroupText>
-      <Style.Descripttion>{ALARM_DESCRIPTION[type](amount, afterSituation)}</Style.Descripttion>
+      <Style.Title $isRead={view}>{ALARM_TEXT[type]}</Style.Title>
+      <Style.GroupText $isRead={view}>{nickname ? `${groupTitle}에서 ${nickname}의` : groupTitle}</Style.GroupText>
+      <Style.Descripttion $isRead={view}>{ALARM_DESCRIPTION[type](amount, afterSituation)}</Style.Descripttion>
     </Style.AlarmCardContainer>
   );
 };
