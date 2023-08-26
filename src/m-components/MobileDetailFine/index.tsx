@@ -21,6 +21,7 @@ import useCheckListState from '@/hooks/useCheckListState';
 import { SYSTEM } from '@/assets/icons/System';
 import { useGroupDetail } from '@/queries/Group';
 import useLockScroll from '@/hooks/useLockScroll';
+import { searchMemberState } from '@/store/searchMemberState';
 
 type GroupedData = {
   [key: string]: SelectedEventInfo[];
@@ -41,6 +42,8 @@ const MobileDetailFine = ({ $isOpen, setIsOpen }: Props) => {
   const { ref, inView } = useInView();
 
   const [detailFilter, setDetailFilter] = useState<DetailFilter>({ nickname: '', situation: '', page: 0, size: 16, groupId: Number(groupId) });
+
+  const [searchMember, setSearchMember] = useRecoilState(searchMemberState);
 
   const [openFilterSheet, setOpenFilterSheet] = useState(false);
 
@@ -90,6 +93,10 @@ const MobileDetailFine = ({ $isOpen, setIsOpen }: Props) => {
     setGroupedListByDate({});
   }, [calendarDate]);
 
+  useEffect(() => {
+    setDetailFilter((prev) => ({ ...prev, nickname: searchMember.nickname }));
+  }, [searchMember]);
+
   //Todo: 언마운트 시키는 방향으로 개선하면 좋을듯
   useEffect(() => {
     setDetailFilter((prev) => ({ ...prev, groupId: Number(groupId) }));
@@ -107,8 +114,8 @@ const MobileDetailFine = ({ $isOpen, setIsOpen }: Props) => {
       return groups;
     }, {});
 
-    setGroupedListByDate((prev) => ({ ...prev, ...groupedData }));
-  }, [data, calendarDate]);
+    setGroupedListByDate((prev) => ({ ...groupedData }));
+  }, [data, calendarDate, detailFilter]);
 
   useEffect(() => {
     setInitCheckDetailFine();
@@ -131,7 +138,6 @@ const MobileDetailFine = ({ $isOpen, setIsOpen }: Props) => {
         />
       </Style.MobileDetailFineHeader>
       <MobileDetailFineList details={GroupedListByDate} inViewElement={ref} />
-
       {openFilterSheet && (
         <FilterBottomSheet //
           detailFilter={detailFilter}
