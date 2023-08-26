@@ -3,8 +3,11 @@ import { useGetAlarmList } from '@/queries/Notification/useGetAlarmList';
 import { useGetAlarmListCount } from '@/queries/Notification/useGetAlarmListCount';
 import { useReadAllNotification } from '@/queries/Notification/useReadAllNotification';
 import { useReadNotification } from '@/queries/Notification/useReadNotification';
+import { alarmInfoState, initAlarmInfoState } from '@/store/alarmInfoState';
 import { useEffect } from 'react';
+import { isMobile } from 'react-device-detect';
 import { useInView } from 'react-intersection-observer';
+import { useRecoilState } from 'recoil';
 import AlarmCard from './AlarmCard';
 import * as Style from './styles';
 
