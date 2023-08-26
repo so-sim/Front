@@ -18,6 +18,9 @@ import { useUpdateDetailStatus } from '@/queries/Detail';
 import { Tooltip } from '@/components/@common/Tooltip';
 import { Button } from '@/components/@common';
 import useDisabledList from '@/hooks/useDisabledList';
+import { detailFineState } from '@/store/detailFineState';
+import { dateState } from '@/store/dateState';
+import dayjs from 'dayjs';
 
 const SITUATION_FORMAT_STYLE: { [key in SituationStatus]: Situation } = {
   FULL: '완납',
@@ -39,12 +42,34 @@ const AlarmInfo = ({}) => {
 
   const isAdmin = groupAdmin?.content.isAdmin;
 
+  const [isOpen, setIsOpen] = useRecoilState(detailFineState);
+
+  const [calendarDate, setCalendarDate] = useRecoilState(dateState);
+
   useEffect(() => {
     (afterSituation === 'NONE' || afterSituation === null) && setSituationToChange('확인중');
     isAdmin && setSituationToChange('완납');
   }, [isAdmin]);
 
   const { data, isLoading, disabledEventIdList, isDisabledItem } = useDisabledList(groupId!, alarmEventIdList, SITUATION_FORMAT_STYLE[afterSituation!]);
+
+  const stringToNumber_Date = (date: string) => +date?.replace(/\-/g, '');
+
+  const sortedtList = data?.content.eventList.sort((a, b) => stringToNumber_Date(a.date) - stringToNumber_Date(b.date));
+
+  const min_Date = (sortedtList: SelectedEventInfo[]) => sortedtList[0]?.date;
+  const max_Date = (sortedtList: SelectedEventInfo[]) => sortedtList.at(-1)?.date;
+
+  useEffect(() => {
+    sortedtList &&
+      setCalendarDate((prev) => ({
+        ...prev,
+        baseDate: dayjs(min_Date(sortedtList)),
+        startDate: dayjs(min_Date(sortedtList)),
+        endDate: dayjs(max_Date(sortedtList)),
+        mode: 'custom',
+      }));
+  }, [data]);
 
   useEffect(() => {
     setCheckedEventId([...filterDisabledList(data?.content.eventList, disabledEventIdList)]);
@@ -68,6 +93,14 @@ const AlarmInfo = ({}) => {
     setCheckedEventId((prev) => [...prev, details.eventId]);
   };
 
+  const settingAlarmInfoNickname = () => {
+    data && setAlarmIdList((prev) => ({ ...prev, nickname: data?.content.eventList[0].nickname }));
+  };
+
+  useEffect(() => {
+    settingAlarmInfoNickname();
+  }, [data]);
+
   const onSuccess = () => {
     setAlarmIdList(initAlarmInfoState);
   };
@@ -76,6 +109,12 @@ const AlarmInfo = ({}) => {
 
   const updateSituation = () => {
     mutateDetailStatus({ situation: situationToChange, eventIdList: checkedEventId });
+    isMobile && mobileOnSuccess();
+  };
+
+  const mobileOnSuccess = () => {
+    setIsOpen(true);
+    navigate(`/m-group/${groupId}/book`);
   };
 
   useEffect(() => {
@@ -83,8 +122,6 @@ const AlarmInfo = ({}) => {
       setAlarmIdList(initAlarmInfoState);
     };
   }, []);
-
-  console.log(isAdmin);
 
   if (isLoading) return null;
 

@@ -3,7 +3,7 @@ import { useGetAlarmListCount } from '@/queries/Notification/useGetAlarmListCoun
 import styled from '@emotion/styled';
 import { useEffect, useState } from 'react';
 import { isMobile } from 'react-device-detect';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
 import AlarmDetail from './AlarmDetail';
 
 import * as Style from './styles';
@@ -18,7 +18,14 @@ const AlarmComponent = ({ headerHeight }: Props) => {
   const navigate = useNavigate();
 
   const location = useLocation();
+
+  const [searchParam, _] = useSearchParams();
+  // searchParam 사용이유 - 전역상태로 만들려면 isnotification false를 달아줘야한다는 생각에 searchparam으로..
+
   useEffect(() => {
+    if (searchParam.get('isnotification')) {
+      setShowAlarmDetail(true);
+    }
     return () => {
       setShowAlarmDetail(false);
     };
