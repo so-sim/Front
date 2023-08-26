@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction, useState } from 'react';
+import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { DetailFilter } from '@/store/detailFilter';
 import { SYSTEM } from '@/assets/icons/System';
 import { Situation } from '@/types/event';
@@ -44,6 +44,9 @@ const FilterController = ({ detailFilter, setDetailFilter, totalAmount }: Props)
     setDetailFilter((prev) => ({ ...prev, nickname: '' }));
     toggleSearchMode();
   };
+  useEffect(() => {
+    detailFilter.nickname && setSearchMode('select');
+  }, [detailFilter]);
 
   return (
     <Style.FilterContainer>
