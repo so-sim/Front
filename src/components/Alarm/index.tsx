@@ -56,7 +56,8 @@ const AlarmComponent = ({ headerHeight }: Props) => {
       >
         {ALARM.ALARM}
       </Style.AlarmIconWrapper>
-      {showAlarmDetail && <AlarmDetail headerHeight={headerHeight} setShowAlarmDetail={setShowAlarmDetail} />}
+      {showAlarmDetail && !isMobile && <AlarmDetail headerHeight={headerHeight} setShowAlarmDetail={setShowAlarmDetail} />}
+      {/* !isMobile을 안넣어줬을 때 AlarmDetail이 Mobile화면에서 출력이 되는 버그가 있다... ?(why.. isMobile에 따라 버튼 트리거도 다른데)  */}
     </>
   );
 };
