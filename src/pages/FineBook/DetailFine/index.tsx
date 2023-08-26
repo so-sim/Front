@@ -63,7 +63,7 @@ const DetailFine = () => {
 
   useEffect(() => {
     setDetailFilter({ nickname: '', situation: '', page: 0, size: 16, groupId: Number(groupId) });
-    if (searchParam.get('isnotification') && alarmState.nickname) {
+    if (alarmState.groupId && alarmState.nickname) {
       setDetailFilter((prev) => ({ ...prev, nickname: alarmState.nickname || '', situation: SITUATION_FORMAT_STYLE[alarmState.afterSituation || 'NONE'] }));
       // 닉네임과 납부여부 설정하는 곳인데/  닉네임설정하려면 input 창 맨처음에 설정해야함
     }
@@ -114,21 +114,21 @@ const DetailFine = () => {
   //   setSearch(search);
   // };
 
-  useEffect(() => {
-    const testt = (e: BeforeUnloadEvent) => {
-      const searchParams = new URLSearchParams(location.search);
+  // useEffect(() => {
+  //   const testt = (e: BeforeUnloadEvent) => {
+  //     const searchParams = new URLSearchParams(location.search);
 
-      // 새로고침 시에만 특정 param 제거
-      if (searchParams.get('isnotification')) {
-        searchParams.delete('isnotification');
-        navigate({ search: searchParams.toString() });
-      }
-    };
-    window.addEventListener('beforeunload', testt);
-    return () => {
-      window.removeEventListener('beforeunload', testt);
-    };
-  }, []);
+  //     // 새로고침 시에만 특정 param 제거
+  //     if (searchParams.get('isnotification')) {
+  //       searchParams.delete('isnotification');
+  //       navigate({ search: searchParams.toString() });
+  //     }
+  //   };
+  //   window.addEventListener('beforeunload', testt);
+  //   return () => {
+  //     window.removeEventListener('beforeunload', testt);
+  //   };
+  // }, []);
 
   // 새로고침 시 searchparam 지우고 싶었는데..
 
@@ -150,7 +150,7 @@ const DetailFine = () => {
             <AlarmRequest_PaymentUpdate checkDetailFine={{ ...checkDetailFine }} />
           </AlarmRequest_PaymentUpdate.DesktopFrame>
         )}
-        {searchParam.get('isnotification') && <BackDrop />}
+        {alarmState.groupId && <BackDrop />}
       </Style.DetailFineFrame>
     </SelectedFineContextProvider>
   );

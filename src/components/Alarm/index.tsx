@@ -1,9 +1,11 @@
 import { ALARM } from '@/assets/icons/Alarm';
 import { useGetAlarmListCount } from '@/queries/Notification/useGetAlarmListCount';
+import { alarmInfoState } from '@/store/alarmInfoState';
 import styled from '@emotion/styled';
 import { useEffect, useState } from 'react';
 import { isMobile } from 'react-device-detect';
 import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
+import { useRecoilState } from 'recoil';
 import AlarmDetail from './AlarmDetail';
 
 import * as Style from './styles';
@@ -22,8 +24,10 @@ const AlarmComponent = ({ headerHeight }: Props) => {
   const [searchParam, _] = useSearchParams();
   // searchParam 사용이유 - 전역상태로 만들려면 isnotification false를 달아줘야한다는 생각에 searchparam으로..
 
+  const [alarmIdList, setAlarmIdList] = useRecoilState(alarmInfoState);
+
   useEffect(() => {
-    if (searchParam.get('isnotification')) {
+    if (alarmIdList.groupId) {
       setShowAlarmDetail(true);
     }
     return () => {

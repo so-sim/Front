@@ -4,7 +4,7 @@ import AlarmList from './AlarmList';
 import * as Style from './styles';
 import AlarmInfo from './AlarmInfo';
 import { useRecoilState } from 'recoil';
-import { alarmInfoState } from '@/store/alarmInfoState';
+import { alarmInfoState, initAlarmInfoState } from '@/store/alarmInfoState';
 import { useSearchParams } from 'react-router-dom';
 
 type Props = {
@@ -19,8 +19,7 @@ const AlarmDetail = ({ headerHeight, setShowAlarmDetail }: Props) => {
   const close = () => {
     setShowAlarmDetail((prev) => !prev);
 
-    searchParam.delete('isnotification');
-    setSearchParam(searchParam);
+    setAlarmIdList(initAlarmInfoState);
   };
   return (
     <Style.AlarmDetailFrame $headerHeight={headerHeight}>
