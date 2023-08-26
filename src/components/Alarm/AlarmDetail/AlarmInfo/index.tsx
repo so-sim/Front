@@ -101,20 +101,20 @@ const AlarmInfo = ({}) => {
     settingAlarmInfoNickname();
   }, [data]);
 
+  const mobileOnSuccess = () => {
+    setIsOpen(true);
+    navigate(`/m-group/${groupId}/book`);
+  };
+
   const onSuccess = () => {
     setAlarmIdList(initAlarmInfoState);
+    isMobile && mobileOnSuccess();
   };
 
   const { mutate: mutateDetailStatus } = useUpdateDetailStatus(onSuccess);
 
   const updateSituation = () => {
     mutateDetailStatus({ situation: situationToChange, eventIdList: checkedEventId });
-    isMobile && mobileOnSuccess();
-  };
-
-  const mobileOnSuccess = () => {
-    setIsOpen(true);
-    navigate(`/m-group/${groupId}/book`);
   };
 
   useEffect(() => {
@@ -198,7 +198,12 @@ const AlarmInfo = ({}) => {
             <Button width="100%" height="2.675rem" onClick={isMobile ? () => navigate(-1) : () => setAlarmIdList((prev) => ({ ...prev, alarmEventIdList: [] }))} color="white">
               취소
             </Button>
-            <Button width="100%" height="2.675rem" onClick={updateSituation} color={!isAdmin && afterSituation === 'CHECK' ? 'disabled' : 'black'}>
+            <Button
+              width="100%"
+              height="2.675rem"
+              onClick={updateSituation}
+              color={!(checkedEventId.length > 0) || (!isAdmin && afterSituation === 'CHECK') ? 'disabled' : 'black'}
+            >
               변경하기
             </Button>
           </>
