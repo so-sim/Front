@@ -2,8 +2,8 @@ import api from '..';
 import { ServerResponse } from '@/types/serverResponse';
 import { NotificationListWithIndex } from '@/types/notification';
 
-export const reqNotifications = async (): Promise<ServerResponse> => {
-  const { data } = await api.post('/api/pay-notifications');
+export const reqNotifications = async (eventIdList: number[]): Promise<ServerResponse> => {
+  const { data } = await api.post('/api/pay-notifications', { eventIdList });
   return data;
 };
 
