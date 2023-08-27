@@ -39,6 +39,8 @@ const SITUATION_FORMAT_STYLE: { [key in SituationStatus]: Situation } = {
 const DetailFine = () => {
   const { groupId } = useParams();
 
+  const location = useLocation();
+
   const [detailFilter, setDetailFilter] = useState<DetailFilter>({ nickname: '', situation: '', page: 0, size: 16, groupId: Number(groupId) });
 
   const calendarDate = useRecoilValue(dateState);
@@ -55,7 +57,7 @@ const DetailFine = () => {
 
   useEffect(() => {
     setInitCheckDetailFine();
-  }, [calendarDate]);
+  }, [calendarDate, location, detailFilter]);
 
   const [alarmState, setAlarmEventIdList] = useRecoilState(alarmInfoState);
 

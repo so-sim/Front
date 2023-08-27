@@ -11,6 +11,7 @@ import { useNavigate } from 'react-router-dom';
 import * as Style from './styles';
 import { ALARM } from '@/assets/icons/Alarm';
 import AlarmComponent from '@/components/Alarm';
+import useCheckListState from '@/hooks/useCheckListState';
 
 const DorpDownList = [
   { title: '환경설정', svg: SYSTEM.SETTING_SM },
@@ -24,6 +25,10 @@ const GroupLayoutHeader = () => {
   const [showDropDown, setShowDropDown] = useState(false);
 
   const { openConfirmModal, closeConfirmModal } = useConfirmModal();
+
+  const {
+    setCheckDetailFine: { setInitCheckDetailFine },
+  } = useCheckListState();
 
   const dropDownRef = useRef<HTMLButtonElement>(null);
 
@@ -41,6 +46,7 @@ const GroupLayoutHeader = () => {
 
   const handleDropDown = () => {
     setShowDropDown((prev) => !prev);
+    setInitCheckDetailFine();
   };
 
   const onClickLogOut = () => {

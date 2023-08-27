@@ -1,4 +1,5 @@
 import { ALARM } from '@/assets/icons/Alarm';
+import useCheckListState from '@/hooks/useCheckListState';
 import { useGetAlarmListCount } from '@/queries/Notification/useGetAlarmListCount';
 import { alarmInfoState } from '@/store/alarmInfoState';
 import styled from '@emotion/styled';
@@ -26,6 +27,10 @@ const AlarmComponent = ({ headerHeight }: Props) => {
 
   const [alarmIdList, setAlarmIdList] = useRecoilState(alarmInfoState);
 
+  const {
+    setCheckDetailFine: { setInitCheckDetailFine },
+  } = useCheckListState();
+
   useEffect(() => {
     if (alarmIdList.groupId) {
       setShowAlarmDetail(true);
@@ -45,6 +50,7 @@ const AlarmComponent = ({ headerHeight }: Props) => {
 
   const handleToggleNotificationModal = () => {
     setShowAlarmDetail((prev) => !prev);
+    setInitCheckDetailFine();
   };
 
   return (
