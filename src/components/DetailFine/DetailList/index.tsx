@@ -26,7 +26,7 @@ const DetailList = ({ detailFilter, details }: Props) => {
   const { selectedFine, setSelectedFine } = useSelectedContext('userDetails');
 
   const {
-    setCheckDetailFine: { setToggleCheckList },
+    setCheckDetailFine: { setToggleCheckList, setInitCheckDetailFine },
     isChecked,
   } = useCheckListState();
 
@@ -49,6 +49,10 @@ const DetailList = ({ detailFilter, details }: Props) => {
       window.removeEventListener('click', closeCircleButtonList);
     };
   }, []);
+
+  useEffect(() => {
+    setInitCheckDetailFine();
+  }, [openButtonListId, selectedFine]);
 
   const filteredDataNotFound = details?.length === 0 && calendarState.mode === 'day' && detailFilter.nickname === '' && detailFilter.situation === '';
 
