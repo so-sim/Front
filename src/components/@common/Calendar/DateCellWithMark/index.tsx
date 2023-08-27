@@ -1,5 +1,5 @@
 import { PayMentTypeCountMap } from '@/types/event';
-import { handleDate } from '@/utils/handleDate';
+import { dateToUnixTime, handleDate } from '@/utils/handleDate';
 import { Dayjs } from 'dayjs';
 import { FC } from 'react';
 import { MARK } from '@/assets/icons/Mark';
@@ -25,10 +25,12 @@ const DateCellWithMark: FC<DateCellWithMarkProps> = ({ date, isCurrentMonth, isT
   const isFirst = dateToFormatting(startDate) === dateToFormatting(date);
   const isLast = dateToFormatting(endDate) === dateToFormatting(date);
 
+  const isOneDay = isFirst && isLast;
+
   return (
     <Style.DateCell>
-      <Style.Date mode={mode} isToday={isToday(date)} isSelectedDate={isSelectedDate(date)} isCurrentMonth={isCurrentMonth(date)} isSelectedPeriod={isSelectedPeriod}>
-        {isSelectedPeriod && <Style.SelectedPeriod mode={mode} isSelectedPeriod={isSelectedPeriod} isFirst={isFirst} isLast={isLast} />}
+      <Style.Date mode={mode} isToday={isToday(date)} isSelectedDate={isSelectedDate(date) || isOneDay} isCurrentMonth={isCurrentMonth(date)} isSelectedPeriod={isSelectedPeriod}>
+        {isSelectedPeriod && !isOneDay && <Style.SelectedPeriod mode={mode} isSelectedPeriod={isSelectedPeriod} isFirst={isFirst} isLast={isLast} />}
         {date.date()}
       </Style.Date>
       <Style.Mark>

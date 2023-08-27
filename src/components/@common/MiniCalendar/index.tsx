@@ -10,9 +10,10 @@ interface MiniCalendarProps {
   setType: (value: string) => void;
   setOpenDrop: Dispatch<SetStateAction<boolean>>;
   trigger?: JSX.Element;
+  isInvalidate?: (date: string) => boolean;
 }
 
-const MiniCalendar: FC<MiniCalendarProps> = ({ type, setType, setOpenDrop, trigger }) => {
+const MiniCalendar: FC<MiniCalendarProps> = ({ type, setType, setOpenDrop, trigger, isInvalidate }) => {
   /**
    * Safari에서는 date에 '.'이 들어가면 오류가 발생한다.
    * ex) 2021.09.01 : x
@@ -68,12 +69,17 @@ const MiniCalendar: FC<MiniCalendarProps> = ({ type, setType, setOpenDrop, trigg
         return (
           <Style.Week key={week[0].format('YYYY-MM-DD')}>
             {week.map((date, i) => {
+              const isInvalid = isInvalidate && isInvalidate(date.format('YYYY-MM-DD'));
               return (
                 <Style.Day
                   isOtherMonth={date.month() !== baseDate.month()}
                   isSelected={tempDate === date.format('YYYY-MM-DD')}
                   isSunday={i === 0}
-                  onClick={() => handleDate(date)}
+                  isInvalid={isInvalid}
+                  onClick={() => {
+                    if (isInvalid) return;
+                    handleDate(date);
+                  }}
                   key={date.format('YYYY-MM-DD')}
                 >
                   {date.date()}

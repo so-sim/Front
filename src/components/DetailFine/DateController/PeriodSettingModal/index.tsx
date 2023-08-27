@@ -1,5 +1,6 @@
 import { Button } from '@/components/@common';
 import { dateState } from '@/store/dateState';
+import { dateToUnixTime } from '@/utils/handleDate';
 import dayjs from 'dayjs';
 import { ForwardedRef, forwardRef, useEffect, useState } from 'react';
 import { useRecoilState } from 'recoil';
@@ -47,12 +48,20 @@ const PeriodSettingModal = forwardRef(({ modalHandler }: Props, ref: ForwardedRe
     });
   }, [calendarDate]);
 
+  const isInvalidStartDate = (date: string) => {
+    return dateToUnixTime(dayjs(date)) > dateToUnixTime(dayjs(customPeriod.endDate));
+  };
+
+  const isInvalidEndDate = (date: string) => {
+    return dateToUnixTime(dayjs(date)) < dateToUnixTime(dayjs(customPeriod.startDate));
+  };
+
   return (
     <Style.Frame ref={ref}>
       <Style.Title>상세 기간 선택</Style.Title>
       <Style.PeriodInputRow>
-        <PeriodInput label="시작일" date={customPeriod.startDate} setCustomPeriod={setCustomPeriod} />
-        <PeriodInput label="종료일" date={customPeriod.endDate} setCustomPeriod={setCustomPeriod} />
+        <PeriodInput label="시작일" date={customPeriod.startDate} setCustomPeriod={setCustomPeriod} isInvalidDate={isInvalidStartDate} />
+        <PeriodInput label="종료일" date={customPeriod.endDate} setCustomPeriod={setCustomPeriod} isInvalidDate={isInvalidEndDate} />
       </Style.PeriodInputRow>
       <Style.ButtonRow>
         <Button color="white" onClick={handleCustomPeriod}>
