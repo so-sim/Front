@@ -21,6 +21,7 @@ import { Tooltip } from '@/components/@common/Tooltip';
 import PaymentRequest from '@/components/@common/Tooltip/PaymentRequest';
 import { useWithdrawalParticipantList } from '@/queries/Group/useWithdrawalParticipantList';
 import { useRequestNotification } from '@/queries/Notification/useRequestNotifaction';
+import WithdrawBadge from '@/components/@common/WithdrawBadge';
 
 type Props = {
   select: SelectedEventInfo;
@@ -118,6 +119,7 @@ const UserDetails = () => {
   const { dropdownList, convertTextToSituation, convertSituationToText } = useSituationList(situation);
   const { mutate: mutateDetailStatus } = useUpdateDetailStatus(onSuccessUpdateStatus);
   const { mutate: deleteDetail } = useDeleteDetail(closeUserDetails);
+  const { isWithdrawal } = useWithdrawalParticipantList(Number(groupId));
 
   const updateStatus = (situation: Situation) => {
     mutateDetailStatus({ situation, eventIdList: [eventId] });
@@ -158,7 +160,10 @@ const UserDetails = () => {
           </Style.BetweenBlock>
           <Style.Block>
             <Style.PersonIcon>{USER.PERSON_XL}</Style.PersonIcon>
-            <Style.Text>{nickname}</Style.Text>
+            <Style.Text>
+              {nickname}
+              {isWithdrawal(nickname) && <WithdrawBadge size="md" />}
+            </Style.Text>
           </Style.Block>
           <Style.Block>
             <Style.Text>{changeNumberToMoney(amount)}원</Style.Text>

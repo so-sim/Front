@@ -41,6 +41,12 @@ export const Element = styled.span<{ hasEllipsis?: boolean }>`
   text-overflow: ${({ hasEllipsis }) => hasEllipsis && 'ellipsis'};
 `;
 
+export const FlexElement = styled(Element)`
+  gap: 4px;
+  display: flex;
+  align-items: center;
+`;
+
 export const GroundText = styled.span`
   ${({ theme }) => theme.font.subhead_02}
 `;

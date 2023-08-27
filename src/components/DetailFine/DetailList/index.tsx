@@ -16,6 +16,9 @@ import { ALARM } from '@/assets/icons/Alarm';
 import { SYSTEM } from '@/assets/icons/System';
 import { useRequestNotification } from '@/queries/Notification/useRequestNotifaction';
 import useConfirmModal from '@/hooks/useConfirmModal';
+import { useWithdrawalParticipantList } from '@/queries/Group/useWithdrawalParticipantList';
+import { useParams } from 'react-router-dom';
+import WithdrawBadge from '@/components/@common/WithdrawBadge';
 
 type Props = {
   details?: SelectedEventInfo[];
@@ -23,6 +26,7 @@ type Props = {
 };
 
 const DetailList = ({ detailFilter, details }: Props) => {
+  const { groupId } = useParams();
   const [calendarState, setCalendarState] = useRecoilState(dateState);
 
   const [openButtonListId, setOpenButtonListId] = useState(0);
@@ -30,6 +34,7 @@ const DetailList = ({ detailFilter, details }: Props) => {
   const { selectedFine, setSelectedFine } = useSelectedContext('userDetails');
   const { mutate: mutateRequestNotification } = useRequestNotification();
   const { openConfirmModal, closeConfirmModal } = useConfirmModal();
+  const { withdrawalParticipants, isWithdrawal } = useWithdrawalParticipantList(Number(groupId));
 
   const {
     setCheckDetailFine: { setToggleCheckList },
@@ -91,14 +96,15 @@ const DetailList = ({ detailFilter, details }: Props) => {
             </Style.CheckboxWrapper>
             <Style.Element hasEllipsis={false}>{covertDateForView(date.slice(2))}</Style.Element>
             <DropDownWrapper openButtonListId={openButtonListId} detail={detail} setOpenButtonListId={setOpenButtonListId} />
-            <Style.Element hasEllipsis>
+            <Style.FlexElement hasEllipsis>
               {/* {
                 isIncludeWithdrawalMember(nickname) && <div>탈퇴</div>
               }
               <> */}
-              {nickname}
+              <Style.Element hasEllipsis>{nickname}</Style.Element>
+              {isWithdrawal(nickname) && <WithdrawBadge />}
               {/* </> */}
-            </Style.Element>
+            </Style.FlexElement>
             <Style.Element hasEllipsis>{changeNumberToMoney(amount)}</Style.Element>
             <Style.Element hasEllipsis>
               <Style.GroundText>

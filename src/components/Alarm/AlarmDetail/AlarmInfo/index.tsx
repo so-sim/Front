@@ -21,6 +21,9 @@ import useDisabledList from '@/hooks/useDisabledList';
 import { detailFineState } from '@/store/detailFineState';
 import { dateState } from '@/store/dateState';
 import dayjs from 'dayjs';
+import { USER } from '@/assets/icons/User';
+import { useWithdrawalParticipantList } from '@/queries/Group/useWithdrawalParticipantList';
+import WithdrawBadge from '@/components/@common/WithdrawBadge';
 
 const SITUATION_FORMAT_STYLE: { [key in SituationStatus]: Situation } = {
   FULL: '완납',
@@ -45,6 +48,8 @@ const AlarmInfo = ({}) => {
   const [isOpen, setIsOpen] = useRecoilState(detailFineState);
 
   const [calendarDate, setCalendarDate] = useRecoilState(dateState);
+
+  const { isWithdrawal } = useWithdrawalParticipantList(Number(groupId));
 
   useEffect(() => {
     (afterSituation === 'NONE' || afterSituation === null) && setSituationToChange('확인중');
@@ -142,8 +147,9 @@ const AlarmInfo = ({}) => {
         {/* 해당 Alarm Info가 나의 닉네임과 같다면 */}
 
         <Style.ProfileWrapper>
-          <p>아이콘</p>
+          <p>{USER.PERSON_24}</p>
           <Style.ProfimeText>{userName}</Style.ProfimeText>
+          {userName && isWithdrawal(userName) && <WithdrawBadge size="md" />}
         </Style.ProfileWrapper>
 
         <Style.SubTitle>
