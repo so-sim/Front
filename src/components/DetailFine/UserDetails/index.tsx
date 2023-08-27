@@ -26,9 +26,9 @@ type Props = {
 };
 
 const REQUEST_BUTTON: { [key in Situation]: string } = {
-  미납: '납부요청',
-  확인중: '승인 대기',
-  완납: '납부완료',
+  미납: '납부완료',
+  확인중: '승인대기',
+  완납: '',
 };
 
 const UserDetails = () => {
@@ -56,19 +56,28 @@ const UserDetails = () => {
     });
   };
 
-  const handleRequestConfirmModal = () => {
-    openConfirmModal({
-      type: 'CHANGE_STATUS',
-      confirm: requestConfirmStatus,
-      cancel: closeConfirmModal,
-      id: GA.CON.SIDE_MODAL,
-    });
+  const handleRequestConfirmModal = async () => {
+    const isValid = true;
+
+    if (isValid) {
+      openConfirmModal({
+        type: 'REQUEST_CHANGE_STATUS',
+        confirm: requestConfirmStatus,
+        cancel: closeConfirmModal,
+        id: GA.CON.SIDE_MODAL,
+      });
+    } else {
+      openConfirmModal({
+        type: 'NOTICE_CANNOT_REQUEST',
+        confirm: closeConfirmModal,
+      });
+    }
   };
 
   const handleUpdateStatusConfirmModal = (situation: SituationText) => {
     const convertedSituation = convertTextToSituation(situation);
     openConfirmModal({
-      type: 'CHANGE_STATUS_ADMIN',
+      type: 'CHANGE_STATUS',
       confirm: () => updateStatus(convertedSituation),
       cancel: closeConfirmModal,
       // id: situation === '완납' ? GA.FULL.SIDE_MODAL : '',
@@ -161,7 +170,18 @@ const UserDetails = () => {
           </Label>
         </Style.UserDetailsContent>
         <Style.Footer>
-          {!isAdmin && isOwn && (
+          {!isAdmin && isOwn && situation !== '완납' && (
+            <Button
+              width="150px"
+              height="42px"
+              color={situation === '미납' ? 'black' : 'disabled'} //
+              onClick={handleRequestConfirmModal}
+              id={GA.CON.SIDE_BUTTON}
+            >
+              {REQUEST_BUTTON[situation]}
+            </Button>
+          )}
+          {isAdmin && !isOwn && situation === '미납' && (
             <Tooltip
               title="납부 요청이란?"
               contents={PaymentRequest}
@@ -170,7 +190,6 @@ const UserDetails = () => {
               top="60px"
               left="-163px"
               messageBox={{ left: '290px', top: '-8px' }}
-              defaultValue
               preventClick
               trigger={
                 <Button
@@ -180,7 +199,7 @@ const UserDetails = () => {
                   onClick={handleRequestConfirmModal}
                   id={GA.CON.SIDE_BUTTON}
                 >
-                  {REQUEST_BUTTON[situation]}
+                  납부요청
                 </Button>
               }
             />
