@@ -6,7 +6,7 @@ export const TableRow = styled.div<{ isSelected: boolean }>`
   display: grid;
   align-items: center;
   height: 46px;
-  grid-template-columns: 40px 100px 120px 116px 108px 1fr;
+  grid-template-columns: 40px 100px 120px 116px 108px 1fr 108px;
   border-top: 2px solid ${({ theme }) => theme.colors.neutral_200_b};
   border-radius: 4px;
   cursor: pointer;
@@ -33,7 +33,7 @@ export const NotFoundList = styled.div`
   ${({ theme }) => theme.font.headline}
 `;
 
-export const Element = styled.span<{ hasEllipsis: boolean }>`
+export const Element = styled.span<{ hasEllipsis?: boolean }>`
   display: block;
   width: 100%;
   white-space: nowrap;
@@ -51,4 +51,20 @@ export const CheckboxWrapper = styled.div`
   align-items: center;
   height: 100%;
   width: 100%;
+`;
+
+export const NotificationButton = styled.button<{ isActive: boolean }>`
+  padding: 4px 8px;
+  border: 1px solid ${({ theme }) => theme.colors.neutral_300_b};
+  /* background-color: ${({ theme, isActive }) => (isActive ? theme.colors.secondary_100 : theme.colors.neutral_200_b)}; */
+  display: flex;
+  gap: 2px;
+  ${({ theme }) => theme.font.body_01};
+  color: ${({ theme, isActive }) => (isActive ? theme.colors.secondary_900 : theme.colors.secondary_600)};
+  border-radius: 99px;
+  display: flex;
+  align-items: center;
+  &:hover {
+    background-color: ${({ theme }) => theme.colors.neutral_200_b};
+  }
 `;
