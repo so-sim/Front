@@ -1,4 +1,5 @@
 import { SYSTEM } from '@/assets/icons/System';
+import WithdrawBadge from '@/components/@common/WithdrawBadge';
 import useSearchParticipant from '@/hooks/Member/useSearchParticipant';
 import { KeyboardEvent, useEffect, useRef, useState } from 'react';
 
@@ -67,7 +68,7 @@ export const AutoComplete = ({ updateDetailFilterNickname, initialNickname }: Pr
                 >
                   {SYSTEM.SEARCH_GRAY}
                   <span>{nickname}</span>
-                  {withdraw && <Style.WithdrawButton>탈퇴</Style.WithdrawButton>}
+                  {withdraw && <WithdrawBadge />}
                 </Style.MemberListItem>
               );
             })

@@ -1,5 +1,6 @@
 import { ARROW } from '@/assets/icons/Arrow';
 import { SYSTEM } from '@/assets/icons/System';
+import WithdrawBadge from '@/components/@common/WithdrawBadge';
 import useSearchParticipant from '@/hooks/Member/useSearchParticipant';
 import ModalPageLayout from '@/layouts/Mobile/ModalPageLayout';
 import { detailFineState } from '@/store/detailFineState';
@@ -45,7 +46,7 @@ const MobileMemberSearch = () => {
             <Style.MemberListItem key={nickname} onClick={() => searchTargetMemberList(nickname)}>
               {SYSTEM.SEARCH_GRAY}
               {nickname}
-              {withdraw && <span>탈퇴</span>}
+              {withdraw && <WithdrawBadge />}
             </Style.MemberListItem>
           );
         })}

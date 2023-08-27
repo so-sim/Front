@@ -1,5 +1,7 @@
 import useWindowHeight from '@/hooks/@common/useWindowHeight';
+import { useGroupDetail } from '@/queries/Group';
 import React from 'react';
+import { useParams } from 'react-router-dom';
 import MobileHeader from './components/MobileHeader';
 import * as Style from './styles';
 
@@ -11,6 +13,8 @@ type Props = {
 
 const ModalPageLayout = ({ left, title, children }: Props) => {
   const { windowRef } = useWindowHeight();
+  const { groupId } = useParams();
+  const { data } = useGroupDetail(Number(groupId));
 
   return (
     <Style.Layout ref={windowRef}>

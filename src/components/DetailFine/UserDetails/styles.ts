@@ -95,6 +95,9 @@ export const Row = styled.div`
 `;
 
 export const Text = styled.span`
+  display: flex;
+  gap: 4px;
+  align-items: center;
   ${({ theme }) => theme.font.subhead_04}
 `;
 

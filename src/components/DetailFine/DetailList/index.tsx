@@ -12,6 +12,13 @@ import { CheckDetailFine, SetCheckDetailFine } from '@/components/DetailFine/Ala
 import DetailListCheckBox from '../checkbox';
 import useCheckListState from '@/hooks/useCheckListState';
 import { covertDateForView } from '@/utils/convertFormat';
+import { ALARM } from '@/assets/icons/Alarm';
+import { SYSTEM } from '@/assets/icons/System';
+import { useRequestNotification } from '@/queries/Notification/useRequestNotifaction';
+import useConfirmModal from '@/hooks/useConfirmModal';
+import { useWithdrawalParticipantList } from '@/queries/Group/useWithdrawalParticipantList';
+import { useParams } from 'react-router-dom';
+import WithdrawBadge from '@/components/@common/WithdrawBadge';
 
 type Props = {
   details?: SelectedEventInfo[];
@@ -19,11 +26,15 @@ type Props = {
 };
 
 const DetailList = ({ detailFilter, details }: Props) => {
+  const { groupId } = useParams();
   const [calendarState, setCalendarState] = useRecoilState(dateState);
 
   const [openButtonListId, setOpenButtonListId] = useState(0);
 
   const { selectedFine, setSelectedFine } = useSelectedContext('userDetails');
+  const { mutate: mutateRequestNotification } = useRequestNotification();
+  const { openConfirmModal, closeConfirmModal } = useConfirmModal();
+  const { withdrawalParticipants, isWithdrawal } = useWithdrawalParticipantList(Number(groupId));
 
   const {
     setCheckDetailFine: { setToggleCheckList },
@@ -37,6 +48,14 @@ const DetailList = ({ detailFilter, details }: Props) => {
 
   const handleUserDetailModal = (detail: SelectedEventInfo) => {
     setSelectedFine(detail);
+  };
+
+  const requestNotification = (eventId: number) => {
+    openConfirmModal({
+      type: 'REQUEST_PAYMENT',
+      confirm: () => mutateRequestNotification([eventId]),
+      cancel: closeConfirmModal,
+    });
   };
 
   useEffect(() => {
@@ -61,6 +80,7 @@ const DetailList = ({ detailFilter, details }: Props) => {
     <Style.DetailList>
       {details?.map((detail, i) => {
         const { date, nickname, amount, memo, eventId, ground } = detail;
+        const enableNotification = true;
         return (
           <Style.TableRow key={i} isSelected={selectedFine.eventId === eventId} onClick={() => handleUserDetailModal(detail)}>
             <Style.CheckboxWrapper
@@ -76,7 +96,15 @@ const DetailList = ({ detailFilter, details }: Props) => {
             </Style.CheckboxWrapper>
             <Style.Element hasEllipsis={false}>{covertDateForView(date.slice(2))}</Style.Element>
             <DropDownWrapper openButtonListId={openButtonListId} detail={detail} setOpenButtonListId={setOpenButtonListId} />
-            <Style.Element hasEllipsis>{nickname}</Style.Element>
+            <Style.FlexElement hasEllipsis>
+              {/* {
+                isIncludeWithdrawalMember(nickname) && <div>탈퇴</div>
+              }
+              <> */}
+              <Style.Element hasEllipsis>{nickname}</Style.Element>
+              {isWithdrawal(nickname) && <WithdrawBadge />}
+              {/* </> */}
+            </Style.FlexElement>
             <Style.Element hasEllipsis>{changeNumberToMoney(amount)}</Style.Element>
             <Style.Element hasEllipsis>
               <Style.GroundText>
@@ -85,6 +113,19 @@ const DetailList = ({ detailFilter, details }: Props) => {
               </Style.GroundText>
               {/* Katakana middle dot 이라고 합니다..(저도 잘 몰라요 하하) */}
               {memo}
+            </Style.Element>
+            <Style.Element>
+              <Style.NotificationButton
+                isActive={enableNotification}
+                disabled={!enableNotification}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  requestNotification(eventId);
+                }}
+              >
+                <div style={{ height: '16px' }}>{enableNotification ? ALARM.ALARM_SM : SYSTEM.DONE_SM}</div>
+                <div>{enableNotification ? '벌금요청' : '요청완료'}</div>
+              </Style.NotificationButton>
             </Style.Element>
           </Style.TableRow>
         );

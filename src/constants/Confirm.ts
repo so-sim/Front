@@ -114,7 +114,7 @@ export const CONFIRM_MODAL = {
   },
   CHANGE_ONLY_ONE_TYPE: {
     title: '알림',
-    description: `여러 내역의 납부 여부를 변경하기 위해선\n 납부 여부가 동일한 내역들만 선택해주세요.`,
+    description: `여러 내역의 납부 여부를 변경하려면 \n 해당 내역들의 납부 여부가 동일해야 합니다.`,
     confirm: '확인',
   },
 };

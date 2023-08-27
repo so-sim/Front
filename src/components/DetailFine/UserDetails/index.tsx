@@ -19,16 +19,19 @@ import useSituationList, { SituationText } from '@/hooks/useSituationList';
 import { useGroupDetail } from '@/queries/Group';
 import { Tooltip } from '@/components/@common/Tooltip';
 import PaymentRequest from '@/components/@common/Tooltip/PaymentRequest';
+import { useWithdrawalParticipantList } from '@/queries/Group/useWithdrawalParticipantList';
+import { useRequestNotification } from '@/queries/Notification/useRequestNotifaction';
+import WithdrawBadge from '@/components/@common/WithdrawBadge';
 
 type Props = {
   select: SelectedEventInfo;
   setSelect: Dispatch<SetStateAction<SelectedEventInfo>>;
 };
 
-const REQUEST_BUTTON: { [key in Situation]: string } = {
-  미납: '납부요청',
-  확인중: '승인 대기',
-  완납: '납부완료',
+export const REQUEST_BUTTON: { [key in Situation]: string } = {
+  미납: '납부완료',
+  확인중: '승인대기',
+  완납: '',
 };
 
 const UserDetails = () => {
@@ -41,8 +44,13 @@ const UserDetails = () => {
   const { groupId } = useParams();
   const { data: group } = useGroupDetail(Number(groupId));
   const isAdmin = group?.content.isAdmin;
+  const { withdrawalParticipants } = useWithdrawalParticipantList(Number(groupId));
 
   const [showUpdateModal, setShowUpdateModal] = useState(false);
+
+  const isWithdrawalMember = (nickname: string) => {
+    return withdrawalParticipants?.includes(nickname);
+  };
 
   const handleUpdateModal = () => {
     setShowUpdateModal((prev) => !prev);
@@ -56,19 +64,38 @@ const UserDetails = () => {
     });
   };
 
-  const handleRequestConfirmModal = () => {
+  const handleRequestConfirmModal = async () => {
+    const isValid = true;
+
+    if (isValid) {
+      openConfirmModal({
+        type: 'REQUEST_CHANGE_STATUS',
+        confirm: requestConfirmStatus,
+        cancel: closeConfirmModal,
+        id: GA.CON.SIDE_MODAL,
+      });
+    } else {
+      openConfirmModal({
+        type: 'NOTICE_CANNOT_REQUEST',
+        confirm: closeConfirmModal,
+      });
+    }
+  };
+  const { mutate: mutateRequestNotification } = useRequestNotification();
+
+  // 벌금 납부 요청
+  const handleRequestPayment = () => {
     openConfirmModal({
-      type: 'CHANGE_STATUS',
-      confirm: requestConfirmStatus,
+      type: 'REQUEST_PAYMENT',
+      confirm: () => mutateRequestNotification([eventId]),
       cancel: closeConfirmModal,
-      id: GA.CON.SIDE_MODAL,
     });
   };
 
   const handleUpdateStatusConfirmModal = (situation: SituationText) => {
     const convertedSituation = convertTextToSituation(situation);
     openConfirmModal({
-      type: 'CHANGE_STATUS_ADMIN',
+      type: 'CHANGE_STATUS',
       confirm: () => updateStatus(convertedSituation),
       cancel: closeConfirmModal,
       // id: situation === '완납' ? GA.FULL.SIDE_MODAL : '',
@@ -92,6 +119,7 @@ const UserDetails = () => {
   const { dropdownList, convertTextToSituation, convertSituationToText } = useSituationList(situation);
   const { mutate: mutateDetailStatus } = useUpdateDetailStatus(onSuccessUpdateStatus);
   const { mutate: deleteDetail } = useDeleteDetail(closeUserDetails);
+  const { isWithdrawal } = useWithdrawalParticipantList(Number(groupId));
 
   const updateStatus = (situation: Situation) => {
     mutateDetailStatus({ situation, eventIdList: [eventId] });
@@ -132,7 +160,10 @@ const UserDetails = () => {
           </Style.BetweenBlock>
           <Style.Block>
             <Style.PersonIcon>{USER.PERSON_XL}</Style.PersonIcon>
-            <Style.Text>{nickname}</Style.Text>
+            <Style.Text>
+              {nickname}
+              {isWithdrawal(nickname) && <WithdrawBadge size="md" />}
+            </Style.Text>
           </Style.Block>
           <Style.Block>
             <Style.Text>{changeNumberToMoney(amount)}원</Style.Text>
@@ -161,30 +192,43 @@ const UserDetails = () => {
           </Label>
         </Style.UserDetailsContent>
         <Style.Footer>
-          {!isAdmin && isOwn && (
-            <Tooltip
-              title="납부 요청이란?"
-              contents={PaymentRequest}
-              width={312}
-              location="BOTTOM"
-              top="60px"
-              left="-163px"
-              messageBox={{ left: '290px', top: '-8px' }}
-              defaultValue
-              preventClick
-              trigger={
-                <Button
-                  width="150px"
-                  height="42px"
-                  color={situation === '미납' ? 'black' : 'disabled'} //
-                  onClick={handleRequestConfirmModal}
-                  id={GA.CON.SIDE_BUTTON}
-                >
-                  {REQUEST_BUTTON[situation]}
-                </Button>
-              }
-            />
+          {!isAdmin && isOwn && situation !== '완납' && (
+            <Button
+              width="150px"
+              height="42px"
+              color={situation === '미납' ? 'black' : 'disabled'} //
+              onClick={handleRequestConfirmModal}
+              id={GA.CON.SIDE_BUTTON}
+            >
+              {REQUEST_BUTTON[situation]}
+            </Button>
           )}
+          {isAdmin && //
+            !isOwn &&
+            !isWithdrawalMember(nickname) &&
+            situation === '미납' && (
+              <Tooltip
+                title="납부 요청이란?"
+                contents={PaymentRequest}
+                width={312}
+                location="BOTTOM"
+                top="60px"
+                left="-163px"
+                messageBox={{ left: '290px', top: '-8px' }}
+                preventClick
+                trigger={
+                  <Button
+                    width="150px"
+                    height="42px"
+                    color={situation === '미납' ? 'black' : 'disabled'} //
+                    onClick={handleRequestPayment}
+                    id={GA.CON.SIDE_BUTTON}
+                  >
+                    납부요청
+                  </Button>
+                }
+              />
+            )}
         </Style.Footer>
       </Style.UserDetailsFrame>
       {showUpdateModal && <FineBookUpdateModal modalHandler={handleUpdateModal} />}
