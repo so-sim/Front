@@ -37,6 +37,7 @@ export const Footer = styled.div`
   display: flex;
   justify-content: flex-end;
   gap: 12px;
+  width: calc(100% - 48px);
 
   position: absolute;
   bottom: 1.5rem;

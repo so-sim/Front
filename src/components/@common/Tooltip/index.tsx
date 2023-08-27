@@ -14,6 +14,7 @@ type TooltipProps = {
   messageBox: {
     left?: string;
     top?: string;
+    width?: string;
   };
   left?: string;
   top?: string;
@@ -47,7 +48,7 @@ export const Tooltip = ({
   };
 
   return (
-    <span style={{ position: 'relative' }}>
+    <span style={{ position: 'relative', width: messageBox.width || 'fit-content' }}>
       {showTooltip && (
         <div style={{ position: 'absolute', left, top, zIndex: '10' }}>
           <Style.Arrow top={messageBox.top || '0'} left={messageBox.left || '0'} location={location}>
