@@ -54,7 +54,7 @@ const WithdrawalReason = () => {
         <Button color="white" width="150px" height="42px" onClick={onClickCancle}>
           취소
         </Button>
-        <Button color={selectedReason ? 'black' : 'disabled'} width="150px" height="42px" onClick={handleWithdrawModal}>
+        <Button color={Boolean(selectedReason.title) ? 'black' : 'disabled'} width="150px" height="42px" onClick={handleWithdrawModal}>
           탈퇴하기
         </Button>
       </Style.Footer>
