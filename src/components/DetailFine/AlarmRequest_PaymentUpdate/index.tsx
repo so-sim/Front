@@ -23,6 +23,7 @@ import { useGetDetailListById } from '@/queries/Detail/useGetDetailListById';
 import useDisabledList from '@/hooks/useDisabledList';
 import { Tooltip } from '@/components/@common/Tooltip';
 import { detailFineState } from '@/store/detailFineState';
+import { convertToPriceFormat } from '@/utils/convertFormat';
 
 type Props = {
   checkDetailFine: CheckListState;
@@ -246,7 +247,7 @@ const AlarmRequest_PaymentUpdate = ({ checkDetailFine }: Props) => {
           <Style.DatePeriodText>
             {min_Date(sortedtList)} - {max_Date(sortedtList)}
           </Style.DatePeriodText>
-          {isSingleList(originalCheckListValue) && <Style.TotalAmount>{TotalAmount} 원</Style.TotalAmount>}
+          {isSingleList(originalCheckListValue) && <Style.TotalAmount>{convertToPriceFormat(TotalAmount)} 원</Style.TotalAmount>}
         </Style.DatePeriodContainer>
 
         {/* List 영역 */}
