@@ -26,6 +26,7 @@ const NotificationForm = ({ notificationForm, getNotificationFormAction }: Props
     handleDuplicateNotificationForm,
     isErrorField,
     getNotificationDescription,
+    initFormWithoutSettingType,
   } = getNotificationFormAction();
 
   const { firstLine, secondLine, thirdLine } = getNotificationDescription();
@@ -67,7 +68,11 @@ const NotificationForm = ({ notificationForm, getNotificationFormAction }: Props
                 <Style.PeriodTypeButton //
                   key={type.value}
                   isSelected={isSamePeriodType(type.value)}
-                  onClick={() => handleNotificationForm('settingType', type.value)}
+                  onClick={() => {
+                    //이거 변경할 때에만 초기화
+                    initFormWithoutSettingType();
+                    handleNotificationForm('settingType', type.value);
+                  }}
                 >
                   {type.label}
                 </Style.PeriodTypeButton>
