@@ -15,6 +15,7 @@ import { DetailFilter } from '@/store/detailFilter';
 import { FilterModeTest, useDateFilter } from './hook/useDateFilter';
 import useDropDown from '@/hooks/useDropDown';
 import FilterButton from './FilterButton';
+import useCheckListState from '@/hooks/useCheckListState';
 
 export type FilterButtonType = { mode: FilterModeTest; text: string; id?: string };
 
@@ -35,6 +36,10 @@ const DateController = ({ setDetailFilter }: Props) => {
 
   const initialAddModalState = useCheckLocationState();
 
+  const {
+    setCheckDetailFine: { setInitCheckDetailFine },
+  } = useCheckListState();
+
   const [calendarDate, setCalendarDate] = useRecoilState(dateState);
 
   const [openAddModal, setOpenAddModal] = useState<boolean>(initialAddModalState);
@@ -42,6 +47,7 @@ const DateController = ({ setDetailFilter }: Props) => {
   const { getTitle, increaseDate, decreaseDate } = useDateFilter();
 
   const handleAddModal = () => {
+    setInitCheckDetailFine();
     setOpenAddModal((prev) => !prev);
   };
 

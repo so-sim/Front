@@ -1,5 +1,6 @@
 import { ARROW } from '@/assets/icons/Arrow';
 import { DropDown } from '@/components/@common';
+import useCheckListState from '@/hooks/useCheckListState';
 import useDropDown from '@/hooks/useDropDown';
 import { dateState } from '@/store/dateState';
 import { customedWeek } from '@/utils/customedWeek';
@@ -20,6 +21,10 @@ const FilterButton = ({ btn }: Props) => {
   const [openWeeklyFilterDrop, setOpenWeeklyFilterDrop] = useState(false);
   const { goToWeek, changeDateByButtonMode } = useDateFilter();
 
+  const {
+    setCheckDetailFine: { setInitCheckDetailFine },
+  } = useCheckListState();
+
   const dropDownRef = useRef<HTMLDivElement>(null);
 
   const handleWeeklyFilterDrop = () => {
@@ -33,6 +38,7 @@ const FilterButton = ({ btn }: Props) => {
   const handleDateFilterMode = (e: MouseEvent<HTMLButtonElement>, buttonMode: FilterModeTest) => {
     if (buttonMode === 'custom') {
       setOpenWeeklyFilterDrop(false);
+      setInitCheckDetailFine();
       handleCustomFilterDrop();
       e.stopPropagation();
       return;

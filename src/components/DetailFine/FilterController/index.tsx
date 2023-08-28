@@ -31,7 +31,10 @@ const FilterController = ({ detailFilter, setDetailFilter, totalAmount }: Props)
   const [searchMode, setSearchMode] = useState<SearchMode>('search');
   const { groupId } = useParams();
 
-  const { checkDetailFineValues } = useCheckListState();
+  const {
+    checkDetailFineValues,
+    setCheckDetailFine: { setInitCheckDetailFine },
+  } = useCheckListState();
 
   const TotalAmount = checkDetailFineValues?.reduce((prev, current) => prev + current.amount, 0);
 
@@ -61,7 +64,7 @@ const FilterController = ({ detailFilter, setDetailFilter, totalAmount }: Props)
 
   return (
     <Style.FilterContainer>
-      <Style.LeftContainer>
+      <Style.LeftContainer onClick={setInitCheckDetailFine}>
         <Style.FilterText>필터</Style.FilterText>
         <Style.ButtonContainer>
           {SITUATION_FILTER.map(({ value, title }) => {
