@@ -141,7 +141,7 @@ const useNotificationForm = (): NotificationHook => {
     const dayList = daysOfWeek?.map((day) => dayType[day as DayType]).join(',');
     const weekList = ordinalNumbers?.map((ordinalNumber) => weekType[ordinalNumber]).join(',');
 
-    const startNotificationDate = `${startMonth}월 ${startDay}일부터`;
+    const startNotificationDate = `${startMonth}월 ${startDay}일 이후부터`;
     const notificationCycle = isRegularCycle ? `매${unitType[settingType]}` : `${repeatCycle}${unitType_2[settingType]}마다`;
 
     const regularCycle = `${isRegularCycle ? `${notificationCycle} ` : ''}`;
