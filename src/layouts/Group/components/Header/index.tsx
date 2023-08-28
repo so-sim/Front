@@ -12,6 +12,8 @@ import * as Style from './styles';
 import { ALARM } from '@/assets/icons/Alarm';
 import AlarmComponent from '@/components/Alarm';
 import useCheckListState from '@/hooks/useCheckListState';
+import { useRecoilState } from 'recoil';
+import { notificationModalState } from '@/store/notificationModalState';
 
 const DorpDownList = [
   { title: '환경설정', svg: SYSTEM.SETTING_SM },
@@ -29,6 +31,8 @@ const GroupLayoutHeader = ({ handleSideBar }: Props) => {
   const [showDropDown, setShowDropDown] = useState(false);
 
   const { openConfirmModal, closeConfirmModal } = useConfirmModal();
+
+  const [showNotification, setShowNotification] = useRecoilState(notificationModalState);
 
   const {
     setCheckDetailFine: { setInitCheckDetailFine },
@@ -51,6 +55,7 @@ const GroupLayoutHeader = ({ handleSideBar }: Props) => {
   const handleDropDown = () => {
     setShowDropDown((prev) => !prev);
     setInitCheckDetailFine();
+    setShowNotification(false);
   };
 
   const onClickLogOut = () => {

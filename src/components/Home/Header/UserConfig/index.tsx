@@ -6,9 +6,11 @@ import DropDown from '@/components/@common/DropDown';
 import UserConfigModal from '@/components/@common/Modal/UserConfigModal';
 import AlarmComponent from '@/components/Alarm';
 import useConfirmModal from '@/hooks/useConfirmModal';
+import { notificationModalState } from '@/store/notificationModalState';
 import { useEffect, useRef, useState } from 'react';
 import { isMobile } from 'react-device-detect';
 import { useNavigate } from 'react-router-dom';
+import { useRecoilState } from 'recoil';
 import * as Style from './style';
 
 const UserConfig = () => {
@@ -16,6 +18,8 @@ const UserConfig = () => {
   const [showConfigModal, setShowConfigModal] = useState(false);
   const [showDropDown, setShowDropDown] = useState(false);
   const navigate = useNavigate();
+
+  const [showNotification, setShowNotification] = useRecoilState(notificationModalState);
 
   const { openConfirmModal, closeConfirmModal } = useConfirmModal();
 
@@ -34,6 +38,7 @@ const UserConfig = () => {
 
   const handleDropDown = () => {
     setShowDropDown((prev) => !prev);
+    setShowNotification(false);
   };
 
   const onClickLogOut = () => {
