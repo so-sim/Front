@@ -15,9 +15,10 @@ import AlarmRequest_PaymentUpdate from '@/components/DetailFine/AlarmRequest_Pay
 
 import useCheckListState from '@/hooks/useCheckListState';
 import { sideModalState } from '@/store/sideModalState';
-import { alarmInfoState } from '@/store/alarmInfoState';
+import { alarmInfoState, initAlarmInfoState } from '@/store/alarmInfoState';
 import { SituationStatus } from '@/types/notification';
 import styled from '@emotion/styled';
+import { notificationModalState } from '@/store/notificationModalState';
 
 export type FilterMode = 'month' | 'week' | 'day';
 
@@ -39,6 +40,8 @@ const SITUATION_FORMAT_STYLE: { [key in SituationStatus]: Situation } = {
 const DetailFine = () => {
   const { groupId } = useParams();
 
+  const location = useLocation();
+
   const [detailFilter, setDetailFilter] = useState<DetailFilter>({ nickname: '', situation: '', page: 0, size: 16, groupId: Number(groupId) });
 
   const calendarDate = useRecoilValue(dateState);
@@ -46,6 +49,7 @@ const DetailFine = () => {
 
   const [sideModal, setSideModal] = useRecoilState(sideModalState);
 
+  const [showNotification, setShowNotification] = useRecoilState(notificationModalState);
   const { isModal } = sideModal;
 
   const {
@@ -55,19 +59,34 @@ const DetailFine = () => {
 
   useEffect(() => {
     setInitCheckDetailFine();
-  }, [calendarDate]);
+  }, [calendarDate, location, detailFilter]);
 
   const [alarmState, setAlarmEventIdList] = useRecoilState(alarmInfoState);
 
   const [searchParam, setSearhParam] = useSearchParams();
 
+  const notificationFilterTrigger = useRef(false);
+
   useEffect(() => {
-    setDetailFilter({ nickname: '', situation: '', page: 0, size: 16, groupId: Number(groupId) });
+    if (notificationFilterTrigger.current === true) {
+      setAlarmEventIdList(initAlarmInfoState);
+      // 전역 AlarmState 초기화는 DetailList / MobileLayout / ALarmInfo - onSuccess 에서 진행되고 있다
+      return;
+    }
+    //
+
+    if (showNotification) {
+      notificationFilterTrigger.current = true;
+    }
+  }, [showNotification]);
+  // 해당 useEffect는 Alarm index 41Line과도 연관이 있습니다.
+
+  useEffect(() => {
     if (alarmState.groupId && alarmState.nickname) {
       setDetailFilter((prev) => ({ ...prev, nickname: alarmState.nickname || '', situation: SITUATION_FORMAT_STYLE[alarmState.afterSituation || 'NONE'] }));
       // 닉네임과 납부여부 설정하는 곳인데/  닉네임설정하려면 input 창 맨처음에 설정해야함
     }
-  }, [groupId, alarmState, searchParam]);
+  }, [groupId, alarmState]);
 
   // check를 다시 풀고 다시 해줘야 User인터랙션이 겹쳤을 때 바뀐 상태를 다시 저장할 수 있다.  (그래서 그냥 다시 요청을 보내기로)
 
@@ -89,23 +108,9 @@ const DetailFine = () => {
             <AlarmRequest_PaymentUpdate checkDetailFine={{ ...checkDetailFine }} />
           </AlarmRequest_PaymentUpdate.DesktopFrame>
         )}
-        {alarmState.groupId && <BackDrop />}
       </Style.DetailFineFrame>
     </SelectedFineContextProvider>
   );
 };
 
 export default DetailFine;
-
-export const BackDrop = styled.div`
-  position: absolute;
-  top: 68px;
-  bottom: 0;
-  right: 0;
-  left: 0;
-
-  background-color: #2d2d2d;
-  opacity: 30%;
-
-  z-index: 9998;
-`;

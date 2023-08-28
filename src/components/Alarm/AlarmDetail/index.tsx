@@ -6,6 +6,8 @@ import AlarmInfo from './AlarmInfo';
 import { useRecoilState } from 'recoil';
 import { alarmInfoState, initAlarmInfoState } from '@/store/alarmInfoState';
 import { useSearchParams } from 'react-router-dom';
+import styled from '@emotion/styled';
+import { notificationModalState } from '@/store/notificationModalState';
 
 type Props = {
   headerHeight: number;
@@ -14,27 +16,29 @@ type Props = {
 const AlarmDetail = ({ headerHeight, setShowAlarmDetail }: Props) => {
   const [alarmIdList, setAlarmIdList] = useRecoilState(alarmInfoState);
 
-  const [searchParam, setSearchParam] = useSearchParams();
+  const [showNotification, setShowNotification] = useRecoilState(notificationModalState);
 
   const close = () => {
     setShowAlarmDetail((prev) => !prev);
-
-    setAlarmIdList(initAlarmInfoState);
   };
   return (
-    <Style.AlarmDetailFrame $headerHeight={headerHeight}>
-      <Style.Header>
-        <Style.CloseIconWrapper onClick={close}>
-          {SYSTEM.CLOSE_LG}
-          <Style.CloseText>닫기</Style.CloseText>
-        </Style.CloseIconWrapper>
-      </Style.Header>
+    <>
+      <Style.AlarmDetailFrame $headerHeight={headerHeight}>
+        <Style.Header>
+          <Style.CloseIconWrapper onClick={close}>
+            {SYSTEM.CLOSE_LG}
+            <Style.CloseText>닫기</Style.CloseText>
+          </Style.CloseIconWrapper>
+        </Style.Header>
 
-      <Style.Main>
-        {!alarmIdList.alarmEventIdList.length && <AlarmList />}
-        {(alarmIdList.alarmEventIdList.length || null) && <AlarmInfo />}
-      </Style.Main>
-    </Style.AlarmDetailFrame>
+        {/* 여기서 Trigger를 state하나 지정해서 List 에서 Card 누르면 Info로 가는 state를 만드는게 나을듯 */}
+        <Style.Main>
+          {!alarmIdList.alarmEventIdList.length && <AlarmList />}
+          {(alarmIdList.alarmEventIdList.length || null) && <AlarmInfo />}
+        </Style.Main>
+      </Style.AlarmDetailFrame>
+      {showNotification && <Style.BackDrop $headerHeight={headerHeight} onClick={() => setShowNotification(false)} />}
+    </>
   );
 };
 export default AlarmDetail;

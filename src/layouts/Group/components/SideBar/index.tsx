@@ -8,6 +8,7 @@ import { SYSTEM } from '@/assets/icons/System';
 import { USER } from '@/assets/icons/User';
 import * as Style from './styles';
 import { isMobile } from 'react-device-detect';
+import useCheckListState from '@/hooks/useCheckListState';
 
 const GROUP_TAPS = [
   { title: '홈', svg: SYSTEM.HOME, disabled: true, link: 'home' },
@@ -30,6 +31,11 @@ const GroupSideBar = () => {
   const isAdmin = group?.content.isAdmin;
 
   const [showGroupSettingModal, setShowGroupSettingModal] = useState(false);
+
+  const {
+    setCheckDetailFine: { setInitCheckDetailFine },
+  } = useCheckListState();
+
   const { data: groupData, isError } = useGroupDetail(Number(groupId));
 
   const isSelected = (link: string) => {
@@ -41,6 +47,7 @@ const GroupSideBar = () => {
 
   const handleGroupSettingModal = () => {
     setShowGroupSettingModal((prev) => !prev);
+    setInitCheckDetailFine();
   };
 
   const moveToSettingPage = () => {

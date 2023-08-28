@@ -6,12 +6,13 @@ import { DetailFilter } from '@/store/detailFilter';
 import { useRecoilState } from 'recoil';
 import { dateState } from '@/store/dateState';
 import { SelectedEventInfo } from '@/types/event';
-import { useSelectedContext } from '@/contexts/SelectedFineContext';
+import { initialSelectData, useSelectedContext } from '@/contexts/SelectedFineContext';
 import CheckboxContainer from '../../@common/Checkbox';
 import { CheckDetailFine, SetCheckDetailFine } from '@/components/DetailFine/AlarmRequest_PaymentUpdate/hooks/useCheckDetailFine';
 import DetailListCheckBox from '../checkbox';
 import useCheckListState from '@/hooks/useCheckListState';
 import { covertDateForView } from '@/utils/convertFormat';
+import { notificationModalState } from '@/store/notificationModalState';
 import { ALARM } from '@/assets/icons/Alarm';
 import { SYSTEM } from '@/assets/icons/System';
 import { useRequestNotification } from '@/queries/Notification/useRequestNotifaction';
@@ -19,6 +20,7 @@ import useConfirmModal from '@/hooks/useConfirmModal';
 import { useWithdrawalParticipantList } from '@/queries/Group/useWithdrawalParticipantList';
 import { useParams } from 'react-router-dom';
 import WithdrawBadge from '@/components/@common/WithdrawBadge';
+
 
 type Props = {
   details?: SelectedEventInfo[];
@@ -36,8 +38,10 @@ const DetailList = ({ detailFilter, details }: Props) => {
   const { openConfirmModal, closeConfirmModal } = useConfirmModal();
   const { withdrawalParticipants, isWithdrawal } = useWithdrawalParticipantList(Number(groupId));
 
+  const [showNotification, setShowNotification] = useRecoilState(notificationModalState);
+
   const {
-    setCheckDetailFine: { setToggleCheckList },
+    setCheckDetailFine: { setToggleCheckList, setInitCheckDetailFine },
     isChecked,
   } = useCheckListState();
 
@@ -68,6 +72,14 @@ const DetailList = ({ detailFilter, details }: Props) => {
       window.removeEventListener('click', closeCircleButtonList);
     };
   }, []);
+
+  useEffect(() => {
+    setInitCheckDetailFine();
+  }, [openButtonListId, selectedFine]);
+
+  useEffect(() => {
+    setSelectedFine(initialSelectData);
+  }, [showNotification]);
 
   const filteredDataNotFound = details?.length === 0 && calendarState.mode === 'day' && detailFilter.nickname === '' && detailFilter.situation === '';
 

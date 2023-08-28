@@ -96,3 +96,24 @@ export const Button = styled.button<{ isSubmit?: boolean }>`
       color: ${theme.colors.secondary_100};
     `}
 `;
+
+export const DatePeriodContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+
+  margin-bottom: 8px;
+  ${({ theme }) => theme.font.body_01};
+`;
+
+export const DatePeriodText = styled.p`
+  ${({ theme }) => theme.font.body_01};
+
+  color: ${({ theme }) => theme.colors.secondary_600};
+  font-size: 0.875rem;
+`;
+
+export const TotalAmount = styled.p`
+  ${({ theme }) => theme.font.subhead_02};
+
+  color: ${({ theme }) => theme.colors.secondary_900};
+`;
