@@ -216,6 +216,7 @@ const UserDetails = () => {
                 left="-163px"
                 messageBox={{ left: '290px', top: '-8px' }}
                 preventClick
+                defaultValue
                 trigger={
                   <Button
                     width="150px"

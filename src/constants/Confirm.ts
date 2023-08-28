@@ -117,4 +117,12 @@ export const CONFIRM_MODAL = {
     description: `여러 내역의 납부 여부를 변경하려면 \n 해당 내역들의 납부 여부가 동일해야 합니다.`,
     confirm: '확인',
   },
+  CHANGE_WITHDRAWAL_MEMBER_DETAIL: {
+    title: '알림',
+    description: isMobile
+      ? `탈퇴한 팀원을\n다른 팀원으로 변경하시겠습니까?\n변경 시, 탈퇴한 팀원의 내역은\n복구할 수 없습니다.`
+      : `탈퇴한 팀원을 다른 팀원으로 변경하시겠습니까?\n변경 시, 탈퇴한 팀원의 내역은 복구할 수 없습니다.`,
+    confirm: '변경하기',
+    cancel: '취소',
+  },
 };
