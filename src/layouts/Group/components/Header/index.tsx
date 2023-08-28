@@ -18,7 +18,11 @@ const DorpDownList = [
   { title: '로그아웃', svg: SYSTEM.LOGOUT },
 ];
 
-const GroupLayoutHeader = () => {
+type Props = {
+  handleSideBar: VoidFunction;
+};
+
+const GroupLayoutHeader = ({ handleSideBar }: Props) => {
   const navigate = useNavigate();
   const [dropDownState, setDropDownState] = useState('');
   const [showConfigModal, setShowConfigModal] = useState(false);
@@ -62,7 +66,10 @@ const GroupLayoutHeader = () => {
   return (
     <>
       <Style.Header>
-        <span onClick={() => navigate('/')}>{LOGO.SM}</span>
+        <Style.Logo>
+          <button onClick={handleSideBar}>{SYSTEM.MENU}</button>
+          <span onClick={() => navigate('/')}>{LOGO.SM}</span>
+        </Style.Logo>
 
         <Style.UserConfigContainer>
           <AlarmComponent headerHeight={4.25} />

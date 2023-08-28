@@ -8,6 +8,9 @@ import { AutoComplete } from './AutoComplete';
 import * as Style from './styles';
 import Toolbar from '../Toolbar';
 import { SituationText } from '@/hooks/useSituationList';
+import { useWithdrawalParticipantList } from '@/queries/Group/useWithdrawalParticipantList';
+import { useParams } from 'react-router-dom';
+import WithdrawBadge from '@/components/@common/WithdrawBadge';
 
 type Props = {
   detailFilter: DetailFilter;
@@ -25,6 +28,8 @@ const SITUATION_FILTER: { value: Situation; title: SituationText }[] = [
 
 const FilterController = ({ detailFilter, setDetailFilter, totalAmount }: Props) => {
   const [searchMode, setSearchMode] = useState<SearchMode>('search');
+  const { groupId } = useParams();
+  const { isWithdrawal } = useWithdrawalParticipantList(Number(groupId));
 
   const updateSituationFilter = (situation: Situation) => {
     const isSameSituationFilter = detailFilter.situation === situation;
@@ -72,6 +77,7 @@ const FilterController = ({ detailFilter, setDetailFilter, totalAmount }: Props)
               <Style.SelectedNickname onClick={toggleSearchMode}>
                 {USER.PERSON_SM}
                 {detailFilter.nickname}
+                {isWithdrawal(detailFilter.nickname) && <WithdrawBadge />}
               </Style.SelectedNickname>
               <Style.CancelButton onClick={cancelSearchNickname}>{SYSTEM.CLOSE_SM}</Style.CancelButton>
             </Style.SelectedMember>

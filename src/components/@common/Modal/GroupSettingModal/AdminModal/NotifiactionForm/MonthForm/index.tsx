@@ -43,6 +43,21 @@ const MonthForm = <T extends NotificationInfo, V extends T[DuplicateValues]>({ n
     }, time);
   };
 
+  const isDuplicateOrdinaryNumbers = (value: number) => {
+    return (notificationForm.ordinalNumbers ?? []).includes(value);
+  };
+
+  const subtractDuplicateOrdinaryNumbers = (value: number) => {
+    handleNotificationForm(
+      'ordinalNumbers',
+      (notificationForm.ordinalNumbers ?? []).filter((v) => v !== value),
+    );
+  };
+
+  const addDuplicateOrdinaryNumbers = (value: number) => {
+    handleNotificationForm('ordinalNumbers', [...(notificationForm.ordinalNumbers ?? []), value]);
+  };
+
   const isSimpleDateType = notificationForm.monthSettingType === 'SIMPLE_DATE';
   const isSelectDayType = notificationForm.monthSettingType === 'WEEK';
 
@@ -103,11 +118,16 @@ const MonthForm = <T extends NotificationInfo, V extends T[DuplicateValues]>({ n
                   key={label}
                   isSelected={notificationForm.ordinalNumbers?.includes(value)}
                   onClick={() => {
-                    if (ordinaryError) return;
+                    if (isDuplicateOrdinaryNumbers(value)) {
+                      setOrdinaryError(false);
+                      return subtractDuplicateOrdinaryNumbers(value);
+                    }
+
                     if (isOverTwoOrdinaryNumbers()) {
                       return setErrorMessageDuring(2000);
                     }
-                    handleDuplicateValues('ordinalNumbers', value);
+
+                    addDuplicateOrdinaryNumbers(value);
                   }}
                 >
                   {label}

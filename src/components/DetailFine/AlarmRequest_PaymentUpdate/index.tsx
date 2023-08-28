@@ -198,7 +198,8 @@ const AlarmRequest_PaymentUpdate = ({ checkDetailFine }: Props) => {
   };
 
   const requestAlarm = () => {
-    mutateRequestNotification();
+    //Todo: 알림 보내는
+    mutateRequestNotification(eventIdList.map(Number));
     isMobile && mobileOnSuccess();
   };
   // 백엔드 API명세에 아직 추가되어있지않음

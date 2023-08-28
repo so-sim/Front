@@ -20,6 +20,19 @@ export const Header = styled.header`
   }
 `;
 
+export const Logo = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  button {
+    display: none;
+    @media (max-width: 1679px) {
+      display: block;
+    }
+  }
+`;
+
 export const UserConfigButton = styled.button`
   display: flex;
   align-items: center;

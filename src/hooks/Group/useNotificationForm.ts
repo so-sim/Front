@@ -285,7 +285,8 @@ export const getErrorFieldList = (notificationForm: NotificationInfo): Array<key
   const result: Array<keyof NotificationInfo> = [];
 
   if (repeatCycle < 1 || repeatCycle > 100) result.push('repeatCycle');
-  if (!dayjs(startDate).isValid() || startDate.length < 10) result.push('startDate');
+
+  if (isValidDate(startDate)) result.push('startDate');
 
   if (settingType === 'M' && monthSettingType === 'WEEK') {
     if (!ordinalNumbers || !ordinalNumbers?.length) {
@@ -341,4 +342,18 @@ export const getIsValidNotificationForm = (notificationForm: NotificationInfo) =
 const controlDuplicateValues = <T>(list: T[], value: T): T[] => {
   const result = list.includes(value) ? list.filter((day) => day !== value) : [...list, value];
   return result;
+};
+
+const isValidDate = (startDate: string) => {
+  const [year, month, date] = startDate.split('-').map(Number);
+  const lastDateByMonth = dayjs(`${year}-${month}-01`).endOf('month').date();
+
+  return (
+    !dayjs(startDate).isValid() || //
+    startDate.length < 10 ||
+    month > 12 ||
+    month <= 0 ||
+    date > lastDateByMonth ||
+    date <= 0
+  );
 };
