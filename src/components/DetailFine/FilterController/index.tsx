@@ -11,6 +11,7 @@ import { SituationText } from '@/hooks/useSituationList';
 import { useWithdrawalParticipantList } from '@/queries/Group/useWithdrawalParticipantList';
 import { useParams } from 'react-router-dom';
 import WithdrawBadge from '@/components/@common/WithdrawBadge';
+import useCheckListState from '@/hooks/useCheckListState';
 
 type Props = {
   detailFilter: DetailFilter;
@@ -29,6 +30,11 @@ const SITUATION_FILTER: { value: Situation; title: SituationText }[] = [
 const FilterController = ({ detailFilter, setDetailFilter, totalAmount }: Props) => {
   const [searchMode, setSearchMode] = useState<SearchMode>('search');
   const { groupId } = useParams();
+
+  const { checkDetailFineValues } = useCheckListState();
+
+  const TotalAmount = checkDetailFineValues?.reduce((prev, current) => prev + current.amount, 0);
+
   const { isWithdrawal } = useWithdrawalParticipantList(Number(groupId));
 
   const updateSituationFilter = (situation: Situation) => {
@@ -88,7 +94,7 @@ const FilterController = ({ detailFilter, setDetailFilter, totalAmount }: Props)
       </Style.LeftContainer>
       <Style.AmountContainer>
         <div>합계</div>
-        <Style.Amount>{convertToPriceFormat(totalAmount)}</Style.Amount>
+        <Style.Amount>{TotalAmount === 0 ? 0 : convertToPriceFormat(TotalAmount)} 원</Style.Amount>
       </Style.AmountContainer>
       <Toolbar />
     </Style.FilterContainer>
