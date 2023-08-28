@@ -74,8 +74,7 @@ export const Footer = styled.div`
   right: 0;
   left: 0;
 
-  padding: 0 24px;
-  padding-bottom: 48px;
+  padding: 12px 24px 24px;
 
   background-color: white;
 `;

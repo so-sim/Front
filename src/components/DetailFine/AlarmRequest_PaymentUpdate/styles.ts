@@ -2,12 +2,13 @@ import { DefaultTheme } from '@/styles/Theme';
 import { Situation } from '@/types/event';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
+import { isMobile } from 'react-device-detect';
 
 export const UserDetailsFrame = styled.div`
   /* userDetail 에서 값은 왜 더높음? */
   width: 460px;
   position: absolute;
-  top: 0;
+  top: 4.25rem;
   bottom: 0;
   right: 0;
   z-index: 9999;
@@ -70,6 +71,20 @@ export const UserLineSpan = styled.span<{ $situation: Situation }>`
   ${({ theme, $situation }) => SITUATION_USERLINESTYLES[$situation](theme)};
 `;
 
+export const ProfileWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+
+  padding-bottom: 0.75rem;
+`;
+
+export const ProfimeText = styled.p`
+  ${({ theme }) => (isMobile ? theme.font.subhead_03 : theme.font.subhead_04)};
+
+  color: ${({ theme }) => theme.colors.secondary_800};
+`;
+
 export const DatePeriodContainer = styled.div`
   display: flex;
   justify-content: space-between;
@@ -130,12 +145,12 @@ export const Button = styled.button<{ isSubmit?: boolean }>`
 
 export const BackDrop = styled.div`
   position: absolute;
-  top: 0;
+  top: 4.25rem;
   bottom: 0;
   right: 0;
   left: 0;
 
-  background-color: #2d2d2d;
+  background-color: white;
   opacity: 30%;
 
   z-index: 9998;

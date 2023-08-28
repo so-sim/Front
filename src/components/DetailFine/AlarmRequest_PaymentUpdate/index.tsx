@@ -24,6 +24,9 @@ import useDisabledList from '@/hooks/useDisabledList';
 import { Tooltip } from '@/components/@common/Tooltip';
 import { detailFineState } from '@/store/detailFineState';
 import { convertToPriceFormat } from '@/utils/convertFormat';
+import { USER } from '@/assets/icons/User';
+import { useWithdrawalParticipantList } from '@/queries/Group/useWithdrawalParticipantList';
+import WithdrawBadge from '@/components/@common/WithdrawBadge';
 
 type Props = {
   checkDetailFine: CheckListState;
@@ -221,6 +224,10 @@ const AlarmRequest_PaymentUpdate = ({ checkDetailFine }: Props) => {
     return isAllSameSituation.size === 1;
   };
 
+  const getSingleNickName = originalCheckListValue[0].nickname;
+
+  const { isWithdrawal } = useWithdrawalParticipantList(Number(groupId));
+
   // 해당 로직을 ItemList에서 toggle이 실행되었을 때 해주어도 좋을 것 같다.
 
   const max_Date = (sortedtList: SelectedEventInfo[]) => sortedtList.at(-1)?.date;
@@ -234,6 +241,13 @@ const AlarmRequest_PaymentUpdate = ({ checkDetailFine }: Props) => {
       <Style.Main $isMobile={isMobile}>
         {/* Title 영역 */}
         {type && Status[type].title}
+        {isSingleList(originalCheckListValue) && (
+          <Style.ProfileWrapper>
+            <p>{USER.PERSON_24}</p>
+            <Style.ProfimeText>{getSingleNickName}</Style.ProfimeText>
+            {getSingleNickName && isWithdrawal(getSingleNickName) && <WithdrawBadge size="md" />}
+          </Style.ProfileWrapper>
+        )}
         {type && Status[type].subTitle(situationToChange)}
 
         {/* Situation 변경 확인 Buttons */}
@@ -247,7 +261,7 @@ const AlarmRequest_PaymentUpdate = ({ checkDetailFine }: Props) => {
           <Style.DatePeriodText>
             {min_Date(sortedtList)} - {max_Date(sortedtList)}
           </Style.DatePeriodText>
-          {isSingleList(originalCheckListValue) && <Style.TotalAmount>{convertToPriceFormat(TotalAmount)} 원</Style.TotalAmount>}
+          {isSingleList(originalCheckListValue) && <Style.TotalAmount>{TotalAmount === 0 ? 0 : convertToPriceFormat(TotalAmount)} 원</Style.TotalAmount>}
         </Style.DatePeriodContainer>
 
         {/* List 영역 */}
