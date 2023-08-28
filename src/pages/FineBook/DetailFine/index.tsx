@@ -54,6 +54,7 @@ const DetailFine = () => {
 
   const {
     checkDetailFine,
+    checkedSize,
     setCheckDetailFine: { setInitCheckDetailFine },
   } = useCheckListState();
 
@@ -102,7 +103,7 @@ const DetailFine = () => {
         </Style.DetailContent>
         <Pagination totalCount={data?.content.totalCount} detailFilter={detailFilter} setDetailFilter={setDetailFilter} />
         <UserDetails />
-        {isModal && (
+        {isModal && !showNotification && checkedSize > 0 && (
           <AlarmRequest_PaymentUpdate.DesktopFrame>
             <AlarmRequest_PaymentUpdate.DesktopHeader />
             <AlarmRequest_PaymentUpdate checkDetailFine={{ ...checkDetailFine }} />
