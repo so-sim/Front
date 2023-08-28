@@ -127,6 +127,13 @@ const AlarmRequest_PaymentUpdate = ({ checkDetailFine }: Props) => {
     setCheckList(checkDetailFine);
   }, [checkDetailFine]);
 
+  useEffect(() => {
+    return () => {
+      setSideModal(initialSideModalState);
+    };
+    // 알람창 눌러서 해당 컴포넌트 unmount시키면 sideModal은 false로 전환되지않아서 checkbox하나 클릭 시 바로 또 mount되는 현상 대응
+  }, []);
+
   const setSubtractCheckDetailFine = (detail: SelectedEventInfo) => {
     setCheckList((prev) => subtractCheckDetailFine(detail, prev));
   };
@@ -294,10 +301,15 @@ const AlarmRequest_PaymentUpdate = ({ checkDetailFine }: Props) => {
 };
 
 const DesktopFrame = ({ children }: React.PropsWithChildren) => {
+  const [sideModal, setSideModal] = useRecoilState(sideModalState);
+
+  const closePage = () => {
+    setSideModal(initialSideModalState);
+  };
   return (
     <>
       <Style.UserDetailsFrame>{children}</Style.UserDetailsFrame>
-      <Style.BackDrop />
+      <Style.BackDrop onClick={closePage} />
     </>
   );
 };
