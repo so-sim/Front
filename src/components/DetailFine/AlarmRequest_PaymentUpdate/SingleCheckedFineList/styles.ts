@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 import { isMobile } from 'react-device-detect';
 
 export const Container = styled.div`
-  height: calc(100vh - 310px);
+  height: ${isMobile ? 'calc(100vh - 306px)' : 'calc(100vh - 432px)'};
   overflow-y: scroll;
 
   &::-webkit-scrollbar {
