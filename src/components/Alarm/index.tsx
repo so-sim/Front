@@ -2,6 +2,7 @@ import { ALARM } from '@/assets/icons/Alarm';
 import useCheckListState from '@/hooks/useCheckListState';
 import { useGetAlarmListCount } from '@/queries/Notification/useGetAlarmListCount';
 import { alarmInfoState } from '@/store/alarmInfoState';
+import { notificationModalState } from '@/store/notificationModalState';
 import styled from '@emotion/styled';
 import { useEffect, useState } from 'react';
 import { isMobile } from 'react-device-detect';
@@ -16,7 +17,9 @@ type Props = {
 };
 
 const AlarmComponent = ({ headerHeight }: Props) => {
-  const [showAlarmDetail, setShowAlarmDetail] = useState(false);
+  // const [showAlarmDetail, setShowAlarmDetail] = useState(false);
+  const [showNotification, setShowNotification] = useRecoilState(notificationModalState);
+  // 기존 컴포넌트 내부 state였는데 알람 On/off시  납부여부 변경 및 요청 페이지 , 상세리스트디테일 페이지가 닫혀야해서 전역으로 변경
 
   const navigate = useNavigate();
 
@@ -33,10 +36,10 @@ const AlarmComponent = ({ headerHeight }: Props) => {
 
   useEffect(() => {
     if (alarmIdList.groupId) {
-      setShowAlarmDetail(true);
+      setShowNotification(true);
     }
     return () => {
-      setShowAlarmDetail(false);
+      setShowNotification(false);
     };
   }, [location]);
 
@@ -49,7 +52,7 @@ const AlarmComponent = ({ headerHeight }: Props) => {
   };
 
   const handleToggleNotificationModal = () => {
-    setShowAlarmDetail((prev) => !prev);
+    setShowNotification((prev) => !prev);
     setInitCheckDetailFine();
   };
 
@@ -62,7 +65,7 @@ const AlarmComponent = ({ headerHeight }: Props) => {
       >
         {ALARM.ALARM}
       </Style.AlarmIconWrapper>
-      {showAlarmDetail && !isMobile && <AlarmDetail headerHeight={headerHeight} setShowAlarmDetail={setShowAlarmDetail} />}
+      {showNotification && !isMobile && <AlarmDetail headerHeight={headerHeight} setShowAlarmDetail={setShowNotification} />}
       {/* !isMobile을 안넣어줬을 때 AlarmDetail이 Mobile화면에서 출력이 되는 버그가 있다... ?(why.. isMobile에 따라 버튼 트리거도 다른데)  */}
     </>
   );

@@ -3,8 +3,8 @@ import { SelectedEventInfo, Situation } from '@/types/event';
 import React from 'react';
 
 //disabled 되어야하는 List를 가져오는 hook
-const useDisabledList = (groupId: number, checkEventIdList: number[], currentSituation: Situation) => {
-  const { data, isLoading } = useGetDetailListById(groupId, checkEventIdList);
+const useDisabledList = (groupId: number | null, checkEventIdList: number[], currentSituation: Situation) => {
+  const { data, isLoading, isSuccess } = useGetDetailListById(groupId!, checkEventIdList);
 
   // Id로 가져오기랑 기존 가져오기를 합치면 무한 스크롤형식의 size가 들어가서 불편할듯
 
@@ -20,6 +20,7 @@ const useDisabledList = (groupId: number, checkEventIdList: number[], currentSit
   return {
     data,
     isLoading,
+    isSuccess,
     disabledEventIdList,
     isDisabledItem,
   };

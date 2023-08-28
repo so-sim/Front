@@ -26,9 +26,9 @@ api.interceptors.response.use(
     return response;
   },
   async (error) => {
-    if (notFoundGroupDetail(error)) {
-      return (window.location.href = '/not-found');
-    }
+    // if (notFoundGroupDetail(error)) {
+    //   return (window.location.href = '/not-found');
+    // }
 
     const { config, response } = error;
     if (response?.status === 401) {

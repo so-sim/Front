@@ -8,11 +8,11 @@ import theme from '@/styles/Theme';
 import { SelectedEventInfo, Situation } from '@/types/event';
 
 import { useEffect, useState } from 'react';
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useResetRecoilState } from 'recoil';
 import * as Style from './styles';
 import { SituationStatus } from '@/types/notification';
 import { useGroupDetail } from '@/queries/Group';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { isMobile } from 'react-device-detect';
 import { useUpdateDetailStatus } from '@/queries/Detail';
 import { Tooltip } from '@/components/@common/Tooltip';
@@ -32,11 +32,16 @@ const filterDisabledList = (dataList: SelectedEventInfo[] | undefined, disabledE
   dataList?.filter((item) => !disabledEventIdList?.includes(item.eventId)).map((item) => item.eventId) || [];
 
 const AlarmInfo = ({}) => {
-  const [{ alarmEventIdList, nickname, groupId, afterSituation, beforeSituation }, setAlarmIdList] = useRecoilState(alarmInfoState);
+  const [alr, setAlarmIdList] = useRecoilState(alarmInfoState);
+
+  const { alarmEventIdList, nickname, groupId, afterSituation, beforeSituation } = alr;
+  console.log(alr);
 
   const [situationToChange, setSituationToChange] = useState<Situation>('완납');
 
   const navigate = useNavigate();
+
+  const [searchParam, _] = useSearchParams();
 
   const { data: groupAdmin } = useGroupDetail(Number(groupId));
 
@@ -51,7 +56,7 @@ const AlarmInfo = ({}) => {
     isAdmin && setSituationToChange('완납');
   }, [isAdmin]);
 
-  const { data, isLoading, disabledEventIdList, isDisabledItem } = useDisabledList(groupId!, alarmEventIdList, SITUATION_FORMAT_STYLE[afterSituation!]);
+  const { data, isLoading, isSuccess, disabledEventIdList, isDisabledItem } = useDisabledList(groupId, alarmEventIdList, SITUATION_FORMAT_STYLE[afterSituation!]);
 
   const stringToNumber_Date = (date: string) => +date?.replace(/\-/g, '');
 
@@ -70,6 +75,12 @@ const AlarmInfo = ({}) => {
         mode: 'custom',
       }));
   }, [data]);
+
+  useEffect(() => {
+    return () => {
+      console.log('alarmInfo');
+    };
+  }, []);
 
   useEffect(() => {
     setCheckedEventId([...filterDisabledList(data?.content.eventList, disabledEventIdList)]);
@@ -94,31 +105,43 @@ const AlarmInfo = ({}) => {
   };
 
   const settingAlarmInfoNickname = () => {
-    data && setAlarmIdList((prev) => ({ ...prev, nickname: data?.content.eventList[0].nickname }));
+    isSuccess && data && setAlarmIdList((prev) => ({ ...prev, nickname: data?.content.eventList[0].nickname }));
   };
 
   useEffect(() => {
+    console.log('data');
     settingAlarmInfoNickname();
   }, [data]);
 
+  useEffect(() => {
+    console.log('alarmNickname');
+  }, [nickname]);
+
+  const resetList = useResetRecoilState(alarmInfoState);
+
   const mobileOnSuccess = () => {
+    console.log('onSuccess');
     setIsOpen(true);
-    navigate(`/m-group/${groupId}/book`);
+    setAlarmIdList(initAlarmInfoState);
+
+    navigate(`/m-group/${groupId}/book`); // 업데이트 완료 후에 navigate 실행
   };
 
+  console.log(isOpen);
   const onSuccess = () => {
-    setAlarmIdList(initAlarmInfoState);
-    isMobile && mobileOnSuccess();
+    mobileOnSuccess();
+    navigate(`/m-group/${groupId}/book`);
   };
 
   const { mutate: mutateDetailStatus } = useUpdateDetailStatus(onSuccess);
 
   const updateSituation = () => {
-    mutateDetailStatus({ situation: situationToChange, eventIdList: checkedEventId });
+    mutateDetailStatus({ situation: situationToChange, eventIdList: checkedEventId }, { onSuccess: () => setIsOpen(true) });
   };
 
   useEffect(() => {
     return () => {
+      console.log('unmount');
       setAlarmIdList((prev) => ({ ...prev, alarmEventIdList: [] }));
     };
   }, []);
