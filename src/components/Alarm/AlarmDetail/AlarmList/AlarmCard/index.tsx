@@ -66,7 +66,7 @@ const AlarmCard = ({ notificationInfo }: Props) => {
   const goToAlarmInfo = (eventIdList: number[]) => {
     handleReadNotification();
     setAlarmEventIdList({ alarmEventIdList: [...eventIdList], nickname, beforeSituation, afterSituation, groupId });
-    isMobile ? navigate(`/m-notification/info`) : settingCalendarDate();
+    isMobile ? navigate(`/m-notification/info?groupId=${groupId}`) : settingCalendarDate();
   };
 
   const goToGroupMember = () => {

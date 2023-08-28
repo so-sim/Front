@@ -10,7 +10,7 @@ const useValidateSituation = () => {
   const { groupId } = useParams();
   const { checkDetailFineValues, checkDetailFineKeys } = useCheckListState();
 
-  const { refetch: refetchEventListById } = useQuery(['isSameSituationByServerState'], () =>
+  const { refetch: refetchEventListById } = useQuery(['isSameSituationByServerState', groupId], () =>
     getDetailListById({ groupId: Number(groupId), eventIdsList: checkDetailFineKeys.map(Number) }),
   );
 

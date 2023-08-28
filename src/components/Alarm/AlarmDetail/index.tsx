@@ -32,7 +32,7 @@ const AlarmDetail = ({ headerHeight, setShowAlarmDetail }: Props) => {
 
       <Style.Main>
         {!alarmIdList.alarmEventIdList.length && <AlarmList />}
-        {(alarmIdList.alarmEventIdList.length || null) && <AlarmInfo />}
+        {alarmIdList.alarmEventIdList.length && <AlarmInfo />}
       </Style.Main>
     </Style.AlarmDetailFrame>
   );
