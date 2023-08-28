@@ -108,23 +108,9 @@ const DetailFine = () => {
             <AlarmRequest_PaymentUpdate checkDetailFine={{ ...checkDetailFine }} />
           </AlarmRequest_PaymentUpdate.DesktopFrame>
         )}
-        {showNotification && <BackDrop />}
       </Style.DetailFineFrame>
     </SelectedFineContextProvider>
   );
 };
 
 export default DetailFine;
-
-export const BackDrop = styled.div`
-  position: absolute;
-  top: 68px;
-  bottom: 0;
-  right: 0;
-  left: 0;
-
-  background-color: #2d2d2d;
-  opacity: 30%;
-
-  z-index: 9998;
-`;
