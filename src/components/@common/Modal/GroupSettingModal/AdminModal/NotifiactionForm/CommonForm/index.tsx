@@ -12,6 +12,7 @@ import useLockScroll from '@/hooks/useLockScroll';
 import { Tooltip } from '@/components/@common/Tooltip';
 import { SYSTEM } from '@/assets/icons/System';
 import StartDate from '@/components/@common/Tooltip/StartDate';
+import dayjs from 'dayjs';
 
 export const TIME_LIST = Array.from({ length: 48 }, (v, i) => {
   const hour = padStart(Math.floor(i / 2));
@@ -62,7 +63,8 @@ const CommonForm = ({ notificationForm, handleNotificationForm, isErrorField }: 
   const handleOpenCalendar = () => {
     setOpenCalendar((prev) => !prev);
   };
-  console.log(notificationForm.startDate);
+
+  const TestArray = [`${padStart(dayjs().hour())}:${padStart(dayjs().minute() + 5)}`, `${padStart(dayjs().hour())}:${padStart(dayjs().minute() + 10)}`, ...TIME_LIST];
 
   return (
     <>
@@ -121,7 +123,7 @@ const CommonForm = ({ notificationForm, handleNotificationForm, isErrorField }: 
           </Style.CommonDropBox>
           {openDrop && !isMobile && (
             <Style.CommonDropDown style={{ position: 'absolute' }}>
-              {TIME_LIST.map((time) => {
+              {TestArray.map((time) => {
                 return (
                   <Style.CommonTime
                     key={time} //
