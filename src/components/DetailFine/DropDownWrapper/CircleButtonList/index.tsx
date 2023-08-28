@@ -27,10 +27,13 @@ const getGATrigger = (situation: Situation): string => {
 
 const CircleButtonList = ({ setOpenButtonListId, situation, eventId, isAdmin = false }: Props) => {
   const onSuccessUpdateStatus = (buttonSituation: Situation) => {
+    console.log('성공');
     cancelUpdateStatus();
     pushDataLayerByStatus(isAdmin, buttonSituation);
     buttonSituation === '미납' && pushDataLayer('nonpayment', { route: 'list' });
   };
+
+  console.log('check');
 
   const { mutate: mutateDetailStatus } = useUpdateDetailStatus(onSuccessUpdateStatus);
   const { openConfirmModal, closeConfirmModal } = useConfirmModal();
