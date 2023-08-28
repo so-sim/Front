@@ -106,7 +106,7 @@ export const DatePeriodContainer = styled.div`
 `;
 
 export const DatePeriodText = styled.p`
-  ${({ theme }) => theme.font.body_02};
+  ${({ theme }) => theme.font.body_01};
 
   color: ${({ theme }) => theme.colors.secondary_600};
   font-size: 0.875rem;
