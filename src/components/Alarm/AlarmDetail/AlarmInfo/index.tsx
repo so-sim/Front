@@ -46,6 +46,7 @@ const AlarmInfo = ({}) => {
   const isAdmin = groupAdmin?.content.isAdmin;
 
   const [isOpen, setIsOpen] = useRecoilState(detailFineState);
+  // Mobile에서 Calendar위에 detailList를 띄우는지 판별하는 Trigger
 
   const [calendarDate, setCalendarDate] = useRecoilState(dateState);
 
