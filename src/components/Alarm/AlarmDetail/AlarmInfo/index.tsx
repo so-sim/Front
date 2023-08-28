@@ -24,6 +24,7 @@ import dayjs from 'dayjs';
 import { USER } from '@/assets/icons/User';
 import { useWithdrawalParticipantList } from '@/queries/Group/useWithdrawalParticipantList';
 import WithdrawBadge from '@/components/@common/WithdrawBadge';
+import { convertToPriceFormat } from '@/utils/convertFormat';
 
 const SITUATION_FORMAT_STYLE: { [key in SituationStatus]: Situation } = {
   FULL: '완납',
@@ -87,9 +88,11 @@ const AlarmInfo = ({}) => {
 
   const [checkedEventId, setCheckedEventId] = useState<number[]>([]);
 
-  const userName = data?.content.eventList[0]?.nickname;
-
   const isChecked = (eventId: number) => checkedEventId.includes(eventId);
+
+  const TotalAmount = data?.content.eventList?.reduce((prev, current) => (isChecked(current.eventId) ? prev + current.amount : prev + 0), 0);
+
+  const userName = data?.content.eventList[0]?.nickname;
 
   const toggleCheckedEventId = (details: SelectedEventInfo) => {
     if (isChecked(details.eventId)) {
@@ -186,6 +189,13 @@ const AlarmInfo = ({}) => {
           <SituationButton situationToChange={situationToChange} setSituationToChange={setSituationToChange} currentSituation={SITUATION_FORMAT_STYLE[afterSituation!] || '미납'} />
         )}
       </Style.TextContainer>
+
+      <Style.DatePeriodContainer>
+        <Style.DatePeriodText>
+          {min_Date(sortedtList!)} - {max_Date(sortedtList!)}
+        </Style.DatePeriodText>
+        <Style.TotalAmount>{TotalAmount && convertToPriceFormat(TotalAmount)} 원</Style.TotalAmount>
+      </Style.DatePeriodContainer>
 
       {afterSituation === 'FULL' && data?.content.eventList ? (
         <SingleCheckedFineList checkDetailFine={data?.content.eventList} setCheckDetailFine={toggleCheckedEventId} isChecked={() => false} noCheckBox={true} />
