@@ -17,7 +17,7 @@ const MobileLayout = ({ location, children }: Props) => {
   const [openSideBar, setOpenSideBar] = useState(false);
   const { windowRef } = useWindowHeight();
 
-  useLockScroll(openSideBar);
+  useLockScroll(openSideBar, 'openSideBar');
 
   const sideBarHandler = () => {
     setOpenSideBar((prev) => !prev);

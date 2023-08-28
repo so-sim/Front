@@ -28,7 +28,7 @@ const MobileFineBookForm = ({ selectData, action, convertSituationToText }: Prop
   const MEMO_MAX_LENGTH = 65;
 
   const [openMemberList, setOpenMemberList] = useState(false);
-  useLockScroll(openMemberList);
+  useLockScroll(openMemberList, 'openMemberList');
 
   const [openDateCalendar, setOpenDateCalendar] = useState(false);
 

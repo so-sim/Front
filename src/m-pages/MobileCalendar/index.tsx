@@ -18,7 +18,6 @@ import { detailFineState } from '@/store/detailFineState';
 import { useGroupDetail } from '@/queries/Group';
 import { firstVisitState } from '@/store/firstVisitState';
 import InviteModal from '@/components/@common/Modal/InviteModal';
-import useLockScroll from '@/hooks/useLockScroll';
 import useNotificationForm from '@/hooks/Group/useNotificationForm';
 import { Tooltip } from '@/components/@common/Tooltip';
 import MobileCalendarTooltip from '@/components/@common/Tooltip/MobileCalendarTooltip';
