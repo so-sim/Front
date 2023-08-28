@@ -18,8 +18,6 @@ const AlarmDetail = ({ headerHeight, setShowAlarmDetail }: Props) => {
 
   const close = () => {
     setShowAlarmDetail((prev) => !prev);
-
-    setAlarmIdList(initAlarmInfoState);
   };
   return (
     <Style.AlarmDetailFrame $headerHeight={headerHeight}>
