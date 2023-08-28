@@ -20,6 +20,7 @@ import { useWithdrawalParticipantList } from '@/queries/Group/useWithdrawalParti
 import { useParams } from 'react-router-dom';
 import WithdrawBadge from '@/components/@common/WithdrawBadge';
 import { useGroupDetail } from '@/queries/Group';
+import { useGetMyNikname } from '@/queries/Group/useGetMyNickname';
 
 type Props = {
   details?: SelectedEventInfo[];
@@ -36,9 +37,14 @@ const DetailList = ({ detailFilter, details }: Props) => {
   const { mutate: mutateRequestNotification } = useRequestNotification();
   const { openConfirmModal, closeConfirmModal } = useConfirmModal();
   const { withdrawalParticipants, isWithdrawal } = useWithdrawalParticipantList(Number(groupId));
+  const { data } = useGetMyNikname(Number(groupId));
+
   const { data: groupDetail } = useGroupDetail(Number(groupId));
 
   const isAdmin = groupDetail?.content.isAdmin || false;
+  const isOwn = (nickname: string) => {
+    return data?.content.nickname === nickname;
+  };
 
   const {
     setCheckDetailFine: { setToggleCheckList },
@@ -118,21 +124,24 @@ const DetailList = ({ detailFilter, details }: Props) => {
               {/* Katakana middle dot 이라고 합니다..(저도 잘 몰라요 하하) */}
               {memo}
             </Style.Element>
-            {isAdmin && (
-              <Style.Element>
-                <Style.NotificationButton
-                  isActive={enableNotification}
-                  disabled={!enableNotification}
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    requestNotification(eventId);
-                  }}
-                >
-                  <div style={{ height: '16px' }}>{enableNotification ? ALARM.ALARM_SM : SYSTEM.DONE_SM}</div>
-                  <div>{enableNotification ? '벌금요청' : '요청완료'}</div>
-                </Style.NotificationButton>
-              </Style.Element>
-            )}
+            {isAdmin && //
+              !isOwn(nickname) &&
+              !isWithdrawal(nickname) &&
+              detail.situation === '미납' && (
+                <Style.Element>
+                  <Style.NotificationButton
+                    isActive={enableNotification}
+                    disabled={!enableNotification}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      requestNotification(eventId);
+                    }}
+                  >
+                    <div style={{ height: '16px' }}>{enableNotification ? ALARM.ALARM_SM : SYSTEM.DONE_SM}</div>
+                    <div>{enableNotification ? '벌금요청' : '요청완료'}</div>
+                  </Style.NotificationButton>
+                </Style.Element>
+              )}
           </Style.TableRow>
         );
       })}
