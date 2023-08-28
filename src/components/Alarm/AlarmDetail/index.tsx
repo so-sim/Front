@@ -28,6 +28,7 @@ const AlarmDetail = ({ headerHeight, setShowAlarmDetail }: Props) => {
         </Style.CloseIconWrapper>
       </Style.Header>
 
+      {/* 여기서 Trigger를 state하나 지정해서 List 에서 Card 누르면 Info로 가는 state를 만드는게 나을듯 */}
       <Style.Main>
         {!alarmIdList.alarmEventIdList.length && <AlarmList />}
         {(alarmIdList.alarmEventIdList.length || null) && <AlarmInfo />}
