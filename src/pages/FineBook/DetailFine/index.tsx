@@ -59,7 +59,7 @@ const DetailFine = () => {
 
   useEffect(() => {
     setInitCheckDetailFine();
-  }, [calendarDate, location, detailFilter]);
+  }, [calendarDate, location]);
 
   const [alarmState, setAlarmEventIdList] = useRecoilState(alarmInfoState);
 
