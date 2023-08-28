@@ -93,8 +93,10 @@ const FilterController = ({ detailFilter, setDetailFilter, totalAmount }: Props)
         </Style.SearchContainer>
       </Style.LeftContainer>
       <Style.AmountContainer>
-        <div>합계</div>
-        <Style.Amount>{TotalAmount === 0 ? 0 : convertToPriceFormat(TotalAmount)} 원</Style.Amount>
+        <Style.AmountTitle>합계</Style.AmountTitle>
+        <Style.Amount>
+          {TotalAmount === 0 ? 0 : convertToPriceFormat(TotalAmount)} <Style.Amount_Unit> 원</Style.Amount_Unit>
+        </Style.Amount>
       </Style.AmountContainer>
       <Toolbar />
     </Style.FilterContainer>
