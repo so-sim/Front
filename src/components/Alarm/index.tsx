@@ -38,6 +38,7 @@ const AlarmComponent = ({ headerHeight }: Props) => {
     if (alarmIdList.groupId) {
       setShowNotification(true);
     }
+    // 이 부분때문에 초기화를 시켜줘야함  (해당 코드는 다른 페이지 이동시에 닫혀야하는데 알람Info클릭 시에는 열려있어야해서 추가해준 코드)
     return () => {
       setShowNotification(false);
     };
