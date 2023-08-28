@@ -32,7 +32,7 @@ const ALARM_DESCRIPTION: {
   [key in NotificationType]: (amout?: number, situation?: SituationStatus | null) => React.ReactNode;
 } = {
   PAYMENT_DATE: () => '벌금 내역 확인 후, 벌금을 내주세요!',
-  REQUEST_PAYMENT: (amout?: number) => <>벌금 내역 확인 후,${amout}원을 내주세요!</>,
+  REQUEST_PAYMENT: (amout?: number) => <>벌금 내역 확인 후, {amout}원을 내주세요!</>,
   CHANGE_ADMIN: () => '새로운 총무를 확인해보세요!',
   CHANGE_FULL_SITUATION: (_, afterSituation?: SituationStatus | null) => (
     <>

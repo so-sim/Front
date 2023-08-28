@@ -14,15 +14,21 @@ import { checkFormIsValid } from '@/utils/validation';
 import { SelectedEventInfo } from '@/types/event';
 import { useSelectedContext } from '@/contexts/SelectedFineContext';
 import useFinebook from '@/hooks/Group/useFinebook';
+import useConfirmModal from '@/hooks/useConfirmModal';
+import { useWithdrawalParticipantList } from '@/queries/Group/useWithdrawalParticipantList';
+import { useParams } from 'react-router-dom';
 
 interface Props {
   modalHandler: () => void;
 }
 
 const FineBookUpdateModal = ({ modalHandler }: Props) => {
+  const { groupId } = useParams();
   const { selectedFine, setSelectedFine } = useSelectedContext('userDetails');
+  const { openConfirmModal, closeConfirmModal } = useConfirmModal();
 
   const { selectData, getFormFiledActions, updateLoading } = useFinebook(selectedFine);
+  const { isWithdrawal } = useWithdrawalParticipantList(Number(groupId));
   const { updateDetail } = getFormFiledActions();
 
   const [_, setDateState] = useRecoilState(dateState);
@@ -36,6 +42,14 @@ const FineBookUpdateModal = ({ modalHandler }: Props) => {
   };
 
   const onUpdateDetail = () => {
+    const isWithdrawalMemberDetail = isWithdrawal(selectedFine.nickname) && selectedFine.nickname !== selectData.nickname;
+    if (isWithdrawalMemberDetail) {
+      return openConfirmModal({
+        type: 'CHANGE_WITHDRAWAL_MEMBER_DETAIL',
+        confirm: () => updateDetail().then(onSuccessUpdateDetail),
+        cancel: closeConfirmModal,
+      });
+    }
     updateDetail().then(onSuccessUpdateDetail);
   };
 

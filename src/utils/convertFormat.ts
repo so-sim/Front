@@ -27,6 +27,8 @@ export const convertDateFormat = (date: string) => {
 
 export const convertTimeFormat = (time: string) => {
   const [hour, minute] = time.split(':').map(Number);
+  if (hour === 0) return `오전 12:${padStart(minute)}`;
+
   let result = '';
   result += hour >= 12 ? '오후 ' : '오전 ';
   result += hour >= 13 ? `${padStart(hour - 12)}:${padStart(minute)}` : `${padStart(hour)}:${padStart(minute)}`;
@@ -36,6 +38,8 @@ export const convertTimeFormat = (time: string) => {
 
 export const covertToTime = (time: string) => {
   const [hour, minute] = time.split(':').map(Number);
+  if (hour === 0) return minute === 0 ? `오전 12시` : `오전 12시 ${minute}분`;
+
   let result = '';
   result += hour >= 12 ? '오후 ' : '오전 ';
   const hourForView = hour >= 13 ? hour - 12 : hour;

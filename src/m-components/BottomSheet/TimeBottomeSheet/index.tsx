@@ -1,5 +1,7 @@
 import { TIME_LIST } from '@/components/@common/Modal/GroupSettingModal/AdminModal/NotifiactionForm/CommonForm';
 import { convertTimeFormat } from '@/utils/convertFormat';
+import { padStart } from '@/utils/padStart';
+import dayjs from 'dayjs';
 import BottomSheet from '..';
 
 import * as Style from './styles';
@@ -15,10 +17,12 @@ const TimeBottomSheet = ({ onClose, onChange }: Props) => {
     onClose();
   };
 
+  const TestArray = [`${padStart(dayjs().hour())}:${padStart(dayjs().minute() + 1)}`, ...TIME_LIST];
+
   return (
     <BottomSheet title="팀원" onClose={onClose}>
       <Style.TimeList>
-        {TIME_LIST.map((time) => {
+        {TestArray.map((time) => {
           return (
             <Style.TimeListItem
               key={time} //

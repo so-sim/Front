@@ -93,6 +93,11 @@ export const CONFIRM_MODAL = {
     description: `"납부 전" 상태인 팀원에게만\n납부요청을 보낼 수 있습니다.`,
     confirm: '확인',
   },
+  NOTICE_ONLY_MY_DETAIL: {
+    title: '알림',
+    description: `"납부 전" 상태인 자신의 내역만 \n 납부 여부를 변경할 수 있습니다.`,
+    confirm: '확인',
+  },
   NOTICE_ALREADY_SEND: {
     title: '알림',
     description: `이미 납부 요청을 보낸 내역의 경우,\n24시간 후에 재요청 할 수 있습니다.`,
@@ -116,5 +121,13 @@ export const CONFIRM_MODAL = {
     title: '알림',
     description: `여러 내역의 납부 여부를 변경하려면 \n 해당 내역들의 납부 여부가 동일해야 합니다.`,
     confirm: '확인',
+  },
+  CHANGE_WITHDRAWAL_MEMBER_DETAIL: {
+    title: '알림',
+    description: isMobile
+      ? `탈퇴한 팀원을\n다른 팀원으로 변경하시겠습니까?\n변경 시, 탈퇴한 팀원의 내역은\n복구할 수 없습니다.`
+      : `탈퇴한 팀원을 다른 팀원으로 변경하시겠습니까?\n변경 시, 탈퇴한 팀원의 내역은 복구할 수 없습니다.`,
+    confirm: '변경하기',
+    cancel: '취소',
   },
 };

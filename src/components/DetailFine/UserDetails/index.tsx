@@ -95,7 +95,7 @@ const UserDetails = () => {
   const handleUpdateStatusConfirmModal = (situation: SituationText) => {
     const convertedSituation = convertTextToSituation(situation);
     openConfirmModal({
-      type: 'CHANGE_STATUS',
+      type: 'CHANGE_STATUS_ADMIN',
       confirm: () => updateStatus(convertedSituation),
       cancel: closeConfirmModal,
       // id: situation === '완납' ? GA.FULL.SIDE_MODAL : '',
@@ -216,6 +216,7 @@ const UserDetails = () => {
                 left="-163px"
                 messageBox={{ left: '290px', top: '-8px' }}
                 preventClick
+                defaultValue
                 trigger={
                   <Button
                     width="150px"

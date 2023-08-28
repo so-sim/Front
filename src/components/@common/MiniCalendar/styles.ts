@@ -35,7 +35,7 @@ export const FlexGap = styled.div`
 export const Week = styled(FlexGap)``;
 export const DayTitle = styled(FlexGap)``;
 
-export const Day = styled.div<{ isSunday: boolean; isSelected?: boolean; isOtherMonth?: boolean }>`
+export const Day = styled.div<{ isSunday: boolean; isSelected?: boolean; isOtherMonth?: boolean; isInvalid?: boolean }>`
   width: ${isMobile ? '34px' : '28px'};
   height: ${isMobile ? '34px' : '28px'};
   border-radius: 999px;
@@ -43,12 +43,13 @@ export const Day = styled.div<{ isSunday: boolean; isSelected?: boolean; isOther
   align-items: center;
   justify-content: center;
   ${({ theme }) => theme.font.subhead_02}
-  background-color: ${({ theme, isSelected }) => isSelected && theme.colors.neutral_400_b};
-  color: ${({ theme, isSunday, isOtherMonth }) => (isOtherMonth ? theme.colors.secondary_400 : isSunday ? theme.colors.system_red_200 : theme.colors.secondary_900)};
+  background-color: ${({ theme, isSelected, isInvalid }) => isSelected && !isInvalid && theme.colors.neutral_400_b};
+  color: ${({ theme, isSunday, isOtherMonth, isInvalid }) =>
+    isInvalid ? theme.colors.neutral_300_b : isOtherMonth ? theme.colors.secondary_400 : isSunday ? theme.colors.system_red_200 : theme.colors.secondary_900};
   &:hover {
-    background-color: ${({ theme }) => theme.colors.neutral_400_b};
+    background-color: ${({ theme, isInvalid }) => !isInvalid && theme.colors.neutral_400_b};
   }
-  cursor: pointer;
+  cursor: ${({ theme, isInvalid }) => !isInvalid && 'pointer'};
 `;
 
 export const DateTitle = styled.div`

@@ -67,7 +67,7 @@ export const Status: StatusType = {
           }}
           $situation={situationToChange!}
         >
-          {SITUATION_STATUS_FORMAT[situationToChange!]}
+          {SITUATION_STATUS_FORMAT[situationToChange!] === '승인대기' ? '납부완료' : SITUATION_STATUS_FORMAT[situationToChange!]}
         </Style.UserLineSpan>
         으로 변경하시겠습니까?
       </Style.SubTitle>

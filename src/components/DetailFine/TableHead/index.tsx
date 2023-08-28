@@ -1,7 +1,7 @@
 import React, { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react';
 import { ARROW } from '@/assets/icons/Arrow';
 import * as Style from './styles';
-import { useParticipantList } from '@/queries/Group';
+import { useGroupDetail, useParticipantList } from '@/queries/Group';
 import { useParams, useSearchParams } from 'react-router-dom';
 import DropDown from '@/components/@common/DropDown';
 import { GA } from '@/constants/GA';
@@ -29,6 +29,11 @@ type PaymentDropdown = '전체' | '미납' | '완납' | '확인중';
 // ];
 
 const TableHead = ({ details }: Props) => {
+  const { groupId } = useParams();
+  const { data: groupDetail } = useGroupDetail(Number(groupId));
+
+  const isAdmin = groupDetail?.content.isAdmin;
+
   return (
     <Style.TableHead>
       <SelectAllCheckbox details={details} />
@@ -53,21 +58,23 @@ const TableHead = ({ details }: Props) => {
       </Style.Element>
       <Style.Element>금액</Style.Element>
       <Style.Element>사유</Style.Element>
-      <Tooltip
-        title="납부 요청이란?"
-        contents={PaymentRequest}
-        width={312}
-        location="BOTTOM"
-        top="40px"
-        left="-204px"
-        messageBox={{ left: '280px', top: '-8px' }}
-        trigger={
-          <Style.PointerElement>
-            <span>납부요청</span>
-            {SYSTEM.TOOLTIP_MD}
-          </Style.PointerElement>
-        }
-      />
+      {isAdmin && (
+        <Tooltip
+          title="납부 요청이란?"
+          contents={PaymentRequest}
+          width={312}
+          location="BOTTOM"
+          top="40px"
+          left="-204px"
+          messageBox={{ left: '280px', top: '-8px' }}
+          trigger={
+            <Style.PointerElement>
+              <span>납부요청</span>
+              {SYSTEM.TOOLTIP_MD}
+            </Style.PointerElement>
+          }
+        />
+      )}
     </Style.TableHead>
   );
 };

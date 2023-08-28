@@ -9,7 +9,7 @@ type Props = {
   isAbleChange?: boolean;
 };
 
-const SITUATION_STATUS_FORMAT = {
+export const SITUATION_STATUS_FORMAT = {
   미납: '납부 전',
   확인중: '승인대기',
   완납: '납부완료',
@@ -32,7 +32,9 @@ const SituationButton = ({ situationToChange, setSituationToChange, currentSitua
           </Style.SituationButton>
         </>
       ) : (
-        <Style.SituationButton situationType={situationToChange}>{SITUATION_STATUS_FORMAT[situationToChange]}</Style.SituationButton>
+        <Style.SituationButton situationType={situationToChange}>
+          {SITUATION_STATUS_FORMAT[situationToChange || '완납'] === '승인대기' ? '납부완료' : SITUATION_STATUS_FORMAT[situationToChange || '완납']}
+        </Style.SituationButton>
       )}
     </Style.SituationContainer>
   );

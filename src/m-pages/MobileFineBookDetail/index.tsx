@@ -204,33 +204,34 @@ const MobileFineBookDetail = () => {
             !isWithdrawalMember(nickname) && // 탈퇴한지 판별
             !isOwn &&
             situation === '미납' && (
-              <Button width="100%" height="42px" color="black" onClick={handleRequestPayment} id={GA.CON.SIDE_BUTTON}>
-                납부요청
-              </Button>
+              <Tooltip
+                title="납부 요청이란?"
+                contents={PaymentRequest}
+                width={312}
+                location="TOP"
+                top="-200px"
+                left={`calc(${window.innerWidth / 2}px - 156px - 24px)`}
+                messageBox={{ left: '148px', top: '160px', width: '100%' }}
+                defaultValue
+                preventClick
+                trigger={
+                  <Button width="100%" height="42px" color="black" onClick={handleRequestPayment} id={GA.CON.SIDE_BUTTON}>
+                    납부요청
+                  </Button>
+                }
+              />
             )}
+
           {!isAdmin && isOwn && situation !== '완납' && (
-            <Tooltip
-              title="납부 요청이란?"
-              contents={PaymentRequest}
-              width={312}
-              location="TOP"
-              top="-200px"
-              left={`calc(${window.innerWidth / 2}px - 156px - 24px)`}
-              messageBox={{ left: '148px', top: '160px', width: '100%' }}
-              defaultValue
-              preventClick
-              trigger={
-                <Button
-                  width="100%"
-                  height="42px"
-                  color={situation === '미납' ? 'black' : 'disabled'} //
-                  onClick={handleRequestConfirmModal}
-                  id={GA.CON.SIDE_BUTTON}
-                >
-                  {REQUEST_BUTTON[situation]}
-                </Button>
-              }
-            />
+            <Button
+              width="100%"
+              height="42px"
+              color={situation === '미납' ? 'black' : 'disabled'} //
+              onClick={handleRequestConfirmModal}
+              id={GA.CON.SIDE_BUTTON}
+            >
+              {REQUEST_BUTTON[situation]}
+            </Button>
           )}
           {/* {!isAdmin && isOwn && situation !== '완납' && (
             <Button

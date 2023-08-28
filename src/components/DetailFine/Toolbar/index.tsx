@@ -70,6 +70,10 @@ const Toolbar = () => {
     if (isSameSituation(checkDetailFineValues) && isMyCheckDetailFine(checkDetailFineValues, myNickname!) && checkDetailFineValues[0].situation === '미납') {
       setSideModal({ type: 'situation_change', isModal: true });
     } else {
+      openConfirmModal({
+        type: 'NOTICE_ONLY_MY_DETAIL',
+        confirm: closeConfirmModal,
+      });
       console.log('팀원아 제대로해라');
     }
   };

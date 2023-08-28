@@ -1,5 +1,5 @@
 import SingleCheckedFineList from '@/components/DetailFine/AlarmRequest_PaymentUpdate/SingleCheckedFineList';
-import SituationButton from '@/components/DetailFine/AlarmRequest_PaymentUpdate/SituationButton';
+import SituationButton, { SITUATION_STATUS_FORMAT } from '@/components/DetailFine/AlarmRequest_PaymentUpdate/SituationButton';
 import { useGetDetailListById } from '@/queries/Detail/useGetDetailListById';
 import { alarmInfoState, initAlarmInfoState } from '@/store/alarmInfoState';
 import { useGetMyNikname } from '@/queries/Group/useGetMyNickname';
@@ -164,7 +164,7 @@ const AlarmInfo = ({}) => {
             }}
             $situation={situationToChange}
           >
-            {situationToChange || '완납'}
+            {SITUATION_STATUS_FORMAT[situationToChange || '완납'] === '승인대기' ? '납부완료' : SITUATION_STATUS_FORMAT[situationToChange || '완납']}
           </Style.UserLineSpan>
           으로 {afterSituation === 'FULL' ? '변경되었습니다.' : '변경하시겠습니까?'}
         </Style.SubTitle>

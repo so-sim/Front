@@ -13,13 +13,17 @@ type Props = {
 export const AutoComplete = ({ updateDetailFilterNickname, initialNickname }: Props) => {
   const [nicknameIndex, setNicknameIndex] = useState<null | number>(null);
   const [focusInput, setFocusInput] = useState(false);
+  const searchDropdownRef = useRef<HTMLUListElement>(null);
+
+  useEffect(() => {
+    searchDropdownRef.current?.addEventListener('scroll', () => console.log(searchDropdownRef.current?.scrollTop));
+  }, [searchDropdownRef]);
 
   const toggleFocusInput = () => {
     setFocusInput((prev) => !prev);
   };
 
   const { nickname, searchNickname, filteredMemberList, initNickname, inputRef } = useSearchParticipant(initialNickname);
-
   const handleSearchNicknameByKeyboard = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Escape') {
       return initNickname();
@@ -57,7 +61,7 @@ export const AutoComplete = ({ updateDetailFilterNickname, initialNickname }: Pr
         ref={inputRef}
       />
       {focusInput && (
-        <Style.DropDownContainer>
+        <Style.DropDownContainer ref={searchDropdownRef}>
           {filteredMemberList.length > 0 ? (
             filteredMemberList.map(({ nickname, withdraw }, idx) => {
               return (
