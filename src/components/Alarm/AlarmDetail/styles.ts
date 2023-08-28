@@ -43,3 +43,16 @@ export const CloseText = styled.span`
 
   color: ${({ theme }) => theme.colors.secondary_900};
 `;
+
+export const BackDrop = styled.div<{ $headerHeight: number }>`
+  position: absolute;
+  top: ${({ $headerHeight }) => `${$headerHeight}rem`};
+  bottom: 0;
+  right: 0;
+  left: 0;
+
+  background-color: white;
+  opacity: 30%;
+
+  z-index: 9998;
+`;
