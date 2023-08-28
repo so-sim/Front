@@ -94,7 +94,7 @@ const MobileFineBookDetail = () => {
 
   // 바텀시트
   const [openSituationSheet, setOpenSituationSheet] = useState(false);
-  useLockScroll(openSituationSheet);
+  useLockScroll(openSituationSheet, 'openSituationSheet');
 
   const handleOpenSituationSheet = () => {
     setOpenSituationSheet((prev) => !prev);

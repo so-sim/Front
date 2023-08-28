@@ -34,7 +34,7 @@ type Props = {
 const CommonForm = ({ notificationForm, handleNotificationForm, isErrorField }: Props) => {
   const { dropDownRef, openDrop, setOpenDrop } = useDropDown();
 
-  useLockScroll(openDrop && isMobile);
+  isMobile && useLockScroll(openDrop, 'openDrop');
   const [openCalendar, setOpenCalendar] = useState(false);
 
   const handleOpenDrop = () => {
