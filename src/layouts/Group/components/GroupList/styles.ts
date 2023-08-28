@@ -4,14 +4,18 @@ import styled from '@emotion/styled';
 
 export const Layout = styled.div<{ isMobile: boolean }>`
   width: ${({ isMobile }) => (isMobile ? '76px' : '100px')};
-  height: ${({ isMobile }) => (isMobile ? 'calc(100vh - 52px)' : 'auto')};
+  height: ${({ isMobile }) => (isMobile ? 'calc(100vh - 52px)' : 'calc(100vh - 68px)')};
   display: flex;
   flex-direction: column;
   background-color: ${({ theme }) => theme.colors.neutral_200_b};
   border-right: 2px solid ${({ theme }) => theme.colors.neutral_200_b};
   padding: 24px 0;
   align-items: center;
-  overflow-y: auto;
+  overflow-y: scroll;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
 `;
 
 export const EachGroup = styled.button`
