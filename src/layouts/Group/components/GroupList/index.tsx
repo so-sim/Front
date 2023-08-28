@@ -35,7 +35,7 @@ const GroupList = () => {
     if (inView && hasNextPage) {
       fetchNextPage();
     }
-  }, [inView]);
+  }, [inView, hasNextPage]);
 
   useEffect(() => {
     setShowCreateModal(false);
@@ -56,12 +56,13 @@ const GroupList = () => {
             ))}
           </React.Fragment>
         ))}
-        <div ref={ref} />
+
         <Stlye.CreateButton onClick={handleCreateModal} id={GA.CREATE.SIDE_BUTTON}>
           {SYSTEM.PLUS_GRAY}
         </Stlye.CreateButton>
+        <div ref={ref} />
+        {showCreateModal && <CreateGroupModal modalHandler={handleCreateModal} id={GA.CREATE.SIDE_MODAL} />}
       </Stlye.Layout>
-      {showCreateModal && <CreateGroupModal modalHandler={handleCreateModal} id={GA.CREATE.SIDE_MODAL} />}
     </>
   );
 };
