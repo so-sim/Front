@@ -91,9 +91,18 @@ export const AmountContainer = styled.div`
   ${({ theme }) => theme.font.body_03};
 `;
 
+export const AmountTitle = styled.p`
+  ${({ theme }) => theme.font.body_01};
+`;
 export const Amount = styled.div`
   display: flex;
-  align-items: center;
+  align-items: flex-end;
+  gap: 0.25rem;
   margin-left: 8px;
   ${({ theme }) => theme.font.subhead_04};
+`;
+
+export const Amount_Unit = styled.span`
+  margin-bottom: 2px;
+  ${({ theme }) => theme.font.subhead_01};
 `;
