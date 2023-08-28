@@ -2,11 +2,11 @@ import styled from '@emotion/styled';
 
 export const DetailList = styled.div``;
 
-export const TableRow = styled.div<{ isSelected: boolean }>`
+export const TableRow = styled.div<{ isSelected: boolean; isAdmin: boolean }>`
   display: grid;
   align-items: center;
   height: 46px;
-  grid-template-columns: 40px 100px 120px 116px 108px 1fr 108px;
+  grid-template-columns: 40px 100px 120px 116px 108px 1fr ${({ isAdmin }) => isAdmin && '108px'};
   border-top: 2px solid ${({ theme }) => theme.colors.neutral_200_b};
   border-radius: 4px;
   cursor: pointer;
