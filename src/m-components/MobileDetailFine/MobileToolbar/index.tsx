@@ -4,7 +4,9 @@ import useValidateSituation from '@/hooks/Group/useValidateSituation';
 import useCheckListState from '@/hooks/useCheckListState';
 import useConfirmModal from '@/hooks/useConfirmModal';
 import { useGroupDetail } from '@/queries/Group';
+import { useGetMyNikname } from '@/queries/Group/useGetMyNickname';
 import { sideModalState, ModalType } from '@/store/sideModalState';
+import { SelectedEventInfo } from '@/types/event';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
 
@@ -14,6 +16,8 @@ const MobileToolbar = () => {
   const navigate = useNavigate();
 
   const { data: group } = useGroupDetail(Number(groupId));
+  const { data: myNick } = useGetMyNikname(Number(groupId));
+  const myNickname = myNick?.content.nickname;
   const isAdmin = group?.content.isAdmin;
 
   const [sideModal, setSideModal] = useRecoilState(sideModalState);
@@ -21,6 +25,7 @@ const MobileToolbar = () => {
 
   const {
     checkedSize,
+    checkDetailFineValues,
     setCheckDetailFine: { setInitCheckDetailFine },
   } = useCheckListState();
 
@@ -31,7 +36,31 @@ const MobileToolbar = () => {
     setInitCheckDetailFine();
   };
 
+  const isSameSituation = (checkDetailFine: SelectedEventInfo[]) => {
+    const situationOfCheckDetailFine = checkDetailFine.map(({ situation }) => situation);
+
+    const isAllSameSituation = new Set(situationOfCheckDetailFine);
+
+    return isAllSameSituation.size === 1;
+  };
+
+  const isMyCheckDetailFine = (checkDetailFineList: SelectedEventInfo[], myNickname: string) => checkDetailFineList.every(({ nickname }) => nickname === myNickname);
+
   const moveToSituationChangePage = async () => {
+    if (!isAdmin) {
+      if (isSameSituation(checkDetailFineValues) && isMyCheckDetailFine(checkDetailFineValues, myNickname!) && checkDetailFineValues[0].situation === '미납') {
+        setSideModal({ type: 'situation_change', isModal: true });
+        navigate(`/m-group/${groupId}/book/alarm`);
+      } else {
+        openConfirmModal({
+          type: 'NOTICE_ONLY_MY_DETAIL',
+          confirm: closeConfirmModal,
+        });
+        console.log('팀원아 제대로해라');
+      }
+      return;
+    }
+
     const isValid = await isSameSituationByServerState();
 
     if (isValid) {

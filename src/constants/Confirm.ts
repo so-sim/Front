@@ -93,6 +93,11 @@ export const CONFIRM_MODAL = {
     description: `"납부 전" 상태인 팀원에게만\n납부요청을 보낼 수 있습니다.`,
     confirm: '확인',
   },
+  NOTICE_ONLY_MY_DETAIL: {
+    title: '알림',
+    description: `"납부 전" 상태인 자신의 내역만 \n 납부 여부를 변경할 수 있습니다.`,
+    confirm: '확인',
+  },
   NOTICE_ALREADY_SEND: {
     title: '알림',
     description: `이미 납부 요청을 보낸 내역의 경우,\n24시간 후에 재요청 할 수 있습니다.`,
