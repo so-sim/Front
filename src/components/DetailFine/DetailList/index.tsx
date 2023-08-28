@@ -6,12 +6,13 @@ import { DetailFilter } from '@/store/detailFilter';
 import { useRecoilState } from 'recoil';
 import { dateState } from '@/store/dateState';
 import { SelectedEventInfo } from '@/types/event';
-import { useSelectedContext } from '@/contexts/SelectedFineContext';
+import { initialSelectData, useSelectedContext } from '@/contexts/SelectedFineContext';
 import CheckboxContainer from '../../@common/Checkbox';
 import { CheckDetailFine, SetCheckDetailFine } from '@/components/DetailFine/AlarmRequest_PaymentUpdate/hooks/useCheckDetailFine';
 import DetailListCheckBox from '../checkbox';
 import useCheckListState from '@/hooks/useCheckListState';
 import { covertDateForView } from '@/utils/convertFormat';
+import { notificationModalState } from '@/store/notificationModalState';
 
 type Props = {
   details?: SelectedEventInfo[];
@@ -24,6 +25,8 @@ const DetailList = ({ detailFilter, details }: Props) => {
   const [openButtonListId, setOpenButtonListId] = useState(0);
 
   const { selectedFine, setSelectedFine } = useSelectedContext('userDetails');
+
+  const [showNotification, setShowNotification] = useRecoilState(notificationModalState);
 
   const {
     setCheckDetailFine: { setToggleCheckList, setInitCheckDetailFine },
@@ -53,6 +56,10 @@ const DetailList = ({ detailFilter, details }: Props) => {
   useEffect(() => {
     setInitCheckDetailFine();
   }, [openButtonListId, selectedFine]);
+
+  useEffect(() => {
+    setSelectedFine(initialSelectData);
+  }, [showNotification]);
 
   const filteredDataNotFound = details?.length === 0 && calendarState.mode === 'day' && detailFilter.nickname === '' && detailFilter.situation === '';
 
