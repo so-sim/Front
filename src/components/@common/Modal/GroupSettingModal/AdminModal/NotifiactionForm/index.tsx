@@ -27,6 +27,7 @@ const NotificationForm = ({ notificationForm, getNotificationFormAction }: Props
     isErrorField,
     getNotificationDescription,
     initFormWithoutSettingType,
+    getOneLineNotificationDescription,
   } = getNotificationFormAction();
 
   const { firstLine, secondLine, thirdLine } = getNotificationDescription();
@@ -85,6 +86,7 @@ const NotificationForm = ({ notificationForm, getNotificationFormAction }: Props
           <MonthForm
             notificationForm={notificationForm} //
             isErrorField={isErrorField}
+            getOneLineNotificationDescription={getOneLineNotificationDescription}
             handleNotificationForm={handleNotificationForm}
             handleDuplicateValues={handleDuplicateNotificationForm}
           />

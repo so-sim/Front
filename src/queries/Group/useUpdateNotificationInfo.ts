@@ -3,7 +3,7 @@ import { NotificationInfo } from '@/types/group';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { DayType } from '@/types/group';
 
-const DayOfWeek: Record<DayType, number> = {
+export const DayOfWeek: Record<DayType, number> = {
   MONDAY: 1,
   TUESDAY: 2,
   WEDNESDAY: 3,

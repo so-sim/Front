@@ -1,15 +1,18 @@
 import { ARROW } from '@/assets/icons/Arrow';
-import { NotificationInfo } from '@/types/group';
+import { DayType, NotificationInfo } from '@/types/group';
 import { DuplicateValues } from '..';
 import * as Style from './styles';
 import DaySelector from '../DaySelector';
 import { useState } from 'react';
+import { DayOfWeek } from '@/queries/Group/useUpdateNotificationInfo';
+import { sortNotificationForm } from '../../utils/sortNotificationInfo';
 
 type Props<T, V> = {
   notificationForm: NotificationInfo;
   isErrorField: (field: keyof NotificationInfo) => boolean;
   handleDuplicateValues: <T extends DuplicateValues, V>(type: T, value: V) => void;
   handleNotificationForm: <T extends keyof NotificationInfo>(type: T, value: NotificationInfo[T]) => void;
+  getOneLineNotificationDescription: (notificationInfo: NotificationInfo) => string;
 };
 
 const ORDINARY_LIST = [
@@ -21,7 +24,13 @@ const ORDINARY_LIST = [
   { label: '마지막', value: 6 },
 ];
 
-const MonthForm = <T extends NotificationInfo, V extends T[DuplicateValues]>({ notificationForm, handleNotificationForm, handleDuplicateValues, isErrorField }: Props<T, V>) => {
+const MonthForm = <T extends NotificationInfo, V extends T[DuplicateValues]>({
+  notificationForm,
+  getOneLineNotificationDescription,
+  handleNotificationForm,
+  handleDuplicateValues,
+  isErrorField,
+}: Props<T, V>) => {
   const createFixedCalendar = () => {
     const result = Array.from({ length: 5 }, () => [] as (number | null)[]);
     for (let i = 0; i < 35; i++) {
@@ -60,6 +69,9 @@ const MonthForm = <T extends NotificationInfo, V extends T[DuplicateValues]>({ n
 
   const isSimpleDateType = notificationForm.monthSettingType === 'SIMPLE_DATE';
   const isSelectDayType = notificationForm.monthSettingType === 'WEEK';
+
+  const sortedNotificationForm = sortNotificationForm(notificationForm);
+  const notificationDescription = getOneLineNotificationDescription(sortedNotificationForm);
 
   return (
     <>
@@ -107,7 +119,7 @@ const MonthForm = <T extends NotificationInfo, V extends T[DuplicateValues]>({ n
       </Style.MonthlySelectTitle>
       {isSelectDayType && (
         <div>
-          <Style.Notice>몇 번째 요일인가요?</Style.Notice>
+          <Style.Notice>{notificationDescription}</Style.Notice>
           <Style.Notice>
             <div>몇 번째</div>
             {isErrorField('ordinalNumbers') && <Style.ErrorText>최소 1개 이상 선택해주세요.</Style.ErrorText>}
