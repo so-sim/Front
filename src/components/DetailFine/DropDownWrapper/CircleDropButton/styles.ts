@@ -1,4 +1,5 @@
 import { Situation } from '@/types/event';
+import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 
 type CircleDropButtonProps = { situation: Situation };
@@ -22,7 +23,20 @@ export const Text = styled.span`
   margin-right: 4px;
 `;
 
-export const Icon = styled.span`
+const SITUATION_COLOR_LIST = {
+  미납: '#fabda9',
+  완납: '#bdd5fa',
+  확인중: '#fada9d',
+};
+
+export const Icon = styled.span<{ $situation: Situation; $isNoAuthority?: boolean }>`
   width: 16px;
   height: 16px;
+  ${({ $isNoAuthority, $situation }) =>
+    $isNoAuthority &&
+    css`
+      & rect {
+        fill: ${SITUATION_COLOR_LIST[$situation]};
+      }
+    `}
 `;

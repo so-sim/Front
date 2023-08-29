@@ -7,6 +7,7 @@ import * as Style from './styles';
 interface Props {
   situation: Situation;
   origin: Situation;
+  isNoAuthority?: boolean;
 }
 
 const SITUATION_CODE: { [key in Situation]: 'NON' | 'CON' | 'FULL' } = {
@@ -15,13 +16,15 @@ const SITUATION_CODE: { [key in Situation]: 'NON' | 'CON' | 'FULL' } = {
   완납: 'FULL',
 };
 
-const CircleDropButton = ({ situation, origin }: Props) => {
+const CircleDropButton = ({ situation, origin, isNoAuthority = false }: Props) => {
   const PAYMENT_TYPE = SITUATION_CODE[situation];
 
   return (
     <Style.StatusButton situation={situation} id={GA[PAYMENT_TYPE].LIST_BUTTON}>
       <Style.Text>{getClientSituationTextFromServer(situation, origin)}</Style.Text>
-      <Style.Icon>{getStatusIcon(situation)}</Style.Icon>
+      <Style.Icon $situation={situation} $isNoAuthority={isNoAuthority}>
+        {getStatusIcon(situation)}
+      </Style.Icon>
     </Style.StatusButton>
   );
 };
