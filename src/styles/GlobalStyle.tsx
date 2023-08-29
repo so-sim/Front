@@ -1,6 +1,11 @@
 import { css } from '@emotion/react';
 
 const globalStyle = css`
+  .Toastify__toast-container--bottom-left,
+  .Toastify__toast-container--bottom-center,
+  .Toastify__toast-container--bottom-right {
+    bottom: 4rem;
+  }
   html {
     font-size: 16px;
   }
