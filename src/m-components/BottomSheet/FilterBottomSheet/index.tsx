@@ -9,6 +9,7 @@ import { DetailFilter } from '@/store/detailFilter';
 import dayjs from 'dayjs';
 import { SYSTEM } from '@/assets/icons/System';
 import MobileMiniCalendar from '@/m-components/MobileMiniCalendar';
+import { dateToUnixTime } from '@/utils/handleDate';
 
 const dateFilterModeList = [
   { mode: 'month', text: '월간' },
@@ -62,6 +63,24 @@ const FilterBottomSheet = ({ detailFilter, setDetailFilter, onClose }: Props) =>
     if (dateType === 'END_DATE') {
       return setCalendarDate((prev) => ({ ...prev, endDate: dayjs(date) }));
     }
+  };
+
+  const isInvalidStartDate = (date: string) => {
+    return dateToUnixTime(dayjs(date)) > dateToUnixTime(dayjs(calendarDate.endDate));
+  };
+
+  const isInvalidEndDate = (date: string) => {
+    return dateToUnixTime(dayjs(date)) < dateToUnixTime(dayjs(calendarDate.startDate));
+  };
+
+  const isInvalidDate = (date: string) => {
+    if (dateType === 'START_DATE') {
+      return isInvalidStartDate(date);
+    }
+    if (dateType === 'END_DATE') {
+      return isInvalidEndDate(date);
+    }
+    return true;
   };
 
   const isCustomMode = calendarDate.mode === 'custom';
@@ -135,6 +154,7 @@ const FilterBottomSheet = ({ detailFilter, setDetailFilter, onClose }: Props) =>
           date={dayjs(calendarDate.startDate).format('YYYY-MM-DD')}
           onChangeDate={handleDate}
           onClose={handleCalednar}
+          isInvalidDate={isInvalidDate}
         />
       )}
     </>
