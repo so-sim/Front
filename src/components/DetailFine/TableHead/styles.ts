@@ -5,7 +5,9 @@ export const TableHead = styled.div`
   align-items: center;
   grid-template-columns: 40px 100px 120px 116px 108px 1fr 108px;
 
-  position: relative;
+  position: sticky;
+  top: 48px;
+  z-index: 1;
 
   border: 2px solid ${({ theme }) => theme.colors.neutral_300_b};
   border-radius: 4px;
