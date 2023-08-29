@@ -15,6 +15,14 @@ export const StatusButton = styled.button<CircleDropButtonProps>`
   background-color: ${({ theme, situation }) => (situation === '미납' ? theme.colors.red_200 : situation === '확인중' ? theme.colors.orange_200 : theme.colors.blue_200)};
 `;
 
+export const MarkIconWrapper = styled.div`
+  display: flex;
+  align-items: center;
+
+  margin-right: 0.25rem;
+  /* padding-bottom: 0.125rem; */
+`;
+
 export const Text = styled.span`
   display: flex;
   justify-content: flex-start;
