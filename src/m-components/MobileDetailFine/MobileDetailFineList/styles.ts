@@ -24,7 +24,7 @@ export const DetailFineListContainer = styled.ul`
 
   padding: 0.75rem 1rem 0;
 
-  height: calc(100vh - 243px);
+  height: calc(100vh - 260px);
 
   overflow-y: auto;
   &::-webkit-scrollbar {

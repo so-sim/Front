@@ -87,7 +87,7 @@ const MobileDetailFine = ({ $isOpen, setIsOpen }: Props) => {
     if (inView && hasNextPage) {
       fetchNextPage();
     }
-  }, [inView]);
+  }, [inView, hasNextPage]);
 
   useEffect(() => {
     setGroupedListByDate({});
