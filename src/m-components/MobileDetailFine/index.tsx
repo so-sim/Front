@@ -22,6 +22,7 @@ import { SYSTEM } from '@/assets/icons/System';
 import { useGroupDetail } from '@/queries/Group';
 import useLockScroll from '@/hooks/useLockScroll';
 import { searchMemberState } from '@/store/searchMemberState';
+import { lockScrollState, initialLockScrollState } from '@/store/lockScrollState';
 
 type GroupedData = {
   [key: string]: SelectedEventInfo[];
@@ -44,6 +45,8 @@ const MobileDetailFine = ({ $isOpen, setIsOpen }: Props) => {
   const [detailFilter, setDetailFilter] = useState<DetailFilter>({ nickname: '', situation: '', page: 0, size: 16, groupId: Number(groupId) });
 
   const [searchMember, setSearchMember] = useRecoilState(searchMemberState);
+
+  const [lockList, setLockList] = useRecoilState(lockScrollState);
 
   const [openFilterSheet, setOpenFilterSheet] = useState(false);
 
@@ -82,6 +85,12 @@ const MobileDetailFine = ({ $isOpen, setIsOpen }: Props) => {
   };
 
   const getSumOfDetails = checkDetailFineValues.reduce((result, { amount }) => (result += amount), 0);
+
+  useEffect(() => {
+    return () => {
+      setLockList(initialLockScrollState);
+    };
+  }, []);
 
   useEffect(() => {
     if (inView && hasNextPage) {
