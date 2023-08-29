@@ -22,7 +22,7 @@ export const MOBILE_SITUATION_STATUS_STYLES = {
 export const DetailFineListContainer = styled.ul`
   position: relative;
 
-  padding: 0.75rem 1rem 0;
+  padding: 0 1rem 0.75rem;
 
   height: calc(100vh - 260px);
 
@@ -33,9 +33,13 @@ export const DetailFineListContainer = styled.ul`
 `;
 
 export const DateText = styled.p`
+  position: sticky;
+  top: 0;
+
   padding-top: 1rem;
   ${({ theme }) => theme.font.body_01};
   color: ${({ theme }) => theme.colors.secondary_500};
+  background-color: white;
 `;
 
 export const DetailFineItem = styled.li<{ isChecked: boolean }>`

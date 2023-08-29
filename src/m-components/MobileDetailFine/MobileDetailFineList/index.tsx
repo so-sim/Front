@@ -57,7 +57,7 @@ const MobileDetailFineList = ({ details, inViewElement }: Props) => {
     <>
       <Style.DetailFineListContainer>
         {Object.values(details).map((item, index) => (
-          <React.Fragment key={index}>
+          <div key={index}>
             <Style.DateText key={index}>{Object.keys(details)[index]}</Style.DateText>
 
             {item.map((item, index) => (
@@ -91,7 +91,7 @@ const MobileDetailFineList = ({ details, inViewElement }: Props) => {
               </Style.DetailFineItem>
             ))}
             <div style={{ height: '5px' }} ref={inViewElement}></div>
-          </React.Fragment>
+          </div>
         ))}
       </Style.DetailFineListContainer>
     </>
