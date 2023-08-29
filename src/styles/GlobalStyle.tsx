@@ -1,10 +1,11 @@
 import { css } from '@emotion/react';
+import { isMobile } from 'react-device-detect';
 
 const globalStyle = css`
   .Toastify__toast-container--bottom-left,
   .Toastify__toast-container--bottom-center,
   .Toastify__toast-container--bottom-right {
-    bottom: 4rem;
+    bottom: ${isMobile && '4rem'};
   }
   html {
     font-size: 16px;
