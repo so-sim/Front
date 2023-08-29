@@ -95,24 +95,26 @@ const Toolbar = () => {
     <>
       {!(checkedSize === 0) && (
         <Style.SituationControlWrapper>
-          <CheckboxContainer id={'checkDetailFineLength'} isChecked={!(checkedSize === 0)} onChange={(event: React.MouseEvent<HTMLInputElement>) => initCheckDetailFine(event)}>
-            <CheckboxContainer.Checkbox as={DetailListCheckBox} />
-            {/*    이 부분 props를 자연스럽게 넘겨주려면 이 방법 밖에?? function으로 넘겨주는 방법도 있긴한데,  이거는 rest props 안넘어옴 */}
-          </CheckboxContainer>
-          {/* 여기 onChange는 임시 cache역할을 만들어서 비우고 다시 채우는 역할??  근데 비우면 없어짐  그래서 그냥 cache 필요없이 지우는 역할을 해야할 것 같다.  */}
-          {/* fixed는 논의 후 추가 */}
+          <Style.AbsoluteContainer>
+            <CheckboxContainer id={'checkDetailFineLength'} isChecked={!(checkedSize === 0)} onChange={(event: React.MouseEvent<HTMLInputElement>) => initCheckDetailFine(event)}>
+              <CheckboxContainer.Checkbox as={DetailListCheckBox} />
+              {/*    이 부분 props를 자연스럽게 넘겨주려면 이 방법 밖에?? function으로 넘겨주는 방법도 있긴한데,  이거는 rest props 안넘어옴 */}
+            </CheckboxContainer>
+            {/* 여기 onChange는 임시 cache역할을 만들어서 비우고 다시 채우는 역할??  근데 비우면 없어짐  그래서 그냥 cache 필요없이 지우는 역할을 해야할 것 같다.  */}
+            {/* fixed는 논의 후 추가 */}
 
-          <Style.Label>{checkedSize}개 선택</Style.Label>
-          <Style.DividingLine />
-          {isAdmin ? (
-            <>
-              <Style.SituationControlButton onClick={moveSituationControlPage}>납부여부 변경</Style.SituationControlButton>
-              <Style.DividingLine />
-              <Style.SituationControlButton onClick={handleRequestPayment}>납부요청</Style.SituationControlButton>
-            </>
-          ) : (
-            <Style.SituationControlButton onClick={moveSituationControlPageByMember}>납부여부 변경</Style.SituationControlButton>
-          )}
+            <Style.Label>{checkedSize}개 선택</Style.Label>
+            <Style.DividingLine />
+            {isAdmin ? (
+              <>
+                <Style.SituationControlButton onClick={moveSituationControlPage}>납부여부 변경</Style.SituationControlButton>
+                <Style.DividingLine />
+                <Style.SituationControlButton onClick={handleRequestPayment}>납부요청</Style.SituationControlButton>
+              </>
+            ) : (
+              <Style.SituationControlButton onClick={moveSituationControlPageByMember}>납부여부 변경</Style.SituationControlButton>
+            )}
+          </Style.AbsoluteContainer>
         </Style.SituationControlWrapper>
       )}
     </>

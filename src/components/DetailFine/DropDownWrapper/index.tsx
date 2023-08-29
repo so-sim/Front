@@ -28,6 +28,7 @@ const DropDownWrapper = ({ detail, openButtonListId, setOpenButtonListId }: Prop
   const isSelectedEvent = openButtonListId === eventId;
 
   const hasPermissionOfHover = isAdmin || (!isAdmin && isOwn && situation === '미납');
+
   const hasPermissionOfChangePaymentType = hasPermissionOfHover && isSelectedEvent;
 
   const handleCircleDropButton = (e: MouseEvent) => {
@@ -42,7 +43,7 @@ const DropDownWrapper = ({ detail, openButtonListId, setOpenButtonListId }: Prop
       {hasPermissionOfChangePaymentType ? (
         <CircleButtonList setOpenButtonListId={setOpenButtonListId} isAdmin={isAdmin} situation={situation} eventId={eventId} />
       ) : (
-        <CircleDropButton situation={situation} origin={situation} />
+        <CircleDropButton situation={situation} origin={situation} isNoAuthority={!hasPermissionOfHover} />
       )}
     </Style.DropDownWrapper>
   );
