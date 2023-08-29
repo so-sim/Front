@@ -1,12 +1,20 @@
 import styled from '@emotion/styled';
 
 export const SituationControlWrapper = styled.div`
+  position: sticky;
+  top: 42px;
+  z-index: 3;
+  /* background-color: blue; */
+  /* margin-top: 4px; */
+`;
+
+export const AbsoluteContainer = styled.div`
   display: flex;
   gap: 4px;
   align-items: center;
 
   position: absolute;
-  bottom: 0;
+  top: 6px;
 
   border: 1px solid ${({ theme }) => theme.colors.neutral_400_b};
   border-radius: 4px;
