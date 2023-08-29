@@ -2,7 +2,7 @@ import { GA } from '@/constants/GA';
 import useCalendarStatus from '@/hooks/Calendar/useCalendarStatus';
 import useCalendarState from '@/hooks/Calendar/useCalendarState';
 import { useGetMonthStatus } from '@/queries/Detail/useGetMonthStatus';
-import { useGroupDetail } from '@/queries/Group';
+import { useGroupDetail, useNotificationInfo } from '@/queries/Group';
 import { dateState } from '@/store/dateState';
 import createCalendar from '@/utils/createCalendar';
 import { handleDate } from '@/utils/handleDate';
@@ -40,6 +40,7 @@ const Calendar: FC<CalnedrProps> = ({ cellType }) => {
   const [{ baseDate, startDate, endDate, mode }, setDateTestObj] = useRecoilState(dateState);
 
   const { calendarDate, setCalendarDate, increaseMonth, decreaseMonth } = useCalendarState();
+  const { data: notificationInfo } = useNotificationInfo(Number(groupId));
   const { monthList, filterCorrectDateStatus, isCurrentMonth, isToday, isSelectedDate } = useCalendarStatus(calendarDate, groupId);
 
   const { getNotificationFormAction } = useNotificationForm();
@@ -93,7 +94,7 @@ const Calendar: FC<CalnedrProps> = ({ cellType }) => {
             {cellType === 'Tag' && (
               <Style.NotificationDescription onClick={handleShowAdminModal}>
                 <span>벌금일정</span>
-                <div>{getOneLineNotificationDescription()}</div>
+                <div>{getOneLineNotificationDescription(notificationInfo?.content)}</div>
               </Style.NotificationDescription>
             )}
           </div>

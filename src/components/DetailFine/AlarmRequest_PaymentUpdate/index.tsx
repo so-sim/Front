@@ -45,43 +45,6 @@ const SITUATION_STATUS_FORMAT = {
   완납: '납부완료',
 };
 
-export const Status: StatusType = {
-  situation_change: {
-    title: (
-      <Tooltip
-        title={`납부여부를 변경해보세요!\n변경 시, 팀원에게 알림이 갑니다.`}
-        contents={[]}
-        width={312}
-        location="TOP"
-        top="-56px"
-        left="0px"
-        defaultValue
-        messageBox={{ left: '0px', top: '37px' }}
-        trigger={<Style.Title>납부여부 변경하기</Style.Title>}
-      />
-    ),
-
-    subTitle: (situationToChange?: Situation) => (
-      <Style.SubTitle>
-        선택된 모든 내역을{' '}
-        <Style.UserLineSpan
-          style={{
-            textUnderlineOffset: '2px',
-          }}
-          $situation={situationToChange!}
-        >
-          {SITUATION_STATUS_FORMAT[situationToChange!] === '승인대기' ? '납부완료' : SITUATION_STATUS_FORMAT[situationToChange!]}
-        </Style.UserLineSpan>
-        으로 변경하시겠습니까?
-      </Style.SubTitle>
-    ),
-  },
-  alarm_request: {
-    title: <Style.Title>납부 요청하기</Style.Title>,
-    subTitle: () => <Style.SubTitle>선택된 팀원에게 벌금 알림을 보내시겠습니까?</Style.SubTitle>,
-  },
-};
-
 /**
  * @description CheckedFineList에서 멤버 별로 check가 되기때문에, 멤버에 해당하는 CheckList 내역을 toggle 해주는 함수이다..
  * 여기서부터 조금 정신이 나가서 제대로 안적은 곳이 있을 수 있는데,, 따금한 지적부탁드립니다 ㅎㅎ...
@@ -240,6 +203,43 @@ const AlarmRequest_PaymentUpdate = ({ checkDetailFine }: Props) => {
   const max_Date = (sortedtList: SelectedEventInfo[]) => sortedtList.at(-1)?.date;
 
   const min_Date = (sortedtList: SelectedEventInfo[]) => sortedtList[0]?.date;
+
+  const Status: StatusType = {
+    situation_change: {
+      title: (
+        <Tooltip
+          title={`납부여부를 변경해보세요!\n변경 시, ${isAdmin ? '팀원' : '총무'}에게 알림이 갑니다.`}
+          contents={[]}
+          width={312}
+          location="TOP"
+          top="-56px"
+          left="0px"
+          defaultValue
+          messageBox={{ left: '0px', top: '37px' }}
+          trigger={<Style.Title>납부여부 변경하기</Style.Title>}
+        />
+      ),
+
+      subTitle: (situationToChange?: Situation) => (
+        <Style.SubTitle>
+          선택된 모든 내역을{' '}
+          <Style.UserLineSpan
+            style={{
+              textUnderlineOffset: '2px',
+            }}
+            $situation={situationToChange!}
+          >
+            {SITUATION_STATUS_FORMAT[situationToChange!] === '승인대기' ? '납부완료' : SITUATION_STATUS_FORMAT[situationToChange!]}
+          </Style.UserLineSpan>
+          으로 변경하시겠습니까?
+        </Style.SubTitle>
+      ),
+    },
+    alarm_request: {
+      title: <Style.Title>납부 요청하기</Style.Title>,
+      subTitle: () => <Style.SubTitle>선택된 팀원에게 벌금 알림을 보내시겠습니까?</Style.SubTitle>,
+    },
+  };
 
   if (!isModal) return null;
 

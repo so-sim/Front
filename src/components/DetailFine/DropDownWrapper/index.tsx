@@ -41,7 +41,13 @@ const DropDownWrapper = ({ detail, openButtonListId, setOpenButtonListId }: Prop
   return (
     <Style.DropDownWrapper isValid={hasPermissionOfHover} onClick={handleCircleDropButton}>
       {hasPermissionOfChangePaymentType ? (
-        <CircleButtonList setOpenButtonListId={setOpenButtonListId} isAdmin={isAdmin} situation={situation} eventId={eventId} />
+        <CircleButtonList //
+          setOpenButtonListId={setOpenButtonListId}
+          isAdmin={isAdmin}
+          isOwn={isOwn}
+          situation={situation}
+          eventId={eventId}
+        />
       ) : (
         <CircleDropButton situation={situation} origin={situation} isNoAuthority={!hasPermissionOfHover} />
       )}

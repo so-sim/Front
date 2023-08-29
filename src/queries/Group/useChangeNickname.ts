@@ -1,7 +1,7 @@
 import { TOAST_SUCCESS } from '@/constants/Toast';
 import { ToastPopUp } from '@/components/@common/Toast';
 import { changeNickname } from '@/api/Group';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 import { ServerResponse } from '@/types/serverResponse';
 
@@ -11,8 +11,11 @@ interface UseChangeNicknameProps {
 }
 
 export const useChangeNickname = ({ modalHandler, setError }: UseChangeNicknameProps) => {
+  const queryClient = useQueryClient();
   return useMutation(changeNickname, {
     onSuccess: () => {
+      queryClient.invalidateQueries(['myNickname']);
+      queryClient.invalidateQueries(['participantList']);
       modalHandler && modalHandler();
       ToastPopUp({ type: 'success', message: TOAST_SUCCESS.UPDATE_GROUP });
     },

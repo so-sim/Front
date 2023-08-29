@@ -6,6 +6,7 @@ import { GroupListWithIndex } from '@/types/group';
 import { ServerResponse } from '@/types/serverResponse';
 import { withdrawalGroup } from '@/api/Group';
 
+//Todo: optimistic update 실패 이유 찾아보기
 export const useWithdrawalGroup = () => {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
@@ -14,15 +15,15 @@ export const useWithdrawalGroup = () => {
       await queryClient.cancelQueries({ queryKey: ['groupList'] });
       const previousData = queryClient.getQueryData<InfiniteData<ServerResponse<GroupListWithIndex>>>(['groupList']);
 
-      if (previousData) {
-        const newData = previousData.pages[0].content.groupList.filter((list) => list.groupId !== groupId);
+      // if (previousData) {
+      //   const newData = previousData.pages[0].content.groupList.filter((list) => list.groupId !== groupId);
 
-        queryClient.setQueryData(['groupList'], () => ({
-          ...previousData,
-          pages: newData,
-          pageParams: [undefined],
-        }));
-      }
+      //   queryClient.setQueryData(['groupList'], () => ({
+      //     ...previousData,
+      //     pages: newData,
+      //     pageParams: [undefined],
+      //   }));
+      // }
       return { previousData };
     },
 

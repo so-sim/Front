@@ -29,7 +29,7 @@ export type NotificationFormAction<T = NotificationInfo> = {
   isSamePeriodType: (type: NotificationSettingType) => boolean;
   isErrorField: (field: keyof T) => boolean;
   getNotificationDescription: () => { firstLine: string; secondLine: string; thirdLine?: string };
-  getOneLineNotificationDescription: () => string;
+  getOneLineNotificationDescription: (notificationInfo?: NotificationInfo) => string;
 };
 
 export type NotificationHook = {
@@ -171,12 +171,12 @@ const useNotificationForm = (): NotificationHook => {
     return { firstLine: '', secondLine: '' };
   };
 
-  const getOneLineNotificationDescription = () => {
-    if (!notificationInfo?.content || notificationInfo?.content.enableNotification === false) {
+  const getOneLineNotificationDescription = (notificationInfo?: NotificationInfo) => {
+    if (!notificationInfo || notificationInfo.enableNotification === false) {
       return '모임 설정에서 알림을 등록해보세요!';
     }
 
-    const { settingType, repeatCycle, monthSettingType, sendDay, ordinalNumbers, daysOfWeek } = notificationInfo?.content;
+    const { settingType, repeatCycle, monthSettingType, sendDay, ordinalNumbers, daysOfWeek } = notificationInfo;
     const isRegularCycle = repeatCycle === 1;
 
     const unitType = {
