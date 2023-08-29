@@ -94,6 +94,15 @@ const UserDetails = () => {
 
   const handleUpdateStatusConfirmModal = (situation: SituationText) => {
     const convertedSituation = convertTextToSituation(situation);
+    if (isAdmin && isOwn) {
+      openConfirmModal({
+        type: 'CHANGE_OWN_ADMIN_STATUS',
+        confirm: () => updateStatus(convertedSituation),
+        cancel: closeConfirmModal,
+      });
+      return;
+    }
+
     openConfirmModal({
       type: 'CHANGE_STATUS_ADMIN',
       confirm: () => updateStatus(convertedSituation),

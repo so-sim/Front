@@ -23,7 +23,13 @@ export const CONFIRM_MODAL = {
   },
   CHANGE_STATUS_ADMIN: {
     title: '납부여부 변경',
-    description: `납부여부를 변경하시겠습니까? \n변경 시, 해당 팀원에게 알림이 갑니다.`,
+    description: `납부여부를 변경하시겠습니까? \n모임에 현재 가입되어 있는 팀원인 경우,\n변경 알림이 갑니다.`,
+    cancel: '취소',
+    confirm: '변경하기',
+  },
+  CHANGE_OWN_ADMIN_STATUS: {
+    title: '납부여부 변경',
+    description: `납부여부를 변경하시겠습니까?`,
     cancel: '취소',
     confirm: '변경하기',
   },
