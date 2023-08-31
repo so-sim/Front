@@ -37,20 +37,45 @@ const App = () => {
     },
   });
 
+  const findParentId = (target: HTMLElement) => {
+    try {
+      if (target?.id === 'app') {
+        //아이디가 아무 것도 없음
+        return;
+      }
+
+      if (target?.id !== '') {
+        //아이디가 존재한다
+        dataLayer.push({ event: 'gtm.click', 'gtm.elementId': target?.id as string });
+        return;
+      }
+
+      findParentId(target.parentElement!);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
   return (
     <RecoilRoot>
-      <QueryClientProvider client={queryClient}>
-        <ThemeProvider theme={theme}>
-          <BrowserRouter>
-            <MobileRouter />
-            <Router />
-          </BrowserRouter>
-          <Toast />
-          <GlobalConfirmModal />
-          <Global styles={globalStyle} />
-        </ThemeProvider>
-        {/* <ReactQueryDevtools initialIsOpen={false} position={'bottom-right'} /> */}
-      </QueryClientProvider>
+      <div
+        onClick={(e) => {
+          findParentId(e.target as HTMLElement);
+        }}
+      >
+        <QueryClientProvider client={queryClient}>
+          <ThemeProvider theme={theme}>
+            <BrowserRouter>
+              <MobileRouter />
+              <Router />
+            </BrowserRouter>
+            <Toast />
+            <GlobalConfirmModal />
+            <Global styles={globalStyle} />
+          </ThemeProvider>
+          {/* <ReactQueryDevtools initialIsOpen={false} position={'bottom-right'} /> */}
+        </QueryClientProvider>
+      </div>
     </RecoilRoot>
   );
 };
