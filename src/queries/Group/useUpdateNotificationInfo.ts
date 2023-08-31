@@ -1,7 +1,10 @@
 import { updateNotificationInfo } from '@/api/Group';
 import { NotificationInfo } from '@/types/group';
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { DayType } from '@/types/group';
+import { ToastPopUp } from '@/components/@common/Toast';
+import { useNavigate } from 'react-router-dom';
+import { isMobile } from 'react-device-detect';
 
 export const DayOfWeek: Record<DayType, number> = {
   MONDAY: 1,
@@ -15,6 +18,8 @@ export const DayOfWeek: Record<DayType, number> = {
 
 export const useUpdateNotificationInfo = (groupId: number) => {
   const queryClient = useQueryClient();
+  const navigate = useNavigate();
+
   return useMutation(
     ({ notificationInfo }: { notificationInfo: NotificationInfo }) => {
       const { sendDay, monthSettingType, ordinalNumbers, daysOfWeek, ...basicFeilds } = notificationInfo;
@@ -39,7 +44,12 @@ export const useUpdateNotificationInfo = (groupId: number) => {
     },
     {
       onSuccess: () => {
+        ToastPopUp({ type: 'success', message: '수정이 완료되었습니다.' });
         queryClient.invalidateQueries(['notification']);
+        if (isMobile) {
+          navigate(`/m-group/${groupId}/book`);
+          return;
+        }
       },
     },
   );
