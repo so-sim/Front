@@ -4,10 +4,12 @@ import * as Style from './styles';
 import useRecentlyVisitedGroup from '@/hooks/useRecentlyVisitedGroup';
 import { EventSourcePolyfill, NativeEventSource } from 'event-source-polyfill';
 import { getAccessToken } from '@/utils/acceessToken';
+import { useQueryClient } from '@tanstack/react-query';
 
 const Home = () => {
   const { isExist, navigateToSavedGroup } = useRecentlyVisitedGroup();
 
+  const queryClient = useQueryClient();
   useEffect(() => {
     const EventSource = EventSourcePolyfill || NativeEventSource;
     const SSE = new EventSource(`${process.env.REACT_APP_SERVER_URL}/api/subscribe`, {
@@ -24,6 +26,7 @@ const Home = () => {
 
     SSE.addEventListener('notification', (e) => {
       console.log('notification: ', e);
+      queryClient.invalidateQueries(['notificationCount']);
     });
   }, []);
 
