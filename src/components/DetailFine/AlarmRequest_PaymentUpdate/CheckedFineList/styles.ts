@@ -16,6 +16,11 @@ export const ItemWrapper = styled.div`
   padding-right: 34px;
 `;
 
+export const UserIconWrapper = styled.div`
+  display: flex;
+  align-items: center;
+`;
+
 export const ItemTitle = styled.p`
   display: flex;
   align-items: center;
