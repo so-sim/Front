@@ -105,6 +105,8 @@ const AlarmRequest_PaymentUpdate = ({ checkDetailFine }: Props) => {
 
   const [sideModal, setSideModal] = useRecoilState(sideModalState);
 
+  const { selectedFine, setSelectedFine } = useSelectedContext('userDetails');
+
   const [_, setIsOpen] = useRecoilState(detailFineState);
 
   const originalCheckListValue = Object.values(checkDetailFine);
@@ -115,6 +117,8 @@ const AlarmRequest_PaymentUpdate = ({ checkDetailFine }: Props) => {
   const detailFineList = Object.values(checkList);
 
   const currentSituation = React.useMemo(() => Object.values(checkDetailFine)[0]?.situation, []);
+
+  const { participantListWithWithdrawnMembers, isWithdrawal } = useWithdrawalParticipantList(Number(groupId));
 
   //disabled 되어야하는 List를 가져오는 hook (일단 임시 주석)  추가하려면 '납부완료'상태에만 disabled를 하는 코드를 추가해야함
   // const { disabledEventIdList, isDisabledItem } = useDisabledList(Number(groupId), originalCheckListEventId, currentSituation);
@@ -233,8 +237,6 @@ const AlarmRequest_PaymentUpdate = ({ checkDetailFine }: Props) => {
 
   const getSingleNickName = originalCheckListValue[0].nickname;
 
-  const { isWithdrawal } = useWithdrawalParticipantList(Number(groupId));
-
   // 해당 로직을 ItemList에서 toggle이 실행되었을 때 해주어도 좋을 것 같다.
 
   const max_Date = (sortedtList: SelectedEventInfo[]) => sortedtList.at(-1)?.date;
@@ -276,10 +278,11 @@ const AlarmRequest_PaymentUpdate = ({ checkDetailFine }: Props) => {
           {isSingleList(originalCheckListValue) ? (
             <SingleCheckedFineList checkDetailFine={originalCheckListValue} setCheckDetailFine={setToggleCheckList} isChecked={isChecked} />
           ) : (
-            participantList?.map((nickName) => (
+            participantListWithWithdrawnMembers?.map((nickName) => (
               <CheckedFineList
                 key={nickName}
                 myName={nickName as string}
+                isWithdrawalMember={isWithdrawal(nickName)}
                 list={participantSituation_List(nickName as string, sortedtList)}
                 isChecked={isChecked}
                 setCheckDetailFine={setToggleCheckListByName}
