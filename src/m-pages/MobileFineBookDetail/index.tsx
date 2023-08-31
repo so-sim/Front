@@ -17,12 +17,14 @@ import { useGroupDetail } from '@/queries/Group';
 import { useGetMyNikname } from '@/queries/Group/useGetMyNickname';
 import { useWithdrawalParticipantList } from '@/queries/Group/useWithdrawalParticipantList';
 import { useRequestNotification } from '@/queries/Notification/useRequestNotifaction';
+import { detailFineState } from '@/store/detailFineState';
 import { Situation } from '@/types/event';
 import { changeNumberToMoney } from '@/utils/changeNumberToMoney';
 import { covertDateForView } from '@/utils/convertFormat';
 import { pushDataLayer } from '@/utils/pushDataLayer';
 import { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
+import { useRecoilState } from 'recoil';
 
 import * as Style from './styles';
 
@@ -49,6 +51,8 @@ const MobileFineBookDetail = () => {
 
   const { data, isLoading } = useGetOneOfDetail(Number(fineBookDetailId));
 
+  const [isOpen, setIsOpen] = useRecoilState(detailFineState);
+
   const { eventId, date, situation, nickname, amount, memo, ground } = data?.content || {
     eventId: 1,
     date: 'loading',
@@ -65,6 +69,7 @@ const MobileFineBookDetail = () => {
   const isOwn = nickname === myNickname?.content.nickname;
 
   const goBack = () => {
+    setIsOpen(true);
     navigate(-1);
   };
 

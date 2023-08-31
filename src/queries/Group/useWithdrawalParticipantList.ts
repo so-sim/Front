@@ -12,7 +12,10 @@ export const useWithdrawalParticipantList = (groupId: number | undefined) => {
     return withdrawalParticipants?.includes(nickname);
   };
 
+  const participantListWithWithdrawnMembers = participantList?.content.nicknameList.map((item) => item.nickname);
+
   return {
+    participantListWithWithdrawnMembers,
     withdrawalParticipants,
     isWithdrawal,
   };
