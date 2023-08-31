@@ -59,8 +59,12 @@ export const DateTitle = styled.div`
 `;
 
 export const DayType = styled(Day)`
-  ${({ theme }) => theme.font.caption}
-  color: ${({ theme, isSunday }) => (isSunday ? theme.colors.system_red_200 : theme.colors.secondary_600)}
+  ${({ theme }) => theme.font.caption};
+  color: ${({ theme, isSunday }) => (isSunday ? theme.colors.system_red_200 : theme.colors.secondary_600)};
+  background-color: white;
+  &:hover {
+    background-color: white;
+  }
 `;
 
 export const Trigger = styled.div`
