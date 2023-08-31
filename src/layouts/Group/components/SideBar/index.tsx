@@ -77,7 +77,7 @@ const GroupSideBar = () => {
             <NavLink to={`/${devicePath}/${groupId}/${tap.link}`} key={tap.title + index}>
               <div style={{ position: 'relative' }}>
                 <Style.Selected isSelected={isSelected(tap.link)} />
-                <Style.Tap disabled={tap.disabled}>
+                <Style.Tap $isDisabled={tap.disabled}>
                   <div style={{ height: '24px' }}>{tap.svg}</div>
                   <span>{tap.title}</span>
                 </Style.Tap>
