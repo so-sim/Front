@@ -1,4 +1,4 @@
-import { useEffect, useReducer } from 'react';
+import { useEffect, useReducer, useRef, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { useCreateDetail } from '@/queries/Detail';
@@ -30,6 +30,8 @@ const FineBookCreateModal = ({ modalHandler }: Props) => {
   const { selectData, getFormFiledActions, createLoading } = useFinebook(formState || initialSelectData);
   const { onChangeDate, onInitForm, createDetail } = getFormFiledActions();
 
+  const disabledRef = useRef(false);
+
   useEffect(() => {
     setFormState(null);
 
@@ -48,6 +50,7 @@ const FineBookCreateModal = ({ modalHandler }: Props) => {
   const onSuccessCreateDetail = (type: 'continue' | 'save') => {
     pushDataLayer('add_list', { button: type === 'continue' ? 'keep' : 'add' });
 
+    disabledRef.current = false;
     const groundsDate = dayjs(selectData.date);
     setDateState((prev) => ({ ...prev, baseDate: groundsDate, startDate: groundsDate, endDate: groundsDate, mode: 'day' }));
 
@@ -62,6 +65,7 @@ const FineBookCreateModal = ({ modalHandler }: Props) => {
   };
 
   const onCreateDetail = (type: 'continue' | 'save') => {
+    disabledRef.current = true;
     createDetail().then(() => onSuccessCreateDetail(type));
   };
 
@@ -82,7 +86,7 @@ const FineBookCreateModal = ({ modalHandler }: Props) => {
             추가하기
           </Button>
           <Button
-            color={checkFormIsValid(selectData) ? 'white' : 'white-disabled'}
+            color={checkFormIsValid(selectData) && !disabledRef.current ? 'white' : 'white-disabled'}
             width="100%"
             height="42px"
             onClick={() => onCreateDetail('continue')}
