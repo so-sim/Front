@@ -23,7 +23,6 @@ import WithdrawBadge from '@/components/@common/WithdrawBadge';
 import { useGroupDetail } from '@/queries/Group';
 import { useGetMyNikname } from '@/queries/Group/useGetMyNickname';
 
-
 type Props = {
   details?: SelectedEventInfo[];
   detailFilter: DetailFilter;
@@ -150,7 +149,7 @@ const DetailList = ({ detailFilter, details }: Props) => {
                     }}
                   >
                     <div style={{ height: '16px' }}>{enableNotification ? ALARM.ALARM_SM : SYSTEM.DONE_SM}</div>
-                    <div>{enableNotification ? '벌금요청' : '요청완료'}</div>
+                    <div>{enableNotification ? '납부요청' : '요청완료'}</div>
                   </Style.NotificationButton>
                 </Style.Element>
               )}
