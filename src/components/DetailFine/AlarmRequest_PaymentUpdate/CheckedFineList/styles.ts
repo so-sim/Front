@@ -17,7 +17,10 @@ export const ItemWrapper = styled.div`
 `;
 
 export const ItemTitle = styled.p`
-  ${({ theme }) => theme.font.body_02}
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  ${({ theme }) => theme.font.body_02};
 `;
 
 export const ItemAmount = styled.p<{ isOpen?: boolean }>`
