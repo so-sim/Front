@@ -7,10 +7,13 @@ import CheckboxContainer from '@/components/@common/Checkbox';
 import DetailListCheckBox from '../../checkbox';
 import CheckStatusListWrapper from '@/components/@common/CheckStatusListWrapper';
 import { convertToPriceFormat } from '@/utils/convertFormat';
+import WithdrawBadge from '@/components/@common/WithdrawBadge';
+import { USER } from '@/assets/icons/User';
 
 type Props = {
   myName: string;
   list?: SelectedEventInfo[];
+  isWithdrawalMember?: boolean;
   isChecked: (eventId: number) => boolean;
   setCheckDetailFine: (name: string, list: SelectedEventInfo[]) => void;
   pageFromAlarm?: boolean;
@@ -18,7 +21,7 @@ type Props = {
 
 // 팀원 수가 한명일 때로 style을 나누려고 했는데, Alarm에서 들어오는 페이지가 다르다고 첨언을 주셨다.
 
-const CheckedFineList = ({ myName, list, setCheckDetailFine, isChecked, pageFromAlarm = false }: Props) => {
+const CheckedFineList = ({ myName, list, isWithdrawalMember, setCheckDetailFine, isChecked, pageFromAlarm = false }: Props) => {
   const [toggle, setToggle] = useState(false);
 
   const TotalAmount = list?.reduce((prev, current) => prev + current.amount, 0);
@@ -42,7 +45,10 @@ const CheckedFineList = ({ myName, list, setCheckDetailFine, isChecked, pageFrom
               <CheckboxContainer.Checkbox as={DetailListCheckBox} />
             </CheckboxContainer>
 
-            <Style.ItemTitle>{myName}</Style.ItemTitle>
+            <Style.ItemTitle>
+              <Style.UserIconWrapper>{USER.PERSON_24}</Style.UserIconWrapper>
+              {myName} {isWithdrawalMember && <WithdrawBadge />}
+            </Style.ItemTitle>
             <Style.ItemAmount isOpen={toggle}>
               {convertToPriceFormat(TotalAmount!)}
               <Style.Monetary_Unit>원</Style.Monetary_Unit>
