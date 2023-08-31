@@ -37,10 +37,15 @@ const App = () => {
     },
   });
 
-  const findParentId = (target: HTMLElement) => {
+  const findParentId = (target: HTMLElement, flag = true) => {
     try {
       if (target?.id === 'app') {
         //아이디가 아무 것도 없음
+        return;
+      }
+
+      if (target?.id !== '' && flag) {
+        //아이디가 존재한다
         return;
       }
 
@@ -50,7 +55,7 @@ const App = () => {
         return;
       }
 
-      findParentId(target.parentElement!);
+      findParentId(target.parentElement!, false);
     } catch (e) {
       console.log(e);
     }
