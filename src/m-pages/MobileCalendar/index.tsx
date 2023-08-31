@@ -30,7 +30,8 @@ const MobileCalendar = () => {
   const navigate = useNavigate();
 
   const [{ isFirstVisit }, setIsFirstVisit] = useRecoilState(firstVisitState);
-  const { getNotificationFormAction } = useNotificationForm();
+  const { notificationForm, getNotificationFormAction } = useNotificationForm();
+
   const { getOneLineNotificationDescription } = getNotificationFormAction();
 
   const { data: group } = useGroupDetail(Number(groupId));
@@ -76,7 +77,7 @@ const MobileCalendar = () => {
     <MobileLayout location="GROUP">
       <Style.Notification onClick={goToGroupAlarmSettingPage}>
         <Style.NotificationTitle>벌금일정</Style.NotificationTitle>
-        <Style.NotificationContent>{getOneLineNotificationDescription()}</Style.NotificationContent>
+        <Style.NotificationContent>{getOneLineNotificationDescription(notificationForm)}</Style.NotificationContent>
       </Style.Notification>
       <Style.CalendarBody>
         <Style.Container>
