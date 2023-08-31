@@ -20,7 +20,7 @@ const TimeBottomSheet = ({ onClose, onChange }: Props) => {
   const TestArray = [`${padStart(dayjs().hour())}:${padStart(dayjs().minute() + 1)}`, ...TIME_LIST];
 
   return (
-    <BottomSheet title="시간 설정" onClose={onClose}>
+    <BottomSheet title="알림 시간" onClose={onClose}>
       <Style.TimeList>
         {TestArray.map((time) => {
           return (
