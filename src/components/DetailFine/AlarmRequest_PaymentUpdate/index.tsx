@@ -132,6 +132,7 @@ const AlarmRequest_PaymentUpdate = ({ checkDetailFine }: Props) => {
   }, [checkDetailFine]);
 
   useEffect(() => {
+    setSelectedFine(initialSelectData);
     return () => {
       setSideModal(initialSideModalState);
     };
