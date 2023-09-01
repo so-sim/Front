@@ -17,7 +17,7 @@ const DateCellWithTag: FC<DateCellWitTagProps> = ({ date, isCurrentMonth, isToda
 
   return (
     <>
-      <Style.DateCell key={date.day()}>
+      <Style.DateCell key={date.day()} isToday={isToday(date)}>
         <Style.Date isToday={isToday(date)} isSelectedDate={isSelectedDate(date)} isCurrentMonth={currentMonth}>
           {date.date()}
         </Style.Date>

@@ -28,7 +28,7 @@ const DateCellWithMark: FC<DateCellWithMarkProps> = ({ date, isCurrentMonth, isT
   const isOneDay = isFirst && isLast;
 
   return (
-    <Style.DateCell>
+    <Style.DateCell mode={mode} isToday={isToday(date)} isSelectedDate={isSelectedDate(date) || isOneDay} isCurrentMonth={isCurrentMonth(date)} isSelectedPeriod={isSelectedPeriod}>
       <Style.Date mode={mode} isToday={isToday(date)} isSelectedDate={isSelectedDate(date) || isOneDay} isCurrentMonth={isCurrentMonth(date)} isSelectedPeriod={isSelectedPeriod}>
         {isSelectedPeriod && !isOneDay && <Style.SelectedPeriod mode={mode} isSelectedPeriod={isSelectedPeriod} isFirst={isFirst} isLast={isLast} />}
         {date.date()}
