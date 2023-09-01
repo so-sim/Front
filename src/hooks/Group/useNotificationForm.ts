@@ -6,6 +6,25 @@ import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import useFormState from '../Shared/useFormState';
 
+export const dayType = {
+  MONDAY: '월',
+  TUESDAY: '화',
+  WEDNESDAY: '수',
+  THURSDAY: '목',
+  FRIDAY: '금',
+  SATURDAY: '토',
+  SUNDAY: '일',
+};
+
+export const weekType: Record<number, string> = {
+  1: '첫 번째',
+  2: '두 번째',
+  3: '세 번째',
+  4: '네 번째',
+  5: '다섯 번째',
+  6: '마지막',
+};
+
 const initialValue: NotificationInfo = {
   enableNotification: false,
   settingType: 'M',
@@ -189,25 +208,6 @@ const useNotificationForm = (): NotificationHook => {
       M: '개월',
       W: '주',
       D: '일',
-    };
-
-    const dayType = {
-      MONDAY: '월',
-      TUESDAY: '화',
-      WEDNESDAY: '수',
-      THURSDAY: '목',
-      FRIDAY: '금',
-      SATURDAY: '토',
-      SUNDAY: '일',
-    };
-
-    const weekType: Record<number, string> = {
-      1: '첫 번째',
-      2: '두 번째',
-      3: '세 번째',
-      4: '네 번째',
-      5: '다섯 번째',
-      6: '마지막',
     };
 
     const dayList = daysOfWeek?.map((day) => dayType[day as DayType]).join(',');

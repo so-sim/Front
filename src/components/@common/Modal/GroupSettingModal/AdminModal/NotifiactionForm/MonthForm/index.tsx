@@ -6,6 +6,7 @@ import DaySelector from '../DaySelector';
 import { useState } from 'react';
 import { DayOfWeek } from '@/queries/Group/useUpdateNotificationInfo';
 import { sortNotificationForm } from '../../utils/sortNotificationInfo';
+import { dayType, weekType } from '@/hooks/Group/useNotificationForm';
 
 type Props<T, V> = {
   notificationForm: NotificationInfo;
@@ -71,7 +72,15 @@ const MonthForm = <T extends NotificationInfo, V extends T[DuplicateValues]>({
   const isSelectDayType = notificationForm.monthSettingType === 'WEEK';
 
   const sortedNotificationForm = sortNotificationForm(notificationForm);
-  const notificationDescription = getOneLineNotificationDescription(sortedNotificationForm);
+
+  const description = ({ daysOfWeek, ordinalNumbers }: NotificationInfo) => {
+    const mappedDaysOfWeek = daysOfWeek?.map((day) => dayType[day as DayType]);
+    const mappedOrdinalNumbers = ordinalNumbers?.map((week) => weekType[week]);
+    const dayString = mappedDaysOfWeek?.length === 0 ? '무슨' : mappedDaysOfWeek?.join(', ');
+    const weekString = mappedOrdinalNumbers?.length === 0 ? '몇 번째' : mappedOrdinalNumbers?.join(', ');
+
+    return `${weekString} ${dayString}요일`;
+  };
 
   return (
     <>
@@ -119,7 +128,7 @@ const MonthForm = <T extends NotificationInfo, V extends T[DuplicateValues]>({
       </Style.MonthlySelectTitle>
       {isSelectDayType && (
         <div>
-          <Style.Notice>{notificationDescription}</Style.Notice>
+          <Style.Notice>{description(sortedNotificationForm)}</Style.Notice>
           <Style.Notice>
             <div>몇 번째</div>
             {isErrorField('ordinalNumbers') && <Style.ErrorText>최소 1개 이상 선택해주세요.</Style.ErrorText>}
