@@ -22,6 +22,9 @@ import PaymentRequest from '@/components/@common/Tooltip/PaymentRequest';
 import { useWithdrawalParticipantList } from '@/queries/Group/useWithdrawalParticipantList';
 import { useRequestNotification } from '@/queries/Notification/useRequestNotifaction';
 import WithdrawBadge from '@/components/@common/WithdrawBadge';
+import { requestNotificationState } from '@/store/requestNotificationState';
+import { useRecoilState } from 'recoil';
+import { covertDateForView } from '@/utils/convertFormat';
 
 type Props = {
   select: SelectedEventInfo;
@@ -32,6 +35,12 @@ export const REQUEST_BUTTON: { [key in Situation]: string } = {
   미납: '납부완료',
   확인중: '승인대기',
   완납: '',
+};
+
+const DROP_BUTTON = {
+  미납: GA.NON.DETAIL_DROP,
+  완납: GA.FULL.DETAIL_DROP,
+  확인중: GA.CON.DETAIL_DROP,
 };
 
 const UserDetails = () => {
@@ -130,6 +139,11 @@ const UserDetails = () => {
   const { mutate: deleteDetail } = useDeleteDetail(closeUserDetails);
   const { isWithdrawal } = useWithdrawalParticipantList(Number(groupId));
 
+  //Todo: 백엔드 api 업데이트되면 수정 예정
+  //쿨타임 24시간 대신에 사용 중
+  const [sendedNotification, setSendedNotification] = useRecoilState(requestNotificationState);
+  const isEnable = !sendedNotification.includes(eventId);
+
   const updateStatus = (situation: Situation) => {
     mutateDetailStatus({ situation, eventIdList: [eventId] });
   };
@@ -157,7 +171,7 @@ const UserDetails = () => {
         </Style.Header>
         <Style.UserDetailsContent>
           <Style.BetweenBlock>
-            <Style.Date>{date.slice(2)}</Style.Date>
+            <Style.Date>{covertDateForView(date.slice(2))}</Style.Date>
             {isAdmin ? (
               <Style.ButtonBox>
                 <Style.AdminButton onClick={handleDeleteConfirmModal}>삭제</Style.AdminButton>
@@ -186,6 +200,7 @@ const UserDetails = () => {
                 <DropBox
                   color="white"
                   boxWidth="112px"
+                  id={DROP_BUTTON[situation]}
                   width={112}
                   setType={handleUpdateStatusConfirmModal}
                   type={convertSituationToText(situation)} //Todo: GA 코드 추가해야됨
@@ -224,15 +239,15 @@ const UserDetails = () => {
                 top="60px"
                 left="-163px"
                 messageBox={{ left: '290px', top: '-8px' }}
-                preventClick
-                defaultValue
+                onCloseTooltip={() => localStorage.setItem('isFirstRequestPaymentTooltip', 'true')}
+                defaultValue={localStorage.getItem('isFirstRequestPaymentTooltip') === null}
                 trigger={
                   <Button
                     width="150px"
                     height="42px"
-                    color={situation === '미납' ? 'black' : 'disabled'} //
+                    color={isEnable ? 'black' : 'disabled'} //
                     onClick={handleRequestPayment}
-                    id={GA.CON.SIDE_BUTTON}
+                    id={GA.PAYMENT_REQUEST.DETAIL_BUTTON}
                   >
                     납부요청
                   </Button>

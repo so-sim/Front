@@ -1,5 +1,6 @@
 import { SYSTEM } from '@/assets/icons/System';
 import WithdrawBadge from '@/components/@common/WithdrawBadge';
+import { GA } from '@/constants/GA';
 import useSearchParticipant from '@/hooks/Member/useSearchParticipant';
 import { KeyboardEvent, useEffect, useRef, useState } from 'react';
 
@@ -49,7 +50,7 @@ export const AutoComplete = ({ updateDetailFilterNickname, initialNickname }: Pr
   }, [nickname]);
 
   return (
-    <Style.AutoCompleteContainer>
+    <Style.AutoCompleteContainer id={GA.SEARCH}>
       <Style.SearchBar
         type="text" //
         placeholder="팀원을 검색해주세요."

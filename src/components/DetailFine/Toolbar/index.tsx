@@ -11,6 +11,7 @@ import useCheckListState from '@/hooks/useCheckListState';
 import { SelectedEventInfo } from '@/types/event';
 import useConfirmModal from '@/hooks/useConfirmModal';
 import useValidateSituation from '@/hooks/Group/useValidateSituation';
+import { GA } from '@/constants/GA';
 
 const Toolbar = () => {
   const { groupId } = useParams();
@@ -107,12 +108,18 @@ const Toolbar = () => {
             <Style.DividingLine />
             {isAdmin ? (
               <>
-                <Style.SituationControlButton onClick={moveSituationControlPage}>납부여부 변경</Style.SituationControlButton>
+                <Style.SituationControlButton id={GA.TOOLBAR.PAYMENT_CHANGE} onClick={moveSituationControlPage}>
+                  납부여부 변경
+                </Style.SituationControlButton>
                 <Style.DividingLine />
-                <Style.SituationControlButton onClick={handleRequestPayment}>납부요청</Style.SituationControlButton>
+                <Style.SituationControlButton id={GA.TOOLBAR.PAYMENT_REQUEST} onClick={handleRequestPayment}>
+                  납부요청
+                </Style.SituationControlButton>
               </>
             ) : (
-              <Style.SituationControlButton onClick={moveSituationControlPageByMember}>납부여부 변경</Style.SituationControlButton>
+              <Style.SituationControlButton id={GA.TOOLBAR.PAYMENT_CHANGE} onClick={moveSituationControlPageByMember}>
+                납부여부 변경
+              </Style.SituationControlButton>
             )}
           </Style.AbsoluteContainer>
         </Style.SituationControlWrapper>

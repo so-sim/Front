@@ -11,9 +11,9 @@ import { isMobile } from 'react-device-detect';
 import useCheckListState from '@/hooks/useCheckListState';
 
 const GROUP_TAPS = [
-  { title: '홈', svg: SYSTEM.HOME, disabled: true, link: 'home' },
-  { title: '공지사항', svg: SYSTEM.NOTICE, disabled: true, link: 'notice' },
-  { title: '벌금 장부', svg: SYSTEM.ARTICLE, disabled: false, link: 'book' },
+  { title: '홈', svg: SYSTEM.HOME, disabled: true, link: GA.MENU.HOME },
+  { title: '공지사항', svg: SYSTEM.NOTICE, disabled: true, link: GA.MENU.NOTIFICATION },
+  { title: '벌금 장부', svg: SYSTEM.ARTICLE, disabled: false, link: GA.MENU.BOOK },
 ];
 
 const ETC = [

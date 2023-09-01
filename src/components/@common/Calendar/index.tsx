@@ -92,7 +92,7 @@ const Calendar: FC<CalnedrProps> = ({ cellType }) => {
               </Style.ArrowWrapper>
             </Style.ArrowBlock>
             {cellType === 'Tag' && (
-              <Style.NotificationDescription onClick={handleShowAdminModal}>
+              <Style.NotificationDescription onClick={handleShowAdminModal} id={GA.NAVIGATION.GROUP.ALARM}>
                 <span>벌금일정</span>
                 <div>{getOneLineNotificationDescription(notificationInfo?.content)}</div>
               </Style.NotificationDescription>
@@ -113,7 +113,11 @@ const Calendar: FC<CalnedrProps> = ({ cellType }) => {
                 top="40px"
                 left="-456px"
                 messageBox={{ left: '459px', top: '-8px' }}
-                trigger={<span style={{ cursor: 'pointer' }}>{SYSTEM.TOOLTIP_INFO}</span>}
+                trigger={
+                  <span style={{ cursor: 'pointer' }} id={GA.TOOLTIP.PAYMENT_OVERVIEW}>
+                    {SYSTEM.TOOLTIP_INFO}
+                  </span>
+                }
               />
             )}
           </Style.RightItem>
@@ -123,7 +127,7 @@ const Calendar: FC<CalnedrProps> = ({ cellType }) => {
             <div key={date}>{date}</div>
           ))}
         </Style.WeekDate>
-        <Style.CalendarContainer length={monthList.length} mini={cellType === 'Mark'}>
+        <Style.CalendarContainer length={monthList.length} mini={cellType === 'Mark'} id={GA.CALENDAR_SKIP.DATE}>
           {monthList.map((weeks, idx) => (
             <Style.WeekWrap key={idx} cellType={cellType}>
               {weeks.map((date) => (

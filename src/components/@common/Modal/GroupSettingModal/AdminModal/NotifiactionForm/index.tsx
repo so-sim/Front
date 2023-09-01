@@ -8,6 +8,7 @@ import { NotificationHook } from '@/hooks/Group/useNotificationForm';
 import { SYSTEM } from '@/assets/icons/System';
 import { Tooltip } from '@/components/@common/Tooltip';
 import Notification from '@/components/@common/Tooltip/Notification';
+import { GA } from '@/constants/GA';
 
 const PERIOD_TYPE_LIST: { label: string; value: NotificationSettingType }[] = [
   { label: '매달', value: 'M' },
@@ -45,7 +46,11 @@ const NotificationForm = ({ notificationForm, getNotificationFormAction }: Props
             top="32px"
             left={'-106px'}
             messageBox={{ left: '106px', top: '-10px' }}
-            trigger={<div style={{ height: '20px' }}>{SYSTEM.TOOLTIP_MD}</div>}
+            trigger={
+              <div style={{ height: '20px' }} id={GA.TOOLTIP.AUTO_REQUEST}>
+                {SYSTEM.TOOLTIP_MD}
+              </div>
+            }
           />
         </Style.TabTitle>
         <Toggle

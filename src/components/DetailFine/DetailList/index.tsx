@@ -22,6 +22,8 @@ import { useParams } from 'react-router-dom';
 import WithdrawBadge from '@/components/@common/WithdrawBadge';
 import { useGroupDetail } from '@/queries/Group';
 import { useGetMyNikname } from '@/queries/Group/useGetMyNickname';
+import { requestNotificationState } from '@/store/requestNotificationState';
+import { GA } from '@/constants/GA';
 import { sideModalState } from '@/store/sideModalState';
 
 type Props = {
@@ -35,6 +37,9 @@ const DetailList = ({ detailFilter, details }: Props) => {
 
   const [openButtonListId, setOpenButtonListId] = useState(0);
 
+  //Todo: 백엔드 api 업데이트되면 수정 예정
+  //쿨타임 24시간 대신에 사용 중
+  const [sendedNotification, setSendedNotification] = useRecoilState(requestNotificationState);
   const [sideModal, setSideModal] = useRecoilState(sideModalState);
 
   const { selectedFine, setSelectedFine } = useSelectedContext('userDetails');
@@ -111,14 +116,14 @@ const DetailList = ({ detailFilter, details }: Props) => {
     <Style.DetailList>
       {details?.map((detail, i) => {
         const { date, nickname, amount, memo, eventId, ground } = detail;
-        const enableNotification = true;
+        const isEnable = !sendedNotification.includes(eventId);
+
         return (
-          <Style.TableRow isAdmin={isAdmin} key={i} isSelected={selectedFine.eventId === eventId} onClick={() => handleUserDetailModal(detail)}>
+          <Style.TableRow id={GA.LIST.DETAIL} isAdmin={isAdmin} key={i} isSelected={selectedFine.eventId === eventId} onClick={() => handleUserDetailModal(detail)}>
             <CheckboxContainer id={String(eventId)} isChecked={isChecked(eventId)} onChange={(event: React.MouseEvent<HTMLInputElement>) => handleToggleCheckbox(event, detail)}>
               <CheckboxContainer.Checkbox as={DetailListCheckBox} />
               {/*    이 부분 props를 자연스럽게 넘겨주려면 이 방법 밖에?? function으로 넘겨주는 방법도 있긴한데,  이거는 rest props 안넘어옴 */}
             </CheckboxContainer>
-
             <Style.Element hasEllipsis={false}>{covertDateForView(date.slice(2))}</Style.Element>
             <DropDownWrapper openButtonListId={openButtonListId} detail={detail} setOpenButtonListId={setOpenButtonListId} />
             <Style.FlexElement hasEllipsis>
@@ -145,15 +150,16 @@ const DetailList = ({ detailFilter, details }: Props) => {
               detail.situation === '미납' && (
                 <Style.Element>
                   <Style.NotificationButton
-                    isActive={enableNotification}
-                    disabled={!enableNotification}
+                    isActive={isEnable}
+                    disabled={!isEnable}
+                    id={GA.PAYMENT_REQUEST.LIST_BUTTON}
                     onClick={(e) => {
                       e.stopPropagation();
                       requestNotification(eventId);
                     }}
                   >
-                    <div style={{ height: '16px' }}>{enableNotification ? ALARM.ALARM_SM : SYSTEM.DONE_SM}</div>
-                    <div>{enableNotification ? '벌금요청' : '요청완료'}</div>
+                    <div style={{ height: '16px' }}>{isEnable ? ALARM.ALARM_SM : SYSTEM.DONE_SM}</div>
+                    <div>{isEnable ? '납부요청' : '요청완료'}</div>
                   </Style.NotificationButton>
                 </Style.Element>
               )}

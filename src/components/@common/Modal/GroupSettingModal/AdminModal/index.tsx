@@ -12,8 +12,8 @@ import useNotificationForm from '@/hooks/Group/useNotificationForm';
 import useGroupForm from '@/hooks/Group/useGroupForm';
 
 const TAB_LIST = [
-  { label: '사용자 설정', value: 'GROUP' },
-  { label: '알림 설정', value: 'ALARM' },
+  { label: '사용자 설정', value: 'GROUP', id: '' },
+  { label: '알림 설정', value: 'ALARM', id: GA.GROUP.ALARM },
 ];
 
 export type GroupFormData = {
@@ -93,6 +93,7 @@ export const AdminModal = ({ modalHandler, defaultValue = 'GROUP' }: Props) => {
               {TAB_LIST.map((tab) => {
                 return (
                   <Style.SubTitle //
+                    id={tab.id}
                     key={tab.value}
                     isSelected={tab.value === tapValue}
                   >

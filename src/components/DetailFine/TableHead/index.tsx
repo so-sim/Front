@@ -47,7 +47,7 @@ const TableHead = ({ details }: Props) => {
         left="-166px"
         messageBox={{ left: '242px', top: '-8px' }}
         trigger={
-          <Style.PointerElement>
+          <Style.PointerElement id={GA.TOOLTIP.PAYMENT}>
             <span>납부여부</span>
             {SYSTEM.TOOLTIP_MD}
           </Style.PointerElement>
@@ -68,7 +68,7 @@ const TableHead = ({ details }: Props) => {
           left="-204px"
           messageBox={{ left: '280px', top: '-8px' }}
           trigger={
-            <Style.PointerElement>
+            <Style.PointerElement id={GA.TOOLTIP.PAYMENT_REQUEST}>
               <span>납부요청</span>
               {SYSTEM.TOOLTIP_MD}
             </Style.PointerElement>

@@ -108,6 +108,7 @@ const MobileDetailFine = ({ $isOpen, setIsOpen }: Props) => {
 
   //Todo: 언마운트 시키는 방향으로 개선하면 좋을듯
   useEffect(() => {
+    setSearchMember({ nickname: '' });
     setDetailFilter((prev) => ({ ...prev, groupId: Number(groupId) }));
   }, [groupId]);
 
