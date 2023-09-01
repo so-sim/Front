@@ -20,7 +20,7 @@ export default DetailListCheckBox;
 export const CheckBoxWrapper = styled.div`
   display: flex;
   align-items: center;
-  padding: 0.5rem 0.75rem 0.5rem 0.5rem;
+  padding: 0.5rem 0.75rem 0.5rem 1.125rem;
 `;
 
 export const CheckBox = styled.input`
