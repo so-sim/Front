@@ -24,6 +24,7 @@ import { useGroupDetail } from '@/queries/Group';
 import { useGetMyNikname } from '@/queries/Group/useGetMyNickname';
 import { requestNotificationState } from '@/store/requestNotificationState';
 import { GA } from '@/constants/GA';
+import { sideModalState } from '@/store/sideModalState';
 
 type Props = {
   details?: SelectedEventInfo[];
@@ -39,6 +40,7 @@ const DetailList = ({ detailFilter, details }: Props) => {
   //Todo: 백엔드 api 업데이트되면 수정 예정
   //쿨타임 24시간 대신에 사용 중
   const [sendedNotification, setSendedNotification] = useRecoilState(requestNotificationState);
+  const [sideModal, setSideModal] = useRecoilState(sideModalState);
 
   const { selectedFine, setSelectedFine } = useSelectedContext('userDetails');
   const { mutate: mutateRequestNotification } = useRequestNotification();
@@ -77,6 +79,11 @@ const DetailList = ({ detailFilter, details }: Props) => {
     });
   };
 
+  const handleToggleCheckbox = (event: React.MouseEvent<HTMLInputElement>, detail: SelectedEventInfo) => {
+    event.stopPropagation();
+    setToggleCheckList(detail);
+  };
+
   useEffect(() => {
     const closeCircleButtonList = () => {
       setOpenButtonListId(0);
@@ -89,7 +96,9 @@ const DetailList = ({ detailFilter, details }: Props) => {
   }, []);
 
   useEffect(() => {
-    setInitCheckDetailFine();
+    if (sideModal.isModal !== true) {
+      setInitCheckDetailFine();
+    }
   }, [openButtonListId, selectedFine]);
 
   useEffect(() => {
@@ -110,24 +119,11 @@ const DetailList = ({ detailFilter, details }: Props) => {
         const isEnable = !sendedNotification.includes(eventId);
 
         return (
-          <Style.TableRow //
-            key={i}
-            isAdmin={isAdmin}
-            isSelected={selectedFine.eventId === eventId}
-            onClick={() => handleUserDetailModal(detail)}
-            id={GA.LIST.DETAIL}
-          >
-            <Style.CheckboxWrapper
-              onClick={(e) => {
-                e.stopPropagation();
-                setToggleCheckList(detail);
-              }}
-            >
-              <CheckboxContainer id={String(eventId)} isChecked={isChecked(eventId)} onChange={(event: React.MouseEvent<HTMLInputElement>) => setToggleCheckList(detail)}>
-                <CheckboxContainer.Checkbox as={DetailListCheckBox} />
-                {/*    이 부분 props를 자연스럽게 넘겨주려면 이 방법 밖에?? function으로 넘겨주는 방법도 있긴한데,  이거는 rest props 안넘어옴 */}
-              </CheckboxContainer>
-            </Style.CheckboxWrapper>
+          <Style.TableRow id={GA.LIST.DETAIL} isAdmin={isAdmin} key={i} isSelected={selectedFine.eventId === eventId} onClick={() => handleUserDetailModal(detail)}>
+            <CheckboxContainer id={String(eventId)} isChecked={isChecked(eventId)} onChange={(event: React.MouseEvent<HTMLInputElement>) => handleToggleCheckbox(event, detail)}>
+              <CheckboxContainer.Checkbox as={DetailListCheckBox} />
+              {/*    이 부분 props를 자연스럽게 넘겨주려면 이 방법 밖에?? function으로 넘겨주는 방법도 있긴한데,  이거는 rest props 안넘어옴 */}
+            </CheckboxContainer>
             <Style.Element hasEllipsis={false}>{covertDateForView(date.slice(2))}</Style.Element>
             <DropDownWrapper openButtonListId={openButtonListId} detail={detail} setOpenButtonListId={setOpenButtonListId} />
             <Style.FlexElement hasEllipsis>

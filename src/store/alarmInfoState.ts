@@ -1,5 +1,11 @@
 import { SituationStatus } from '@/types/notification';
+import { isMobile } from 'react-device-detect';
 import { atom } from 'recoil';
+import { recoilPersist } from 'recoil-persist';
+
+const { persistAtom } = recoilPersist({
+  storage: localStorage,
+});
 
 export type AlarmInfoType = {
   alarmEventIdList: number[];
@@ -20,4 +26,5 @@ export const initAlarmInfoState = {
 export const alarmInfoState = atom<AlarmInfoType>({
   key: 'alarmEventIdListState',
   default: initAlarmInfoState,
+  effects_UNSTABLE: isMobile ? [persistAtom] : [],
 });
