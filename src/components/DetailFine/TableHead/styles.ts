@@ -3,7 +3,7 @@ import styled from '@emotion/styled';
 export const TableHead = styled.div`
   display: grid;
   align-items: center;
-  grid-template-columns: 40px 100px 120px 116px 108px 1fr 108px;
+  grid-template-columns: 40px 100px 130px 116px 108px 1fr 108px;
 
   position: sticky;
   top: 48px;

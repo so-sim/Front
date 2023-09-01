@@ -18,6 +18,7 @@ export const ToolbarContainer = styled.div`
 
   background-color: white;
 
+  box-shadow: 0px -6px 12px 0px rgba(45, 45, 45, 0.1);
   ${({ theme }) => theme.font.subhead_02};
 `;
 

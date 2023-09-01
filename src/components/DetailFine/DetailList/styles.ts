@@ -6,9 +6,10 @@ export const TableRow = styled.div<{ isSelected: boolean; isAdmin: boolean }>`
   display: grid;
   align-items: center;
   height: 46px;
-  grid-template-columns: 40px 100px 120px 116px 108px 1fr ${({ isAdmin }) => isAdmin && '108px'};
-  border-top: 2px solid ${({ theme }) => theme.colors.neutral_200_b};
+  grid-template-columns: 40px 100px 130px 116px 108px 1fr ${({ isAdmin }) => isAdmin && '108px'};
+  border-bottom: 2px solid ${({ theme }) => theme.colors.neutral_200_b};
   border-radius: 4px;
+  border-left: 2px solid white;
   cursor: pointer;
   background: ${({ theme, isSelected }) => (isSelected ? theme.colors.neutral_300_b : theme.colors.secondary_100)};
   &:hover {

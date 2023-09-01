@@ -7,7 +7,7 @@ type CircleDropButtonProps = { situation: Situation };
 export const StatusButton = styled.button<CircleDropButtonProps>`
   display: flex;
   align-items: center;
-  padding: 4px 12px;
+  padding: 4px 8px;
   margin: 8px 10px;
   border-radius: 16px;
   color: ${({ theme, situation }) => (situation === '미납' ? theme.colors.red_600 : situation === '확인중' ? theme.colors.orange_600 : theme.colors.primary_600)};

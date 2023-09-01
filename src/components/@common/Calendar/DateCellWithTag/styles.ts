@@ -1,6 +1,24 @@
 import styled from '@emotion/styled';
 
-export const DateCell = styled.div`
+export const Date = styled.div<DateProps>`
+  ${({ theme }) => theme.font.subhead_02}
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 30px;
+  background-color: ${(props) => (props.isToday ? props.theme.colors.neutral_300_b : props.theme.colors.white)};
+  color: ${(props) => {
+    if (!props.isCurrentMonth) {
+      return props.theme.colors.secondary_400;
+    } else {
+      return props.theme.colors.secondary_900;
+    }
+  }};
+`;
+
+export const DateCell = styled.div<DateProps>`
   cursor: pointer;
   width: 100%;
   position: relative;
@@ -13,36 +31,19 @@ export const DateCell = styled.div`
   overflow: hidden;
   white-space: nowrap;
   z-index: 1;
+
+  &:hover {
+    ${Date} {
+      background-color: ${(props) => (props.isToday ? props.theme.colors.neutral_400_b : props.theme.colors.neutral_200_b)};
+    }
+  }
 `;
 
 interface DateProps {
   isToday: boolean;
-  isSelectedDate: boolean;
-  isCurrentMonth: boolean;
+  isSelectedDate?: boolean;
+  isCurrentMonth?: boolean;
 }
-export const Date = styled.div<DateProps>`
-  ${({ theme }) => theme.font.subhead_02}
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 28px;
-  height: 28px;
-  border-radius: 30px;
-  background-color: ${(props) => (props.isToday ? props.theme.colors.secondary_800 : props.theme.colors.white)};
-  color: ${(props) => {
-    if (props.isToday) {
-      return props.theme.colors.white;
-    } else if (!props.isCurrentMonth) {
-      return props.theme.colors.secondary_400;
-    } else {
-      return props.theme.colors.secondary_900;
-    }
-  }};
-  border: ${(props) => props.isToday && `2px solid ${props.theme.colors.secondary_800}`};
-  :hover {
-    background-color: ${(props) => (props.isToday ? props.theme.colors.secondary_600 : props.theme.colors.neutral_200_b)};
-  }
-`;
 
 interface TagProps {
   color: 'blue' | 'orange' | 'red';

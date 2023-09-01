@@ -16,7 +16,7 @@ const MobileNotificationList = () => {
   };
 
   return (
-    <ModalPageLayout left={{ icon: ARROW.LEFT, onClick: goBack }} title="상세내역">
+    <ModalPageLayout left={{ icon: ARROW.LEFT, onClick: goBack }} title="알림">
       <AlarmList />
     </ModalPageLayout>
   );
