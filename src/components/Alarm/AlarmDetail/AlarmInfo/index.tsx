@@ -138,13 +138,14 @@ const AlarmInfo = ({}) => {
     <>
       <Style.TextContainer>
         <Tooltip
-          title={`납부여부를 변경해보세요!\n변경 시, ${isAdmin ? '팀원' : '총무'}에게 알림이 갑니다.`}
+          title={`납부여부를 변경해보세요!\n총무인 경우, 해당 내역의 팀원에게 알림이 가며\n팀원인 경우, 총무에게 승인 알림이 갑니다.`}
           contents={[]}
           width={312}
           location="TOP"
           top="-56px"
           left="0px"
-          defaultValue
+          onCloseTooltip={() => localStorage.setItem('isFirstSituationTooltip', 'true')}
+          defaultValue={localStorage.getItem('isFirstSituationTooltip') === null}
           messageBox={{ left: '0px', top: '37px' }}
           trigger={<Style.Title>{myname === nickname && `나의`} 내역 확인하기</Style.Title>}
         />

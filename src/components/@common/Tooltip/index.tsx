@@ -20,6 +20,7 @@ type TooltipProps = {
   top?: string;
   defaultValue?: boolean;
   preventClick?: boolean;
+  onCloseTooltip?: () => void;
 };
 
 export const Tooltip = ({
@@ -33,6 +34,7 @@ export const Tooltip = ({
   defaultValue = false,
   messageBox,
   preventClick = false,
+  onCloseTooltip,
 }: TooltipProps) => {
   const [page, setPage] = useState(0);
   const [showTooltip, setShowTooltip] = useState(defaultValue);
@@ -40,6 +42,7 @@ export const Tooltip = ({
   const onClose = () => {
     setPage(0);
     setShowTooltip((prev) => !prev);
+    onCloseTooltip && onCloseTooltip();
   };
 
   const openTooltip = () => {

@@ -219,7 +219,8 @@ const MobileFineBookDetail = () => {
                 top="-200px"
                 left={`calc(${window.innerWidth / 2}px - 156px - 24px)`}
                 messageBox={{ left: '148px', top: '160px', width: '100%' }}
-                defaultValue
+                onCloseTooltip={() => localStorage.setItem('isFirstRequestPaymentTooltip', 'true')}
+                defaultValue={localStorage.getItem('isFirstRequestPaymentTooltip') === null}
                 preventClick
                 trigger={
                   <Button //

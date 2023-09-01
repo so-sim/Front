@@ -232,8 +232,8 @@ const UserDetails = () => {
                 top="60px"
                 left="-163px"
                 messageBox={{ left: '290px', top: '-8px' }}
-                preventClick
-                defaultValue={isEnable}
+                onCloseTooltip={() => localStorage.setItem('isFirstRequestPaymentTooltip', 'true')}
+                defaultValue={localStorage.getItem('isFirstRequestPaymentTooltip') === null}
                 trigger={
                   <Button
                     width="150px"
