@@ -297,7 +297,7 @@ const AlarmRequest_PaymentUpdate = ({ checkDetailFine }: Props) => {
         <Style.Button onClick={isMobile ? () => navigate(-1) : closePage}>취소</Style.Button>
 
         <Style.Button isSubmit={true} onClick={type === 'situation_change' ? updateSituation : requestAlarm}>
-          변경하기
+          {type === 'situation_change' ? '변경하기' : '요청하기'}
         </Style.Button>
       </Style.Footer>
     </>
