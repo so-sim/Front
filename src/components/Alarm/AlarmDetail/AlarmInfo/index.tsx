@@ -25,6 +25,7 @@ import { USER } from '@/assets/icons/User';
 import { useWithdrawalParticipantList } from '@/queries/Group/useWithdrawalParticipantList';
 import WithdrawBadge from '@/components/@common/WithdrawBadge';
 import { convertToPriceFormat } from '@/utils/convertFormat';
+import { CONVERT_SITUATION_FORMAT } from '@/constants/Situation';
 
 const SITUATION_FORMAT_STYLE: { [key in SituationStatus]: Situation } = {
   FULL: '완납',
@@ -164,7 +165,7 @@ const AlarmInfo = ({}) => {
             }}
             $situation={situationToChange}
           >
-            {SITUATION_STATUS_FORMAT[situationToChange || '완납'] === '승인대기' ? '납부완료' : SITUATION_STATUS_FORMAT[situationToChange || '완납']}
+            {CONVERT_SITUATION_FORMAT[situationToChange || '완납'] === '승인대기' ? '납부완료' : CONVERT_SITUATION_FORMAT[situationToChange || '완납']}
           </Style.UserLineSpan>
           으로 {afterSituation === 'FULL' ? '변경되었습니다.' : '변경하시겠습니까?'}
         </Style.SubTitle>
