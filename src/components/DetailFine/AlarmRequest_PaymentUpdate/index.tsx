@@ -68,8 +68,6 @@ const AlarmRequest_PaymentUpdate = ({ checkDetailFine }: Props) => {
 
   const [sideModal, setSideModal] = useRecoilState(sideModalState);
 
-  const { selectedFine, setSelectedFine } = useSelectedContext('userDetails');
-
   const [_, setIsOpen] = useRecoilState(detailFineState);
 
   const originalCheckListValue = Object.values(checkDetailFine);
@@ -95,7 +93,6 @@ const AlarmRequest_PaymentUpdate = ({ checkDetailFine }: Props) => {
   }, [checkDetailFine]);
 
   useEffect(() => {
-    setSelectedFine(initialSelectData);
     return () => {
       setSideModal(initialSideModalState);
     };
