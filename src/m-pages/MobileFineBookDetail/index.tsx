@@ -17,12 +17,14 @@ import { useGroupDetail } from '@/queries/Group';
 import { useGetMyNikname } from '@/queries/Group/useGetMyNickname';
 import { useWithdrawalParticipantList } from '@/queries/Group/useWithdrawalParticipantList';
 import { useRequestNotification } from '@/queries/Notification/useRequestNotifaction';
+import { requestNotificationState } from '@/store/requestNotificationState';
 import { Situation } from '@/types/event';
 import { changeNumberToMoney } from '@/utils/changeNumberToMoney';
 import { covertDateForView } from '@/utils/convertFormat';
 import { pushDataLayer } from '@/utils/pushDataLayer';
 import { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
+import { useRecoilState } from 'recoil';
 
 import * as Style from './styles';
 
@@ -151,6 +153,11 @@ const MobileFineBookDetail = () => {
     mutateDetailStatus({ situation: '확인중', eventIdList: [eventId] });
   };
 
+  //Todo: 백엔드 api 업데이트되면 수정 예정
+  //쿨타임 24시간 대신에 사용 중
+  const [sendedNotification, setSendedNotification] = useRecoilState(requestNotificationState);
+  const isEnable = !sendedNotification.includes(eventId);
+
   if (isLoading) return null;
 
   return (
@@ -215,7 +222,13 @@ const MobileFineBookDetail = () => {
                 defaultValue
                 preventClick
                 trigger={
-                  <Button width="100%" height="42px" color="black" onClick={handleRequestPayment} id={GA.CON.SIDE_BUTTON}>
+                  <Button //
+                    width="100%"
+                    height="42px"
+                    color={isEnable ? 'black' : 'disabled'}
+                    onClick={handleRequestPayment}
+                    id={GA.CON.SIDE_BUTTON}
+                  >
                     납부요청
                   </Button>
                 }

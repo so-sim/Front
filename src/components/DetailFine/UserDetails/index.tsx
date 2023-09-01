@@ -22,6 +22,9 @@ import PaymentRequest from '@/components/@common/Tooltip/PaymentRequest';
 import { useWithdrawalParticipantList } from '@/queries/Group/useWithdrawalParticipantList';
 import { useRequestNotification } from '@/queries/Notification/useRequestNotifaction';
 import WithdrawBadge from '@/components/@common/WithdrawBadge';
+import { requestNotificationState } from '@/store/requestNotificationState';
+import { useRecoilState } from 'recoil';
+import { covertDateForView } from '@/utils/convertFormat';
 
 type Props = {
   select: SelectedEventInfo;
@@ -130,6 +133,11 @@ const UserDetails = () => {
   const { mutate: deleteDetail } = useDeleteDetail(closeUserDetails);
   const { isWithdrawal } = useWithdrawalParticipantList(Number(groupId));
 
+  //Todo: 백엔드 api 업데이트되면 수정 예정
+  //쿨타임 24시간 대신에 사용 중
+  const [sendedNotification, setSendedNotification] = useRecoilState(requestNotificationState);
+  const isEnable = !sendedNotification.includes(eventId);
+
   const updateStatus = (situation: Situation) => {
     mutateDetailStatus({ situation, eventIdList: [eventId] });
   };
@@ -157,7 +165,7 @@ const UserDetails = () => {
         </Style.Header>
         <Style.UserDetailsContent>
           <Style.BetweenBlock>
-            <Style.Date>{date.slice(2)}</Style.Date>
+            <Style.Date>{covertDateForView(date.slice(2))}</Style.Date>
             {isAdmin ? (
               <Style.ButtonBox>
                 <Style.AdminButton onClick={handleDeleteConfirmModal}>삭제</Style.AdminButton>
@@ -225,12 +233,12 @@ const UserDetails = () => {
                 left="-163px"
                 messageBox={{ left: '290px', top: '-8px' }}
                 preventClick
-                defaultValue
+                defaultValue={isEnable}
                 trigger={
                   <Button
                     width="150px"
                     height="42px"
-                    color={situation === '미납' ? 'black' : 'disabled'} //
+                    color={isEnable ? 'black' : 'disabled'} //
                     onClick={handleRequestPayment}
                     id={GA.CON.SIDE_BUTTON}
                   >

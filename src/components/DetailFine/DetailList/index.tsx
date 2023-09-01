@@ -22,6 +22,7 @@ import { useParams } from 'react-router-dom';
 import WithdrawBadge from '@/components/@common/WithdrawBadge';
 import { useGroupDetail } from '@/queries/Group';
 import { useGetMyNikname } from '@/queries/Group/useGetMyNickname';
+import { requestNotificationState } from '@/store/requestNotificationState';
 
 type Props = {
   details?: SelectedEventInfo[];
@@ -33,6 +34,10 @@ const DetailList = ({ detailFilter, details }: Props) => {
   const [calendarState, setCalendarState] = useRecoilState(dateState);
 
   const [openButtonListId, setOpenButtonListId] = useState(0);
+
+  //Todo: 백엔드 api 업데이트되면 수정 예정
+  //쿨타임 24시간 대신에 사용 중
+  const [sendedNotification, setSendedNotification] = useRecoilState(requestNotificationState);
 
   const { selectedFine, setSelectedFine } = useSelectedContext('userDetails');
   const { mutate: mutateRequestNotification } = useRequestNotification();
@@ -101,7 +106,8 @@ const DetailList = ({ detailFilter, details }: Props) => {
     <Style.DetailList>
       {details?.map((detail, i) => {
         const { date, nickname, amount, memo, eventId, ground } = detail;
-        const enableNotification = true;
+        const isEnable = !sendedNotification.includes(eventId);
+
         return (
           <Style.TableRow isAdmin={isAdmin} key={i} isSelected={selectedFine.eventId === eventId} onClick={() => handleUserDetailModal(detail)}>
             <Style.CheckboxWrapper
@@ -141,15 +147,15 @@ const DetailList = ({ detailFilter, details }: Props) => {
               detail.situation === '미납' && (
                 <Style.Element>
                   <Style.NotificationButton
-                    isActive={enableNotification}
-                    disabled={!enableNotification}
+                    isActive={isEnable}
+                    disabled={!isEnable}
                     onClick={(e) => {
                       e.stopPropagation();
                       requestNotification(eventId);
                     }}
                   >
-                    <div style={{ height: '16px' }}>{enableNotification ? ALARM.ALARM_SM : SYSTEM.DONE_SM}</div>
-                    <div>{enableNotification ? '납부요청' : '요청완료'}</div>
+                    <div style={{ height: '16px' }}>{isEnable ? ALARM.ALARM_SM : SYSTEM.DONE_SM}</div>
+                    <div>{isEnable ? '납부요청' : '요청완료'}</div>
                   </Style.NotificationButton>
                 </Style.Element>
               )}
