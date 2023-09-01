@@ -23,6 +23,7 @@ import WithdrawBadge from '@/components/@common/WithdrawBadge';
 import { useGroupDetail } from '@/queries/Group';
 import { useGetMyNikname } from '@/queries/Group/useGetMyNickname';
 import { requestNotificationState } from '@/store/requestNotificationState';
+import { GA } from '@/constants/GA';
 
 type Props = {
   details?: SelectedEventInfo[];
@@ -109,7 +110,13 @@ const DetailList = ({ detailFilter, details }: Props) => {
         const isEnable = !sendedNotification.includes(eventId);
 
         return (
-          <Style.TableRow isAdmin={isAdmin} key={i} isSelected={selectedFine.eventId === eventId} onClick={() => handleUserDetailModal(detail)}>
+          <Style.TableRow //
+            key={i}
+            isAdmin={isAdmin}
+            isSelected={selectedFine.eventId === eventId}
+            onClick={() => handleUserDetailModal(detail)}
+            id={GA.LIST.DETAIL}
+          >
             <Style.CheckboxWrapper
               onClick={(e) => {
                 e.stopPropagation();
@@ -149,6 +156,7 @@ const DetailList = ({ detailFilter, details }: Props) => {
                   <Style.NotificationButton
                     isActive={isEnable}
                     disabled={!isEnable}
+                    id={GA.PAYMENT_REQUEST.LIST_BUTTON}
                     onClick={(e) => {
                       e.stopPropagation();
                       requestNotification(eventId);

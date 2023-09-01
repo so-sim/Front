@@ -1,5 +1,6 @@
 import { SYSTEM } from '@/assets/icons/System';
 import { USER } from '@/assets/icons/User';
+import { GA } from '@/constants/GA';
 import { searchMemberState } from '@/store/searchMemberState';
 import React from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -36,10 +37,14 @@ const MobileFilterController = ({ openFilterSheet }: Props) => {
             <Style.CancelButton onClick={cancelSearchNickname}>{SYSTEM.CLOSE_SM}</Style.CancelButton>
           </Style.SelectedMember>
         ) : (
-          <div onClick={navigateToMemberSearchPage}>팀원 검색</div>
+          <div onClick={navigateToMemberSearchPage} id={GA.SEARCH}>
+            팀원 검색
+          </div>
         )}
       </Style.SearchMemberInput>
-      <Style.FilterButton onClick={openFilterSheet}>{SYSTEM.FILTER}필터</Style.FilterButton>
+      <Style.FilterButton onClick={openFilterSheet} id={GA.FILTER.FILTER}>
+        {SYSTEM.FILTER}필터
+      </Style.FilterButton>
     </Style.FilterRow>
   );
 };

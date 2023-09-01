@@ -1,4 +1,5 @@
 import { ALARM } from '@/assets/icons/Alarm';
+import { GA } from '@/constants/GA';
 import useCheckListState from '@/hooks/useCheckListState';
 import { useGetAlarmListCount } from '@/queries/Notification/useGetAlarmListCount';
 import { alarmInfoState } from '@/store/alarmInfoState';
@@ -61,6 +62,7 @@ const AlarmComponent = ({ headerHeight }: Props) => {
   return (
     <>
       <Style.AlarmIconWrapper
+        id={GA.ALARM.BUTTON}
         $isCount={notificationCount !== 0 && !isLoading}
         data-count={notificationCount}
         onClick={isMobile ? goToMobileNotificationList : handleToggleNotificationModal}

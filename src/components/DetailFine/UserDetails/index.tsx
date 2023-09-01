@@ -37,6 +37,12 @@ export const REQUEST_BUTTON: { [key in Situation]: string } = {
   완납: '',
 };
 
+const DROP_BUTTON = {
+  미납: GA.NON.DETAIL_DROP,
+  완납: GA.FULL.DETAIL_DROP,
+  확인중: GA.CON.DETAIL_DROP,
+};
+
 const UserDetails = () => {
   const { selectedFine, setSelectedFine } = useSelectedContext('userDetails');
 
@@ -194,6 +200,7 @@ const UserDetails = () => {
                 <DropBox
                   color="white"
                   boxWidth="112px"
+                  id={DROP_BUTTON[situation]}
                   width={112}
                   setType={handleUpdateStatusConfirmModal}
                   type={convertSituationToText(situation)} //Todo: GA 코드 추가해야됨
@@ -240,7 +247,7 @@ const UserDetails = () => {
                     height="42px"
                     color={isEnable ? 'black' : 'disabled'} //
                     onClick={handleRequestPayment}
-                    id={GA.CON.SIDE_BUTTON}
+                    id={GA.PAYMENT_REQUEST.DETAIL_BUTTON}
                   >
                     납부요청
                   </Button>

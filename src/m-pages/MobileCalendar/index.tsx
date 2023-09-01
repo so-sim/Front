@@ -134,7 +134,11 @@ const MobileCalendar = () => {
               </Style.WeekWrapper>
             ))}
           </Style.CalendarWrapper>
-          {isAdmin && <Style.AddIconWrapper onClick={goToCreateFineBook}>{SYSTEM.PLUS_WHITE}</Style.AddIconWrapper>}
+          {isAdmin && (
+            <Style.AddIconWrapper onClick={goToCreateFineBook} id={GA.ADD_LIST.BUTTON}>
+              {SYSTEM.PLUS_WHITE}
+            </Style.AddIconWrapper>
+          )}
           {/* 내역 추가 페이지로 라우팅 */}
         </Style.Container>
         <MobileDetailFine $isOpen={isOpen} setIsOpen={setIsOpen} />

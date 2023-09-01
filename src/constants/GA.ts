@@ -16,6 +16,7 @@ export const GA = {
     ALL: 'calendar_skip_all',
     LEFT: 'calendar_skip_left',
     RIGHT: 'calendar_skip_right',
+    DATE: 'calendar_date',
   },
   LIST_SKIP: {
     ALL: 'list_skip_all',
@@ -30,21 +31,25 @@ export const GA = {
   CON: {
     LIST_BUTTON: 'confirming_list_button',
     LIST_MODAL: 'confirming_list_modal',
-    SIDE_BUTTON: 'confirming_side_button',
+    SIDE_BUTTON: 'confirming_detail_button',
     SIDE_MODAL: 'confirming_side_modal',
+    DETAIL_DROP: 'confirming_detail_drop',
   },
   NON: {
     LIST_BUTTON: 'nonpayment_list_button',
     LIST_MODAL: 'nonpayment_list_modal',
     SIDE_BUTTON: 'nonpayment_side_button',
+    DETAIL_DROP: 'nonpayment_detail_drop',
   },
   FULL: {
     LIST_BUTTON: 'fullpayment_list_button',
     LIST_MODAL: 'fullpayment_list_modal',
     SIDE_BUTTON: 'fullpayment_side_button',
     SIDE_MODAL: 'fullpayment_side_modal',
+    DETAIL_DROP: 'fullpayment_detail_drop',
   },
   FILTER: {
+    FILTER: 'filter',
     MONTH: 'filter_month',
     DAY: 'filter_day',
     WEEK_DROP: 'filter_week_drop',
@@ -66,5 +71,37 @@ export const GA = {
   GROUP: {
     MODIFY: 'group_modify',
     SETTING: 'group_setting',
+    ALARM: 'group_setting_alarm',
+  },
+  MENU: {
+    HOME: 'menu_home',
+    NOTIFICATION: 'menu_notification',
+    BOOK: 'menu_book',
+  },
+  ALARM: {
+    BUTTON: 'alarm_button',
+  },
+  NAVIGATION: {
+    GROUP: {
+      ALARM: 'navigation_group_setting_alarm',
+    },
+  },
+  TOOLTIP: {
+    PAYMENT_OVERVIEW: 'tooltip_payment_overview',
+    PAYMENT: 'tooltip_payment',
+    PAYMENT_REQUEST: 'tooltip_payment_request',
+    AUTO_REQUEST: 'tooltip_auto_request',
+  },
+  SEARCH: 'search',
+  LIST: {
+    DETAIL: 'list_detail',
+  },
+  PAYMENT_REQUEST: {
+    DETAIL_BUTTON: 'payment_request_detail_button',
+    LIST_BUTTON: 'payment_request_list_button',
+  },
+  TOOLBAR: {
+    PAYMENT_CHANGE: 'toolbar_payment_change',
+    PAYMENT_REQUEST: 'toolbar_payment_request',
   },
 };
