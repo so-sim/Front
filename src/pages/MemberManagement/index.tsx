@@ -26,13 +26,13 @@ const MemberManagement = () => {
           <Style.UserIcon>{USER.PERSON_XL}</Style.UserIcon>
           <span>{participantList?.content.adminNickname}</span>
           <Style.Tag>총무</Style.Tag>
-          {group?.content.isAdmin && <Style.Tag>나</Style.Tag>}
+          {group?.content.isAdmin && <Style.Tag $myTag={true}>나</Style.Tag>}
         </Style.UserContainer>
         {myNickname && !group?.content.isAdmin && (
           <Style.UserContainer>
             <Style.UserIcon>{USER.PERSON_XL}</Style.UserIcon>
             <div>{myNickname.content.nickname}</div>
-            <Style.Tag>나</Style.Tag>
+            <Style.Tag $myTag={true}>나</Style.Tag>
           </Style.UserContainer>
         )}
         {participantList?.content.nicknameList.map((nickname) => {

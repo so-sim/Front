@@ -58,13 +58,13 @@ export const UserIcon = styled.div`
   height: 32px;
 `;
 
-export const Tag = styled.div`
-  color: ${({ theme }) => theme.colors.white};
+export const Tag = styled.div<{ $myTag?: boolean }>`
+  color: ${({ theme, $myTag }) => ($myTag ? theme.colors.secondary_900 : theme.colors.white)};
   display: flex;
   align-items: center;
   padding: 4px 14px;
   height: 26px;
-  background-color: ${({ theme }) => theme.colors.secondary_800};
+  background-color: ${({ theme, $myTag }) => ($myTag ? theme.colors.neutral_200_b : theme.colors.secondary_800)};
   border-radius: 32px;
   ${({ theme }) => theme.font.caption};
 `;
