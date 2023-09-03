@@ -23,7 +23,7 @@ const useCalendarStatus = (calendarDate: dayjs.Dayjs, groupId: string | undefine
 
   const { dateToFormatting, getMonth, getDate, dateToUnixTime } = handleDate;
 
-  const monthList = createCalendar(dayjs(calendarDate));
+  const monthList = createCalendar(dayjs(calendarDate), true);
 
   const startDateOfMonth = dateToFormatting(dayjs(calendarDate).startOf('month'));
   const endDateOfMonth = dateToFormatting(dayjs(calendarDate).endOf('month'));

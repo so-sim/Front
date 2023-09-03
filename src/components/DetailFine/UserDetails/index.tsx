@@ -123,9 +123,9 @@ const UserDetails = () => {
   const onSuccessUpdateStatus = (situation: Situation) => {
     closeConfirmModal();
     setSelectedFine((prev) => ({ ...prev, situation }));
-    if (situation === '미납') pushDataLayer('nonpayment', { route: 'detail' });
-    if (isAdmin === true && situation === '완납') return pushDataLayer('fullpayment', { route: 'detail' });
-    if (isAdmin === false) pushDataLayer('confirming', { route: 'detail' });
+    if (situation === '미납') pushDataLayer('nonpayment', { route: 'detail', count_list: 1, count_member: 1 });
+    if (isAdmin === true && situation === '완납') return pushDataLayer('fullpayment', { route: 'detail', count_list: 1, count_member: 1 });
+    if (isAdmin === false) pushDataLayer('confirming', { route: 'detail', count_list: 1, count_member: 1 });
   };
 
   const closeUserDetails = () => {

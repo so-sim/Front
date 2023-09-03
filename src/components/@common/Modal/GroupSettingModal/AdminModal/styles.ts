@@ -35,6 +35,7 @@ export const Container = styled.div`
   border-left: ${({ theme }) => !isMobile && `2px solid ${theme.colors.neutral_400_b}`};
   padding-left: ${!isMobile && '16px'};
   gap: 24px;
+  height: 709px;
 `;
 
 export const ButtonFrame = styled.div`

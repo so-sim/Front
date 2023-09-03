@@ -1,5 +1,6 @@
 import styled from '@emotion/styled';
 import { GroupColor as Color } from '@/types/group';
+import { isMobile } from 'react-device-detect';
 
 export const GroupColor = styled.div<{ color: Color; size: 'sm' | 'md' }>`
   width: 100%;
@@ -17,7 +18,7 @@ export const GroupTitle = styled.div`
   overflow: hidden;
   text-overflow: ellipsis;
   margin-bottom: 8px;
-  ${({ theme }) => theme.font.subhead_02}
+  ${({ theme }) => (isMobile ? theme.font.subhead_01 : theme.font.subhead_02)}
 `;
 
 export const GroupPeople = styled.div`

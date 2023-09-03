@@ -93,7 +93,8 @@ const MonthForm = <T extends NotificationInfo, V extends T[DuplicateValues]>({
       {isSimpleDateType && (
         <div style={{ width: '100%' }}>
           <Style.Notice>
-            {notificationForm.sendDay}일로 설정 {notificationForm.sendDay === 31 ? '(말일로 설정됩니다)' : ''}
+            <span>{notificationForm.sendDay}</span>
+            일로 설정 {notificationForm.sendDay === 31 ? '(말일로 설정됩니다)' : ''}
           </Style.Notice>
           <Style.CalendarBlock>
             {createFixedCalendar().map((week, i) => {
