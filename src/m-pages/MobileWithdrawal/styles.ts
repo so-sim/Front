@@ -36,7 +36,7 @@ export const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  margin: 0 24px;
+  margin: 0 12px;
   padding: 24px;
 `;
 

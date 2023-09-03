@@ -10,5 +10,5 @@ export const Layout = styled.div`
 `;
 
 export const Body = styled.div<{ isHome: boolean }>`
-  background: ${({ theme, isHome }) => isHome && theme.colors.neutral_200_b};
+  /* background: ${({ theme, isHome }) => isHome && theme.colors.neutral_200_b}; */
 `;
