@@ -7,9 +7,9 @@ export const pushDataLayer = (event: string, data: KeyValueObject) => {
 
 export const pushDataLayerByStatus = (isAdmin: boolean, situation: Situation) => {
   if (isAdmin === false && situation === '확인중') {
-    pushDataLayer('confirming', { route: 'list' });
+    pushDataLayer('confirming', { route: 'list', count_list: 1, count_member: 1 });
   }
   if (isAdmin === true && situation === '완납') {
-    pushDataLayer('fullpayment', { route: 'list' });
+    pushDataLayer('fullpayment', { route: 'list', count_list: 1, count_member: 1 });
   }
 };

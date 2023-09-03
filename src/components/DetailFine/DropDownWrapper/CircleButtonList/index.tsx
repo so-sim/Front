@@ -30,7 +30,7 @@ const CircleButtonList = ({ setOpenButtonListId, situation, eventId, isAdmin = f
   const onSuccessUpdateStatus = (buttonSituation: Situation) => {
     cancelUpdateStatus();
     pushDataLayerByStatus(isAdmin, buttonSituation);
-    buttonSituation === '미납' && pushDataLayer('nonpayment', { route: 'list' });
+    buttonSituation === '미납' && pushDataLayer('nonpayment', { route: 'list', count_list: 1, count_member: 1 });
   };
 
   const { mutate: mutateDetailStatus } = useUpdateDetailStatus(onSuccessUpdateStatus);

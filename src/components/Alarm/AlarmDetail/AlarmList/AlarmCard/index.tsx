@@ -4,12 +4,22 @@ import { alarmInfoState } from '@/store/alarmInfoState';
 import { dateState } from '@/store/dateState';
 import { Situation } from '@/types/event';
 import { MessageData, NotificationList, NotificationType, SituationStatus } from '@/types/notification';
+import { pushDataLayer } from '@/utils/pushDataLayer';
 import { useQueryClient } from '@tanstack/react-query';
 import dayjs from 'dayjs';
 import { isMobile } from 'react-device-detect';
 import { useNavigate, Link } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
 import * as Style from './styles';
+
+const GA_ALARM_TYPE = {
+  PAYMENT_DATE: 'auto_request',
+  REQUEST_PAYMENT: 'payment_request',
+  CHANGE_FULL_SITUATION: 'fullpayment',
+  CHANGE_NONE_SITUATION: 'nonpayment',
+  CHANGE_CHECK_SITUATION: 'confirming',
+  CHANGE_ADMIN: 'admin_change',
+};
 
 const TextByAlarmType = {};
 // 해당 enum에 따라 Text를 정의해준다.
@@ -54,6 +64,7 @@ const ALARM_DESCRIPTION: {
 const AlarmCard = ({ notificationInfo }: Props) => {
   const { category, date, groupTitle, eventIdList, groupId, messageData, summary, type, view, notificationId } = notificationInfo;
   const { afterSituation, amount, beforeSituation, nickname } = messageData;
+  console.log(type);
 
   const navigate = useNavigate();
 
@@ -64,6 +75,7 @@ const AlarmCard = ({ notificationInfo }: Props) => {
   };
 
   const goToAlarmInfo = (eventIdList: number[]) => {
+    pushDataLayer('alarm_click', { alarm_type: GA_ALARM_TYPE[type] });
     handleReadNotification();
     setAlarmEventIdList({ alarmEventIdList: [...eventIdList], nickname, beforeSituation, afterSituation, groupId });
     isMobile ? navigate(`/m-notification/info`) : settingCalendarDate();

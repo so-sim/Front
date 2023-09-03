@@ -8,6 +8,9 @@ import { SelectedEventInfo } from '@/types/event';
 import { useGetMyNikname } from '@/queries/Group/useGetMyNickname';
 import useSituationList, { getClientSituationTextFromServer } from '@/hooks/useSituationList';
 import { useGroupDetail } from '@/queries/Group';
+import { GA } from '@/constants/GA';
+import { SITUATION_CODE } from './CircleDropButton';
+import { pushDataLayer } from '@/utils/pushDataLayer';
 
 interface Props {
   detail: SelectedEventInfo;
@@ -35,6 +38,8 @@ const DropDownWrapper = ({ detail, openButtonListId, setOpenButtonListId }: Prop
     e.stopPropagation();
     if (!isSelectedEvent && hasPermissionOfHover) {
       setOpenButtonListId(eventId);
+      //Todo: 여기만 왜 안 되는지 찾아보기 (stopPropagation인가?)
+      pushDataLayer('gtm.click', { 'gtm.element': GA[SITUATION_CODE[situation]].LIST_BUTTON });
     }
   };
 

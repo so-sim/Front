@@ -5,6 +5,7 @@ import { DayType } from '@/types/group';
 import { ToastPopUp } from '@/components/@common/Toast';
 import { useNavigate } from 'react-router-dom';
 import { isMobile } from 'react-device-detect';
+import { pushDataLayer } from '@/utils/pushDataLayer';
 
 export const DayOfWeek: Record<DayType, number> = {
   MONDAY: 1,
@@ -46,6 +47,7 @@ export const useUpdateNotificationInfo = (groupId: number) => {
       onSuccess: () => {
         ToastPopUp({ type: 'success', message: '수정이 완료되었습니다.' });
         queryClient.invalidateQueries(['notification']);
+        pushDataLayer('alarm_setting', { state: true });
         if (isMobile) {
           navigate(`/m-group/${groupId}/book`);
           return;

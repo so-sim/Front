@@ -8,6 +8,7 @@ export const useUpdateDetailStatus = (onSuccessUpdate?: (data: Situation) => voi
   const queryClient = useQueryClient();
   return useMutation(updateEventStatus, {
     onSuccess: (data) => {
+      console.log(data.content.eventIdList.length);
       queryClient.invalidateQueries(['detailList']);
       queryClient.invalidateQueries(['monthStatus']);
       queryClient.invalidateQueries(['oneOfDetail']);
