@@ -66,6 +66,7 @@ export const TabButtonBox = styled.ul`
   padding: 4px;
   border-radius: 4px;
   background-color: ${({ theme }) => theme.colors.neutral_200_b};
+  ${({ theme }) => theme.font.subhead_01};
 `;
 
 export const PeriodTypeButton = styled.button<{ isSelected: boolean }>`
