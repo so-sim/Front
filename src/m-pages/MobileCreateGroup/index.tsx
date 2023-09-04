@@ -26,7 +26,7 @@ const MobileCreateGroup = () => {
     <>
       <ModalPageLayout title="모임만들기" left={{ icon: ARROW.LEFT_MD, onClick: goBack }}>
         <div style={{ padding: '0 8px', height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
-          <div style={{ padding: '0 12px', display: 'flex', flexDirection: 'column', gap: '8px' }}>
+          <div style={{ padding: '20px 12px 0', display: 'flex', flexDirection: 'column', gap: '8px' }}>
             <MobileGroupForm //
               groupForm={groupForm}
               handleGroupFormData={handleGroupFormData}

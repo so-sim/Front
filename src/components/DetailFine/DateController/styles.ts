@@ -39,7 +39,7 @@ export const TodayButton = styled.button`
 export const FilterWrapper = styled.div`
   display: flex;
   border: 1px solid ${({ theme }) => theme.colors.neutral_400_b};
-  border-radius: 12px;
+  border-radius: 4px;
   position: relative;
   white-space: nowrap;
 `;

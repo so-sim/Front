@@ -100,7 +100,7 @@ const Calendar: FC<CalnedrProps> = ({ cellType }) => {
           </div>
           <Style.RightItem>
             {cellType === 'Tag' && isAdmin && (
-              <Button width="124px" color="black" onClick={handleShowCreateDetailModal} id={GA.ADD_LIST.BUTTON}>
+              <Button width="124px" height="40px" color="black" onClick={handleShowCreateDetailModal} id={GA.ADD_LIST.BUTTON}>
                 내역 추가하기
               </Button>
             )}

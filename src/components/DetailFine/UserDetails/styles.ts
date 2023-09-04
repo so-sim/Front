@@ -61,7 +61,7 @@ export const CloseIcon = styled.span`
 
 export const PersonIcon = styled.span`
   height: 32px;
-  margin-right: 12px;
+  margin-right: 8px;
 `;
 
 export const Footer = styled.div`

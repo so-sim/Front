@@ -9,6 +9,7 @@ import CheckStatusListWrapper from '@/components/@common/CheckStatusListWrapper'
 import { convertToPriceFormat } from '@/utils/convertFormat';
 import WithdrawBadge from '@/components/@common/WithdrawBadge';
 import { USER } from '@/assets/icons/User';
+import MemberListCheckbox from '../../checkboxList';
 
 type Props = {
   myName: string;
@@ -42,7 +43,7 @@ const CheckedFineList = ({ myName, list, isWithdrawalMember, setCheckDetailFine,
             {/* 완납일 때는 CheckBox 가 보이면 안된다. (근데 완납을 다시 미납으로 변경하는 경우?..) */}
 
             <CheckboxContainer id={myName} isChecked={isAllChecked} onChange={(event: React.MouseEvent<HTMLInputElement>) => toggleCheckDetailFine(event, myName)}>
-              <CheckboxContainer.Checkbox as={DetailListCheckBox} />
+              <CheckboxContainer.Checkbox as={MemberListCheckbox} />
             </CheckboxContainer>
 
             <Style.ItemTitle>

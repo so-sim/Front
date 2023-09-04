@@ -30,7 +30,7 @@ export const TextArea = styled.textarea<{ disabled?: boolean }>`
 
 export const PersonIcon = styled.span`
   height: 24px;
-  margin-right: 12px;
+  margin-right: 8px;
 `;
 
 export const Footer = styled.div`

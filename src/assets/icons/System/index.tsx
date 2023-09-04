@@ -18,6 +18,7 @@ import MobileNon from './MobileNon.svg';
 import MobileFull from './MobileFull.svg';
 import Filter from './Filter.svg';
 import Done from './Done.svg';
+import MobilePreparing from './MobilePreparing.svg';
 
 export const SYSTEM = {
   ARTICLE: <Article />,
@@ -39,6 +40,7 @@ export const SYSTEM = {
   DOTS: <Dots />,
   MENU: <Menu />,
   PREPARING: <PreParing />,
+  MOBILEPREPARING: <MobilePreparing />,
   SEARCH_BLACK: <Search fill="#3C3C3C" width={24} height={24} />,
   SEARCH_GRAY: <Search fill="#9C9C9C" width={24} height={24} />,
   SEARCH_GRAY_LG: <Search fill="#E3E4E5" width={48} height={48} />,

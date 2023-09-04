@@ -11,9 +11,10 @@ import * as Style from './styles';
 type Props = {
   location: 'HOME' | 'GROUP';
   children: React.ReactNode;
+  isWhite?: boolean;
 };
 
-const MobileLayout = ({ location, children }: Props) => {
+const MobileLayout = ({ location, children, isWhite }: Props) => {
   const [openSideBar, setOpenSideBar] = useState(false);
   const { windowRef } = useWindowHeight();
 

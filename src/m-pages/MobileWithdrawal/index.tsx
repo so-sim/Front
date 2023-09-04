@@ -9,7 +9,7 @@ const MobileWithdrawal = () => {
   const [pageState, setPageState] = useState<'CONFIRM' | 'REASON'>('CONFIRM');
 
   return (
-    <MobileLayout location="HOME">
+    <MobileLayout location="HOME" isWhite={true}>
       <Style.ProgressBar>
         <Style.Progress pageState={pageState} />
       </Style.ProgressBar>

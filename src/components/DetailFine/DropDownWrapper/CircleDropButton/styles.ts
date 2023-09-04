@@ -7,6 +7,8 @@ type CircleDropButtonProps = { situation: Situation };
 export const StatusButton = styled.button<CircleDropButtonProps>`
   display: flex;
   align-items: center;
+
+  width: 101px;
   padding: 4px 8px;
   margin: 8px 10px;
   border-radius: 16px;
@@ -29,6 +31,7 @@ export const Text = styled.span`
   ${({ theme }) => theme.font.subhead_01}
   width: 52px;
   margin-right: 4px;
+  white-space: nowrap;
 `;
 
 const SITUATION_COLOR_LIST = {

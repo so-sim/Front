@@ -47,6 +47,6 @@ export const EmptyIconWrapper = styled.div`
 
 export const EmptyText = styled.p`
   ${({ theme }) => theme.font.subhead_03};
-
+  white-space: nowrap;
   color: ${({ theme }) => theme.colors.secondary_500};
 `;

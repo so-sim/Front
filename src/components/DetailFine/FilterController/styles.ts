@@ -20,8 +20,8 @@ export const FilterText = styled.div`
 `;
 
 export const SituationButton = styled.button<{ isActive: boolean }>`
-  height: 24px;
-  width: 56px;
+  height: 25px;
+  width: 65px;
   background-color: ${({ theme, isActive }) => isActive && theme.colors.neutral_300_b};
   border: 1px solid ${({ theme }) => theme.colors.neutral_400_b};
   border-radius: 4px;

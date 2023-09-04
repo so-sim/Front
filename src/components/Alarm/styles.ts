@@ -4,6 +4,8 @@ import styled from '@emotion/styled';
 export const AlarmIconWrapper = styled.div<{ $isCount?: boolean }>`
   position: relative;
 
+  height: 24px;
+
   ${({ $isCount, theme }) =>
     $isCount &&
     css`
