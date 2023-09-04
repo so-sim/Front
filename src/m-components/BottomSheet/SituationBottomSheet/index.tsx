@@ -28,7 +28,7 @@ const SituationBottomSheet = ({ onClose, onChange, onConfirm }: Props) => {
   };
 
   return (
-    <BottomSheet title="팀원" onClose={onClose}>
+    <BottomSheet title="" onClose={onClose}>
       <Style.SituationList>
         {situationList.map((situation) => (
           <Style.SituationListItem key={situation} onClick={() => handleSelectMember(situation)}>
