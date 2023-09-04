@@ -6,8 +6,8 @@ export const TOS_LINK = {
 };
 
 export const GNB_LINK = {
-  SERVICE: 'https://www.notion.so/25348117c25b4403842ed533f388179c?pvs=4',
-  FAQ: 'https://www.notion.so/83ac133c02f2454fb4f6787aef123ce6?pvs=4',
+  SERVICE: 'https://steadfast-car-5c9.notion.site/6e5b2e9a2abb4cb3bfb32fd34f326b61?pvs=4',
+  FAQ: 'https://www.notion.so/ce5c6c842ff849eda26e590d7187f214?pvs=4',
   SUGGEST: 'https://forms.gle/V7ArjjrinyyHkvzT7',
 };
 
