@@ -28,7 +28,7 @@ const MobileLayout = ({ location, children, isWhite }: Props) => {
     <>
       <Style.Layout>
         <MobileHeader left={{ onClick: sideBarHandler, icon: SYSTEM.MENU }} title={<MobileLogo />} hasAuth />
-        <Style.Body ref={windowRef} isHome={location === 'HOME'} $isWhite={isWhite}>
+        <Style.Body ref={windowRef} isHome={location === 'HOME'}>
           {children}
         </Style.Body>
       </Style.Layout>
