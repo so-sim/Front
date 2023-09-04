@@ -25,6 +25,7 @@ import { useGetMyNikname } from '@/queries/Group/useGetMyNickname';
 import { requestNotificationState } from '@/store/requestNotificationState';
 import { GA } from '@/constants/GA';
 import { sideModalState } from '@/store/sideModalState';
+import { pushDataLayer } from '@/utils/pushDataLayer';
 
 type Props = {
   details?: SelectedEventInfo[];
@@ -156,6 +157,7 @@ const DetailList = ({ detailFilter, details }: Props) => {
                     onClick={(e) => {
                       e.stopPropagation();
                       requestNotification(eventId);
+                      pushDataLayer('gtm.click', { 'gtm.element': GA.PAYMENT_REQUEST.LIST_BUTTON });
                     }}
                   >
                     <div style={{ height: '16px' }}>{isEnable ? ALARM.ALARM_SM : SYSTEM.DONE_SM}</div>
