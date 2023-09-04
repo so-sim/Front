@@ -31,9 +31,9 @@ export const DividingLine = styled.div`
   margin: 0 1rem;
   ${({ theme }) => theme.font.subhead_01};
   color: ${({ theme }) => theme.colors.secondary_800};
-  width: 1px;
+  width: 2px;
   height: 17px;
-  background-color: ${({ theme }) => theme.colors.neutral_300_b};
+  border: 1px solid ${({ theme }) => theme.colors.neutral_300_b};
 `;
 
 export const Button = styled.button`
