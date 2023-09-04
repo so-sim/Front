@@ -167,7 +167,7 @@ const MobileFineBookDetail = () => {
   return (
     <>
       <ModalPageLayout left={{ icon: ARROW.LEFT, onClick: goBack }} title="상세내역">
-        <div style={{ padding: '1.5rem 1rem' }}>
+        <div style={{ padding: '1.25rem 0.5rem' }}>
           <Style.BetweenBlock>
             <Style.Date>{covertDateForView(date.slice(2))}</Style.Date>
             {isAdmin ? (
