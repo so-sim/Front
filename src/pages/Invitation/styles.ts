@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+import { isMobile } from 'react-device-detect';
 
 export const Background = styled.div`
   width: 100vw;
@@ -13,7 +14,7 @@ export const Title = styled.div`
   display: flex;
   align-items: center;
   gap: 12px;
-  margin-bottom: 20px;
+  margin-bottom: ${isMobile ? '4px' : '12px'};
 `;
 
 export const CoverColor = styled.span<{ coverColor: string }>`
@@ -24,7 +25,7 @@ export const CoverColor = styled.span<{ coverColor: string }>`
 
 export const GroupName = styled.div`
   ${({ theme }) => theme.font.subhead_04};
-  margin-bottom: 28px;
+  margin-bottom: ${isMobile ? '12px' : '20px'};
 `;
 
 export const Block = styled.div`
@@ -36,5 +37,5 @@ export const Block = styled.div`
 export const Footer = styled.div`
   display: flex;
   gap: 12px;
-  margin-top: 32px;
+  margin-top: ${isMobile ? '24px' : '32px'};
 `;
