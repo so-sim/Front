@@ -19,9 +19,9 @@ const TOS = () => {
       <Style.Layout>
         {LOGO.LG}
         <Style.TOSContainer>
-          <div>
+          <div style={{ marginBottom: '40px' }}>
             <Style.TOSTitle>약관 동의</Style.TOSTitle>
-            <span>아래의 내용 확인 후 동의해 주세요.</span>
+            <Style.TOSSubTitle>아래의 내용 확인 후 동의해 주세요.</Style.TOSSubTitle>
             <Style.TOSList>
               <Style.TOSWhole>
                 <label>
