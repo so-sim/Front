@@ -23,7 +23,7 @@ const MobileHeader = ({ left, title, hasAuth }: Props) => {
     <>
       <Style.Header hasAuth={hasAuth}>
         {left ? (
-          <span style={{ width: hasAuth ? '80px' : 'fit-content' }} onClick={left.onClick}>
+          <span style={{ width: hasAuth ? '77px' : 'fit-content' }} onClick={left.onClick}>
             {left.icon}
           </span>
         ) : (

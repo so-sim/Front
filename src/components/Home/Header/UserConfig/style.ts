@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+import { isMobile } from 'react-device-detect';
 
 export const UserConfigButton = styled.button`
   display: flex;
@@ -15,5 +16,5 @@ export const Container = styled.div`
   display: flex;
   align-items: center;
 
-  gap: 2rem;
+  gap: ${isMobile ? '1rem' : '2rem'};
 `;

@@ -26,7 +26,7 @@ const MobileTOS = () => {
               <Style.TOSWhole>
                 <label>
                   <input type="checkbox" checked={isAllChecked} onClick={allCheckHandler} />
-                  <span>전체 약관 모두 동의</span>
+                  <Style.TOSAgree>전체 약관 모두 동의</Style.TOSAgree>
                 </label>
               </Style.TOSWhole>
               {TOSList.map((list) => (
