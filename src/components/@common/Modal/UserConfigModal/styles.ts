@@ -48,6 +48,7 @@ export const Kakao = styled.div`
   background: #ffe600;
   border-radius: 6px;
   margin-bottom: 4px;
+  white-space: nowrap;
 `;
 
 export const WithDrwalBtn = styled.button`
