@@ -12,7 +12,7 @@ export const AlarmDetailFrame = styled.div<{ $headerHeight: number }>`
   width: 460px;
 
   border-left: 1px solid ${({ theme }) => theme.colors.neutral_300_b};
-  margin-top: 1px;
+  /* margin-top: 1px; */
 
   background-color: white;
 `;
