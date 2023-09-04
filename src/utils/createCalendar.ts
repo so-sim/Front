@@ -1,6 +1,6 @@
 import dayjs, { Dayjs } from 'dayjs';
 
-const createCalendar = (baseDate: Dayjs) => {
+const createCalendar = (baseDate: Dayjs, fixWeek: boolean = false) => {
   const WEEK = 7;
 
   const monthStart = baseDate.startOf('month');
@@ -9,7 +9,7 @@ const createCalendar = (baseDate: Dayjs) => {
   const startDay = monthStart.day();
   // 요일 가져오는 부분
   const endDate = monthEnd.date();
-  const totalWeek = Math.ceil((startDay + endDate) / 7);
+  const totalWeek = fixWeek ? 6 : Math.ceil((startDay + endDate) / 7);
   // 로우 갯수 계산
 
   const getFirstWeek = () => {

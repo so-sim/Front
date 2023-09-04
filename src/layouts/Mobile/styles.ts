@@ -9,8 +9,6 @@ export const Layout = styled.div`
   }
 `;
 
-export const Body = styled.div<{ isHome: boolean; $isWhite: boolean | undefined }>`
-  background: ${({ theme, isHome }) => isHome && theme.colors.neutral_200_b};
-
-  background-color: ${({ theme, $isWhite }) => $isWhite && theme.colors.secondary_100};
+export const Body = styled.div<{ isHome: boolean }>`
+  /* background: ${({ theme, isHome }) => isHome && theme.colors.neutral_200_b}; */
 `;

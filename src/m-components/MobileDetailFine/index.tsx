@@ -106,9 +106,9 @@ const MobileDetailFine = ({ $isOpen, setIsOpen }: Props) => {
     setDetailFilter((prev) => ({ ...prev, nickname: searchMember.nickname }));
   }, [searchMember]);
 
-  //Todo: 언마운트 시키는 방향으로 개선하면 좋을듯
+  //Todo: 그룹 이동 시 초기화 하도록 수정해애ㅑ 함
   useEffect(() => {
-    setSearchMember({ nickname: '' });
+    // setSearchMember({ nickname: '' });
     setDetailFilter((prev) => ({ ...prev, groupId: Number(groupId) }));
   }, [groupId]);
 

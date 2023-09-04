@@ -18,7 +18,7 @@ export const useGetDetailList = (detailFilter: DetailFilter, calendarDate: DateS
     enabled: !!query, //
     onSuccess(data) {
       if (prevQuery.current.nickname !== detailFilter.nickname) {
-        pushDataLayer('filter_member', { state: detailFilter.nickname !== '' });
+        pushDataLayer('filter_member', { state: true });
       }
       if (prevQuery.current.mode !== calendarDate.mode) pushDataLayer('filter_term', { state: calendarDate.mode });
       if (prevQuery.current.situation !== detailFilter.situation && detailFilter.situation !== '') {

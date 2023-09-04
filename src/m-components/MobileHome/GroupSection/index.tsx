@@ -36,7 +36,7 @@ const MobileGroupSection = () => {
       <Style.GroupSection>
         <div>
           <div style={{ width: '100%', height: 'auto' }}>
-            <img src="/public/banner.png" alt="group" style={{ width: '100%', height: '200px', objectFit: 'cover' }} />
+            <img src="/public/mobile-banner.png" alt="group" style={{ width: '100%', height: '200px', objectFit: 'cover' }} />
           </div>
           <div style={{ padding: '0 16px' }}>
             <Style.Title>참여 모임</Style.Title>

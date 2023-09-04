@@ -34,6 +34,11 @@ export const Notice = styled.div`
   text-align: start;
   color: ${({ theme }) => theme.colors.secondary_900};
   ${({ theme }) => theme.font.body_01}
+
+  span {
+    ${({ theme }) => theme.font.subhead_01}
+    text-decoration: underline;
+  }
 `;
 export const WeekBlock = styled.div`
   display: flex;

@@ -54,7 +54,7 @@ export const deleteEvent = async (eventId: number): Promise<ServerResponse<Evnet
   return data;
 };
 
-export const updateEventStatus = async (info: { eventIdList: number[]; situation: Situation }): Promise<ServerResponse<EventInfoTest>> => {
+export const updateEventStatus = async (info: { eventIdList: number[]; situation: Situation }): Promise<ServerResponse<{ eventIdList: number[]; situation: Situation }>> => {
   const { data } = await api.patch(`/api/event/penalty`, { ...info });
   return data;
 };
