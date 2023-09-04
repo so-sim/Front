@@ -5,6 +5,7 @@ import { SelectedEventInfo } from '@/types/event';
 import { convertToPriceFormat } from '@/utils/convertFormat';
 
 import DetailListCheckBox from '../../checkbox';
+import MemberListCheckbox from '../../checkboxList';
 import * as Style from './styles';
 
 type Props = {
@@ -24,7 +25,7 @@ const SingleCheckedFineList = ({ checkDetailFine, setCheckDetailFine, isChecked,
             <Style.CheckBoxWrapper>
               {!noCheckBox && (
                 <CheckboxContainer id={String(item.eventId)} isChecked={isChecked(item.eventId)} onChange={(event: React.MouseEvent<HTMLInputElement>) => setCheckDetailFine(item)}>
-                  <CheckboxContainer.Checkbox as={DetailListCheckBox} disabled={isDisabled(item.eventId)} />
+                  <CheckboxContainer.Checkbox as={MemberListCheckbox} disabled={isDisabled(item.eventId)} />
                 </CheckboxContainer>
               )}
             </Style.CheckBoxWrapper>

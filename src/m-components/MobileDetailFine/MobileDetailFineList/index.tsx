@@ -1,6 +1,7 @@
 import { SYSTEM } from '@/assets/icons/System';
 import CheckboxContainer from '@/components/@common/Checkbox';
 import DetailListCheckBox from '@/components/DetailFine/checkbox';
+import MemberListCheckbox from '@/components/DetailFine/checkboxList';
 
 import useCheckListState from '@/hooks/useCheckListState';
 import { EventInfoListTest, SelectedEventInfo } from '@/types/event';
@@ -67,7 +68,7 @@ const MobileDetailFineList = ({ details, inViewElement }: Props) => {
                   isChecked={isChecked(item.eventId)}
                   onChange={(event: React.MouseEvent<HTMLInputElement>) => handleToggleCheckList(event, item)}
                 >
-                  <CheckboxContainer.Checkbox as={DetailListCheckBox} />
+                  <CheckboxContainer.Checkbox as={MemberListCheckbox} />
                 </CheckboxContainer>
                 <Style.ContentWrapper>
                   <Style.TopWrapper>

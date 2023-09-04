@@ -1,5 +1,6 @@
 import CheckboxContainer from '@/components/@common/Checkbox';
 import DetailListCheckBox from '@/components/DetailFine/checkbox';
+import MemberListCheckbox from '@/components/DetailFine/checkboxList';
 import useValidateSituation from '@/hooks/Group/useValidateSituation';
 import useCheckListState from '@/hooks/useCheckListState';
 import useConfirmModal from '@/hooks/useConfirmModal';
@@ -92,7 +93,7 @@ const MobileToolbar = () => {
   return (
     <Style.ToolbarContainer>
       <CheckboxContainer id={'checkDetailFineLength'} isChecked={!(checkedSize === 0)} onChange={(event: React.MouseEvent<HTMLInputElement>) => initCheckDetailFine(event)}>
-        <CheckboxContainer.Checkbox as={DetailListCheckBox} />
+        <CheckboxContainer.Checkbox as={MemberListCheckbox} />
         {/*    이 부분 props를 자연스럽게 넘겨주려면 이 방법 밖에?? function으로 넘겨주는 방법도 있긴한데,  이거는 rest props 안넘어옴 */}
       </CheckboxContainer>
       <Style.Label>{checkedSize}개 선택</Style.Label>
