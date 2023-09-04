@@ -19,6 +19,7 @@ export const Page = styled.span<{ isSelected: boolean }>`
   &:hover {
     background-color: ${({ theme }) => theme.colors.neutral_400_b};
   }
+  ${({ theme }) => theme.font.subhead_02};
 `;
 
 export const DoubleArrow = styled.span`
