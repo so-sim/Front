@@ -24,7 +24,12 @@ const MobileFineBookForm = ({ selectData, action, convertSituationToText }: Prop
   const location = useLocation();
   const isCreate = location.pathname.includes('create');
 
-  const situationList = isCreate ? SITUATION_LIST.filter((value) => value !== '승인대기') : SITUATION_LIST;
+  const situationList = isCreate
+    ? SITUATION_LIST.filter((value) => value !== '승인대기')
+    : selectData.situation === '확인중'
+    ? SITUATION_LIST
+    : SITUATION_LIST.filter((value) => value !== '승인대기');
+
   const MEMO_MAX_LENGTH = 65;
 
   const [openMemberList, setOpenMemberList] = useState(false);
