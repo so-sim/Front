@@ -36,6 +36,9 @@ const SITUATION_FORMAT_STYLE: { [key in SituationStatus]: Situation } = {
 const filterDisabledList = (dataList: SelectedEventInfo[] | undefined, disabledEventIdList?: number[]) =>
   dataList?.filter((item) => !disabledEventIdList?.includes(item.eventId)).map((item) => item.eventId) || [];
 
+/**
+ * 알람을 눌러서 나오는 변경하기 페이지
+ */
 const AlarmInfo = ({}) => {
   const [{ alarmEventIdList, nickname, groupId, afterSituation, beforeSituation }, setAlarmIdList] = useRecoilState(alarmInfoState);
 

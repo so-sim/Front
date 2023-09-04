@@ -20,5 +20,8 @@ export const useGroupDetail = (groupId: number | undefined) => {
         });
       }
     },
+    // 죄송합니다,, 코드를 진짜 왜 이렇게 만들었지..
+    // 진짜 생각없이 만들었네요,,,,,
+    enabled: !!groupId,
   });
 };

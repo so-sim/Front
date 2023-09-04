@@ -91,6 +91,7 @@ export const AmountContainer = styled.div`
 `;
 
 export const AmountTitle = styled.p`
+  margin-top: 2px;
   ${({ theme }) => theme.font.body_01};
 `;
 export const Amount = styled.div`

@@ -1,9 +1,11 @@
 import { SYSTEM } from '@/assets/icons/System';
 import CheckboxContainer from '@/components/@common/Checkbox';
+import WithdrawBadge from '@/components/@common/WithdrawBadge';
 import DetailListCheckBox from '@/components/DetailFine/checkbox';
 import MemberListCheckbox from '@/components/DetailFine/checkboxList';
 
 import useCheckListState from '@/hooks/useCheckListState';
+import { useWithdrawalParticipantList } from '@/queries/Group/useWithdrawalParticipantList';
 import { EventInfoListTest, SelectedEventInfo } from '@/types/event';
 import { convertToPriceFormat } from '@/utils/convertFormat';
 import React from 'react';
@@ -40,6 +42,8 @@ const MobileDetailFineList = ({ details, inViewElement }: Props) => {
     setCheckDetailFine: { setToggleCheckList },
     isChecked,
   } = useCheckListState();
+
+  const { isWithdrawal } = useWithdrawalParticipantList(Number(groupId));
 
   // const stringTonumber = checkedEventIdList.map((item) => Number(item));
   // const { data } = useGetDetailListById(Number(groupId), [...stringTonumber]);
@@ -78,6 +82,7 @@ const MobileDetailFineList = ({ details, inViewElement }: Props) => {
                     <Style.AmountText>{convertToPriceFormat(item.amount)}원</Style.AmountText>
                   </Style.TopWrapper>
                   <Style.DetailContextWrapper>
+                    {isWithdrawal(item.nickname) && <WithdrawBadge />}
                     <Style.SituationBox situationType={item.situation}>
                       <Style.IconWrapper>{SITUATION_STATUS_ICON[item.situation]}</Style.IconWrapper>
                       {SITUATION_STATUS_TEXT[item.situation]}

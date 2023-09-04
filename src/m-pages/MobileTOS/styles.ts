@@ -26,9 +26,16 @@ export const TOSContainer = styled.div`
 `;
 
 export const TOSTitle = styled.h1`
-  margin-bottom: 0;
+  margin-bottom: 16px;
   gap: 8px;
   ${({ theme }) => theme.font.subhead_04};
+  span {
+    ${({ theme }) => theme.font.body_02};
+  }
+`;
+
+export const TOSAgree = styled.span`
+  ${({ theme }) => theme.font.subhead_02};
 `;
 
 export const TOSList = styled.div`

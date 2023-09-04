@@ -111,6 +111,15 @@ const MobileFineBookDetail = () => {
   };
 
   const updateConfirmStatus = (situation: Situation) => {
+    // 총무 자신의 것일 때 분기처리
+    if (isOwn) {
+      openConfirmModal({
+        type: 'CHANGE_OWN_ADMIN_STATUS',
+        confirm: () => changeConfirmStatus(situation),
+        cancel: closeConfirmModal,
+      });
+      return;
+    }
     openConfirmModal({
       type: 'CHANGE_STATUS_ADMIN',
       confirm: () => changeConfirmStatus(situation),

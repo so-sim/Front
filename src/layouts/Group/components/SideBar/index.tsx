@@ -11,9 +11,9 @@ import { isMobile } from 'react-device-detect';
 import useCheckListState from '@/hooks/useCheckListState';
 
 const GROUP_TAPS = [
-  { title: '홈', svg: SYSTEM.HOME, disabled: true, link: 'home' },
-  { title: '공지사항', svg: SYSTEM.NOTICE, disabled: true, link: 'notice' },
-  { title: '벌금 장부', svg: SYSTEM.ARTICLE, disabled: false, link: 'book' },
+  { title: '홈', svg: SYSTEM.HOME, disabled: true, link: 'home', id: GA.MENU.HOME },
+  { title: '공지사항', svg: SYSTEM.NOTICE, disabled: true, link: 'notice', id: GA.MENU.NOTIFICATION },
+  { title: '벌금 장부', svg: SYSTEM.ARTICLE, disabled: false, link: 'book', id: GA.MENU.HOME },
 ];
 
 const ETC = [
@@ -74,7 +74,7 @@ const GroupSideBar = () => {
         <Style.TapContainer>
           <Style.Category>벌금 관리</Style.Category>
           {GROUP_TAPS.map((tap, index) => (
-            <NavLink to={`/${devicePath}/${groupId}/${tap.link}`} key={tap.title + index}>
+            <NavLink to={`/${devicePath}/${groupId}/${tap.link}`} key={tap.title + index} id={tap.id}>
               <div style={{ position: 'relative' }}>
                 <Style.Selected isSelected={isSelected(tap.link)} />
                 <Style.Tap $isDisabled={tap.disabled}>
@@ -89,7 +89,7 @@ const GroupSideBar = () => {
           <Style.Category>기타</Style.Category>
           {ETC.map((etc, index) =>
             etc.link ? (
-              <NavLink to={`/${devicePath}/${groupId}/${etc.link}`} key={etc.title} id={etc.id + index}>
+              <NavLink to={`/${devicePath}/${groupId}/${etc.link}`} key={etc.title} id={etc.id}>
                 <div style={{ position: 'relative' }}>
                   <Style.Selected isSelected={isSelected(etc.link)} />
                   <Style.Tap key={etc.title}>
@@ -99,8 +99,8 @@ const GroupSideBar = () => {
                 </div>
               </NavLink>
             ) : (
-              <Style.GroupSettingContainer onClick={() => (isMobile ? moveToSettingPage() : handleGroupSettingModal())} key={index}>
-                <Style.Tap key={etc.title} id={etc.id}>
+              <Style.GroupSettingContainer onClick={() => (isMobile ? moveToSettingPage() : handleGroupSettingModal())} key={index} id={etc.id}>
+                <Style.Tap key={etc.title}>
                   <div style={{ height: '21px' }}>{etc.svg}</div>
                   <span>{etc.title}</span>
                 </Style.Tap>
