@@ -23,6 +23,7 @@ export const ItemContainer = styled.div`
 export const CheckBoxWrapper = styled.div`
   display: flex;
   align-items: center;
+  padding-left: 4px;
 `;
 
 export const TextWrapper = styled.div`
