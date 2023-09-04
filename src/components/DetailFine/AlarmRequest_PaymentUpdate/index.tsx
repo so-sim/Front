@@ -60,6 +60,9 @@ const filterByNickName = (prev: CheckListState, name: string, list: SelectedEven
 const filteredDisabled = (prev: CheckListState, disabledEventIdList: number[] | undefined) =>
   Object.fromEntries(Object.entries(prev).filter(([key]) => !disabledEventIdList?.includes(Number(key))));
 
+/**
+ * 체크리스트로 넘어오는 변경하기, 요청하기 페이지
+ */
 const AlarmRequest_PaymentUpdate = ({ checkDetailFine }: Props) => {
   const { groupId } = useParams();
   const navigate = useNavigate();
@@ -189,11 +192,19 @@ const AlarmRequest_PaymentUpdate = ({ checkDetailFine }: Props) => {
   const TotalAmount = detailFineList?.reduce((prev, current) => prev + current.amount, 0);
 
   const isSingleList = (sortedList: SelectedEventInfo[]) => {
+    const count = countMember(sortedList);
+
+    return count === 1;
+  };
+
+  /**
+   * 몇명인지 세는 함수
+   */
+  const countMember = (sortedList: SelectedEventInfo[]) => {
     const situationOfCheckDetailFine = sortedList.map(({ nickname }) => nickname);
+    const count = new Set(situationOfCheckDetailFine);
 
-    const isAllSameSituation = new Set(situationOfCheckDetailFine);
-
-    return isAllSameSituation.size === 1;
+    return count.size;
   };
 
   const getSingleNickName = originalCheckListValue[0].nickname;
