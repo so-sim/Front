@@ -7,6 +7,8 @@ import * as Stlye from './styles';
 import { useInView } from 'react-intersection-observer';
 import { GA } from '@/constants/GA';
 import { isMobile } from 'react-device-detect';
+import { searchMemberState } from '@/store/searchMemberState';
+import { useRecoilState } from 'recoil';
 
 const GroupList = () => {
   const param = useParams();
@@ -15,6 +17,8 @@ const GroupList = () => {
   const [showCreateModal, setShowCreateModal] = useState(false);
   const navigate = useNavigate();
   const devicePath = isMobile ? '/m-group' : '/group';
+
+  const [searchMember, setSearchMember] = useRecoilState(searchMemberState);
 
   const { data: groups, fetchNextPage, hasNextPage } = useGroupList();
   const { ref, inView } = useInView();
@@ -47,7 +51,14 @@ const GroupList = () => {
         {groups?.pages.map((page, index) => (
           <React.Fragment key={index}>
             {page.content?.groupList.map((group) => (
-              <Stlye.Groups key={group.groupId} to={`${devicePath}/${group.groupId}/book`}>
+              <Stlye.Groups
+                onClick={() => {
+                  //ToDo: 여기에서 초기화 시켜주는데, 어떻게 해야할지 잘 모르겠네요,,,,,,,,
+                  setSearchMember({ nickname: '' });
+                }}
+                key={group.groupId}
+                to={`${devicePath}/${group.groupId}/book`}
+              >
                 <Stlye.Cover isSelected={isSelected(group.groupId)} />
                 <Stlye.EachGroup color={group.coverColor}>
                   <span>{group.title.substring(0, 3)}</span>
