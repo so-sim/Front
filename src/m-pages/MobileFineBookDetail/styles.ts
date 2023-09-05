@@ -30,7 +30,6 @@ export const TextArea = styled.textarea<{ disabled?: boolean }>`
 
 export const PersonIcon = styled.span`
   height: 24px;
-  margin-right: 8px;
 `;
 
 export const Footer = styled.div`
@@ -55,6 +54,7 @@ export const SemiBlock = styled.div`
   display: flex;
   align-items: center;
   margin-bottom: 0.25rem;
+  gap: 0.5rem;
 `;
 
 export const BetweenBlock = styled(Block)`
