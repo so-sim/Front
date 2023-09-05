@@ -1,7 +1,5 @@
 import * as Style from './styles';
 import { SYSTEM } from '@/assets/icons/System';
-import theme from '@/styles/Theme';
-import { CheckDetailFine, SelectedEventInfo_Checked, SetCheckDetailFine } from '@/components/DetailFine/AlarmRequest_PaymentUpdate/hooks/useCheckDetailFine';
 import { useUpdateDetailStatus } from '@/queries/Detail';
 import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import CheckedFineList from './CheckedFineList';
@@ -9,7 +7,6 @@ import { useParticipantList } from '@/queries/Group';
 import React, { useEffect, useState } from 'react';
 import { SelectedEventInfo, Situation } from '@/types/event';
 import { useGroupDetail } from '@/queries/Group';
-import { useSelectedContext, initialSelectData } from '@/contexts/SelectedFineContext';
 import { useRequestNotification } from '@/queries/Notification/useRequestNotifaction';
 import { useRecoilState } from 'recoil';
 import { initialSideModalState, sideModalState } from '@/store/sideModalState';
