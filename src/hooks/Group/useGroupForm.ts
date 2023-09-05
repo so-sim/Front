@@ -8,6 +8,7 @@ import { useEffect } from 'react';
 import { ServerResponse } from '@/types/serverResponse';
 import { GroupId } from '@/types/group';
 import useConfirmModal from '../useConfirmModal';
+import { useWithdrawalParticipantList } from '@/queries/Group/useWithdrawalParticipantList';
 
 const initialValue: GroupFormData = {
   title: '',
@@ -18,7 +19,7 @@ const initialValue: GroupFormData = {
 
 export type GroupFormAction = {
   createGroup: () => Promise<ServerResponse<GroupId>>;
-  updateGroupForm: () => Promise<ServerResponse<GroupId>>;
+  updateGroupForm: () => Promise<ServerResponse<GroupId>> | void;
   deleteGroup: () => void;
   withdrwalGroup: () => void;
   hasUser: () => boolean;
@@ -47,6 +48,7 @@ const useGroupForm = (formType?: 'create' | 'update'): GroupFormHook => {
   });
 
   const { data: groupData } = useGroupDetail(Number(groupId));
+  const { isWithdrawal } = useWithdrawalParticipantList(Number(groupId));
   const { mutateAsync: updateGroupMutate, isLoading: groupInfoLoading } = useUpdateGroup({ setError });
   const { mutateAsync: createGroupMutate, isLoading: createGroupLoading } = useCreateGroup();
 
@@ -72,6 +74,10 @@ const useGroupForm = (formType?: 'create' | 'update'): GroupFormHook => {
   };
 
   const updateGroupForm = () => {
+    if (isWithdrawal(formState.nickname)) {
+      setError('nickname', '탈퇴 이력이 존재한 닉네임으로 변경 불가능 합니다.');
+      throw new Error('올바른 형식이 아닙니다');
+    }
     return updateGroupMutate({ groupId: Number(groupId), ...formState });
   };
 

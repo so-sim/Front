@@ -11,6 +11,7 @@ import * as Style from './styles';
 import { useChangeNickname } from '@/queries/Group';
 import { useGetMyNikname } from '@/queries/Group/useGetMyNickname';
 import useConfirmModal from '@/hooks/useConfirmModal';
+import { useWithdrawalParticipantList } from '@/queries/Group/useWithdrawalParticipantList';
 
 const MobileUserGroupSetting = () => {
   const navigate = useNavigate();
@@ -22,6 +23,8 @@ const MobileUserGroupSetting = () => {
 
   const { data: myNickname } = useGetMyNikname(Number(groupId));
   const { data: groupData } = useGroupDetail(Number(groupId));
+  const { isWithdrawal } = useWithdrawalParticipantList(Number(groupId));
+
   const { mutate: updateNickname, isLoading } = useChangeNickname({ setError });
   const { mutate: withdrawalGroupMutate } = useWithdrawalGroup();
 
@@ -48,6 +51,10 @@ const MobileUserGroupSetting = () => {
 
   const updateMyNickname = () => {
     const id = Number(groupId);
+    if (isWithdrawal(nickname)) {
+      setError('nickname', '탈퇴 이력이 존재한 닉네임으로 변경 불가능 합니다.');
+      return;
+    }
     !isError.nickname && updateNickname({ groupId: id, nickname });
   };
 
