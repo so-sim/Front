@@ -26,6 +26,7 @@ import { useWithdrawalParticipantList } from '@/queries/Group/useWithdrawalParti
 import WithdrawBadge from '@/components/@common/WithdrawBadge';
 import { convertToPriceFormat } from '@/utils/convertFormat';
 import { CONVERT_SITUATION_FORMAT } from '@/constants/Situation';
+import useConfirmModal from '@/hooks/useConfirmModal';
 
 const SITUATION_FORMAT_STYLE: { [key in SituationStatus]: Situation } = {
   FULL: '완납',
@@ -45,6 +46,8 @@ const AlarmInfo = ({}) => {
   const [situationToChange, setSituationToChange] = useState<Situation>('완납');
 
   const navigate = useNavigate();
+
+  const { openConfirmModal, closeConfirmModal } = useConfirmModal();
 
   const { data: groupAdmin } = useGroupDetail(Number(groupId));
 
@@ -223,7 +226,7 @@ const AlarmInfo = ({}) => {
             <Button
               width="100%"
               height="2.675rem"
-              onClick={updateSituation}
+              onClick={() => openConfirmModal({ type: 'CHANGE_OWN_ADMIN_STATUS', confirm: updateSituation, cancel: closeConfirmModal })}
               color={!(checkedEventId.length > 0) || (!isAdmin && afterSituation === 'CHECK') ? 'disabled' : 'black'}
             >
               변경하기
