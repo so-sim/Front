@@ -24,6 +24,8 @@ import { convertToPriceFormat } from '@/utils/convertFormat';
 import { USER } from '@/assets/icons/User';
 import { useWithdrawalParticipantList } from '@/queries/Group/useWithdrawalParticipantList';
 import WithdrawBadge from '@/components/@common/WithdrawBadge';
+import { GA_ALARM_SITUATION } from '@/constants/GA_ALARM';
+import { pushDataLayer } from '@/utils/pushDataLayer';
 
 type Props = {
   checkDetailFine: CheckListState;
@@ -169,12 +171,14 @@ const AlarmRequest_PaymentUpdate = ({ checkDetailFine }: Props) => {
   };
 
   const updateSituation = () => {
+    pushDataLayer(GA_ALARM_SITUATION[situationToChange], { route: 'checkbox', count_list: currentCheckList.length, count_member: countMember(sortedtList) });
     mutateDetailStatus({ situation: situationToChange, eventIdList: currentCheckList });
     isMobile && mobileOnSuccess();
   };
 
   const requestAlarm = () => {
     //Todo: 알림 보내는
+    pushDataLayer('payment_request', { route: 'checkbox', count_list: currentCheckList.length, count_member: countMember(sortedtList) });
     mutateRequestNotification(eventIdList.map(Number));
     isMobile && mobileOnSuccess();
   };

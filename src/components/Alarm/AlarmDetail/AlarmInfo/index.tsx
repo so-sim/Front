@@ -27,6 +27,8 @@ import WithdrawBadge from '@/components/@common/WithdrawBadge';
 import { convertToPriceFormat } from '@/utils/convertFormat';
 import { CONVERT_SITUATION_FORMAT } from '@/constants/Situation';
 import useConfirmModal from '@/hooks/useConfirmModal';
+import { pushDataLayer } from '@/utils/pushDataLayer';
+import { GA_ALARM_SITUATION, GA_ALARM_TYPE } from '@/constants/GA_ALARM';
 
 const SITUATION_FORMAT_STYLE: { [key in SituationStatus]: Situation } = {
   FULL: '완납',
@@ -41,7 +43,7 @@ const filterDisabledList = (dataList: SelectedEventInfo[] | undefined, disabledE
  * 알람을 눌러서 나오는 변경하기 페이지
  */
 const AlarmInfo = ({}) => {
-  const [{ alarmEventIdList, nickname, groupId, afterSituation, beforeSituation }, setAlarmIdList] = useRecoilState(alarmInfoState);
+  const [{ alarmEventIdList, nickname, groupId, afterSituation, beforeSituation, type }, setAlarmIdList] = useRecoilState(alarmInfoState);
 
   const [situationToChange, setSituationToChange] = useState<Situation>('완납');
 
@@ -130,6 +132,8 @@ const AlarmInfo = ({}) => {
   const { mutate: mutateDetailStatus } = useUpdateDetailStatus(onSuccess);
 
   const updateSituation = () => {
+    pushDataLayer(GA_ALARM_SITUATION[situationToChange], { route: 'alarm', count_list: checkedEventId.length, count_member: 1, alarm_type: GA_ALARM_TYPE[type!] });
+
     mutateDetailStatus({ situation: situationToChange, eventIdList: checkedEventId });
   };
 
