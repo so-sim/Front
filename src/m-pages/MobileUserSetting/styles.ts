@@ -6,27 +6,28 @@ export const Text = styled.span`
   display: block;
   width: 100%;
   height: 32px;
-  ${({ theme }) => theme.font.subhead_03}
+  ${({ theme }) => theme.font.subhead_02}
 `;
 
-export const Email = styled.span`
+export const Email = styled.div`
+  margin-top: 4px;
   ${({ theme }) => theme.font.body_01}
 `;
 
 export const Kakao = styled.div`
-  display: flex;
+  display: inline-flex;
   align-items: center;
-  padding: 0px 16px;
-  width: 152px;
-  height: 32px;
+  padding: 6px 16px;
+
   background: #ffe600;
   border-radius: 6px;
-  margin-bottom: 4px;
+
   white-space: nowrap;
+  ${({ theme }) => theme.font.subhead_02};
 `;
 
 export const WithDrwalBtn = styled.button`
-  margin-top: 32px;
+  margin-top: 24px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -40,5 +41,5 @@ export const WithDrwalBtn = styled.button`
 `;
 
 export const Content = styled.div`
-  margin: 24px 20px;
+  margin: 20px;
 `;
