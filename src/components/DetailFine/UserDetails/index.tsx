@@ -100,11 +100,15 @@ const UserDetails = () => {
   };
   const { mutate: mutateRequestNotification } = useRequestNotification();
 
+  const requestNotification = () => {
+    pushDataLayer('payment_request', { route: 'detail', count_list: 1, count_member: 1 });
+    mutateRequestNotification([eventId]);
+  };
   // 벌금 납부 요청
   const handleRequestPayment = () => {
     openConfirmModal({
       type: 'REQUEST_PAYMENT',
-      confirm: () => mutateRequestNotification([eventId]),
+      confirm: requestNotification,
       cancel: closeConfirmModal,
     });
   };

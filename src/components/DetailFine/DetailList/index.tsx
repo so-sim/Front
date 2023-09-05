@@ -157,6 +157,7 @@ const DetailList = ({ detailFilter, details }: Props) => {
                     onClick={(e) => {
                       e.stopPropagation();
                       requestNotification(eventId);
+                      pushDataLayer('payment_request', { route: 'list', count_list: 1, count_member: 1 });
                       pushDataLayer('gtm.click', { 'gtm.element': GA.PAYMENT_REQUEST.LIST_BUTTON });
                     }}
                   >
