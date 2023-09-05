@@ -7,7 +7,7 @@ export const AlarmDetailFrame = styled.div<{ $headerHeight: number }>`
   right: 0;
   bottom: 0;
   height: calc(100vh - 72px);
-  z-index: 9999;
+  z-index: 18;
 
   width: 460px;
 
@@ -54,5 +54,5 @@ export const BackDrop = styled.div<{ $headerHeight: number }>`
   background-color: white;
   opacity: 30%;
 
-  z-index: 9998;
+  z-index: 18;
 `;
