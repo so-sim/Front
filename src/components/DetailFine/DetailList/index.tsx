@@ -44,7 +44,12 @@ const DetailList = ({ detailFilter, details }: Props) => {
   const [sideModal, setSideModal] = useRecoilState(sideModalState);
 
   const { selectedFine, setSelectedFine } = useSelectedContext('userDetails');
-  const { mutate: mutateRequestNotification } = useRequestNotification();
+
+  const onSuccessRequestNotification = () => {
+    pushDataLayer('payment_request', { route: 'list', count_list: 1, count_member: 1 });
+  };
+
+  const { mutate: mutateRequestNotification } = useRequestNotification(onSuccessRequestNotification);
   const { openConfirmModal, closeConfirmModal } = useConfirmModal();
   const { withdrawalParticipants, isWithdrawal } = useWithdrawalParticipantList(Number(groupId));
   const { data } = useGetMyNikname(Number(groupId));
@@ -158,7 +163,6 @@ const DetailList = ({ detailFilter, details }: Props) => {
                       e.stopPropagation();
                       requestNotification(eventId);
                       pushDataLayer('gtm.click', { 'gtm.elementId': GA.PAYMENT_REQUEST.LIST_BUTTON });
-                      pushDataLayer('payment_request', { route: 'list', count_list: 1, count_member: 1 });
                     }}
                   >
                     <div style={{ height: '16px' }}>{isEnable ? ALARM.ALARM_SM : SYSTEM.DONE_SM}</div>
