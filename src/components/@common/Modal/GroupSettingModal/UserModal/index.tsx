@@ -9,6 +9,7 @@ import { useParams } from 'react-router-dom';
 import { useChangeNickname, useGroupDetail, useWithdrawalGroup } from '@/queries/Group';
 import { useGetMyNikname } from '@/queries/Group/useGetMyNickname';
 import useConfirmModal from '@/hooks/useConfirmModal';
+import { useWithdrawalParticipantList } from '@/queries/Group/useWithdrawalParticipantList';
 
 export const UserModal: FC<ModalHandlerProps> = ({ modalHandler }) => {
   const [myName, setMyName] = useState('');
@@ -20,6 +21,8 @@ export const UserModal: FC<ModalHandlerProps> = ({ modalHandler }) => {
   });
 
   const { mutate: updateNickname } = useChangeNickname({ setError, modalHandler });
+  const { isWithdrawal } = useWithdrawalParticipantList(Number(groupId));
+
   const { mutate: withdrawalGroupMutate } = useWithdrawalGroup();
   const { data: groupData } = useGroupDetail(Number(groupId));
   const { data: myNickname } = useGetMyNikname(Number(groupId));
@@ -39,6 +42,10 @@ export const UserModal: FC<ModalHandlerProps> = ({ modalHandler }) => {
 
   const updateMyNickname = () => {
     const id = Number(groupId);
+    if (isWithdrawal(myName)) {
+      setError('nickname', '탈퇴 이력이 존재한 닉네임으로 변경 불가능 합니다.');
+      return;
+    }
     !isError.nickname && updateNickname({ groupId: id, nickname: myName });
   };
 

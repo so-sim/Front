@@ -6,7 +6,7 @@ export const Overlay = styled.div`
   position: fixed;
   background-color: ${({ theme }) => theme.colors.secondary_900};
   opacity: 0.3;
-  z-index: 10;
+  z-index: 9999;
   width: 100%;
   height: 100%;
   right: 0;
@@ -28,7 +28,7 @@ export const ModalFrame = styled.div<ModalProps>`
   top: 0;
   bottom: 0;
   margin: auto;
-  z-index: 10;
+  z-index: 9999;
   background-color: white;
   padding: ${isMobile ? '24px' : '24px 32px'};
 

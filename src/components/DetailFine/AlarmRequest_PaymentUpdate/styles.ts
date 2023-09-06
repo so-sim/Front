@@ -11,7 +11,7 @@ export const UserDetailsFrame = styled.div`
   top: 4.25rem;
   bottom: 0;
   right: 0;
-  z-index: 9999;
+  z-index: 8;
 
   box-shadow: 2px 0px 25px 7px rgba(156, 156, 156, 0.15);
   border-left: 2px solid ${({ theme }) => theme.colors.neutral_400_b};
@@ -153,5 +153,5 @@ export const BackDrop = styled.div`
   background-color: white;
   opacity: 30%;
 
-  z-index: 9998;
+  z-index: 7;
 `;

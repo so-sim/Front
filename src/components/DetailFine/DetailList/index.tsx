@@ -158,6 +158,7 @@ const DetailList = ({ detailFilter, details }: Props) => {
                       e.stopPropagation();
                       requestNotification(eventId);
                       pushDataLayer('gtm.click', { 'gtm.elementId': GA.PAYMENT_REQUEST.LIST_BUTTON });
+                      pushDataLayer('payment_request', { route: 'list', count_list: 1, count_member: 1 });
                     }}
                   >
                     <div style={{ height: '16px' }}>{isEnable ? ALARM.ALARM_SM : SYSTEM.DONE_SM}</div>

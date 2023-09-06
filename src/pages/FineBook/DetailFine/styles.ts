@@ -5,8 +5,9 @@ export const DetailFineFrame = styled.section`
   /* relative 주게되면 다 깨진다... 이거 나중에 absolute가 추가될 수도 있어서 수정해야하려나?? */
 
   border-left: 2px solid ${({ theme }) => theme.colors.neutral_200_b};
-  /* height: calc(100vh - 68px);
-  overflow: auto; */
+  height: calc(100vh - 68px);
+
+  overflow-y: scroll;
 `;
 
 export const DetailContent = styled.div`

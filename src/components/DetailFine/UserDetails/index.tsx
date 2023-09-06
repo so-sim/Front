@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction, useState } from 'react';
+import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { SYSTEM } from '@/assets/icons/System';
 import { USER } from '@/assets/icons/User';
 import { Label, DropBox, Button } from '@/components/@common';
@@ -25,6 +25,7 @@ import WithdrawBadge from '@/components/@common/WithdrawBadge';
 import { requestNotificationState } from '@/store/requestNotificationState';
 import { useRecoilState } from 'recoil';
 import { covertDateForView } from '@/utils/convertFormat';
+import { sideModalState } from '@/store/sideModalState';
 
 type Props = {
   select: SelectedEventInfo;
@@ -56,6 +57,13 @@ const UserDetails = () => {
   const { withdrawalParticipants } = useWithdrawalParticipantList(Number(groupId));
 
   const [showUpdateModal, setShowUpdateModal] = useState(false);
+
+  const [sideModal, setSideModal] = useRecoilState(sideModalState);
+
+  useEffect(() => {
+    setSelectedFine(initialSelectData);
+    // 해당 컴포넌트가 unMount가 되는게 아니여서 가능합니다. 만약 unMount 되는 형식으로 변경이 된다면, if(SideModal===true) 이런 형식으로 분기를 나눠줘야합니다.
+  }, [sideModal]);
 
   const isWithdrawalMember = (nickname: string) => {
     return withdrawalParticipants?.includes(nickname);
@@ -92,11 +100,15 @@ const UserDetails = () => {
   };
   const { mutate: mutateRequestNotification } = useRequestNotification();
 
+  const requestNotification = () => {
+    pushDataLayer('payment_request', { route: 'detail', count_list: 1, count_member: 1 });
+    mutateRequestNotification([eventId]);
+  };
   // 벌금 납부 요청
   const handleRequestPayment = () => {
     openConfirmModal({
       type: 'REQUEST_PAYMENT',
-      confirm: () => mutateRequestNotification([eventId]),
+      confirm: requestNotification,
       cancel: closeConfirmModal,
     });
   };

@@ -28,6 +28,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
 
 import * as Style from './styles';
+import WithdrawBadge from '@/components/@common/WithdrawBadge';
 
 // const REQUEST_BUTTON: { [key in Situation]: string } = {
 //   미납: '납부요청',
@@ -84,7 +85,7 @@ const MobileFineBookDetail = () => {
 
   const { mutate: deleteDetail } = useDeleteDetail(goToCalendar);
 
-  const { withdrawalParticipants } = useWithdrawalParticipantList(Number(groupId));
+  const { withdrawalParticipants, isWithdrawal } = useWithdrawalParticipantList(Number(groupId));
 
   const isWithdrawalMember = (nickname: string) => {
     return withdrawalParticipants?.includes(nickname);
@@ -191,6 +192,7 @@ const MobileFineBookDetail = () => {
           <Style.SemiBlock>
             <Style.PersonIcon>{USER.PERSON_24}</Style.PersonIcon>
             <Style.Text>{nickname}</Style.Text>
+            {isWithdrawal(nickname) && <WithdrawBadge />}
           </Style.SemiBlock>
           <Style.Block>
             <Style.GroundText>{changeNumberToMoney(amount)}원</Style.GroundText>
