@@ -40,7 +40,7 @@ const DropDownWrapper = ({ detail, openButtonListId, setOpenButtonListId }: Prop
       setOpenButtonListId(eventId);
       //Todo: 여기만 왜 안 되는지 찾아보기 (stopPropagation인가?)
     }
-    pushDataLayer('gtm.click', { 'gtm.element': GA[SITUATION_CODE[situation]].LIST_BUTTON });
+    pushDataLayer('gtm.click', { 'gtm.elementId': GA[SITUATION_CODE[situation]].LIST_BUTTON });
   };
 
   return (

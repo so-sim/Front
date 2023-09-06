@@ -157,7 +157,7 @@ const DetailList = ({ detailFilter, details }: Props) => {
                     onClick={(e) => {
                       e.stopPropagation();
                       requestNotification(eventId);
-                      pushDataLayer('gtm.click', { 'gtm.element': GA.PAYMENT_REQUEST.LIST_BUTTON });
+                      pushDataLayer('gtm.click', { 'gtm.elementId': GA.PAYMENT_REQUEST.LIST_BUTTON });
                     }}
                   >
                     <div style={{ height: '16px' }}>{isEnable ? ALARM.ALARM_SM : SYSTEM.DONE_SM}</div>
