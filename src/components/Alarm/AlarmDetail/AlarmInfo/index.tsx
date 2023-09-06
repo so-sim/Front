@@ -230,6 +230,7 @@ const AlarmInfo = ({}) => {
             <Button
               width="100%"
               height="2.675rem"
+              id="payment_change_alarm_button"
               onClick={() => openConfirmModal({ type: 'CHANGE_OWN_ADMIN_STATUS', confirm: updateSituation, cancel: closeConfirmModal })}
               color={!(checkedEventId.length > 0) || (!isAdmin && afterSituation === 'CHECK') ? 'disabled' : 'black'}
             >

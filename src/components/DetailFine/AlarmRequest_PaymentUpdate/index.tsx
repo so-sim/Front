@@ -307,7 +307,7 @@ const AlarmRequest_PaymentUpdate = ({ checkDetailFine }: Props) => {
         <Style.Button onClick={isMobile ? () => navigate(-1) : closePage}>취소</Style.Button>
 
         <Style.Button
-          id={type === 'situation_change' ? 'payment_change_alarm_button' : 'payment_request_checkbox_button'}
+          id={type === 'situation_change' ? 'payment_change_checkbox_button' : 'payment_request_checkbox_button'}
           isSubmit={true}
           onClick={type === 'situation_change' ? updateSituation : requestAlarm}
         >

@@ -13,7 +13,7 @@ import useCheckListState from '@/hooks/useCheckListState';
 const GROUP_TAPS = [
   { title: '홈', svg: SYSTEM.HOME, disabled: true, link: 'home', id: GA.MENU.HOME },
   { title: '공지사항', svg: SYSTEM.NOTICE, disabled: true, link: 'notice', id: GA.MENU.NOTIFICATION },
-  { title: '벌금 장부', svg: SYSTEM.ARTICLE, disabled: false, link: 'book', id: GA.MENU.HOME },
+  { title: '벌금 장부', svg: SYSTEM.ARTICLE, disabled: false, link: 'book', id: GA.MENU.BOOK },
 ];
 
 const ETC = [
