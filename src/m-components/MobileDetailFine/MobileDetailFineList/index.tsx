@@ -99,6 +99,7 @@ const MobileDetailFineList = ({ details, inViewElement }: Props) => {
             <div style={{ height: '5px' }} ref={inViewElement}></div>
           </div>
         ))}
+        <div style={{ height: '60px' }} />
       </Style.DetailFineListContainer>
     </>
   );
