@@ -136,4 +136,10 @@ export const CONFIRM_MODAL = {
     confirm: '변경하기',
     cancel: '취소',
   },
+  REJOIN_WITHDRAWAL_MEMBER: {
+    title: '알림',
+    description: `이미 탈퇴했던 모임입니다.\n 모임에 재가입하시겠습니까?`,
+    cancel: '취소',
+    confirm: '가입하기',
+  },
 };

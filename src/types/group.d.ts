@@ -16,15 +16,22 @@ export interface GroupNickname {
   nickname: string;
 }
 
-export interface GroupDetail {
+export interface GroupDetail extends GroupCommonDetail {
   isAdmin: boolean;
-  isInto: boolean;
-  title: string;
   adminNickname: string;
-  groupId: number;
-  coverColor: GroupColor;
   type: string;
   size: number;
+}
+
+export interface GroupCommonDetail {
+  groupId: number;
+  title: string;
+  coverColor: GroupColor;
+  isInto: boolean;
+  adminNickname: string;
+}
+export interface GroupDetailWithParticipant extends GroupCommonDetail {
+  isWithdraw: boolean;
 }
 
 export interface ParticipantList {
