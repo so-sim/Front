@@ -15,7 +15,7 @@ import * as Style from './styles';
 import MobileDetailFine from '@/m-components/MobileDetailFine';
 import { useEffect } from 'react';
 import { detailFineState } from '@/store/detailFineState';
-import { useGroupDetail } from '@/queries/Group';
+import { useGroupDetail, useNotificationInfo } from '@/queries/Group';
 import { firstVisitState } from '@/store/firstVisitState';
 import InviteModal from '@/components/@common/Modal/InviteModal';
 import useNotificationForm from '@/hooks/Group/useNotificationForm';
@@ -31,6 +31,7 @@ const MobileCalendar = () => {
 
   const [{ isFirstVisit }, setIsFirstVisit] = useRecoilState(firstVisitState);
   const { notificationForm, getNotificationFormAction } = useNotificationForm();
+  const { data: notificationInfo } = useNotificationInfo(Number(groupId));
 
   const { getOneLineNotificationDescription } = getNotificationFormAction();
 
@@ -77,7 +78,7 @@ const MobileCalendar = () => {
     <MobileLayout location="GROUP">
       <Style.Notification onClick={goToGroupAlarmSettingPage}>
         <Style.NotificationTitle>벌금일정</Style.NotificationTitle>
-        <Style.NotificationContent>{getOneLineNotificationDescription(notificationForm)}</Style.NotificationContent>
+        <Style.NotificationContent>{getOneLineNotificationDescription(notificationInfo?.content)}</Style.NotificationContent>
       </Style.Notification>
       <Style.CalendarBody>
         <Style.Container>

@@ -9,6 +9,11 @@ import { GA } from '@/constants/GA';
 import { isMobile } from 'react-device-detect';
 import { searchMemberState } from '@/store/searchMemberState';
 import { useRecoilState } from 'recoil';
+import useCalendarState from '@/hooks/Calendar/useCalendarState';
+import { dateState } from '@/store/dateState';
+import dayjs from 'dayjs';
+import { initialDateState } from '@/store/dateState';
+import useCalendarStatus from '@/hooks/Calendar/useCalendarStatus';
 
 const GroupList = () => {
   const param = useParams();
@@ -19,6 +24,13 @@ const GroupList = () => {
   const devicePath = isMobile ? '/m-group' : '/group';
 
   const [searchMember, setSearchMember] = useRecoilState(searchMemberState);
+
+  // const { calendarDate, setCalendarDate, increaseMonth, decreaseMonth } = useCalendarState();
+  // const { monthList, filterCorrectDateStatus, isCurrentMonth, isToday, isSelectedDate } = useCalendarStatus(calendarDate, groupId);
+
+  // const initCalendarDate = () => {
+  //   setCalendarDate(dayjs());
+  // };
 
   const { data: groups, fetchNextPage, hasNextPage } = useGroupList();
   const { ref, inView } = useInView();
@@ -54,6 +66,7 @@ const GroupList = () => {
               <Stlye.Groups
                 onClick={() => {
                   //ToDo: 여기에서 초기화 시켜주는데, 어떻게 해야할지 잘 모르겠네요,,,,,,,,
+                  // initCalendarDate();
                   setSearchMember({ nickname: '' });
                 }}
                 key={group.groupId}
