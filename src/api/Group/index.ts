@@ -1,5 +1,16 @@
 import { ServerResponse } from '@/types/serverResponse';
-import { GroupDetail, GroupId, GroupInfo, GroupListWithIndex, GroupNickname, NotificationInfo, ParticipantList, SearchedParticipantList } from '@/types/group';
+import {
+  GroupCommonDetail,
+  GroupDetail,
+  GroupDetailWithParticipant,
+  GroupId,
+  GroupInfo,
+  GroupListWithIndex,
+  GroupNickname,
+  NotificationInfo,
+  ParticipantList,
+  SearchedParticipantList,
+} from '@/types/group';
 import api from '..';
 
 export const createGroup = async (newGroupInfo: GroupInfo): Promise<ServerResponse<GroupId>> => {
@@ -73,5 +84,15 @@ export const getNotificationInfo = async (groupId: number | undefined): Promise<
 
 export const updateNotificationInfo = async (groupId: number | undefined, notificationInfo: NotificationInfo): Promise<ServerResponse> => {
   const { data } = await api.put(`/api/group/${groupId}/notification-info`, { ...notificationInfo });
+  return data;
+};
+
+export const getInvitation = async (groupId: number | undefined): Promise<ServerResponse<GroupDetailWithParticipant>> => {
+  const { data } = await api.get(`/api/group/${groupId}/invitation`);
+  return data;
+};
+
+export const rejoinGroup = async (groupId: number | undefined): Promise<ServerResponse> => {
+  const { data } = await api.put(`/api/group/${groupId}/participant`);
   return data;
 };
