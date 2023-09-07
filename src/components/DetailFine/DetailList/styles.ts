@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 
 export const DetailList = styled.div``;
 
-export const TableRow = styled.div<{ isSelected: boolean; isAdmin: boolean }>`
+export const TableRow = styled.div<{ isSelected: boolean; isAdmin: boolean; $isChecked: boolean }>`
   display: grid;
   align-items: center;
   height: 46px;
@@ -11,7 +11,7 @@ export const TableRow = styled.div<{ isSelected: boolean; isAdmin: boolean }>`
   border-radius: 4px;
   border-left: 2px solid white;
   cursor: pointer;
-  background: ${({ theme, isSelected }) => (isSelected ? theme.colors.neutral_300_b : theme.colors.secondary_100)};
+  background: ${({ theme, isSelected, $isChecked }) => (isSelected ? theme.colors.neutral_300_b : $isChecked ? theme.colors.primary_50 : theme.colors.secondary_100)};
   &:hover {
     background-color: ${({ theme, isSelected }) => (isSelected ? theme.colors.neutral_300_b : theme.colors.neutral_200_b)};
   }
