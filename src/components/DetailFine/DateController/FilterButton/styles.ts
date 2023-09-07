@@ -1,3 +1,4 @@
+import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 
 export const FilterButton = styled.button<{ isActive: boolean; isFirst: boolean; isLast: boolean }>`
@@ -10,6 +11,12 @@ export const FilterButton = styled.button<{ isActive: boolean; isFirst: boolean;
   &:hover {
     background-color: ${({ theme }) => theme.colors.neutral_200_b};
   }
+
+  ${({ isLast, theme }) =>
+    !isLast &&
+    css`
+      border-right: 1px solid ${theme.colors.neutral_400_b};
+    `}
 
   ${({ isFirst }) => isFirst && 'border-radius: 3px 0 0 3px'};
   ${({ isLast }) => isLast && 'border-radius: 0 3px 3px 0'};
