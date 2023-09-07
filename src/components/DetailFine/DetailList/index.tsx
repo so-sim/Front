@@ -125,7 +125,14 @@ const DetailList = ({ detailFilter, details }: Props) => {
         const isEnable = !sendedNotification.includes(eventId);
 
         return (
-          <Style.TableRow id={GA.LIST.DETAIL} isAdmin={isAdmin} key={i} isSelected={selectedFine.eventId === eventId} onClick={() => handleUserDetailModal(detail)}>
+          <Style.TableRow
+            id={GA.LIST.DETAIL}
+            isAdmin={isAdmin}
+            key={i}
+            isSelected={selectedFine.eventId === eventId}
+            $isChecked={isChecked(eventId)}
+            onClick={() => handleUserDetailModal(detail)}
+          >
             <CheckboxContainer id={String(eventId)} isChecked={isChecked(eventId)} onChange={(event: React.MouseEvent<HTMLInputElement>) => handleToggleCheckbox(event, detail)}>
               <CheckboxContainer.Checkbox as={DetailListCheckBox} />
               {/*    이 부분 props를 자연스럽게 넘겨주려면 이 방법 밖에?? function으로 넘겨주는 방법도 있긴한데,  이거는 rest props 안넘어옴 */}

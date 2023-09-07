@@ -25,6 +25,7 @@ export const ToolbarContainer = styled.div`
 export const Label = styled.label`
   white-space: nowrap;
   padding: 2px 4px;
+  color: #2d2d2d;
 `;
 
 export const DividingLine = styled.div`
@@ -39,4 +40,5 @@ export const DividingLine = styled.div`
 export const Button = styled.button`
   white-space: nowrap;
   ${({ theme }) => theme.font.subhead_02};
+  color: #2d2d2d;
 `;

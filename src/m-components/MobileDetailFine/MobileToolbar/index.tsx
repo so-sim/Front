@@ -10,6 +10,7 @@ import { sideModalState, ModalType } from '@/store/sideModalState';
 import { SelectedEventInfo } from '@/types/event';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
+import MobileToolbarCheckbox from './checkbox';
 
 import * as Style from './styles';
 const MobileToolbar = () => {
@@ -92,11 +93,13 @@ const MobileToolbar = () => {
   if (checkedSize === 0) return null;
   return (
     <Style.ToolbarContainer>
-      <CheckboxContainer id={'checkDetailFineLength'} isChecked={!(checkedSize === 0)} onChange={(event: React.MouseEvent<HTMLInputElement>) => initCheckDetailFine(event)}>
-        <CheckboxContainer.Checkbox as={MemberListCheckbox} />
-        {/*    이 부분 props를 자연스럽게 넘겨주려면 이 방법 밖에?? function으로 넘겨주는 방법도 있긴한데,  이거는 rest props 안넘어옴 */}
-      </CheckboxContainer>
-      <Style.Label>{checkedSize}개 선택</Style.Label>
+      <div style={{ display: 'flex', alignItems: 'center' }}>
+        <CheckboxContainer id={'checkDetailFineLength'} isChecked={!(checkedSize === 0)} onChange={(event: React.MouseEvent<HTMLInputElement>) => initCheckDetailFine(event)}>
+          <CheckboxContainer.Checkbox as={MobileToolbarCheckbox} />
+          {/*    이 부분 props를 자연스럽게 넘겨주려면 이 방법 밖에?? function으로 넘겨주는 방법도 있긴한데,  이거는 rest props 안넘어옴 */}
+        </CheckboxContainer>
+        <Style.Label>{checkedSize}개 선택</Style.Label>
+      </div>
       <Style.DividingLine />
       {isAdmin ? (
         <>
