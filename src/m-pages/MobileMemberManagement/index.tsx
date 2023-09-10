@@ -1,19 +1,18 @@
-import { LOGO } from '@/assets/icons/Logo';
 import { SYSTEM } from '@/assets/icons/System';
 import { USER } from '@/assets/icons/User';
 import MemberListItem from '@/components/MemberManagement/MemberListItem';
 import { GA } from '@/constants/GA';
 import useMemberManageMent from '@/hooks/Member/useMemberManageMent';
 
-import MobileHeader from '@/layouts/Mobile/components/MobileHeader';
-import MobileSideBar from '@/layouts/Mobile/components/MobileSideBar';
 import { copyInvitationLink } from '@/utils/copyInvitationLink';
-import { useState } from 'react';
 import * as Style from './styles';
 import MobileLayout from '@/layouts/Mobile/MobileLayout';
+import useCopyInvitationLink from '@/hooks/useCopyInvitationLink';
+import CopyToClipboard from 'react-copy-to-clipboard';
 
 const MobileMemberManagement = () => {
   const { groupId, participantList, myNickname, group } = useMemberManageMent();
+  const { invitationLink, onSuccessCopy } = useCopyInvitationLink();
 
   return (
     <MobileLayout location="GROUP">
@@ -22,7 +21,9 @@ const MobileMemberManagement = () => {
           <h2>멤버 관리</h2>
           <Style.ButtonFlex onClick={() => copyInvitationLink(Number(groupId))} id={GA.INVITATION.MEMBER}>
             {SYSTEM.LINK_BLACK}
-            <span>초대링크 복사</span>
+            <CopyToClipboard text={invitationLink} onCopy={onSuccessCopy}>
+              <span>초대링크 복사</span>
+            </CopyToClipboard>
           </Style.ButtonFlex>
         </Style.Title>
         <Style.UserContainer>

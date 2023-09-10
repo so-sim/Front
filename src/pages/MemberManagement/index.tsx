@@ -3,14 +3,14 @@ import { USER } from '@/assets/icons/User';
 import MemberListItem from '@/components/MemberManagement/MemberListItem';
 import { GA } from '@/constants/GA';
 import useMemberManageMent from '@/hooks/Member/useMemberManageMent';
-import { useGroupDetail, useParticipantList } from '@/queries/Group';
-import { useGetMyNikname } from '@/queries/Group/useGetMyNickname';
+import useCopyInvitationLink from '@/hooks/useCopyInvitationLink';
 import { copyInvitationLink } from '@/utils/copyInvitationLink';
-import { useParams } from 'react-router-dom';
+import CopyToClipboard from 'react-copy-to-clipboard';
 import * as Style from './styles';
 
 const MemberManagement = () => {
   const { groupId, participantList, myNickname, group } = useMemberManageMent();
+  const { invitationLink, onSuccessCopy } = useCopyInvitationLink();
 
   return (
     <>
@@ -19,7 +19,9 @@ const MemberManagement = () => {
           <h2>멤버 관리</h2>
           <Style.ButtonFlex onClick={() => copyInvitationLink(Number(groupId))} id={GA.INVITATION.MEMBER}>
             {SYSTEM.LINK_BLACK}
-            <span>초대링크 복사</span>
+            <CopyToClipboard text={invitationLink} onCopy={onSuccessCopy}>
+              <span>초대링크 복사</span>
+            </CopyToClipboard>
           </Style.ButtonFlex>
         </Style.Title>
         <Style.UserContainer>
