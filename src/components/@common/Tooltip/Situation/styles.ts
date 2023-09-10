@@ -22,7 +22,7 @@ export const Asterisk = styled.span`
 `;
 
 export const Asterisk2 = styled(Asterisk)`
-  margin-left: -8px;
+  margin-left: 2px;
 `;
 
 export const DescWrapper = styled.div`
@@ -32,4 +32,13 @@ export const DescWrapper = styled.div`
   ${({ theme }) => theme.font.body_01};
   display: flex;
   align-items: center;
+`;
+
+export const ButtonWrapper = styled.div`
+  display: flex;
+  align-items: center;
+
+  & > button {
+    margin: 4px 0;
+  }
 `;

@@ -7,33 +7,46 @@ const Situation_Tooltip1 = () => {
     <Style.Content>
       <Style.Subhead>총무라면?</Style.Subhead>
       <Style.Body>팀원이 벌금을 낸 경우</Style.Body>
-      <div style={{ display: 'flex', alignItems: 'center' }}>
-        <CircleDropButton situation="미납" origin="미납" />
+      <Style.ButtonWrapper>
+        <Style.ButtonWrapper>
+          <CircleDropButton situation="미납" origin="미납" />
+          <div style={{ width: '10px' }} />
+        </Style.ButtonWrapper>
         {ARROW.FORWARD}
+        <div style={{ width: '10px' }} />
         <CircleDropButton situation="완납" origin="완납" />
-      </div>
-      <div style={{ display: 'flex', alignItems: 'center' }}>
-        <div style={{ display: 'flex', alignItems: 'center' }}>
+      </Style.ButtonWrapper>
+      <Style.ButtonWrapper>
+        <Style.ButtonWrapper>
           <CircleDropButton situation="확인중" origin="확인중" />
           <Style.Asterisk2>*</Style.Asterisk2>
-        </div>
+        </Style.ButtonWrapper>
         {ARROW.FORWARD}
+        <div style={{ width: '10px' }} />
+
         <CircleDropButton situation="완납" origin="완납" />
-      </div>
+      </Style.ButtonWrapper>
       <Style.Body>팀원이 벌금을 안 낸 경우</Style.Body>
-      <div style={{ display: 'flex', alignItems: 'center' }}>
-        <CircleDropButton situation="완납" origin="완납" />
+      <Style.ButtonWrapper>
+        <Style.ButtonWrapper>
+          <CircleDropButton situation="완납" origin="완납" />
+          <div style={{ width: '10px' }} />
+        </Style.ButtonWrapper>
         {ARROW.FORWARD}
+        <div style={{ width: '10px' }} />
+
         <CircleDropButton situation="미납" origin="미납" />
-      </div>
-      <div style={{ display: 'flex', alignItems: 'center' }}>
-        <div style={{ display: 'flex', alignItems: 'center' }}>
+      </Style.ButtonWrapper>
+      <Style.ButtonWrapper>
+        <Style.ButtonWrapper>
           <CircleDropButton situation="확인중" origin="확인중" />
           <Style.Asterisk2>*</Style.Asterisk2>
-        </div>
+        </Style.ButtonWrapper>
         {ARROW.FORWARD}
+        <div style={{ width: '10px' }} />
+
         <CircleDropButton situation="미납" origin="미납" />
-      </div>
+      </Style.ButtonWrapper>
       <div style={{ display: 'flex', gap: '2px', margin: '12px 0' }}>
         <Style.Asterisk>*</Style.Asterisk>
         <Style.DescWrapper>
@@ -49,16 +62,16 @@ const Situation_Tooltip2 = () => {
     <Style.Content>
       <Style.Subhead>팀원이라면?</Style.Subhead>
       <Style.Body>벌금을 냈다면 아래와 같이 변경해보세요!</Style.Body>
-      <div style={{ display: 'flex', alignItems: 'center' }}>
+      <Style.ButtonWrapper>
         <CircleDropButton situation="미납" origin="미납" />
         {ARROW.FORWARD}
         <CircleDropButton situation="확인중" origin="미납" />
-      </div>
+      </Style.ButtonWrapper>
       <Style.Body>변경 시 총무에게 알림이 가며 총무의 최종 승인 이후,</Style.Body>
-      <div style={{ display: 'flex', alignItems: 'center' }}>
+      <Style.ButtonWrapper>
         <CircleDropButton situation="완납" origin="완납" />
         <Style.Body>로 변경됩니다.</Style.Body>
-      </div>
+      </Style.ButtonWrapper>
 
       <div style={{ display: 'flex', gap: '2px', margin: '12px 0', alignItems: 'center' }}>
         <Style.Asterisk>*</Style.Asterisk>

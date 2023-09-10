@@ -27,7 +27,15 @@ const MobileLayout = ({ location, children, isWhite }: Props) => {
   return (
     <>
       <Style.Layout>
-        <MobileHeader left={{ onClick: sideBarHandler, icon: SYSTEM.MENU }} title={<MobileLogo />} hasAuth />
+        <MobileHeader
+          left={{ onClick: sideBarHandler, icon: SYSTEM.MENU }}
+          title={
+            <div style={{ height: '24px' }}>
+              <MobileLogo />
+            </div>
+          }
+          hasAuth
+        />
         <Style.Body ref={windowRef} isHome={location === 'HOME'}>
           {children}
         </Style.Body>

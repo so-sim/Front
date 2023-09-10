@@ -13,7 +13,7 @@ import { useRecoilState } from 'recoil';
 import * as Style from './styles';
 
 import MobileDetailFine from '@/m-components/MobileDetailFine';
-import { useEffect } from 'react';
+import { useEffect, useLayoutEffect } from 'react';
 import { detailFineState } from '@/store/detailFineState';
 import { useGroupDetail, useNotificationInfo } from '@/queries/Group';
 import { firstVisitState } from '@/store/firstVisitState';
@@ -69,6 +69,8 @@ const MobileCalendar = () => {
     // setCalendarDateState(initialDateState);
     // 해당 코드때문에 내역추가 시 추가한 날짜로 이동을 안하고 있었습니다. (큰 문제는 제가 저 코드를 왜 넣었는지.. 기억이ㅠ)
 
+    // 종현: 이거 아마도 그룹 이동하면 캘린더 초기화 시켜주려고 넣은거 같아요
+    // 1번 그룹 12월 보다가 -> 2번그룹 이동하면 현재 달로 변경해줘야 해서..!!!
     return () => {
       setIsOpen(false);
     };
