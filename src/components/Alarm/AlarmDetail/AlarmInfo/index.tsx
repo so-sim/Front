@@ -153,7 +153,7 @@ const AlarmInfo = ({}) => {
           contents={[]}
           width={332}
           location="TOP"
-          top="-76px"
+          top="-68px"
           left="0px"
           onCloseTooltip={() => localStorage.setItem('isFirstSituationTooltip', 'true')}
           defaultValue={localStorage.getItem('isFirstSituationTooltip') === null}
@@ -163,7 +163,7 @@ const AlarmInfo = ({}) => {
         {/* 해당 Alarm Info가 나의 닉네임과 같다면 */}
 
         <Style.ProfileWrapper>
-          <p>{USER.PERSON_24}</p>
+          <p style={{ height: '24px' }}>{USER.PERSON_24}</p>
           <Style.ProfimeText>{userName}</Style.ProfimeText>
           {userName && isWithdrawal(userName) && <WithdrawBadge size="md" />}
         </Style.ProfileWrapper>
