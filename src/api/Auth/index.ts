@@ -35,8 +35,9 @@ export const reTakeToken = async (): Promise<ServerResponse> => {
     setAccesToken(accessToken);
     return response.data;
   } catch (error) {
-    const { response } = error as unknown as AxiosError;
-    if (response?.status === 403) {
+    const { response } = error as unknown as AxiosError<ServerResponse>;
+    const code = response?.data.status.code;
+    if (code === 1200) {
       window.location.href = KAKAO_URL.SIGIN;
     }
     if (response?.status === 406 || response?.status === 401) {
