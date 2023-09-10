@@ -1,8 +1,8 @@
 import { dateState } from '@/store/dateState';
 import createCalendar from '@/utils/createCalendar';
 import { handleDate } from '@/utils/handleDate';
-import dayjs from 'dayjs';
-import { useState } from 'react';
+import dayjs, { Dayjs } from 'dayjs';
+import { Dispatch, SetStateAction, useState } from 'react';
 import { useRecoilState } from 'recoil';
 
 type CreateCalendarHook = {
