@@ -1,17 +1,26 @@
 import { ToastContainer } from 'react-toastify';
 import styled from '@emotion/styled';
+import { isMobile } from 'react-device-detect';
+import { css } from '@emotion/react';
 
 export const Container = styled(ToastContainer)`
   .Toastify__toast {
-    font-family: 'SUIT';
-    font-style: normal;
-    font-weight: 600;
-    font-size: 16px;
+    ${isMobile
+      ? css`
+          font-family: 'SUIT';
+          font-size: 18px;
+          font-family: SUIT;
+          font-weight: 600;
+        `
+      : css`
+          font-size: 16px;
+          font-family: SUIT;
+          font-weight: 600;
+        `}
     line-height: 22px;
     display: flex;
     flex-direction: row;
     align-items: center;
-    padding: 12px 16px;
     gap: 8px;
     background: #ffffff;
     border-radius: 12px;
@@ -23,6 +32,11 @@ export const Container = styled(ToastContainer)`
   .Toastify__toast--success {
     border: 2px solid #1c6ee9;
     color: #1c6ee9;
+    ${isMobile &&
+    css`
+      width: calc(100% - 48px);
+      margin: auto;
+    `}
   }
 
   .Toastify__toast--error {

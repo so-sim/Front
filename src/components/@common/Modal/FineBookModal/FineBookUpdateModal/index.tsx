@@ -13,19 +13,27 @@ import { selectedDataReducer } from '../reducer/selectedDataReducer';
 import { checkFormIsValid } from '@/utils/validation';
 import { SelectedEventInfo } from '@/types/event';
 import { useSelectedContext } from '@/contexts/SelectedFineContext';
+import useFinebook from '@/hooks/Group/useFinebook';
+import useConfirmModal from '@/hooks/useConfirmModal';
+import { useWithdrawalParticipantList } from '@/queries/Group/useWithdrawalParticipantList';
+import { useParams } from 'react-router-dom';
 
 interface Props {
   modalHandler: () => void;
 }
 
 const FineBookUpdateModal = ({ modalHandler }: Props) => {
+  const { groupId } = useParams();
   const { selectedFine, setSelectedFine } = useSelectedContext('userDetails');
+  const { openConfirmModal, closeConfirmModal } = useConfirmModal();
 
-  const [selectData, dispatch] = useReducer(selectedDataReducer, selectedFine);
+  const { selectData, getFormFiledActions, updateLoading } = useFinebook(selectedFine);
+  const { isWithdrawal } = useWithdrawalParticipantList(Number(groupId));
+  const { updateDetail } = getFormFiledActions();
 
   const [_, setDateState] = useRecoilState(dateState);
 
-  const onSuccessUpdateDetail = (data: ServerResponse<EventInfoTest>) => {
+  const onSuccessUpdateDetail = () => {
     const groundsDate = dayjs(selectData.date);
 
     setSelectedFine((prev) => ({ ...prev, ...selectData }));
@@ -33,23 +41,29 @@ const FineBookUpdateModal = ({ modalHandler }: Props) => {
     modalHandler();
   };
 
-  const { mutate: update, isLoading: updateLoading } = useUpdateDetail(onSuccessUpdateDetail);
-
-  const updateDetail = () => {
-    update(selectData);
+  const onUpdateDetail = () => {
+    const isWithdrawalMemberDetail = isWithdrawal(selectedFine.nickname) && selectedFine.nickname !== selectData.nickname;
+    if (isWithdrawalMemberDetail) {
+      return openConfirmModal({
+        type: 'CHANGE_WITHDRAWAL_MEMBER_DETAIL',
+        confirm: () => updateDetail().then(onSuccessUpdateDetail),
+        cancel: closeConfirmModal,
+      });
+    }
+    updateDetail().then(onSuccessUpdateDetail);
   };
 
   return (
     <Modal.Frame width="448px" onClick={modalHandler}>
       <Modal.Header onClick={modalHandler}>상세 내역 수정</Modal.Header>
       <Style.FlexColumn>
-        <FormFileds dispatch={dispatch} selectData={selectData} />
+        <FormFileds action={getFormFiledActions} selectData={selectData} />
         <Modal.Footer>
           <Button //
             color={checkFormIsValid(selectData) ? 'black' : 'disabled'}
             width="100%"
             height="42px"
-            onClick={updateDetail}
+            onClick={onUpdateDetail}
             loading={updateLoading}
           >
             저장하기

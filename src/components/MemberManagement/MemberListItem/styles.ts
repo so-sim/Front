@@ -1,7 +1,8 @@
 import styled from '@emotion/styled';
+import { isMobile } from 'react-device-detect';
 
 export const MemberContainer = styled.div`
-  padding: 14px 32px;
+  padding: ${isMobile ? ' 14px 16px' : '14px 32px'};
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -12,7 +13,7 @@ export const MemberContainer = styled.div`
 `;
 
 export const Nickname = styled.span`
-  ${({ theme }) => theme.font.subhead_03};
+  ${({ theme }) => (isMobile ? theme.font.subhead_01 : theme.font.subhead_03)};
 `;
 
 export const Flex = styled.div`

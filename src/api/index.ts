@@ -1,6 +1,8 @@
-import { getAccessToken } from '@/utils/acceessToken';
-import axios from 'axios';
+import { ServerResponse } from '@/types/serverResponse';
+import { getAccessToken, isErrorCase, removeAccessToken } from '@/utils/acceessToken';
+import axios, { AxiosError } from 'axios';
 import { reTakeToken } from './Auth';
+import { notFoundGroupDetail } from './Error';
 
 export const BASE_URL = process.env.REACT_APP_SERVER_URL;
 
@@ -24,13 +26,23 @@ api.interceptors.response.use(
     return response;
   },
   async (error) => {
+    if (notFoundGroupDetail(error)) {
+      return (window.location.href = '/not-found');
+    }
+
     const { config, response } = error;
     if (response?.status === 401) {
+      if (isErrorCase(response.data.status.code)) {
+        removeAccessToken();
+        window.location.href = process.env.REACT_APP_SERVICE_URL as string;
+      }
       if (!lock) {
-        lock = true;
-        await reTakeToken();
-        lock = false;
-        return;
+        if (response?.data.status.code === 1204) {
+          lock = true;
+          await reTakeToken();
+          lock = false;
+          return;
+        }
       }
     }
     return Promise.reject(error);

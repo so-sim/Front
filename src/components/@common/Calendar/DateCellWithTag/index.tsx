@@ -1,4 +1,4 @@
-import { PayMentTpyeCountMap } from '@/types/event';
+import { PayMentTypeCountMap } from '@/types/event';
 import { Dayjs } from 'dayjs';
 import { FC } from 'react';
 import { MARK } from '@/assets/icons/Mark';
@@ -9,7 +9,7 @@ interface DateCellWitTagProps {
   isCurrentMonth: (date: Dayjs) => boolean;
   isToday: (date: Dayjs) => boolean;
   isSelectedDate: (date: Dayjs) => boolean;
-  status: PayMentTpyeCountMap | undefined;
+  status: PayMentTypeCountMap | undefined;
 }
 
 const DateCellWithTag: FC<DateCellWitTagProps> = ({ date, isCurrentMonth, isToday, isSelectedDate, status }) => {
@@ -17,7 +17,7 @@ const DateCellWithTag: FC<DateCellWitTagProps> = ({ date, isCurrentMonth, isToda
 
   return (
     <>
-      <Style.DateCell key={date.day()}>
+      <Style.DateCell key={date.day()} isToday={isToday(date)}>
         <Style.Date isToday={isToday(date)} isSelectedDate={isSelectedDate(date)} isCurrentMonth={currentMonth}>
           {date.date()}
         </Style.Date>

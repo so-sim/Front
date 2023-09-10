@@ -2,22 +2,42 @@ import { ARROW } from '@/assets/icons/Arrow';
 import createCalendar from '@/utils/createCalendar';
 import dayjs, { Dayjs } from 'dayjs';
 import { Dispatch, FC, SetStateAction, useState } from 'react';
+import { isSafari } from 'react-device-detect';
 import * as Style from './styles';
 
 interface MiniCalendarProps {
   type: string;
   setType: (value: string) => void;
   setOpenDrop: Dispatch<SetStateAction<boolean>>;
+  trigger?: JSX.Element;
+  isInvalidate?: (date: string) => boolean;
 }
 
-const MiniCalendar: FC<MiniCalendarProps> = ({ type, setType, setOpenDrop }) => {
-  const [baseDate, setBaseDate] = useState(dayjs(type));
+const MiniCalendar: FC<MiniCalendarProps> = ({ type, setType, setOpenDrop, trigger, isInvalidate }) => {
+  /**
+   * Safari에서는 date에 '.'이 들어가면 오류가 발생한다.
+   * ex) 2021.09.01 : x
+   * ex) 2021-09-01 : o
+   *  */
+  const convertedType = isSafari ? type.replaceAll(/\./g, '-') : type;
+
+  const [baseDate, setBaseDate] = useState(dayjs(convertedType));
+  const [tempDate, setTempDate] = useState(dayjs(convertedType).format('YYYY-MM-DD'));
   const calendarArray = createCalendar(baseDate);
 
   const DAY_LIST = ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'];
 
   const handleDate = (date: Dayjs) => {
-    setType(date.format('YYYY.MM.DD'));
+    if (!trigger) {
+      setType(date.format('YYYY-MM-DD'));
+      setOpenDrop(false);
+      return;
+    }
+    setTempDate(date.format('YYYY-MM-DD'));
+  };
+
+  const handleSubmit = () => {
+    setType(tempDate);
     setOpenDrop(false);
   };
 
@@ -47,15 +67,20 @@ const MiniCalendar: FC<MiniCalendarProps> = ({ type, setType, setOpenDrop }) => 
       </Style.DayTitle>
       {calendarArray.map((week) => {
         return (
-          <Style.Week key={week[0].format('YYYY.MM.DD')}>
+          <Style.Week key={week[0].format('YYYY-MM-DD')}>
             {week.map((date, i) => {
+              const isInvalid = isInvalidate && isInvalidate(date.format('YYYY-MM-DD'));
               return (
                 <Style.Day
                   isOtherMonth={date.month() !== baseDate.month()}
-                  isSelected={type === date.format('YYYY.MM.DD')}
+                  isSelected={tempDate === date.format('YYYY-MM-DD')}
                   isSunday={i === 0}
-                  onClick={() => handleDate(date)}
-                  key={date.format('YYYY.MM.DD')}
+                  isInvalid={isInvalid}
+                  onClick={() => {
+                    if (isInvalid) return;
+                    handleDate(date);
+                  }}
+                  key={date.format('YYYY-MM-DD')}
                 >
                   {date.date()}
                 </Style.Day>
@@ -64,6 +89,11 @@ const MiniCalendar: FC<MiniCalendarProps> = ({ type, setType, setOpenDrop }) => 
           </Style.Week>
         );
       })}
+      {trigger && (
+        <Style.Trigger>
+          <span onClick={handleSubmit}>{trigger}</span>
+        </Style.Trigger>
+      )}
     </Style.Calendar>
   );
 };

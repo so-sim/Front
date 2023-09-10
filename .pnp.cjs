@@ -62,6 +62,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@testing-library/react", "virtual:2012bb92bd3c02c31c208dd19c7a30b32c4e004bc22c4ac67376a0b485daeffa61f9ac1dd14f7ec2e6d9f117f17b40d67db4154a3f2abfb8e2cf15cea16c14d6#npm:14.0.0"],\
             ["@testing-library/user-event", "virtual:2012bb92bd3c02c31c208dd19c7a30b32c4e004bc22c4ac67376a0b485daeffa61f9ac1dd14f7ec2e6d9f117f17b40d67db4154a3f2abfb8e2cf15cea16c14d6#npm:14.4.3"],\
             ["@types/dotenv-webpack", "npm:7.0.3"],\
+            ["@types/event-source-polyfill", "npm:1.0.1"],\
             ["@types/fork-ts-checker-webpack-plugin", "npm:0.4.5"],\
             ["@types/jest", "npm:29.4.0"],\
             ["@types/node", "npm:18.11.18"],\
@@ -89,6 +90,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["eslint-plugin-prettier", "virtual:2012bb92bd3c02c31c208dd19c7a30b32c4e004bc22c4ac67376a0b485daeffa61f9ac1dd14f7ec2e6d9f117f17b40d67db4154a3f2abfb8e2cf15cea16c14d6#npm:4.2.1"],\
             ["eslint-plugin-react", "virtual:2012bb92bd3c02c31c208dd19c7a30b32c4e004bc22c4ac67376a0b485daeffa61f9ac1dd14f7ec2e6d9f117f17b40d67db4154a3f2abfb8e2cf15cea16c14d6#npm:7.32.2"],\
             ["eslint-plugin-react-hooks", "virtual:2012bb92bd3c02c31c208dd19c7a30b32c4e004bc22c4ac67376a0b485daeffa61f9ac1dd14f7ec2e6d9f117f17b40d67db4154a3f2abfb8e2cf15cea16c14d6#npm:4.6.0"],\
+            ["event-source-polyfill", "npm:1.0.31"],\
             ["file-loader", "virtual:2012bb92bd3c02c31c208dd19c7a30b32c4e004bc22c4ac67376a0b485daeffa61f9ac1dd14f7ec2e6d9f117f17b40d67db4154a3f2abfb8e2cf15cea16c14d6#npm:6.2.0"],\
             ["fork-ts-checker-webpack-plugin", "virtual:2012bb92bd3c02c31c208dd19c7a30b32c4e004bc22c4ac67376a0b485daeffa61f9ac1dd14f7ec2e6d9f117f17b40d67db4154a3f2abfb8e2cf15cea16c14d6#npm:7.3.0"],\
             ["global", "npm:4.4.0"],\
@@ -102,6 +104,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["prettier", "npm:2.8.3"],\
             ["react", "npm:18.2.0"],\
             ["react-calendar", "virtual:2012bb92bd3c02c31c208dd19c7a30b32c4e004bc22c4ac67376a0b485daeffa61f9ac1dd14f7ec2e6d9f117f17b40d67db4154a3f2abfb8e2cf15cea16c14d6#npm:4.1.0"],\
+            ["react-device-detect", "virtual:2012bb92bd3c02c31c208dd19c7a30b32c4e004bc22c4ac67376a0b485daeffa61f9ac1dd14f7ec2e6d9f117f17b40d67db4154a3f2abfb8e2cf15cea16c14d6#npm:2.2.3"],\
             ["react-dom", "virtual:2012bb92bd3c02c31c208dd19c7a30b32c4e004bc22c4ac67376a0b485daeffa61f9ac1dd14f7ec2e6d9f117f17b40d67db4154a3f2abfb8e2cf15cea16c14d6#npm:18.2.0"],\
             ["react-intersection-observer", "virtual:2012bb92bd3c02c31c208dd19c7a30b32c4e004bc22c4ac67376a0b485daeffa61f9ac1dd14f7ec2e6d9f117f17b40d67db4154a3f2abfb8e2cf15cea16c14d6#npm:9.4.3"],\
             ["react-lottie-player", "virtual:2012bb92bd3c02c31c208dd19c7a30b32c4e004bc22c4ac67376a0b485daeffa61f9ac1dd14f7ec2e6d9f117f17b40d67db4154a3f2abfb8e2cf15cea16c14d6#npm:1.5.4"],\
@@ -9201,6 +9204,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD"\
         }]\
       ]],\
+      ["@types/event-source-polyfill", [\
+        ["npm:1.0.1", {\
+          "packageLocation": "./.yarn/cache/@types-event-source-polyfill-npm-1.0.1-3f38d3704d-37f3ccc40e.zip/node_modules/@types/event-source-polyfill/",\
+          "packageDependencies": [\
+            ["@types/event-source-polyfill", "npm:1.0.1"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
       ["@types/express", [\
         ["npm:4.17.16", {\
           "packageLocation": "./.yarn/cache/@types-express-npm-4.17.16-8fb62e745c-43f3ed2cea.zip/node_modules/@types/express/",\
@@ -15431,6 +15443,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageDependencies": [\
             ["event-loop-spinner", "npm:2.2.0"],\
             ["tslib", "npm:2.5.0"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["event-source-polyfill", [\
+        ["npm:1.0.31", {\
+          "packageLocation": "./.yarn/cache/event-source-polyfill-npm-1.0.31-25a5668f35-973f226404.zip/node_modules/event-source-polyfill/",\
+          "packageDependencies": [\
+            ["event-source-polyfill", "npm:1.0.31"]\
           ],\
           "linkType": "HARD"\
         }]\
@@ -23144,6 +23165,33 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD"\
         }]\
       ]],\
+      ["react-device-detect", [\
+        ["npm:2.2.3", {\
+          "packageLocation": "./.yarn/cache/react-device-detect-npm-2.2.3-307eab666a-42d9b3182b.zip/node_modules/react-device-detect/",\
+          "packageDependencies": [\
+            ["react-device-detect", "npm:2.2.3"]\
+          ],\
+          "linkType": "SOFT"\
+        }],\
+        ["virtual:2012bb92bd3c02c31c208dd19c7a30b32c4e004bc22c4ac67376a0b485daeffa61f9ac1dd14f7ec2e6d9f117f17b40d67db4154a3f2abfb8e2cf15cea16c14d6#npm:2.2.3", {\
+          "packageLocation": "./.yarn/__virtual__/react-device-detect-virtual-0805e7b2d4/0/cache/react-device-detect-npm-2.2.3-307eab666a-42d9b3182b.zip/node_modules/react-device-detect/",\
+          "packageDependencies": [\
+            ["react-device-detect", "virtual:2012bb92bd3c02c31c208dd19c7a30b32c4e004bc22c4ac67376a0b485daeffa61f9ac1dd14f7ec2e6d9f117f17b40d67db4154a3f2abfb8e2cf15cea16c14d6#npm:2.2.3"],\
+            ["@types/react", "npm:18.0.27"],\
+            ["@types/react-dom", "npm:18.0.10"],\
+            ["react", "npm:18.2.0"],\
+            ["react-dom", "virtual:2012bb92bd3c02c31c208dd19c7a30b32c4e004bc22c4ac67376a0b485daeffa61f9ac1dd14f7ec2e6d9f117f17b40d67db4154a3f2abfb8e2cf15cea16c14d6#npm:18.2.0"],\
+            ["ua-parser-js", "npm:1.0.35"]\
+          ],\
+          "packagePeers": [\
+            "@types/react-dom",\
+            "@types/react",\
+            "react-dom",\
+            "react"\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
       ["react-docgen", [\
         ["npm:5.4.3", {\
           "packageLocation": "./.yarn/cache/react-docgen-npm-5.4.3-10385f7edf-cef935ba94.zip/node_modules/react-docgen/",\
@@ -24876,6 +24924,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@testing-library/react", "virtual:2012bb92bd3c02c31c208dd19c7a30b32c4e004bc22c4ac67376a0b485daeffa61f9ac1dd14f7ec2e6d9f117f17b40d67db4154a3f2abfb8e2cf15cea16c14d6#npm:14.0.0"],\
             ["@testing-library/user-event", "virtual:2012bb92bd3c02c31c208dd19c7a30b32c4e004bc22c4ac67376a0b485daeffa61f9ac1dd14f7ec2e6d9f117f17b40d67db4154a3f2abfb8e2cf15cea16c14d6#npm:14.4.3"],\
             ["@types/dotenv-webpack", "npm:7.0.3"],\
+            ["@types/event-source-polyfill", "npm:1.0.1"],\
             ["@types/fork-ts-checker-webpack-plugin", "npm:0.4.5"],\
             ["@types/jest", "npm:29.4.0"],\
             ["@types/node", "npm:18.11.18"],\
@@ -24903,6 +24952,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["eslint-plugin-prettier", "virtual:2012bb92bd3c02c31c208dd19c7a30b32c4e004bc22c4ac67376a0b485daeffa61f9ac1dd14f7ec2e6d9f117f17b40d67db4154a3f2abfb8e2cf15cea16c14d6#npm:4.2.1"],\
             ["eslint-plugin-react", "virtual:2012bb92bd3c02c31c208dd19c7a30b32c4e004bc22c4ac67376a0b485daeffa61f9ac1dd14f7ec2e6d9f117f17b40d67db4154a3f2abfb8e2cf15cea16c14d6#npm:7.32.2"],\
             ["eslint-plugin-react-hooks", "virtual:2012bb92bd3c02c31c208dd19c7a30b32c4e004bc22c4ac67376a0b485daeffa61f9ac1dd14f7ec2e6d9f117f17b40d67db4154a3f2abfb8e2cf15cea16c14d6#npm:4.6.0"],\
+            ["event-source-polyfill", "npm:1.0.31"],\
             ["file-loader", "virtual:2012bb92bd3c02c31c208dd19c7a30b32c4e004bc22c4ac67376a0b485daeffa61f9ac1dd14f7ec2e6d9f117f17b40d67db4154a3f2abfb8e2cf15cea16c14d6#npm:6.2.0"],\
             ["fork-ts-checker-webpack-plugin", "virtual:2012bb92bd3c02c31c208dd19c7a30b32c4e004bc22c4ac67376a0b485daeffa61f9ac1dd14f7ec2e6d9f117f17b40d67db4154a3f2abfb8e2cf15cea16c14d6#npm:7.3.0"],\
             ["global", "npm:4.4.0"],\
@@ -24916,6 +24966,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["prettier", "npm:2.8.3"],\
             ["react", "npm:18.2.0"],\
             ["react-calendar", "virtual:2012bb92bd3c02c31c208dd19c7a30b32c4e004bc22c4ac67376a0b485daeffa61f9ac1dd14f7ec2e6d9f117f17b40d67db4154a3f2abfb8e2cf15cea16c14d6#npm:4.1.0"],\
+            ["react-device-detect", "virtual:2012bb92bd3c02c31c208dd19c7a30b32c4e004bc22c4ac67376a0b485daeffa61f9ac1dd14f7ec2e6d9f117f17b40d67db4154a3f2abfb8e2cf15cea16c14d6#npm:2.2.3"],\
             ["react-dom", "virtual:2012bb92bd3c02c31c208dd19c7a30b32c4e004bc22c4ac67376a0b485daeffa61f9ac1dd14f7ec2e6d9f117f17b40d67db4154a3f2abfb8e2cf15cea16c14d6#npm:18.2.0"],\
             ["react-intersection-observer", "virtual:2012bb92bd3c02c31c208dd19c7a30b32c4e004bc22c4ac67376a0b485daeffa61f9ac1dd14f7ec2e6d9f117f17b40d67db4154a3f2abfb8e2cf15cea16c14d6#npm:9.4.3"],\
             ["react-lottie-player", "virtual:2012bb92bd3c02c31c208dd19c7a30b32c4e004bc22c4ac67376a0b485daeffa61f9ac1dd14f7ec2e6d9f117f17b40d67db4154a3f2abfb8e2cf15cea16c14d6#npm:1.5.4"],\
@@ -26499,6 +26550,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/typescript-patch-2f73799a60-8f6260acc8.zip/node_modules/typescript/",\
           "packageDependencies": [\
             ["typescript", "patch:typescript@npm%3A4.9.5#~builtin<compat/typescript>::version=4.9.5&hash=ad5954"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["ua-parser-js", [\
+        ["npm:1.0.35", {\
+          "packageLocation": "./.yarn/cache/ua-parser-js-npm-1.0.35-38ecdb7612-02370d38a0.zip/node_modules/ua-parser-js/",\
+          "packageDependencies": [\
+            ["ua-parser-js", "npm:1.0.35"]\
           ],\
           "linkType": "HARD"\
         }]\

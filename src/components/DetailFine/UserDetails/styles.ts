@@ -61,7 +61,7 @@ export const CloseIcon = styled.span`
 
 export const PersonIcon = styled.span`
   height: 32px;
-  margin-right: 12px;
+  margin-right: 8px;
 `;
 
 export const Footer = styled.div`
@@ -95,6 +95,9 @@ export const Row = styled.div`
 `;
 
 export const Text = styled.span`
+  display: flex;
+  gap: 4px;
+  align-items: center;
   ${({ theme }) => theme.font.subhead_04}
 `;
 

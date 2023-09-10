@@ -1,11 +1,11 @@
-import { FilterMode } from '@/pages/FineBook/DetailFine';
 import styled from '@emotion/styled';
+import { FilterModeTest } from './hook/useDateFilter';
 
 export const DateController = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 12px;
+  margin-bottom: 8px;
 `;
 
 export const ArrowWrapper = styled.button`
@@ -36,39 +36,10 @@ export const TodayButton = styled.button`
   }
 `;
 
-export const FilterButton = styled.button<{ isActive: boolean }>`
-  width: 56px;
-  height: 32px;
-  ${({ theme }) => theme.font.subhead_01}
-  border-right: 1px solid ${({ theme }) => theme.colors.neutral_400_b};
-  background-color: ${({ theme, isActive }) => (isActive ? theme.colors.neutral_300_b : '')};
-  color: ${({ theme }) => theme.colors.secondary_900};
-  &:hover {
-    background-color: ${({ theme }) => theme.colors.neutral_200_b};
-  }
-  &:first-of-type {
-    border-radius: 10px 0 0 10px;
-  }
-  &:last-of-type {
-    border: none;
-    border-radius: 0 10px 10px 0;
-  }
-`;
-
-export const FlexCenter = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
-
-export const ArrowIcon = styled.span`
-  display: flex;
-  align-items: center;
-`;
-
 export const FilterWrapper = styled.div`
+  display: flex;
   border: 1px solid ${({ theme }) => theme.colors.neutral_400_b};
-  border-radius: 12px;
+  border-radius: 4px;
   position: relative;
   white-space: nowrap;
 `;
@@ -90,8 +61,8 @@ export const ArrowBlock = styled.span`
   display: flex;
 `;
 
-export const Date = styled.span<{ mode: FilterMode }>`
-  width: ${({ mode }) => (mode === 'week' ? '272px' : mode === 'day' ? '118px' : '60px')};
+export const Date = styled.span<{ mode: FilterModeTest }>`
+  width: ${({ mode }) => (mode === 'week' || mode === 'custom' ? '272px' : mode === 'day' ? '118px' : '60px')};
   white-space: nowrap;
   ${({ theme }) => theme.font.headline}
 `;

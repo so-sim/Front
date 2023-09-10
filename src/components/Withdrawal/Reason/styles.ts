@@ -1,7 +1,8 @@
 import styled from '@emotion/styled';
+import { isMobile } from 'react-device-detect';
 
 export const Label = styled.label`
-  ${({ theme }) => theme.font.subhead_03}
+  ${({ theme }) => (isMobile ? theme.font.subhead_02 : theme.font.subhead_03)}
   height: 40px;
   input {
     margin-right: 8px;

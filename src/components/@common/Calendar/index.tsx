@@ -1,6 +1,8 @@
 import { GA } from '@/constants/GA';
+import useCalendarStatus from '@/hooks/Calendar/useCalendarStatus';
+import useCalendarState from '@/hooks/Calendar/useCalendarState';
 import { useGetMonthStatus } from '@/queries/Detail/useGetMonthStatus';
-import { useGroupDetail } from '@/queries/Group';
+import { useGroupDetail, useNotificationInfo } from '@/queries/Group';
 import { dateState } from '@/store/dateState';
 import createCalendar from '@/utils/createCalendar';
 import { handleDate } from '@/utils/handleDate';
@@ -15,6 +17,11 @@ import DateCellWithMark from './DateCellWithMark';
 import DateCellWithTag from './DateCellWithTag';
 
 import * as Style from './styles';
+import useNotificationForm from '@/hooks/Group/useNotificationForm';
+import { AdminModal } from '../Modal/GroupSettingModal/AdminModal';
+import { SYSTEM } from '@/assets/icons/System';
+import { Tooltip } from '../Tooltip';
+import CalendarTooltip from '../Tooltip/Calendar';
 
 const WEEKDATE = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
@@ -23,56 +30,36 @@ interface CalnedrProps {
 }
 
 const Calendar: FC<CalnedrProps> = ({ cellType }) => {
-  const today = dayjs();
-
-  const [{ baseDate, startDate, endDate, mode }, setDateTestObj] = useRecoilState(dateState);
-  const [showCreateDetailModal, setShowCreateDetailModal] = useState(false);
-  const [calendarDate, setCalendarDate] = useState(baseDate);
-
-  const monthList = createCalendar(dayjs(calendarDate));
   const navigate = useNavigate();
   const { groupId } = useParams();
-
-  const { addMonth, subMonth, dateToFormatting, getMonth, getDate, dateToUnixTime } = handleDate;
-
-  const startDateOfMonth = dateToFormatting(dayjs(calendarDate).startOf('month'));
-  const endDateOfMonth = dateToFormatting(dayjs(calendarDate).endOf('month'));
-
-  const { data: status } = useGetMonthStatus(groupId, startDateOfMonth, endDateOfMonth);
   const { data: group } = useGroupDetail(Number(groupId));
+  const isAdmin = group?.content.isAdmin;
 
-  const filterCorrectDateStatus = (date: Dayjs) => {
-    const hasStatusOfDay = (status?.content.statusOfDay ?? {}).hasOwnProperty(getDate(date));
+  const [showCreateDetailModal, setShowCreateDetailModal] = useState(false);
+  const [showAdminModal, setShowAdminModal] = useState(false);
+  const [{ baseDate, startDate, endDate, mode }, setDateTestObj] = useRecoilState(dateState);
 
-    if (hasStatusOfDay) return status?.content.statusOfDay[getDate(date)];
-  };
+  const { calendarDate, setCalendarDate, increaseMonth, decreaseMonth } = useCalendarState();
+  const { data: notificationInfo } = useNotificationInfo(Number(groupId));
+  const { monthList, filterCorrectDateStatus, isCurrentMonth, isToday, isSelectedDate } = useCalendarStatus(calendarDate, groupId);
+
+  const { getNotificationFormAction } = useNotificationForm();
+  const { getOneLineNotificationDescription } = getNotificationFormAction();
+
+  const { dateToFormatting, dateToUnixTime } = handleDate;
 
   const handleShowCreateDetailModal = () => {
     setShowCreateDetailModal((prev) => !prev);
   };
 
-  const increaseMonth = () => {
-    setCalendarDate(addMonth(calendarDate));
-  };
-  const decreaseMonth = () => {
-    setCalendarDate(subMonth(calendarDate));
-  };
-
-  const isCurrentMonth = (date: Dayjs) => {
-    return date.month() === getMonth(calendarDate);
-  };
-
-  const isToday = (date: Dayjs) => {
-    return dateToFormatting(date) === dateToFormatting(today);
+  const handleShowAdminModal = () => {
+    if (isAdmin) {
+      setShowAdminModal((prev) => !prev);
+    }
   };
 
   const isSelectedPeriod = (date: Dayjs) => {
     return dateToUnixTime(startDate) <= dateToUnixTime(date) && dateToUnixTime(endDate) >= dateToUnixTime(date);
-  };
-
-  const isSelectedDate = (date: Dayjs) => {
-    if (mode !== 'day') return false;
-    return dateToFormatting(startDate) === dateToFormatting(date);
   };
 
   const goDetail = (date: Dayjs) => {
@@ -104,19 +91,43 @@ const Calendar: FC<CalnedrProps> = ({ cellType }) => {
                 {ARROW.RIGHT}
               </Style.ArrowWrapper>
             </Style.ArrowBlock>
+            {cellType === 'Tag' && (
+              <Style.NotificationDescription onClick={handleShowAdminModal} id={GA.NAVIGATION.GROUP.ALARM}>
+                <span>벌금일정</span>
+                <div>{getOneLineNotificationDescription(notificationInfo?.content)}</div>
+              </Style.NotificationDescription>
+            )}
           </div>
-          {cellType === 'Tag' && group?.content.isAdmin && (
-            <Button width="124px" color="black" onClick={handleShowCreateDetailModal} id={GA.ADD_LIST.BUTTON}>
-              내역 추가하기
-            </Button>
-          )}
+          <Style.RightItem>
+            {cellType === 'Tag' && isAdmin && (
+              <Button width="124px" height="40px" color="black" onClick={handleShowCreateDetailModal} id={GA.ADD_LIST.BUTTON}>
+                내역 추가하기
+              </Button>
+            )}
+            {cellType === 'Tag' && (
+              <Tooltip
+                title="캘린더에서 날짜별 벌금 납부 현황을 확인해보세요!"
+                contents={CalendarTooltip}
+                width={480}
+                location="BOTTOM"
+                top="40px"
+                left="-456px"
+                messageBox={{ left: '459px', top: '-8px' }}
+                trigger={
+                  <span style={{ cursor: 'pointer' }} id={GA.TOOLTIP.PAYMENT_OVERVIEW}>
+                    {SYSTEM.TOOLTIP_INFO}
+                  </span>
+                }
+              />
+            )}
+          </Style.RightItem>
         </Style.Header>
         <Style.WeekDate>
           {WEEKDATE.map((date) => (
             <div key={date}>{date}</div>
           ))}
         </Style.WeekDate>
-        <Style.CalendarContainer length={monthList.length} mini={cellType === 'Mark'}>
+        <Style.CalendarContainer length={monthList.length} mini={cellType === 'Mark'} id={GA.CALENDAR_SKIP.DATE}>
           {monthList.map((weeks, idx) => (
             <Style.WeekWrap key={idx} cellType={cellType}>
               {weeks.map((date) => (
@@ -148,6 +159,7 @@ const Calendar: FC<CalnedrProps> = ({ cellType }) => {
           ))}
         </Style.CalendarContainer>
       </Style.Layout>
+      {showAdminModal && <AdminModal modalHandler={handleShowAdminModal} defaultValue="ALARM" />}
       {showCreateDetailModal && <FineBookCreateModal modalHandler={handleShowCreateDetailModal} />}
     </>
   );

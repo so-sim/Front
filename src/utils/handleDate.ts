@@ -1,7 +1,7 @@
 import dayjs, { Dayjs } from 'dayjs';
 
 const dateToFormatting = (date: Dayjs) => {
-  return dayjs(date).format('YYYY.MM.DD');
+  return dayjs(date).format('YYYY-MM-DD');
 };
 
 const addMonth = (date: Dayjs) => {
@@ -35,11 +35,11 @@ const getDay = (date: Dayjs) => {
 };
 
 const getDateArray = (date: Dayjs) => {
-  const [year, month, day] = dayjs(date).format('YYYY.MM.DD').split('.');
+  const [year, month, day] = dayjs(date).format('YYYY-MM-DD').split('-');
   return [year, month, day];
 };
-const dateToUnixTime = (date: Dayjs): number => {
-  return new Date(dayjs(date).format('YYYY.MM.DD')).getTime();
+export const dateToUnixTime = (date: Dayjs): number => {
+  return new Date(dayjs(date).format('YYYY-MM-DD')).getTime();
 };
 
 export const handleDate = {

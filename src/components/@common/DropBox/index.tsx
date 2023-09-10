@@ -14,9 +14,10 @@ interface Props<T> {
   setType: (value: T) => void;
   direction?: 'left' | 'right';
   align?: 'start' | 'center';
+  id?: string;
 }
 
-const DropBox = <T,>({ align = 'start', setType, type, dropDownList, width = 152, boxWidth = '148px', color = 'white', direction }: Props<T>) => {
+const DropBox = <T,>({ align = 'start', setType, type, dropDownList, width = 152, boxWidth = '148px', color = 'white', direction, id }: Props<T>) => {
   const [openDrop, setOpenDrop] = useState(false);
   const isDisabled = color === 'disabled';
 
@@ -28,7 +29,7 @@ const DropBox = <T,>({ align = 'start', setType, type, dropDownList, width = 152
   };
 
   return (
-    <Style.DropDownBox boxWidth={boxWidth} color={color} focus={openDrop} ref={dropDownRef} onClick={handleDropDown}>
+    <Style.DropDownBox id={id} boxWidth={boxWidth} color={color} focus={openDrop} ref={dropDownRef} onClick={handleDropDown}>
       <Style.Content>
         <Style.Text boxWidth={boxWidth} isDisabled={isDisabled} isSelected={!!type} focus={openDrop}>
           {(typeof type === 'string' && type) || '선택해주세요'}

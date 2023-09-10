@@ -95,3 +95,22 @@ export const WeekWrap = styled.div<WeekWrapProps>`
     white-space: nowrap;
   }
 `;
+
+export const NotificationDescription = styled.div`
+  margin-left: 12px;
+  cursor: pointer;
+  display: flex;
+  gap: 8px;
+  padding: 9px 16px;
+  background: ${({ theme }) => theme.colors.neutral_200_b};
+  color: ${({ theme }) => theme.colors.secondary_800};
+  ${({ theme }) => theme.font.subhead_01};
+  span {
+    color: ${({ theme }) => theme.colors.secondary_600};
+  }
+`;
+
+export const RightItem = styled.div`
+  display: flex;
+  gap: 8px;
+`;

@@ -16,20 +16,31 @@ export interface GroupNickname {
   nickname: string;
 }
 
-export interface GroupDetail {
+export interface GroupDetail extends GroupCommonDetail {
   isAdmin: boolean;
-  isInto: boolean;
-  title: string;
   adminNickname: string;
-  groupId: number;
-  coverColor: GroupColor;
   type: string;
   size: number;
+}
+
+export interface GroupCommonDetail {
+  groupId: number;
+  title: string;
+  coverColor: GroupColor;
+  isInto: boolean;
+  adminNickname: string;
+}
+export interface GroupDetailWithParticipant extends GroupCommonDetail {
+  isWithdraw: boolean;
 }
 
 export interface ParticipantList {
   adminNickname: string;
   nicknameList: string[];
+}
+
+export interface SearchedParticipantList {
+  nicknameList: { nickname: string; withdraw: boolean }[];
 }
 
 export interface CoverGroupInfo {
@@ -38,7 +49,7 @@ export interface CoverGroupInfo {
   admin: string;
 }
 
-export interface GropuList {
+export interface GroupList {
   groupId: number;
   title: string;
   coverColor: GroupColor;
@@ -48,5 +59,29 @@ export interface GropuList {
 
 export interface GroupListWithIndex {
   hasNext: boolean;
-  groupList: GropuList[];
+  groupList: GroupList[];
 }
+
+export type NotificationSettingType = 'M' | 'W' | 'D';
+export type MonthSettingType = 'SIMPLE_DATE' | 'WEEK';
+export type DayType = 'MONDAY' | 'TUESDAY' | 'WEDNESDAY' | 'THURSDAY' | 'FRIDAY' | 'SATURDAY' | 'SUNDAY';
+
+export type NotificationInfo = {
+  //필수 데이터
+  enableNotification: boolean; //-${알림 허용 여부},
+  settingType: NotificationSettingType; //매달, 매주, 매일
+  repeatCycle: number; //반복주기,
+  startDate: string; //시작일
+  sendTime: string; // 시간설정,
+
+  //매달일 경우
+  monthSettingType?: MonthSettingType; // 날짜로 선택하기 | 요일로 선택하기
+
+  //날짜로 선택하기일 경우
+  sendDay?: number | 0; // 날짜로 선택하기일 경우, 전송하는 날짜 : => 요일로 선택하기일 경우에는 0 전송
+
+  //요일로 선택하기일 경우
+  ordinalNumbers?: number[] | null; // 몇 번째 (첫 번째, 두 번째 ...) 날짜로 선택하기일 경우 null
+
+  daysOfWeek?: string[] | null; //-${매달 요일Type -> 요일들/매주 -> 요일들} [MONDAY, SUNDAY] => 날짜로 선택하기일 경우 null
+};

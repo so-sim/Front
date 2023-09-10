@@ -1,19 +1,26 @@
 import { useRecoilState } from 'recoil';
 import { createGroup } from '@/api/Group';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { firstVisitState } from '@/store/firstVisitState';
+import { pushDataLayer } from '@/utils/pushDataLayer';
+import { isMobile } from 'react-device-detect';
 
-export const useCreateGroup = (modalHandler: () => void) => {
+export const useCreateGroup = () => {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
   const [_, setIsFirstVisit] = useRecoilState(firstVisitState);
+  const location = useLocation();
 
   return useMutation(createGroup, {
     onSuccess: (data) => {
-      navigate(`/group/${data.content.groupId}/book`);
+      pushDataLayer('create', { route: location.pathname === '/' ? 'main' : 'side' });
+      if (isMobile) {
+        navigate(`/m-group/${data.content.groupId}/book`);
+      } else {
+        navigate(`/group/${data.content.groupId}/book`);
+      }
       setIsFirstVisit((prev) => ({ ...prev, isFirstVisit: true }));
-      modalHandler();
       queryClient.invalidateQueries(['groupList']);
     },
   });

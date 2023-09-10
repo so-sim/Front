@@ -9,13 +9,37 @@ export const createEvent = async (detailInfo: Omit<EventInfoTest, 'eventId'>): P
   return data;
 };
 
-export const getOneOfEvent = async (eventId?: number): Promise<ServerResponse<Omit<EventInfoTest, 'groupId'>>> => {
+export const getOneOfEvent = async (eventId?: number): Promise<ServerResponse<SelectedEventInfo>> => {
   const { data } = await api.get(`/api/event/penalty/${eventId}`);
   return data;
 };
 
 export const getDetailList = async (query: string): Promise<ServerResponse<EventInfoListTest>> => {
   const { data } = await api.get(`/api/event/penalties?${query}`);
+  return data;
+};
+interface MobileType {
+  startDate: string;
+  endDate: string;
+  groupId: number;
+  nickname: string;
+  situation: '' | Situation;
+  page: number;
+  size: number;
+}
+
+export const getMobileDetailList = async (query: Partial<MobileType>): Promise<ServerResponse<EventInfoListTest>> => {
+  const { data } = await api.get(`/api/event/penalties`, {
+    // get요청할 때, 객체를 넣으면 query로 변환해준다.
+    params: query,
+  });
+  return data;
+};
+
+export const getDetailListById = async (eventIds: { groupId?: number; eventIdsList: number[] }): Promise<ServerResponse<EventInfoListTest>> => {
+  const { groupId, eventIdsList } = eventIds;
+
+  const { data } = await api.get(`api/events?groupId=${groupId}&eventIdList=${eventIdsList}`);
   return data;
 };
 
@@ -30,7 +54,7 @@ export const deleteEvent = async (eventId: number): Promise<ServerResponse<Evnet
   return data;
 };
 
-export const updateEventStatus = async (info: { eventIdList: number[]; situation: Situation }): Promise<ServerResponse<EventInfoTest>> => {
+export const updateEventStatus = async (info: { eventIdList: number[]; situation: Situation }): Promise<ServerResponse<{ eventIdList: number[]; situation: Situation }>> => {
   const { data } = await api.patch(`/api/event/penalty`, { ...info });
   return data;
 };

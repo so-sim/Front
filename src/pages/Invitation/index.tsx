@@ -12,6 +12,10 @@ import { useQueryString } from '@/hooks/useQueryString';
 import Loading from '@/components/Auth/Loading';
 import { NotFoundGroup } from '@/components/Invitation/NotFoundGroup';
 import useRecentlyVisitedGroup from '@/hooks/useRecentlyVisitedGroup';
+import { isMobile } from 'react-device-detect';
+import { useGetInvitation } from '@/queries/Group/useGetInvitation';
+import useConfirmModal from '@/hooks/useConfirmModal';
+import useRejoinGroup from '@/queries/Group/useRejoinGroup';
 
 const Invitation = () => {
   const navigate = useNavigate();
@@ -19,10 +23,12 @@ const Invitation = () => {
   const user = useRecoilValue(userState);
   const [showInvitationModal, setShowInvitationModal] = useState(false);
   const [showLoginModal, setShowLoginModal] = useState(false);
+  const { openConfirmModal, closeConfirmModal } = useConfirmModal();
 
   const { groupId } = useQueryString();
-  const { data, isSuccess, isLoading } = useGroupDetail(Number(groupId));
+  const { data, isSuccess, isLoading } = useGetInvitation(Number(groupId));
   const { removeGroupId, setGroupId } = useRecentlyVisitedGroup();
+  const { mutate: mutateRejoinGroup } = useRejoinGroup(Number(groupId));
 
   useEffect(() => {
     removeGroupId();
@@ -39,8 +45,22 @@ const Invitation = () => {
   };
 
   const checkUserLoginStatus = () => {
+    /** 이미 가입한 유저가 접근했을 때 */
     if (isSuccess && data?.content.isInto === true) {
+      if (isMobile) {
+        return navigate(`/m-group/${groupId}/book`);
+      }
       return navigate(`/group/${groupId}/book`);
+    }
+
+    /** 한번 탈퇴한 유저가 다시 접근했을 때 */
+    if (isSuccess && data?.content.isWithdraw === true) {
+      openConfirmModal({
+        type: 'REJOIN_WITHDRAWAL_MEMBER',
+        cancel: closeConfirmModal,
+        confirm: mutateRejoinGroup,
+      });
+      return;
     }
 
     if (user.userId === null) {

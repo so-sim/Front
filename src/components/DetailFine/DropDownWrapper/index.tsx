@@ -8,6 +8,9 @@ import { SelectedEventInfo } from '@/types/event';
 import { useGetMyNikname } from '@/queries/Group/useGetMyNickname';
 import useSituationList, { getClientSituationTextFromServer } from '@/hooks/useSituationList';
 import { useGroupDetail } from '@/queries/Group';
+import { GA } from '@/constants/GA';
+import { SITUATION_CODE } from './CircleDropButton';
+import { pushDataLayer } from '@/utils/pushDataLayer';
 
 interface Props {
   detail: SelectedEventInfo;
@@ -28,21 +31,30 @@ const DropDownWrapper = ({ detail, openButtonListId, setOpenButtonListId }: Prop
   const isSelectedEvent = openButtonListId === eventId;
 
   const hasPermissionOfHover = isAdmin || (!isAdmin && isOwn && situation === '미납');
+
   const hasPermissionOfChangePaymentType = hasPermissionOfHover && isSelectedEvent;
 
   const handleCircleDropButton = (e: MouseEvent) => {
     e.stopPropagation();
     if (!isSelectedEvent && hasPermissionOfHover) {
       setOpenButtonListId(eventId);
+      //Todo: 여기만 왜 안 되는지 찾아보기 (stopPropagation인가?)
     }
+    pushDataLayer('gtm.click', { 'gtm.elementId': GA[SITUATION_CODE[situation]].LIST_BUTTON });
   };
 
   return (
     <Style.DropDownWrapper isValid={hasPermissionOfHover} onClick={handleCircleDropButton}>
       {hasPermissionOfChangePaymentType ? (
-        <CircleButtonList setOpenButtonListId={setOpenButtonListId} isAdmin={isAdmin} situation={situation} eventId={eventId} />
+        <CircleButtonList //
+          setOpenButtonListId={setOpenButtonListId}
+          isAdmin={isAdmin}
+          isOwn={isOwn}
+          situation={situation}
+          eventId={eventId}
+        />
       ) : (
-        <CircleDropButton situation={situation} origin={situation} />
+        <CircleDropButton situation={situation} origin={situation} isNoAuthority={!hasPermissionOfHover} />
       )}
     </Style.DropDownWrapper>
   );

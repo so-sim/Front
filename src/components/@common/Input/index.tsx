@@ -31,7 +31,7 @@ const Input = ({ onChange, value, placeholder = '', maxLength = 10, errorText = 
   };
 
   return (
-    <>
+    <div>
       <Style.Input
         type="text" //
         placeholder={placeholder}
@@ -46,7 +46,7 @@ const Input = ({ onChange, value, placeholder = '', maxLength = 10, errorText = 
           {value.length}/{maxLength}
         </Style.Length>
       </Style.Phrase>
-    </>
+    </div>
   );
 };
 export default Input;

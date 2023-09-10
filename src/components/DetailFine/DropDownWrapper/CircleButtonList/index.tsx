@@ -10,6 +10,7 @@ import * as Style from './styles';
 
 interface Props {
   isAdmin?: boolean;
+  isOwn?: boolean;
   eventId: number;
   situation: Situation;
   setOpenButtonListId: Dispatch<SetStateAction<number>>;
@@ -25,11 +26,11 @@ const getGATrigger = (situation: Situation): string => {
   return id[situation];
 };
 
-const CircleButtonList = ({ setOpenButtonListId, situation, eventId, isAdmin = false }: Props) => {
+const CircleButtonList = ({ setOpenButtonListId, situation, eventId, isAdmin = false, isOwn = false }: Props) => {
   const onSuccessUpdateStatus = (buttonSituation: Situation) => {
     cancelUpdateStatus();
     pushDataLayerByStatus(isAdmin, buttonSituation);
-    buttonSituation === '미납' && pushDataLayer('nonpayment', { route: 'list' });
+    buttonSituation === '미납' && pushDataLayer('nonpayment', { route: 'list', count_list: 1, count_member: 1 });
   };
 
   const { mutate: mutateDetailStatus } = useUpdateDetailStatus(onSuccessUpdateStatus);
@@ -47,9 +48,17 @@ const CircleButtonList = ({ setOpenButtonListId, situation, eventId, isAdmin = f
 
   const handleCircleButtonList = (buttonSituation: Situation) => {
     if (buttonSituation === situation) return cancelUpdateStatus();
+    if (isAdmin && isOwn) {
+      openConfirmModal({
+        type: 'CHANGE_OWN_ADMIN_STATUS',
+        confirm: () => updateStatus(buttonSituation),
+        cancel: closeConfirmModal,
+      });
+      return;
+    }
 
     openConfirmModal({
-      type: 'CHANGE_STATUS',
+      type: isAdmin ? 'CHANGE_STATUS_ADMIN' : 'CHANGE_STATUS',
       confirm: () => updateStatus(buttonSituation),
       cancel: cancelUpdateStatus,
       id: getGATrigger(buttonSituation),

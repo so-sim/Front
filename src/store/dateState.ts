@@ -1,7 +1,7 @@
 import dayjs, { Dayjs } from 'dayjs';
 import { atom } from 'recoil';
 import { recoilPersist } from 'recoil-persist';
-import { FilterMode } from '@/pages/FineBook/DetailFine';
+import { FilterModeTest } from '@/components/DetailFine/DateController/hook/useDateFilter';
 
 const { persistAtom } = recoilPersist({
   storage: sessionStorage,
@@ -11,17 +11,19 @@ export interface DateState {
   baseDate: Dayjs;
   startDate: Dayjs;
   endDate: Dayjs;
-  mode: FilterMode;
+  mode: FilterModeTest;
 }
+
+export const initialDateState: DateState = {
+  //  겹치는 week ui 구성 요소
+  baseDate: dayjs(),
+  startDate: dayjs(),
+  endDate: dayjs(),
+  mode: 'day',
+};
 
 export const dateState = atom<DateState>({
   key: 'dateState',
-  default: {
-    //  겹치는 week ui 구성 요소
-    baseDate: dayjs(),
-    startDate: dayjs(),
-    endDate: dayjs(),
-    mode: 'day',
-  },
+  default: initialDateState,
   effects_UNSTABLE: [persistAtom],
 });

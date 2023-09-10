@@ -8,10 +8,23 @@ import Plus from './Plus.svg';
 import Settings from './Settings.svg';
 import Dots from './Dots.svg';
 import PreParing from './PreParing.svg';
+import Search from './Search.svg';
+import Menu from './Menu.svg';
+import ToolTip from './ToolTip.svg';
+import TooltipInfo from './TooltipInfo.svg';
+import Initialization from './Initialization.svg';
+import MobileCon from './MobileCon.svg';
+import MobileNon from './MobileNon.svg';
+import MobileFull from './MobileFull.svg';
+import Filter from './Filter.svg';
+import Done from './Done.svg';
+import MobilePreparing from './MobilePreparing.svg';
 
 export const SYSTEM = {
   ARTICLE: <Article />,
-  CLOSE: <Close />,
+  CLOSE_SM: <Close width={16} height={16} fill="#3C3C3C" />,
+  CLOSE_LG: <Close width={24} height={24} fill="#3C3C3C" />,
+  CLOSE_SM_WHITE: <Close width={16} height={16} fill="#FFFFFF" />,
   HOME: <Home />,
   LINK: <Link fill="#ffffff" />,
   LINK_BLACK: <Link fill="#3C3C3C" />,
@@ -19,10 +32,26 @@ export const SYSTEM = {
   NOTICE: <Notice />,
   PLUS: <Plus fill="#3C3C3C" width={32} height={32} />,
   PLUS_GRAY_SM: <Plus fill="#9C9C9C" width={16} height={16} />,
+  PLUS_BLACK_SM: <Plus fill="#6E6E6E" width={16} height={16} />,
   PLUS_GRAY: <Plus fill="#9C9C9C" width={32} height={32} />,
   SETTING_SM: <Settings width={14} height={14} />,
   SETTING_MD: <Settings width={17} height={17} />,
   SETTING_LG: <Settings width={21} height={21} />,
   DOTS: <Dots />,
+  MENU: <Menu />,
   PREPARING: <PreParing />,
+  MOBILEPREPARING: <MobilePreparing />,
+  SEARCH_BLACK: <Search fill="#3C3C3C" width={24} height={24} />,
+  SEARCH_GRAY: <Search fill="#9C9C9C" width={24} height={24} />,
+  SEARCH_GRAY_LG: <Search fill="#E3E4E5" width={48} height={48} />,
+  TOOLTIP: <ToolTip width={24} height={24} />,
+  TOOLTIP_MD: <TooltipInfo width={16} height={16} />,
+  TOOLTIP_INFO: <TooltipInfo width={24} height={24} />,
+  PLUS_WHITE: <Plus width={24} height={24} />,
+  INITIALIZATION: <Initialization />,
+  MOBILENON: <MobileNon />,
+  MOBILECON: <MobileCon />,
+  MOBILEFULL: <MobileFull />,
+  FILTER: <Filter />,
+  DONE_SM: <Done width={16} height={16} />,
 };

@@ -37,12 +37,12 @@ const ModalFrame: FC<ModalProps> = ({ width = '376px', height = '283px', onClick
   );
 };
 
-const ModalHeader: FC<ModalHeaderProps> = ({ children, onClick, align = 'center', margin = '20px', ...args }) => {
+const ModalHeader: FC<ModalHeaderProps> = ({ children, onClick, align = 'center', margin = '16px', ...args }) => {
   return (
     <Style.ModalHeader {...args} align={align} margin={margin}>
       {onClick && (
         <Style.HeaderIcon>
-          <Style.CloseIcon onClick={onClick}>{SYSTEM.CLOSE}</Style.CloseIcon>
+          <Style.CloseIcon onClick={onClick}>{SYSTEM.CLOSE_LG}</Style.CloseIcon>
         </Style.HeaderIcon>
       )}
       <Style.HeaderTitle>{children}</Style.HeaderTitle>

@@ -1,6 +1,12 @@
 import { css } from '@emotion/react';
+import { isMobile } from 'react-device-detect';
 
 const globalStyle = css`
+  .Toastify__toast-container--bottom-left,
+  .Toastify__toast-container--bottom-center,
+  .Toastify__toast-container--bottom-right {
+    bottom: ${isMobile && '4rem'};
+  }
   html {
     font-size: 16px;
   }
@@ -43,6 +49,7 @@ const globalStyle = css`
     padding: 0;
   }
   button {
+    color: 2d2d2d;
     border: none;
     background-color: transparent;
     padding: 0;
@@ -58,6 +65,11 @@ const globalStyle = css`
   ol {
     margin: 0;
   }
+  input::-webkit-inner-spin-button {
+    appearance: none;
+    -moz-appearance: none;
+    -webkit-appearance: none;
+  }
   input {
     background: none;
     border: none;
@@ -65,6 +77,7 @@ const globalStyle = css`
     outline: none;
   }
   a {
+    color: #2d2d2d;
     text-decoration: none;
     color: inherit;
   }

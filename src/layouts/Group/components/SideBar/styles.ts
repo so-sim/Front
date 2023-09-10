@@ -30,7 +30,7 @@ export const TapContainer = styled.div`
 `;
 
 interface TapProps {
-  disabled?: boolean;
+  $isDisabled?: boolean;
 }
 
 export const Tap = styled.button<TapProps>`
@@ -45,7 +45,7 @@ export const Tap = styled.button<TapProps>`
   text-align: center;
   gap: 4px;
   span {
-    color: ${(props) => (props.disabled ? props.theme.colors.secondary_400 : props.theme.colors.secondary_800)};
+    color: ${(props) => (props.$isDisabled ? props.theme.colors.secondary_400 : props.theme.colors.secondary_800)};
     ${({ theme }) => theme.font.subhead_02}
   }
 `;
@@ -58,7 +58,7 @@ export const Selected = styled.div<SelectedProps>`
   display: ${(props) => (props.isSelected ? 'block' : 'none')};
   position: absolute;
   width: 6px;
-  left: 100px;
+  left: -24px;
   height: 32px;
   background-color: ${({ theme }) => theme.colors.secondary_900};
   border-radius: 0px 4px 4px 0px;

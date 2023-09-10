@@ -1,4 +1,4 @@
-export interface PayMentTpyeCountMap {
+export interface PayMentTypeCountMap {
   확인중: number;
   미납: number;
   완납: number;
@@ -9,7 +9,7 @@ export type EvnetId = {
 };
 
 export interface MonthStatus {
-  statusOfDay: { [date in number]: PayMentTpyeCountMap };
+  statusOfDay: { [date in number]: PayMentTypeCountMap };
 }
 
 export type Ground = '지각' | '결석' | '과제 안 함' | '기타';
