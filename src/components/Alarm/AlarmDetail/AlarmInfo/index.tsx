@@ -151,19 +151,19 @@ const AlarmInfo = ({}) => {
         <Tooltip
           title={`납부여부를 변경해보세요!\n총무인 경우, 해당 내역의 팀원에게 알림이 가며\n팀원인 경우, 총무에게 승인 알림이 갑니다.`}
           contents={[]}
-          width={312}
+          width={332}
           location="TOP"
-          top="-56px"
+          top="-68px"
           left="0px"
           onCloseTooltip={() => localStorage.setItem('isFirstSituationTooltip', 'true')}
           defaultValue={localStorage.getItem('isFirstSituationTooltip') === null}
-          messageBox={{ left: '0px', top: '37px' }}
+          messageBox={{ left: '0px', top: '57px' }}
           trigger={<Style.Title>{myname === nickname && `나의`} 내역 확인하기</Style.Title>}
         />
         {/* 해당 Alarm Info가 나의 닉네임과 같다면 */}
 
         <Style.ProfileWrapper>
-          <p>{USER.PERSON_24}</p>
+          <p style={{ height: '24px' }}>{USER.PERSON_24}</p>
           <Style.ProfimeText>{userName}</Style.ProfimeText>
           {userName && isWithdrawal(userName) && <WithdrawBadge size="md" />}
         </Style.ProfileWrapper>

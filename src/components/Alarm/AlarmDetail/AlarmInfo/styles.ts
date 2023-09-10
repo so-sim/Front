@@ -74,7 +74,7 @@ export const Footer = styled.div`
   right: 0;
   left: 0;
 
-  padding: 12px 24px 24px;
+  padding: 12px 24px ${isMobile ? '24px' : '48px'};
 
   background-color: white;
 `;

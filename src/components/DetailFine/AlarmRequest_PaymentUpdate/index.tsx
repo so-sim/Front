@@ -224,7 +224,7 @@ const AlarmRequest_PaymentUpdate = ({ checkDetailFine }: Props) => {
           contents={[]}
           width={332}
           location="TOP"
-          top="-76px"
+          top="-68px"
           left="0px"
           onCloseTooltip={() => localStorage.setItem('isFirstSituationTooltip', 'true')}
           defaultValue={localStorage.getItem('isFirstSituationTooltip') === null}
@@ -263,7 +263,7 @@ const AlarmRequest_PaymentUpdate = ({ checkDetailFine }: Props) => {
         {type && Status[type].title}
         {isSingleList(originalCheckListValue) && (
           <Style.ProfileWrapper>
-            <p>{USER.PERSON_24}</p>
+            <p style={{ height: '24px' }}>{USER.PERSON_24}</p>
             <Style.ProfimeText>{getSingleNickName}</Style.ProfimeText>
             {getSingleNickName && isWithdrawal(getSingleNickName) && <WithdrawBadge size="md" />}
           </Style.ProfileWrapper>

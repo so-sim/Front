@@ -120,8 +120,8 @@ export const Footer = styled.div`
   right: 0;
   left: 0;
 
-  margin-bottom: 48px;
-  padding: 0 24px;
+  background-color: white;
+  padding: 0 24px ${isMobile ? '24px' : '48px'};
 `;
 
 export const Button = styled.button<{ isSubmit?: boolean }>`
