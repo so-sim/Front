@@ -4,13 +4,13 @@ import Modal from '@/components/@common/Modal';
 import * as Style from './styles';
 import { ModalProps } from '@/components/@common/Modal';
 import { SYSTEM } from '@/assets/icons/System';
-import { useParams } from 'react-router-dom';
-import { copyInvitationLink } from '@/utils/copyInvitationLink';
 import { GA } from '@/constants/GA';
 import { isMobile } from 'react-device-detect';
+import { CopyToClipboard } from 'react-copy-to-clipboard';
+import useCopyInvitationLink from '@/hooks/useCopyInvitationLink';
 
 const InviteModal: FC<Partial<ModalProps>> = ({ onClick }) => {
-  const { groupId } = useParams();
+  const { invitationLink, onSuccessCopy } = useCopyInvitationLink();
 
   return (
     <Modal.Frame width={isMobile ? '328px' : '448px'} height={isMobile ? '244px' : '264px'} onClick={onClick}>
@@ -25,8 +25,17 @@ const InviteModal: FC<Partial<ModalProps>> = ({ onClick }) => {
       </Modal.Body>
       <div style={{ height: '12px' }} />
       <Modal.Footer>
-        <Button color="primary" width="100%" leftIcon={SYSTEM.LINK} height="42px" onClick={() => copyInvitationLink(Number(groupId))} id={GA.INVITATION.MODAL}>
-          초대링크 복사하기
+        <Button
+          color="primary"
+          width="100%"
+          leftIcon={SYSTEM.LINK}
+          height="42px" //
+          // onClick={() => copyInvitationLink(Number(groupId))}
+          id={GA.INVITATION.MODAL}
+        >
+          <CopyToClipboard text={invitationLink} onCopy={onSuccessCopy}>
+            <span>초대링크 복사하기</span>
+          </CopyToClipboard>
         </Button>
       </Modal.Footer>
     </Modal.Frame>
