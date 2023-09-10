@@ -2,7 +2,7 @@ import useFormState from '../Shared/useFormState';
 import { COLORS } from '@/constants/Group';
 import { checkCountChar, useError } from '@/utils/validation';
 import { GroupFormData } from '@/components/@common/Modal/GroupSettingModal/AdminModal';
-import { useCreateGroup, useDeleteGroup, useGroupDetail, useUpdateGroup, useWithdrawalGroup } from '@/queries/Group';
+import { useCreateGroup, useDeleteGroup, useGroupDetail, useParticipantList, useUpdateGroup, useWithdrawalGroup } from '@/queries/Group';
 import { useParams } from 'react-router-dom';
 import { useEffect } from 'react';
 import { ServerResponse } from '@/types/serverResponse';
@@ -49,6 +49,7 @@ const useGroupForm = (formType?: 'create' | 'update'): GroupFormHook => {
 
   const { data: groupData } = useGroupDetail(Number(groupId));
   const { isWithdrawal } = useWithdrawalParticipantList(Number(groupId));
+  const { data: participants } = useParticipantList(Number(groupId));
   const { mutateAsync: updateGroupMutate, isLoading: groupInfoLoading } = useUpdateGroup({ setError });
   const { mutateAsync: createGroupMutate, isLoading: createGroupLoading } = useCreateGroup();
 
@@ -60,9 +61,11 @@ const useGroupForm = (formType?: 'create' | 'update'): GroupFormHook => {
   };
 
   const hasUser = (): boolean => {
-    if (groupData?.content.size) {
-      return groupData?.content.size > 1 ? true : false;
+    const size = participants?.content.nicknameList.length;
+    if (size) {
+      return size >= 1 ? true : false;
     }
+
     return false;
   };
 
