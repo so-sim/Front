@@ -66,6 +66,7 @@ const MobileCalendar = () => {
   };
 
   useEffect(() => {
+    setCalendarDate(dayjs());
     // setCalendarDateState(initialDateState);
     // 해당 코드때문에 내역추가 시 추가한 날짜로 이동을 안하고 있었습니다. (큰 문제는 제가 저 코드를 왜 넣었는지.. 기억이ㅠ)
 
