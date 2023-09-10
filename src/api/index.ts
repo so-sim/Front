@@ -1,5 +1,5 @@
 import { ServerResponse } from '@/types/serverResponse';
-import { getAccessToken, removeAccessToken } from '@/utils/acceessToken';
+import { getAccessToken, isErrorCase, removeAccessToken } from '@/utils/acceessToken';
 import axios, { AxiosError } from 'axios';
 import { reTakeToken } from './Auth';
 import { notFoundGroupDetail } from './Error';
@@ -32,11 +32,17 @@ api.interceptors.response.use(
 
     const { config, response } = error;
     if (response?.status === 401) {
+      if (isErrorCase(response.data.status.code)) {
+        removeAccessToken();
+        window.location.href = process.env.REACT_APP_SERVICE_URL as string;
+      }
       if (!lock) {
-        lock = true;
-        await reTakeToken();
-        lock = false;
-        return;
+        if (response?.data.status.code === 1204) {
+          lock = true;
+          await reTakeToken();
+          lock = false;
+          return;
+        }
       }
     }
     return Promise.reject(error);
