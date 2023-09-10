@@ -17,6 +17,8 @@ export const Login = styled.button`
 `;
 
 export const Title = styled.h1`
+  display: flex;
+  align-items: center;
   color: ${({ theme }) => theme.colors.secondary_900};
   ${({ theme }) => theme.font.subhead_03}
 `;
