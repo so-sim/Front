@@ -1,8 +1,12 @@
 import styled from '@emotion/styled';
+import { CalnedrProps } from '.';
 
-export const Layout = styled.div`
+export const Layout = styled.div<{ $calendarType: string }>`
   padding: 48px 32px;
   width: 100%;
+
+  min-width: ${({ $calendarType }) => ($calendarType === 'Tag' ? '1200px' : ' 360px')};
+
   height: calc(100vh - 68px);
   overflow-y: auto;
 `;
@@ -78,6 +82,7 @@ export const CalendarContainer = styled.div<CalendarContainerProps>`
   display: grid;
   border: ${(props) => props.mini || `1px solid ${props.theme.colors.neutral_400_b}`};
   border-bottom: ${(props) => props.mini && `2px solid ${props.theme.colors.neutral_400_b}`};
+
   max-height: fit-content;
   grid-template-rows: ${(props) => `repeat(${props.length},1fr`};
 `;

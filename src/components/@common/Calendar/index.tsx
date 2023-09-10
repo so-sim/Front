@@ -25,7 +25,7 @@ import CalendarTooltip from '../Tooltip/Calendar';
 
 const WEEKDATE = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
-interface CalnedrProps {
+export interface CalnedrProps {
   cellType: 'Mark' | 'Tag';
 }
 
@@ -78,7 +78,7 @@ const Calendar: FC<CalnedrProps> = ({ cellType }) => {
 
   return (
     <>
-      <Style.Layout>
+      <Style.Layout $calendarType={cellType}>
         <Style.Title>벌금 장부</Style.Title>
         <Style.Header>
           <div>
