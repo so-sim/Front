@@ -104,4 +104,12 @@ export const GA = {
     PAYMENT_CHANGE: 'toolbar_payment_change',
     PAYMENT_REQUEST: 'toolbar_payment_request',
   },
+  ALARM_TYPE: {
+    PAYMENT_DATE: 'alarm_auto_request',
+    REQUEST_PAYMENT: 'alarm_payment_request',
+    CHANGE_FULL_SITUATION: 'alarm_fullpayment',
+    CHANGE_NONE_SITUATION: 'alarm_nonpayment',
+    CHANGE_CHECK_SITUATION: 'alarm_confirming',
+    CHANGE_ADMIN: 'alarm_admin_change',
+  },
 };

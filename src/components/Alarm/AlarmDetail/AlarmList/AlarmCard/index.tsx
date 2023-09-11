@@ -1,3 +1,4 @@
+import { GA } from '@/constants/GA';
 import { GA_ALARM_TYPE } from '@/constants/GA_ALARM';
 import { useGetAlarmList } from '@/queries/Notification/useGetAlarmList';
 import { useReadNotification } from '@/queries/Notification/useReadNotification';
@@ -84,7 +85,7 @@ const AlarmCard = ({ notificationInfo }: Props) => {
   };
 
   return (
-    <Style.AlarmCardContainer onClick={type === 'CHANGE_ADMIN' ? goToGroupMember : () => goToAlarmInfo(eventIdList)} id="alarm_auto_request">
+    <Style.AlarmCardContainer onClick={type === 'CHANGE_ADMIN' ? goToGroupMember : () => goToAlarmInfo(eventIdList)} id={GA.ALARM_TYPE[type]}>
       <Style.Header $isRead={view}>
         <Style.Circle $isRead={view} />
         <Style.AlarmTypeText>{category}</Style.AlarmTypeText>
