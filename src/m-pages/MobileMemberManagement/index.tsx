@@ -19,7 +19,7 @@ const MobileMemberManagement = () => {
       <Style.Container>
         <Style.Title>
           <h2>멤버 관리</h2>
-          <Style.ButtonFlex onClick={() => copyInvitationLink(Number(groupId))} id={GA.INVITATION.MEMBER}>
+          <Style.ButtonFlex onClick={() => {}} id={GA.INVITATION.MEMBER}>
             {SYSTEM.LINK_BLACK}
             <CopyToClipboard text={invitationLink} onCopy={onSuccessCopy}>
               <span>초대링크 복사</span>
