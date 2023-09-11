@@ -5,6 +5,13 @@ import useRecentlyVisitedGroup from '@/hooks/useRecentlyVisitedGroup';
 import { EventSourcePolyfill, NativeEventSource } from 'event-source-polyfill';
 import { getAccessToken } from '@/utils/acceessToken';
 import { useQueryClient } from '@tanstack/react-query';
+import { ErrorBoundary } from 'react-error-boundary';
+import api from '@/api';
+import Test from './test';
+
+const ErrorFallback = () => {
+  return <div>에러났어요@@</div>;
+};
 
 const Home = () => {
   const { isExist, navigateToSavedGroup } = useRecentlyVisitedGroup();
@@ -34,16 +41,24 @@ const Home = () => {
     if (isExist) navigateToSavedGroup();
   }, []);
 
+  const test = async () => {
+    const { data } = await api.get(`api/events?groupId=&eventIdList=`);
+    return data;
+  };
+
   return (
     <Style.Main>
-      <div>
-        <Header />
-        <Banner />
-        <GroupSection />
-      </div>
-      <div>
-        <Footer />
-      </div>
+      <ErrorBoundary FallbackComponent={ErrorFallback}>
+        <div>
+          <Header />
+          <Banner />
+          <GroupSection />
+        </div>
+        <div>
+          <Footer />
+        </div>
+        <Test />
+      </ErrorBoundary>
     </Style.Main>
   );
 };
