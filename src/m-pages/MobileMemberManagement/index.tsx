@@ -19,12 +19,12 @@ const MobileMemberManagement = () => {
       <Style.Container>
         <Style.Title>
           <h2>멤버 관리</h2>
-          <Style.ButtonFlex onClick={() => {}} id={GA.INVITATION.MEMBER}>
-            {SYSTEM.LINK_BLACK}
-            <CopyToClipboard text={invitationLink} onCopy={onSuccessCopy}>
+          <CopyToClipboard text={invitationLink} onCopy={onSuccessCopy}>
+            <Style.ButtonFlex onClick={() => {}} id={GA.INVITATION.MEMBER}>
+              {SYSTEM.LINK_BLACK}
               <span>초대링크 복사</span>
-            </CopyToClipboard>
-          </Style.ButtonFlex>
+            </Style.ButtonFlex>
+          </CopyToClipboard>
         </Style.Title>
         <Style.UserContainer>
           <Style.UserIcon>{USER.PERSON_XL}</Style.UserIcon>

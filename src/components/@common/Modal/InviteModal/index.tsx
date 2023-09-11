@@ -25,18 +25,18 @@ const InviteModal: FC<Partial<ModalProps>> = ({ onClick }) => {
       </Modal.Body>
       <div style={{ height: '12px' }} />
       <Modal.Footer>
-        <Button
-          color="primary"
-          width="100%"
-          leftIcon={SYSTEM.LINK}
-          height="42px" //
-          // onClick={() => copyInvitationLink(Number(groupId))}
-          id={GA.INVITATION.MODAL}
-        >
-          <CopyToClipboard text={invitationLink} onCopy={onSuccessCopy}>
+        <CopyToClipboard text={invitationLink} onCopy={onSuccessCopy}>
+          <Button
+            color="primary"
+            width="100%"
+            leftIcon={SYSTEM.LINK}
+            height="42px" //
+            // onClick={() => copyInvitationLink(Number(groupId))}
+            id={GA.INVITATION.MODAL}
+          >
             <span>초대링크 복사하기</span>
-          </CopyToClipboard>
-        </Button>
+          </Button>
+        </CopyToClipboard>
       </Modal.Footer>
     </Modal.Frame>
   );
