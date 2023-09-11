@@ -64,7 +64,7 @@ const UserConfig = () => {
   return (
     <>
       <Style.Container>
-        <AlarmComponent headerHeight={5.55} />
+        <AlarmComponent headerHeight={5.58} />
         <Style.UserConfig>
           <Style.UserConfigButton onClick={handleDropDown} ref={dropDownRef} style={{ display: 'flex', alignItems: 'center' }}>
             {USER.PERSON_MD}
