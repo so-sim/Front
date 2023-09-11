@@ -6,7 +6,7 @@ export const AlarmDetailFrame = styled.div<{ $headerHeight: number }>`
   top: ${({ $headerHeight }) => `${$headerHeight}rem`};
   right: 0;
   bottom: 0;
-  height: calc(100vh - 72px);
+  /* height: calc(100vh - 72px); */
   z-index: 19;
 
   width: 460px;
