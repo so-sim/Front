@@ -84,7 +84,7 @@ const AlarmCard = ({ notificationInfo }: Props) => {
   };
 
   return (
-    <Style.AlarmCardContainer onClick={type === 'CHANGE_ADMIN' ? goToGroupMember : () => goToAlarmInfo(eventIdList)}>
+    <Style.AlarmCardContainer onClick={type === 'CHANGE_ADMIN' ? goToGroupMember : () => goToAlarmInfo(eventIdList)} id="alarm_auto_request">
       <Style.Header $isRead={view}>
         <Style.Circle $isRead={view} />
         <Style.AlarmTypeText>{category}</Style.AlarmTypeText>
