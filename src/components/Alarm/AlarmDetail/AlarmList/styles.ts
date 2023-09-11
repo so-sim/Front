@@ -1,3 +1,4 @@
+import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { isMobile } from 'react-device-detect';
 
@@ -24,12 +25,16 @@ export const ReadAllAlarmsText = styled.p<{ $hasItem: boolean }>`
   color: ${({ $hasItem, theme }) => ($hasItem ? theme.colors.secondary_800 : theme.colors.secondary_500)};
 `;
 
-export const AlarmListWrapper = styled.div`
+export const AlarmListWrapper = styled.div<{ $headerHeight?: number }>`
   display: flex;
   flex-direction: column;
   gap: ${isMobile ? '0.5rem' : '0.75rem'};
 
-  ${!isMobile && 'height: calc(100vh - 190px);'}
+  ${({ $headerHeight }) =>
+    $headerHeight &&
+    css`
+      height: calc(100vh - (7.5rem + ${$headerHeight}rem));
+    `}
 
   overflow-y: auto;
   &::-webkit-scrollbar {
