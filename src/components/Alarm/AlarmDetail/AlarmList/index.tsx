@@ -11,7 +11,11 @@ import { useRecoilState } from 'recoil';
 import AlarmCard from './AlarmCard';
 import * as Style from './styles';
 
-const AlarmList = () => {
+type Props = {
+  headerHeight?: number;
+};
+
+const AlarmList = ({ headerHeight }: Props) => {
   const { data, fetchNextPage, hasNextPage } = useGetAlarmList(8);
 
   const { ref, inView } = useInView();
@@ -41,7 +45,7 @@ const AlarmList = () => {
       </Style.TitleWrapper>
 
       {hasItem ? (
-        <Style.AlarmListWrapper>
+        <Style.AlarmListWrapper $headerHeight={headerHeight}>
           {data?.pages.map((page) => page.content.notificationResponseList.map((notificationInfo, index) => <AlarmCard notificationInfo={notificationInfo} key={index} />))}
 
           <div ref={ref} />
