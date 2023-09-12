@@ -33,7 +33,7 @@ const AlarmDetail = ({ headerHeight, setShowAlarmDetail }: Props) => {
 
         {/* 여기서 Trigger를 state하나 지정해서 List 에서 Card 누르면 Info로 가는 state를 만드는게 나을듯 */}
         <Style.Main>
-          {!alarmIdList.alarmEventIdList.length && <AlarmList />}
+          {!alarmIdList.alarmEventIdList.length && <AlarmList headerHeight={headerHeight} />}
           {(alarmIdList.alarmEventIdList.length || null) && <AlarmInfo />}
         </Style.Main>
       </Style.AlarmDetailFrame>
