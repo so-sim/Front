@@ -12,12 +12,13 @@ import { GlobalConfirmModal } from './components/@common/Modal/ConfirmModal';
 import MobileRouter from './routes/MobileRouter';
 import { BrowserRouter } from 'react-router-dom';
 import { isMobile } from 'react-device-detect';
+import Auth from './Auth';
 
 const App = () => {
   const queryClient = new QueryClient({
     defaultOptions: {
       mutations: {
-        retry: 2,
+        retry: 0,
         onError: (error) => {
           const { response } = error as unknown as AxiosError;
           if (response?.status !== 401) {
@@ -26,7 +27,9 @@ const App = () => {
         },
       },
       queries: {
-        retry: 2,
+        refetchOnWindowFocus: false,
+        staleTime: 30000,
+        retry: 0,
         onError: (error) => {
           const { response } = error as unknown as AxiosError;
           if (response?.status !== 401 && response?.status !== 400) {
@@ -71,8 +74,10 @@ const App = () => {
         <QueryClientProvider client={queryClient}>
           <ThemeProvider theme={theme}>
             <BrowserRouter>
-              <MobileRouter />
-              <Router />
+              <Auth>
+                <MobileRouter />
+                <Router />
+              </Auth>
             </BrowserRouter>
             <Toast />
             <GlobalConfirmModal />
