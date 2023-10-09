@@ -13,6 +13,7 @@ import MobileRouter from './routes/MobileRouter';
 import { BrowserRouter } from 'react-router-dom';
 import { isMobile } from 'react-device-detect';
 import Auth from './Auth';
+import ErrorBoundary from './hooks/Shared/Errorboundary';
 
 const App = () => {
   const queryClient = new QueryClient({
@@ -30,6 +31,7 @@ const App = () => {
         refetchOnWindowFocus: false,
         staleTime: 30000,
         retry: 0,
+        useErrorBoundary: true,
         onError: (error) => {
           const { response } = error as unknown as AxiosError;
           if (response?.status !== 401 && response?.status !== 400) {
@@ -74,10 +76,12 @@ const App = () => {
         <QueryClientProvider client={queryClient}>
           <ThemeProvider theme={theme}>
             <BrowserRouter>
-              <Auth>
-                <MobileRouter />
-                <Router />
-              </Auth>
+              <ErrorBoundary>
+                <Auth>
+                  <MobileRouter />
+                  <Router />
+                </Auth>
+              </ErrorBoundary>
             </BrowserRouter>
             <Toast />
             <GlobalConfirmModal />
