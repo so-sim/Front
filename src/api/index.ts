@@ -1,4 +1,3 @@
-import { testState } from '@/store/test';
 import { ServerResponse } from '@/types/serverResponse';
 import { getAccessToken, isErrorCase, removeAccessToken } from '@/utils/acceessToken';
 import axios, { AxiosError } from 'axios';
@@ -25,8 +24,6 @@ api.interceptors.request.use((config) => {
   return config;
 });
 
-let lock = false;
-
 /**
  * 서버 오류 시 무한 재귀를 대응하기위한 count 변수
  * */
@@ -39,9 +36,6 @@ api.interceptors.response.use(
   async (error) => {
     const { config, response } = error;
 
-    // const [test, setTest] = useRecoilState(testState);
-    // setTest(59);
-
     count += 1;
 
     /**
@@ -52,16 +46,21 @@ api.interceptors.response.use(
       return Promise.reject(error);
     }
 
-    await reTakeToken();
-
     if (notFoundGroupDetail(error)) {
       return (window.location.href = '/not-found');
     }
 
-    if (response?.data.status.code === 1204) {
-      await reTakeToken();
+    if (response?.status === 401) {
+      if (isErrorCase(response.data.status.code)) {
+        removeAccessToken();
+        window.location.href = process.env.REACT_APP_SERVICE_URL as string;
+        return;
+      }
+      if (response?.data.status.code === 1204) {
+        await reTakeToken();
 
-      return api(config);
+        return api(config);
+      }
     }
 
     return Promise.reject(error);
