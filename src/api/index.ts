@@ -15,9 +15,7 @@ const api = axios.create({
 
 api.interceptors.request.use((config) => {
   const accessToken = getAccessToken();
-  if (config.url === '/api/event/penalty/73') {
-    console.log(config);
-  }
+
   if (config.headers && accessToken) {
     config.headers.Authorization = `Bearer ${accessToken}`;
   }
