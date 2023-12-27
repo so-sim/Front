@@ -78,3 +78,4 @@ src
 | [[GTM] 클릭한 id를 추적하지 못하는 이슈](https://velog.io/@jong1co/GTM-%ED%81%B4%EB%A6%AD%ED%95%9C-id%EB%A5%BC-%EC%B6%94%EC%A0%81%ED%95%98%EC%A7%80-%EB%AA%BB%ED%95%98%EB%8A%94-%EC%9D%B4%EC%8A%88) |
 | [[React] 수많은 Modal들을 추상화 시켜보자](https://velog.io/@jong1co/React-%EC%88%98%EB%A7%8E%EC%9D%80-Modal%EB%93%A4%EC%9D%84-%EC%B6%94%EC%83%81%ED%99%94-%EC%8B%9C%EC%BC%9C%EB%B3%B4%EC%9E%90)|
 | [React Query 쿼리 키를 살펴보자 (feat. JSON.stringify())](https://velog.io/@jong1co/Tanstack-Query-%EC%9C%A0%EB%8B%88%ED%81%AC-%ED%82%A4)|
+| [React 로그인(자동로그인) 처리 / silent refresh](https://velog.io/@jma1020/React-%EB%A1%9C%EA%B7%B8%EC%9D%B8%EC%9E%90%EB%8F%99%EB%A1%9C%EA%B7%B8%EC%9D%B8-%EC%B2%98%EB%A6%AC-silent-refresh)|
