@@ -33,3 +33,41 @@
 - 카카오 로그인
   - access token, refresh token
 - 모바일 반응형 및 적응형
+
+# 프론트 아키텍쳐
+![Web_App_Reference_Architecture_1](https://github.com/so-sim/front/assets/45344418/b563be64-3a1c-4d79-86ae-58aef84ccc42)
+
+
+# 디렉터리 구조
+```
+src
+ ┣ components
+ ┃ ┣ @common
+ ┃ ┣ 페이지 네이밍별 폴더
+ ┃ ┣ ...
+ ┃ 
+ ┣ m-components 
+ ┃ ┣ @common
+ ┃ ┣ 페이지 네이밍별 폴더
+ ┃ ┣ ...
+ ┃ 
+ ┣ pages
+ ┃ ┣ 페이지 네이밍별 폴더
+ ┃ ┣ ...
+ ┃ 
+ ┣ hooks
+ ┃ ┣ @common
+ ┃ ┣ 페이지 네이밍별 폴더
+ ┃ ┣ ...
+ ┃ 
+ ┣ routes
+ ┃ ┣ MobileRouter.tsx
+ ┃ ┗ Router.tsx
+ ┣ api (서버 도메인별 api요청 폴더)
+ ┣ constants 
+ ┣ mocks (mock up 서버용 폴더)
+ ┣ store 
+ ┣ styles
+ ┣ types
+ ┣ utils
+```
