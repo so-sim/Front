@@ -13,6 +13,7 @@
 
 > 
 > [👉 서비스 사용하러 가기](https://sosim-manager.com)
+> [👉 기능 보러가기](https://github.com/so-sim)
 
 # 기능
 - **벌금 템플릿**
