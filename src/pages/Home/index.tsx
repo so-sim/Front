@@ -10,25 +10,25 @@ const Home = () => {
   const { isExist, navigateToSavedGroup } = useRecentlyVisitedGroup();
 
   const queryClient = useQueryClient();
-  useEffect(() => {
-    const EventSource = EventSourcePolyfill || NativeEventSource;
-    const SSE = new EventSource(`${process.env.REACT_APP_SERVER_URL}/api/subscribe`, {
-      headers: {
-        Authorization: `Bearer ${getAccessToken()}`,
-      },
-      withCredentials: true,
-      heartbeatTimeout: 30 * 60 * 1000,
-    });
+  // useEffect(() => {
+  //   const EventSource = EventSourcePolyfill || NativeEventSource;
+  //   const SSE = new EventSource(`${process.env.REACT_APP_SERVER_URL}/api/subscribe`, {
+  //     headers: {
+  //       Authorization: `Bearer ${getAccessToken()}`,
+  //     },
+  //     withCredentials: true,
+  //     heartbeatTimeout: 30 * 60 * 1000,
+  //   });
 
-    SSE.addEventListener('subscribe', (e) => {
-      console.log('subscribe: ', e);
-    });
+  //   SSE.addEventListener('subscribe', (e) => {
+  //     console.log('subscribe: ', e);
+  //   });
 
-    SSE.addEventListener('notification', (e) => {
-      console.log('notification: ', e);
-      queryClient.invalidateQueries(['notificationCount']);
-    });
-  }, []);
+  //   SSE.addEventListener('notification', (e) => {
+  //     console.log('notification: ', e);
+  //     queryClient.invalidateQueries(['notificationCount']);
+  //   });
+  // }, []);
 
   useEffect(() => {
     if (isExist) navigateToSavedGroup();

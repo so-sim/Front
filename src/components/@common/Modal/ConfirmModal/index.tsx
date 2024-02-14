@@ -62,7 +62,15 @@ export const GlobalConfirmModal = () => {
       return null;
     }
 
-    return <ConfirmModal id={confirmModal.id || ''} modalHandler={modalHandler} cancel={confirmModal.cancel} type={confirmModal.type} confirm={confirmModal.confirm} />;
+    return (
+      <ConfirmModal //
+        id={confirmModal.id || ''}
+        modalHandler={modalHandler}
+        cancel={confirmModal.cancel}
+        type={confirmModal.type}
+        confirm={confirmModal.confirm}
+      />
+    );
   };
 
   return <>{renderer()}</>;

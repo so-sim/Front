@@ -76,12 +76,12 @@ const App = () => {
         <QueryClientProvider client={queryClient}>
           <ThemeProvider theme={theme}>
             <BrowserRouter>
-              <ErrorBoundary>
-                <Auth>
-                  <MobileRouter />
-                  <Router />
-                </Auth>
-              </ErrorBoundary>
+              {/* <ErrorBoundary> */}
+              <Auth>
+                <MobileRouter />
+                <Router />
+              </Auth>
+              {/* </ErrorBoundary> */}
             </BrowserRouter>
             <Toast />
             <GlobalConfirmModal />

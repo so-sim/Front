@@ -38,8 +38,8 @@ class ErrorBoundary extends Component<PropsWithChildren, ErrorBoundaryState> {
   }
 
   render() {
-    console.log(this.state.showError);
-    if (this.state.showError) return <div>반갑</div>;
+    // console.log(this.state.showError);
+    // if (this.state.showError) return <div>반갑</div>;
 
     return this.props.children;
   }
