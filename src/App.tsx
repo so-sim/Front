@@ -11,9 +11,7 @@ import { TOAST_ERROR } from './constants/Toast';
 import { GlobalConfirmModal } from './components/@common/Modal/ConfirmModal';
 import MobileRouter from './routes/MobileRouter';
 import { BrowserRouter } from 'react-router-dom';
-import { isMobile } from 'react-device-detect';
 import Auth from './Auth';
-import ErrorBoundary from './hooks/Shared/Errorboundary';
 
 const App = () => {
   const queryClient = new QueryClient({
